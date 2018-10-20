@@ -290,7 +290,6 @@
         player.MaxWillHealth = 100;
         player.Health = player.MaxHealth;
         player.WillHealth = player.MaxWillHealth;
-        CheckFlags();
     });
 
     // Ge karaktär start värden
