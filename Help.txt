@@ -1,0 +1,30 @@
+Help Notes
+
+You can control your player with wasd, arrow keys and mouse.
+
+In order to change gender you need to siphon essence from enemies.
+You  can siphon essence from an enemy after they have orgasmed.
+
+Your passive heal works while you have above 1 fat and it will slowly burn away your fat.
+
+You cannot siphon masculinity or femininity if they have below 0. 
+If your siphon amount is higher than what they have left you will only get what they have left.
+
+Once you leave an area the enemies there will get deleted and when you return there will be new ones generated.
+
+Stats:
+	Strength: Make you hit harder and allow you to gain muscle at the gym.
+	Charm: Makes your tease attack stronger.
+	Endurance: Gives you more health and increase the amount of times you can orgasm by round of(end/8) ex 13/8= 2 times and 18/8=2 times.
+	Intelegence: Currenlty useless.
+	Willpower: Gives you more willpower/willhealth.
+	Sexskill: During sex your enemies gain more arousal.
+
+House:
+	An upgraded bedroom for now only gives you extra hp & willpower
+	The dorm allows you take home opponents you have defeated 5 times or more, 3 per level.
+	The kitchen adds passive fat gain for servants.
+	The gym adds passive muscle gain for servants at cost of fat.
+	
+Gym: 
+	The amount of muscle you can gain at the gym is decided by your strength, height and muscle.

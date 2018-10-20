@@ -1,0 +1,673 @@
+<!DOCTYPE HTML>
+<HTML LANG="sv">
+<!-- written by Yggre -->
+
+<head>
+<link rel="stylesheet" type="text/css" href="Stil.css">
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" >
+<title>The Essence of Gender</title>
+</head>
+
+<body>
+<!-- CharCreator: Form för användare att mata in data-->
+
+<div id="Fps"></div>
+
+<div id="StartPage"> 	
+	<h1>The Essence of Gender</h1>
+	<input type="button" id="GoToCharCreator" value="Start game" />
+	<br>
+	<input type="button" id="LoadButton" value="Load game" />
+</div>
+
+<div id="CharCreator" class="None">
+	<h2>Create character</h2> 
+	<form>
+			<label for="firstname">First name</label>
+			<div>
+				<input type="text" id="firstname" placeholder="Your first name" value="Alex"/>
+			</div>
+			<label for="lastname">Last name</label>
+			<div>				
+				<input type="text" id="lastname" placeholder="Your last name" value="Smith"/>
+			</div>
+			<label for="haircolor">Hair color</label>
+			<div>
+				<select id="haircolor">
+					<option value="blonde">Blonde</option>
+					<option value="brown">Brown</option>
+					<option value="dark brown">Darkbrown</option>
+					<option value="black">Black</option>
+
+				</select>
+			</div>
+			<label for="skincolor">Skin color</label>
+			<div>
+				<select id="skincolor">
+					<option value="fair">Pale</option>
+					<option value="tan">Tan</option>
+					<option value="brown">Brown</option>
+					<option value="black">Black</option>
+				</select>
+			</div>
+	</form>
+	<br>
+	<div>
+		<input type="button" id="BackHome" value=" Return " />
+		<input type="button" id="Begin" value="Continue" />
+	</div>	
+</div>
+
+<!-- page2: Här presenteras datan användaren matade in på sida1 -->
+<div id="page2" class="None">
+<p>After celebrating your coming of age is it time for you to leave your family home and make a 
+	life of your own. How will you fare in this world where the weak submit and the strong dominate.</p>
+<p id="looks"></p>
+<br><p>Notes: You can move with mouse, wasd or arrowkeys</p>
+<input type="button" id="startgame" value="startgame" />
+</div>
+
+<div id="map" class="None">
+<canvas id="hem"></canvas>
+<canvas id="WorldMap"></canvas>
+</div>
+
+<div id="buttons" class="left buttons None">
+	<div class="container">
+			<input type="button" id="LevelButton" value="Level up">
+			<input type="button" id="Looks" value="Looks"/>
+			<input type="button" id="Quests" value="Quests"/>
+			<input type="button" id="Options" value="Options"/>
+			<input type="button" id="PerkOptions" value="Fetish options"/>
+			<input type="button" id="Save" value="Save" />
+			<input type="button" id="Load" value="Load" />
+			<input type="button" id="VoreLooks" value="Vore"/>
+	</div>
+</div>
+<div id="EmptyButtons" class="left buttons None"></div>
+<div id="SaveMenu" class="SLMenu None">
+		<h1>Save menu</h1>
+		<input type="button" id="SavePlayer1" value="Save 1" />
+		<input type="button" id="SavePlayer2" value="Save 2" />
+		<input type="button" id="SavePlayer3" value="Save 3" />
+		<input type="button" id="SavePlayer4" value="Save 4" />
+		<input type="button" id="SavePlayer5" value="Save 5" />
+	<div>
+		<input type="button" id="SaveLeave" value="Leave" />
+	</div>
+		<br><br><input type="button" id="SaveText" value="Save to computer"/>
+
+</div>
+<div id="LoadMenu" class="SLMenu None">
+		<h1>Load menu</h1>
+		<input type="button" id="LoadPlayer1" value="Load 1 "/>
+		<input type="button" id="LoadPlayer2" value="Load 2"/>	
+		<input type="button" id="LoadPlayer3" value="Load 3"/>
+		<input type="button" id="LoadPlayer4" value="Load 4"/>
+		<input type="button" id="LoadPlayer5" value="Load 5"/>
+	<div id="MapLoad" class="None">
+		<input type="button" id="LoadLeave" value="Leave">
+	</div>
+	<div id="StartLoad" class="None">
+		<input type="button" id="LoadLeaveStart" value="Leave">
+	</div>
+	<br><br><input type="file" id="LoadFile" value="Load from computer"/>
+
+</div>
+
+
+<div id="LevelMenu" class="LPMenu None">
+	<h1>Level Menu</h1>
+	<p id="SkillPointsLeft"></p>
+	<div>
+		<input type="button" id="GainStr" value="Strength" title="Makes hit stronger">
+		<input type="button" id="GainCha" value="Charm" title="Makes tease stronger">
+	</div>
+
+	<div>
+		<input type="button" id="GainEnd" value="Endurance" title="Gives you more health and every 8 point increase max orgasm">
+		<input type="button" id="GainInt" value="Intelligence" title="Useless">
+	</div>
+
+	<div>
+			<input type="button" id="GainWill" value="Willpower" title="Gives you more WillPower">
+			<input type="button" id="GainSex" value="Sex skil" title="When having sex your enemy gains more arousal">
+	</div>
+	<br>
+	<div>	
+		<input type="button" id="No" value="Done">
+		<input type="button" id="PerkMenu" value="Perk Menu">
+	</div>
+</div>
+
+<div id="PerksMenu" class="LPMenu None">
+
+	<p id="PerkPointsLeft"></p>
+	<div>
+		<input type="button" id="ExtraHealth" value="Extra Health">
+		<input type="button" id="ExtraWillHealth" value="Extra Will Health">
+		<input type="button" id="FasterRest" value="Faster Rest" title="Increases your passive rest with +0.01hp/tick">
+		<input type="button" id="StealMore" value="More essence" title="Increases the amount of essence you take when your enemy orgasm">
+		<input type="button" id="GiveEssence" value="Give essence" title="Makes your enemy gain femininity or masculinity when you orgasm">
+	</div>
+
+	<input type="button" id="LeavePerkMenu" value="Done">
+</div>
+
+
+
+<div id="ShowLooks" class="None Looks">
+	<p id="looks2"></p>
+	<br>
+	<p id="genitals2"></p>
+	<br>	
+	<p id="StatusMascFemi"></p>
+	<br>
+	<p id="StatusFitness"></p>
+	<input type="button" id="CloseLooks" value="Close" />
+	<input type="button" id="ExtraInfo" value="Detailed info"/>
+</div>
+
+<div id="DetailedInfo" class="None Looks">
+	<h1>Details</h1>
+	<br>
+	<p id="Pregnancy"></p>
+	<br>
+	<p id="ExtraStats"></p>
+	<input type="button" id="CloseExtra" value="Close"/>
+</div>
+
+<div id="ShowQuests" class="None">
+	<h1>Quests</h1>
+	<div id="QuestTexts">
+	</div>
+	<input type="button" id="QuestsLeave" value="Close"/>
+</div>
+
+
+<div id="status" class="left None">
+	<br>
+	<p id="StatusName"></p>
+	<label for="StatusHealth">Health</label>
+		<div class="FullBar">
+			<div id="StatusHealth" class="StatusHealth"></div>
+		</div>
+	<label for="StatusWillHealth">Willpower</label>
+		<div class="FullBar">
+			<div id="StatusWillHealth" class="StatusWillHealth"></div>
+		</div>
+	<label for="StatusLevel">Level</label>
+		<div class="FullBar">
+			<div id="StatusLevel"></div>
+		</div>
+	<p id="Gold"></p>
+	<p id="Hunger"></p>
+</div>
+
+<div id="optionpage" class="Options None">
+	<div class="TwoCollum">
+		<div>
+		<label for="backcolor">Backcolor</label>
+			<input type="color" id="backcolor" value="#9099a7"/>
+		</div>
+		<div>
+		<label for="MapColor">Map color</label>
+			<input type="color" id="MapColor" value="#808080"/>
+		</div>
+		<div>
+			<label for="BorderColor">Border & Map color</label>	
+				<input type="color" id="BorderColor" value="#B22222"/>
+			</div>
+		<div>
+		<label for="textcolor">Textcolor</label>	
+			<input type="color" id="textcolor" value="#000000"/>
+		</div>
+	</div>
+		<div>
+		<label for="textfont">Textfont</label>
+			<select id="textfont">
+				<option value="Times New Roman', Times, serif">Times New Roman</option>
+				<option value="Verdana, Geneva, sans-serif" selected>Verdana</option>
+				<option value="Arial, Helvetica, sans-serif">Ariel</option>
+				<option value="Tahoma, Geneva, sans-serif">Tahoma</option>
+				<option value="Impact,Charcoal,sans-serif">Impact</option>
+				<option value="Trebuchet MS, Helvetica, sans-serif">Trebuchet MS</option>
+			</select>
+		</div>
+		<div>
+			<label for="Sizes">Font size</label>
+			<div id="Sizes">
+				<input type="button" id="FontSmaller" value="-"/>
+				<input type="button" id="FontBigger" value="+"/>
+			</div>
+		</div>
+		<div>
+		<label for="MapScale">Map size</label>
+			<select id="MapScale">
+				<option value="0.5">Small(50%)</option>
+				<option value="0.6">Small+(60%)</option>
+				<option value="0.7">Medium(70%)</option>
+				<option value="0.8" selected>Medium+(80%)</option>
+				<option value="0.9">Large(90%)</option>
+				<option value="0.98">Max(98%)</option>
+			</select>
+		</div>
+		<div>
+			<input type="button" id="ImgPack" value="ImgPack (Buggy)">
+		</div>
+		<div>
+			<input type="button" id="saveoptions" value="Save options"/>
+		</div>
+</div>
+
+<div id="PerkOptionsMenu" class="Options None">
+	<label for="Skip">Skip Sex</label>
+		<input type="button" id="Skip" value="Skip">
+	<label for="OptionGiveEssence">Give Essence</label>
+		<input type="button" id="OptionGiveEssence" value="Both"/>
+	<label for="Vore">Vore (incomplete)</label>
+		<input type="button" id="Vore" value="Vore false"/>
+	<br><br><input type="button" id="PerkOptionsLeave" value="Leave"/>
+</div>
+
+<div id="Inventory" class="None">
+
+</div>
+
+<div id="ShowVore" class="None Vore">
+	<div id="VoreStats">
+		<label for="VoreLevel">Vore level</label>
+			<div class="FullBar">
+				<div id="VoreLevel"></div>
+			</div>
+	</div>
+	<div id="VoreButtons">
+		<input type="button" id="ShowStomach" value="Stomach">
+		<input type="button" id="ShowVagina" value="Pussy">
+		<input type="button" id="ShowBreast" value="Breast">
+		<input type="button" id="ShowBalls" value="Balls">
+		<input type="button" id="ShowAnal" value="Anal">
+	</div>
+	<div id="VoreStomach" class="None">
+		<div id="StomachContent" class="VoreGrid"></div>
+		<input type="button" id="StomachDigestion" value="Stomach digestion true">
+		<input type="button" id="StomachLeave" value="Back">
+	</div>
+	<div id="VoreVagina" class="None">
+		<div id="VaginaContent" class="VoreGrid"></div>
+		<input type="button" id="VaginaLeave" value="Back">
+	</div>
+	<div id="VoreBreast" class="None">
+		<div id="BreastContent" class="VoreGrid"></div>
+		<input type="button" id="BreastLeave" value="Back">
+	</div>
+	<div id="VoreBalls" class="None">
+		<div id="BallsContent" class="VoreGrid"></div>
+		<input type="button" id="CumDigestion" value="Cum transformation true">
+		<input type="button" id="BallsLeave" value="Back">
+	</div>
+	<div id="VoreAnal" class="None">
+		<div id="AnalContent" class="VoreGrid"></div>
+		<input type="button" id="AnalLeave" value="Back">
+	</div>
+	<input type="button" id="LeaveVore" value="Close">
+</div>
+
+<div id="Encounter" class="None">
+	<h1 class="a">Battle</h1>
+	<div id="TheEnemy" class="d">
+		<p id="BattleEnemy"></p>
+		<label for="EnemyStatusHealth">Health</label>
+			<div class="FullBar">
+				<div id="EnemyStatusHealth" class="StatusHealth"></div>
+			</div>
+		<label for="EnemyStatusWillHealth">Willpower</label>
+			<div class="FullBar">
+				<div id="EnemyStatusWillHealth" class="StatusWillHealth"></div>
+			</div>
+	</div>
+	<div id="ThePlayer" class="b">
+		<p id="StatusName2"></p>
+			<label for="StatusHealth2">Health</label>
+				<div class="FullBar">
+					<div id="StatusHealth2" class="StatusHealth"></div>
+				</div>
+			<label for="StatusWillHealth2">Willpower</label>
+				<div class="FullBar">
+					<div id="StatusWillHealth2" class="StatusWillHealth"></div>
+				</div>
+	</div>
+	<br>
+	<div id="BattleLog" class="c">
+		<p id="BattleText"></p>
+		<p id="BattleText2"></p>
+	</div>
+	<div class="e">
+		<input type="button" id="Hit" value="Hit" />
+		<input type="button" id="Tease" value="Tease" />
+	</div>
+
+
+</div>
+
+<div id="AfterBattle" class="AfterBattle None">
+	<h1 class="a">Sex</h1>
+	<div id="PlayerSex" class="PlayerSex">
+		<p id="PName"></p>
+		<label for="Mascu">Masculinity</label>
+			<div id="Mascu" class="Masc"></div>
+		<label for="Femin">Femininity</label>
+			<div id="Femin" class="Femi"></div>
+		<label for="PArousal">Arousal</label>
+			<div id="PArousal" class="Arousal"></div> 
+		<p id="PlayerLooks"></p>
+	</div>
+	<div id="SexLog" class="SexLog">
+			<p id="SexText"></p>
+			<p id="SexStats"></p>
+		<div class="TwoCollum">
+			<p id="PlayerOrgasm"></p>
+			<p id="EnemyOrgasm"></p>
+		</div>
+	</div>
+	<div id="EnemySex" class="EnemySex">
+		<p id="EName"></p>
+		<label for="EMascu">Masculinity</label>
+			<div id="EMascu" class="Masc"></div>
+		<label for="EFemin">Femininity</label>
+			<div id="EFemin" class="Femi"></div>
+		<label for="EArousal">Arousal</label>
+			<div id="EArousal" class="Arousal"></div> 	
+		<p id="EnemyLooks"></p>
+	</div>
+	<img id="MyImg" class="f">
+	<!-- Mouth -->
+	<div id="SexButtons" class="e Grid"> 
+		<div>
+			<div id="PlayerMouth">
+					<div id="EnemyVagina">
+						<input type="button" id="GiveCunniglus" value="Give cunniglus" />
+					</div>
+					<div id="EnemyDick">	
+						<input type="button" id="GiveBlowjob" value="Give blowjob" />
+					</div>
+					<input type="button" id="OralVore" value="Eat them"/>
+			</div>
+		</div>
+		<!-- Vagina -->
+		<div>
+			<div id="PlayerVagina">
+					<div id="Vagina">
+						<input type="button" id="Scissoring" value="Scissoring" />
+						<input type="button" id="GetCunniglus" value="Receive cunniglus" />
+						<input type="button" id="RideCowgirl" value="Ride cowgirl" />
+					</div>
+				</div>
+				<input type="button" id="Unbirth" value="Unbirth"/>	
+		</div>
+		<!-- Dick -->
+		<div>
+			<div id="PlayerDick">
+				<div id="Dick">
+					<input type="button" id="Missionary" value="Missionary"/>
+					<input type="button" id="DoggyStyle" value="Doggy style"/>
+					<input type="button" id="GetBlowjob" value="Receive blowjob"/>
+					<input type="button" id="DoggyStyleAnal" value="Anal doggy style"/>		
+				</div>
+				<input type="button" id="CockVore" value="Cock vore"/>
+			</div>
+		</div>
+		<!-- Anal-->
+		<div>
+			<div id="Anal">
+				<div>
+					<input type="button" id="GetRimjob" value="Receive rimjob" />
+					<input type="button" id="GiveRimjob" value="Give rimjob" />
+				</div>
+				<input type="button" id="AnalVore" value="Anal vore"/>
+			</div>	
+		</div>
+		<div>
+			<div id="Breast">
+				<input type="button" id="BreastVore" value="Breast vore">
+			</div>
+		</div>
+		<div>
+			<div id="DrainMenu">
+				<input type="button" id="DrainM" value="Siphon masculinity">
+				<input type="button" id="DrainF" value="Siphon femininity">
+			</div>
+		</div>
+		<div>
+			<div id="StopSex">	
+				<input type="button" id="StopSexButton" value="Stop sex" />
+			</div>
+			<div id="CaptureOpponent">
+				<input type="button" id="Capture" value="Take"/>
+			</div>
+		</div>
+	</div>
+	<!--  Stop -->
+	
+</div>
+</div>
+
+<!-- Lose -->
+
+<div id="Lose" class="AfterBattle None">
+	<h1 class="a">Defeat</h1>
+	<div id="PlayerLoseSex" class="PlayerSex">
+		<p id="LosePName"></p>
+		<label for="LoseMascu">Masculinity</label>
+			<div id="LoseMascu" class="Masc"></div>
+		<label for="LoseFemin">Femininity</label>
+			<div id="LoseFemin" class="Femi"></div>
+		<p id="LosePlayerLooks"></p>
+	</div>
+	<div id="EnemyLoseSex" class="EnemySex">
+		<p id="LoseEName"></p>
+		<label for="LoseEMascu">Masculinity</label>
+			<div id="LoseEMascu" class="Masc"></div>
+		<label for="LoseEFemin">Femininity</label>
+			<div id="LoseEFemin" class="Femi"></div>
+		<p id="LoseEnemyLooks"></p>
+
+	</div>
+	<div id="LoseSexLog" class="SexLog">
+			<p id="LoseSexText"></p>
+			<p id="LoseSexStats"></p>
+			<p id="LoseEnemyOrgasm"></p>
+			<p id="LosePlayerOrgasm"></p>
+	</div>
+	<div class="e">
+		<input type="button" id="LoseSubmit" value="Submit"/>
+		<input type="button" id="LoseStruggle" value="Struggle"/>
+		<input type="button" id="LeaveLose" value="Leave"/>
+	</div>	
+
+</div>
+
+
+<!-- City-->
+<div id="Townhall" class="Building None">
+	<div id="TownhallStart">
+		<h1>Townhall</h1>
+		<input type="button" id="QuestMenu" value="Quest"/>
+		<input type="button" id="BuyHouse" value="Buy house 100g"/>
+		<input type="button" id="Services" value="Services">
+		<br><br><input type="button" id="LeaveTownhall" value="Leave"/>
+
+	</div>
+	<div id="Quest" class="None">
+		<h1>Quests</h1>
+		<p id="QuestText" class="TextBox"></p>
+		<div id="QuestStart">
+			<input type="button" id="BanditLord" value="Banditlord"/>
+			<input type="button" id="ElfHunt" value="Elf Hunt"/>
+		</div>
+		<div id="QuestReward">
+			<input type="button" id="ElfHuntReward" value="Elf hunt reward"/>
+			<input type="button" id="BanditLordReward" value="Banditlord reward"/>
+		</div>
+		<div id="QuestButtons">
+			<input type="button" id="QuestAccept" value="Accept"/>
+			<input type="button" id="QuestDecline" value="Decline"/>
+		</div>
+
+		<br><input type="button" id="LeaveQuest" value="Leave"/>	
+	</div>
+	<div id="Service" class="None">
+		<h1>Services</h1>
+		<div id="NameChangeForm" class="None">
+			<label for="firstname2">First name</label>
+			<div>
+				<input type="text" id="firstname2" placeholder="Your first name" value=""/>
+			</div>
+			<label for="lastname2">Last name</label>
+			<div>				
+				<input type="text" id="lastname2" placeholder="Your last name" value=""/>
+			</div>
+			<input type="button" id="AcceptName" value="Accept">
+		</div>
+		<input type="button" id="NameChange" value="Change name">
+		<input type="button" id="ServicesLeave" value="Leave">
+	</div>
+</div>
+<div id="Bar" class="Building None">
+	<h1>Bar</h1>
+	<p id="BarText" class="TextBox"></p>
+	<input type="button" id="RestBar" value="Rest 25g"/>
+	<input type="button" id="EatBar" value="Eat 10g"/>
+	<br><br><input type="button" id="LeaveBar" value="Leave"/>
+</div>
+<div id="Shop" class="Building None">
+	<h1>Shop</h1>
+	<p id="ShopText" class="TextBox"></p>
+	<div id="ItemsShop">
+		<div>
+			<input type="button" id="StrPotion" value="Potion of Strength 100g"/>
+			<input type="button" id="ChaPotion" value="Potion of Charm 100g"/>
+		</div>
+		<div>
+			<input type="button" id="EndPotion" value="Potion of Endurance 100g"/>
+			<input type="button" id="IntPotion" value="Potion of Intelligence 100g"/>
+		</div>
+		<div>
+			<input type="button" id="WillPotion" value="Potion of Willpower 100g"/>
+			<input type="button" id="SexPotion" value="Potion of Sexskill 100g"/>
+		</div>
+		<br><input type="button" id="LeaveShop" value="Leave"/>
+	</div>
+</div>
+
+<!-- Home-->
+<div id="Home" class="None">
+	<p id="HomeText" class="TextBox"></p>
+	<div id="HomeStart">
+		<div>
+			<input type="button" id="Sleep" value="Sleep"/>
+			<input type="button" id="Dorm" value="Dorm"/>
+		</div>		
+		<div>
+			<input type="button" id="UpgradeHome" value="Home upgrades"/>
+		</div>
+		<div>
+			<input type="button" id="LeaveHome" value="Leave">
+		</div>
+	</div>
+	<div id="Upgrades" class="None">
+		<h1>Upgrades</h1>
+		<input type="button" id="UpgradeBed" value="Upgrade bed 50g" title="An upgraded bed makes you wake up bonus health & willpower."/>
+		<input type="button" id="BuildDorm" value="Build dorm 250g" title="A dorm to house defeated opponents."/>
+		<input type="button" id="BuildGym" value="Build gym 200g" title="A gym will make your servant can gain muscle over time."/>
+		<input type="button" id="BuildKitchen" value="Build kitchen 200g" title="A kitchen will make your servants gain fat over time."/>
+		<input type="button" id="LeaveUpgradeHome" value="Back">
+	</div>
+	<div id="TheDorm" class="None">
+		<div id="ButtonMates">
+		</div>
+		<div id="flex">
+			<div id="DivMates"></div>
+			<div>
+				<input type="button" id="Fuck" value="Fuck">
+				<input type="button" id="LeaveRoom" value="Leave room">
+				<br><br><input type="button" id="KickOut" value="Kick out">
+			</div>
+		</div>
+		<br><input type="button" id="LeaveDorm" value="Leave dorm">
+		<div id="KickYesNo" class="None">
+			<input type="button" id="KickYes" value="Yes">
+			<input type="button" id="KickNo" value="No">
+		</div>
+	</div>
+</div>
+
+<div id="FuckDorm" class="AfterBattle None">
+		<h1 class="a">Dorm</h1>
+		<div id="PlayerDormSex" class="PlayerSex">
+			<p id="DormPName"></p>
+			<label for="DormMascu">Masculinity</label>
+				<div id="DormMascu" class="Masc"></div>
+			<label for="DormFemin">Femininity</label>
+				<div id="DormFemin" class="Femi"></div>
+			<p id="DormPlayerLooks"></p>
+		</div>
+		<div id="EnemyDormSex" class="EnemySex">
+			<p id="DormEName"></p>
+			<label for="DormEMascu">Masculinity</label>
+				<div id="DormEMascu" class="Masc"></div>
+			<label for="DormEFemin">Femininity</label>
+				<div id="DormEFemin" class="Femi"></div>
+			<p id="DormEnemyLooks"></p>
+	
+		</div>
+		<div id="DormSexLog" class="SexLog">
+				<p id="DormSexText"></p>
+				<p id="DormSexStats"></p>
+				<p id="DormEnemyOrgasm"></p>
+				<p id="DormPlayerOrgasm"></p>
+		</div>
+		<div class="e">
+			<input type="button" id="DormDrainMasc" value="Siphon masculinity"/>
+			<input type="button" id="DormDrainFemi" value="Siphon femininity"/>
+			<input type="button" id="Impregnate" value="Try to impregnate"/>
+			<input type="button" id="LeaveDormSex" value="Leave"/>
+		</div>		
+</div>
+
+
+<!-- Witch&Gym-->
+<div id="Gym" class="Building None">
+	<h1>Gym</h1>
+	<p id="GymText" class="TextBox"></p>
+	<input type="button" id="Train" value="Train"/>
+	<br><br><input type="button" id="LeaveGym" value="Leave"/>
+</div>
+
+<div id="WitchShop" class="Building None">
+	<h1>Witchs store</h1>
+	<p id="WitchShopText" class="TextBox"></p>
+	<div>
+		<input type="button" id="Grow" value="Grow 50g" title="Tired of being short? Don't wait grow bigger today!"/>
+		<input type="button" id="Shrink" value="Shrink 50g" title="Do you feel like you should have been born shorter, well then fix it today!"/>
+	</div>
+	<div>
+		<input type="button" id="FertilityAdd" value="Fertility booster 30g" title="Is it hard to become pregnant? Fear not we have the product for you!"/>
+		<input type="button" id="FertilitySub" value="Fertility subtractor 70g" title="Tired of getting knocked up by a bunch of useless fathers? We have the product to turn your fertil nethers to a barren wasteland! "/>
+	</div>
+	<div>
+		<input type="button" id="VirilityAdd" value="Virility booster 70g" title="Do you feel like you don't have enough chrilden? Don't worry with our virility booster you can be sure that you will get enough successors!"/>
+		<input type="button" id="VirilitySub" value="Virility subtractor 30g" title="Do you have nightmares that future partners will demand of childsupport? Do you want to live a child free life? Well then look no futher!"/>
+	</div>
+
+	<br><input type="button" id="LeaveWitchShop" value="Leave"/>
+</div>
+<div id="WitchHut" class="Building None">
+	<h1>Witch hut</h1>
+	<p id="WitchHutText" class="TextBox"></p>
+	<br><input type="button" id="LeaveWitchHut" value="Leave"/>
+</div>
+
+<script src="Gamescript.js"></script>
+</body>
+</html>
