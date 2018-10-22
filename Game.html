@@ -74,35 +74,52 @@
 	</div>
 
 	<div id="EventLog" class="None">
-		<h1>Event Log</h1>
-		<p id="EventText"></p>
-		<div class="TwoCollum">
-			<div id="CumBar"> 
-				<label for="FluidCum">Cum</label>
-				<div class="FullBar">
-					<div id="FluidCum"></div>
+		<div>
+			<input type="button" id="HideEventLog" value="Hide" />
+			<h1>Event Log</h1>
+		</div>
+		<div id="EventLogPart">
+			<p id="EventText"></p>
+		</div>
+		<div>
+			<input type="button" id="HideFuilds" value="Hide" />
+			<h1>Fluids</h1>
+		</div>
+		<div id="FluidPart">
+			<div class="TwoCollum">
+				<div id="CumBar">
+					<label for="FluidCum">Cum</label>
+					<div class="FullFluidBar">
+						<div id="FluidCum"></div>
+					</div>
+				</div>
+				<div id="MilkBar">
+					<label for="FluidMilk">Milk</label>
+					<div class="FullFluidBar">
+						<div id="FluidMilk"></div>
+					</div>
 				</div>
 			</div>
-			<div id="MilkBar">
-				<label for="FluidMilk">Milk</label>
-				<div class="FullBar">
-					<div id="FluidMilk"></div>
-				</div>
-			</div>
-			
 		</div>
 	</div>
 
 	<div id="buttons" class="left buttons None">
 		<div class="container">
-			<input type="button" id="LevelButton" value="Level up">
-			<input type="button" id="Looks" value="Looks" />
-			<input type="button" id="Quests" value="Quests" />
-			<input type="button" id="Options" value="Options" />
-			<input type="button" id="PerkOptions" value="Fetish options" />
-			<input type="button" id="Save" value="Save" />
-			<input type="button" id="Load" value="Load" />
-			<input type="button" id="VoreLooks" value="Vore" />
+			<div id="FirstButtons">
+				<input type="button" id="LevelButton" value="Level up">
+				<input type="button" id="Looks" value="Looks" />
+				<input type="button" id="Quests" value="Quests" />
+				<input type="button" id="Options" value="Options" />
+				<input type="button" id="Save" value="Save" />
+				<input type="button" id="Load" value="Load" />
+				<input type="button" id="MoreButtons" value="More buttons" />
+			</div>
+			<div id="SecondButtnos">
+				<input type="button" id="EssenceOptions" value="Essence" />
+				<input type="button" id="PerkOptions" value="Fetish options" />
+				<input type="button" id="VoreLooks" value="Vore" />
+				<input type="button" id="LessButtons" value="Less buttons" />
+			</div>
 		</div>
 	</div>
 	<div id="EmptyButtons" class="left buttons None"></div>
@@ -165,10 +182,10 @@
 
 		<p id="PerkPointsLeft"></p>
 		<div>
-			<input type="button" id="ExtraHealth" value="Extra Health">
-			<input type="button" id="ExtraWillHealth" value="Extra Will Health">
-			<input type="button" id="FasterRest" value="Faster Rest" title="Increases your passive rest with +0.01hp/tick">
-			<input type="button" id="StealMore" value="More essence" title="Increases the amount of essence you take when your enemy orgasm">
+			<input type="button" id="ExtraHealth" value="Extra Health" title="Increase max health by 20">
+			<input type="button" id="ExtraWillHealth" value="Extra Will Health" title="Increase willpower by 20">
+			<input type="button" id="FasterRest" value="Faster Rest" title="Increases your passive rest with +0.01hp/tick, this will alse increase rate of which fat is burned">
+			<input type="button" id="StealMore" value="More essence" title="Increases the amount of essence you can take when your enemy orgasm">
 			<input type="button" id="GiveEssence" value="Give essence" title="Makes your enemy gain femininity or masculinity when you orgasm">
 		</div>
 
@@ -274,19 +291,39 @@
 			</select>
 		</div>
 		<div>
-			<input type="button" id="ImgPack" value="ImgPack (Buggy)">
+			<input type="button" id="ImgPack" value="ImgPack(No included)">
 		</div>
 		<div>
 			<input type="button" id="saveoptions" value="Save options" />
 		</div>
 	</div>
 
+	<div id="EssenceOptionsMenu" class="Options None">
+		<label for="OptionGiveEssence">Give Essence</label>
+		<input type="button" id="OptionGiveEssence" value="Both" />
+		<label for="EssenceAuto">Is essence body changes Auto or Manual</label>
+		<br><input type="button" id="EssenceAuto" value="Essence Auto" />
+		<p>Warning if you play on manual switching to auto will change player to according to your current Femininity
+			and Masculinity, so if you have spent a lot of Essence into the player it will be lost.</p>
+		<div id="ManualGrowth" class="TwoCollum None">
+			<input type="button" id="GrowBreast" value="Breast++" />
+			<input type="button" id="GrowExtraBreast" value="Extra breast (don't work)" />
+			<input type="button" id="GrowPussy" value="Pussy++" />
+			<input type="button" id="GrowExtraPussy" value="Extra pussy" />
+			<input type="button" id="GrowDick" value="Dick++" />
+			<input type="button" id="GrowExtraDick" value="Extra dick" />
+			<input type="button" id="GrowBalls" value="Balls++" />
+			<input type="button" id="GrowExtraBalls" value="Extra balls (Don't work)" />
+		</div>
+
+
+		<br><input type="button" id="EssenceOptionsLeave" value="Close" />
+	</div>
+
 	<div id="PerkOptionsMenu" class="Options None">
 		<label for="Skip">Skip Sex</label>
 		<input type="button" id="Skip" value="Skip">
-		<label for="OptionGiveEssence">Give Essence</label>
-		<input type="button" id="OptionGiveEssence" value="Both" />
-		<label for="Vore">Vore (incomplete)</label>
+		<label for="Vore">Vore (Aplha)</label>
 		<input type="button" id="Vore" value="Vore false" />
 		<br><br><input type="button" id="PerkOptionsLeave" value="Leave" />
 	</div>
@@ -308,7 +345,7 @@
 			<input type="button" id="ShowBreast" value="Breast">
 			<input type="button" id="ShowBalls" value="Balls">
 			<input type="button" id="ShowAnal" value="Anal">
-			<input type="button" id="VorePerks" value="Vore perks"/>
+			<input type="button" id="VorePerks" value="Vore perks" />
 		</div>
 		<div id="VoreStomach" class="None">
 			<div id="StomachContent" class="VoreGrid"></div>
@@ -317,13 +354,13 @@
 		</div>
 		<div id="VoreVagina" class="None">
 			<div id="VaginaContent" class="VoreGrid"></div>
-			<input type="button" id="VCumDigestion" value="Digestion false"/>
-			<input type="button" id="ChildTF" value="Child tf/Age reduc true"/>
+			<input type="button" id="VCumDigestion" value="Digestion false" />
+			<input type="button" id="ChildTF" value="Child tf/Age reduc true" />
 			<input type="button" id="VaginaLeave" value="Back">
 		</div>
 		<div id="VoreBreast" class="None">
 			<div id="BreastContent" class="VoreGrid"></div>
-			<input type="button" id="MilkTransformation" value="Milk transformation true"/>
+			<input type="button" id="MilkTransformation" value="Milk transformation true" />
 			<input type="button" id="BreastLeave" value="Back">
 		</div>
 		<div id="VoreBalls" class="None">
@@ -336,16 +373,16 @@
 			<input type="button" id="AnalLeave" value="Back">
 		</div>
 		<div id="VorePerkMenu">
-				<p id="VorePerkPointsLeft"></p>
-				<div>
-					<input type="button" id="" value="Steal essence" title="Steal essence of your preys">
-					<input type="button" id="" value="Faster digestion">
-					<input type="button" id="" value="" title="Increases your passive rest with +0.01hp/tick">
-					<input type="button" id="" value="" title="Increases the amount of essence you take when your enemy orgasm">
-					<input type="button" id="" value="" title="Makes your enemy gain femininity or masculinity when you orgasm">
-				</div>
-		
-				<input type="button" id="LeavePerkMenu" value="Done">
+			<p id="VorePerkPointsLeft"></p>
+			<div>
+				<input type="button" id="" value="Steal essence" title="Steal essence of your preys">
+				<input type="button" id="" value="Faster digestion">
+				<input type="button" id="" value="" title="Increases your passive rest with +0.01hp/tick">
+				<input type="button" id="" value="" title="Increases the amount of essence you take when your enemy orgasm">
+				<input type="button" id="" value="" title="Makes your enemy gain femininity or masculinity when you orgasm">
+			</div>
+
+			<input type="button" id="LeavePerkMenu" value="Done">
 		</div>
 		<input type="button" id="LeaveVore" value="Close">
 	</div>
@@ -614,10 +651,12 @@
 		</div>
 		<div id="Upgrades" class="None">
 			<h1>Upgrades</h1>
-			<input type="button" id="UpgradeBed" value="Upgrade bed 50g" title="An upgraded bed makes you wake up bonus health & willpower." />
+			<input type="button" id="UpgradeBed" value="Upgrade bedroom 50g" title="An upgraded bedroom makes you wake up bonus health & willpower." />
 			<input type="button" id="BuildDorm" value="Build dorm 250g" title="A dorm to house defeated opponents." />
 			<input type="button" id="BuildGym" value="Build gym 200g" title="A gym will make your servant can gain muscle over time." />
 			<input type="button" id="BuildKitchen" value="Build kitchen 200g" title="A kitchen will make your servants gain fat over time." />
+			<input type="button" id="BuildPortal" value="Portal (placeholder)" title="Why would you walk in a magic world, that's for peasants!" />
+			<input type="button" id="BuildBrothel" value="Brothel (plaveholder)"/>
 			<input type="button" id="LeaveUpgradeHome" value="Back">
 		</div>
 		<div id="TheDorm" class="None">
@@ -628,13 +667,26 @@
 				<div>
 					<input type="button" id="Fuck" value="Fuck">
 					<input type="button" id="LeaveRoom" value="Leave room">
-					<br><br><input type="button" id="KickOut" value="Kick out">
+					<br><br>
+					<input type="button" id="Rename" value="Give name" />
+					<input type="button" id="KickOut" value="Kick out" />
 				</div>
 			</div>
 			<br><input type="button" id="LeaveDorm" value="Leave dorm">
 			<div id="KickYesNo" class="None">
 				<input type="button" id="KickYes" value="Yes">
 				<input type="button" id="KickNo" value="No">
+			</div>
+			<div id="DormNameChangeForm" class="None">
+				<label for="DormFirstName">First name</label>
+				<div>
+					<input type="text" id="DormFirstName" placeholder="Their first name" value="" />
+				</div>
+				<label for="DormLastName">Last name</label>
+				<div>
+					<input type="text" id="DormLastName" placeholder="Their last name" value="" />
+				</div>
+				<input type="button" id="AcceptDormName" value="Accept">
 			</div>
 		</div>
 	</div>
@@ -707,6 +759,7 @@
 	<div id="WitchHut" class="Building None">
 		<h1>Witch hut</h1>
 		<p id="WitchHutText" class="TextBox"></p>
+		<input type="button" id="ElfTF" value="Elf delight 200g" title="Tired of being a human? Do you feel a desire to possess pointy ears? Become a elf today!" />
 		<br><input type="button" id="LeaveWitchHut" value="Leave" />
 	</div>
 
