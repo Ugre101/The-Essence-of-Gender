@@ -37,18 +37,20 @@
         bottom: 0;
         right: 0;
         background-color: rgb(137, 129, 168);
-        height: 40vh;
+        height: auto;
+        max-height: 50vh;
         width: 20vw;
         border: 2px solid black;
         border-radius: 10px 0 0 0;
-        text-align: center;
 
     }
-    #EventLog > h1 {
+    #EventLog > div > h1 {
+        display: inline-block;
         margin: 0;
     }
-    #EventLog > p {
-        height: 47%;
+    #EventLog > div > p {
+        min-height: 10vh;
+        max-height: 20vh;
         box-shadow: 0 0 1px 1px black;
         border-radius: 10px 0 0 10px;
         background-color: rgb(255, 255, 255);
@@ -59,7 +61,15 @@
         overflow: auto;
     }
     #EventLog > div {
-        margin: 1em 0;
+        margin: 0.2em 0;
+    }
+    #EventLog > div > input[type="button"] {
+        width: 25%;
+        left: 0 ;
+    }
+    #FluidPart {
+        padding: 0 1em 1em 1em;
+        text-align: center;
     }
     @media (max-width: 600px){
         #map {position: absolute; right: 0;}
@@ -77,6 +87,14 @@
     }
     div.FullBar {
         width: 200px;
+        max-width: 92%;
+        height: 4vh;
+        max-height: 20px;
+        border: 2px solid black;
+        margin: auto;
+        background-color: rgb(228, 188, 188);
+    }
+    div.FullFluidBar {
         max-width: 92%;
         height: 4vh;
         max-height: 20px;
@@ -432,6 +450,9 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
+    #DormNameChangeForm {
+        text-align: center; 
+    }
     div.Masc {
         margin: 0 0; 
         background-color: rgb(74, 74, 255);
@@ -541,4 +562,8 @@
     div.VoreGrid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    #ManualGrowth {
+        box-shadow: 0 0 1px 1px black;
+        border-radius: 10px;
     }
