@@ -64,8 +64,12 @@
 			life of your own. How will you fare in this world where the weak submit and the strong dominate.</p>
 		<p id="looks"></p>
 		<br>
-		<p>Notes: You can move with mouse, wasd or arrowkeys</p>
-		<input type="button" id="startgame" value="startgame" />
+		<div>
+			<p>Notes: You can move with mouse, wasd or arrowkeys</p>
+			<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually</label>
+			<input type="button" id="StartAutoEssence" value="Auto TF true" />
+			<br><br><input type="button" id="startgame" value="Start game" />
+		</div>
 	</div>
 
 	<div id="map" class="None">
@@ -116,7 +120,6 @@
 			</div>
 			<div id="SecondButtnos">
 				<input type="button" id="EssenceOptions" value="Essence" />
-				<input type="button" id="PerkOptions" value="Fetish options" />
 				<input type="button" id="VoreLooks" value="Vore" />
 				<input type="button" id="LessButtons" value="Less buttons" />
 			</div>
@@ -156,6 +159,7 @@
 
 	<div id="LevelMenu" class="LPMenu None">
 		<h1>Level Menu</h1>
+		<p id="LevelMenuText"></p>
 		<p id="SkillPointsLeft"></p>
 		<div>
 			<input type="button" id="GainStr" value="Strength" title="Makes hit stronger">
@@ -179,7 +183,7 @@
 	</div>
 
 	<div id="PerksMenu" class="LPMenu None">
-
+		<p id="PerkMenuText"></p>
 		<p id="PerkPointsLeft"></p>
 		<div>
 			<input type="button" id="ExtraHealth" value="Extra Health" title="Increase max health by 20">
@@ -210,6 +214,7 @@
 		<h1>Details</h1>
 		<br>
 		<p id="Pregnancy"></p>
+		<input type="button" id="Children" value="Children(placeholder)" />
 		<br>
 		<p id="ExtraStats"></p>
 		<input type="button" id="CloseExtra" value="Close" />
@@ -291,34 +296,70 @@
 			</select>
 		</div>
 		<div>
-			<input type="button" id="ImgPack" value="ImgPack(No included)">
+			<input type="button" id="ImgPack" value="ImgPack(No included)" />
+			<input type="button" id="SetPronun" value="Change pronuns" />
 		</div>
 		<div>
+			<input type="button" id="PerkOptions" value="Fetish options" />
 			<input type="button" id="saveoptions" value="Save options" />
 		</div>
 	</div>
 
-	<div id="EssenceOptionsMenu" class="Options None">
-		<label for="OptionGiveEssence">Give Essence</label>
-		<input type="button" id="OptionGiveEssence" value="Both" />
-		<label for="EssenceAuto">Is essence body changes Auto or Manual</label>
-		<br><input type="button" id="EssenceAuto" value="Essence Auto" />
-		<p>Warning if you play on manual switching to auto will change player to according to your current Femininity
-			and Masculinity, so if you have spent a lot of Essence into the player it will be lost.</p>
-		<div id="ManualGrowth" class="TwoCollum None">
-			<input type="button" id="GrowBreast" value="Breast++" />
-			<input type="button" id="GrowExtraBreast" value="Extra breast (don't work)" />
-			<input type="button" id="GrowPussy" value="Pussy++" />
+	<div id="PronunForm" class="None Options">
+		<label for="Herm">Herm</label>
+		<input type="text" id="Herm" placeholder="hermaphrodite" value="hermaphrodite" />
+		<label for="Male">Male</label>
+		<input type="text" id="Male" placeholder="male" value="male" />
+		<label for="Female">Female</label>
+		<input type="text" id="Female" placeholder="female" value="female" />
+		<label for="Doll">Doll</label>
+		<input type="text" id="Doll" placeholder="doll" value="doll" />
+		<br><br><input type="button" id="AcceptPronun" value="Accept" />
+	</div>
+
+	<div id="EssenceOptionsMenu" class="None">
+		<p id="EssenceTracker"></p>
+		<div id="EssenceStart">
+			<label for="OptionGiveEssence">Give Essence</label>
+			<input type="button" id="OptionGiveEssence" value="Both" />
+			<label for="EssenceAuto">Is essence body changes Auto or Manual</label>
+			<br><input type="button" id="EssenceAuto" value="Essence Auto" />
+			<p>Warning if you play on manual switching to auto will change player to according to your current Femininity
+				and Masculinity, so if you have spent a lot of Essence into the player it will be lost.</p>
+			<div id="ManualGrowth" class="TwoCollum None">
+				<input type="button" id="GrowBreast" value="Breast menu" />
+				<input type="button" id="GrowPussy" value="Pussy menu" />
+				<input type="button" id="GrowDick" value="Dick menu" />
+				<input type="button" id="GrowBalls" value="Balls menu" />
+			</div>
+		</div>
+		<div id="BreastMenu" class="None">
+			<input type="button" id="GrowExtraBreast" value="Extra breast" />
+			<input type="button" id="GrowBreastBack" value="Back" />
+			<div id="BreastButtons"></div>
+		</div>
+		<div id="PussyMenu" class="None">
 			<input type="button" id="GrowExtraPussy" value="Extra pussy" />
-			<input type="button" id="GrowDick" value="Dick++" />
+			<input type="button" id="GrowPussyBack" value="Back" />
+			<div id="PussyButtons"></div>
+
+		</div>
+		<div id="DickMenu" class="None">
 			<input type="button" id="GrowExtraDick" value="Extra dick" />
-			<input type="button" id="GrowBalls" value="Balls++" />
-			<input type="button" id="GrowExtraBalls" value="Extra balls (Don't work)" />
+			<input type="button" id="GrowDickBack" value="Back" />
+			<div id="DickButtons"></div>
+
+		</div>
+		<div id="BallsMenu" class="None">
+			<input type="button" id="GrowExtraBalls" value="Extra balls" />
+			<input type="button" id="GrowBallsBack" value="Back" />
+			<div id="BallsButtons"></div>
 		</div>
 
 
 		<br><input type="button" id="EssenceOptionsLeave" value="Close" />
 	</div>
+	<div></div>
 
 	<div id="PerkOptionsMenu" class="Options None">
 		<label for="Skip">Skip Sex</label>
@@ -375,11 +416,11 @@
 		<div id="VorePerkMenu">
 			<p id="VorePerkPointsLeft"></p>
 			<div>
-				<input type="button" id="" value="Steal essence" title="Steal essence of your preys">
-				<input type="button" id="" value="Faster digestion">
-				<input type="button" id="" value="" title="Increases your passive rest with +0.01hp/tick">
-				<input type="button" id="" value="" title="Increases the amount of essence you take when your enemy orgasm">
-				<input type="button" id="" value="" title="Makes your enemy gain femininity or masculinity when you orgasm">
+				<input type="button" id="AbsorbEssence" value="Absorb prey essence" title="Absorb essence of your preys">
+				<input type="button" id="FasterDigestion" value="Faster digestion" title="Digest your prey faster, also speeds up gain of fat, cum and milk">
+				<input type="button" id="HigerCapacity" value="Stretchy body(Placeholder)" title="Increase the total weight of prey your body part can hold.">
+				<input type="button" id="AbsorbHeight" value="Absorb height(Placeholder)" title="Allows you to gain height by absorbing height from your preys.">
+				<input type="button" id="" value="" title="">
 			</div>
 
 			<input type="button" id="LeavePerkMenu" value="Done">
@@ -644,7 +685,9 @@
 			</div>
 			<div>
 				<input type="button" id="UpgradeHome" value="Home upgrades" />
+				<input type="button" id="Portal" value="Portal" />
 			</div>
+			<br>
 			<div>
 				<input type="button" id="LeaveHome" value="Leave">
 			</div>
@@ -655,8 +698,8 @@
 			<input type="button" id="BuildDorm" value="Build dorm 250g" title="A dorm to house defeated opponents." />
 			<input type="button" id="BuildGym" value="Build gym 200g" title="A gym will make your servant can gain muscle over time." />
 			<input type="button" id="BuildKitchen" value="Build kitchen 200g" title="A kitchen will make your servants gain fat over time." />
-			<input type="button" id="BuildPortal" value="Portal (placeholder)" title="Why would you walk in a magic world, that's for peasants!" />
-			<input type="button" id="BuildBrothel" value="Brothel (plaveholder)"/>
+			<input type="button" id="BuildPortal" value="Portal 1000g(Concept)" title="Why would you walk in a magic world, that's for peasants!" />
+			<input type="button" id="BuildBrothel" value="Brothel (plaveholder)" />
 			<input type="button" id="LeaveUpgradeHome" value="Back">
 		</div>
 		<div id="TheDorm" class="None">
@@ -665,8 +708,9 @@
 			<div id="flex">
 				<div id="DivMates"></div>
 				<div>
-					<input type="button" id="Fuck" value="Fuck">
-					<input type="button" id="LeaveRoom" value="Leave room">
+					<input type="button" id="Fuck" value="Fuck" />
+					<input type="button" id="LeaveRoom" value="Leave room" />
+					<input type="button" id="DormChildren" value="Children(Placeholder)" />
 					<br><br>
 					<input type="button" id="Rename" value="Give name" />
 					<input type="button" id="KickOut" value="Kick out" />
@@ -687,6 +731,12 @@
 					<input type="text" id="DormLastName" placeholder="Their last name" value="" />
 				</div>
 				<input type="button" id="AcceptDormName" value="Accept">
+			</div>
+		</div>
+		<div id="PortalMenu" class="None">
+			<input type="button" id="LeavePortal" value="Back" /><br>
+			<div id="Portals">
+				<input type="button" id="TempLand" value="TempLand" />
 			</div>
 		</div>
 	</div>
@@ -743,7 +793,7 @@
 		</div>
 		<div>
 			<input type="button" id="FertilityAdd" value="Fertility booster 30g" title="Is it hard to become pregnant? Fear not we have the product for you!" />
-			<input type="button" id="FertilitySub" value="Fertility subtractor 70g" title="Tired of getting knocked up by a bunch of useless fathers? We have the product to turn your fertil nethers to a barren wasteland! " />
+			<input type="button" id="FertilitySub" value="Fertility subtractor 70g" title="Tired of getting knocked up by a bunch of deadbeat fathers? We have the product to turn your fertil nethers to a barren wasteland! " />
 		</div>
 		<div>
 			<input type="button" id="VirilityAdd" value="Virility booster 70g" title="Do you feel like you don't have enough chrilden? Don't worry with our virility booster you can be sure that you will get enough successors!" />
@@ -760,6 +810,7 @@
 		<h1>Witch hut</h1>
 		<p id="WitchHutText" class="TextBox"></p>
 		<input type="button" id="ElfTF" value="Elf delight 200g" title="Tired of being a human? Do you feel a desire to possess pointy ears? Become a elf today!" />
+		<input type="button" id="HumanTF" value="Potion of regret 250g" title="Do you not remember who you are anymore? Feel like you have lost you humanity?" />
 		<br><input type="button" id="LeaveWitchHut" value="Leave" />
 	</div>
 
@@ -768,6 +819,12 @@
 		<p id="Temp_TempssonText" class="TextBox">Dungeon coming Soon</p>
 		<input type="button" id="LeaveTemp_Tempsson" value="Close" />
 	</div>
+
+	<div id="LocalPortal" class="None">
+		<input type="button" id="LeaveLocalPortal" value="Leave" />
+		<input type="button" id="TeleportHome" value="Home" />
+	</div>
+
 
 	<script src="Gamescript.js"></script>
 </body>

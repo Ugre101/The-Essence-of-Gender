@@ -99,7 +99,14 @@
         Skip: false,
         Vore: false,
         ImgPack: false,
-        EssenceAuto: true
+        EssenceAuto: true,
+        Pronun: {
+            Status: false,
+            Herm: "hermaphrodite",
+            Male: "male",
+            Female: "female",
+            Doll: "doll"
+        }
     }
 
     // Start values for canvas
@@ -252,12 +259,6 @@
             document.getElementById("BuyHouse").style.display = 'none'
         };
 
-        if (House.Dorm > 0) {
-            document.getElementById("Dorm").style.display = "inline-block";
-        } else {
-            document.getElementById("Dorm").style.display = "none"
-        }
-
         // load Settings
         document.body.style.backgroundColor = Settings.BackColor;
         MapColor = Settings.MapColor
@@ -284,6 +285,16 @@
         if (!Settings.ImgPack) {
             Settings.ImgPack = false;
             console.log("Set imgpack: false");
+        }
+        if (!Settings.hasOwnProperty("Pronun")) {
+            Settings.Pronun = {
+                Status: false,
+                Herm: "hermaphrodite",
+                Male: "male",
+                Female: "female",
+                Doll: "doll"
+            }
+            console.log("Added Settings pronun");
         }
         // Makes old saves work?
         if (player.Balls.length > 0) {
@@ -312,10 +323,11 @@
             player.Pregnant.Babies = [];
             console.log("Added babies []");
         }
-        if (!Flags.Pregnations) {
-            Flags.Pregnations = 0;
-            console.log("Set pregnation: 0");
+        if (!Array.isArray(player.Children)) {
+            player.Children = [];
+            console.log("Added Children []");
         }
+        Flags.Pregnations = Math.max(0, Flags.Pregnations);
         if (!House.hasOwnProperty("Gym")) {
             House.Gym = 0;
             console.log("Added gym");
@@ -360,12 +372,16 @@
 
     // Ge karaktär start värden
     document.getElementById("Begin").addEventListener("click", function () {
-        document.getElementById("startgame").style.display = 'block';
-        document.getElementById("looks").innerHTML = "You are " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + CheckGender(player) +
+        document.getElementById("startgame").style.display = 'inline-block';
+        document.getElementById("looks").innerHTML = "You are " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
             ", weighs " + player.Weight + "kg. Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor + " skin color.";
 
         requestAnimationFrame(loop);
 
+    });
+    document.getElementById("StartAutoEssence").addEventListener("click", function () {
+        Settings.EssenceAuto = !Settings.EssenceAuto;
+        document.getElementById("StartAutoEssence").value = "Auto TF " + Settings.EssenceAuto;
     });
 
     document.getElementById("startgame").addEventListener("click", function () {
@@ -499,7 +515,7 @@
     function Fitness(who) {
         var a, b;
         if ((who.Fat / who.Weight) * 100 <= 2) {
-            a = "You are starving ";
+            a = "You look malnourished ";
         } else if ((who.Fat / who.Weight) * 100 <= 14) {
             a = "You have a athletic body ";
         } else if ((who.Fat / who.Weight) * 100 <= 18) {
@@ -542,6 +558,7 @@
         document.getElementById("DetailedInfo").style.display = 'none';
         document.getElementById("ShowVore").style.display = 'none';
         document.getElementById("EssenceOptionsMenu").style.display = 'none';
+        document.getElementById("PronunForm").style.display = 'none'
     }
 
     document.getElementById("Options").addEventListener("click", function () {
@@ -560,6 +577,20 @@
     });
     var OldMap;
     var MapProcent = 0.9;
+
+    document.getElementById("SetPronun").addEventListener("click", function () {
+        DisplayNone();
+        document.getElementById("PronunForm").style.display = 'block'
+    });
+    document.getElementById("AcceptPronun").addEventListener("click", function () {
+        DisplayNone();
+        document.getElementById("optionpage").style.display = 'block';
+        Settings.Pronun.Herm = document.getElementById("Herm").value;
+        Settings.Pronun.Male = document.getElementById("Male").value;
+        Settings.Pronun.Female = document.getElementById("Female").value;
+        Settings.Pronun.Doll = document.getElementById("Doll").value;
+        Settings.Pronun.Status = true;
+    });
 
     // Makes sure map scales correctly when user change screen size.
     function HemScale() {
@@ -603,8 +634,22 @@
         WitchShop = new Npc("WitchShop", grid * 15, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
         WitchHut = new Npc("WitchHut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
         Tempsson = new Npc("Temp_Tempsson", grid * 10, grid * 15, grid, grid, "RGB(133,94,66)");
+        Portal = new Npc("LocalPortal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
         return;
     }
+
+    // LocalPotal
+    document.getElementById("TeleportHome").addEventListener("click", function () {
+        player.Area = "First";
+        player.Map = "RoadToHome";
+        battle = false;
+        document.getElementById("LocalPortal").style.display = 'none';
+        document.getElementById("map").style.display = 'block';
+        document.getElementById("status").style.display = 'block';
+        document.getElementById("buttons").style.display = 'block';
+        document.getElementById("EventLog").style.display = 'block';
+    });
+
 
     // More buttons for small screen height
     document.getElementById("MoreButtons").addEventListener("click", function () {
@@ -644,21 +689,21 @@
         } else {
             document.getElementById("EssenceAuto").value = "Essence Manual";
             document.getElementById("ManualGrowth").style.display = 'block';
-            document.getElementById("GrowBreast").value = "Breast++ " + (10 * Math.pow(1.2, player.Boobies[0].Size)) + "F";
-            if (player.Pussies.length > 0) {
-                document.getElementById("GrowPussy").value = "Pussy++ " + (10 * Math.pow(1.2, player.Pussies[0].Size)) + "F";
-            }
-            document.getElementById("GrowExtraPussy").value = "Grow extra pussy " + (30 * Math.pow(5, player.Pussies.length)) + "F";
-            if (player.Dicks.length > 0) {
-                document.getElementById("GrowDick").value = "Dick++ " + (10 * Math.pow(1.2, player.Dicks[0].Size)) + "M";
-            }
-            document.getElementById("GrowExtraDick").value = "Grow extra dick " + (30 * Math.pow(5, player.Dicks.length)) + "M";
-            if (player.Balls.length > 0) {
-                document.getElementById("GrowBalls").value = "Balls++ " + (10 * Math.pow(1.2, player.Balls[0].Size)) + "M";
-            }
-            document.getElementById("GrowExtraBalls").value = "Grow extra pair of balls " + (30 * Math.pow(5, player.Balls.length)) + "M";
+            document.getElementById("GrowExtraBreast").value = "Extra breast " + EssenceExtraCost(player.Boobies)
+            document.getElementById("GrowExtraPussy").value = "Extra pussy " + EssenceExtraCost(player.Pussies) + "F";
+            document.getElementById("GrowExtraDick").value = "Extra dick " + EssenceExtraCost(player.Dicks) + "M";
+            document.getElementById("GrowExtraBalls").value = "Extra balls " + EssenceExtraCost(player.Balls) + "M";
         }
     });
+
+    function EssenceCost(what) {
+        return Math.round((10 * Math.pow(1.1, what.Size)));
+    };
+
+    function EssenceExtraCost(what) {
+        return Math.round((30 * Math.pow(5, what.length)));
+    };
+
     document.getElementById("EssenceAuto").addEventListener("click", function () {
         Settings.EssenceAuto = !Settings.EssenceAuto;
         if (Settings.EssenceAuto) {
@@ -667,71 +712,104 @@
         } else {
             document.getElementById("EssenceAuto").value = "Essence Manual";
             document.getElementById("ManualGrowth").style.display = 'block';
-            document.getElementById("GrowBreast").value = "Breast++ " + (10 * Math.pow(1.2, player.Boobies[0].Size)) + "F";
-            if (player.Pussies.length > 0) {
-                document.getElementById("GrowPussy").value = "Pussy++ " + (10 * Math.pow(1.2, player.Pussies[0].Size)) + "F";
-            }
-            document.getElementById("GrowExtraPussy").value = "Grow extra pussy " + (30 * Math.pow(5, player.Pussies.length)) + "F";
-            if (player.Dicks.length > 0) {
-                document.getElementById("GrowDick").value = "Dick++ " + (10 * Math.pow(1.2, player.Dicks[0].Size)) + "M";
-            }
-            document.getElementById("GrowExtraDick").value = "Grow extra dick " + (30 * Math.pow(5, player.Dicks.length)) + "M";
-            if (player.Balls.length > 0) {
-                document.getElementById("GrowBalls").value = "Balls++ " + (10 * Math.pow(1.2, player.Balls[0].Size)) + "M";
-            }
-            document.getElementById("GrowExtraBalls").value = "Grow extra pair of balls " + (30 * Math.pow(5, player.Balls.length)) + "M";
-
+            document.getElementById("GrowExtraBreast").value = "Extra breast " + EssenceExtraCost(player.Boobies)
+            document.getElementById("GrowExtraPussy").value = "Extra pussy " + EssenceExtraCost(player.Pussies) + "F";
+            document.getElementById("GrowExtraDick").value = "Extra dick " + EssenceExtraCost(player.Dicks) + "M";
+            document.getElementById("GrowExtraBalls").value = "Extra balls " + EssenceExtraCost(player.Balls) + "M";
         }
     });
     document.getElementById("GrowBreast").addEventListener("click", function () {
-        var cost = 10 * Math.pow(1.2, player.Boobies[0].Size);
-        if (player.Femi >= cost) {
-            player.Femi -= cost;
-            player.Boobies[0].Size++;
-            document.getElementById("GrowBreast").value = "Breast++ " + (10 * Math.pow(1.2, player.Boobies[0].Size)) + "F";
-        }
+        document.getElementById("EssenceStart").style.display = 'none';
+        document.getElementById("BreastMenu").style.display = 'block';
+        BreastButtons();
+    });
+    document.getElementById("GrowBreastBack").addEventListener("click", function () {
+        document.getElementById("EssenceStart").style.display = 'block';
+        document.getElementById("BreastMenu").style.display = 'none';
     });
     document.getElementById("GrowExtraBreast").addEventListener("click", function () {
-        return;
-        var cost = 30 * Math.pow(1.2, player.Boobies.length);
+        var cost = EssenceExtraCost(player.Boobies);
         if (player.Femi >= cost) {
             player.Femi -= cost;
-            player.Boobies[0].Size++;
+            var Boob = {
+                Size: 0,
+                Type: player.Race
+            }
+            player.Boobies.push(Boob);
         }
-        cost = 10 * Math.pow(1.2, player.Boobies[0].Size);
-        document.getElementById("GrowExtraBreast").value = "Extra Breast++ " + cost
+        document.getElementById("GrowExtraBreast").value = "Extra Breast " + EssenceExtraCost(player.Boobies) + "F";
+        BreastButtons();
     });
-    document.getElementById("GrowPussy").addEventListener("click", function () {
-        var cost = 10 * Math.pow(1.2, player.Pussies[0].Size);
+
+    function BreastButtons() {
+        var Inputs = [];
+        for (var e = 0; e < player.Boobies.length; e++) {
+            var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerChest(" + e + "); BreastButtons();\">" +
+                BoobSizeConvertor(player.Boobies[e].Size) + " " + EssenceCost(player.Boobies[e]) + "Feminity</button  >"
+            Inputs += Input;
+        }
+        document.getElementById("BreastButtons").innerHTML = Inputs;
+    }
+
+    function BiggerChest(index) {
+        var cost = EssenceCost(player.Boobies[index]);
         if (player.Femi >= cost) {
             player.Femi -= cost;
-            player.Pussies[0].Size++;
-            document.getElementById("GrowPussy").value = "Pussy++ " + (10 * Math.pow(1.2, player.Pussies[0].Size)) + "F";
+            player.Boobies[index].Size++;
         }
+    }
+    document.getElementById("GrowPussy").addEventListener("click", function () {
+        document.getElementById("EssenceStart").style.display = 'none';
+        document.getElementById("PussyMenu").style.display = 'block';
+        PussyButtons();
+    });
+    document.getElementById("GrowPussyBack").addEventListener("click", function () {
+        document.getElementById("EssenceStart").style.display = 'block';
+        document.getElementById("PussyMenu").style.display = 'none';
     });
     document.getElementById("GrowExtraPussy").addEventListener("click", function () {
-        var cost = 30 * Math.pow(5, player.Pussies.length);
+        var cost = EssenceExtraCost(player.Pussies);
         if (player.Femi >= cost) {
             player.Femi -= cost;
             var Pussy = {
-                Size: Math.round(who.Femi / 25),
+                Size: 2,
                 Type: player.Race,
                 Virgin: true
             }
             player.Pussies.push(Pussy);
-            document.getElementById("GrowExtraPussy").value = "Grow extra pussy " + (30 * Math.pow(5, player.Pussies.length)) + "F";
+            document.getElementById("GrowExtraPussy").value = "Extra pussy " + EssenceExtraCost(player.Pussies) + "F";
+            PussyButtons();
         }
     });
-    document.getElementById("GrowDick").addEventListener("click", function () {
-        var cost = 10 * Math.pow(1.2, player.Dicks[0].Size);
-        if (player.Masc >= cost) {
-            player.Masc -= cost;
-            player.Dicks[0].Size++;
-            document.getElementById("GrowDick").value = "Dick++ " + (10 * Math.pow(1.2, player.Dicks[0].Size)) + "M";
+
+    function PussyButtons() {
+        var Inputs = [];
+        for (var e = 0; e < player.Pussies.length; e++) {
+            var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerPussy(" + e + "); PussyButtons();\">" +
+                player.Pussies[e].Size + "cm " + EssenceCost(player.Pussies[e]) + "Feminity</button  >"
+            Inputs += Input;
         }
+        document.getElementById("PussyButtons").innerHTML = Inputs;
+    }
+
+    function BiggerPussy(index) {
+        var cost = EssenceCost(player.Pussies[index]);
+        if (player.Femi >= cost) {
+            player.Femi -= cost;
+            player.Pussies[index].Size++;
+        }
+    }
+    document.getElementById("GrowDick").addEventListener("click", function () {
+        document.getElementById("EssenceStart").style.display = 'none';
+        document.getElementById("DickMenu").style.display = 'block';
+        DickButtons();
+    });
+    document.getElementById("GrowDickBack").addEventListener("click", function () {
+        document.getElementById("EssenceStart").style.display = 'block';
+        document.getElementById("DickMenu").style.display = 'none';
     });
     document.getElementById("GrowExtraDick").addEventListener("click", function () {
-        var cost = 30 * Math.pow(5, player.Dicks.length);
+        var cost = EssenceExtraCost(player.Dicks);
         if (player.Masc >= cost) {
             player.Masc -= cost;
             var Dick = {
@@ -740,19 +818,39 @@
                 Virgin: true
             }
             player.Dicks.push(Dick);
-            document.getElementById("GrowExtraDick").value = "Grow extra dick " + (30 * Math.pow(5, player.Dicks.length)) + "M";
+            document.getElementById("GrowExtraDick").value = "Extra dick " + EssenceExtraCost(player.Dicks) + "M";
+            DickButtons();
         }
     });
-    document.getElementById("GrowBalls").addEventListener("click", function () {
-        var cost = 10 * Math.pow(1.2, player.Balls[0].Size);
+
+    function BiggerDick(index) {
+        var cost = EssenceCost(player.Dicks[index]);
         if (player.Masc >= cost) {
             player.Masc -= cost;
-            player.Balls[0].Size++;
-            document.getElementById("GrowBalls").value = "Balls++ " + (10 * Math.pow(1.2, player.Balls[0].Size)) + "M";
+            player.Dicks[index].Size++;
         }
+    }
+
+    function DickButtons() {
+        var Inputs = [];
+        for (var e = 0; e < player.Dicks.length; e++) {
+            var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerDick(" + e + "); DickButtons();\">" +
+                player.Dicks[e].Size + "cm " + EssenceCost(player.Dicks[e]) + "Masculinity</button  >"
+            Inputs += Input;
+        }
+        document.getElementById("DickButtons").innerHTML = Inputs;
+    }
+    document.getElementById("GrowBalls").addEventListener("click", function () {
+        document.getElementById("EssenceStart").style.display = 'none';
+        document.getElementById("BallsMenu").style.display = 'block';
+        BallsButtons();
+    });
+    document.getElementById("GrowBallsBack").addEventListener("click", function () {
+        document.getElementById("EssenceStart").style.display = 'block';
+        document.getElementById("BallsMenu").style.display = 'none';
     });
     document.getElementById("GrowExtraBalls").addEventListener("click", function () {
-        var cost = 30 * Math.pow(5, player.Balls.length);
+        var cost = EssenceExtraCost(player.Balls);
         if (player.Masc >= cost) {
             player.Masc -= cost;
             var Ball = {
@@ -764,9 +862,28 @@
                 CumBaseRate: 0.5
             }
             player.Balls.push(Ball);
-            document.getElementById("GrowExtraBalls").value = "Grow extra pair of balls " + (30 * Math.pow(5, player.Balls.length)) + "M";
+            document.getElementById("GrowExtraBalls").value = "Extra balls " + EssenceExtraCost(player.Balls) + "M";
+            BallsButtons();
         }
     });
+
+    function BiggerBalls(index) {
+        var cost = EssenceCost(player.Balls[index]);
+        if (player.Masc >= cost) {
+            player.Masc -= cost;
+            player.Balls[index].Size++;
+        }
+    };
+
+    function BallsButtons() {
+        var Inputs = [];
+        for (var e = 0; e < player.Balls.length; e++) {
+            var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerBalls(" + e + "); BallsButtons();\">" +
+                player.Balls[e].Size + "cm " + EssenceCost(player.Balls[e]) + "Masculinity</button  >"
+            Inputs += Input;
+        }
+        document.getElementById("BallsButtons").innerHTML = Inputs;
+    }
 
     document.getElementById("EssenceOptionsLeave").addEventListener("click", function () {
         DisplayNone();
@@ -813,12 +930,6 @@
             EssenceCheck(player);
         }
         document.getElementById("ShowLooks").style.display = 'block';
-
-        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + player.Race + " " + CheckGender(player) +
-            ". Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor + " skin color.";
-
-        document.getElementById("StatusFitness").innerHTML = "Weight: " + Math.round(player.Weight) + "kg<br>" + "Fat: " + Math.round(player.Fat) + "kg<br>Muscle: " + Math.round(player.Muscle) + "kg<br>" + Fitness(player);
-        document.getElementById("genitals2").innerHTML = BoobLook(player) + DickLook(player) + BallLook(player) + PussyLook(player);
     });
 
     document.getElementById("CloseLooks").addEventListener("click", function () {
@@ -1004,6 +1115,35 @@
     var battle = false;
     var FirstRound = true;
 
+    function Pronun(gender) {
+        switch (gender) {
+            case "hermaphrodite":
+                if (Settings.Pronun.Status) {
+                    return Settings.Pronun.Herm
+                } else {
+                    return gender;
+                }
+            case "male":
+                if (Settings.Pronun.Status) {
+                    return Settings.Pronun.Male
+                } else {
+                    return gender;
+                }
+            case "female":
+                if (Settings.Pronun.Status) {
+                    return Settings.Pronun.Female
+                } else {
+                    return gender;
+                }
+            case "doll":
+                if (Settings.Pronun.Status) {
+                    return Settings.Pronun.Doll
+                } else {
+                    return gender;
+                }
+        }
+    }
+
     function CheckGender(who) {
         var gender;
         if (who.Dicks.length > 0 && who.Pussies.length > 0) {
@@ -1059,6 +1199,9 @@
             return;
         }
     });
+    document.getElementById("GainStr").addEventListener("mouseover", function (e) {
+        document.getElementById("LevelMenuText").innerHTML = e.target.title;
+    });
     document.getElementById("GainCha").addEventListener("click", function () {
         if (player.SkillPoints > 0) {
             player.Charm++;
@@ -1068,6 +1211,9 @@
         } else {
             return;
         }
+    });
+    document.getElementById("GainCha").addEventListener("mouseover", function (e) {
+        document.getElementById("LevelMenuText").innerHTML = e.target.title;
     });
     document.getElementById("GainEnd").addEventListener("click", function () {
         if (player.SkillPoints > 0) {
@@ -1080,6 +1226,9 @@
             return;
         }
     });
+    document.getElementById("GainEnd").addEventListener("mouseover", function (e) {
+        document.getElementById("LevelMenuText").innerHTML = e.target.title;
+    });
     document.getElementById("GainInt").addEventListener("click", function () {
         if (player.SkillPoints > 0) {
             player.Int++;
@@ -1089,6 +1238,9 @@
         } else {
             return;
         }
+    });
+    document.getElementById("GainInt").addEventListener("mouseover", function (e) {
+        document.getElementById("LevelMenuText").innerHTML = e.target.title;
     });
     document.getElementById("GainWill").addEventListener("click", function () {
         if (player.SkillPoints > 0) {
@@ -1101,6 +1253,9 @@
             return;
         }
     });
+    document.getElementById("GainWill").addEventListener("mouseover", function (e) {
+        document.getElementById("LevelMenuText").innerHTML = e.target.title;
+    });
     document.getElementById("GainSex").addEventListener("click", function () {
         if (player.SkillPoints > 0) {
             player.SexSkill++;
@@ -1110,6 +1265,9 @@
         } else {
             return;
         }
+    });
+    document.getElementById("GainSex").addEventListener("mouseover", function (e) {
+        document.getElementById("LevelMenuText").innerHTML = e.target.title;
     });
     // level menu return
     document.getElementById("No").addEventListener("click", function () {
@@ -1166,12 +1324,18 @@
             return;
         }
     });
+    document.getElementById("ExtraHealth").addEventListener("mouseover", function (e) {
+        document.getElementById("PerkMenuText").innerHTML = e.target.title;
+    });
     document.getElementById("ExtraWillHealth").addEventListener("click", function () {
         if (player.PerkPoints > 0) {
             PerkHandler("ExtraWillHealth");
         } else {
             return;
         }
+    });
+    document.getElementById("ExtraWillHealth").addEventListener("mouseover", function (e) {
+        document.getElementById("PerkMenuText").innerHTML = e.target.title;
     });
     document.getElementById("FasterRest").addEventListener("click", function () {
         if (player.PerkPoints > 0) {
@@ -1181,6 +1345,9 @@
             return;
         }
     });
+    document.getElementById("FasterRest").addEventListener("mouseover", function (e) {
+        document.getElementById("PerkMenuText").innerHTML = e.target.title;
+    });
     document.getElementById("StealMore").addEventListener("click", function () {
         if (player.PerkPoints > 0) {
             PerkHandler("StealMore");
@@ -1188,6 +1355,9 @@
         } else {
             return;
         }
+    });
+    document.getElementById("StealMore").addEventListener("mouseover", function (e) {
+        document.getElementById("PerkMenuText").innerHTML = e.target.title;
     });
     document.getElementById("GiveEssence").addEventListener("click", function () {
         if (player.PerkPoints > 0) {
@@ -1197,6 +1367,9 @@
             return;
         }
     });
+    document.getElementById("GiveEssence").addEventListener("mouseover", function (e) {
+        document.getElementById("PerkMenuText").innerHTML = e.target.title;
+    });
 
 
     // function to update player & enemy stats, check if you won or lose and deal damage to player
@@ -1204,7 +1377,7 @@
         document.getElementById("status").style.display = 'none';
         document.getElementById("buttons").style.display = 'none';
         document.getElementById("EventLog").style.display = 'none';
-        document.getElementById("BattleEnemy").innerHTML = enemies[EnemyIndex].Name + "<br>" + enemies[EnemyIndex].Race + " " + CheckGender(enemies[EnemyIndex]);
+        document.getElementById("BattleEnemy").innerHTML = enemies[EnemyIndex].Name + "<br>" + enemies[EnemyIndex].Race + " " + Pronun(CheckGender(enemies[EnemyIndex]));
         document.getElementById("EnemyStatusHealth").innerHTML = enemies[EnemyIndex].Health;
         document.getElementById("EnemyStatusHealth").style.width = 100 * (enemies[EnemyIndex].Health / enemies[EnemyIndex].FullHealth) + "%";
         document.getElementById("EnemyStatusWillHealth").innerHTML = enemies[EnemyIndex].WillHealth;
@@ -1251,9 +1424,9 @@
     function Lose() {
         Winner = false;
         document.getElementById("LosePName").innerHTML = player.Name + " " + player.Lastname;
-        document.getElementById("LoseEName").innerHTML = enemies[EnemyIndex].Name + "<br>" + enemies[EnemyIndex].Race + " " + CheckGender(enemies[EnemyIndex].Masc, enemies[EnemyIndex].Femi);
-        document.getElementById("LoseMascu").innerHTML = player.Masc;
-        document.getElementById("LoseFemin").innerHTML = player.Femi;
+        document.getElementById("LoseEName").innerHTML = enemies[EnemyIndex].Name + "<br>" + enemies[EnemyIndex].Race + " " + Pronun(CheckGender(enemies[EnemyIndex]));
+        document.getElementById("LoseMascu").innerHTML = Math.round(player.Masc);
+        document.getElementById("LoseFemin").innerHTML = Math.round(player.Femi);
         document.getElementById("LoseEMascu").innerHTML = enemies[EnemyIndex].Masc;
         document.getElementById("LoseEFemin").innerHTML = enemies[EnemyIndex].Femi;
         var DelatMed = 2;
@@ -1275,7 +1448,7 @@
         document.getElementById("Encounter").style.display = 'none';
         document.getElementById("Lose").style.display = 'grid';
         document.getElementById("LeaveLose").style.display = 'none';
-        document.getElementById("LoseSexText").innerHTML = "You lost to a " + CheckGender(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Race + " " + enemies[EnemyIndex].Name;
+        document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronun(CheckGender(enemies[EnemyIndex])) + " " + enemies[EnemyIndex].Race + " " + enemies[EnemyIndex].Name;
         return;
     }
     document.getElementById("LoseSubmit").addEventListener("click", function () {
@@ -1488,7 +1661,7 @@
     function EncounterStart() {
         var OP = new enemy(RandomString(Names), RandomString(Races), RandomInt(0, 100), RandomInt(0, 100), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5),
             RandomInt(2, 5), RandomInt(6, 9), 0, 0, 70, 70, 70, 70, RandomInt(2, 18) * grid, RandomInt(2, 18) * grid,
-            RandomInt(15, 20), RandomInt(5, 15), 'green', grid, RandomInt(50, 70), RandomInt(140, 180), RandomInt(10, 30), RandomInt(20, 40));
+            RandomInt(15, 20), RandomInt(5, 15), 'Chocolate', grid, RandomInt(50, 70), RandomInt(140, 180), RandomInt(10, 30), RandomInt(20, 40));
         EssenceCheck(OP);
         if (OP.Pussies.length > 0) {
             var a = RandomInt(1, 5);
@@ -1510,7 +1683,7 @@
     function EncounterPath1() {
         var OP = new enemy(RandomString(Names), RandomString(RacesRoad), RandomInt(0, 120), RandomInt(0, 120), RandomInt(3, 6), RandomInt(3, 6), RandomInt(3, 6), RandomInt(3, 6),
             RandomInt(3, 6), RandomInt(7, 10), 0, 0, 80, 80, 80, 80, RandomInt(2, 18) * grid, RandomInt(2, 18) * grid,
-            RandomInt(20, 25), RandomInt(8, 18), 'green', grid, RandomInt(50, 70), RandomInt(140, 180), RandomInt(10, 30), RandomInt(20, 40));
+            RandomInt(20, 25), RandomInt(8, 18), 'Chocolate', grid, RandomInt(50, 70), RandomInt(140, 180), RandomInt(10, 30), RandomInt(20, 40));
         EssenceCheck(OP);
         if (OP.Pussies.length > 0) {
             var a = RandomInt(1, 5);
@@ -2270,7 +2443,24 @@
                     ee.Pregnant = {}
                     ee.Pregnant.Status = false;
                 } else if (!ee.Pregnant.Status) {
-                    Impregnate(ee, player, "A", "");
+                    for (var b = 0; b < player.Balls.length; b++) {
+                        if (player.Balls[b].Cum > 50) {
+                            Impregnate(ee, player, "A", "");
+                            player.Balls[b].Cum -= 50;
+                        }
+                    }
+                }
+            }
+            if (LastPressed == ("DoggyStyle" || "Missionary")) {
+                document.getElementById("SexText").innerHTML = "Feeling that you are close you push yourself as deep as you can in their sweet pussy."
+                if (player.Balls.length > 0) {
+                    var Cum = 0;
+                    for (var b = 0; b < player.Balls.length; b++) {
+                        Cum += player.Balls[b].Cum / 10;
+                        player.Balls[b].Cum -= player.Balls[b].Cum / 10;
+                    }
+                    Cum = Math.round((Cum / 1000) * 100) / 100;
+                    document.getElementById("SexText").innerHTML += "<br>You release " + Cum + "L of cum into their pussy.";
                 }
             }
             AfterBattleButtons();
@@ -2298,10 +2488,10 @@
         var PlayerMaxOrgasm = Math.round(player.End / 8);
         SexAttack = Math.round((RandomInt(4, 7) * player.SexSkill) / 2);
         ESexAttack = Math.round((RandomInt(4, 7) * enemies[EnemyIndex].SexSkill) / 2);
-        document.getElementById("PName").innerHTML = player.Name + " " + player.Lastname + "<br>" + player.Race + " " + CheckGender(player);
-        document.getElementById("EName").innerHTML = ee.Name + " " + ee.FirstName +  " " + ee.LastName + "<br>" + ee.Race + " " + CheckGender(ee);
-        document.getElementById("Mascu").innerHTML = player.Masc;
-        document.getElementById("Femin").innerHTML = player.Femi;
+        document.getElementById("PName").innerHTML = player.Name + " " + player.Lastname + "<br>" + player.Race + " " + Pronun(CheckGender(player));
+        document.getElementById("EName").innerHTML = ee.Name + " " + ee.FirstName + " " + ee.LastName + "<br>" + ee.Race + " " + Pronun(CheckGender(ee));
+        document.getElementById("Mascu").innerHTML = Math.round(player.Masc);
+        document.getElementById("Femin").innerHTML = Math.round(player.Femi);
         document.getElementById("PArousal").innerHTML = Math.round(player.Arousal);
         document.getElementById("EMascu").innerHTML = ee.Masc;
         document.getElementById("EFemin").innerHTML = ee.Femi;
@@ -2319,10 +2509,10 @@
 
         document.getElementById("Mascu").style.width = player.Masc * DelatMed + "%";
         document.getElementById("Femin").style.width = player.Femi * DelatMed + "%";
-        document.getElementById("PArousal").style.width = player.Arousal + "%";
+        document.getElementById("PArousal").style.width = Math.max(1, player.Arousal) + "%";
         document.getElementById("EMascu").style.width = ee.Masc * DelatMed + "%";
         document.getElementById("EFemin").style.width = ee.Femi * DelatMed + "%";
-        document.getElementById("EArousal").style.width = ee.Arousal + "%";
+        document.getElementById("EArousal").style.width = Math.max(1, ee.Arousal) + "%";
 
 
         document.getElementById("SexStats").innerHTML = " ";
@@ -2386,7 +2576,7 @@
                         b = "You see their dick shrinking."
                     }
                 } else {
-                    b = "You see their dick shrinking completely into their body, turning them into a " + CheckGender(ecurrent) + ".";
+                    b = "You see their dick shrinking completely into their body, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
                 }
                 break;
             case "female":
@@ -2399,7 +2589,7 @@
                         b = "You see their breast shrinking."
                     }
                 } else {
-                    b = "You see their pussy closing completely and disappear, turning them into a " + CheckGender(ecurrent) + ".";
+                    b = "You see their pussy closing completely and disappear, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
                 }
                 break;
             case "hermaphrodite":
@@ -2408,7 +2598,7 @@
                         b = "You see their dick shrinking."
                     }
                 } else {
-                    b = "You see their dick shrinking completely into their body, turning them into a " + CheckGender(ecurrent) + ".";
+                    b = "You see their dick shrinking completely into their body, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
                 }
                 if (ecurrent.Pussies.length > 0) {
                     if (eold.Pussies[0].Size > ecurrent.Pussies[0].Size && eold.Boobies[0].Size > ecurrent.Boobies[0].Size) {
@@ -2419,7 +2609,7 @@
                         b = "You see their breast shrinking."
                     }
                 } else {
-                    b = "You see their pussy closing completely and disappear, turning them into a " + CheckGender(ecurrent) + ".";
+                    b = "You see their pussy closing completely and disappear, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
                 }
                 break;
             default:
@@ -2486,7 +2676,7 @@
 
         }
         if (CheckGender(old) != CheckGender(current)) {
-            b += "<br>You have become a " + CheckGender(current) + "!";
+            b += "<br>You have become a " + Pronun(CheckGender(current)) + "!";
         }
         return "<br>" + a + "<br>" + b;
     }
@@ -2655,7 +2845,7 @@
         return;
     });
     document.getElementById("AnalVore").addEventListener("click", function () {
-        if (enemies[EnemyIndex].Weight < AnalCapacity()) {
+        if (enemies[EnemyIndex].Weight < AnalCapacity() + 100) {
             if (Settings.ImgPack) {
                 ImgChose(player, "AnalVore", enemies[EnemyIndex]);
             }
@@ -2681,6 +2871,47 @@
         document.getElementById("BreastVore").style.display = 'none';
     }
 
+    function PreyButton(ps, from, index) {
+        var color;
+        switch (CheckGender(ps)) {
+            case "female":
+                color = "Pink";
+                break;
+            case "male":
+                color = "Blue";
+                break;
+            case "hermaphrodite":
+                color = "Purple";
+                break;
+            case "doll":
+                color = "Beige";
+                break;
+        }
+        return "<button type=\"button\" class=\"" + color + "\" onclick=\"Show" + from + "Prey(" + index + ")\">" + ps.Name + " " + ps.Race +
+            " <br> " + Pronun(CheckGender(ps)) + "<br><br>Height:" + Math.round(ps.Height) + "<br>Weight:" +
+            Math.round(ps.Weight) + "</button>";
+    }
+
+    function ShowAnalPrey(e) {
+        console.log(e);
+    };
+
+    function ShowBallsPrey(e) {
+        console.log(e);
+    };
+
+    function ShowVaginaPrey(e) {
+        console.log(e);
+    };
+
+    function ShowBreastPrey(e) {
+        console.log(e);
+    };
+
+    function ShowStomachPrey(e) {
+        console.log(e);
+    };
+
     document.getElementById("VoreLooks").addEventListener("click", function () {
         DisplayNone();
         document.getElementById("ShowVore").style.display = 'block';
@@ -2692,8 +2923,8 @@
         var food = "";
         for (var e = 0; e < player.Vore.Stomach.length; e++) {
             var ps = player.Vore.Stomach[e];
-            food += "<button type=\"button\">" + ps.Name + " " + ps.Race + "<br>" + CheckGender(ps) +
-                "<br><br>Height:" + Math.round(ps.Height) + "<br>Weight:" + Math.round(ps.Weight) + "</button>"
+            EssenceCheck(ps);
+            food += PreyButton(ps, "Stomach", e);
         }
         document.getElementById("StomachContent").innerHTML = food;
 
@@ -2708,8 +2939,8 @@
         var food = "";
         for (var e = 0; e < player.Vore.Vagina.length; e++) {
             var ps = player.Vore.Vagina[e];
-            food += "<button type=\"button\">" + ps.Name + " " + ps.Race + "<br>" + CheckGender(ps) +
-                "<br><br>Height:" + Math.round(ps.Height) + "<br>Weight:" + Math.round(ps.Weight) + "</button>"
+            EssenceCheck(ps);
+            food += PreyButton(ps, "Vagina", e);
         }
         document.getElementById("VaginaContent").innerHTML = food;
     });
@@ -2740,10 +2971,11 @@
         var food = "";
         for (var e = 0; e < player.Vore.Breast.length; e++) {
             var ps = player.Vore.Breast[e];
-            food += "<button type=\"button\">" + ps.Name + " " + ps.Race + "<br>" + CheckGender(ps) +
-                "<br><br>Height:" + Math.round(ps.Height) + "<br>Weight:" + Math.round(ps.Weight) + "</button>"
+            EssenceCheck(ps);
+            food += PreyButton(ps, "Breast", e);
         }
         document.getElementById("BreastContent").innerHTML = food;
+        document.getElementById("MilkTransformation").value = "Milk transformation " + Settings.VoreSettings.MilkTF;
     });
     document.getElementById("MilkTransformation").addEventListener("click", function () {
         Settings.VoreSettings.MilkTF = !Settings.VoreSettings.MilkTF;
@@ -2755,8 +2987,8 @@
         var food = "";
         for (var e = 0; e < player.Vore.Balls.length; e++) {
             var ps = player.Vore.Balls[e];
-            food += "<button type=\"button\">" + ps.Name + " " + ps.Race + "<br>" + CheckGender(ps) +
-                "<br><br>Height:" + Math.round(ps.Height) + "<br>Weight:" + Math.round(ps.Weight) + "</button>"
+            EssenceCheck(ps);
+            food += PreyButton(ps, "Balls", e);
         }
         document.getElementById("BallsContent").innerHTML = food;
 
@@ -2771,8 +3003,8 @@
         var food = "";
         for (var e = 0; e < player.Vore.Anal.length; e++) {
             var ps = player.Vore.Anal[e];
-            food += "<button type=\"button\">" + ps.Name + " " + ps.Race + "<br>" + CheckGender(ps) +
-                "<br><br>Height:" + Math.round(ps.Height) + "<br>Weight:" + Math.round(ps.Weight) + "</button>"
+            EssenceCheck(ps);
+            food += PreyButton(ps, "Anal", e);
         }
         document.getElementById("AnalContent").innerHTML = food;
 
@@ -2800,9 +3032,38 @@
     document.getElementById("VorePerks").addEventListener("click", function () {
         document.getElementById("VoreButtons").style.display = 'none';
         document.getElementById("VorePerkMenu").style.display = 'block';
+        if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
+            document.getElementById("AbsorbEssence").value = "AbsorbEssence +" + player.Vore.VorePerks.AbsorbEssence.Count;
+        }
         return;
     });
 
+    function VorePerkHandler(perket) {
+        player.Vore.VorePoints--;
+        if (player.Vore.VorePerks.hasOwnProperty(perket)) {
+            player.Vore.VorePerks[perket].Count++;
+        } else {
+            player.Vore.VorePerks[perket] = {
+                Count: 1
+            }
+        }
+        document.getElementById(perket).value = perket + " +" + player.Vore.VorePerks[perket].Count;
+        document.getElementById("VorePerkPointsLeft").innerHTML = "You have " + player.Vore.VorePoints + " perk points left.";
+    }
+    document.getElementById("AbsorbEssence").addEventListener("click", function () {
+        if (player.Vore.VorePoints > 0) {
+            VorePerkHandler("AbsorbEssence");
+        } else {
+            return;
+        }
+    });
+    document.getElementById("FasterDigestion").addEventListener("click", function () {
+        if (player.Vore.VorePoints > 0) {
+            VorePerkHandler("FasterDigestion");
+        } else {
+            return;
+        }
+    });
 
     document.getElementById("LeaveVore").addEventListener("click", function () {
         battle = false;
@@ -2839,13 +3100,29 @@
                 player.Vore.StomachExp += 0.001;
                 player.Vore.Exp += 0.001;
                 player.Fat += 0.0005;
+                if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
+                    player.Vore.Stomach[e].Weight -= 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.StomachExp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.Exp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Fat += 0.0005 * player.Vore.VorePerks.FasterDigestion.Count;
+                }
                 if (player.Vore.Stomach[e].Weight < 0) {
-                    EventLog("You have digested " + player.Vore.Stomach[e].Name + " " + player.Vore.Stomach[e].Race  + " " + player.Vore.Balls[e].FirstName + " " + player.Vore.Balls[e].Lastname);
+                    EventLog("You have digested " + player.Vore.Stomach[e].Name + " " + player.Vore.Stomach[e].Race + " " + player.Vore.Balls[e].FirstName + " " + player.Vore.Balls[e].Lastname);
                     player.Vore.Stomach.splice(e, 1);
                 }
             } else {
                 player.Vore.StomachExp += 0.0005;
                 player.Vore.Exp += 0.0005;
+            }
+            if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
+                if (player.Vore.Stomach[e].Masc > 0) {
+                    player.Vore.Stomach[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                }
+                if (player.Vore.Stomach[e].Femi > 0) {
+                    player.Vore.Stomach[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                }
             }
         }
         for (var e = 0; e < player.Vore.Vagina.length; e++) {
@@ -2853,6 +3130,11 @@
                 player.Vore.Vagina[e].Weight -= 0.001;
                 player.Vore.Vagina[e].VaginaExp += 0.001;
                 player.Vore.Exp += 0.001;
+                if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
+                    player.Vore.Vagina[e].Weight -= 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.Vagina[e].VaginaExp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.Exp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                };
                 if (player.Vore.Vagina[e].Weight < 0) {
                     EventLog("The only trace left of " + player.Vore.Vagina[e].Name + " " + player.Vore.Vagina[e].Race + " " + player.Vore.Balls[e].FirstName + " " + player.Vore.Balls[e].Lastname + " is a trail of pussy discharge traveling down your legs.");
                     player.Vore.Vagina.splice(e, 1);
@@ -2877,15 +3159,34 @@
                 player.Vore.VaginaExp += 0.0005;
                 player.Vore.Exp += 0.0005;
             }
+            if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
+                if (player.Vore.Vagina[e].Masc > 0) {
+                    player.Vore.Vagina[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                }
+                if (player.Vore.Vagina[e].Femi > 0) {
+                    player.Vore.Vagina[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                }
+            }
+
         }
         for (var e = 0; e < player.Vore.Breast.length; e++) {
             if (Settings.VoreSettings.MilkTF) {
                 player.Vore.Breast[e].Weight -= 0.001;
                 player.Vore.BreastExp += 0.001;
                 player.Vore.Exp += 0.001;
+                if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
+                    player.Vore.Breast[e].Weight -= 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.Breast[e].BreastExp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.Exp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                };
                 for (var b = 0; b < player.Boobies.length; b++) {
                     if (player.Boobies[b].Milk < player.Boobies[b].MilkMax) {
                         player.Boobies[b].Milk += 0.001;
+                        if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
+                            player.Boobies[b].Milk += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                        };
                     }
                 }
                 if (player.Vore.Breast[e].Weight < 0) {
@@ -2896,15 +3197,34 @@
                 player.Vore.BreastExp += 0.0005;
                 player.Vore.Exp += 0.0005;
             }
+            if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
+                if (player.Vore.Breast[e].Masc > 0) {
+                    player.Vore.Breast[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                }
+                if (player.Vore.Breast[e].Femi > 0) {
+                    player.Vore.Breast[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                }
+            }
         }
         for (var e = 0; e < player.Vore.Balls.length; e++) {
             if (Settings.VoreSettings.CumTF) {
                 player.Vore.Balls[e].Weight -= 0.001;
                 player.Vore.BallsExp += 0.001;
                 player.Vore.Exp += 0.001;
+                if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
+                    player.Vore.Balls[e].Weight -= 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.Balls[e].BallsExp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.Exp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                };
                 for (var b = 0; b < player.Balls.length; b++) {
                     if (player.Balls[b].Cum < player.Balls[b].CumMax) {
                         player.Balls[b].Cum += 0.1;
+                        if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
+                            player.Balls[b].Cum += 0.1 * player.Vore.VorePerks.FasterDigestion.Count;
+
+                        }
                     }
                 }
                 if (player.Vore.Balls[e].Weight < 0) {
@@ -2915,10 +3235,40 @@
                 player.Vore.BallsExp += 0.0005;
                 player.Vore.Exp += 0.001;
             }
+            if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
+                if (player.Vore.Balls[e].Masc > 0) {
+                    player.Vore.Balls[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                }
+                if (player.Vore.Balls[e].Femi > 0) {
+                    player.Vore.Balls[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                }
+            }
         }
         for (var e = 0; e < player.Vore.Anal.length; e++) {
-            if (player.Vore.Anal[e].Weight < 0) {
-                player.Vore.Anal.splice(e, 1);
+            if (false) {
+                if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
+                    player.Vore.Anal[e].Weight -= 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.Anal[e].AnalExp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.Exp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                };
+                if (player.Vore.Anal[e].Weight < 0) {
+                    player.Vore.Anal.splice(e, 1);
+                }
+            } else {
+                player.Vore.AnalExp += 0.0005;
+                player.Vore.Exp += 0.001;
+            }
+            if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
+                if (player.Vore.Anal[e].Masc > 0) {
+                    player.Vore.Anal[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                }
+                if (player.Vore.Anal[e].Femi > 0) {
+                    player.Vore.Anal[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                }
             }
         }
 
@@ -2992,32 +3342,39 @@
     // End vore
 
     function PregnanyEngine() {
+        if (player.Children.length > 0) {
+            for (var e = 0; e < player.Children.length; e++) {
+                player.Children[e].AgeCounter++;
+                if (player.Children[e].AgeCounter % 120000 == 0) {
+                    var age = Math.round(player.Children[e].AgeCounter / 120000);
+                    EventLog("You child has grown" + age + " years old.");
+                }
+            }
+        }
+
         if (player.Pregnant.Babies.length < 1) {
             player.Pregnant.Status = false;
         }
-        if (player.hasOwnProperty("Pregnant")) {
-            if (player.Pregnant.Status) {
-                for (var e = 0; e < player.Pregnant.Babies.length; e++) {
-                    player.Pregnant.Babies[e].BabyAge++;
-                    if (player.Pregnant.Babies[e].BabyAge > 90000) {
-                        if (player.hasOwnProperty("Children")) {
-                            var Child = {
-                                AgeCounter: 0,
-                                Race: player.Pregnant.Babies[e].BabyRace
-                            };
-                            player.Children.push(Child);
-                            EventLog("You have given birth!")
-                            player.Pregnant.Babies.splice(e, 1);
-                        } else {
-                            player.Children = [];
-                        }
+        if (player.Pregnant.Status) {
+            for (var e = 0; e < player.Pregnant.Babies.length; e++) {
+                player.Pregnant.Babies[e].BabyAge++;
+                if (player.Pregnant.Babies[e].BabyAge > 90000) {
+                    if (player.hasOwnProperty("Children")) {
+                        var Child = {
+                            AgeCounter: 0,
+                            Race: player.Pregnant.Babies[e].BabyRace
+                        };
+                        player.Children.push(Child);
+                        EventLog("You have given birth!")
+                        player.Pregnant.Babies.splice(e, 1);
+                    } else {
+                        player.Children = [];
                     }
                 }
-                for (var b = 0; b < player.Boobies.length; b++) {
-                    player.Boobies[b].MilkBaseRate = player.Boobies[b].MilkMax / 50000;
-                    player.Boobies[b].Milk += player.Boobies[b].MilkBaseRate + player.Boobies[b].MilkRate;
-                }
-
+            }
+            for (var b = 0; b < player.Boobies.length; b++) {
+                player.Boobies[b].MilkBaseRate = player.Boobies[b].MilkMax / 50000;
+                player.Boobies[b].Milk += player.Boobies[b].MilkBaseRate + player.Boobies[b].MilkRate;
             }
         } else {
             player.Pregnant.Status = false;
@@ -3035,15 +3392,30 @@
                             House.Dormmates[e].Children.push(Child);
                             House.Dormmates[e].Pregnant.Baby = 0;
                             House.Dormmates[e].Pregnant.Status = false;
-                            EventLog("A house servant have given birth!");
+                            EventLog(House.Dormmates[e].FirstName + " " + House.Dormmates[e].LastName + " have given birth!");
                         } else {
                             House.Dormmates[e].Children = [];
                         }
                     }
                 }
             }
+            if (Array.isArray(House.Dormmates[e].Children)) {
+                if (House.Dormmates[e].Children.length > 0) {
+                    for (var b = 0; b < House.Dormmates[e].Children.length; b++) {
+                        House.Dormmates[e].Children[b].AgeCounter++;
+                        if (House.Dormmates[e].Children[b].AgeCounter % 120000 == 0) {
+                            var age = Math.round(House.Dormmates[e].Children[b].AgeCounter / 120000);
+                            EventLog("You child with " + House.Dormmates[e].FirstName + " " + House.Dormmates[e].LastName + " has grown " + age + " years old.");
+                        }
+                    }
+                }
+            } else {
+                House.Dormmates[e].Children = [];
+            }
         }
     }
+
+
 
     function HouseEngine() {
         if (House.Gym > 0) {
@@ -3067,36 +3439,53 @@
         }
     };
 
-    var Stoploop = true;
-
     function FluidsEngine() {
         if (player.Balls.length > 0) {
-            document.getElementById("CumBar").style.display = 'block';
-            for (var e = 0; e < player.Balls.length; e++) {
-                var CumProcent = player.Balls[e].Cum / player.Balls[e].CumMax;
-                if (CumProcent > 1) {
-                    EventLog("Your balls were so full that you spontaneously ejaculated!")
-                    player.Balls[e].Cum -= player.Balls[e].Cum / 3;
+            for (var b = 0; b < player.Balls.length; b++) {
+                player.Balls[b].CumMax = Math.round(player.Balls[b].Size * 400);
+                player.Balls[b].CumBaseRate = player.Balls[b].CumMax / 50000;
+                if (player.Balls[b].Cum < player.Balls[b].CumMax) {
+                    player.Balls[b].Cum += player.Balls[b].CumRate + player.Balls[b].CumBaseRate;
                 }
-                document.getElementById("FluidCum").style.width = CumProcent * 100 + "%";
             }
+        }
+        if (player.Balls.length > 0) {
+            document.getElementById("CumBar").style.display = 'block';
+            var TotalCum = 0,
+                TotalCumMax = 0;
+            for (var e = 0; e < player.Balls.length; e++) {
+                TotalCum += player.Balls[e].Cum;
+                TotalCumMax += player.Balls[e].CumMax
+            }
+            var CumProcent = TotalCum / TotalCumMax;
+            if (false) {
+                EventLog("Your balls are so full that you can barely hold it!")
+            }
+            document.getElementById("FluidCum").innerHTML = Math.round((Math.round(TotalCum) / 1000) * 10) / 10 + "L";
+            document.getElementById("FluidCum").style.width = CumProcent * 100 + "%";
 
         } else {
             document.getElementById("CumBar").style.display = 'none';
         }
+        var TotalMilk = 0,
+            TotalMilkMax = 0;
         for (var b = 0; b < player.Boobies.length; b++) {
             if (player.Boobies[b].Milk > 1) {
-                var MilkProcent = player.Boobies[b].Milk / player.Boobies[b].MilkMax;
-                if (MilkProcent > 1 && Stoploop) {
-                    EventLog("You breast are so full that they have started leaking.")
-                    Stoploop = false;
-                }
-                document.getElementById("FluidMilk").style.width = MilkProcent * 100 + "%";
+                TotalMilk += player.Boobies[b].Milk;
+                TotalMilkMax += player.Boobies[b].MilkMax;
                 document.getElementById("MilkBar").style.display = 'block';
             } else {
                 document.getElementById("MilkBar").style.display = 'none';
             }
         }
+        var MilkProcent = TotalMilk / TotalMilkMax;
+        document.getElementById("FluidMilk").innerHTML = Math.round((Math.round(TotalMilk) / 1000) * 10) / 10 + "L";
+        document.getElementById("FluidMilk").style.width = MilkProcent * 100 + "%";
+
+        if (false) {
+            EventLog("You breast are so full that they have started leaking.")
+        }
+
 
     }
 
@@ -3113,14 +3502,30 @@
             TF.Counter = 0;
         } else {
             TF.Counter++;
-            if (TF.Counter > 1000) {
-                EventLog("You are now a elf!");
-                player.Race = "elf";
-                TF.Status = false;
-                TF.Counter = 0;
-            } else if (TF.Counter == 500) {
-                EventLog("You are have grown pointy ears!");
+            switch (TF.To) {
+                case "elf":
+                    if (TF.Counter > 1000) {
+                        EventLog("You are now a elf!");
+                        player.Race = "elf";
+                        TF.Status = false;
+                        TF.Counter = 0;
+                    } else if (TF.Counter == 500) {
+                        EventLog("You are have grown pointy ears!");
+                    }
+                    break;
+                case "human":
+                    if (TF.Counter > 1000) {
+                        EventLog("You are now a human!");
+                        player.Race = "human";
+                        TF.Status = false;
+                        TF.Counter = 0;
+                    } else if (TF.Counter == 500) {
+                        EventLog("You are have growning into something very familiar.");
+                    }
+                    break;
+
             }
+
         }
     }
 
@@ -3295,15 +3700,6 @@
                 CumBaseRate: 0.5
             }
             who.Balls.push(Ball);
-        } else if (who.Balls.length > 0) {
-            for (var b = 0; b < who.Balls.length; b++) {
-                who.Balls[b].Size = Math.round(who.Masc / 60);
-                who.Balls[b].CumMax = Math.round(who.Balls[b].Size * 400);
-                who.Balls[b].CumBaseRate = who.Balls[b].CumMax / 50000;
-                if (who.Balls[b].Cum < who.Balls[b].CumMax) {
-                    who.Balls[b].Cum += who.Balls[b].CumRate + who.Balls[b].CumBaseRate;
-                }
-            }
         }
         if (who.Femi < 30 && who.Pussies.length > 0) {
             who.Pussies.pop();
@@ -3474,6 +3870,16 @@
                             document.getElementById("buttons").style.display = 'none';
                             document.getElementById("EmptyButtons").style.display = 'block';
                             document.getElementById("Home").style.display = 'block';
+                            if (House.Dorm > 0) {
+                                document.getElementById("Dorm").style.display = "inline-block";
+                            } else {
+                                document.getElementById("Dorm").style.display = "none"
+                            }
+                            if (House.hasOwnProperty("Portal")) {
+                                document.getElementById("Portal").style.display = 'inline-block'
+                            } else {
+                                document.getElementById("Portal").style.display = 'none'
+                            }
                         } else if (Doors[i].NESW == "N") {
                             player.Map = "RoadToWitch";
                             sprite.y = startarea.height - 3 * grid;
@@ -3596,6 +4002,8 @@
     var WitchShop = new Npc("WitchShop", grid * 15, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
     var WitchHut = new Npc("WitchHut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
     var Tempsson = new Npc("Temp_Tempsson", grid * 10, grid * 15, grid, grid, "RGB(133,94,66)");
+    var Portal = new Npc("LocalPortal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
+
 
     var Npcs = [];
 
@@ -3659,7 +4067,7 @@
     });
     document.getElementById("EatBar").addEventListener("click", function () {
         if (player.Gold > 10) {
-            player.Fat += 20 / player.Fat + 5;
+            player.Fat += 18 / player.Fat + 5;
             player.Gold -= 10;
             player.Health += 20;
             player.WillHealth += 20;
@@ -3754,14 +4162,14 @@
         document.getElementById("QuestText").innerHTML = "";
         document.getElementById("LeaveQuest").style.display = 'inline-block';
 
-    })
+    });
     document.getElementById("QuestDecline").addEventListener("click", function () {
         document.getElementById("QuestButtons").style.display = 'none';
         document.getElementById("QuestStart").style.display = 'block';
         document.getElementById("QuestReward").style.display = 'block';
         document.getElementById("LeaveQuest").style.display = 'inline-block';
         document.getElementById("QuestText").innerHTML = "";
-    })
+    });
     document.getElementById("LeaveQuest").addEventListener("click", function () {
         document.getElementById("Quest").style.display = 'none';
         document.getElementById("TownhallStart").style.display = 'block';
@@ -3880,6 +4288,29 @@
             }
         }
     });
+    document.getElementById("WitchShop").addEventListener("mouseover", function (e) {
+        var Chosen;
+        if (e.target.type == "button") {
+            Chosen = String(e.target.id);
+            if (Chosen == "Grow") {
+                document.getElementById("WitchShopText").innerHTML = e.target.title;
+            } else if (Chosen == "Shrink") {
+                document.getElementById("WitchShopText").innerHTML = e.target.title
+            } else if (Chosen == "FertilityAdd") {
+                document.getElementById("WitchShopText").innerHTML = e.target.title
+            } else if (Chosen == "FertilitySub") {
+                document.getElementById("WitchShopText").innerHTML = e.target.title
+            } else if (Chosen == "VirilityAdd") {
+                document.getElementById("WitchShopText").innerHTML = e.target.title
+            } else if (Chosen == "VirilitySub") {
+                document.getElementById("WitchShopText").innerHTML = e.target.title
+            } else if (Chosen == "CumRateAdd") {
+                document.getElementById("WitchShopText").innerHTML = e.target.title
+            } else if (Chosen == "CumRateSub") {
+                document.getElementById("WitchShopText").innerHTML = e.target.title
+            }
+        }
+    });
     document.getElementById("ElfTF").addEventListener("click", function () {
         if (player.Race == "elf") {
             document.getElementById("WitchHutText").innerHTML = "You are already a elf!";
@@ -3896,6 +4327,29 @@
         } else {
             document.getElementById("WitchHutText").innerHTML = "You can't afford the potion";
         }
+    });
+    document.getElementById("ElfTF").addEventListener("mouseover", function (e) {
+        document.getElementById("WitchHutText").innerHTML = e.target.title;
+    });
+    document.getElementById("HumanTF").addEventListener("click", function () {
+        if (player.Race == "human") {
+            document.getElementById("WitchHutText").innerHTML = "You are already a human!";
+            return;
+        }
+        if (TF.Status) {
+            document.getElementById("WitchHutText").innerHTML = "Your body is currently transforming!";
+            return;
+        }
+        if (player.Gold >= 250) {
+            player.Gold -= 250;
+            TfEngine("human");
+            document.getElementById("WitchHutText").innerHTML = "You drink the potion and get a familiar feeling running trough your entire body.";
+        } else {
+            document.getElementById("WitchHutText").innerHTML = "You can't afford the potion";
+        }
+    });
+    document.getElementById("HumanTF").addEventListener("mouseover", function (e) {
+        document.getElementById("WitchHutText").innerHTML = e.target.title;
     });
 
     document.getElementById("Train").addEventListener("click", function () {
@@ -3939,7 +4393,9 @@
         document.getElementById("HomeStart").style.display = 'none';
         document.getElementById("Upgrades").style.display = 'block';
         document.getElementById("HomeText").innerHTML = "";
-
+        if (House.hasOwnProperty("Portal")) {
+            document.getElementById("BuildPortal").style.display = 'none';
+        }
         var BedCost = Math.round(50 * Math.pow(1.2, House.BedLevel));
         document.getElementById("UpgradeBed").value = "Upgrade bedroom " + BedCost + "g";
         var DormCost = Math.round(250 * Math.pow(1.2, House.Dorm));
@@ -3967,6 +4423,9 @@
         }
         document.getElementById("UpgradeBed").value = "Upgrade bedroom " + BedCost + "g";
     });
+    document.getElementById("UpgradeBed").addEventListener("mouseover", function (e) {
+        document.getElementById("HomeText").innerHTML = e.target.title;
+    });
     document.getElementById("BuildDorm").addEventListener("click", function () {
         var DormCost = Math.round(250 * Math.pow(1.2, House.Dorm));
         if (player.Gold > DormCost) {
@@ -3984,6 +4443,11 @@
         var DormCost = Math.round(250 * Math.pow(1.2, House.Dorm));
         document.getElementById("BuildDorm").value = "Build dorm " + DormCost + "g";
     });
+
+    document.getElementById("BuildDorm").addEventListener("mouseover", function (e) {
+        document.getElementById("HomeText").innerHTML = e.target.title;
+    });
+
     document.getElementById("BuildGym").addEventListener("click", function () {
         var Gymcost = Math.round(200 * Math.pow(1.2, House.Gym));
         if (player.Gold > Gymcost) {
@@ -3998,6 +4462,9 @@
             document.getElementById("BuildGym").value = "Build gym " + Gymcost + "g";
         }
     });
+    document.getElementById("BuildGym").addEventListener("mouseover", function (e) {
+        document.getElementById("HomeText").innerHTML = e.target.title;
+    });
     document.getElementById("BuildKitchen").addEventListener("click", function () {
         var Kitchencost = Math.round(200 * Math.pow(1.2, House.Kitchen));
         if (player.Gold > Kitchencost) {
@@ -4011,6 +4478,23 @@
         }
         var Kitchencost = Math.round(200 * Math.pow(1.2, House.Kitchen));
         document.getElementById("BuildKitchen").value = "Build kitchen " + Kitchencost + "g";
+    });
+    document.getElementById("BuildKitchen").addEventListener("mouseover", function (e) {
+        document.getElementById("HomeText").innerHTML = e.target.title;
+    });
+    document.getElementById("BuildPortal").addEventListener("click", function () {
+        if (player.Gold > 1000 && !House.hasOwnProperty("Portal")) {
+            player.Gold -= 1000;
+            House.Portal = true;
+            document.getElementById("HomeText").innerHTML = "Congratulations you now own a personal portal, a true sign of wealth for peasants to envy!"
+            document.getElementById("BuildPortal").style.display = 'none';
+            document.getElementById("Portal").style.display = 'inline-block';
+        } else {
+            document.getElementById("HomeText").innerHTML = "You are to poor to buy a portal you peasant!"
+        }
+    });
+    document.getElementById("BuildPortal").addEventListener("mouseover", function (e) {
+        document.getElementById("HomeText").innerHTML = e.target.title;
     });
     document.getElementById("LeaveUpgradeHome").addEventListener("click", function () {
         document.getElementById("Upgrades").style.display = 'none';
@@ -4086,10 +4570,11 @@
         if (rm.hasOwnProperty("LastName")) {
             DormName += " " + rm.LastName;
         };
-        document.getElementById(e).innerHTML = "<div>" + DormName + "<br>" + rm.Name + " " + rm.Race + "<br>" + CheckGender(rm) +
-            "<br><br>Height: " + Math.round(rm.Height) + "cm<br>Weight: " + Math.round(rm.Weight) + "kg<br>Muscle: " + Math.round(rm.Muscle) + "kg<br>Fat: " + Math.round(rm.Fat) + "kg<br>" + PregnantStatus + "<br><br>" + BoobLook(rm) + DickLook(rm) + PussyLook(rm) + "</div>" + "<div> Strength: " + rm.Str +
-            "<br>Charm: " + rm.Charm + "<br>Endurance: " + rm.End + "<br>Int: " + rm.Int + "<br>Sexskill: " +
-            rm.SexSkill + "<br> Willpower" + rm.Willpower + "</div>"
+        document.getElementById(e).innerHTML = "<div>" + DormName + "<br>" + rm.Name + " " + rm.Race + "<br>" + Pronun(CheckGender(rm)) +
+            "<br><br>Height: " + Math.round(rm.Height) + "cm<br>Weight: " + Math.round(rm.Weight) + "kg<br>Muscle: " + Math.round(rm.Muscle) + "kg<br>Fat: " + Math.round(rm.Fat) +
+            "kg<br>" + PregnantStatus + "<br><br>" + BoobLook(rm) + DickLook(rm) + PussyLook(rm) + "</div>" + "<div> Strength: " + rm.Str +
+            "<br>Charm: " + rm.Charm + "<br>Endurance: " + rm.End + "<br>Int: " + rm.Int + "<br>Sexskill: " + rm.SexSkill +
+            "<br> Willpower" + rm.Willpower + "</div>"
         document.getElementById(e).style.display = 'block'
         document.getElementById("LeaveRoom").style.display = 'block';
         document.getElementById("LeaveDorm").style.display = 'none';
@@ -4140,7 +4625,7 @@
     function DormSex() {
         var e = House.Dormmates[MateIndex];
         document.getElementById("DormPName").innerHTML = player.Name + " " + player.Lastname;
-        document.getElementById("DormEName").innerHTML = e.Name + "<br>" + e.Race + " " + CheckGender(e);
+        document.getElementById("DormEName").innerHTML = e.Name + "<br>" + e.Race + " " + Pronun(CheckGender(e));
         document.getElementById("DormMascu").innerHTML = player.Masc;
         document.getElementById("DormFemin").innerHTML = player.Femi;
         document.getElementById("DormEMascu").innerHTML = Math.round(e.Masc);
@@ -4280,7 +4765,35 @@
         document.getElementById("TheDorm").style.display = 'none';
         return;
     });
+    // Portal
+    document.getElementById("Portal").addEventListener("click", function () {
+        document.getElementById("HomeStart").style.display = 'none';
+        document.getElementById("PortalMenu").style.display = 'block';
+    });
+    document.getElementById("LeavePortal").addEventListener("click", function () {
+        document.getElementById("HomeStart").style.display = 'block';
+        document.getElementById("PortalMenu").style.display = 'none';
+    });
+    document.getElementById("Portals").addEventListener("click", function (e) {
+        Npcs = [];
+        var Chosen;
+        if (e.target.type == "button") {
+            Chosen = String(e.target.id);
+            if (Chosen == "TempLand") {
+                player.Area = "TempLand";
+                player.Map = "TempCity";
+                LeaveHome();
+            }
+        }
+    });
+
+
     document.getElementById("LeaveHome").addEventListener("click", function () {
+        LeaveHome();
+        return;
+    });
+
+    function LeaveHome() {
         battle = false;
         document.getElementById("Home").style.display = 'none';
         document.getElementById("map").style.display = 'block';
@@ -4288,8 +4801,9 @@
         document.getElementById("EmptyButtons").style.display = 'none';
         document.getElementById("buttons").style.display = 'block';
         document.getElementById("EventLog").style.display = 'block';
-        return;
-    });
+    }
+
+    // End home
 
     function PrintDoor(NESW) {
         this.NESW = NESW;
@@ -4438,20 +4952,23 @@
     function CurrentMap() {
         switch (player.Map) {
             case "Start":
-                PrintDoor("E");
                 if (enemies.length < 1) {
                     enemies = [EncounterStart(), EncounterStart(), EncounterStart()];
                 }
                 PrintMap("Start");
+                var backmap = new Image;
+                backmap.src = "../Tiles/Start.png";
+                ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+
                 break;
             case "RoadToCity1":
-                PrintDoor("S");
-                PrintDoor("W");
-                PrintDoor("N");
                 if (enemies.length < 1) {
                     enemies = [EncounterPath1(), EncounterPath1(), EncounterPath1()];
                 }
                 PrintMap("RoadToCity1");
+                var backmap = new Image;
+                backmap.src = "../Tiles/RoadToCity.png";
+                ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                 break;
             case "Bandit":
                 PrintDoor("S");
@@ -4570,6 +5087,14 @@
                 }
                 PrintMap("Cave3");
                 break;
+            case "TempCity":
+                if (enemies.length < 1) {
+
+                }
+                if (Npcs.length < 1) {
+                    Npcs = [Portal];
+                }
+                break;
         }
 
 
@@ -4598,21 +5123,30 @@
             HemScale();
             a = document.documentElement.clientHeight
         };
-        ctx.clearRect(0, 0, startarea.width, startarea.height);
-        World.clearRect(0, 0, World.width, World.height);
 
-        ctx.fillStyle = MapColor;
-        World.fillStyle = MapColor;
-        ctx.fillRect(0, 0, startarea.width, startarea.height);
-        World.fillRect(0, 0, WorldMap.width, WorldMap.height);
 
-        // Wall around map
-        ctx.fillStyle = Settings.BorderColor;
-        ctx.fillRect(0, 0, grid / 2, startarea.height);
-        ctx.fillRect(0, 0, startarea.width, grid / 2);
-        ctx.fillRect(startarea.width - (grid / 2), 0, grid / 2, startarea.height);
-        ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
 
+        switch (player.Map) {
+            case "Start":
+            case "RoadToCity1":
+                break;
+            default:
+                ctx.clearRect(0, 0, startarea.width, startarea.height);
+                World.clearRect(0, 0, World.width, World.height);
+                ctx.fillStyle = MapColor;
+                World.fillStyle = MapColor;
+                ctx.fillRect(0, 0, startarea.width, startarea.height);
+                World.fillRect(0, 0, WorldMap.width, WorldMap.height);
+
+                // Wall around map
+                ctx.fillStyle = Settings.BorderColor;
+                ctx.fillRect(0, 0, grid / 2, startarea.height);
+                ctx.fillRect(0, 0, startarea.width, grid / 2);
+                ctx.fillRect(startarea.width - (grid / 2), 0, grid / 2, startarea.height);
+                ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
+
+                break;
+        }
         CurrentMap();
         if (enemies.length > 0) {
             PrintEnemies();
@@ -4642,26 +5176,47 @@
         }
         document.getElementById("StatusLevel").innerHTML = player.level;
         document.getElementById("StatusLevel").style.width = 100 * (player.Exp / MaxExp) + "%";
-        document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + player.Masc + "<br> Femininity: " + player.Femi;
         document.getElementById("Gold").innerHTML = "Gold: " + Math.round(player.Gold);
 
-        if (player.Health < player.MaxHealth && !battle && player.Fat >= 1) {
+        // Live update for Looksmenu
+        document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
+        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + player.Race + " " + Pronun(CheckGender(player)) +
+            ". Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor + " skin color.";
+
+        if (player.Pregnant.Status) {
+            if (player.Pregnant.Babies[0].BabyAge < 10000) {
+                document.getElementById("looks2").innerHTML += "<br><br> You are pregnant"
+
+            } else {
+                document.getElementById("looks2").innerHTML += "<br><br> You are " + Math.round(player.Pregnant.Babies[0].BabyAge / 10000) + " months pregnant."
+            }
+        }
+
+        document.getElementById("StatusFitness").innerHTML = "Weight: " + Math.round(player.Weight) + "kg<br>" + "Fat: " + Math.round(player.Fat) + "kg<br>Muscle: " + Math.round(player.Muscle) + "kg<br>" + Fitness(player);
+        document.getElementById("genitals2").innerHTML = BoobLook(player) + DickLook(player) + BallLook(player) + PussyLook(player);
+        // End live update Looksmenu
+
+        if (player.Health < player.MaxHealth && !battle && player.Fat >= player.Height / 100) {
             if ((player.Health + player.RestRate) > player.MaxHealth) {
                 player.Health = player.MaxHealth;
             } else {
                 player.Health += player.RestRate;
                 player.Fat -= player.RestRate / 50;
             }
+        } else if (!battle) {
+            player.Fat -= 0.0001;
         }
-        if (player.WillHealth < player.MaxWillHealth && !battle && player.Fat >= 1) {
+        if (player.WillHealth < player.MaxWillHealth && !battle && player.Fat >= player.Height / 100) {
             if ((player.WillHealth + player.RestRate) > player.MaxWillHealth) {
                 player.WillHealth = player.MaxWillHealth;
             } else {
                 player.WillHealth += player.RestRate;
                 player.Fat -= player.RestRate / 50;
             }
+        } else if (!battle) {
+            player.Fat -= 0.0001;
         }
-        if (player.Fat <= 1 && !battle) {
+        if (player.Fat <= player.Height / 100 && !battle) {
             player.Health -= 0.001;
             player.WillHealth -= 0.001;
             document.getElementById("Hunger").innerHTML = "You are starving";
@@ -4669,7 +5224,7 @@
             document.getElementById("Hunger").innerHTML = null;
         }
         ExpCheck();
-        player.Fat = Math.max(1, player.Fat);
+        player.Fat = Math.max(0.1, player.Fat);
         player.Muscle = Math.max(1, player.Muscle);
         player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);
 
@@ -4692,6 +5247,9 @@
             document.getElementById("VoreLooks").style.display = 'inline-block';
             VoreEngine();
         }
+
+        document.getElementById("EssenceTracker").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
+
         PregnanyEngine();
         HouseEngine();
         FluidsEngine();
