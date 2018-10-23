@@ -56,7 +56,7 @@
         background-color: rgb(255, 255, 255);
         width: 91%;
         margin: 0 0 0 1em;
-        padding: 1em;
+        padding: 0.5em;
         text-align: center;
         overflow: auto;
     }
@@ -202,8 +202,12 @@
         padding: 0.5em 1.5em;
         border: 1px solid black;
         border-radius: 5px;
-        background-color: rgb(235, 235, 228);    
+        background-color: rgb(235, 235, 228);
     }
+    #page2 > div{ 
+        text-align: center;
+    }
+
     #WorldMap {
         position: absolute;
         right: 2vh;
@@ -264,6 +268,16 @@
         background-color: rgb(235, 235, 228);    
         text-align: center;
     }
+    #EssenceOptionsMenu {
+        width: 550px;
+        max-width: 50%;
+        height: auto;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+        background-color: rgb(235, 235, 228);    
+        text-align: center;   
+    }
     #Sizes > input[type=button]{
         max-width: 30%;
         max-height: 4vh;
@@ -277,6 +291,28 @@
         border-radius: 5px;
         text-align: center;
         position: relative;
+    }
+    #LevelMenuText{
+        min-height: 5em;
+        height: auto;
+        box-shadow: 0 0 1px 1px black;
+        border-radius: 10px;
+        background-color: rgb(255, 255, 255);
+        width: 50%;
+        margin: 1em auto 1em auto;
+        padding: 1em;
+        text-align: center;
+    }
+    #PerkMenuText{
+        min-height: 5em;
+        height: auto;
+        box-shadow: 0 0 1px 1px black;
+        border-radius: 10px;
+        background-color: rgb(255, 255, 255);
+        width: 50%;
+        margin: 1em auto 1em auto;
+        padding: 1em;
+        text-align: center;
     }
     div.buttons {
         width: 17%;
@@ -426,7 +462,9 @@
     #Home { 
         background-color: rgb(192, 189, 192);
         min-width: 50%;
+        max-width: 58%;
         min-height: 50%;
+        max-height: 95%;
         border: 2px solid black;
         border-radius: 5px;
     }
@@ -442,13 +480,14 @@
         margin-left: 1em;
         padding: 1em;
         box-shadow: 0 0 1px 1px black;
+        border-radius: 10px;
     }
     #DivMates > div > input[type=button] {
         float: left;
     }
     #flex {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 70% 1fr;
     }
     #DormNameChangeForm {
         text-align: center; 
