@@ -78,6 +78,7 @@
         Dorm: 0,
         Kitchen: 0,
         Gym: 0,
+        Brothel: 0,
         Dormmates: []
     };
 
@@ -85,7 +86,12 @@
     var Flags = {
         BanditLord: false,
         Impregnations: 0,
-        Pregnations: 0
+        Pregnations: 0,
+        Date: {
+            Year: 1200,
+            Month: 0,
+            Day: 0
+        }
     };
 
     // Settings variables
@@ -328,6 +334,16 @@
             console.log("Added Children []");
         }
         Flags.Pregnations = Math.max(0, Flags.Pregnations);
+        if (!Flags.hasOwnProperty("Date")) {
+            Flags.Date = {
+                Year: 1200,
+                Month: 0,
+                Day: 0
+            }
+            console.log("Added date")
+        }
+        DateEngine();
+
         if (!House.hasOwnProperty("Gym")) {
             House.Gym = 0;
             console.log("Added gym");
@@ -335,6 +351,10 @@
         if (!House.hasOwnProperty("Kitchen")) {
             House.Kitchen = 0;
             console.log("Added Kitchen");
+        }
+        if (!House.hasOwnProperty("Brothel")) {
+            House.Brothel = 0;
+            console.log("Added brothel")
         }
 
         if (window.innerHeight < 800) {
@@ -377,6 +397,7 @@
             ", weighs " + player.Weight + "kg. Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor + " skin color.";
 
         requestAnimationFrame(loop);
+        DateEngine();
 
     });
     document.getElementById("StartAutoEssence").addEventListener("click", function () {
@@ -558,7 +579,8 @@
         document.getElementById("DetailedInfo").style.display = 'none';
         document.getElementById("ShowVore").style.display = 'none';
         document.getElementById("EssenceOptionsMenu").style.display = 'none';
-        document.getElementById("PronunForm").style.display = 'none'
+        document.getElementById("PronunForm").style.display = 'none';
+        document.getElementById("Inventory").style.display = 'none';
     }
 
     document.getElementById("Options").addEventListener("click", function () {
@@ -966,6 +988,77 @@
         document.getElementById("ShowQuests").style.display = 'none';
         document.getElementById("map").style.display = 'block';
     });
+    document.getElementById("ShowInventory").addEventListener("click", function () {
+        DisplayNone();
+        console.log(Blade)
+        document.getElementById("Inventory").style.display = 'block';
+        document.getElementById("InventoryBag").innerHTML = Items(Blade)
+
+    });
+
+    var Blade = [
+        Blade = {
+            Name: "Blade",
+            Use: "Yes",
+            Equip: "Yes",
+            Drop: "Yes",
+            Does: "Attack+5"
+        }
+    ];
+
+    function Items(Things) {
+        var Bag = "";
+        for (var e = 0; e < Things.length; e++) {
+            var Thing = Things[e];
+            console.log(Thing)
+            var item = "<div title=\"Temp_Tempsson legendary Temp sword for testing.\">" + Thing.Name
+            switch (Thing.Use) {
+                case "Yes":
+                    item += "<input type=\"button\" onclick=\"Use(" + Thing.Name + ")\" value=\"Use\">"
+                    break;
+                default:
+                    break
+            }
+            switch (Thing.Equip) {
+                case "Yes":
+                    item += "<input type=\"button\" onclick=\"Equip(" + Thing.Name + ")\" value=\"Equip\">"
+                    break;
+                default:
+                    break;
+            }
+            switch (Thing.Drop) {
+                case "No":
+                    break;
+                default:
+                    item += "<input type=\"button\" onclick=\"Drop(" + Thing.Name + ")\" value=\"Drop\">"
+                    break;
+            }
+            item += "</div>";
+            Bag += item;
+        }
+        return Bag;
+
+    }
+
+    function Use(item) {
+        var e = item[4];
+        return console.log(e);
+    }
+
+    function Equip(item) {
+        var e = item[4];
+        return console.log(e);
+    }
+
+    function Drop(item) {
+        var e = item[4];
+        return console.log(e);
+    }
+    document.getElementById("InventoryLeave").addEventListener("click", function () {
+        battle = false;
+        document.getElementById("Inventory").style.display = 'none';
+        document.getElementById("map").style.display = 'block';
+    });
 
     document.getElementById("Save").addEventListener("click", function () {
         DisplayNone();
@@ -1107,7 +1200,9 @@
     var RacesForest = ["Elf", "Amazon"];
     var RacesForest2 = ["Elf", "Fairy"];
     var Names = ["Commoner", "Farmer", "Thug"];
-    var RacesWitch = ["Human", "Elf", "Dark elf"]
+    var RacesWitch = ["Human", "Elf", "Dark elf"];
+    var RacesCave = [];
+
     var FemaleFirstNames = ["Veronica", "Kyra", "Lauryn", "Alicja", "Tate", "Colleen", "Melody", "Pippa", "Keziah", "Melissa", "Lana", "Marie", "Molly", "Sandra", "Dannielle", "Yusra", "Laiba", "Gabrielle", "Syeda", "Amirah"]
     var MaleFirstNames = ["Asim", "Faith", "Macy", "Landon", "Sulaiman", "Iestyn", "Gordon", "Hector", "Haris", "Lee", "Simran", "Ronnie", "Rishi", "Bartosz", "Shelley", "Virgil", "Howard", "Rio"]
     var LastNames = ["Heath", "Bone", "Dupont", "Patterson", "Garza", "Stein", "Madden", "Francis", "Villanueva", "Perry", "Lyssa", "Beach", "Crouch", "Sharp", "Clifford", "Wade", "Vargas", "Hatfield", "Mata", "Lozano", "Everett"]
@@ -1844,6 +1939,14 @@
         return OP;
     }
 
+    function EncounterCave1() {
+        var OP = new enemy("Lesser")
+
+
+
+        return OP;
+    }
+
     var enemies = [];
 
     // Battle attack buttons
@@ -2210,10 +2313,10 @@
         console.log(source);
         myimg.src = "../imgPack/" + source + ".jpg";
         myimg.onload = function () {
-            document.getElementById("MyImg").src = "../imgPack/" + source + ".jpg";
+            document.getElementById("MyImg").src = "imgPack/" + source + ".jpg";
         }
         myimg.onerror = function () {
-            document.getElementById("MyImg").src = "../imgPack/Default.jpg";
+            document.getElementById("MyImg").src = "imgPack/Default.jpg";
         }
     }
 
@@ -2858,7 +2961,7 @@
             document.getElementById("Anal").style.display = 'none';
             HideVore();
         } else {
-            document.getElementById("SexText").innerHTML = "You cannot fit more into your ass.";
+            document.getElementById("SexText").innerHTML = "You cannot fit more into your bowels.";
         }
         return;
     });
@@ -2908,9 +3011,48 @@
         console.log(e);
     };
 
+    var PreyIndex;
+
     function ShowStomachPrey(e) {
-        console.log(e);
+        var Prey = player.Vore.Stomach[e];
+        PreyIndex = e;
+        document.getElementById("StomachContent").style.display = 'none';
+        document.getElementById("StomachPrey").style.display = 'block';
+        document.getElementById("StomachLeave").style.display = 'none';
+        document.getElementById("LeaveVore").style.display = 'none';
+        document.getElementById("LeaveStomachPrey").style.display = 'inline-block';
+        document.getElementById("regurgitateStomach").style.display = 'inline-block';
+        document.getElementById("StomachPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
     };
+    document.getElementById("LeaveStomachPrey").addEventListener("click", function () {
+        document.getElementById("StomachContent").style.display = 'grid';
+        document.getElementById("StomachPrey").style.display = 'none';
+        document.getElementById("StomachLeave").style.display = 'inline-block';
+        document.getElementById("LeaveVore").style.display = 'inline-block';
+        document.getElementById("LeaveStomachPrey").style.display = 'none';
+        document.getElementById("regurgitateStomach").style.display = 'none'
+        console.log(true);
+    });
+    document.getElementById("regurgitateStomach").addEventListener("click", function () {
+        var who = player.Vore.Stomach[PreyIndex];
+        enemies.push(who);
+        player.Vore.Stomach.splice(PreyIndex, 1);
+
+        document.getElementById("StomachContent").style.display = 'grid';
+        document.getElementById("StomachPrey").style.display = 'none';
+        document.getElementById("StomachLeave").style.display = 'inline-block';
+        document.getElementById("LeaveVore").style.display = 'inline-block';
+        document.getElementById("LeaveStomachPrey").style.display = 'none';
+        document.getElementById("regurgitateStomach").style.display = 'none'
+        var food = "";
+        for (var e = 0; e < player.Vore.Stomach.length; e++) {
+            var ps = player.Vore.Stomach[e];
+            EssenceCheck(ps);
+            food += PreyButton(ps, "Stomach", e);
+        }
+        document.getElementById("StomachContent").innerHTML = food;
+    });
+
 
     document.getElementById("VoreLooks").addEventListener("click", function () {
         DisplayNone();
@@ -2920,6 +3062,9 @@
     document.getElementById("ShowStomach").addEventListener("click", function () {
         document.getElementById("VoreButtons").style.display = 'none'
         document.getElementById("VoreStomach").style.display = 'block';
+        document.getElementById("LeaveStomachPrey").style.display = 'none';
+        document.getElementById("regurgitateStomach").style.display = 'none';
+        document.getElementById("StomachDigestion").value = "Stomach digestion " + Settings.VoreSettings.StomachDigestion;
         var food = "";
         for (var e = 0; e < player.Vore.Stomach.length; e++) {
             var ps = player.Vore.Stomach[e];
@@ -2943,6 +3088,8 @@
             food += PreyButton(ps, "Vagina", e);
         }
         document.getElementById("VaginaContent").innerHTML = food;
+        document.getElementById("ChildTF").value = "Child tf/Age reduc " + Settings.VoreSettings.ChildTF;
+        document.getElementById("VCumDigestion").value = "Digestion " + Settings.VoreSettings.VCumDigestion;
     });
     document.getElementById("ChildTF").addEventListener("click", function () {
         if (Settings.VoreSettings.ChildTF) {
@@ -2991,6 +3138,7 @@
             food += PreyButton(ps, "Balls", e);
         }
         document.getElementById("BallsContent").innerHTML = food;
+        document.getElementById("CumDigestion").innerHTML = "Cum transformation " + Settings.VoreSettings.CumTF;
 
     });
     document.getElementById("CumDigestion").addEventListener("click", function () {
@@ -3011,29 +3159,38 @@
     });
     document.getElementById("StomachLeave").addEventListener("click", function () {
         document.getElementById("VoreStomach").style.display = 'none';
-        document.getElementById("VoreButtons").style.display = 'block';
+        document.getElementById("VoreButtons").style.display = 'grid';
     });
     document.getElementById("VaginaLeave").addEventListener("click", function () {
         document.getElementById("VoreVagina").style.display = 'none';
-        document.getElementById("VoreButtons").style.display = 'block';
+        document.getElementById("VoreButtons").style.display = 'grid';
     });
     document.getElementById("BreastLeave").addEventListener("click", function () {
         document.getElementById("VoreBreast").style.display = 'none';
-        document.getElementById("VoreButtons").style.display = 'block';
+        document.getElementById("VoreButtons").style.display = 'grid';
     });
     document.getElementById("BallsLeave").addEventListener("click", function () {
         document.getElementById("VoreBalls").style.display = 'none';
-        document.getElementById("VoreButtons").style.display = 'block';
+        document.getElementById("VoreButtons").style.display = 'grid';
     });
     document.getElementById("AnalLeave").addEventListener("click", function () {
         document.getElementById("VoreAnal").style.display = 'none';
-        document.getElementById("VoreButtons").style.display = 'block';
+        document.getElementById("VoreButtons").style.display = 'grid';
     });
     document.getElementById("VorePerks").addEventListener("click", function () {
         document.getElementById("VoreButtons").style.display = 'none';
         document.getElementById("VorePerkMenu").style.display = 'block';
         if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
             document.getElementById("AbsorbEssence").value = "AbsorbEssence +" + player.Vore.VorePerks.AbsorbEssence.Count;
+        }
+        if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
+            document.getElementById("FasterDigestion").value = "Faster digestion +" + player.Vore.VorePerks.FasterDigestion.Count;
+        }
+        if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
+            document.getElementById("HigerCapacity").value = "Higer capacity +" + player.Vore.VorePerks.HigerCapacity.Count;
+        }
+        if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
+            document.getElementById("AbsorbHeight").value = "Absorb height +" + player.Vore.VorePerks.AbsorbHeight.Count;
         }
         return;
     });
@@ -3057,12 +3214,42 @@
             return;
         }
     });
+    document.getElementById("AbsorbEssence").addEventListener("mouseover", function (e) {
+        document.getElementById("VorePerkMenuText").innerHTML = e.target.title;
+    });
     document.getElementById("FasterDigestion").addEventListener("click", function () {
         if (player.Vore.VorePoints > 0) {
             VorePerkHandler("FasterDigestion");
         } else {
             return;
         }
+    });
+    document.getElementById("FasterDigestion").addEventListener("mouseover", function (e) {
+        document.getElementById("VorePerkMenuText").innerHTML = e.target.title;
+    });
+    document.getElementById("HigerCapacity").addEventListener("click", function () {
+        if (player.Vore.VorePoints > 0) {
+            VorePerkHandler("HigerCapacity");
+        } else {
+            return;
+        }
+    });
+    document.getElementById("HigerCapacity").addEventListener("mouseover", function (e) {
+        document.getElementById("VorePerkMenuText").innerHTML = e.target.title;
+    });
+    document.getElementById("AbsorbHeight").addEventListener("click", function () {
+        if (player.Vore.VorePoints > 0) {
+            VorePerkHandler("AbsorbHeight");
+        } else {
+            return;
+        }
+    });
+    document.getElementById("AbsorbHeight").addEventListener("mouseover", function (e) {
+        document.getElementById("VorePerkMenuText").innerHTML = e.target.title;
+    });
+    document.getElementById("LeaveVorePerkMenu").addEventListener("click", function () {
+        document.getElementById("VoreButtons").style.display = 'grid';
+        document.getElementById("VorePerkMenu").style.display = 'none';
     });
 
     document.getElementById("LeaveVore").addEventListener("click", function () {
@@ -3074,7 +3261,7 @@
         document.getElementById("VoreVagina").style.display = 'none';
         document.getElementById("VoreStomach").style.display = 'none';
         document.getElementById("map").style.display = 'block';
-        document.getElementById("VoreButtons").style.display = 'block';
+        document.getElementById("VoreButtons").style.display = 'grid';
 
     });
 
@@ -3087,6 +3274,11 @@
         }
         document.getElementById("VoreLevel").innerHTML = player.Vore.Level;
         document.getElementById("VoreLevel").style.width = 100 * (player.Vore.Exp / VoreMaxExp) + "%";
+        document.getElementById("ShowStomach").innerHTML = "Stomach<br>" + Math.round(MaxStomachCapacity() - StomachCapacity()) + "kg prey <br> " + Math.round(MaxStomachCapacity()) + "kg Max";
+        document.getElementById("ShowVagina").innerHTML = "Pussy<br>" + Math.round(MaxVaginaCapacity() - VaginaCapacity()) + "kg prey <br> " + Math.round(MaxVaginaCapacity()) + "kg Max";
+        document.getElementById("ShowBreast").innerHTML = "Breast<br>" + Math.round(MaxBreastCapacity() - BreastCapacity()) + "kg prey <br> " + Math.round(MaxBreastCapacity()) + "kg Max";
+        document.getElementById("ShowBalls").innerHTML = "Balls<br>" + Math.round(MaxBallsCapacity() - BallsCapacity()) + "kg prey <br> " + Math.round(MaxBallsCapacity()) + "kg Max";
+        document.getElementById("ShowAnal").innerHTML = "Anal<br>" + Math.round(MaxAnalCapacity() - AnalCapacity()) + "kg prey <br> " + Math.round(MaxAnalCapacity()) + "kg Max";
 
         if (player.Vore.VorePoints > 0) {
             document.getElementById("VorePerks").style.display = 'inline-block';
@@ -3095,6 +3287,23 @@
         }
 
         for (var e = 0; e < player.Vore.Stomach.length; e++) {
+            if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
+                if (player.Vore.Stomach[e].Masc > 0) {
+                    player.Vore.Stomach[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                }
+                if (player.Vore.Stomach[e].Femi > 0) {
+                    player.Vore.Stomach[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                }
+            }
+            if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
+                if (player.Height < 160 + player.Vore.VorePerks.AbsorbHeight.Count * 20 && player.Vore.Stomach[e].Height > 1) {
+                    player.Height += player.Vore.VorePerks.AbsorbHeight.Count * 0.001;
+                    player.Vore.Stomach[e].Height -= player.Vore.VorePerks.AbsorbHeight.Count * 0.001;
+                }
+
+            }
             if (Settings.VoreSettings.StomachDigestion) {
                 player.Vore.Stomach[e].Weight -= 0.001;
                 player.Vore.StomachExp += 0.001;
@@ -3106,26 +3315,33 @@
                     player.Vore.Exp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
                     player.Fat += 0.0005 * player.Vore.VorePerks.FasterDigestion.Count;
                 }
+
                 if (player.Vore.Stomach[e].Weight < 0) {
-                    EventLog("You have digested " + player.Vore.Stomach[e].Name + " " + player.Vore.Stomach[e].Race + " " + player.Vore.Balls[e].FirstName + " " + player.Vore.Balls[e].Lastname);
+                    EventLog("You have digested " + player.Vore.Stomach[e].Name + " " + player.Vore.Stomach[e].Race + " " + player.Vore.Balls[e].FirstName + " " + player.Vore.Balls[e].LastName);
                     player.Vore.Stomach.splice(e, 1);
                 }
             } else {
                 player.Vore.StomachExp += 0.0005;
                 player.Vore.Exp += 0.0005;
             }
+        }
+        for (var e = 0; e < player.Vore.Vagina.length; e++) {
             if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
-                if (player.Vore.Stomach[e].Masc > 0) {
-                    player.Vore.Stomach[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                if (player.Vore.Vagina[e].Masc > 0) {
+                    player.Vore.Vagina[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                     player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                 }
-                if (player.Vore.Stomach[e].Femi > 0) {
-                    player.Vore.Stomach[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                if (player.Vore.Vagina[e].Femi > 0) {
+                    player.Vore.Vagina[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                     player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                 }
             }
-        }
-        for (var e = 0; e < player.Vore.Vagina.length; e++) {
+            if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
+                if (player.Height < 160 + player.Vore.VorePerks.AbsorbHeight.Count * 20 && player.Vore.Vagina[e].Height > 1) {
+                    player.Height += player.Vore.VorePerks.AbsorbHeight.Count * 0.001;
+                    player.Vore.Vagina[e].Height -= player.Vore.VorePerks.AbsorbHeight.Count * 0.001;
+                }
+            }
             if (Settings.VoreSettings.VCumDigestion) {
                 player.Vore.Vagina[e].Weight -= 0.001;
                 player.Vore.Vagina[e].VaginaExp += 0.001;
@@ -3159,19 +3375,25 @@
                 player.Vore.VaginaExp += 0.0005;
                 player.Vore.Exp += 0.0005;
             }
+        }
+        for (var e = 0; e < player.Vore.Breast.length; e++) {
             if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
-                if (player.Vore.Vagina[e].Masc > 0) {
-                    player.Vore.Vagina[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                if (player.Vore.Breast[e].Masc > 0) {
+                    player.Vore.Breast[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                     player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                 }
-                if (player.Vore.Vagina[e].Femi > 0) {
-                    player.Vore.Vagina[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                if (player.Vore.Breast[e].Femi > 0) {
+                    player.Vore.Breast[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                     player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                 }
             }
+            if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
+                if (player.Height < 160 + player.Vore.VorePerks.AbsorbHeight.Count * 20 && player.Vore.Breast[e].Height > 1) {
+                    player.Height += player.Vore.VorePerks.AbsorbHeight.Count * 0.001;
+                    player.Vore.Breast[e].Height -= player.Vore.VorePerks.AbsorbHeight.Count * 0.001;
+                }
 
-        }
-        for (var e = 0; e < player.Vore.Breast.length; e++) {
+            }
             if (Settings.VoreSettings.MilkTF) {
                 player.Vore.Breast[e].Weight -= 0.001;
                 player.Vore.BreastExp += 0.001;
@@ -3197,18 +3419,25 @@
                 player.Vore.BreastExp += 0.0005;
                 player.Vore.Exp += 0.0005;
             }
+        }
+        for (var e = 0; e < player.Vore.Balls.length; e++) {
             if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
-                if (player.Vore.Breast[e].Masc > 0) {
-                    player.Vore.Breast[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                if (player.Vore.Balls[e].Masc > 0) {
+                    player.Vore.Balls[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                     player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                 }
-                if (player.Vore.Breast[e].Femi > 0) {
-                    player.Vore.Breast[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                if (player.Vore.Balls[e].Femi > 0) {
+                    player.Vore.Balls[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                     player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                 }
             }
-        }
-        for (var e = 0; e < player.Vore.Balls.length; e++) {
+            if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
+                if (player.Height < 160 + player.Vore.VorePerks.AbsorbHeight.Count * 20 && player.Vore.Balls[e].Height > 1) {
+                    player.Height += player.Vore.VorePerks.AbsorbHeight.Count * 0.001;
+                    player.Vore.Balls[e].Height -= player.Vore.VorePerks.AbsorbHeight.Count * 0.001;
+                }
+
+            }
             if (Settings.VoreSettings.CumTF) {
                 player.Vore.Balls[e].Weight -= 0.001;
                 player.Vore.BallsExp += 0.001;
@@ -3235,18 +3464,24 @@
                 player.Vore.BallsExp += 0.0005;
                 player.Vore.Exp += 0.001;
             }
+        }
+        for (var e = 0; e < player.Vore.Anal.length; e++) {
             if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
-                if (player.Vore.Balls[e].Masc > 0) {
-                    player.Vore.Balls[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                if (player.Vore.Anal[e].Masc > 0) {
+                    player.Vore.Anal[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                     player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                 }
-                if (player.Vore.Balls[e].Femi > 0) {
-                    player.Vore.Balls[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                if (player.Vore.Anal[e].Femi > 0) {
+                    player.Vore.Anal[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                     player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                 }
             }
-        }
-        for (var e = 0; e < player.Vore.Anal.length; e++) {
+            if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
+                if (player.Height < 160 + player.Vore.VorePerks.AbsorbHeight.Count * 20 && player.Vore.Anal[e].Height > 1) {
+                    player.Height += player.Vore.VorePerks.AbsorbHeight.Count * 0.001;
+                    player.Vore.Anal[e].Height -= player.Vore.VorePerks.AbsorbHeight.Count * 0.001;
+                }
+            }
             if (false) {
                 if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
                     player.Vore.Anal[e].Weight -= 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
@@ -3260,18 +3495,7 @@
                 player.Vore.AnalExp += 0.0005;
                 player.Vore.Exp += 0.001;
             }
-            if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
-                if (player.Vore.Anal[e].Masc > 0) {
-                    player.Vore.Anal[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-                    player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-                }
-                if (player.Vore.Anal[e].Femi > 0) {
-                    player.Vore.Anal[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-                    player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-                }
-            }
         }
-
     }
 
     function StomachCapacity() {
@@ -3283,14 +3507,31 @@
         for (var e = 0; e < player.Vore.Stomach.length; e++) {
             sub += player.Vore.Stomach[e].Weight;
         }
+        if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
+            bonus += 0.1 * player.Vore.VorePerks.HigerCapacity.Count;
+        }
         return capacity * bonus - sub;
+    }
+
+    function MaxStomachCapacity() {
+        var capacity = player.Height / 3
+        if (player.hasOwnProperty("Vore")) {
+            var bonus = 1 + player.Vore.StomachExp / 100;
+        }
+        if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
+            bonus += 0.1 * player.Vore.VorePerks.HigerCapacity.Count;
+        }
+        return capacity * bonus;
     }
 
     function VaginaCapacity() {
         if (player.Pussies.length < 1) {
             return 0;
         }
-        var capacity = player.Pussies[0].Size;
+        var capacity = 0;
+        for (var e = 0; e < player.Pussies.length; e++) {
+            capacity += player.Pussies[e].Size
+        }
         var sub = 0;
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.VaginaExp / 100;
@@ -3298,11 +3539,34 @@
         for (var e = 0; e < player.Vore.Vagina.length; e++) {
             sub += player.Vore.Vagina[e].Weight;
         }
+        if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
+            bonus += 0.1 * player.Vore.VorePerks.HigerCapacity.Count;
+        }
         return capacity * bonus - sub;
     }
 
+    function MaxVaginaCapacity() {
+        if (player.Pussies.length < 1) {
+            return 0;
+        }
+        var capacity = 0;
+        for (var e = 0; e < player.Pussies.length; e++) {
+            capacity += player.Pussies[e].Size
+        }
+        if (player.hasOwnProperty("Vore")) {
+            var bonus = 1 + player.Vore.VaginaExp / 100;
+        }
+        if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
+            bonus += 0.1 * player.Vore.VorePerks.HigerCapacity.Count;
+        }
+        return capacity * bonus;
+    }
+
     function BreastCapacity() {
-        var capacity = player.Boobies[0].Size;
+        var capacity = 0;
+        for (var e = 0; e < player.Boobies.length; e++) {
+            capacity += player.Boobies[e].Size;
+        }
         var sub = 0;
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.BreastExp / 100;
@@ -3310,14 +3574,34 @@
         for (var e = 0; e < player.Vore.Breast.length; e++) {
             sub += player.Vore.Breast[e].Weight;
         }
+        if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
+            bonus += 0.1 * player.Vore.VorePerks.HigerCapacity.Count;
+        }
         return capacity * bonus - sub;
+    }
+
+    function MaxBreastCapacity() {
+        var capacity = 0;
+        for (var e = 0; e < player.Boobies.length; e++) {
+            capacity += player.Boobies[e].Size;
+        }
+        if (player.hasOwnProperty("Vore")) {
+            var bonus = 1 + player.Vore.BreastExp / 100;
+        }
+        if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
+            bonus += 0.1 * player.Vore.VorePerks.HigerCapacity.Count;
+        }
+        return capacity * bonus;
     }
 
     function BallsCapacity() {
         if (player.Balls.length < 1) {
             return 0;
         }
-        var capacity = player.Balls[0].Size;
+        var capacity = 0;
+        for (var e = 0; e < player.Balls.length; e++) {
+            capacity += player.Balls[e].Size;
+        }
         var sub = 0;
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.BallsExp / 100;
@@ -3325,19 +3609,59 @@
         for (var e = 0; e < player.Vore.Balls.length; e++) {
             sub += player.Vore.Balls[e].Weight;
         }
+        if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
+            bonus += 0.1 * player.Vore.VorePerks.HigerCapacity.Count;
+        }
         return capacity * bonus - sub;
     }
 
+    function MaxBallsCapacity() {
+        if (player.Balls.length < 1) {
+            return 0;
+        }
+        var capacity = 0;
+        for (var e = 0; e < player.Balls.length; e++) {
+            capacity += player.Balls[e].Size;
+        }
+        if (player.hasOwnProperty("Vore")) {
+            var bonus = 1 + player.Vore.BallsExp / 100;
+        }
+        if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
+            bonus += 0.1 * player.Vore.VorePerks.HigerCapacity.Count;
+        }
+        return capacity * bonus;
+    }
+
     function AnalCapacity() {
-        var capacity = player.Anal[0].Size;
+        var capacity = 0;
+        for (var e = 0; e < player.Anal.length; e++) {
+            capacity += player.Anal[e].Size;
+        }
         var sub = 0;
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.AnalExp / 100;
+        }
+        if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
+            bonus += 0.1 * player.Vore.VorePerks.HigerCapacity.Count;
         }
         for (var e = 0; e < player.Vore.Anal.length; e++) {
             sub += player.Vore.Anal[e].Weight;
         }
         return capacity * bonus - sub;
+    }
+
+    function MaxAnalCapacity() {
+        var capacity = 0;
+        for (var e = 0; e < player.Anal.length; e++) {
+            capacity += player.Anal[e].Size;
+        }
+        if (player.hasOwnProperty("Vore")) {
+            var bonus = 1 + player.Vore.AnalExp / 100;
+        }
+        if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
+            bonus += 0.1 * player.Vore.VorePerks.HigerCapacity.Count;
+        }
+        return capacity * bonus;
     }
     // End vore
 
@@ -3367,14 +3691,19 @@
                         player.Children.push(Child);
                         EventLog("You have given birth!")
                         player.Pregnant.Babies.splice(e, 1);
+                        if (player.Pregnant.Babies.length > 0) {
+                            player.Pregnant.Status = false;
+                        }
                     } else {
                         player.Children = [];
                     }
                 }
             }
             for (var b = 0; b < player.Boobies.length; b++) {
-                player.Boobies[b].MilkBaseRate = player.Boobies[b].MilkMax / 50000;
-                player.Boobies[b].Milk += player.Boobies[b].MilkBaseRate + player.Boobies[b].MilkRate;
+                if (player.Boobies[b].Milk < player.Boobies[b].MilkMax) {
+                    player.Boobies[b].MilkBaseRate = player.Boobies[b].MilkMax / 50000;
+                    player.Boobies[b].Milk += player.Boobies[b].MilkBaseRate + player.Boobies[b].MilkRate;
+                }
             }
         } else {
             player.Pregnant.Status = false;
@@ -3520,7 +3849,7 @@
                         TF.Status = false;
                         TF.Counter = 0;
                     } else if (TF.Counter == 500) {
-                        EventLog("You are have growning into something very familiar.");
+                        EventLog("Your body starts to feel familiar.");
                     }
                     break;
 
@@ -3528,6 +3857,24 @@
 
         }
     }
+
+    function DateEngine() {
+        setInterval(DateTracker, 5000);
+    }
+
+    function DateTracker() {
+        Flags.Date.Day++;
+        if (Flags.Date.Day > 30) {
+            Flags.Date.Day = 1;
+            Flags.Date.Month++;
+            if (Flags.Date.Month > 12) {
+                Flags.Date.Month = 1;
+                Flags.Date.Year++;
+            }
+        }
+        document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+    }
+
 
     function Impregnate(who, by, mode, where) {
         var Father = RandomInt(1, 4);
@@ -3797,6 +4144,7 @@
     };
 
     var Doors = [];
+
 
     function CheckDoor() {
         for (var i = 0; i < Doors.length; i++) {
@@ -4263,7 +4611,7 @@
                 document.getElementById("WitchShopText").innerHTML = "You feel your body becoming more fertil.";
             } else if (Chosen == "FertilitySub" && player.Gold >= 70) {
                 player.Gold -= 70;
-                player.Fertility--;
+                player.Fertility -= 3;
                 document.getElementById("WitchShopText").innerHTML = "You feel your body becoming more barren."
             } else if (Chosen == "VirilityAdd" && player.Gold >= 70) {
                 player.Gold -= 70;
@@ -4271,7 +4619,7 @@
                 document.getElementById("WitchShopText").innerHTML = "You feel your virility increasing.";
             } else if (Chosen == "VirilitySub" && player.Gold >= 30) {
                 player.Gold -= 30;
-                player.Virility--;
+                player.Virility -= 3;
                 document.getElementById("WitchShopText").innerHTML = "You feel your virility decreasing";
             } else if (Chosen == "CumRateAdd" && player.Gold >= 100 && player.Balls.length > 0) {
                 player.Gold -= 100;
@@ -4404,8 +4752,8 @@
         document.getElementById("BuildGym").value = "Build gym " + Gymcost + "g";
         var Kitchencost = Math.round(200 * Math.pow(1.2, House.Kitchen));
         document.getElementById("BuildKitchen").value = "Build kitchen " + Kitchencost + "g";
-
-
+        var Brothelcost = Math.round(500 * Math.pow(1.2, House.Brothel));
+        document.getElementById("BuildBrothel").value = "Build brothel " + Brothelcost + "g(Concept)";
     });
     document.getElementById("UpgradeBed").addEventListener("click", function () {
         var BedCost = Math.round(50 * Math.pow(1.2, House.BedLevel));
@@ -4458,7 +4806,7 @@
             }
             House.Gym++;
             player.Gold -= Gymcost;
-            var Gymcost = Math.round(200 * Math.pow(1.2, House.Gym));
+            Gymcost = Math.round(200 * Math.pow(1.2, House.Gym));
             document.getElementById("BuildGym").value = "Build gym " + Gymcost + "g";
         }
     });
@@ -4494,6 +4842,23 @@
         }
     });
     document.getElementById("BuildPortal").addEventListener("mouseover", function (e) {
+        document.getElementById("HomeText").innerHTML = e.target.title;
+    });
+    document.getElementById("BuildBrothel").addEventListener("click", function () {
+        var Brothelcost = Math.round(500 * Math.pow(1.2, House.Brothel))
+        if (player.Gold > Brothelcost) {
+            player.Gold -= Brothelcost;
+            if (House.Brothel < 1) {
+                document.getElementById("HomeText").innerHTML = "You have built a brothel where your servants will whore themself out, allowing you to gain extra income."
+            } else {
+                document.getElementById("HomeText").innerHTML = "You upgrade your brothel for extra income.";
+            }
+            House.Brothel++;
+        }
+        Brothelcost = Math.round(500 * Math.pow(1.2, House.Brothel));
+        document.getElementById("BuildBrothel").value = "Upgrade brothel " + Brothelcost + "g";
+    });
+    document.getElementById("BuildBrothel").addEventListener("mouseover", function (e) {
         document.getElementById("HomeText").innerHTML = e.target.title;
     });
     document.getElementById("LeaveUpgradeHome").addEventListener("click", function () {
@@ -4949,6 +5314,8 @@
         }
     };
 
+    var backmap;
+
     function CurrentMap() {
         switch (player.Map) {
             case "Start":
@@ -4956,18 +5323,17 @@
                     enemies = [EncounterStart(), EncounterStart(), EncounterStart()];
                 }
                 PrintMap("Start");
-                var backmap = new Image;
-                backmap.src = "../Tiles/Start.png";
+                backmap = new Image;
+                backmap.src = "Tiles/Start.png";
                 ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
-
                 break;
             case "RoadToCity1":
                 if (enemies.length < 1) {
                     enemies = [EncounterPath1(), EncounterPath1(), EncounterPath1()];
                 }
                 PrintMap("RoadToCity1");
-                var backmap = new Image;
-                backmap.src = "../Tiles/RoadToCity.png";
+                backmap = new Image;
+                backmap.src = "Tiles/RoadToCity.png";
                 ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                 break;
             case "Bandit":
@@ -4976,25 +5342,27 @@
                     enemies = [EncounterBandit(), EncounterBandit(), EncounterBandit(), EncounterBanditLord()];
                 }
                 PrintMap("Bandit");
+
                 break;
             case "RoadToCity2":
-                PrintDoor("N");
-                PrintDoor("E");
                 if (enemies.length < 1) {
                     enemies = [EncounterPath2(), EncounterPath2(), EncounterPath2()];
                 }
                 Npcs = [];
                 PrintMap("RoadToCity2");
+                backmap = new Image;
+                backmap.src = "Tiles/RoadToCity2.png";
+                ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                 break;
             case "City":
-                PrintDoor("E");
-                PrintDoor("W");
-                PrintDoor("S");
                 enemies = [];
                 if (Npcs.length < 1) {
                     Npcs = [Townhall, Bar, Shop];
                 }
                 PrintMap("City");
+                var backmap = new Image;
+                backmap.src = "Tiles/City.png";
+                ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                 break;
             case "RoadToHome":
                 PrintDoor("W");
@@ -5100,6 +5468,22 @@
 
     }
 
+
+    function PaintBackground() {
+        ctx.fillStyle = MapColor;
+        World.fillStyle = MapColor;
+        ctx.fillRect(0, 0, startarea.width, startarea.height);
+        World.fillRect(0, 0, WorldMap.width, WorldMap.height);
+
+        // Wall around map
+        ctx.fillStyle = Settings.BorderColor;
+        ctx.fillRect(0, 0, grid / 2, startarea.height);
+        ctx.fillRect(0, 0, startarea.width, grid / 2);
+        ctx.fillRect(startarea.width - (grid / 2), 0, grid / 2, startarea.height);
+        ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
+    }
+
+
     var fps = [];
     var timer = 0;
 
@@ -5125,35 +5509,30 @@
         };
 
 
-
         switch (player.Map) {
             case "Start":
             case "RoadToCity1":
+            case "RoadToCity2":
+            case "City":
                 break;
             default:
-                ctx.clearRect(0, 0, startarea.width, startarea.height);
-                World.clearRect(0, 0, World.width, World.height);
-                ctx.fillStyle = MapColor;
-                World.fillStyle = MapColor;
-                ctx.fillRect(0, 0, startarea.width, startarea.height);
-                World.fillRect(0, 0, WorldMap.width, WorldMap.height);
-
-                // Wall around map
-                ctx.fillStyle = Settings.BorderColor;
-                ctx.fillRect(0, 0, grid / 2, startarea.height);
-                ctx.fillRect(0, 0, startarea.width, grid / 2);
-                ctx.fillRect(startarea.width - (grid / 2), 0, grid / 2, startarea.height);
-                ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
-
+                PaintBackground();
                 break;
         }
         CurrentMap();
         if (enemies.length > 0) {
             PrintEnemies();
         };
-        if (Npcs.length > 0) {
+        if (Npcs.length > 0 && player.Map != "City") {
             PrintNpcs();
-        };
+        } else if (player.Map == "City") {
+            for (var e = 0; e < Npcs.length; e++) {
+                ctx.fillStyle = Settings.TextColor;
+                ctx.font = "4vh Arial";
+                ctx.textAlign = "center";
+                ctx.fillText(Npcs[e].Name, Npcs[e].X + Npcs[e].Width / 2, Npcs[e].Y + Npcs[e].Height / 1.8);
+            }
+        }
 
         ctx.fillStyle = "BlueViolet";
         ctx.fillRect(sprite.x, sprite.y, grid, grid);
@@ -5191,10 +5570,13 @@
                 document.getElementById("looks2").innerHTML += "<br><br> You are " + Math.round(player.Pregnant.Babies[0].BabyAge / 10000) + " months pregnant."
             }
         }
-
         document.getElementById("StatusFitness").innerHTML = "Weight: " + Math.round(player.Weight) + "kg<br>" + "Fat: " + Math.round(player.Fat) + "kg<br>Muscle: " + Math.round(player.Muscle) + "kg<br>" + Fitness(player);
         document.getElementById("genitals2").innerHTML = BoobLook(player) + DickLook(player) + BallLook(player) + PussyLook(player);
         // End live update Looksmenu
+
+        document.getElementById("EssenceTracker").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
+
+
 
         if (player.Health < player.MaxHealth && !battle && player.Fat >= player.Height / 100) {
             if ((player.Health + player.RestRate) > player.MaxHealth) {
@@ -5242,13 +5624,14 @@
                 House.Dormmates[esf].Masc += 0.0001;
                 House.Dormmates[esf].Femi += 0.0001;
             }
+            if (House.hasOwnProperty("Brothel")) {
+                player.Gold += 0.001 * House.Dormmates.length * House.Brothel;
+            }
         }
         if (Settings.Vore) {
             document.getElementById("VoreLooks").style.display = 'inline-block';
             VoreEngine();
         }
-
-        document.getElementById("EssenceTracker").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
 
         PregnanyEngine();
         HouseEngine();
