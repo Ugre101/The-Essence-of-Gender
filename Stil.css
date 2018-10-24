@@ -44,7 +44,7 @@
         border-radius: 10px 0 0 0;
 
     }
-    #EventLog > div > h1 {
+    #EventLog > div > h2 {
         display: inline-block;
         margin: 0;
     }
@@ -56,7 +56,7 @@
         background-color: rgb(255, 255, 255);
         width: 91%;
         margin: 0 0 0 1em;
-        padding: 0.5em;
+        padding: 0.5em 0.2em;
         text-align: center;
         overflow: auto;
     }
@@ -310,6 +310,17 @@
         border-radius: 10px;
         background-color: rgb(255, 255, 255);
         width: 50%;
+        margin: 1em auto 1em auto;
+        padding: 1em;
+        text-align: center;
+    }
+    #VorePerkMenuText{
+        min-height: 5em;
+        height: auto;
+        box-shadow: 0 0 1px 1px black;
+        border-radius: 10px;
+        background-color: rgb(255, 255, 255);
+        width: 70%;
         margin: 1em auto 1em auto;
         padding: 1em;
         text-align: center;
@@ -582,8 +593,8 @@
     }
 
     div.Vore {  
-        width: 600px;
-        max-width: 50%;
+        min-width: 30%;
+        max-width: 55%;
         min-height: 200px;
         height: auto;
         padding: 10px;
@@ -599,10 +610,45 @@
     }
 
     div.VoreGrid {
+        max-height: 80vh;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-template-rows: repeat(auto-fit, 140px);
+        overflow: auto;
     }
     #ManualGrowth {
         box-shadow: 0 0 1px 1px black;
         border-radius: 10px;
+    }
+    #Inventory {
+        background-color: rgb(235, 235, 228);
+        border: 2px solid black;
+        border-radius: 5px;
+        width: 600px;
+        max-width: 90%;
+        min-height: 300px;
+        height: auto;
+        max-height: 90%;
+        text-align: center;
+        padding: 1em;   
+    }
+    #InventoryBag {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1em;  
+    }
+    #InventoryBag > div {
+        border: 1px solid black;
+        padding: 0.5em;
+    }
+    #InventoryBag > div > input[type="button"]{
+        font-size: 0.5em;
+        width: 15%;
+        height: 100%;
+        float: right;
+        margin: 0 1em;
+    }
+    #VoreButtons {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
     }

@@ -18,6 +18,8 @@
 		<input type="button" id="GoToCharCreator" value="Start game" />
 		<br>
 		<input type="button" id="LoadButton" value="Load game" />
+		<br><br><br>
+		<input type="button" id="NewGamePlus" value="New game+(placeholder)" />
 	</div>
 
 	<div id="CharCreator" class="None">
@@ -80,14 +82,14 @@
 	<div id="EventLog" class="None">
 		<div>
 			<input type="button" id="HideEventLog" value="Hide" />
-			<h1>Event Log</h1>
+			<h2>Event Log</h2>
 		</div>
 		<div id="EventLogPart">
 			<p id="EventText"></p>
 		</div>
 		<div>
 			<input type="button" id="HideFuilds" value="Hide" />
-			<h1>Fluids</h1>
+			<h2>Fluids</h2>
 		</div>
 		<div id="FluidPart">
 			<div class="TwoCollum">
@@ -113,9 +115,10 @@
 				<input type="button" id="LevelButton" value="Level up">
 				<input type="button" id="Looks" value="Looks" />
 				<input type="button" id="Quests" value="Quests" />
-				<input type="button" id="Options" value="Options" />
+				<input type="button" id="ShowInventory" value="Inventory(placeholder)" />
 				<input type="button" id="Save" value="Save" />
 				<input type="button" id="Load" value="Load" />
+				<input type="button" id="Options" value="Options" />
 				<input type="button" id="MoreButtons" value="More buttons" />
 			</div>
 			<div id="SecondButtnos">
@@ -212,6 +215,9 @@
 
 	<div id="DetailedInfo" class="None Looks">
 		<h1>Details</h1>
+		<div id="Date">
+				<p>Date: <time id="CurrentDate"></time></p>
+		</div>
 		<br>
 		<p id="Pregnancy"></p>
 		<input type="button" id="Children" value="Children(placeholder)" />
@@ -370,7 +376,9 @@
 	</div>
 
 	<div id="Inventory" class="None">
-
+		<p id="InventoryText"></p>
+		<div id="InventoryBag"></div>
+		<input type="button" id="InventoryLeave" value="Close" />
 	</div>
 
 	<div id="ShowVore" class="None Vore">
@@ -381,17 +389,20 @@
 			</div>
 		</div>
 		<div id="VoreButtons">
-			<input type="button" id="ShowStomach" value="Stomach">
-			<input type="button" id="ShowVagina" value="Pussy">
-			<input type="button" id="ShowBreast" value="Breast">
-			<input type="button" id="ShowBalls" value="Balls">
-			<input type="button" id="ShowAnal" value="Anal">
-			<input type="button" id="VorePerks" value="Vore perks" />
+			<button type="button" id="ShowStomach">Stomach</button>
+			<button type="button" id="ShowVagina">Pussy</button>
+			<button type="button" id="ShowBreast">Breast</button>
+			<button type="button" id="ShowBalls">Balls</button>
+			<button type="button" id="ShowAnal">Anal</button>
+			<button type="button" id="VorePerks">Vore perks</button>
 		</div>
 		<div id="VoreStomach" class="None">
 			<div id="StomachContent" class="VoreGrid"></div>
+			<div id="StomachPrey" class="None"></div>
 			<input type="button" id="StomachDigestion" value="Stomach digestion true">
 			<input type="button" id="StomachLeave" value="Back">
+			<input type="button" id="LeaveStomachPrey" value="close"/>
+			<input type="button" id="regurgitateStomach" value="regurgitate"/>
 		</div>
 		<div id="VoreVagina" class="None">
 			<div id="VaginaContent" class="VoreGrid"></div>
@@ -414,16 +425,17 @@
 			<input type="button" id="AnalLeave" value="Back">
 		</div>
 		<div id="VorePerkMenu">
+			<p id="VorePerkMenuText"></p>
 			<p id="VorePerkPointsLeft"></p>
 			<div>
-				<input type="button" id="AbsorbEssence" value="Absorb prey essence" title="Absorb essence of your preys">
+				<input type="button" id="AbsorbEssence" value="Absorb prey essence" title="Absorb essence of masculinity and femininity from your preys">
 				<input type="button" id="FasterDigestion" value="Faster digestion" title="Digest your prey faster, also speeds up gain of fat, cum and milk">
-				<input type="button" id="HigerCapacity" value="Stretchy body(Placeholder)" title="Increase the total weight of prey your body part can hold.">
-				<input type="button" id="AbsorbHeight" value="Absorb height(Placeholder)" title="Allows you to gain height by absorbing height from your preys.">
+				<input type="button" id="HigerCapacity" value="Higer capacity" title="Increase the total weight of prey your body can hold.">
+				<input type="button" id="AbsorbHeight" value="Absorb height" title="Grow taller by absorbing height from your preys. (Growth limit [160cm + 20 * perklevel] t.ex. perk level 3 allows you to grow to 220cm)">
 				<input type="button" id="" value="" title="">
 			</div>
 
-			<input type="button" id="LeavePerkMenu" value="Done">
+			<input type="button" id="LeaveVorePerkMenu" value="Done">
 		</div>
 		<input type="button" id="LeaveVore" value="Close">
 	</div>
@@ -529,8 +541,8 @@
 						<input type="button" id="GetBlowjob" value="Receive blowjob" />
 						<input type="button" id="DoggyStyleAnal" value="Anal doggy style" />
 					</div>
-					<input type="button" id="CockVore" value="Cock vore" />
 				</div>
+				<input type="button" id="CockVore" value="Cock vore" />
 			</div>
 			<!-- Anal-->
 			<div>
@@ -539,8 +551,8 @@
 						<input type="button" id="GetRimjob" value="Receive rimjob" />
 						<input type="button" id="GiveRimjob" value="Give rimjob" />
 					</div>
-					<input type="button" id="AnalVore" value="Anal vore" />
 				</div>
+				<input type="button" id="AnalVore" value="Anal vore" />
 			</div>
 			<div>
 				<div id="Breast">
@@ -699,7 +711,7 @@
 			<input type="button" id="BuildGym" value="Build gym 200g" title="A gym will make your servant can gain muscle over time." />
 			<input type="button" id="BuildKitchen" value="Build kitchen 200g" title="A kitchen will make your servants gain fat over time." />
 			<input type="button" id="BuildPortal" value="Portal 1000g(Concept)" title="Why would you walk in a magic world, that's for peasants!" />
-			<input type="button" id="BuildBrothel" value="Brothel (plaveholder)" />
+			<input type="button" id="BuildBrothel" value="Brothel(Concept)" title="More to come but for now grants you extra passive income."/>
 			<input type="button" id="LeaveUpgradeHome" value="Back">
 		</div>
 		<div id="TheDorm" class="None">
