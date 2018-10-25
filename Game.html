@@ -19,7 +19,7 @@
 		<br>
 		<input type="button" id="LoadButton" value="Load game" />
 		<br><br><br>
-		<input type="button" id="NewGamePlus" value="New game+(placeholder)" />
+		<input type="button" id="NewGamePlus" value="Old release load(placeholder)" />
 	</div>
 
 	<div id="CharCreator" class="None">
@@ -115,7 +115,7 @@
 				<input type="button" id="LevelButton" value="Level up">
 				<input type="button" id="Looks" value="Looks" />
 				<input type="button" id="Quests" value="Quests" />
-				<input type="button" id="ShowInventory" value="Inventory(placeholder)" />
+				<input type="button" id="ShowInventory" value="Inventory(Concept)" />
 				<input type="button" id="Save" value="Save" />
 				<input type="button" id="Load" value="Load" />
 				<input type="button" id="Options" value="Options" />
@@ -156,7 +156,17 @@
 			<input type="button" id="LoadLeaveStart" value="Leave">
 		</div>
 		<br><br><input type="file" id="LoadFile" value="Load from computer" />
+	</div>
 
+	<div id="NewGamePlusMenu" class="SLMenu None">
+		<h1>Old Save Game</h1>
+		<input type="button" id="NGPLoadPlayer1" value="Load 1 " />
+		<input type="button" id="NGPLoadPlayer2" value="Load 2" />
+		<input type="button" id="NGPLoadPlayer3" value="Load 3" />
+		<input type="button" id="NGPLoadPlayer4" value="Load 4" />
+		<input type="button" id="NGPLoadPlayer5" value="Load 5" />
+		<input type="button" id="NGPLoadLeaveStart" value="Leave">
+		<br><br><input type="file" id="NGPLoadFile" value="Load from computer" />
 	</div>
 
 
@@ -215,15 +225,17 @@
 
 	<div id="DetailedInfo" class="None Looks">
 		<h1>Details</h1>
-		<div id="Date">
-				<p>Date: <time id="CurrentDate"></time></p>
-		</div>
+
 		<br>
 		<p id="Pregnancy"></p>
 		<input type="button" id="Children" value="Children(placeholder)" />
 		<br>
 		<p id="ExtraStats"></p>
 		<input type="button" id="CloseExtra" value="Close" />
+	</div>
+
+	<div id="ChildrenMenu" class="None">
+		<input type="button" id="LeaveChildrenMenu" value="close" />
 	</div>
 
 	<div id="ShowQuests" class="None">
@@ -235,7 +247,9 @@
 
 
 	<div id="status" class="left None">
-		<br>
+		<div id="Date">
+			<p>Date: <time id="CurrentDate"></time></p>
+		</div>
 		<p id="StatusName"></p>
 		<label for="StatusHealth">Health</label>
 		<div class="FullBar">
@@ -328,6 +342,9 @@
 		<div id="EssenceStart">
 			<label for="OptionGiveEssence">Give Essence</label>
 			<input type="button" id="OptionGiveEssence" value="Both" />
+			<label for="NoExtra">(Placeholder)Stop you from growing extra limbs</label>
+			<input type="button" id="NoExtra" value="No extra dick/pussies" title="On auto you can't grow more than one dick, pussy, balls and breast." />
+
 			<label for="EssenceAuto">Is essence body changes Auto or Manual</label>
 			<br><input type="button" id="EssenceAuto" value="Essence Auto" />
 			<p>Warning if you play on manual switching to auto will change player to according to your current Femininity
@@ -401,28 +418,41 @@
 			<div id="StomachPrey" class="None"></div>
 			<input type="button" id="StomachDigestion" value="Stomach digestion true">
 			<input type="button" id="StomachLeave" value="Back">
-			<input type="button" id="LeaveStomachPrey" value="close"/>
-			<input type="button" id="regurgitateStomach" value="regurgitate"/>
+			<input type="button" id="LeaveStomachPrey" value="close" />
+			<input type="button" id="regurgitateStomach" value="regurgitate" />
 		</div>
 		<div id="VoreVagina" class="None">
 			<div id="VaginaContent" class="VoreGrid"></div>
+			<div id="VaginaPrey" class="None"></div>
 			<input type="button" id="VCumDigestion" value="Digestion false" />
 			<input type="button" id="ChildTF" value="Child tf/Age reduc true" />
 			<input type="button" id="VaginaLeave" value="Back">
+			<input type="button" id="LeaveVaginaPrey" value="close" />
+			<input type="button" id="regurgitateVagina" value="regurgitate" />
 		</div>
 		<div id="VoreBreast" class="None">
 			<div id="BreastContent" class="VoreGrid"></div>
+			<div id="BreastPrey" class="None"></div>
 			<input type="button" id="MilkTransformation" value="Milk transformation true" />
 			<input type="button" id="BreastLeave" value="Back">
+			<input type="button" id="LeaveBreastPrey" value="close" />
+			<input type="button" id="regurgitateBreast" value="regurgitate" />
 		</div>
 		<div id="VoreBalls" class="None">
 			<div id="BallsContent" class="VoreGrid"></div>
+			<div id="BallsPrey" class="None"></div>
 			<input type="button" id="CumDigestion" value="Cum transformation true">
 			<input type="button" id="BallsLeave" value="Back">
+			<input type="button" id="LeaveBallsPrey" value="close" />
+			<input type="button" id="regurgitateBalls" value="regurgitate" />
 		</div>
 		<div id="VoreAnal" class="None">
 			<div id="AnalContent" class="VoreGrid"></div>
+			<div id="AnalPrey" class="None"></div>
+			<input type="button" id="AnalDigestion" value="Anal digestion ">
 			<input type="button" id="AnalLeave" value="Back">
+			<input type="button" id="LeaveAnalPrey" value="close" />
+			<input type="button" id="regurgitateAnal" value="regurgitate" />
 		</div>
 		<div id="VorePerkMenu">
 			<p id="VorePerkMenuText"></p>
@@ -711,7 +741,7 @@
 			<input type="button" id="BuildGym" value="Build gym 200g" title="A gym will make your servant can gain muscle over time." />
 			<input type="button" id="BuildKitchen" value="Build kitchen 200g" title="A kitchen will make your servants gain fat over time." />
 			<input type="button" id="BuildPortal" value="Portal 1000g(Concept)" title="Why would you walk in a magic world, that's for peasants!" />
-			<input type="button" id="BuildBrothel" value="Brothel(Concept)" title="More to come but for now grants you extra passive income."/>
+			<input type="button" id="BuildBrothel" value="Brothel(Concept)" title="More to come but for now grants you extra passive income." />
 			<input type="button" id="LeaveUpgradeHome" value="Back">
 		</div>
 		<div id="TheDorm" class="None">
