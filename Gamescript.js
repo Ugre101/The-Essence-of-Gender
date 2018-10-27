@@ -49,7 +49,7 @@
                 Count: 0
             }
         },
-        RestRate: 0.01,
+        RestRate: 1,
         EssenceDrain: 5,
         GiveEssence: 0,
         Map: "Start",
@@ -68,7 +68,14 @@
             Babies: []
         },
         Children: [],
-        Inventory: []
+        Inventory: [],
+        Age: 18,
+        Face: {
+            Eyes: "brown",
+            HairStyle: "curly",
+            HairColor: "brown",
+            HairLength: "shoulder"
+        }
     };
 
     // House variable
@@ -112,6 +119,12 @@
             Male: "male",
             Female: "female",
             Doll: "doll"
+        },
+        MaxLimbs: {
+            MaxBoobs: 5,
+            MaxVaginas: 5,
+            MaxDicks: 5,
+            MaxBalls: 5
         }
     }
 
@@ -419,7 +432,6 @@
             if (Oldplayer.Perks.hasOwnProperty("FasterRest")) {
                 if (Oldplayer.Perks.FasterRest.hasOwnProperty("Count")) {
                     player.Perks.FasterRest.Count = Oldplayer.Perks.FasterRest.Count;
-                    player.RestRate = 0.01 + player.Perks.FasterRest.Count * 0.01;
                 }
             }
 
@@ -622,11 +634,25 @@
                     Title: "Temp_Tempsson legendary temp sword gives +999 to testing."
                 }
                 player.Inventory.push(Blade);
-
             }
         } else {
             player.Inventory = [];
         }
+
+        if (!Settings.hasOwnProperty("MaxLimbs")) {
+            Settings.MaxLimbs = {
+                MaxBoobs: 5,
+                MaxVaginas: 5,
+                MaxDicks: 5,
+                MaxBalls: 5
+            }
+            console.log("Added MaxLimbs ")
+        }
+        if (!player.hasOwnProperty("Age")) {
+            player.Age = 18;
+            console.log("Added player age")
+        }
+
     }
 
     // Start på char creator
@@ -918,14 +944,15 @@
         DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N");
         Doors = [DoorE, DoorS, DoorN, DoorW];
         Npcs = [];
-        Townhall = new Npc("Townhall", startarea.width / 2 - 4 * grid, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
-        Shop = new Npc("Shop", grid / 2, startarea.height - grid * 6, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
-        Bar = new Npc("Bar", startarea.width - 6 * grid, startarea.height - 6 * grid, grid * 5.5, grid * 5.5, "RGB(133,94,66)")
-        Gym = new Npc("Gym", grid / 2, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
-        WitchShop = new Npc("WitchShop", grid * 15, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
-        WitchHut = new Npc("WitchHut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
-        Tempsson = new Npc("Temp_Tempsson", grid * 10, grid * 15, grid, grid, "RGB(133,94,66)");
-        Portal = new Npc("LocalPortal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
+        Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
+        Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
+        Bar = new Npc("Bar", "Bar", 14 * grid, 14 * grid, grid * 5.5, grid * 5.5, "RGB(133,94,66)")
+        Gym = new Npc("Gym", "Gym", grid / 2, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
+        WitchShop = new Npc("WitchShop", "Witch shop", grid * 15, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
+        WitchHut = new Npc("WitchHut", "Witch hut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
+        Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
+        Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
+        BlackMartket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
         return;
     }
 
@@ -974,6 +1001,7 @@
     document.getElementById("EssenceOptions").addEventListener("click", function () {
         DisplayNone();
         document.getElementById("EssenceOptionsMenu").style.display = 'block';
+        document.getElementById("MaxMenu").style.display = 'none';
         if (Settings.EssenceAuto) {
             document.getElementById("EssenceAuto").value = "Essence Auto";
             document.getElementById("ManualGrowth").style.display = 'none';
@@ -985,7 +1013,76 @@
             document.getElementById("GrowExtraDick").value = "Extra dick " + EssenceExtraCost(player.Dicks) + "M";
             document.getElementById("GrowExtraBalls").value = "Extra balls " + EssenceExtraCost(player.Balls) + "M";
         }
+        document.getElementById("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
+        document.getElementById("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
+        document.getElementById("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
+        document.getElementById("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
+        document.getElementById("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
+        document.getElementById("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
+        document.getElementById("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
+        document.getElementById("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
     });
+
+    document.getElementById("BoobsLess").addEventListener("click", function () {
+        if (Settings.MaxLimbs.MaxBoobs > 0) {
+            Settings.MaxLimbs.MaxBoobs--;
+        }
+        document.getElementById("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
+        document.getElementById("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
+    });
+    document.getElementById("BoobsMore").addEventListener("click", function () {
+        Settings.MaxLimbs.MaxBoobs++;
+        document.getElementById("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
+        document.getElementById("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
+    });
+    document.getElementById("VaginasLess").addEventListener("click", function () {
+        if (Settings.MaxLimbs.MaxVaginas > 0) {
+            Settings.MaxLimbs.MaxVaginas--;
+        }
+        document.getElementById("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
+        document.getElementById("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
+    });
+    document.getElementById("VaginasMore").addEventListener("click", function () {
+        Settings.MaxLimbs.MaxVaginas++;
+        document.getElementById("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
+        document.getElementById("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
+    });
+    document.getElementById("DicksLess").addEventListener("click", function () {
+        if (Settings.MaxLimbs.MaxDicks > 0) {
+            Settings.MaxLimbs.MaxDicks--;
+        }
+        document.getElementById("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
+        document.getElementById("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
+    });
+    document.getElementById("DicksMore").addEventListener("click", function () {
+        Settings.MaxLimbs.MaxDicks++;
+        document.getElementById("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
+        document.getElementById("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
+    });
+    document.getElementById("BallsLess").addEventListener("click", function () {
+        if (Settings.MaxLimbs.MaxBalls > 0) {
+            Settings.MaxLimbs.MaxBalls--;
+        }
+        document.getElementById("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
+        document.getElementById("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
+    });
+    document.getElementById("BallsMore").addEventListener("click", function () {
+        Settings.MaxLimbs.MaxBalls++;
+        document.getElementById("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
+        document.getElementById("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
+    });
+
+
+    document.getElementById("NoExtra").addEventListener("click", function () {
+        if (document.getElementById("MaxMenu").style.display == 'none') {
+            document.getElementById("MaxMenu").style.display = 'block';
+            document.getElementById("NoExtra").value = "Hide";
+        } else {
+            document.getElementById("MaxMenu").style.display = 'none';
+            document.getElementById("NoExtra").value = "Max boobs/dicks etc";
+        }
+    });
+
 
     function EssenceCost(what) {
         return Math.round((10 * Math.pow(1.1, what.Size)));
@@ -1266,9 +1363,10 @@
 
     function Items(Things) {
         var Bag = "";
+        Things.sort();
         for (var e = 0; e < Things.length; e++) {
             var Thing = Things[e];
-            console.log(Thing)
+            console.log(Thing);
             var item = "<div title=\"" + Thing.Title + "\">" + Thing.Name
             switch (Thing.Use) {
                 case "Yes":
@@ -1303,6 +1401,11 @@
         if (thing.Name == "Orc cum") {
             player.Masc += 50;
             player.Inventory.splice(item, 1);
+            EventLog("After drinking the orc cum, you body absorbs the manly essence of it.");
+        } else if (thing.Name == "Fairy dust") {
+            player.Height -= 5;
+            player.Inventory.splice(item, 1);
+            EventLog("Inhaling the fairy dust you see the world grow before you, or maybe it's you who became shorter?");
         }
         document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
         return console.log(player.Inventory[item]);
@@ -1464,11 +1567,19 @@
     var RacesForest2 = ["Elf", "Fairy"];
     var Names = ["Commoner", "Farmer", "Thug"];
     var RacesWitch = ["Human", "Elf", "Dark elf"];
-    var RacesCave = [];
+    var RacesCave = ["Goblin", "Imp"];
+    var RacesCave2 = ["Goblin", "Demon"];
+    var RacesCave3 = ["Dhampir", "Demon"];
 
-    var FemaleFirstNames = ["Veronica", "Kyra", "Lauryn", "Alicja", "Tate", "Colleen", "Melody", "Pippa", "Keziah", "Melissa", "Lana", "Marie", "Molly", "Sandra", "Dannielle", "Yusra", "Laiba", "Gabrielle", "Syeda", "Amirah"]
-    var MaleFirstNames = ["Asim", "Faith", "Macy", "Landon", "Sulaiman", "Iestyn", "Gordon", "Hector", "Haris", "Lee", "Simran", "Ronnie", "Rishi", "Bartosz", "Shelley", "Virgil", "Howard", "Rio"]
-    var LastNames = ["Heath", "Bone", "Dupont", "Patterson", "Garza", "Stein", "Madden", "Francis", "Villanueva", "Perry", "Lyssa", "Beach", "Crouch", "Sharp", "Clifford", "Wade", "Vargas", "Hatfield", "Mata", "Lozano", "Everett"]
+
+
+    var FemaleFirstNames = ["Veronica", "Kyra", "Lauryn", "Alicja", "Tate", "Colleen", "Melody", "Pippa", "Keziah", "Melissa", "Lana", "Marie", "Molly", "Sandra", "Dannielle", "Yusra", "Laiba", "Gabrielle", "Syeda", "Amirah"];
+    var MaleFirstNames = ["Asim", "Faith", "Macy", "Landon", "Sulaiman", "Iestyn", "Gordon", "Hector", "Haris", "Lee", "Simran", "Ronnie", "Rishi", "Bartosz", "Shelley", "Virgil", "Howard", "Rio"];
+    var LastNames = ["Heath", "Bone", "Dupont", "Patterson", "Garza", "Stein", "Madden", "Francis", "Villanueva", "Perry", "Lyssa", "Beach", "Crouch", "Sharp", "Clifford", "Wade", "Vargas", "Hatfield", "Mata", "Lozano", "Everett"];
+
+    var EvilMaleFirstNames = ["Neclord", "Virion", "Dario", "Grumio", "Auron", "Jaymes", "Fark", "Cidolfus", "Bartholomew", "Arthur"];
+    var EvilFemaleFirstNames = ["Autumn", "Imeena", "Margorie", "Draven", "Lauden", "Ethel", "Cat", "Raven", "Senka", "Jinx"];
+    var EvilLastNames = ["Crimson", "Kane", "Duke", "Interfector", "Geulimja", "Ebonywood", "Grove", "Helion", "Church", "Geulimja", "Moonfall", "Winter", "Hart", "Calarook", "Crypt", "Wolf", "Rex", "Fadington", "Maganti", "Hook"];
 
     var battle = false;
     var FirstRound = true;
@@ -1698,7 +1809,6 @@
     document.getElementById("FasterRest").addEventListener("click", function () {
         if (player.PerkPoints > 0) {
             PerkHandler("FasterRest");
-            player.RestRate = 0.01 + player.Perks.FasterRest.Count * 0.01;
         } else {
             return;
         }
@@ -1999,6 +2109,18 @@
                 who.Str += 1;
                 who.SexSkill += 2;
                 break;
+            case "Imp":
+                who.Femi = 0;
+                break;
+            case "Demon":
+                who.WillHealth += 20;
+                who.FullWillHealth += 20;
+                break;
+            case "Dhampir":
+                who.WillHealth += 40;
+                who.WillFullHealth += 40;
+                who.Will += 1;
+                break;
         }
         return who;
     };
@@ -2011,10 +2133,25 @@
                 break;
             case "hermaphrodite":
             case "female":
+            case "doll":
                 who.FirstName = RandomString(FemaleFirstNames);
                 break;
         }
         who.LastName = RandomString(LastNames);
+    }
+
+    function EvilNameGiver(who) {
+        switch (CheckGender(who)) {
+            case "male":
+                who.FirstName = RandomString(EvilMaleFirstNames);
+                break;
+            case "hermaphrodite":
+            case "female":
+            case "doll":
+                who.FirstName = RandomString(EvilFemaleFirstNames);
+                break;
+        }
+        who.LastName = RandomString(EvilLastNames);
     }
 
     // Encounter function
@@ -2086,7 +2223,7 @@
 
     function EncounterBandit() {
         var OP = new enemy("Bandit", RandomString(RacesBandit), RandomInt(50, 200), RandomInt(0, 100), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15),
-            RandomInt(8, 15), RandomInt(10, 20), 0, 0, 170, 170, 170, 170, RandomInt(2, 18) * grid, RandomInt(2, 18) * grid,
+            RandomInt(8, 15), RandomInt(10, 15), 0, 0, 170, 170, 170, 170, RandomInt(2, 18) * grid, RandomInt(2, 18) * grid,
             RandomInt(30, 45), RandomInt(30, 55), 'tomato ', grid, RandomInt(50, 70), RandomInt(140, 180), RandomInt(10, 30), RandomInt(20, 40));
         EssenceCheck(OP);
         if (OP.Pussies.length > 0) {
@@ -2205,10 +2342,68 @@
     }
 
     function EncounterCave1() {
-        var OP = new enemy("Lesser")
+        var OP = new enemy("Lesser", RandomString(RacesCave), RandomInt(50, 150), RandomInt(0, 150), RandomInt(7, 10), RandomInt(7, 10), RandomInt(7, 10), RandomInt(0, 2),
+            RandomInt(1, 3), RandomInt(6, 15), 0, 0, 120, 120, 150, 150, RandomInt(2, 18) * grid, RandomInt(2, 18) * grid,
+            RandomInt(25, 35), RandomInt(15, 30), 'red', grid, RandomInt(40, 60), RandomInt(120, 140), RandomInt(10, 25), RandomInt(15, 35));
+        EssenceCheck(OP);
+        if (OP.Pussies.length > 0) {
+            var a = RandomInt(1, 5);
+            if (a < 5) {
+                OP.Pussies[0].Virgin = false;
+            }
+        }
+        if (OP.Dicks.length > 0) {
+            var b = RandomInt(1, 5);
+            if (b < 5) {
+                OP.Dicks[0].Virgin = false;
+            }
+        }
+        RaceBonus(OP);
+        EvilNameGiver(OP);
+        return OP;
+    }
 
+    function EncounterCave2() {
+        var OP = new enemy("Cave", RandomString(RacesCave2), RandomInt(50, 250), RandomInt(0, 150), RandomInt(12, 18), RandomInt(12, 18), RandomInt(12, 18), RandomInt(8, 12),
+            RandomInt(5, 8), RandomInt(16, 25), 0, 0, 190, 190, 210, 210, RandomInt(2, 18) * grid, RandomInt(2, 18) * grid,
+            RandomInt(40, 60), RandomInt(35, 60), 'red', grid, RandomInt(50, 70), RandomInt(150, 180), RandomInt(15, 35), RandomInt(15, 35));
+        EssenceCheck(OP);
+        if (OP.Pussies.length > 0) {
+            var a = RandomInt(1, 5);
+            if (a < 5) {
+                OP.Pussies[0].Virgin = false;
+            }
+        }
+        if (OP.Dicks.length > 0) {
+            var b = RandomInt(1, 5);
+            if (b < 5) {
+                OP.Dicks[0].Virgin = false;
+            }
+        }
+        RaceBonus(OP);
+        EvilNameGiver(OP);
+        return OP;
+    }
 
-
+    function EncounterCave3() {
+        var OP = new enemy("Guard", RandomString(RacesCave3), RandomInt(200, 700), RandomInt(50, 350), RandomInt(25, 40), RandomInt(25, 40), RandomInt(22, 38), RandomInt(18, 22),
+            RandomInt(15, 18), RandomInt(50, 70), 0, 0, 370, 370, 400, 400, RandomInt(2, 18) * grid, RandomInt(2, 18) * grid,
+            RandomInt(65, 85), RandomInt(55, 80), 'red', grid, RandomInt(50, 80), RandomInt(160, 190), RandomInt(25, 35), RandomInt(15, 35));
+        EssenceCheck(OP);
+        if (OP.Pussies.length > 0) {
+            var a = RandomInt(1, 5);
+            if (a < 5) {
+                OP.Pussies[0].Virgin = false;
+            }
+        }
+        if (OP.Dicks.length > 0) {
+            var b = RandomInt(1, 5);
+            if (b < 5) {
+                OP.Dicks[0].Virgin = false;
+            }
+        }
+        RaceBonus(OP);
+        EvilNameGiver(OP);
         return OP;
     }
 
@@ -2229,6 +2424,41 @@
         UpdateStats();
         return;
     });
+
+
+    function DropSystem(who) {
+        var e = who;
+        switch (e.Name) {
+            case "Banditlord":
+                var OrcCum = {
+                    Name: "Orc cum",
+                    Use: "Yes",
+                    Equip: "No",
+                    Drop: "Yes",
+                    Does: "Masc+50",
+                    Title: "Quite nasty but it will give you extra masculinity."
+                }
+                player.Inventory.push(OrcCum);
+                break;
+            default:
+                break;
+        }
+        switch (e.Race) {
+            case "Fairy":
+                var FairyDust = {
+                    Name: "Fairy dust",
+                    Use: "Yes",
+                    Equip: "No",
+                    Drop: "Yes",
+                    Does: "Size minus 5cm",
+                    Title: "Sparkly, commonly used as prank item to shrink people."
+                }
+                player.Inventory.push(FairyDust);
+            default:
+                break;
+        }
+    }
+
     // Function to call when battle is won
     var SexAttack;
     var ESexAttack;
@@ -2255,6 +2485,7 @@
                 }
             }
         }
+        DropSystem(enemies[EnemyIndex]);
         if (Settings.Skip) {
             battle = false;
             document.getElementById("map").style.display = 'block';
@@ -2277,19 +2508,6 @@
             CheckArousal();
             AfterBattleButtons();
         }
-        if (enemies[EnemyIndex].Name == "Banditlord") {
-            player.Quests[i].Completed = true;
-            var OrcCum = {
-                Name: "Orc cum",
-                Use: "Yes",
-                Equip: "No",
-                Drop: "Yes",
-                Does: "Masc+50",
-                Title: "Quite nasty but it will give you extra masculinity."
-            }
-            player.Inventory.push(OrcCum);
-            return;
-        }
     }
 
     var PRL;
@@ -2305,7 +2523,7 @@
         if (LastPressed == "GiveBlowjob") {
             document.getElementById("SexText").innerHTML = "You suck your opponents " + enemies[EnemyIndex].Dicks[RL].Type + " " + enemies[EnemyIndex].Dicks[RL].Size + "cm dick.";
         } else {
-            RL = RandomInt(0, enemies[EnemyIndex].Dicks.length-1);
+            RL = RandomInt(0, enemies[EnemyIndex].Dicks.length - 1);
             document.getElementById("SexText").innerHTML = "You go down on your knees you and suck your opponents " + enemies[EnemyIndex].Dicks[RL].Type + " " + enemies[EnemyIndex].Dicks[RL].Size + "cm dick.";
         }
         CheckArousal();
@@ -2385,8 +2603,8 @@
         if (LastPressed == "RideCowgirl") {
             document.getElementById("SexText").innerHTML = "You ride their " + enemies[EnemyIndex].Dicks[RL].Size + "cm " + enemies[EnemyIndex].Dicks[RL].Type + " dick.<br>Their dick " + Tightness(enemies[EnemyIndex], player, "B") + " your pussy.";
         } else {
-            RL = RandomInt(0, enemies[EnemyIndex].Dicks.length-1);
-            PRL = RandomInt(0, player.Pussies.length-1);
+            RL = RandomInt(0, enemies[EnemyIndex].Dicks.length - 1);
+            PRL = RandomInt(0, player.Pussies.length - 1);
 
             document.getElementById("SexText").innerHTML = "Laying your  opponent down on thier back, you position yourself ontop of them and ride their " + enemies[EnemyIndex].Dicks[RL].Size + "cm " + enemies[EnemyIndex].Dicks[RL].Type + " dick.<br>Their dick " + Tightness(enemies[EnemyIndex], player, "B") + " your pussy.";
         }
@@ -2408,7 +2626,7 @@
         if (LastPressed == "Missionary") {
             document.getElementById("SexText").innerHTML = "You continue fucking their " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + player.Dicks[PRL].Size + "cm " + player.Dicks[PRL].Type + " dick.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
         } else {
-            PRL = RandomInt(0, player.Dicks.length-1);
+            PRL = RandomInt(0, player.Dicks.length - 1);
             document.getElementById("SexText").innerHTML = "Positioning your  opponent on thier back you fuck their " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + player.Dicks[PRL].Size + "cm " + player.Dicks[PRL].Type + " dick.<br> Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
         }
         if (player.Dicks[PRL].Virgin) {
@@ -2429,7 +2647,7 @@
         if (LastPressed == "DoggyStyle") {
             document.getElementById("SexText").innerHTML = "You continue fucking them from behind.<br>Their " + enemies[EnemyIndex].Pussies[0].Type + " pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to your " + player.Dicks[PRL].Size + "cm " + player.Dicks[PRL].Type + " dick.";
         } else {
-            PRL = RandomInt(0, player.Dicks.length-1);
+            PRL = RandomInt(0, player.Dicks.length - 1);
             document.getElementById("SexText").innerHTML = "Commanding the defeated to get down on their all fours you fuck them from behind.<br> Their " + enemies[EnemyIndex].Pussies[0].Type + " pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to your " + player.Dicks[PRL].Size + "cm " + player.Dicks[PRL].Type + " dick.";
         }
         if (player.Dicks[PRL].Virgin) {
@@ -2466,7 +2684,7 @@
         if (LastPressed == "DoggyStyleAnal") {
             document.getElementById("SexText").innerHTML = "You hold their head down and fuck their ass with your " + player.Dicks[PRL].Size + "cm " + player.Dicks[PRL].Type + " dick.";
         } else {
-            PRL = RandomInt(0, player.Dicks.length-1);
+            PRL = RandomInt(0, player.Dicks.length - 1);
             document.getElementById("SexText").innerHTML = "You order you opponent down on their kees and position yourself behind them you push their head down and fuck their ass with your " + player.Dicks[PRL].Size + "cm " + player.Dicks[PRL].Type + " dick.";
         }
         if (player.Dicks[PRL].Virgin) {
@@ -2502,6 +2720,8 @@
         document.getElementById("PlayerVagina").style.display = 'block';
         document.getElementById("PlayerDick").style.display = 'block';
         document.getElementById("Anal").style.display = 'block';
+        document.getElementById("EnemyVagina").style.display = 'block';
+        document.getElementById("EnemyDick").style.display = 'block';
         document.getElementById("map").style.display = 'block';
         document.getElementById("status").style.display = 'block';
         document.getElementById("buttons").style.display = 'block';
@@ -2715,6 +2935,7 @@
                 }
                 break;
             case "male":
+            console.log(true)
                 document.getElementById("GiveBlowjob").style.display = 'block';
                 document.getElementById("GiveCunniglus").style.display = 'none';
                 if (player.Dicks.length > 0) {
@@ -2858,7 +3079,7 @@
         }
 
         document.getElementById("PlayerLooks").innerHTML = BoobLook(player) + PussyLook(player) + DickLook(player);
-        if (player.Pregnant.Status) {
+        if (player.Pregnant.Babies.length > 0) {
             var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
             if (age < 1) {
                 age = "Impregnated";
@@ -2879,7 +3100,7 @@
         SexAttack = Math.round((RandomInt(4, 7) * player.SexSkill) / 2);
         ESexAttack = Math.round((RandomInt(4, 7) * enemies[EnemyIndex].SexSkill) / 2);
         document.getElementById("PName").innerHTML = player.Name + " " + player.Lastname + "<br>" + player.Race + " " + Pronun(CheckGender(player));
-        document.getElementById("EName").innerHTML = ee.Name + " " + ee.FirstName + " " + ee.LastName + "<br>" + ee.Race + " " + Pronun(CheckGender(ee));
+        document.getElementById("EName").innerHTML = " " + ee.FirstName + " " + ee.LastName + "<br>" + ee.Name + " " + ee.Race + " " + Pronun(CheckGender(ee));
         document.getElementById("Mascu").innerHTML = Math.round(player.Masc);
         document.getElementById("Femin").innerHTML = Math.round(player.Femi);
         document.getElementById("PArousal").innerHTML = Math.round(player.Arousal);
@@ -3167,6 +3388,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "OralVore", enemies[EnemyIndex]);
             }
+            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
             player.Vore.Stomach.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent you shove them down your throat.";
@@ -3185,6 +3407,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "Unbirth", enemies[EnemyIndex]);
             }
+            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
             player.Vore.Vagina.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent you shove into your pussy.";
@@ -3203,6 +3426,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "CockVore", enemies[EnemyIndex]);
             }
+            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
             player.Vore.Balls.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent you shove them down into your cockslit, you watching the bulge travel down your shaft.";
@@ -3221,6 +3445,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "BreastVore", enemies[EnemyIndex]);
             }
+            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
             player.Vore.Breast.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent you shove them into your nipple.";
@@ -3239,6 +3464,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "AnalVore", enemies[EnemyIndex]);
             }
+            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
             player.Vore.Anal.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent you shove them into your bowels.";
@@ -4111,13 +4337,32 @@
     }
     // End vore
 
+    function IntToAge(int) {
+        switch (int) {
+            case 1:
+                return "one year";
+            case 2:
+                return "two years";
+            case 3:
+                return "three years";
+            case 4:
+                return "four years";
+            case 5:
+                return "five years";
+            case 6:
+                return "six years";
+            default:
+                return int + "years";
+        }
+    }
+
     function PregnanyEngine() {
         if (player.Children.length > 0) {
             for (var e = 0; e < player.Children.length; e++) {
                 player.Children[e].AgeCounter++;
                 if (player.Children[e].AgeCounter % 365 == 0) {
                     var age = Math.round(player.Children[e].AgeCounter / 365);
-                    EventLog("Your child has grown" + age + " years old.");
+                    EventLog("Your child has grown " + IntToAge(age) + " old.");
                 }
             }
         }
@@ -4125,7 +4370,7 @@
         if (player.Pregnant.Babies.length < 1) {
             player.Pregnant.Status = false;
         }
-        if (player.Pregnant.Status) {
+        if (player.Pregnant.Babies.length > 0) {
             for (var e = 0; e < player.Pregnant.Babies.length; e++) {
                 player.Pregnant.Babies[e].BabyAge++;
                 if (player.Pregnant.Babies[e].BabyAge > 274) {
@@ -4308,21 +4553,54 @@
         setInterval(DateTracker, 5000);
     }
 
+    var PlayerDay = 0;
+
     function DateTracker() {
-        Flags.Date.Day++;
-        if (Flags.Date.Day > 30) {
-            Flags.Date.Day = 1;
-            Flags.Date.Month++;
-            if (Flags.Date.Month > 12) {
-                Flags.Date.Month = 1;
-                Flags.Date.Year++;
+        if (!battle) {
+            Flags.Date.Day++;
+            PlayerDay++;
+            if (Flags.Date.Day > 30) {
+                Flags.Date.Day = 1;
+                Flags.Date.Month++;
+                if (Flags.Date.Month > 12) {
+                    Flags.Date.Month = 1;
+                    Flags.Date.Year++;
+                    player.Age++;
+                }
+            }
+            document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+            PregnanyEngine();
+            HouseEngine();
+
+            // health/will && fat burn
+            player.RestRate = 2 + player.Perks.FasterRest.Count * 2;
+            if (player.Health < player.MaxHealth && !battle && player.Fat >= player.Height / 100) {
+                if ((player.Health + player.RestRate) > player.MaxHealth) {
+                    player.Health = player.MaxHealth;
+                } else {
+                    player.Health += player.RestRate;
+                    player.Fat -= player.RestRate / 50;
+                }
+            } else if (!battle) {
+                player.Fat -= 0.2;
+            }
+            if (player.WillHealth < player.MaxWillHealth && !battle && player.Fat >= player.Height / 100) {
+                if ((player.WillHealth + player.RestRate) > player.MaxWillHealth) {
+                    player.WillHealth = player.MaxWillHealth;
+                } else {
+                    player.WillHealth += player.RestRate;
+                    player.Fat -= player.RestRate / 50;
+                }
+            } else if (!battle) {
+                player.Fat -= 0.2;
+            }
+            if (player.Fat <= player.Height / 100 && !battle) {
+                player.Health -= 1;
+                player.WillHealth -= 1;
+
             }
         }
-        document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
-        PregnanyEngine();
-        HouseEngine();
     }
-
 
     function Impregnate(who, by, mode, where) {
         var Father = RandomInt(1, 4);
@@ -4340,6 +4618,8 @@
                         who.Pregnant.Status = true;
                         who.Pregnant.Baby = 0;
                         who.Pregnant.BabyRace = Father.Race;
+                        who.Pregnant.Father = by.Name + " " + by.Lastname;
+                        who.Pregnant.Mother = who.FirstName + " " + who.LastName;
                         Flags.Impregnations++;
                         document.getElementById(where + "SexText").innerHTML = "You have impregnated her!"
                     }
@@ -4349,24 +4629,30 @@
                         who.Pregnant.Status = true;
                         who.Pregnant.Baby = 0;
                         who.Pregnant.BabyRace = Father.Race;
+                        who.Pregnant.Father = by.Name + " " + by.Lastname;
+                        who.Pregnant.Mother = who.FirstName + " " + who.LastName;
                         Flags.Impregnations++;
                         document.getElementById(where + "SexText").innerHTML = "You have impregnated hir!"
                     }
                     break;
                 case "male":
-                    if (by.Virility - 30 >= Impregnation) {
+                    if (by.Virility - 60 >= Impregnation) {
                         who.Pregnant.Status = true;
                         who.Pregnant.Baby = 0;
                         who.Pregnant.BabyRace = Father.Race;
+                        who.Pregnant.Father = by.Name + " " + by.Lastname;
+                        who.Pregnant.Mother = who.FirstName + " " + who.LastName;
                         Flags.Impregnations++;
                         document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate him!"
                     }
                     break;
                 default:
-                    if (by.Virility - 30 >= Impregnation) {
+                    if (by.Virility - 60 >= Impregnation) {
                         who.Pregnant.Status = true;
                         who.Pregnant.Baby = 0;
                         who.Pregnant.BabyRace = Father.Race;
+                        who.Pregnant.Father = by.Name + " " + by.Lastname;
+                        who.Pregnant.Mother = who.FirstName + " " + who.LastName;
                         Flags.Impregnations++;
                         document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnated the doll!"
                     }
@@ -4376,7 +4662,9 @@
             var Impregnation = RandomInt(0, (500 - by.Masc));
             var Baby = {
                 BabyAge: 0,
-                BabyRace: Father.Race
+                BabyRace: Father.Race,
+                Father: by.FirstName + " " + by.LastName,
+                Mother: who.Name + " " + who.Lastname
             }
             switch (CheckGender(who)) {
                 case "female":
@@ -4413,6 +4701,7 @@
                     break;
             }
         }
+        console.log(who.Pregnant)
         return;
     }
 
@@ -4444,6 +4733,7 @@
             }
             who.Anal.push(Anal);
         }
+
         if (who.Masc < 30 && who.Dicks.length > 0) {
             who.Dicks.pop();
         } else if (who.Masc >= 30 && who.Dicks.length == 0) {
@@ -4454,35 +4744,26 @@
             }
             who.Dicks.push(Dick);
         } else if (who.Dicks.length > 0) {
+            var dicktotal = 0;
             for (var e = 0; e < who.Dicks.length; e++) {
-                who.Dicks[e].Type = who.Race
-                if (who.Dicks[e].Size < Math.round(who.Height / 3)) {
-                    if (who.Dicks.length > 1 && e > 0) {
-                        who.Dicks[e].Size = Math.max(Math.round(player.Height * 0.03), Math.round(who.Masc / 30) - (who.Dicks[e - 1].Size * e));
-                    } else {
-                        who.Dicks[e].Size = Math.max(Math.round(player.Height * 0.03), Math.round(who.Masc / 30));
+                who.Dicks[e].Type = who.Race;
+                who.Dicks[e].Size = Math.round(Math.min(who.Height / 3, Math.max(who.Masc / 30 - dicktotal, who.Height * 0.03)));
+                if (e == who.Dicks.length - 1 && who.Masc / 30 - dicktotal > who.Height / 3 && Settings.MaxLimbs.MaxDicks > e) {
+                    var Dick = {
+                        Size: 5,
+                        Type: who.Race,
+                        Virgin: true
                     }
-                    if (who.Dicks[e].Size < 1) {
-                        who.Dicks.pop();
-                    }
-                } else {
-                    if (who.Dicks[e].Size > Math.round(who.Height / 3 + 1)) {
-                        who.Dicks[e].Size = Math.round(who.Height / 3);
-                    }
-                    if (e + 1 < who.Dicks.length) {
-                        continue;
-                    } else {
-                        var Dick = {
-                            Size: 5,
-                            Type: who.Race,
-                            Virgin: true
-                        }
-                        who.Dicks.push(Dick);
-                    }
+                    who.Dicks.push(Dick);
                 }
-
+                if (who.Masc / 30 - dicktotal < 0 || e >= Settings.MaxLimbs.MaxDicks) {
+                    who.Dicks.pop();
+                } else {
+                    dicktotal += who.Dicks[e].Size;
+                }
             }
         }
+
         if (who.Masc < 50 && who.Balls.length > 0) {
             who.Balls.pop();
         } else if (who.Masc >= 50 && who.Balls.length == 0) {
@@ -4495,49 +4776,78 @@
                 CumBaseRate: 0.5
             }
             who.Balls.push(Ball);
+        } else if (who.Balls.length > 0) {
+            var ballstotal = 0;
+            for (var e = 0; e < who.Balls.length; e++) {
+                who.Balls[e].Type = who.Race;
+                who.Balls[e].Size = Math.round(Math.min(who.Height / 4, Math.max(who.Masc / 50 - ballstotal, who.Height * 0.02)));
+                if (e == who.Balls.length - 1 && who.Masc / 50 - ballstotal > who.Height / 3 && Settings.MaxLimbs.MaxBalls > e) {
+                    var Ball = {
+                        Size: 2,
+                        Type: who.Race,
+                        CumMax: 2,
+                        Cum: 0,
+                        CumRate: 0,
+                        CumBaseRate: 0.5
+                    }
+                    who.Balls.push(Ball);
+                }
+                if (who.Masc / 50 - ballstotal < 0 || e >= Settings.MaxLimbs.MaxBalls) {
+                    who.Balls.pop();
+                } else {
+                    ballstotal += who.Balls[e].Size;
+                }
+            }
         }
+
         if (who.Femi < 30 && who.Pussies.length > 0) {
             who.Pussies.pop();
             who.Boobies[0].Size = 0;
         } else if (who.Femi >= 30 && who.Pussies.length == 0) {
             var Pussy = {
-                Size: Math.max(Math.round(player.Height * 0.03), Math.round(who.Femi / 25)),
+                Size: Math.max(Math.round(who.Height * 0.03), Math.round(who.Femi / 25)),
                 Type: who.Race,
                 Virgin: true
             }
             who.Pussies.push(Pussy);
         } else if (who.Pussies.length > 0) {
+            var pussytotal = 0;
             for (var e = 0; e < who.Pussies.length; e++) {
                 who.Pussies[e].Type = who.Race;
-                if (who.Pussies[e].Size < Math.round(player.Height / 3)) {
-                    if (who.Pussies.length > 1 && e > 0) {
-                        who.Pussies[e].Size = Math.max(Math.round(player.Height * 0.03), Math.round(who.Femi / 30) - (who.Pussies[e - 1].Size * e));
-                    } else {
-                        who.Pussies[e].Size = Math.max(Math.round(player.Height * 0.03), Math.round(who.Femi / 30));
+                who.Pussies[e].Size = Math.round(Math.min(who.Height / 3, Math.max(who.Femi / 30 - pussytotal, who.Height * 0.03)));
+                if (e == who.Pussies.length - 1 && who.Femi / 30 - pussytotal > who.Height / 3 && Settings.MaxLimbs.MaxVaginas > e) {
+                    var Pussy = {
+                        Size: 5,
+                        Type: who.Race,
+                        Virgin: true
                     }
-                    if (who.Pussies[e].Size < 1) {
-                        who.Pussies.pop();
-                    }
-                } else {
-                    if (who.Pussies[e].Size > Math.round(player.Height / 3 + 1)) {
-                        who.Pussies[e].Size = Math.round(player.Height / 3);
-                    }
-                    if (e + 1 < who.Pussies.length) {
-                        continue;
-                    } else {
-                        var Pussy = {
-                            Size: 5,
-                            Type: who.Race,
-                            Virgin: true
-                        }
-                        who.Pussies.push(Pussy);
-                    }
-
+                    who.Pussies.push(Pussy);
                 }
-
+                if (who.Femi / 30 - pussytotal < 0 || e >= Settings.MaxLimbs.MaxVaginas) {
+                    who.Pussies.pop();
+                } else {
+                    pussytotal += who.Pussies[e].Size
+                }
             }
         }
-        who.Boobies[0].Size = Math.round(who.Femi / 60);
+
+        var boobtotal = 0;
+        for (var e = 0; e < who.Boobies.length; e++) {
+            who.Boobies[e].Type = who.Race;
+            who.Boobies[e].Size = Math.round(Math.min(who.Height / 3, Math.max(who.Femi / 60 - boobtotal, 0)));
+            if (e == who.Boobies.length - 1 && who.Femi / 60 - boobtotal > who.Height / 3 && Settings.MaxLimbs.MaxBoobs > e) {
+                var Boob = {
+                    Size: 0,
+                    Type: who.Race
+                }
+                who.Boobies.push(Boob);
+            }
+            if (who.Femi / 60 - boobtotal < 0 && e > 0 || e >= Settings.MaxLimbs.MaxBoobs) {
+                who.Boobies.pop();
+            } else {
+                boobtotal += who.Boobies[e].Size;
+            }
+        }
         if (who.Anal.length == 0) {
             var Anal = {
                 Size: 0,
@@ -4551,6 +4861,7 @@
         }
         return;
     }
+
 
     // Event log
     var LogHistory = "";
@@ -4730,13 +5041,13 @@
                             sprite.y = startarea.height - 3 * grid;
                             enemies = [];
                         } else if (Doors[i].NESW == "S") {
-                            player.Map = "Temp";
+                            player.Map = "PathToOutlaws";
                             player.Area = "Second";
                             sprite.y = 2 * grid;
                             enemies = [];
                         }
                         break;
-                    case "Temp":
+                    case "PathToOutlaws":
                         if (Doors[i].NESW == "N") {
                             player.Map = "Forest2";
                             player.Area = "First";
@@ -4746,11 +5057,33 @@
                             player.Map = "Cave1";
                             sprite.x = startarea.width - 3 * grid;
                             enemies = []
+                        } else if (Doors[i].NESW == "S") {
+                            player.Map = "PathToOutlaws2";
+                            sprite.y = 2 * grid;
+                            enemies = []
+                        }
+                        break;
+                    case "PathToOutlaws2":
+                        if (Doors[i].NESW == "N") {
+                            player.Map = "PathToOutlaws";
+                            sprite.y = startarea.height - 3 * grid;
+                            enemies = [];
+                        } else if (Doors[i].NESW == "S") {
+                            player.Map = "Outlaws";
+                            sprite.y = 2 * grid;
+                            enemies = []
+                        }
+                        break;
+                    case "Outlaws":
+                        if (Doors[i].NESW == "N") {
+                            player.Map = "PathToOutlaws2";
+                            sprite.y = startarea.height - 3 * grid;
+                            enemies = [];
                         }
                         break;
                     case "Cave1":
                         if (Doors[i].NESW == "E") {
-                            player.Map = "Temp";
+                            player.Map = "PathToOutlaws";
                             sprite.x = 2 * grid;
                             enemies = [];
                         } else if (Doors[i].NESW == "W") {
@@ -4783,22 +5116,24 @@
         }
     };
 
-    function Npc(Name, X, Y, width, height, Color) {
+    function Npc(Name, RealName, X, Y, width, height, Color) {
         this.Name = Name,
+            this.RealName = RealName,
             this.X = X,
             this.Y = Y,
             this.Width = width,
             this.Height = height,
             this.Color = Color
     };
-    var Townhall = new Npc("Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
-    var Shop = new Npc("Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
-    var Bar = new Npc("Bar", 14 * grid, 14 * grid, grid * 5.5, grid * 5.5, "RGB(133,94,66)")
-    var Gym = new Npc("Gym", grid / 2, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
-    var WitchShop = new Npc("WitchShop", grid * 15, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
-    var WitchHut = new Npc("WitchHut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
-    var Tempsson = new Npc("Temp_Tempsson", grid * 10, grid * 15, grid, grid, "RGB(133,94,66)");
-    var Portal = new Npc("LocalPortal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
+    var Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
+    var Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
+    var Bar = new Npc("Bar", "Bar", 14 * grid, 14 * grid, grid * 5.5, grid * 5.5, "RGB(133,94,66)")
+    var Gym = new Npc("Gym", "Gym", grid / 2, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
+    var WitchShop = new Npc("WitchShop", "Witch shop", grid * 15, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
+    var WitchHut = new Npc("WitchHut", "Witch hut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
+    var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
+    var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
+    var BlackMartket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
 
 
     var Npcs = [];
@@ -4863,7 +5198,7 @@
     });
     document.getElementById("EatBar").addEventListener("click", function () {
         if (player.Gold > 10) {
-            player.Fat += 14 / player.Fat + 5;
+            player.Fat += 12;
             player.Gold -= 10;
             player.Health += 20;
             player.WillHealth += 20;
@@ -5389,7 +5724,7 @@
             "<br><br>Height: " + Math.round(rm.Height) + "cm<br>Weight: " + Math.round(rm.Weight) + "kg<br>Muscle: " + Math.round(rm.Muscle) + "kg<br>Fat: " + Math.round(rm.Fat) +
             "kg<br>" + PregnantStatus + "<br><br>" + BoobLook(rm) + DickLook(rm) + PussyLook(rm) + "</div>" + "<div> Strength: " + rm.Str +
             "<br>Charm: " + rm.Charm + "<br>Endurance: " + rm.End + "<br>Int: " + rm.Int + "<br>Sexskill: " + rm.SexSkill +
-            "<br> Willpower" + rm.Willpower + "</div>"
+            "<br> Willpower: " + rm.Willpower + "</div>"
         document.getElementById(e).style.display = 'block'
         document.getElementById("LeaveRoom").style.display = 'block';
         document.getElementById("LeaveDorm").style.display = 'none';
@@ -5447,6 +5782,14 @@
         document.getElementById("DormEFemin").innerHTML = Math.round(e.Femi);
         document.getElementById("DormPlayerLooks").innerHTML = BoobLook(player) + DickLook(player) + PussyLook(player);
         document.getElementById("DormEnemyLooks").innerHTML = BoobLook(e) + DickLook(e) + PussyLook(e);
+        if (e.Pregnant.Status || player.Dicks.length == 0) {
+        document.getElementById("Impregnate").style.display = 'none';
+        console.log(e.Pregnant)
+        console.log(player.Dicks.length == 0)
+        } else {
+            document.getElementById("Impregnate").style.display = 'inline-block';
+        }
+
         if (e.hasOwnProperty("Pregnant")) {
             if (e.Pregnant.Status) {
                 var age = Math.round(e.Pregnant.Baby / 10000);
@@ -5621,6 +5964,137 @@
 
     // End home
 
+    // Black market code
+    document.getElementById("SellLimbs").addEventListener("click", function () {
+        document.getElementById("LimbSale").style.display = 'block';
+        document.getElementById("SellLimbs").style.display = 'none';
+        LimbSale();
+    });
+
+    function LimbSale() {
+        var SellDicks = [];
+        for (var e = 0; e < player.Dicks.length; e++) {
+            var temp = "<button onclick=\"SellDicks(" + e + "); LimbSale()\">Dick: " + (e + 1) + ", " + player.Dicks[e].Size + "cm</button>";
+            SellDicks += temp;
+        }
+        document.getElementById("SellDicks").innerHTML = SellDicks;
+        var SellDickSize = [];
+        for (var e = 0; e < player.Dicks.length; e++) {
+            var temp = "<button onclick=\"SellDickSize(" + e + "); LimbSale()\">Dick: " + (e + 1) + ", " + player.Dicks[e].Size + "cm</button>";
+            SellDickSize += temp;
+        }
+        document.getElementById("SellDickSize").innerHTML = SellDickSize;
+
+        var SellBalls = [];
+        for (var e = 0; e < player.Balls.length; e++) {
+            var temp = "<button onclick=\"SellBalls(" + e + "); LimbSale()\">Ball: " + (e + 1) + ", " + player.Balls[e].Size + "cm</button>";
+            SellBalls += temp;
+        }
+        document.getElementById("SellBalls").innerHTML = SellBalls;
+        var SellBallSize = [];
+        for (var e = 0; e < player.Balls.length; e++) {
+            var temp = "<button onclick=\"SellBallSize(" + e + "); LimbSale()\">Ball: " + (e + 1) + ", " + player.Balls[e].Size + "cm</button>";
+            SellBallSize += temp;
+        }
+        document.getElementById("SellBallSize").innerHTML = SellBallSize;
+
+        var SellBreasts = [];
+        for (var e = 1; e < player.Boobies.length; e++) {
+            var temp = "<button onclick=\"SellBreasts(" + e + "); LimbSale()\">Boobs: " + (e + 1) + ", " + player.Boobies[e].Size + "cm</button>";
+            SellBreasts += temp;
+        }
+        document.getElementById("SellBreasts").innerHTML = SellBreasts;
+        var SellBreastSize = [];
+        for (var e = 0; e < player.Boobies.length; e++) {
+            var temp = "<button onclick=\"SellBreastSize(" + e + "); LimbSale()\">Boobs: " + (e + 1) + ", " + player.Boobies[e].Size + "cm</button>";
+            SellBreastSize += temp;
+        }
+        document.getElementById("SellBreastSize").innerHTML = SellBreastSize;
+
+        var SellVaginas = [];
+        for (var e = 0; e < player.Pussies.length; e++) {
+            var temp = "<button onclick=\"SellVaginas(" + e + "); LimbSale()\">Pussy: " + (e + 1) + ", " + player.Pussies[e].Size + "cm</button>";
+            SellVaginas += temp;
+        }
+        document.getElementById("SellVaginas").innerHTML = SellVaginas;
+        var SellVaignaSize = [];
+        for (var e = 0; e < player.Pussies.length; e++) {
+            var temp = "<button onclick=\"SellVaignaSize(" + e + "); LimbSale()\">Pussy: " + (e + 1) + ", " + player.Pussies[e].Size + "cm</button>";
+            SellVaignaSize += temp;
+        }
+        document.getElementById("SellVaignaSize").innerHTML = SellVaignaSize;
+    }
+
+    function SellDicks(e) {
+        player.Gold += player.Dicks[e].Size * 30;
+        player.Dicks.splice(e, 1);
+    }
+
+    function SellDickSize(e) {
+        player.Gold += 25;
+        player.Dicks[e].Size--;
+    }
+
+    function SellBalls(e) {
+        player.Gold += player.Balls[e].Size * 30;
+        player.Balls.splice(e, 1);
+    }
+
+    function SellBallSize(e) {
+        player.Gold += 25;
+        player.Balls[e].Size--;
+    }
+
+    function SellBreasts(e) {
+        player.Gold += player.Boobies[e].Size * 30;
+        player.Boobies.splice(e, 1);
+    }
+
+    function SellBreastSize(e) {
+        player.Gold += 25;
+        player.Boobies[e].Size--;
+    }
+
+    function SellVaginas(e) {
+        player.Gold += player.Pussies[e].Size * 30;
+        player.Pussies.splice(e, 1);
+    }
+
+    function SellVaignaSize(e) {
+        player.Gold += 25;
+        player.Pussies[e].Size--;
+    }
+
+    document.getElementById("SellFemininity").addEventListener("click", function () {
+        if (player.Femi >= 50) {
+            player.Femi -= 50;
+            player.Gold += 100;
+        }
+    });
+    document.getElementById("SellMasculinity").addEventListener("click", function () {
+        if (player.Masc >= 50) {
+            player.Masc -= 50;
+            player.Gold += 50;
+        }
+    });
+    document.getElementById("BlackMarketWhy").addEventListener("mouseover", function (e) {
+        document.getElementById("BlackMarketText").innerHTML = e.target.title;
+    });
+    document.getElementById("BlackMarketWhy").addEventListener("click", function () {
+        document.getElementById("BlackMarketText").innerHTML = "Yeah we are only buying essence here, you see we have a contract with guys in the capital where we can sell for a lot more to nobles.  Nobles you might ask aren’t they the ones who preach about how you should only have as much essence you can conquer!" +
+            " The thing is though while they say trading essence are forbidden and for the weak, the rich don’t follow the rules they only pretend to in order to maintain their image. ";
+    });
+
+
+    document.getElementById("LeaveBlackMarket").addEventListener("click", function () {
+        document.getElementById("LimbSale").style.display = 'none';
+        document.getElementById("SellLimbs").style.display = 'inline-block';
+    });
+
+
+
+    // End Black market
+
     function PrintDoor(NESW) {
         this.NESW = NESW;
         if (NESW == "E") {
@@ -5638,12 +6112,39 @@
         }
     }
 
+    function testsa(e) {
+        for (var b = e; b < enemies.length; b++) {
+            return enemies[b].XPos;
+        }
+    }
+
     function PrintEnemies() {
         for (var e = 0; e < enemies.length; e++) {
             ctx.fillStyle = enemies[e].Color;
             ctx.fillRect(enemies[e].XPos, enemies[e].YPos, enemies[e].Size, enemies[e].Size);
+            var color;
+            switch (CheckGender(enemies[e])) {
+                case "female":
+                    color = "Pink";
+                    break;
+                case "male":
+                    color = "Blue";
+                    break;
+                case "hermaphrodite":
+                    color = "Purple";
+                    break;
+                case "doll":
+                    color = "Beige";
+                    break;
+            }
+            ctx.fillStyle = color;
+            ctx.fillRect(enemies[e].XPos + enemies[e].Size / 3, enemies[e].YPos + enemies[e].Size / 3, enemies[e].Size / 3, enemies[e].Size / 3);
+            ctx.fillStyle = Settings.TextColor;
+            ctx.font = "1vh Arial";
+            ctx.textAlign = "center";
+            ctx.fillText(enemies[e].Name + " " + enemies[e].Race, enemies[e].XPos + enemies[e].Size / 2, enemies[e].YPos);
         }
-    }
+    };
 
     function PrintNpcs() {
         for (var e = 0; e < Npcs.length; e++) {
@@ -5652,7 +6153,7 @@
             ctx.fillStyle = Settings.TextColor;
             ctx.font = "4vh Arial";
             ctx.textAlign = "center";
-            ctx.fillText(Npcs[e].Name, Npcs[e].X + Npcs[e].Width / 2, Npcs[e].Y + Npcs[e].Height / 1.8);
+            ctx.fillText(Npcs[e].RealName, Npcs[e].X + Npcs[e].Width / 2, Npcs[e].Y + Npcs[e].Height / 1.8);
         }
     }
     var a = document.documentElement.clientHeight;
@@ -5745,10 +6246,21 @@
                 TilePainter(0, 0, WorldMap.width * 0.2, WorldMap.height * 0.2);
                 TilePainter(0, WorldMap.height * 0.2, WorldMap.width * 0.2, WorldMap.height * 0.2);
                 TilePainter(0, WorldMap.height * 0.4, WorldMap.width * 0.2, WorldMap.height * 0.2);
+                TilePainter(WorldMap.width * 0.4, WorldMap.height * 0.2, WorldMap.width * 0.2, WorldMap.height * 0.2);
+                TilePainter(WorldMap.width * 0.4, WorldMap.height * 0.4, WorldMap.width * 0.2, WorldMap.height * 0.2);
+
+                World.font = "2em Arial";
+                World.strokeText("O", WorldMap.width * 0.46, WorldMap.height * 0.57);
 
                 switch (player.Map) {
-                    case "Temp":
+                    case "PathToOutlaws":
                         World.fillRect(WorldMap.width * 0.4, 0, WorldMap.width * 0.2, WorldMap.height * 0.2);
+                        break;
+                    case "PathToOutlaws2":
+                        World.fillRect(WorldMap.width * 0.4, WorldMap.height * 0.2, WorldMap.width * 0.2, WorldMap.height * 0.2);
+                        break;
+                    case "Outlaws":
+                        World.fillRect(WorldMap.width * 0.4, WorldMap.height * 0.4, WorldMap.width * 0.2, WorldMap.height * 0.2);
                         break;
                     case "Cave1":
                         World.fillRect(WorldMap.width * 0.2, 0, WorldMap.width * 0.2, WorldMap.height * 0.2);
@@ -5874,20 +6386,43 @@
                 backmap.src = "Tiles/Forest2.png";
                 ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                 break;
-            case "Temp":
-                PrintDoor("N");
-                PrintDoor("W");
+            case "PathToOutlaws":
                 if (enemies.length < 1) {
 
                 }
                 Npcs = []
-                PrintMap("Temp");
+                PrintMap("PathToOutlaws");
+                backmap = new Image;
+                backmap.src = "Tiles/PathToOutlaws.png";
+                ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                break;
+            case "PathToOutlaws2":
+                if (enemies.length < 1) {
+
+                }
+                Npcs = []
+                PrintMap("PathToOutlaws2");
+                backmap = new Image;
+                backmap.src = "Tiles/PathToOutlaws2.png";
+                ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                break;
+            case "Outlaws":
+                if (enemies.length < 1) {
+
+                }
+                if (Npcs.length < 1) {
+                    Npcs = [BlackMartket]
+                }
+                PrintMap("Outlaws");
+                backmap = new Image;
+                backmap.src = "Tiles/Outlaws.png";
+                ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                 break;
             case "Cave1":
                 PrintDoor("W");
                 PrintDoor("E");
                 if (enemies.length < 1) {
-
+                    enemies = [EncounterCave1(), EncounterCave1(), EncounterCave1(), EncounterCave1(), EncounterCave1()]
                 }
                 Npcs = []
                 PrintMap("Cave1");
@@ -5896,7 +6431,7 @@
                 PrintDoor("S");
                 PrintDoor("E");
                 if (enemies.length < 1) {
-
+                    enemies = [EncounterCave2(), EncounterCave2(), EncounterCave2(), EncounterCave2(), EncounterCave2()]
                 }
                 Npcs = []
                 PrintMap("Cave2");
@@ -5904,7 +6439,7 @@
             case "Cave3":
                 PrintDoor("N");
                 if (enemies.length < 1) {
-
+                    enemies = [EncounterCave3(), EncounterCave3(), EncounterCave3()]
                 }
                 if (Npcs.length < 1) {
                     Npcs = [Tempsson];
@@ -5958,15 +6493,12 @@
                 timer = 0;
             }
         }
-
         if (a != document.documentElement.clientHeight) {
             HemScale();
             a = document.documentElement.clientHeight
         };
 
-
         switch (player.Map) {
-            case "Temp":
             case "Cave1":
             case "Cave2":
             case "Cave3":
@@ -5977,26 +6509,18 @@
                 break;
         }
         CurrentMap();
+        document.getElementById("StatusArea").innerHTML = "Area: " + player.Area + " and Map: " + player.Map;
         if (enemies.length > 0) {
             PrintEnemies();
         };
-        if (Npcs.length > 0 && player.Map != "City") {
+        if (Npcs.length > 0) {
             PrintNpcs();
-        } else if (player.Map == "City") {
-            for (var e = 0; e < Npcs.length; e++) {
-                ctx.fillStyle = Settings.TextColor;
-                ctx.font = "4vh Arial";
-                ctx.textAlign = "center";
-                ctx.fillText(Npcs[e].Name, Npcs[e].X + Npcs[e].Width / 2, Npcs[e].Y + Npcs[e].Height / 1.8);
-            }
         }
-
         ctx.fillStyle = "BlueViolet";
         ctx.fillRect(sprite.x, sprite.y, grid, grid);
 
         player.MaxHealth = player.End * 10 + player.Perks.ExtraHealth.Count * 20;
         player.MaxWillHealth = player.Will * 10 + player.Perks.ExtraWillHealth.Count * 20;
-
         document.getElementById("StatusName").innerHTML = player.Name + " " + player.Lastname;
         document.getElementById("StatusHealth").innerHTML = Math.round(player.Health);
         if (player.Health <= player.MaxHealth) {
@@ -6013,13 +6537,18 @@
         document.getElementById("StatusLevel").innerHTML = player.level;
         document.getElementById("StatusLevel").style.width = 100 * (player.Exp / MaxExp) + "%";
         document.getElementById("Gold").innerHTML = "Gold: " + Math.round(player.Gold);
+        if (player.Fat <= player.Height / 100 && !battle) {
+            document.getElementById("Hunger").innerHTML = "You are starving";
+        } else {
+            document.getElementById("Hunger").innerHTML = null;
+        }
 
         // Live update for Looksmenu
         document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
         document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + player.Race + " " + Pronun(CheckGender(player)) +
             ". Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor + " skin color.";
 
-        if (player.Pregnant.Status) {
+        if (player.Pregnant.Babies.length > 0) {
             if (player.Pregnant.Babies[0].BabyAge < 30) {
                 document.getElementById("looks2").innerHTML += "<br><br> You are pregnant"
 
@@ -6027,45 +6556,24 @@
                 document.getElementById("looks2").innerHTML += "<br><br> You are " + Math.round(player.Pregnant.Babies[0].BabyAge / 30) + " months pregnant."
             }
         }
-        document.getElementById("StatusFitness").innerHTML = "Weight: " + Math.round(player.Weight) + "kg<br>" + "Fat: " + Math.round(player.Fat) + "kg<br>Muscle: " + Math.round(player.Muscle) + "kg<br>" + Fitness(player);
+        document.getElementById("StatusFitness").innerHTML = "Age: " + player.Age + "years old<br>Weight: " + Math.round(player.Weight) + "kg<br>" + "Fat: " + Math.round(player.Fat) + "kg<br>Muscle: " + Math.round(player.Muscle) + "kg<br>" + Fitness(player);
         document.getElementById("genitals2").innerHTML = BoobLook(player) + DickLook(player) + BallLook(player) + PussyLook(player);
         // End live update Looksmenu
 
         document.getElementById("EssenceTracker").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
-
-
-
-        if (player.Health < player.MaxHealth && !battle && player.Fat >= player.Height / 100) {
-            if ((player.Health + player.RestRate) > player.MaxHealth) {
-                player.Health = player.MaxHealth;
-            } else {
-                player.Health += player.RestRate;
-                player.Fat -= player.RestRate / 50;
-            }
-        } else if (!battle) {
-            player.Fat -= 0.0001;
-        }
-        if (player.WillHealth < player.MaxWillHealth && !battle && player.Fat >= player.Height / 100) {
-            if ((player.WillHealth + player.RestRate) > player.MaxWillHealth) {
-                player.WillHealth = player.MaxWillHealth;
-            } else {
-                player.WillHealth += player.RestRate;
-                player.Fat -= player.RestRate / 50;
-            }
-        } else if (!battle) {
-            player.Fat -= 0.0001;
-        }
-        if (player.Fat <= player.Height / 100 && !battle) {
-            player.Health -= 0.001;
-            player.WillHealth -= 0.001;
-            document.getElementById("Hunger").innerHTML = "You are starving";
+        document.getElementById("BlackMarketEssence").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
+        if (Settings.EssenceAuto) {
+            document.getElementById("SellLimbs").style.display = 'none';
         } else {
-            document.getElementById("Hunger").innerHTML = null;
+            document.getElementById("SellLimbs").style.display = 'inline-block';
         }
+
         ExpCheck();
         player.Fat = Math.max(0.1, player.Fat);
         player.Muscle = Math.max(1, player.Muscle);
         player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);
+        player.Health = Math.max(1, player.Health);
+        player.WillHealth = Math.max(1, player.WillHealth);
 
         if (Doors.length < 1) {
             DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E");
@@ -6096,9 +6604,13 @@
             TfEngine();
         }
         if (!battle && Settings.EssenceAuto) {
-            EssenceCheck(player);
+            Laglimiter++;
+            if (Laglimiter % 80 == 0) {
+                EssenceCheck(player);
+            }
         };
     };
+    var Laglimiter = 0;
 
     // Movement buttons
     document.addEventListener('keydown', function (e) {

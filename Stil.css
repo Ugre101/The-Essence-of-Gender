@@ -243,12 +243,15 @@
    }
 
    #WorldMap {
-       position: absolute;
-       right: 2vh;
-       top: 2vh;
        height: 40vh;
        width: 40vh;
        z-index: -1;
+   }
+   #WolrdMapContainer  {
+    position: absolute;
+    right: 2vh;
+    top: 2vh;
+    text-align: center;
    }
 
    @media (max-width: 700px) {
@@ -526,6 +529,7 @@
        grid-area: b;
        width: 100%;
        padding: 0 1em;
+       overflow: auto;
    }
 
    div.EnemySex {
@@ -533,6 +537,7 @@
        grid-area: d;
        width: 100%;
        padding: 0 1em;
+       overflow: auto;
    }
 
    #DrainMenu {
