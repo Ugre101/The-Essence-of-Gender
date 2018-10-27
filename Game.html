@@ -40,7 +40,7 @@
 					<option value="brown">Brown</option>
 					<option value="dark brown">Darkbrown</option>
 					<option value="black">Black</option>
-
+					<option value="red">Red</option>
 				</select>
 			</div>
 			<label for="skincolor">Skin color</label>
@@ -76,7 +76,10 @@
 
 	<div id="map" class="None">
 		<canvas id="hem"></canvas>
-		<canvas id="WorldMap"></canvas>
+		<div id="WolrdMapContainer">
+			<canvas id="WorldMap"></canvas>
+			<p id="StatusArea">Start</p>
+		</div>
 	</div>
 
 	<div id="EventLog" class="None">
@@ -342,8 +345,18 @@
 		<div id="EssenceStart">
 			<label for="OptionGiveEssence">Give Essence</label>
 			<input type="button" id="OptionGiveEssence" value="Both" />
-			<label for="NoExtra">(Placeholder)Stop you from growing extra limbs</label>
-			<input type="button" id="NoExtra" value="No extra dick/pussies" title="On auto you can't grow more than one dick, pussy, balls and breast." />
+			<label for="NoExtra">Set max dicks/boobs/pussies/balls for you and opponents.</label>
+			<input type="button" id="NoExtra" value="Set max boobs/dicks etc" title="On auto you can't grow more than the set amount of dick, pussy, balls and breast. This settings always effect opponents. Setting t.ex. dick to zero will make all opponents female or doll likewise setting dick to zero makes all opponents male or doll." />
+			<div id="MaxMenu" class="None">
+				<input type="button" id="BoobsLess" value="Boobs--" />
+				<input type="button" id="BoobsMore" value="Boobs++" />
+				<input type="button" id="VaginasLess" value="Pussies--" />
+				<input type="button" id="VaginasMore" value="Pussies++" />
+				<input type="button" id="DicksLess" value="Dick--" />
+				<input type="button" id="DicksMore" value="Dick++" />
+				<input type="button" id="BallsLess" value="Balls--" />
+				<input type="button" id="BallsMore" value="Balls++" />
+			</div>
 
 			<label for="EssenceAuto">Is essence body changes Auto or Manual</label>
 			<br><input type="button" id="EssenceAuto" value="Essence Auto" />
@@ -556,7 +569,7 @@
 				<div id="PlayerVagina">
 					<div id="Vagina">
 						<input type="button" id="Scissoring" value="Scissoring" />
-						<input type="button" id="GetCunniglus" value="Receive cunniglus" />
+						<input type="button" id="GetCunniglus" value="Receive cunnilingus" />
 						<input type="button" id="RideCowgirl" value="Ride cowgirl" />
 					</div>
 				</div>
@@ -867,6 +880,40 @@
 		<input type="button" id="TeleportHome" value="Home" />
 	</div>
 
+	<div id="BlackMarket" class="None Building">
+		<p id="BlackMarketText" class="TextBox"></p>
+		<input type="button" id="SellLimbs" value="Sell limbs" />
+		<div id="LimbSale" class="None">
+			<h4>Sell sexual organs 30g/cm</h4>
+			<label for="SellDicks">Dicks</label>
+			<div id="SellDicks"></div>
+			<label for="SellBalls">Balls</label>
+			<div id="SellBalls"></div>
+			<label for="SellBreasts">breasts</label>
+			<div id="SellBreasts"></div>
+			<label for="SellVaginas">Vaginas</label>
+			<div id="SellVaginas"></div>
+			<br><br>
+			<h4>Sell sexual organ size 25g/cm</h4>
+			<label for="SellDickSize">Dick size</label>
+			<div id="SellDickSize"></div>
+			<label for="SellBallSize">Ball size</label>
+			<div id="SellBallSize"></div>
+			<label for="SellBreastSize">Breast size</label>
+			<div id="SellBreastSize"></div>
+			<label for="SellVaignaSize">Vagina depth</label>
+			<div id="SellVaignaSize"></div>
+		</div>
+		<br>
+		<div>
+			<p id="BlackMarketEssence"></p>
+			<input type="button" id="SellFemininity" value="Sell 50 femininity 100g" />
+			<input type="button" id="SellMasculinity" value="Sell 50 masculinity 100g" />
+		</div>
+
+		<input type="button" id="BlackMarketWhy" value="Why can't I buy?" title="I see a plenty signs here of what you are buying, but I see nothing about what I can buy?" />
+		<input type="button" id="LeaveBlackMarket" value="Leave" />
+	</div>
 
 	<script src="Gamescript.js"></script>
 </body>
