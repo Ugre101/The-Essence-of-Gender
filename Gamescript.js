@@ -631,6 +631,7 @@
                     Equip: "Yes",
                     Drop: "Yes",
                     Does: "Temp+5",
+					Quantity: 1,
                     Title: "Temp_Tempsson legendary temp sword gives +999 to testing."
                 }
                 player.Inventory.push(Blade);
@@ -790,25 +791,45 @@
             case 8:
                 return "F size";
             case 9:
-                return "G size";
+                return "Large F size";
             case 10:
-                return "H size";
+                return "G size";
             case 11:
-                return "I size";
+                return "Large G size";
             case 12:
-                return "J size";
+                return "H size";
             case 13:
-                return "K size";
+                return "Large H size";
             case 14:
-                return "L size";
+                return "I size";
             case 15:
-                return "M size";
+                return "Large I size";
             case 16:
-                return "N size";
+                return "J size";
             case 17:
+                return "Large J size";
+			case 18:
+                return "K size";
+            case 19:
+                return "Large L size";
+            case 20:
+                return "M size";
+            case 21:
+                return "Large M size";
+            case 22:
+                return "N size";
+            case 23:
+                return "Large N size";
+            case 24:
                 return "O size";
+            case 25:
+                return "Large O size";
+            case 26:
+                return "P size";
+            case 27:
+                return "Large P size";
             default:
-                return "Huge"
+                return "Scale-breaking"
         }
     }
 
@@ -820,26 +841,26 @@
         } else if (Size >= 4 && Size < 6) {
             return "tight";
         } else if (Size >= 6 && Size < 8) {
-            return "tight";
+            return "parted";
         } else if (Size >= 8 && Size < 10) {
-            return "tight";
-        } else {
             return "loose";
+        } else {
+            return "gaping";
         }
     }
 
     function Fitness(who) {
-        var a, b;
+        var a, b, c;
         if ((who.Fat / who.Weight) * 100 <= 2) {
             a = "You look malnourished ";
         } else if ((who.Fat / who.Weight) * 100 <= 14) {
-            a = "You have a athletic body ";
+            a = "You have an athletic body ";
         } else if ((who.Fat / who.Weight) * 100 <= 18) {
             a = "You have a fit body ";
         } else if ((who.Fat / who.Weight) * 100 <= 26) {
             a = "You have a healthy body ";
         } else if ((who.Fat / who.Weight) * 100 <= 31) {
-            a = "You have a slighty obese body ";
+            a = "You have an overweight body ";
         } else if ((who.Fat / who.Weight) * 100 <= 36) {
             a = "You have a obese body ";
         } else {
@@ -847,16 +868,28 @@
         }
 
         if (who.Muscle < who.Height * 0.18) {
-            b = "with weak looking muscle.";
+            b = "with unnoticable muscle";
         } else if (who.Muscle < who.Height * 0.20) {
-            b = "with average looking muscle.";
+            b = "with some defined muscle";
         } else if (who.Muscle < who.Height * 0.22) {
-            b = "with strong looking muscle.";
+            b = "with well-defined muscle";
         } else {
-            b = "with huge looking of muscle.";
+            b = "with massive muscle";
+        }
+		
+		if ((who.Fat / who.Weight) * 100 <= 31 && who.Muscle < who.Height * 0.18) {
+            c = " covered in fat.";
+        } else if ((who.Fat / who.Weight) * 100 <= 36 && who.Muscle < who.Height * 0.20) {
+            c = " buried in fat.";
+		} else if ((who.Fat / who.Weight) * 100 <= 50 && who.Muscle > who.Height * 0.22) {
+			c = "... Otherwise, you couldn't move.";
+		} else if ((who.Fat / who.Weight) * 100 <= 50) {
+			c = "... No-one knows how you move.";
+        } else {
+            c = ".";
         }
 
-        return a + b;
+        return a + b + c;
     }
 
     // Sets display to none used for menu buttons
@@ -1008,7 +1041,7 @@
         } else {
             document.getElementById("EssenceAuto").value = "Essence Manual";
             document.getElementById("ManualGrowth").style.display = 'block';
-            document.getElementById("GrowExtraBreast").value = "Extra breast " + EssenceExtraCost(player.Boobies)
+            document.getElementById("GrowExtraBreasts").value = "Extra breasts " + EssenceExtraCost(player.Boobies)
             document.getElementById("GrowExtraPussy").value = "Extra pussy " + EssenceExtraCost(player.Pussies) + "F";
             document.getElementById("GrowExtraDick").value = "Extra dick " + EssenceExtraCost(player.Dicks) + "M";
             document.getElementById("GrowExtraBalls").value = "Extra balls " + EssenceExtraCost(player.Balls) + "M";
@@ -1100,7 +1133,7 @@
         } else {
             document.getElementById("EssenceAuto").value = "Essence Manual";
             document.getElementById("ManualGrowth").style.display = 'block';
-            document.getElementById("GrowExtraBreast").value = "Extra breast " + EssenceExtraCost(player.Boobies)
+            document.getElementById("GrowExtraBreasts").value = "Extra breasts " + EssenceExtraCost(player.Boobies)
             document.getElementById("GrowExtraPussy").value = "Extra pussy " + EssenceExtraCost(player.Pussies) + "F";
             document.getElementById("GrowExtraDick").value = "Extra dick " + EssenceExtraCost(player.Dicks) + "M";
             document.getElementById("GrowExtraBalls").value = "Extra balls " + EssenceExtraCost(player.Balls) + "M";
@@ -1115,7 +1148,7 @@
         document.getElementById("EssenceStart").style.display = 'block';
         document.getElementById("BreastMenu").style.display = 'none';
     });
-    document.getElementById("GrowExtraBreast").addEventListener("click", function () {
+    document.getElementById("GrowExtraBreasts").addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Boobies);
         if (player.Femi >= cost) {
             player.Femi -= cost;
@@ -1125,7 +1158,7 @@
             }
             player.Boobies.push(Boob);
         }
-        document.getElementById("GrowExtraBreast").value = "Extra Breast " + EssenceExtraCost(player.Boobies) + "F";
+        document.getElementById("GrowExtraBreasts").value = "Extra breasts " + EssenceExtraCost(player.Boobies) + "F";
         BreastButtons();
     });
 
@@ -1367,27 +1400,15 @@
         for (var e = 0; e < Things.length; e++) {
             var Thing = Things[e];
             console.log(Thing);
-            var item = "<div title=\"" + Thing.Title + "\">" + Thing.Name
-            switch (Thing.Use) {
-                case "Yes":
+            var item = "<div title=\"" + Thing.Title +  Thing.Quantity + "\">" + Thing.Name + " (" + Thing.Quantity + "\)"
+            if(Thing.Use === "Yes") {
                     item += "<input type=\"button\" onclick=\"Use(" + e + ")\" value=\"Use\">"
-                    break;
-                default:
-                    break
             }
-            switch (Thing.Equip) {
-                case "Yes":
+            if (Thing.Equip === "Yes") {
                     item += "<input type=\"button\" onclick=\"Equip(" + e + ")\" value=\"Equip\">"
-                    break;
-                default:
-                    break;
             }
-            switch (Thing.Drop) {
-                case "No":
-                    break;
-                default:
+            if(Thing.Drop != "No") {
                     item += "<input type=\"button\" onclick=\"Drop(" + e + ")\" value=\"Drop\">"
-                    break;
             }
             item += "</div>";
             Bag += item;
@@ -1398,15 +1419,77 @@
 
     function Use(item) {
         var thing = player.Inventory[item];
-        if (thing.Name == "Orc cum") {
+        if (thing.Name === "Orc cum") {
             player.Masc += 50;
-            player.Inventory.splice(item, 1);
             EventLog("After drinking the orc cum, you body absorbs the manly essence of it.");
-        } else if (thing.Name == "Fairy dust") {
+        } else if (thing.Name === "Fairy dust") {
             player.Height -= 5;
-            player.Inventory.splice(item, 1);
             EventLog("Inhaling the fairy dust you see the world grow before you, or maybe it's you who became shorter?");
-        }
+        } else if (thing.Name === "Humanity") {
+			TfEngine("human");
+			EventLog("You try to regain your humanity...");
+		} else if (thing.Name === "HalfPouch") {
+			var z = Math.round(Math.random() * 40) + 10;
+			z = parseInt(z);
+			player.gold += z;
+			EventLog("What's in the bag? It's "+z+" coins!");
+		} else if (thing.Name === "Orc brew") {
+			var z = Math.min(Math.round(player.MaxHealth / 10), player.MaxHealth - player.Health);
+			player.health += z;
+			EventLog("Bottoms up!");
+			if (z > 0)
+				EventLog("You gained "+z+" health back!");
+			else if (z < 0)
+				EventLog("Bleh. That ruined your night's sleep.");
+		} else if (thing.Name === "Troll Milk") {
+						var z = Math.min(Math.round(player.MaxHealth / 10), player.MaxHealth - player.Health);
+			player.health += z;
+			EventLog("Bottoms up!");
+			if (z > 0)
+				EventLog("You gained "+z+" willpower back!");
+			else if (z < 0)
+				EventLog("Bleh. That ruined your night's sleep.");
+		} else if (thing.Name === "Elven hair") {
+			TfEngine("elf");
+			EventLog("You try to become an elf...");
+		} else if (thing.Name === "Amazon's Girdle") {
+			if(player.Masc > player.Femi + 100) {
+				player.Masc -=50;
+				player.Femi += 50;
+			} else if (player.Masc + 100 < player.Femi) {
+				player.Masc +=50;
+				player.Femi -= 50;
+			} else {
+				var z = Math.round((player.Masc + player.Femi)/2);
+				player.Masc = z;
+				player.Femi = z;
+			}
+			EventLog("Tightening the girdle, you feel your essences balancing...");
+		} else if (thing.Name === "Milk Jug") {
+			for(var i = 0; i < player.Boobies.length; i++) {
+				player.Boobies[i].milkRate += 0.1;
+			}
+			EventLog("Chugging the jug, you feel a shudder run through your chest...");
+		} else if (thing.Name === "Fertility idol") {
+			player.Femi += 100;
+			EventLog("You absorb the statue's latent energies.");
+		} else if (thing.Name === "Cocky rock") {
+			player.Masc += 100;
+			EventLog("You absorb the rock's male essence.");
+		} else if (thing.Name === "Infernal semen") {
+			player.Masc += player.Femi;
+			player.Femi = 0;
+			EventLog("The infernally-hot semen burns your feminine essence, leaving you 100% male.");
+		} else if (thing.Name === "Infernal milk") {
+			player.Femi += player.Masc;
+			player.Masc = 0;
+			EventLog("The infernally-hot milk burns your masculine essence, leaving you 100% female.");
+		} else {
+			EventLog("Uh... Something went wrong...");
+		}
+		player.Inventory[item].Quantity--;
+		if(player.Inventory[item].Quantity <= 0)
+			player.Inventory.splice(item,1);
         document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
         return console.log(player.Inventory[item]);
     }
@@ -1571,7 +1654,7 @@
     var RacesCave2 = ["Goblin", "Demon"];
     var RacesCave3 = ["Dhampir", "Demon"];
 
-
+	var dropRate = {"Human": 1.00, "Halfling": 1.00, "Orc": 1.00, "Troll": 1.00, "Farmer": 1.00, "Elf": 1.00, "Amazon": 1.00, "Fairy": 1.00, "Commoner": 1.00,  "Thug": 1.00, "Dark elf": 1.00, "Imp": 1.00, "Goblin": 1.00, "Dhampir": 1.00, "Demon": 1.00}    
 
     var FemaleFirstNames = ["Veronica", "Kyra", "Lauryn", "Alicja", "Tate", "Colleen", "Melody", "Pippa", "Keziah", "Melissa", "Lana", "Marie", "Molly", "Sandra", "Dannielle", "Yusra", "Laiba", "Gabrielle", "Syeda", "Amirah"];
     var MaleFirstNames = ["Asim", "Faith", "Macy", "Landon", "Sulaiman", "Iestyn", "Gordon", "Hector", "Haris", "Lee", "Simran", "Ronnie", "Rishi", "Bartosz", "Shelley", "Virgil", "Howard", "Rio"];
@@ -1933,7 +2016,7 @@
                 } else {
                     player.Masc -= take;
                 }
-                document.getElementById("LosePlayerOrgasm").innerHTML = "They fuckt you until you had a orgasm, allowing them to siphon " + take + " maculinity.";
+                document.getElementById("LosePlayerOrgasm").innerHTML = "They fucked you until you had an orgasm, allowing them to siphon " + take + " maculinity.";
                 break;
             case 2:
             case 5:
@@ -1942,7 +2025,7 @@
                 } else {
                     player.Femi -= take;
                 }
-                document.getElementById("LosePlayerOrgasm").innerHTML = "They fuckt you until you had a orgasm, allowing them to siphon " + take + " femininity.";
+                document.getElementById("LosePlayerOrgasm").innerHTML = "They fucked you until you had an orgasm, allowing them to siphon " + take + " femininity.";
                 break;
             default:
             case 3:
@@ -1955,7 +2038,7 @@
                     player.Masc = 0;
                 } else {
                     player.Masc -= Math.round(take / 2);
-                    document.getElementById("LosePlayerOrgasm").innerHTML = "They fuckt you until you had a orgasm, allowing them to siphon " + take / 2 + " femininity and maculinity.";
+                    document.getElementById("LosePlayerOrgasm").innerHTML = "They fucked you until you had an orgasm, allowing them to siphon " + take / 2 + " femininity and maculinity.";
                 }
                 break;
         }
@@ -1984,7 +2067,7 @@
                 } else {
                     player.Masc -= take;
                 }
-                document.getElementById("LosePlayerOrgasm").innerHTML = "They fuckt you until you had a orgasm, allowing them to siphon " + take + " maculinity.";
+                document.getElementById("LosePlayerOrgasm").innerHTML = "They fucked you until you had an orgasm, allowing them to siphon " + take + " maculinity.";
                 break;
             case 2:
             case 5:
@@ -1993,7 +2076,7 @@
                 } else {
                     player.Femi -= take;
                 }
-                document.getElementById("LosePlayerOrgasm").innerHTML = "They fuckt you until you had a orgasm, allowing them to siphon " + take + " femininity.";
+                document.getElementById("LosePlayerOrgasm").innerHTML = "They fucked you until you had an orgasm, allowing them to siphon " + take + " femininity.";
                 break;
             default:
             case 3:
@@ -2007,7 +2090,7 @@
                 } else {
                     player.Masc -= Math.round(take / 2);
                 }
-                document.getElementById("LosePlayerOrgasm").innerHTML = "They fuckt you until you had a orgasm, allowing them to siphon " + take / 2 + " femininity and maculinity.";
+                document.getElementById("LosePlayerOrgasm").innerHTML = "They fucked you until you had an orgasm, allowing them to siphon " + take / 2 + " femininity and maculinity.";
                 break;
         }
         switch (CheckGender(enemies[EnemyIndex])) {
@@ -2060,7 +2143,7 @@
         } else if (enemies[EnemyIndex].Str < enemies[EnemyIndex].Charm) {
             var EAttack = (RandomInt(1, 5) * enemies[EnemyIndex].Charm) / 2;
             player.WillHealth -= EAttack;
-            document.getElementById("BattleText2").innerHTML = "Your opponent tease you for " + EAttack + " will dmg.";
+            document.getElementById("BattleText2").innerHTML = "Your opponent teased you for " + EAttack + " will dmg.";
             document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
             if (player.Health <= player.MaxHealth) {
                 document.getElementById("StatusHealth2").style.width = 100 * (player.Health / player.MaxHealth) + "%";
@@ -2425,9 +2508,26 @@
         return;
     });
 
+	function SnowInventoryAdd(item) {
+		var i = 0;
+		for(i = 0; i < player.Inventory.length; i++)
+		{
+			var q = false;
+			if(player.Inventory[i].Name === item.Name)
+			{
+				player.Inventory[i].Quantity++;
+				q = true;
+				break;
+			}
+		}
+		if(!q)
+			player.Inventory.push(item);
+	}
 
     function DropSystem(who) {
         var e = who;
+		var r = Math.random();
+		if(r <= dropRate[e.Name]) {
         switch (e.Name) {
             case "Banditlord":
                 var OrcCum = {
@@ -2436,13 +2536,52 @@
                     Equip: "No",
                     Drop: "Yes",
                     Does: "Masc+50",
-                    Title: "Quite nasty but it will give you extra masculinity."
+					Quantity: 1,
+                    Title: "Quite nasty, but it will give you extra masculinity."
                 }
-                player.Inventory.push(OrcCum);
+                SnowInventoryAdd(OrcCum);
                 break;
+			case "Commoner":
+				var HalfPouch = {
+					Name: "Pouch",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Gives gold.",
+					Quantity: 1,
+					Title: "Jingles faintly; probably has money in it."
+				}
+				SnowInventoryAdd(HalfPouch);
+				break;
+			case "Farmer":
+				var Dairy = {
+					Name: "Milk Jug",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Increases lactation",
+					Quantity: 1,
+					Title: "It'll go straight to your chest!"
+				}
+				SnowInventoryAdd(Dairy);
+				break;
+			case "Thug":
+				var HalfPouch = {
+					Name: "Pouch",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Gives gold.",
+					Quantity: 1,
+					Title: "Jingles faintly; probably has money in it."
+				}
+				SnowInventoryAdd(HalfPouch);
+				break;
             default:
                 break;
+		}
         }
+		if(r <= dropRate[e.Race]){
         switch (e.Race) {
             case "Fairy":
                 var FairyDust = {
@@ -2450,12 +2589,147 @@
                     Use: "Yes",
                     Equip: "No",
                     Drop: "Yes",
-                    Does: "Size minus 5cm",
+                    Does: "Shrinks you 5 cm",
+					Quantity: 1,
                     Title: "Sparkly, commonly used as prank item to shrink people."
                 }
-                player.Inventory.push(FairyDust);
+                SnowInventoryAdd(FairyDust);
+				break;
+			case "Human":
+				var Human = {
+					Name: "Humanity",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Makes you human",
+					Quantity: 1,
+					Title: "One way to get your humanity back."
+				}
+				SnowInventoryAdd(Human);
+				break;
+			case "Halfling":
+				var Pouch = {
+					Name: "HalfPouch",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Gives gold.",
+					Quantity: 1,
+					Title: "Jingles faintly; probably has money in it."
+				}
+				SnowInventoryAdd(Pouch);
+				break;
+			case "Orc":
+				var brew = {
+					Name: "Orc brew",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Heals 10% of HP.",
+					Quantity: 1,
+					Title: "Low-quality beer. It'll heal a bit."
+				}
+				SnowInventoryAdd(brew);
+				break;
+			case "Troll":
+				var TMilk = {
+					Name: "Troll Milk",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Restores 10% of willpower.",
+					Quantity: 1,
+					Title: "Smells like it's already gone sour. Increases focus."
+				}
+				SnowInventoryAdd(TMilk);
+				break;
+			case "Elf":
+				var EHair = {
+					Name: "Elven hair",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Elf TF",
+					Quantity: 1,
+					Title: "This is all you need to become an elf, no potions needed."
+				}
+				SnowInventoryAdd(EHair);
+				break;
+			case "Amazon":
+				var Girdle = {
+					Name: "Amazon's Girdle",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Balances gender",
+					Quantity: 1,
+					Title: "Brings your essences closer together in strength."
+				}
+				SnowInventoryAdd(Girdle);
+				break;
+			case "Dark Elf":
+				var EHair = {
+					Name: "Elven hair",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Elf TF",
+					Quantity: 1,
+					Title: "This is all you need to become an elf, no potions needed."
+				}
+				SnowInventoryAdd(EHair);
+				break;
+			case "Goblin":
+				var Female = {
+					Name: "Fertility idol",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Increases femininity",
+					Quantity: 1,
+					Title: "Brings out your feminine side."
+				}
+				SnowInventoryAdd(Female);
+				break;
+			case "Imp":
+				var Male = {
+					Name: "Cocky rock",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Increases masculinity",
+					Quantity: 1,
+					Title: "Brings out your masculine side."
+				}
+				SnowInventoryAdd(Male);
+				break;
+			case "Demon":
+				var MaxMale = {
+					Name: "Infernal semen",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Turns femininity into masculinity",
+					Quantity: 1,
+					Title: "Turns your feminine side into another masculine one."
+				}
+				SnowInventoryAdd(MaxMale);
+				break;
+			case "Dhampir":
+				var MaxFemale = {
+					Name: "Infernal milk",
+					Use: "Yes",
+					Equip: "No",
+					Drop: "Yes",
+					Does: "Turns masculinity into femininity",
+					Quantity: 1,
+					Title: "Turns your masculine side into another feminine one."
+				}
+				SnowInventoryAdd(MaxFemale);
+				break;
             default:
                 break;
+		}
         }
     }
 
@@ -2471,7 +2745,7 @@
         enemies[EnemyIndex].SessionOrgasm = 0;
         document.getElementById("Encounter").style.display = 'none';
         for (var i = 0; i < player.Quests.length; i++) {
-            if (player.Quests[i].Name == "ElfHunt" && !player.Quests[i].Completed) {
+            if (player.Quests[i].Name === "ElfHunt" && !player.Quests[i].Completed) {
                 if (enemies[EnemyIndex].Race == "Elf") {
                     player.Quests[i].Count++;
                     if (player.Quests[i].Count >= 3) {
@@ -2479,8 +2753,8 @@
                     }
                 }
             }
-            if (player.Quests[i].Name == "BanditLord" && !player.Quests[i].Completed) {
-                if (enemies[EnemyIndex].Name == "Banditlord") {
+            if (player.Quests[i].Name === "BanditLord" && !player.Quests[i].Completed) {
+                if (enemies[EnemyIndex].Name === "Banditlord") {
                     player.Quests[i].Completed = true;
                 }
             }
@@ -3193,11 +3467,11 @@
             case "female":
                 if (ecurrent.Pussies.length > 0) {
                     if (eold.Pussies[0].Size > ecurrent.Pussies[0].Size && eold.Boobies[0].Size > ecurrent.Boobies[0].Size) {
-                        b = "You see their breast shrinking and feel their pussy tightening."
+                        b = "You see their breasts shrinking and feel their pussy tightening."
                     } else if (eold.Pussies[0].Size > ecurrent.Pussies[0].Size) {
                         b = "You feel their pussy tightening."
                     } else if (eold.Boobies[0].Size > ecurrent.Boobies[0].Size) {
-                        b = "You see their breast shrinking."
+                        b = "You see their breasts shrinking."
                     }
                 } else {
                     b = "You see their pussy closing completely and disappear, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
@@ -3213,11 +3487,11 @@
                 }
                 if (ecurrent.Pussies.length > 0) {
                     if (eold.Pussies[0].Size > ecurrent.Pussies[0].Size && eold.Boobies[0].Size > ecurrent.Boobies[0].Size) {
-                        b = "You see their breast shrinking and feel their pussy tightening."
+                        b = "You see their breasts shrinking and feel their pussy tightening."
                     } else if (eold.Pussies[0].Size > ecurrent.Pussies[0].Size) {
                         b = "You feel their pussy tightening."
                     } else if (eold.Boobies[0].Size > ecurrent.Boobies[0].Size) {
-                        b = "You see their breast shrinking."
+                        b = "You see their breasts shrinking."
                     }
                 } else {
                     b = "You see their pussy closing completely and disappear, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
@@ -3239,7 +3513,7 @@
                     a = "You feel your dick growing.";
                 }
                 if (old.Boobies[0].Size < current.Boobies[0].Size) {
-                    a = "You feel your breast grow bigger.";
+                    a = "You feel your breasts grow bigger.";
                 }
                 if (current.Pussies.length > 0) {
                     a = "You gave grown a pussy!"
@@ -3248,11 +3522,11 @@
                 break;
             case "female":
                 if (old.Pussies[0].Size < current.Pussies[0].Size && old.Boobies[0].Size < current.Boobies[0].Size) {
-                    a = "You feel both your breast growing bigger and your pussy growing.";
+                    a = "You feel both your breasts and pussy growing.";
                 } else if (old.Pussies[0].Size < current.Pussies[0].Size) {
                     a = "You feel your pussy grow.";
                 } else if (old.Boobies[0].Size < current.Boobies[0].Size) {
-                    a = "You feel your breast grow bigger.";
+                    a = "You feel your breasts grow.";
                 }
                 if (current.Dicks.length > 0) {
                     a = "You have grown a dick!";
@@ -3264,11 +3538,11 @@
                     a = "You feel your dick growing.";
                 }
                 if (old.Pussies[0].Size < current.Pussies[0].Size && old.Boobies[0].Size < current.Boobies[0].Size) {
-                    a = "You feel your both breast growing bigger and your pussy growing.";
+                    a = "You feel your breasts and pussy growing.";
                 } else if (old.Pussies[0].Size < current.Pussies[0].Size) {
                     a = "You feel your pussy grow.";
                 } else if (old.Boobies[0].Size < current.Boobies[0].Size) {
-                    a = "You feel your breast grow bigger.";
+                    a = "You feel your breasts grow bigger.";
                 }
                 b = DrainChangesEnemy(eold, ecurrent);
                 break;
@@ -3280,7 +3554,7 @@
                     a = "You gave grown a pussy!"
                 }
                 if (old.Boobies[0].Size < current.Boobies[0].Size) {
-                    a = "You feel your breast grow bigger.";
+                    a = "You feel your breasts grow bigger.";
                 }
                 b = DrainChangesEnemy(eold, ecurrent);
                 break;
@@ -3345,8 +3619,63 @@
         CheckArousal();
         return;
     })
+    document.getElementById("InjectM").addEventListener("click", function () {
+		var q = Math.min(player.GiveEssence, player.Masc);
+        var old = JSON.parse(JSON.stringify(player));
+        var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
+        if (player.GiveEssence >= player.Masc && player.Masc > 0) {
+            enemies[EnemyIndex].SessionOrgasm--;
+            player.Masc -= q;
+            enemies[EnemyIndex].Masc += q;
+            EssenceCheck(enemies[EnemyIndex]);
+            if (Settings.EssenceAuto) {
+                EssenceCheck(player);
+            }
+            document.getElementById("SexText").innerHTML = "You inject them with your last essence of masculinity, leaving yourself male-free." + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+        } else if (player.GiveEssence < player.Masc) {
+            enemies[EnemyIndex].SessionOrgasm--;
+            player.Masc -= q;
+            enemies[EnemyIndex].Masc += q;
+            EssenceCheck(enemies[EnemyIndex]);
+            if (Settings.EssenceAuto) {
+                EssenceCheck(player);
+            }
+            document.getElementById("SexText").innerHTML = "You inject essence of masculinity into them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+        }
 
-    // Start Vore
+        AfterBattleButtons();
+        CheckArousal();
+        return;
+    });
+    document.getElementById("InjectF").addEventListener("click", function () {
+		var q = Math.min(player.GiveEssence, player.Femi);
+        var old = JSON.parse(JSON.stringify(player));
+        var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
+        if (player.GiveEssence >= player.Femi && player.Femi > 0) {
+            enemies[EnemyIndex].SessionOrgasm--;
+            player.Femi -= q;
+            enemies[EnemyIndex].Femi += q;
+            EssenceCheck(enemies[EnemyIndex]);
+            if (Settings.EssenceAuto) {
+                EssenceCheck(player);
+            }
+            document.getElementById("SexText").innerHTML = "You give them the last of your femininity, leaving yourself female-free. " + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+        } else if (player.GiveEssence < player.Femi) {
+            enemies[EnemyIndex].SessionOrgasm--;
+            player.Femi -= q;
+            enemies[EnemyIndex].Femi += q;
+            EssenceCheck(enemies[EnemyIndex]);
+            if (Settings.EssenceAuto) {
+                EssenceCheck(player);
+            }
+            document.getElementById("SexText").innerHTML = "You inject essence of femininity into them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+        }
+        AfterBattleButtons();
+        CheckArousal();
+        return;
+    })
+    
+	// Start Vore
     document.getElementById("Vore").addEventListener("click", function () {
         Settings.Vore = !Settings.Vore;
         document.getElementById("Vore").value = "Vore " + Settings.Vore;
@@ -3391,14 +3720,14 @@
             enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
             player.Vore.Stomach.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
-            document.getElementById("SexText").innerHTML = "Grabbing your opponent you shove them down your throat.";
+            document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them down your throat!";
             document.getElementById("PlayerMouth").style.display = 'none';
             document.getElementById("PlayerVagina").style.display = 'none';
             document.getElementById("PlayerDick").style.display = 'none';
             document.getElementById("Anal").style.display = 'none';
             HideVore();
         } else {
-            document.getElementById("SexText").innerHTML = "You cannot fit more into your stomach.";
+            document.getElementById("SexText").innerHTML = "You cannot fit more into your stomach!";
         }
         return;
     });
@@ -3410,14 +3739,14 @@
             enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
             player.Vore.Vagina.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
-            document.getElementById("SexText").innerHTML = "Grabbing your opponent you shove into your pussy.";
+            document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove into your pussy!";
             document.getElementById("PlayerMouth").style.display = 'none';
             document.getElementById("PlayerVagina").style.display = 'none';
             document.getElementById("PlayerDick").style.display = 'none';
             document.getElementById("Anal").style.display = 'none';
             HideVore();
         } else {
-            document.getElementById("SexText").innerHTML = "You cannot fit more into your vagina.";
+            document.getElementById("SexText").innerHTML = "You cannot fit more into your vagina!";
         }
         return;
     });
@@ -3429,14 +3758,14 @@
             enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
             player.Vore.Balls.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
-            document.getElementById("SexText").innerHTML = "Grabbing your opponent you shove them down into your cockslit, you watching the bulge travel down your shaft.";
+            document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them down into your cockslit, watching the bulge travel down your shaft.";
             document.getElementById("PlayerMouth").style.display = 'none';
             document.getElementById("PlayerVagina").style.display = 'none';
             document.getElementById("PlayerDick").style.display = 'none';
             document.getElementById("Anal").style.display = 'none';
             HideVore();
         } else {
-            document.getElementById("SexText").innerHTML = "You cannot fit more into your balls.";
+            document.getElementById("SexText").innerHTML = "You cannot fit more into your balls!";
         }
         return;
     });
@@ -3448,14 +3777,17 @@
             enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
             player.Vore.Breast.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
-            document.getElementById("SexText").innerHTML = "Grabbing your opponent you shove them into your nipple.";
+			var i = "Left";
+			if(Math.random() > 0.5)
+				i = "Right";
+            document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them into your " + i + " nipple.";
             document.getElementById("PlayerMouth").style.display = 'none';
             document.getElementById("PlayerVagina").style.display = 'none';
             document.getElementById("PlayerDick").style.display = 'none';
             document.getElementById("Anal").style.display = 'none';
             HideVore();
         } else {
-            document.getElementById("SexText").innerHTML = "You cannot fit more into your breasts.";
+            document.getElementById("SexText").innerHTML = "You cannot fit them into your breasts!";
         }
         return;
     });
@@ -3467,14 +3799,14 @@
             enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
             player.Vore.Anal.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
-            document.getElementById("SexText").innerHTML = "Grabbing your opponent you shove them into your bowels.";
+            document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them into your bowels!";
             document.getElementById("PlayerMouth").style.display = 'none';
             document.getElementById("PlayerVagina").style.display = 'none';
             document.getElementById("PlayerDick").style.display = 'none';
             document.getElementById("Anal").style.display = 'none';
             HideVore();
         } else {
-            document.getElementById("SexText").innerHTML = "You cannot fit more into your bowels.";
+            document.getElementById("SexText").innerHTML = "You cannot fit more into your bowels!";
         }
         return;
     });
@@ -4503,7 +4835,7 @@
         document.getElementById("FluidMilk").style.width = MilkProcent * 100 + "%";
 
         if (false) {
-            EventLog("You breast are so full that they have started leaking.")
+            EventLog("You breasts are so full that they have started leaking.")
         }
 
 
@@ -5262,7 +5594,7 @@
         player.Exp += 300;
         player.Gold += 500;
         for (var i = 0; i < player.Quests.length; i++) {
-            if (player.Quests[i].Name == "BanditLord") {
+            if (player.Quests[i].Name === "BanditLord") {
                 player.Quests.splice(i, 1);
             }
         }
@@ -5274,7 +5606,7 @@
         player.Exp += 100;
         player.Gold += 200;
         for (var i = 0; i < player.Quests.length; i++) {
-            if (player.Quests[i].Name == "ElfHunt") {
+            if (player.Quests[i].Name === "ElfHunt") {
                 player.Quests.splice(i, 1);
             }
         }
@@ -5454,7 +5786,7 @@
         if (player.Gold >= 200) {
             player.Gold -= 200;
             TfEngine("elf");
-            document.getElementById("WitchHutText").innerHTML = "You drink the potion and get a strange feeling running trough your entire body.";
+            document.getElementById("WitchHutText").innerHTML = "You drink the potion and get a strange feeling running through your entire body.";
         } else {
             document.getElementById("WitchHutText").innerHTML = "You can't afford the potion";
         }
@@ -5869,6 +6201,36 @@
             return;
         }
     });
+	    document.getElementById("DormInjMasc").addEventListener("click", function () {
+        var e = House.Dormmates[MateIndex];
+        if (player.Masc > 0) {
+			e.Masc += min(100, player.Masc);
+            player.Masc -= min(100, player.Masc);
+            EssenceCheck(e);
+            if (Settings.EssenceAuto) {
+                EssenceCheck(player);
+            }
+            DormSex();
+            document.getElementById("DormSexText").innerHTML = "Inject masc";
+            return;
+        } 
+    } 
+);
+    document.getElementById("DormInjFemi").addEventListener("click", function () {
+        var e = House.Dormmates[MateIndex];
+        if (player.Femi > 0) {
+            e.Femi += min(100, player.Femi);
+            player.Femi -= min(100, player.Femi);
+            EssenceCheck(e);
+            if (Settings.EssenceAuto) {
+                EssenceCheck(player);
+            }
+            DormSex();
+            document.getElementById("DormSexText").innerHTML = "Inject femi";
+            return;
+        }
+    }
+);
     document.getElementById("Impregnate").addEventListener("click", function () {
         document.getElementById("DormSexText").innerHTML = "You fuck your servant hoping to impregnate them, but you fail."
         var e = House.Dormmates[MateIndex];
