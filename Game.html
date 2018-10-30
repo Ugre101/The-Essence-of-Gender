@@ -63,12 +63,12 @@
 	<!-- page2: Här presenteras datan användaren matade in på sida1 -->
 	<div id="page2" class="None">
 		<p>After celebrating your coming of age is it time for you to leave your family home and make a
-			life of your own. How will you fare in this world where the weak submit and the strong dominate.</p>
+			life of your own. How will you fare in this world where the weak submit and the strong dominate?</p>
 		<p id="looks"></p>
 		<br>
 		<div>
-			<p>Notes: You can move with mouse, wasd or arrowkeys</p>
-			<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually</label>
+			<p>Notes: You can move with mouse, wasd or arrow keys</p>
+			<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually?</label>
 			<input type="button" id="StartAutoEssence" value="Auto TF true" />
 			<br><br><input type="button" id="startgame" value="Start game" />
 		</div>
@@ -204,9 +204,9 @@
 		<div>
 			<input type="button" id="ExtraHealth" value="Extra Health" title="Increase max health by 20">
 			<input type="button" id="ExtraWillHealth" value="Extra Will Health" title="Increase willpower by 20">
-			<input type="button" id="FasterRest" value="Faster Rest" title="Increases your passive rest with +0.01hp/tick, this will alse increase rate of which fat is burned">
-			<input type="button" id="StealMore" value="More essence" title="Increases the amount of essence you can take when your enemy orgasm">
-			<input type="button" id="GiveEssence" value="Give essence" title="Makes your enemy gain femininity or masculinity when you orgasm">
+			<input type="button" id="FasterRest" value="Faster Rest" title="Increases your passive rest with +0.01hp/tick. This will also increase rate burning fat.">
+			<input type="button" id="StealMore" value="More essence" title="Increases the amount of essence you take when your enemy orgasms">
+			<input type="button" id="GiveEssence" value="Give essence" title="Makes your enemy gain femininity and/or masculinity when you orgasm">
 		</div>
 
 		<input type="button" id="LeavePerkMenu" value="Done">
@@ -228,7 +228,7 @@
 
 	<div id="DetailedInfo" class="None Looks">
 		<h1>Details</h1>
-		<p id="FullRace"></p>
+
 		<br>
 		<p id="Pregnancy"></p>
 		<input type="button" id="Children" value="Children(placeholder)" />
@@ -360,8 +360,8 @@
 
 			<label for="EssenceAuto">Is essence body changes Auto or Manual</label>
 			<br><input type="button" id="EssenceAuto" value="Essence Auto" />
-			<p>Warning if you play on manual switching to auto will change player to according to your current Femininity
-				and Masculinity, so if you have spent a lot of Essence into the player it will be lost.</p>
+			<p>Warning: if you play on manual, switching to auto will change you according to your current Femininity
+				and Masculinity, so if you have spent a lot of Essence it will be lost.</p>
 			<div id="ManualGrowth" class="TwoCollum None">
 				<input type="button" id="GrowBreast" value="Breast menu" />
 				<input type="button" id="GrowPussy" value="Pussy menu" />
@@ -370,7 +370,7 @@
 			</div>
 		</div>
 		<div id="BreastMenu" class="None">
-			<input type="button" id="GrowExtraBreast" value="Extra breast" />
+			<input type="button" id="GrowExtraBreasts" value="Extra breast" />
 			<input type="button" id="GrowBreastBack" value="Back" />
 			<div id="BreastButtons"></div>
 		</div>
@@ -471,19 +471,15 @@
 			<p id="VorePerkMenuText"></p>
 			<p id="VorePerkPointsLeft"></p>
 			<div>
-				<input type="button" id="AbsorbEssence" value="Absorb prey essence" title="Absorb essence of masculinity and femininity from your preys">
+				<input type="button" id="AbsorbEssence" value="Absorb prey essence" title="Absorb essence of masculinity and femininity from your prey">
 				<input type="button" id="FasterDigestion" value="Faster digestion" title="Digest your prey faster, also speeds up gain of fat, cum and milk">
-				<input type="button" id="HigerCapacity" value="Higher capacity" title="Increase the total weight of prey your body can hold.">
-				<input type="button" id="AbsorbHeight" value="Absorb height" title="Grow taller by absorbing height from your preys. (Growth limit [160cm + 20 * perklevel] t.ex. perk level 3 allows you to grow to 220cm)">
+				<input type="button" id="HigerCapacity" value="Higer capacity" title="Increase the total weight of prey your body can hold">
+				<input type="button" id="AbsorbHeight" value="Absorb height" title="Grow taller by absorbing height from your prey. (Growth limit [160cm + 20 * perklevel] t.ex. perk level 3 allows you to grow to 220cm)">
 				<input type="button" id="" value="" title="">
 			</div>
 
 			<input type="button" id="LeaveVorePerkMenu" value="Done">
 		</div>
-		<div id="VoreSettingsMenu" class="None">
-			<input type="button" id="AbsorbEssenceSetting" value="Absorb Essence Both" />
-		</div>
-		<input type="button" id="VoreSettings" value="Settings" />
 		<input type="button" id="LeaveVore" value="Close">
 	</div>
 
@@ -609,7 +605,9 @@
 			<div>
 				<div id="DrainMenu">
 					<input type="button" id="DrainM" value="Siphon masculinity">
+					<input type="button" id="InjectM" value="Inject masculinity">
 					<input type="button" id="DrainF" value="Siphon femininity">
+					<input type="button" id="InjectF" value="Inject femininity">
 				</div>
 			</div>
 			<div>
@@ -711,9 +709,7 @@
 		<h1>Bar</h1>
 		<p id="BarText" class="TextBox"></p>
 		<input type="button" id="RestBar" value="Rest 25g" />
-		<input type="button" id="EatBar" value="Medium meal 10g" title="1200kcal gives 0.1kg/hr fat" />
-		<input type="button" id="EatBarMedium" value="Large meal 30g" title="1800kcal gives 0.2kg/hr fat" />
-		<input type="button" id="EatBarLarge" value="Buffet 50g" title="3200kcal gives 0.3kg/hr fat" />
+		<input type="button" id="EatBar" value="Eat 10g" />
 		<br><br><input type="button" id="LeaveBar" value="Leave" />
 	</div>
 	<div id="Shop" class="Building None">
@@ -743,7 +739,6 @@
 			<div>
 				<input type="button" id="Sleep" value="Sleep" />
 				<input type="button" id="Dorm" value="Dorm" />
-				<input type="button" id="Brothel" value="Brothel" />
 			</div>
 			<div>
 				<input type="button" id="UpgradeHome" value="Home upgrades" />
@@ -761,9 +756,7 @@
 			<input type="button" id="BuildGym" value="Build gym 200g" title="A gym will make your servant can gain muscle over time." />
 			<input type="button" id="BuildKitchen" value="Build kitchen 200g" title="A kitchen will make your servants gain fat over time." />
 			<input type="button" id="BuildPortal" value="Portal 1000g(Concept)" title="Why would you walk in a magic world, that's for peasants!" />
-			<input type="button" id="BuildBrothel" value="Brothel" title="More to come but for now grants you extra passive income and increases essence gain for servants." />
-			<input type="button" id="" value="(placeholder)Nursery" title="" />
-			<input type="button" id="" value="(Placeholder)Barn" title="Allows you to milk your lactating servants. The milk can be brought with you as a travel snack or you can sell it for gold." />
+			<input type="button" id="BuildBrothel" value="Brothel(Concept)" title="More to come but for now grants you extra passive income." />
 			<input type="button" id="LeaveUpgradeHome" value="Back">
 		</div>
 		<div id="TheDorm" class="None">
@@ -803,12 +796,6 @@
 				<input type="button" id="TempLand" value="TempLand" />
 			</div>
 		</div>
-		<div id="TheBrothel" class="None">
-			<input type="button" id="ServeMasc" value="Masculin customers? true" title="Allows dorm servants to gain masculinity though whoring themselves out."/>
-			<input type="button" id="ServeFemi" value="Feminin customers? true" title="Allows dorm servants to  gain femininity trough whoring themselves out."/>
-			<input type="button" id="CloseBrothel" value="Back" />
-
-		</div>
 	</div>
 
 	<div id="FuckDorm" class="AfterBattle None">
@@ -838,7 +825,9 @@
 		</div>
 		<div class="e">
 			<input type="button" id="DormDrainMasc" value="Siphon masculinity" />
+			<input type="button" id="DormInjMasc" value="Inject masculinity" />
 			<input type="button" id="DormDrainFemi" value="Siphon femininity" />
+			<input type="button" id="DormInjFemi" value="Inject femininity" />
 			<input type="button" id="Impregnate" value="Try to impregnate" />
 			<input type="button" id="LeaveDormSex" value="Leave" />
 		</div>
@@ -859,19 +848,19 @@
 		<p id="WitchShopText" class="TextBox"></p>
 		<div>
 			<input type="button" id="Grow" value="Grow 50g" title="Tired of being short? Don't wait grow bigger today!" />
-			<input type="button" id="Shrink" value="Shrink 50g" title="Do you feel like you should have been born shorter, well then fix it today!" />
+			<input type="button" id="Shrink" value="Shrink 50g" title="Do you feel like you should have been born shorter? Well then, fix it today!" />
 		</div>
 		<div>
-			<input type="button" id="FertilityAdd" value="Fertility booster 30g" title="Is it hard to become pregnant? Fear not we have the product for you!" />
-			<input type="button" id="FertilitySub" value="Fertility subtractor 70g" title="Tired of getting knocked up by a bunch of deadbeat fathers? We have the product to turn your fertil nethers to a barren wasteland! " />
+			<input type="button" id="FertilityAdd" value="Fertility booster 30g" title="Is it hard to become pregnant? Fear not! We have the product for you!" />
+			<input type="button" id="FertilitySub" value="Fertility subtractor 70g" title="Tired of getting knocked up by a bunch of deadbeat fathers? We have the product to turn your fertile nethers into a barren wasteland! " />
 		</div>
 		<div>
-			<input type="button" id="VirilityAdd" value="Virility booster 70g" title="Do you feel like you don't have enough chrilden? Don't worry with our virility booster you can be sure that you will get enough successors!" />
-			<input type="button" id="VirilitySub" value="Virility subtractor 30g" title="Do you have nightmares that future partners will demand of childsupport? Do you want to live a child free life? Well then look no futher!" />
+			<input type="button" id="VirilityAdd" value="Virility booster 70g" title="Do you feel like you don't have enough children? Don't worry! With our virility booster you can be sure that you will get enough successors!" />
+			<input type="button" id="VirilitySub" value="Virility subtractor 30g" title="Do you have nightmares that future partners will demand child support? Do you want to live a child-free life? Well then, look no futher!" />
 		</div>
 		<div>
-			<input type="button" id="CumRateAdd" value="Cum booster 100g" title="Do you shot blanks? Say no more with our cum booster your balls will refresh with a healthy rate. Warning over dosing can lead to spontaneous ejaculation." />
-			<input type="button" id="CumRateSub" value="Cum subtractor 20g" title="Do your balls overfill and you spontaneously ejaculate in your pants? Do not worry anymore this will dry up your balls. Warning over dosing can lead to impotens." />
+			<input type="button" id="CumRateAdd" value="Cum booster 100g" title="Do you shoot blanks? Say no more! With our cum booster, your balls will refill at a healthy rate. Warning: over-dosing can lead to spontaneous ejaculation." />
+			<input type="button" id="CumRateSub" value="Cum dropper 20g" title="Do your balls overfill and you spontaneously ejaculate in your pants? Don't worry about it! This will dry up your balls. Warning: over-dosing can lead to impotence." />
 		</div>
 
 		<br><input type="button" id="LeaveWitchShop" value="Leave" />
@@ -879,17 +868,8 @@
 	<div id="WitchHut" class="Building None">
 		<h1>Witch hut</h1>
 		<p id="WitchHutText" class="TextBox"></p>
-		<input type="button" id="ElfTF" value="Elf delight 200g" title="Tired of being a human? Do you feel a desire to possess pointy ears? Become a elf today!" />
+		<input type="button" id="ElfTF" value="Elf delight 200g" title="Tired of being a human? Do you feel a desire to possess pointy ears? Become an elf today!" />
 		<input type="button" id="HumanTF" value="Potion of regret 250g" title="Do you not remember who you are anymore? Feel like you have lost you humanity?" />
-		<input type="button" id="EyeColor" value="Eye color 50g" title="Not happy with the eyes you were born with?"/>
-		<div id="EyeColorShop" class="None">
-			<input type="button" id="BrownEye" value="Brown eyes"/>
-			<input type="button" id="HazelEye" value="Hazel eyes" />
-			<input type="button" id="BlueEye" value="Blue eyes" />
-			<input type="button" id="GreenEye" value="Green eyes" />
-			<input type="button" id="SilverEye" value="Silver eyes" />
-			<input type="button" id="AmberEye" value="Amber eyes" />
-		</div>
 		<br><input type="button" id="LeaveWitchHut" value="Leave" />
 	</div>
 
@@ -937,17 +917,6 @@
 
 		<input type="button" id="BlackMarketWhy" value="Why can't I buy?" title="I see a plenty signs here of what you are buying, but I see nothing about what I can buy?" />
 		<input type="button" id="LeaveBlackMarket" value="Leave" />
-	</div>
-
-	<div id="FarmOwner" class="None Building">
-		<p id="FarmOwnerText" class="TextBox"></p>
-		<div>
-			<input type="button" id="" value="(Placeholder)Need help?"/>
-			<input type="button" id="EquineTaurTF" value="Buy Equine-Taur Essence" title="Do you lack endurance? Want to able to work like a horse? One dose of this and you will turn to a taur hybrid of equine and you current race." /> 
-			<input type="button" id="EquineTF" value="Buy Equine Essence" title="Want more lower body strength? Lucky for you this essence will make you to the mare or stallion of your dreams! One dose will turn your lower body to a set of humanoid equine legs while two doses will turn you to a anthropomorphic equine." /> 
-			<input type="button" id="" value="(Placeholder)Bovine Essence"/>
-		</div>
-		<input type="button" id="LeaveFarmOwner" value="Bye" />
 	</div>
 
 	<script src="Gamescript.js"></script>

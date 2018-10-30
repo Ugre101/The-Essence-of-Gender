@@ -181,7 +181,7 @@
        background-color: rgb(235, 235, 228);
        border: 2px solid black;
        border-radius: 5px;
-       width: 700px;
+       width: 600px;
        max-width: 90%;
        min-height: 300px;
        height: auto;
@@ -264,15 +264,12 @@
    }
 
    div.Looks {
-       width: 650px;
-       max-width: 70%;
-       min-height: 45%;
-       max-height: 90%;
+       width: 500px;
+       height: auto;
        padding: 20px;
        border: 1px solid black;
        border-radius: 5px;
        background-color: rgb(235, 235, 228);
-       overflow: auto;
    }
 
    #ShowQuests {
@@ -756,13 +753,4 @@
    #VoreButtons {
        display: grid;
        grid-template-columns: 1fr 1fr 1fr;
-   }
-   #BlackMarket {
-       max-height: 90vh;
-       overflow: auto;
-   }
-
-   #LimbSale {
-       max-height: 40vh;
-       overflow: auto;
    }
