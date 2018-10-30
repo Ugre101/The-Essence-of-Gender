@@ -72,7 +72,7 @@
        margin: 0.2em 0;
    }
 
-   #EventLog>div>input[type="button"] {
+   #EventLog>div>input[type=button] {
        width: 25%;
        left: 0;
    }
@@ -167,7 +167,7 @@
    .Grid {
        display: grid;
        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-       grid-column-gap: 0.5em;
+       grid-column-gap: 0.1em;
        width: 100%;
    }
 
@@ -458,7 +458,7 @@
            "b c c d"
            "e e e e";
        grid-template-columns: repeat(4, 1fr);
-       grid-gap: 1em 0;
+       grid-gap: 1em 0; 
        width: 1400px;
        max-width: 95%;
        padding: 2em;
@@ -549,6 +549,10 @@
        border: 1px solid black;
        border-radius: 5px;
    }
+   #InjectMenu {
+    border: 1px solid black;
+    border-radius: 5px;
+}
 
    #Home {
        background-color: rgb(192, 189, 192);
@@ -611,7 +615,7 @@
    input[type=button] {
        font-family: inherit;
        font-size: inherit;
-       width: 90%;
+       width: 96%;
        max-width: 220px;
        height: 5vh;
        max-height: 40px;
@@ -727,7 +731,7 @@
        background-color: rgb(235, 235, 228);
        border: 2px solid black;
        border-radius: 5px;
-       width: 600px;
+       width: 800px;
        max-width: 90%;
        min-height: 300px;
        height: auto;
@@ -740,15 +744,17 @@
        display: grid;
        grid-template-columns: 1fr 1fr;
        grid-gap: 1em;
+       overflow: auto;
    }
 
    #InventoryBag>div {
        border: 1px solid black;
        padding: 0.5em;
+       min-height: 30px;
    }
 
-   #InventoryBag>div>input[type="button"] {
-       font-size: 0.5em;
+   #InventoryBag>div>input[type=button] {
+       font-size: 0.6em;
        width: 15%;
        height: 100%;
        float: right;
