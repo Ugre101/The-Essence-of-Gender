@@ -181,7 +181,7 @@
        background-color: rgb(235, 235, 228);
        border: 2px solid black;
        border-radius: 5px;
-       width: 600px;
+       width: 700px;
        max-width: 90%;
        min-height: 300px;
        height: auto;
@@ -247,11 +247,12 @@
        width: 40vh;
        z-index: -1;
    }
-   #WolrdMapContainer  {
-    position: absolute;
-    right: 2vh;
-    top: 2vh;
-    text-align: center;
+
+   #WolrdMapContainer {
+       position: absolute;
+       right: 2vh;
+       top: 2vh;
+       text-align: center;
    }
 
    @media (max-width: 700px) {
@@ -264,12 +265,16 @@
    }
 
    div.Looks {
-       width: 500px;
+       width: 650px;
        height: auto;
+       max-width: 70%;
+       min-height: 45%;
+       max-height: 90%;
        padding: 20px;
        border: 1px solid black;
        border-radius: 5px;
        background-color: rgb(235, 235, 228);
+       overflow: auto;
    }
 
    #ShowQuests {
@@ -753,4 +758,14 @@
    #VoreButtons {
        display: grid;
        grid-template-columns: 1fr 1fr 1fr;
+   }
+
+   #BlackMarket {
+       max-height: 90vh;
+       overflow: auto;
+   }
+
+   #LimbSale {
+       max-height: 40vh;
+       overflow: auto;
    }
