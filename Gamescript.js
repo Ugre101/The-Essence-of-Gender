@@ -14,6 +14,7 @@
         SkillPoints: 0,
         PerkPoints: 0,
         Race: "human",
+        SecondRace: "human",
         Dicks: [],
         Balls: [],
         Pussies: [],
@@ -75,7 +76,8 @@
             HairStyle: "curly",
             HairColor: "brown",
             HairLength: "shoulder"
-        }
+        },
+        FoodStomach: []
     };
 
     // House variable
@@ -97,7 +99,8 @@
         Date: {
             Year: 1200,
             Month: 0,
-            Day: 0
+            Day: 0,
+            Hour: 0
         }
     };
 
@@ -125,6 +128,10 @@
             MaxVaginas: 5,
             MaxDicks: 5,
             MaxBalls: 5
+        },
+        Brothel: {
+            ServeMasc: true,
+            ServeFemi: true
         }
     }
 
@@ -537,6 +544,10 @@
 
                 }
             }
+            if (!Settings.VoreSettings.hasOwnProperty("AbsorbEssence")) {
+                Settings.VoreSettings.AbsorbEssence = "Both";
+            }
+
         }
         if (!Settings.hasOwnProperty("EssenceAuto")) {
             Settings.EssenceAuto = true;
@@ -652,6 +663,33 @@
             player.Age = 18;
             console.log("Added player age")
         }
+        if (!player.hasOwnProperty("SecondRace")) {
+            player.SecondRace = "human";
+        }
+        if (!Flags.Date.hasOwnProperty("Hour")) {
+            Flags.Date.Hour = 0;
+            console.log("Added hour")
+        }
+        if (!player.hasOwnProperty("FoodStomach")) {
+            player.FoodStomach = [];
+            console.log("Added food stomach")
+        }
+        document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+        if (!player.hasOwnProperty("Face")) {
+            player.Face = {
+                Eyes: "brown",
+                HairStyle: "curly",
+                HairColor: player.Haircolor,
+                HairLength: "shoulder length "
+            }
+        }
+        if (!Settings.hasOwnProperty("Brothel")) {
+            Settings.Brothel = {
+                ServeMasc: true,
+                ServeFemi: true
+            }
+            console.log("Added brothel settings");
+        }
 
     }
 
@@ -668,6 +706,8 @@
         player.MaxWillHealth = 100;
         player.Health = player.MaxHealth;
         player.WillHealth = player.MaxWillHealth;
+        document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+
     });
 
     document.getElementById("BackHome").addEventListener("click", function () {
@@ -709,17 +749,35 @@
         }
     });
 
+    function IntToOne(int) {
+        switch (int) {
+            case 0:
+                return "A "
+            case 1:
+                return ", below it there is a second "
+            case 2:
+                return ". Followed by a third "
+            default:
+                return " and a ";
+        }
+    }
+
     function DickLook(who) {
         if (who.Dicks.length > 0) {
             var dicks = "";
+            if (who.SecondRace == "equine taur") {
+                dicks = "Under your equine body retracted into their penile sheath you find "
+            } else if (who.SecondRace == "equine") {
+                dicks = "Retracted into their penile sheath you find "
+            }
             var virgin = " ";
             for (var d = 0; d < who.Dicks.length; d++) {
                 if (who.Dicks[d].Virgin) {
                     virgin = " virgin"
                 }
-                dicks += who.Dicks[d].Size + "cm long " + who.Dicks[d].Type + virgin + " dick. <br>";
+                dicks += IntToOne(d) + who.Dicks[d].Size + "cm long " + who.Dicks[d].Type + virgin + " dick";
             }
-            return dicks;
+            return dicks + ".<br><br>";
         } else {
             return "";
         }
@@ -728,11 +786,12 @@
     function BallLook(who) {
         if (who.Balls.length > 0) {
             var balls = "";
+            var cum = "";
             for (var b = 0; b < who.Balls.length; b++) {
-                balls += "A pair of " + who.Balls[b].Size + "cm in diameter balls, ";
-                var cum = "which are filled with " + Math.round((who.Balls[b].Cum / 1000) * 100) / 100 + "Liters of cum.<br>"
+                balls += IntToOne(b) + "pair of " + who.Balls[b].Size + "cm wide balls, ";
+                balls += "which are filled with " + (who.Balls[b].Cum / 1000).toFixed(2) + "Liters of cum"
             }
-            return balls + cum;
+            return balls + ".<br><br>";
         } else {
             return "";
         }
@@ -741,14 +800,17 @@
     function PussyLook(who) {
         if (who.Pussies.length > 0) {
             var pussies = "";
+            if (who.SecondRace == "equine taur") {
+                pussies = "At your equine backside is your mare genitals ";
+            }
             var virgin = " "
             for (var p = 0; p < who.Pussies.length; p++) {
                 if (who.Pussies[p].Virgin) {
                     virgin = " virgin"
                 }
-                pussies += who.Pussies[p].Size + "cm deep " + who.Pussies[p].Type + virgin + " pussy <br>";
+                pussies += IntToOne(p) + who.Pussies[p].Size + "cm deep " + who.Pussies[p].Type + virgin + " pussy";
             }
-            return pussies;
+            return pussies + "<br><br>";
         } else {
             return "";
         }
@@ -758,9 +820,9 @@
         if (who.Boobies.length > 0) {
             var boobies = "";
             for (var b = 0; b < who.Boobies.length; b++) {
-                boobies += BoobSizeConvertor(who.Boobies[b].Size) + " chest. <br>";
+                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
             }
-            return boobies;
+            return boobies + "<br><br>";
         } else {
             return "";
         }
@@ -953,6 +1015,8 @@
         Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
         Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
         BlackMartket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
+
+        FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
         return;
     }
 
@@ -1328,6 +1392,7 @@
     document.getElementById("ExtraInfo").addEventListener("click", function () {
         DisplayNone();
         document.getElementById("DetailedInfo").style.display = 'block';
+        document.getElementById("FullRace").innerHTML = player.Race + " " + player.SecondRace;
         document.getElementById("Pregnancy").innerHTML = "Times you have impregnated: " + Flags.Impregnations + "<br> Times you have been pregnant: " + Flags.Pregnations;
         document.getElementById("ExtraStats").innerHTML = "Virility: " + player.Virility + "<br>Fertility: " + player.Fertility + "<br>Essence drain: " + player.EssenceDrain +
             "<br>Give essence: " + player.GiveEssence + "<br> passive rest rate: " + player.RestRate;
@@ -1570,7 +1635,7 @@
     var RacesCave = ["Goblin", "Imp"];
     var RacesCave2 = ["Goblin", "Demon"];
     var RacesCave3 = ["Dhampir", "Demon"];
-
+    var RacesCave4 = ["Succubus", "incubus"];
 
 
     var FemaleFirstNames = ["Veronica", "Kyra", "Lauryn", "Alicja", "Tate", "Colleen", "Melody", "Pippa", "Keziah", "Melissa", "Lana", "Marie", "Molly", "Sandra", "Dannielle", "Yusra", "Laiba", "Gabrielle", "Syeda", "Amirah"];
@@ -2402,10 +2467,29 @@
                 OP.Dicks[0].Virgin = false;
             }
         }
+        RaceBonus(OP)
+        EvilNameGiver(OP);
+        return OP;
+    }
+
+    function EncounterCave4() {
+        var OP = new enemy("Lesser", RandomString(RacesCave4), 100, 100, RandomInt(2, 5), RandomInt(35, 50), RandomInt(40, 55), RandomInt(40, 55),
+            RandomInt(20, 40), RandomInt(80, 120), 0, 0, 420, 420, 550, 550, RandomInt(2, 18) * grid, RandomInt(2, 18) * grid,
+            RandomInt(85, 110), RandomInt(70, 120), 'purple', grid, RandomInt(50, 70), RandomInt(150, 180), RandomInt(20, 30), RandomInt(15, 35));
+        if (OP.Race == "Succubus") {
+            OP.Femi = RandomInt(1500, 3000);
+            OP.Masc = 0;
+        } else {
+            OP.Femi = 0;
+            OP.Masc = RandomInt(1500, 3000);
+        }
+        EssenceCheck(OP);
         RaceBonus(OP);
         EvilNameGiver(OP);
         return OP;
     }
+
+
 
     var enemies = [];
 
@@ -2935,7 +3019,7 @@
                 }
                 break;
             case "male":
-            console.log(true)
+                console.log(true)
                 document.getElementById("GiveBlowjob").style.display = 'block';
                 document.getElementById("GiveCunniglus").style.display = 'none';
                 if (player.Dicks.length > 0) {
@@ -3918,7 +4002,30 @@
         document.getElementById("VoreButtons").style.display = 'grid';
         document.getElementById("VorePerkMenu").style.display = 'none';
     });
-
+    document.getElementById("VoreSettings").addEventListener("click", function () {
+        if (document.getElementById("VoreSettingsMenu").style.display == 'block') {
+            document.getElementById("VoreSettingsMenu").style.display = 'none';
+        } else {
+            document.getElementById("VoreSettingsMenu").style.display = 'block';
+        }
+    });
+    document.getElementById("AbsorbEssenceSetting").addEventListener("click", function () {
+        switch (Settings.VoreSettings.AbsorbEssence) {
+            case "Both":
+                Settings.VoreSettings.AbsorbEssence = "Femininity";
+                break;
+            case "Femininity":
+                Settings.VoreSettings.AbsorbEssence = "Masculinity";
+                break;
+            case "Masculinity":
+                Settings.VoreSettings.AbsorbEssence = "None";
+                break;
+            default:
+                Settings.VoreSettings.AbsorbEssence = "Both";
+                break;
+        }
+        document.getElementById("AbsorbEssenceSetting").value = "Absorb Essence " + Settings.VoreSettings.AbsorbEssence;
+    });
     document.getElementById("LeaveVore").addEventListener("click", function () {
         battle = false;
         document.getElementById("ShowVore").style.display = 'none';
@@ -3927,6 +4034,7 @@
         document.getElementById("VoreBreast").style.display = 'none';
         document.getElementById("VoreVagina").style.display = 'none';
         document.getElementById("VoreStomach").style.display = 'none';
+        document.getElementById("VoreSettingsMenu").style.display = 'none';
         document.getElementById("map").style.display = 'block';
         document.getElementById("VoreButtons").style.display = 'grid';
 
@@ -3955,13 +4063,17 @@
 
         for (var e = 0; e < player.Vore.Stomach.length; e++) {
             if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
-                if (player.Vore.Stomach[e].Masc > 0) {
-                    player.Vore.Stomach[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-                    player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                if (Settings.VoreSettings.AbsorbEssence == "Both" || Settings.VoreSettings.AbsorbEssence == "Masculinity") {
+                    if (player.Vore.Stomach[e].Masc > 0) {
+                        player.Vore.Stomach[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    }
                 }
-                if (player.Vore.Stomach[e].Femi > 0) {
-                    player.Vore.Stomach[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-                    player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                if (Settings.VoreSettings.AbsorbEssence == "Both" || Settings.VoreSettings.AbsorbEssence == "Femininity") {
+                    if (player.Vore.Stomach[e].Femi > 0) {
+                        player.Vore.Stomach[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                    }
                 }
             }
             if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
@@ -4457,6 +4569,25 @@
                 }
             }
         }
+        if (House.Dormmates.length > 0) {
+            player.Gold += 0.001 * House.Dormmates.length;
+            for (var esf = 0; House.Dormmates.length > esf; esf++) {
+                if (Settings.Brothel.ServeMasc && Settings.Brothel.ServeFemi) {
+                    House.Dormmates[esf].Masc += 0.1 * House.Brothel;
+                    House.Dormmates[esf].Femi += 0.1 * House.Brothel;
+                }
+                else if (Settings.Brothel.ServeFemi) {
+                    House.Dormmates[esf].Femi += 0.2 * House.Brothel;
+                }
+                else if (Settings.Brothel.ServeMasc) {
+                    House.Dormmates[esf].Masc += 0.2 * House.Brothel;
+                }
+                console.log(House.Dormmates[esf])
+            }
+            if (House.hasOwnProperty("Brothel")) {
+                player.Gold += 0.001 * House.Dormmates.length * House.Brothel;
+            }
+        }
     };
 
     function FluidsEngine() {
@@ -4465,7 +4596,7 @@
                 player.Balls[b].CumMax = Math.round(player.Balls[b].Size * 400);
                 player.Balls[b].CumBaseRate = player.Balls[b].CumMax / 50000;
                 if (player.Balls[b].Cum < player.Balls[b].CumMax) {
-                    player.Balls[b].Cum += player.Balls[b].CumRate + player.Balls[b].CumBaseRate;
+                    player.Balls[b].Cum += Math.max(0, player.Balls[b].CumRate + player.Balls[b].CumBaseRate);
                 }
             }
         }
@@ -4491,6 +4622,7 @@
             TotalMilkMax = 0;
         for (var b = 0; b < player.Boobies.length; b++) {
             if (player.Boobies[b].Milk > 1) {
+                player.Boobies[b].Milk = Math.max(0, player.Boobies[b].Milk)
                 TotalMilk += player.Boobies[b].Milk;
                 TotalMilkMax += player.Boobies[b].MilkMax;
                 document.getElementById("MilkBar").style.display = 'block';
@@ -4509,6 +4641,25 @@
 
     }
 
+    function GenitalChange(what) {
+        for (var e = 0; e < player.Dicks.length; e++) {
+            player.Dicks[e].Type = what;
+        }
+        for (var e = 0; e < player.Balls.length; e++) {
+            player.Balls[e].Type = what;
+        }
+        for (var e = 0; e < player.Boobies.length; e++) {
+            player.Boobies[e].Type = what;
+        }
+        for (var e = 0; e < player.Pussies.length; e++) {
+            player.Pussies[e].Type = what;
+        }
+        for (var e = 0; e < player.Anal.length; e++) {
+            player.Anal[e].Type = what;
+        }
+    }
+
+
     var TF = {
         Status: false,
         Counter: 0,
@@ -4524,83 +4675,199 @@
             TF.Counter++;
             switch (TF.To) {
                 case "elf":
-                    if (TF.Counter > 1000) {
-                        EventLog("You are now a elf!");
-                        player.Race = "elf";
-                        TF.Status = false;
-                        TF.Counter = 0;
-                    } else if (TF.Counter == 500) {
-                        EventLog("You are have grown pointy ears!");
+                    if (player.SecondRace != "elf") {
+                        if (TF.Counter > 1000) {
+                            player.SecondRace = "elf";
+                            EventLog("Completing the transfomation you are now half elf, half " + player.Race);
+                            TF.Status = false;
+                            TF.Counter = 0;
+                            GenitalChange("elf");
+                        } else if (TF.Counter == 500) {
+                            EventLog("Your skin feels smooth like silk.")
+                        }
+                    } else {
+                        if (TF.Counter > 1000) {
+                            EventLog("You are now a elf!");
+                            player.Race = "elf";
+                            TF.Status = false;
+                            TF.Counter = 0;
+                        } else if (TF.Counter == 500) {
+                            EventLog("Your ears grow to a pointy shape.");
+                        }
                     }
                     break;
                 case "human":
-                    if (TF.Counter > 1000) {
-                        EventLog("You are now a human!");
-                        player.Race = "human";
-                        TF.Status = false;
-                        TF.Counter = 0;
-                    } else if (TF.Counter == 500) {
-                        EventLog("Your body starts to feel familiar.");
+                    if (player.SecondRace != "human") {
+                        if (TF.Counter > 1000) {
+                            EventLog("You are now a human!");
+                            player.SecondRace = "human";
+                            TF.Status = false;
+                            TF.Counter = 0;
+                            GenitalChange("human");
+                        } else if (TF.Counter == 500) {
+                            EventLog("Your body starts to feel familiar.");
+                        }
+                        break;
+                    } else {
+                        if (TF.Counter > 1000) {
+                            EventLog("You are now a human!");
+                            player.Race = "human";
+                            TF.Status = false;
+                            TF.Counter = 0;
+                        } else if (TF.Counter == 500) {
+                            EventLog("Your body starts to feel familiar.");
+                        }
+                        break;
+                    }
+                case "equine taur":
+                    if (player.SecondRace != "equine taur") {
+                        if (TF.Counter > 1000) {
+                            EventLog("Completing the transformation you are now a centaur with a horses lower body and a " + player.Race + " upper body.");
+                            player.SecondRace = "equine taur";
+                            TF.Status = false;
+                            TF.Counter = 0;
+                            GenitalChange("equine");
+                        } else if (TF.Counter == 300) {
+                            EventLog("The changes to your lower body is so dramatic you fall to the ground, while trying to regain balance you see your torso split into two. The lower one horizontal to the ground and the upper one vertical.")
+                        } else if (TF.Counter == 600) {
+                            EventLog("Your legs transform to those of horse and where the split between the old and new torso is you grow a second set of  horse legs.");
+                        } else if (TF.Counter == 800) {
+                            EventLog("You genitals shifts position and transform into their equine equivalent.");
+                        }
                     }
                     break;
-
+                case "equine":
+                    if (player.SecondRace != "equine") {
+                        if (TF.Counter > 1000) {
+                            EventLog("Completing the transformation you are now a satyr with equine lower body and a " + player.Race + " upperbody.");
+                            player.SecondRace = "equine";
+                            TF.Status = false;
+                            TF.Counter = 0;
+                            GenitalChange("equine");
+                        } else if (TF.Counter == 300) {
+                            EventLog("The skin on your legs thickens and grows a thin layer of fur. Your toes fuse together transforming into hooves.")
+                        } else if (TF.Counter == 600) {
+                            EventLog("Your genitals transform into their equine equivalent.")
+                        }
+                    } else {
+                        if (TF.Counter > 1000) {
+                            EventLog("Completing the transformation you are now a anthropomorphic equine.");
+                            PlayerDay.Race = "equine";
+                            TF.Status = false;
+                            TF.Counter = 0;
+                            GenitalChange("equine");
+                        } else if (TF.Counter == 500) {
+                            EventLog("");
+                        }
+                    }
             }
-
         }
     }
 
+    function RaceDesc(who) {
+        switch (who.Race) {
+            case "human":
+                if (who.SecondRace == "human") {
+                    return "human";
+                } else if (who.SecondRace == "elf") {
+                    return "half elf";
+                } else if (who.SecondRace == "equine taur") {
+                    return "centaur";
+                } else if (who.SecondRace == "equine") {
+                    return "satyr";
+                }
+            case "elf":
+                if (who.SecondRace == "human") {
+                    return "half elf";
+                } else if (who.SecondRace == "elf") {
+                    return "elf";
+                } else if (who.SecondRace == "equine taur") {
+                    return "centaur";
+                } else if (who.SecondRace == "equine") {
+                    return "satyr";
+                }
+            case "equine":
+                if (who.SecondRace == "human") {
+                    return "humanoid equine";
+                } else if (who.SecondRace == "elf") {
+                    return "humanoid equine";
+                } else if (who.SecondRace == "equine taur") {
+                    return "anthropomorphic centaur";
+                } else if (who.SecondRace == "equine") {
+                    return "equine";
+                }
+            default:
+                return player.Race;
+        }
+    }
+
+
     function DateEngine() {
-        setInterval(DateTracker, 5000);
+        setInterval(DateTracker, 1000);
     }
 
     var PlayerDay = 0;
 
     function DateTracker() {
         if (!battle) {
-            Flags.Date.Day++;
-            PlayerDay++;
-            if (Flags.Date.Day > 30) {
-                Flags.Date.Day = 1;
-                Flags.Date.Month++;
-                if (Flags.Date.Month > 12) {
-                    Flags.Date.Month = 1;
-                    Flags.Date.Year++;
-                    player.Age++;
-                }
-            }
-            document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
-            PregnanyEngine();
+            Flags.Date.Hour++;
             HouseEngine();
-
-            // health/will && fat burn
-            player.RestRate = 2 + player.Perks.FasterRest.Count * 2;
+            if (Flags.Date.Hour > 24) {
+                Flags.Date.Day++;
+                Flags.Date.Hour = 0;
+                PlayerDay++;
+                if (Flags.Date.Day > 30) {
+                    Flags.Date.Day = 1;
+                    Flags.Date.Month++;
+                    if (Flags.Date.Month > 12) {
+                        Flags.Date.Month = 1;
+                        Flags.Date.Year++;
+                        player.Age++;
+                    }
+                }
+                document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+                PregnanyEngine();
+            }
+            FoodEngine();
+            player.RestRate = 1 + player.Perks.FasterRest.Count * 1;
             if (player.Health < player.MaxHealth && !battle && player.Fat >= player.Height / 100) {
                 if ((player.Health + player.RestRate) > player.MaxHealth) {
                     player.Health = player.MaxHealth;
                 } else {
                     player.Health += player.RestRate;
-                    player.Fat -= player.RestRate / 50;
+                    player.Fat -= player.RestRate / 120;
                 }
             } else if (!battle) {
-                player.Fat -= 0.2;
+                player.Fat -= 0.01;
             }
             if (player.WillHealth < player.MaxWillHealth && !battle && player.Fat >= player.Height / 100) {
                 if ((player.WillHealth + player.RestRate) > player.MaxWillHealth) {
                     player.WillHealth = player.MaxWillHealth;
                 } else {
                     player.WillHealth += player.RestRate;
-                    player.Fat -= player.RestRate / 50;
+                    player.Fat -= player.RestRate / 120;
                 }
             } else if (!battle) {
-                player.Fat -= 0.2;
+                player.Fat -= 0.01;
             }
             if (player.Fat <= player.Height / 100 && !battle) {
                 player.Health -= 1;
                 player.WillHealth -= 1;
-
             }
         }
     }
+
+    function FoodEngine() {
+        // health/will && fat burn
+        for (var e = 0; e < player.FoodStomach.length; e++) {
+            player.FoodStomach[e].Kcal -= player.FoodStomach[e].KcalRate;
+            player.Fat += player.FoodStomach[e].KcalRate;
+            if (player.FoodStomach[e].Kcal < 0) {
+                player.FoodStomach.splice(e, 1)
+            }
+        }
+    }
+
 
     function Impregnate(who, by, mode, where) {
         var Father = RandomInt(1, 4);
@@ -4746,7 +5013,6 @@
         } else if (who.Dicks.length > 0) {
             var dicktotal = 0;
             for (var e = 0; e < who.Dicks.length; e++) {
-                who.Dicks[e].Type = who.Race;
                 who.Dicks[e].Size = Math.round(Math.min(who.Height / 3, Math.max(who.Masc / 30 - dicktotal, who.Height * 0.03)));
                 if (e == who.Dicks.length - 1 && who.Masc / 30 - dicktotal > who.Height / 3 && Settings.MaxLimbs.MaxDicks > e) {
                     var Dick = {
@@ -4779,7 +5045,6 @@
         } else if (who.Balls.length > 0) {
             var ballstotal = 0;
             for (var e = 0; e < who.Balls.length; e++) {
-                who.Balls[e].Type = who.Race;
                 who.Balls[e].Size = Math.round(Math.min(who.Height / 4, Math.max(who.Masc / 50 - ballstotal, who.Height * 0.02)));
                 if (e == who.Balls.length - 1 && who.Masc / 50 - ballstotal > who.Height / 3 && Settings.MaxLimbs.MaxBalls > e) {
                     var Ball = {
@@ -4813,7 +5078,6 @@
         } else if (who.Pussies.length > 0) {
             var pussytotal = 0;
             for (var e = 0; e < who.Pussies.length; e++) {
-                who.Pussies[e].Type = who.Race;
                 who.Pussies[e].Size = Math.round(Math.min(who.Height / 3, Math.max(who.Femi / 30 - pussytotal, who.Height * 0.03)));
                 if (e == who.Pussies.length - 1 && who.Femi / 30 - pussytotal > who.Height / 3 && Settings.MaxLimbs.MaxVaginas > e) {
                     var Pussy = {
@@ -4833,7 +5097,6 @@
 
         var boobtotal = 0;
         for (var e = 0; e < who.Boobies.length; e++) {
-            who.Boobies[e].Type = who.Race;
             who.Boobies[e].Size = Math.round(Math.min(who.Height / 3, Math.max(who.Femi / 60 - boobtotal, 0)));
             if (e == who.Boobies.length - 1 && who.Femi / 60 - boobtotal > who.Height / 3 && Settings.MaxLimbs.MaxBoobs > e) {
                 var Boob = {
@@ -4987,6 +5250,11 @@
                             } else {
                                 document.getElementById("Portal").style.display = 'none'
                             }
+                            if (House.Brothel > 0) {
+                                document.getElementById("Brothel").style.display = 'inline-block';
+                            } else {
+                                document.getElementById("Brothel").style.display = 'none';
+                            }
                         } else if (Doors[i].NESW == "N") {
                             player.Map = "RoadToWitch";
                             sprite.y = startarea.height - 3 * grid;
@@ -5072,8 +5340,17 @@
                             player.Map = "Outlaws";
                             sprite.y = 2 * grid;
                             enemies = []
+                        } else if (Doors[i].NESW == "E") {
+                            player.Map = "Farm";
+                            sprite.x = 2 * grid;
+                            enemies = [];
                         }
                         break;
+                    case "Farm":
+                        if (Doors[i].NESW == "W") {
+                            player.Map = "PathToOutlaws2";
+                            sprite.x = startarea.width - 3 * grid;
+                        }
                     case "Outlaws":
                         if (Doors[i].NESW == "N") {
                             player.Map = "PathToOutlaws2";
@@ -5108,8 +5385,18 @@
                             player.Map = "Cave2";
                             sprite.y = startarea.height - 3 * grid;
                             enemies = [];
+                        } else if (Doors[i].NESW == "S") {
+                            player.Map = "Cave4";
+                            sprite.y = 2 * grid;
+                            enemies = [];
                         }
                         break;
+                    case "Cave4":
+                        if (Doors[i].NESW == "N") {
+                            player.Map = "Cave3";
+                            sprite.y = startarea.height - 3 * grid;
+                            enemies = [];
+                        }
 
                 }
             }
@@ -5125,6 +5412,7 @@
             this.Height = height,
             this.Color = Color
     };
+    // Buildings
     var Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
     var Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
     var Bar = new Npc("Bar", "Bar", 14 * grid, 14 * grid, grid * 5.5, grid * 5.5, "RGB(133,94,66)")
@@ -5134,6 +5422,10 @@
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
     var BlackMartket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
+
+    // Character 
+    var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
+
 
 
     var Npcs = [];
@@ -5187,10 +5479,13 @@
         });
     }
     document.getElementById("RestBar").addEventListener("click", function () {
-        if (player.Gold > 25 && (player.Health < player.MaxHealth || player.WillHealth < player.MaxWillHealth)) {
+        if (player.Gold >= 25 && (player.Health < player.MaxHealth || player.WillHealth < player.MaxWillHealth)) {
             player.Gold -= 25;
             player.Health = player.MaxHealth;
             player.WillHealth = player.MaxWillHealth;
+
+            Flags.Date.Day++;
+            document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
             return;
         } else {
             return;
@@ -5198,7 +5493,12 @@
     });
     document.getElementById("EatBar").addEventListener("click", function () {
         if (player.Gold > 10) {
-            player.Fat += 12;
+            player.Fat += 2;
+            var BarMeal = {
+                Kcal: 1200,
+                KcalRate: 0.1
+            }
+            player.FoodStomach.push(BarMeal);
             player.Gold -= 10;
             player.Health += 20;
             player.WillHealth += 20;
@@ -5206,6 +5506,47 @@
         } else {
             return;
         }
+    });
+    document.getElementById("EatBar").addEventListener("mouseover", function (e) {
+        document.getElementById("BarText").innerHTML = e.target.title;
+    });
+    document.getElementById("EatBarMedium").addEventListener("click", function () {
+        if (player.Gold > 10) {
+            player.Fat += 2;
+            var BarMeal = {
+                Kcal: 1800,
+                KcalRate: 0.2
+            }
+            player.FoodStomach.push(BarMeal);
+            player.Gold -= 10;
+            player.Health += 20;
+            player.WillHealth += 20;
+            return;
+        } else {
+            return;
+        }
+    });
+    document.getElementById("EatBarMedium").addEventListener("mouseover", function (e) {
+        document.getElementById("BarText").innerHTML = e.target.title;
+    });
+    document.getElementById("EatBarLarge").addEventListener("click", function () {
+        if (player.Gold > 10) {
+            player.Fat += 2;
+            var BarMeal = {
+                Kcal: 3200,
+                KcalRate: 0.3
+            }
+            player.FoodStomach.push(BarMeal);
+            player.Gold -= 10;
+            player.Health += 20;
+            player.WillHealth += 20;
+            return;
+        } else {
+            return;
+        }
+    });
+    document.getElementById("EatBarLarge").addEventListener("mouseover", function (e) {
+        document.getElementById("BarText").innerHTML = e.target.title;
     });
 
     // Questsystem
@@ -5443,7 +5784,7 @@
         }
     });
     document.getElementById("ElfTF").addEventListener("click", function () {
-        if (player.Race == "elf") {
+        if (player.Race == "elf" && player.SecondRace == "elf") {
             document.getElementById("WitchHutText").innerHTML = "You are already a elf!";
             return;
         }
@@ -5463,7 +5804,7 @@
         document.getElementById("WitchHutText").innerHTML = e.target.title;
     });
     document.getElementById("HumanTF").addEventListener("click", function () {
-        if (player.Race == "human") {
+        if (player.Race == "human" && player.SecondRace == "human") {
             document.getElementById("WitchHutText").innerHTML = "You are already a human!";
             return;
         }
@@ -5482,7 +5823,55 @@
     document.getElementById("HumanTF").addEventListener("mouseover", function (e) {
         document.getElementById("WitchHutText").innerHTML = e.target.title;
     });
-
+    document.getElementById("EyeColor").addEventListener("click", function () {
+        if (document.getElementById("EyeColorShop").style.display == 'block') {
+            document.getElementById("EyeColorShop").style.display = 'none';
+        } else {
+            document.getElementById("EyeColorShop").style.display = 'block';
+        }
+    });
+    document.getElementById("BrownEye").addEventListener("click", function () {
+        if (player.Gold >= 50) {
+            player.Face.Eyes = "brown"
+        } else {
+            document.getElementById("WitchHutText").innerHTML = "Insufficient gold!"
+        }
+    });
+    document.getElementById("HazelEye").addEventListener("click", function () {
+        if (player.Gold >= 50) {
+            player.Face.Eyes = "hazel"
+        } else {
+            document.getElementById("WitchHutText").innerHTML = "Insufficient gold!"
+        }
+    });
+    document.getElementById("BlueEye").addEventListener("click", function () {
+        if (player.Gold >= 50) {
+            player.Face.Eyes = "blue"
+        } else {
+            document.getElementById("WitchHutText").innerHTML = "Insufficient gold!"
+        }
+    });
+    document.getElementById("GreenEye").addEventListener("click", function () {
+        if (player.Gold >= 50) {
+            player.Face.Eyes = "green"
+        } else {
+            document.getElementById("WitchHutText").innerHTML = "Insufficient gold!"
+        }
+    });
+    document.getElementById("SilverEye").addEventListener("click", function () {
+        if (player.Gold >= 50) {
+            player.Face.Eyes = "silver"
+        } else {
+            document.getElementById("WitchHutText").innerHTML = "Insufficient gold!"
+        }
+    });
+    document.getElementById("AmberEye").addEventListener("click", function () {
+        if (player.Gold >= 50) {
+            player.Face.Eyes = "amber"
+        } else {
+            document.getElementById("WitchHutText").innerHTML = "Insufficient gold!"
+        }
+    });
 
     document.getElementById("Train").addEventListener("click", function () {
         if (player.Fat > (player.Weight * 0.1)) {
@@ -5520,6 +5909,9 @@
         if (player.WillHealth < player.MaxWillHealth + House.BedLevel * 5) {
             player.WillHealth = player.MaxWillHealth + House.BedLevel * 5;
         }
+
+        Flags.Date.Day++;
+        document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
         document.getElementById("HomeText").innerHTML = "You sleept.";
     });
     document.getElementById("UpgradeHome").addEventListener("click", function () {
@@ -5538,7 +5930,7 @@
         var Kitchencost = Math.round(200 * Math.pow(1.2, House.Kitchen));
         document.getElementById("BuildKitchen").value = "Build kitchen " + Kitchencost + "g";
         var Brothelcost = Math.round(500 * Math.pow(1.2, House.Brothel));
-        document.getElementById("BuildBrothel").value = "Build brothel " + Brothelcost + "g(Concept)";
+        document.getElementById("BuildBrothel").value = "Build brothel " + Brothelcost + "g";
     });
     document.getElementById("UpgradeBed").addEventListener("click", function () {
         var BedCost = Math.round(50 * Math.pow(1.2, House.BedLevel));
@@ -5564,11 +5956,10 @@
         if (player.Gold > DormCost) {
             House.Dorm++;
             player.Gold -= DormCost;
-            if (House.Dorm < 1) {
+            if (House.Dorm < 2) {
                 document.getElementById("Dorm").style.display = "inline-block";
                 document.getElementById("HomeText").innerHTML = "Hiring construction workers you give orders to build a dorm to house servants. <br><br>" +
-                    "Wow that's fast looking outside you see the newly built dorm. You can now take home opponent you have made orgasm five times."
-
+                    "Coming back after a short rest you look outside and see that the dorm is already completed, dwarf builders truly are fast and efficient. You can now take home opponents you have made completely submit by causing them to orgasm five times."
             } else {
                 document.getElementById("HomeText").innerHTML = "You expand your dorm to house three more servants.(" + House.Dorm * 3 + ")";
             }
@@ -5639,6 +6030,7 @@
                 document.getElementById("HomeText").innerHTML = "You upgrade your brothel for extra income.";
             }
             House.Brothel++;
+            document.getElementById("Brothel").style.display = 'inline-block';
         }
         Brothelcost = Math.round(500 * Math.pow(1.2, House.Brothel));
         document.getElementById("BuildBrothel").value = "Upgrade brothel " + Brothelcost + "g";
@@ -5783,9 +6175,9 @@
         document.getElementById("DormPlayerLooks").innerHTML = BoobLook(player) + DickLook(player) + PussyLook(player);
         document.getElementById("DormEnemyLooks").innerHTML = BoobLook(e) + DickLook(e) + PussyLook(e);
         if (e.Pregnant.Status || player.Dicks.length == 0) {
-        document.getElementById("Impregnate").style.display = 'none';
-        console.log(e.Pregnant)
-        console.log(player.Dicks.length == 0)
+            document.getElementById("Impregnate").style.display = 'none';
+            console.log(e.Pregnant)
+            console.log(player.Dicks.length == 0)
         } else {
             document.getElementById("Impregnate").style.display = 'inline-block';
         }
@@ -5946,6 +6338,23 @@
         }
     });
 
+    document.getElementById("Brothel").addEventListener("click", function () {
+        document.getElementById("TheBrothel").style.display = 'block';
+        document.getElementById("HomeStart").style.display = 'none';
+    });
+    document.getElementById("ServeMasc").addEventListener("click", function () {
+        Settings.Brothel.ServeMasc = !Settings.Brothel.ServeMasc;
+        document.getElementById("ServeMasc").value = "Masculin customers? " + Settings.Brothel.ServeMasc;
+    });
+    document.getElementById("ServeFemi").addEventListener("click", function () {
+        Settings.Brothel.ServeFemi = !Settings.Brothel.ServeFemi;
+        document.getElementById("ServeFemi").value = "Feminin customers? " + Settings.Brothel.ServeFemi;
+    });
+
+    document.getElementById("CloseBrothel").addEventListener("click", function () {
+        document.getElementById("TheBrothel").style.display = 'none';
+        document.getElementById("HomeStart").style.display = 'block';
+    });
 
     document.getElementById("LeaveHome").addEventListener("click", function () {
         LeaveHome();
@@ -6090,10 +6499,53 @@
         document.getElementById("LimbSale").style.display = 'none';
         document.getElementById("SellLimbs").style.display = 'inline-block';
     });
-
-
-
     // End Black market
+    // Start Farm
+    document.getElementById("EquineTaurTF").addEventListener("click", function () {
+        if (player.SecondRace == "equine taur") {
+            document.getElementById("FarmOwnerText").innerHTML = "You already are a equine taur!"
+            return;
+        }
+        if (TF.Status) {
+            document.getElementById("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
+            return;
+        }
+        if (player.Gold >= 250) {
+            player.Gold -= 250;
+            TfEngine("equine taur");
+        } else {
+            document.getElementById("FarmOwnerText").innerHTML = "Insufficient gold.";
+            return;
+        }
+    });
+    document.getElementById("EquineTaurTF").addEventListener("mouseover", function (e) {
+        document.getElementById("FarmOwnerText").innerHTML = e.target.title;
+    });
+    document.getElementById("EquineTF").addEventListener("click", function () {
+        if (player.SecondRace == "equine" && player.Race == "equine") {
+            document.getElementById("FarmOwnerText").innerHTML = "You already are a equine!"
+            return;
+        }
+        if (TF.Status) {
+            document.getElementById("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
+            return;
+        }
+        if (player.Gold >= 250) {
+            player.Gold -= 250;
+            TfEngine("equine");
+        } else {
+            document.getElementById("FarmOwnerText").innerHTML = "Insufficient gold.";
+            return;
+        }
+    });
+    document.getElementById("EquineTF").addEventListener("mouseover", function (e) {
+        document.getElementById("FarmOwnerText").innerHTML = e.target.title;
+    });
+
+    // End Farm
+
+
+
 
     function PrintDoor(NESW) {
         this.NESW = NESW;
@@ -6148,8 +6600,10 @@
 
     function PrintNpcs() {
         for (var e = 0; e < Npcs.length; e++) {
-            //ctx.fillStyle = Npcs[e].Color;
-            //ctx.fillRect(Npcs[e].X, Npcs[e].Y, Npcs[e].Width, Npcs[e].Height);
+            if (Npcs[e].Name == "FarmOwner") {
+                ctx.fillStyle = Npcs[e].Color;
+                ctx.fillRect(Npcs[e].X, Npcs[e].Y, Npcs[e].Width, Npcs[e].Height);
+            }
             ctx.fillStyle = Settings.TextColor;
             ctx.font = "4vh Arial";
             ctx.textAlign = "center";
@@ -6176,6 +6630,10 @@
 
         World.fillStyle = Settings.BorderColor;
         World.strokeStyle = Settings.BorderColor;
+
+        var Width = WorldMap.width * 0.2;
+        var Height = WorldMap.height * 0.2;
+
         switch (player.Area) {
             case "First":
                 World.fillStyle = Settings.MapColor;
@@ -6201,8 +6659,7 @@
                 }
 
                 World.font = "1em Arial";
-                World.strokeText("v", WorldMap.width * 0.485, WorldMap.height)
-
+                World.strokeText("v", WorldMap.width * 0.485, WorldMap.height);
 
                 switch (player.Map) {
                     case "Start":
@@ -6241,16 +6698,18 @@
                 }
                 break;
             case "Second":
-                TilePainter(WorldMap.width * 0.4, 0, WorldMap.width * 0.2, WorldMap.height * 0.2);
-                TilePainter(WorldMap.width * 0.2, 0, WorldMap.width * 0.2, WorldMap.height * 0.2);
-                TilePainter(0, 0, WorldMap.width * 0.2, WorldMap.height * 0.2);
-                TilePainter(0, WorldMap.height * 0.2, WorldMap.width * 0.2, WorldMap.height * 0.2);
-                TilePainter(0, WorldMap.height * 0.4, WorldMap.width * 0.2, WorldMap.height * 0.2);
-                TilePainter(WorldMap.width * 0.4, WorldMap.height * 0.2, WorldMap.width * 0.2, WorldMap.height * 0.2);
-                TilePainter(WorldMap.width * 0.4, WorldMap.height * 0.4, WorldMap.width * 0.2, WorldMap.height * 0.2);
+                TilePainter(WorldMap.width * 0.4, 0, Width, Height);
+                TilePainter(WorldMap.width * 0.2, 0, Width, Height);
+                TilePainter(0, 0, WorldMap.width * 0.2, Width, Height);
+                TilePainter(0, WorldMap.height * 0.2, Width, Height);
+                TilePainter(0, WorldMap.height * 0.4, Width, Height);
+                TilePainter(WorldMap.width * 0.4, WorldMap.height * 0.2, Width, Height);
+                TilePainter(WorldMap.width * 0.4, WorldMap.height * 0.4, Width, Height);
+                TilePainter(WorldMap.width * 0.6, WorldMap.height * 0.2, Width, Height);
 
                 World.font = "2em Arial";
                 World.strokeText("O", WorldMap.width * 0.46, WorldMap.height * 0.57);
+                World.strokeText("F", WorldMap.width * 0.66, WorldMap.height * 0.37);
 
                 switch (player.Map) {
                     case "PathToOutlaws":
@@ -6258,6 +6717,9 @@
                         break;
                     case "PathToOutlaws2":
                         World.fillRect(WorldMap.width * 0.4, WorldMap.height * 0.2, WorldMap.width * 0.2, WorldMap.height * 0.2);
+                        break;
+                    case "Farm":
+                        World.fillRect(WorldMap.width * 0.6, WorldMap.height * 0.2, Width, Height);
                         break;
                     case "Outlaws":
                         World.fillRect(WorldMap.width * 0.4, WorldMap.height * 0.4, WorldMap.width * 0.2, WorldMap.height * 0.2);
@@ -6270,6 +6732,9 @@
                         break;
                     case "Cave3":
                         World.fillRect(0, WorldMap.height * 0.2, WorldMap.width * 0.2, WorldMap.height * 0.2);
+                        break;
+                    case "Cave4":
+                        World.fillRect(0, WorldMap.height * 0.4, WorldMap.width * 0.2, WorldMap.height * 0.2);
                         break;
                 }
                 break;
@@ -6406,6 +6871,14 @@
                 backmap.src = "Tiles/PathToOutlaws2.png";
                 ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                 break;
+            case "Farm":
+                PrintDoor("W");
+                if (enemies.length < 1) {}
+                if (Npcs.length < 1) {
+                    Npcs = [FarmOwner]
+                }
+                PrintMap("Farm");
+                break;
             case "Outlaws":
                 if (enemies.length < 1) {
 
@@ -6419,33 +6892,46 @@
                 ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                 break;
             case "Cave1":
-                PrintDoor("W");
-                PrintDoor("E");
                 if (enemies.length < 1) {
                     enemies = [EncounterCave1(), EncounterCave1(), EncounterCave1(), EncounterCave1(), EncounterCave1()]
                 }
                 Npcs = []
                 PrintMap("Cave1");
+                backmap = new Image;
+                backmap.src = "Tiles/Cave1.png";
+                ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                 break;
             case "Cave2":
-                PrintDoor("S");
-                PrintDoor("E");
                 if (enemies.length < 1) {
                     enemies = [EncounterCave2(), EncounterCave2(), EncounterCave2(), EncounterCave2(), EncounterCave2()]
                 }
                 Npcs = []
                 PrintMap("Cave2");
+                backmap = new Image;
+                backmap.src = "Tiles/Cave2.png";
+                ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                 break;
             case "Cave3":
-                PrintDoor("N");
                 if (enemies.length < 1) {
                     enemies = [EncounterCave3(), EncounterCave3(), EncounterCave3()]
+                }
+                Npcs.length = [];
+                PrintMap("Cave3");
+                backmap = new Image;
+                backmap.src = "Tiles/Cave3.png";
+                ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                break;
+            case "Cave4":
+                if (enemies.length < 1) {
+                    enemies = [EncounterCave4(), EncounterCave4(), EncounterCave4(), EncounterCave4()]
                 }
                 if (Npcs.length < 1) {
                     Npcs = [Tempsson];
                 }
-                PrintMap("Cave3");
-                break;
+                backmap = new Image;
+                backmap.src = "Tiles/Cave3.png";
+                ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                PrintMap("Cave4")
             case "TempCity":
                 if (enemies.length < 1) {
 
@@ -6499,10 +6985,8 @@
         };
 
         switch (player.Map) {
-            case "Cave1":
-            case "Cave2":
-            case "Cave3":
             case "TempCity":
+            case "Farm":
                 PaintBackground();
                 break;
             default:
@@ -6545,13 +7029,11 @@
 
         // Live update for Looksmenu
         document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
-        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + player.Race + " " + Pronun(CheckGender(player)) +
-            ". Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor + " skin color.";
-
+        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
+            ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and a " + player.Skincolor + " skin color.";
         if (player.Pregnant.Babies.length > 0) {
             if (player.Pregnant.Babies[0].BabyAge < 30) {
                 document.getElementById("looks2").innerHTML += "<br><br> You are pregnant"
-
             } else {
                 document.getElementById("looks2").innerHTML += "<br><br> You are " + Math.round(player.Pregnant.Babies[0].BabyAge / 30) + " months pregnant."
             }
@@ -6583,22 +7065,11 @@
             Doors = [DoorE, DoorS, DoorN, DoorW];
         }
 
-        if (House.Dormmates.length > 0) {
-            player.Gold += 0.001 * House.Dormmates.length;
-            for (var esf = 0; House.Dormmates.length > esf; esf++) {
-                House.Dormmates[esf].Masc += 0.0001;
-                House.Dormmates[esf].Femi += 0.0001;
-            }
-            if (House.hasOwnProperty("Brothel")) {
-                player.Gold += 0.001 * House.Dormmates.length * House.Brothel;
-            }
-        }
         if (Settings.Vore) {
             document.getElementById("VoreLooks").style.display = 'inline-block';
             VoreEngine();
         }
 
-        HouseEngine();
         FluidsEngine();
         if (TF.Status) {
             TfEngine();
