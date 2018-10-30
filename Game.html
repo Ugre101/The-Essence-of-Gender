@@ -228,7 +228,7 @@
 
 	<div id="DetailedInfo" class="None Looks">
 		<h1>Details</h1>
-
+		<p id="FullRace"></p>
 		<br>
 		<p id="Pregnancy"></p>
 		<input type="button" id="Children" value="Children(placeholder)" />
@@ -480,6 +480,10 @@
 
 			<input type="button" id="LeaveVorePerkMenu" value="Done">
 		</div>
+		<div id="VoreSettingsMenu" class="None">
+			<input type="button" id="AbsorbEssenceSetting" value="Absorb Essence Both" />
+		</div>
+		<input type="button" id="VoreSettings" value="Settings" />
 		<input type="button" id="LeaveVore" value="Close">
 	</div>
 
@@ -709,8 +713,10 @@
 		<h1>Bar</h1>
 		<p id="BarText" class="TextBox"></p>
 		<input type="button" id="RestBar" value="Rest 25g" />
-		<input type="button" id="EatBar" value="Eat 10g" />
-		<br><br><input type="button" id="LeaveBar" value="Leave" />
+		<input type="button" id="EatBar" value="Medium meal 10g" title="1200kcal gives 0.1kg/hr fat" />
+		<input type="button" id="EatBarMedium" value="Large meal 30g" title="1800kcal gives 0.2kg/hr fat" />
+		<input type="button" id="EatBarLarge" value="Buffet 50g" title="3200kcal gives 0.3kg/hr fat" /> <br><br><input type="button"
+		 id="LeaveBar" value="Leave" />
 	</div>
 	<div id="Shop" class="Building None">
 		<h1>Shop</h1>
@@ -739,6 +745,7 @@
 			<div>
 				<input type="button" id="Sleep" value="Sleep" />
 				<input type="button" id="Dorm" value="Dorm" />
+				<input type="button" id="Brothel" value="Brothel" />
 			</div>
 			<div>
 				<input type="button" id="UpgradeHome" value="Home upgrades" />
@@ -756,7 +763,9 @@
 			<input type="button" id="BuildGym" value="Build gym 200g" title="A gym will make your servant can gain muscle over time." />
 			<input type="button" id="BuildKitchen" value="Build kitchen 200g" title="A kitchen will make your servants gain fat over time." />
 			<input type="button" id="BuildPortal" value="Portal 1000g(Concept)" title="Why would you walk in a magic world, that's for peasants!" />
-			<input type="button" id="BuildBrothel" value="Brothel(Concept)" title="More to come but for now grants you extra passive income." />
+			<input type="button" id="BuildBrothel" value="Brothel" title="More to come but for now grants you extra passive income and increases essence gain for servants." />
+			<input type="button" id="" value="(placeholder)Nursery" title="" />
+			<input type="button" id="" value="(Placeholder)Barn" title="Allows you to milk your lactating servants. The milk can be brought with you as a travel snack or you can sell it for gold." />
 			<input type="button" id="LeaveUpgradeHome" value="Back">
 		</div>
 		<div id="TheDorm" class="None">
@@ -795,6 +804,11 @@
 			<div id="Portals">
 				<input type="button" id="TempLand" value="TempLand" />
 			</div>
+		</div>
+		<div id="TheBrothel" class="None">
+			<input type="button" id="ServeMasc" value="Masculin customers? true" title="Allows dorm servants to gain masculinity though whoring themselves out." />
+			<input type="button" id="ServeFemi" value="Feminin customers? true" title="Allows dorm servants to  gain femininity trough whoring themselves out." />
+			<input type="button" id="CloseBrothel" value="Back" />
 		</div>
 	</div>
 
@@ -870,6 +884,15 @@
 		<p id="WitchHutText" class="TextBox"></p>
 		<input type="button" id="ElfTF" value="Elf delight 200g" title="Tired of being a human? Do you feel a desire to possess pointy ears? Become an elf today!" />
 		<input type="button" id="HumanTF" value="Potion of regret 250g" title="Do you not remember who you are anymore? Feel like you have lost you humanity?" />
+		<input type="button" id="EyeColor" value="Eye color 50g" title="Not happy with the eyes you were born with?" />
+		<div id="EyeColorShop" class="None">
+			<input type="button" id="BrownEye" value="Brown eyes" />
+			<input type="button" id="HazelEye" value="Hazel eyes" />
+			<input type="button" id="BlueEye" value="Blue eyes" />
+			<input type="button" id="GreenEye" value="Green eyes" />
+			<input type="button" id="SilverEye" value="Silver eyes" />
+			<input type="button" id="AmberEye" value="Amber eyes" />
+		</div>
 		<br><input type="button" id="LeaveWitchHut" value="Leave" />
 	</div>
 
@@ -917,6 +940,17 @@
 
 		<input type="button" id="BlackMarketWhy" value="Why can't I buy?" title="I see a plenty signs here of what you are buying, but I see nothing about what I can buy?" />
 		<input type="button" id="LeaveBlackMarket" value="Leave" />
+	</div>
+
+	<div id="FarmOwner" class="None Building">
+		<p id="FarmOwnerText" class="TextBox"></p>
+		<div>
+			<input type="button" id="" value="(Placeholder)Need help?"/>
+			<input type="button" id="EquineTaurTF" value="Buy Equine-Taur Essence" title="Do you lack endurance? Want to able to work like a horse? One dose of this and you will turn to a taur hybrid of equine and you current race." /> 
+			<input type="button" id="EquineTF" value="Buy Equine Essence" title="Want more lower body strength? Lucky for you this essence will make you to the mare or stallion of your dreams! One dose will turn your lower body to a set of humanoid equine legs while two doses will turn you to a anthropomorphic equine." /> 
+			<input type="button" id="" value="(Placeholder)Bovine Essence"/>
+		</div>
+		<input type="button" id="LeaveFarmOwner" value="Bye" />
 	</div>
 
 	<script src="Gamescript.js"></script>
