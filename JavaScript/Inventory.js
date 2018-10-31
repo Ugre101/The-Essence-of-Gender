@@ -45,12 +45,12 @@ function Use(item) {
     } else if (thing.Name === "Pouch") {
         var z = Math.round(Math.random() * 40) + 10;
         z = parseInt(z);
-        player.gold += z;
+        player.Gold += z;
         EventLog("What's in the bag? It's " + z + " coins!");
     } else if (thing.Name === "HalfPouch") {
         var z = Math.round(Math.random() * 40) + 10;
         z = parseInt(z);
-        player.gold += z;
+        player.Gold += z;
         EventLog("What's in the bag? It's " + z + " coins!");
     } else if (thing.Name === "Orc brew") {
         var z = Math.min(Math.round(player.MaxHealth / 10), player.MaxHealth - player.Health);
