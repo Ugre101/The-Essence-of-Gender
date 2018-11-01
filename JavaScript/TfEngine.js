@@ -55,8 +55,8 @@ function TfEngine(Tf_to) {
                     } else if (TF.Counter == 500) {
                         EventLog("Your body starts to feel familiar.");
                     }
-                    break;
                 }
+                break;
             case "equine taur":
                 if (player.SecondRace != "equine taur") {
                     if (TF.Counter > 1000) {

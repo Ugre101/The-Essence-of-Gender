@@ -742,7 +742,7 @@
                 break;
         }
         console.log(source);
-        myimg.src = "../imgPack/" + source + ".jpg";
+        myimg.src = "imgPack/" + source + ".jpg";
         myimg.onload = function () {
             document.getElementById("MyImg").src = "imgPack/" + source + ".jpg";
         }

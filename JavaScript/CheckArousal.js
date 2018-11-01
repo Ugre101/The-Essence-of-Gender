@@ -1,5 +1,8 @@
 function CheckArousal() {
     var ee = enemies[EnemyIndex];
+    var ImpregActions ={
+        male : ["DoggyStyle","DoggyStyleAnal" , "Missionary"],
+        female:["DoggyStyle","Missionary"]};
     if (ee.Arousal >= 100) {
         ee.Orgasm++;
         ee.SessionOrgasm++;
@@ -28,7 +31,7 @@ function CheckArousal() {
         }
         EssenceCheck(ee);
 
-        if (LastPressed == ("DoggyStyle" || "DoggyStyleAnal" || "Missionary")) {
+        if (ImpregActions.male.indexOf(LastPressed) != -1) {
 
             if (!ee.hasOwnProperty("Pregnant")) {
                 ee.Pregnant = {}
@@ -42,7 +45,7 @@ function CheckArousal() {
                 }
             }
         }
-        if (LastPressed == ("DoggyStyle" || "Missionary")) {
+        if (ImpregActions.female.indexOf(LastPressed) != -1) {
             document.getElementById("SexText").innerHTML = "Feeling that you are close you push yourself as deep as you can in their sweet pussy."
             if (player.Balls.length > 0) {
                 var Cum = 0;
