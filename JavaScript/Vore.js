@@ -1,6 +1,13 @@
     // Start Vore
     document.getElementById("Vore").addEventListener("click", function () {
-        Settings.Vore = !Settings.Vore;
+        switch (Settings.Vore) {
+            case true:
+                Settings.Vore = false;
+                break;
+            default:
+                Settings.Vore = true;
+                break;
+        }
         document.getElementById("Vore").value = "Vore " + Settings.Vore;
         if (!Settings.Vore) {
             document.getElementById("VoreLooks").style.display = 'none';
