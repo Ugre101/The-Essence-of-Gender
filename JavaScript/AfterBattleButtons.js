@@ -7,7 +7,7 @@ function AfterBattleButtons() {
 
     switch (CheckGender(enemies[EnemyIndex])) {
         case "female":
-            document.getElementById("GiveCunniglus").style.display = 'block';
+            document.getElementById("GiveCunnilingus").style.display = 'block';
             document.getElementById("GiveBlowjob").style.display = 'none';
             if (player.Dicks.length > 0) {
                 document.getElementById("PlayerDick").style.display = 'block';
@@ -22,14 +22,14 @@ function AfterBattleButtons() {
             if (player.Pussies.length > 0) {
                 document.getElementById("PlayerVagina").style.display = 'block';
                 document.getElementById("Scissoring").style.display = 'block';
-                document.getElementById("GetCunniglus").style.display = 'block';
+                document.getElementById("GetCunnilingus").style.display = 'block';
                 document.getElementById("RideCowgirl").style.display = 'none';
             } else {
                 document.getElementById("PlayerVagina").style.display = 'none';
             }
             break;
         case "hermaphrodite":
-            document.getElementById("GiveCunniglus").style.display = 'block';
+            document.getElementById("GiveCunnilingus").style.display = 'block';
             document.getElementById("GiveBlowjob").style.display = 'block';
             if (player.Dicks.length > 0) {
                 document.getElementById("PlayerDick").style.display = 'block';
@@ -44,7 +44,7 @@ function AfterBattleButtons() {
             if (player.Pussies.length > 0) {
                 document.getElementById("PlayerVagina").style.display = 'block';
                 document.getElementById("Scissoring").style.display = 'block';
-                document.getElementById("GetCunniglus").style.display = 'block';
+                document.getElementById("GetCunnilingus").style.display = 'block';
                 document.getElementById("RideCowgirl").style.display = 'block';
             } else {
                 document.getElementById("PlayerVagina").style.display = 'none';
@@ -53,7 +53,7 @@ function AfterBattleButtons() {
         case "male":
             console.log(true)
             document.getElementById("GiveBlowjob").style.display = 'block';
-            document.getElementById("GiveCunniglus").style.display = 'none';
+            document.getElementById("GiveCunnilingus").style.display = 'none';
             if (player.Dicks.length > 0) {
                 document.getElementById("PlayerDick").style.display = 'block';
                 document.getElementById("Missionary").style.display = 'none';
@@ -67,14 +67,14 @@ function AfterBattleButtons() {
             if (player.Pussies.length > 0) {
                 document.getElementById("PlayerVagina").style.display = 'block';
                 document.getElementById("Scissoring").style.display = 'none';
-                document.getElementById("GetCunniglus").style.display = 'block';
+                document.getElementById("GetCunnilingus").style.display = 'block';
                 document.getElementById("RideCowgirl").style.display = 'block';
             } else {
                 document.getElementById("PlayerVagina").style.display = 'none';
             }
             break;
         case "doll":
-            document.getElementById("GiveCunniglus").style.display = 'none';
+            document.getElementById("GiveCunnilingus").style.display = 'none';
             document.getElementById("GiveBlowjob").style.display = 'none';
             if (player.Dicks.length > 0) {
                 document.getElementById("PlayerDick").style.display = 'block';
@@ -88,7 +88,7 @@ function AfterBattleButtons() {
             if (player.Pussies.length > 0) {
                 document.getElementById("PlayerVagina").style.display = 'block';
                 document.getElementById("Scissoring").style.display = 'none';
-                document.getElementById("GetCunniglus").style.display = 'block';
+                document.getElementById("GetCunnilingus").style.display = 'block';
                 document.getElementById("RideCowgirl").style.display = 'none';
             } else {
                 document.getElementById("PlayerVagina").style.display = 'none';

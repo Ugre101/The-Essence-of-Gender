@@ -71,8 +71,7 @@ function TfEngine(Tf_to) {
                         EventLog("Where your torso split you grow a second set of legs, and watch as all four legs transform to those of a horse.");
 					}	else if (TF.Counter == 600) {
                         EventLog("You feel your lower torso growing wider, soon resembling a horse's torso.");
-                    }
-                    } else if (TF.Counter == 800) {
+                    } 	else if (TF.Counter == 800) {
                         EventLog("Your genitals shift around as they transform into their equine equivalent.");
                     }
                 }
@@ -102,6 +101,7 @@ function TfEngine(Tf_to) {
                     }else if (TF.Counter == 600) {
                         EventLog("You see your face stretch out, shifting into a horse's muzzle.");
                 }
+			}
         }
     }
 }
