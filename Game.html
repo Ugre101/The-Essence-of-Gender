@@ -576,6 +576,7 @@
 						<input type="button" id="Scissoring" value="Scissoring" />
 						<input type="button" id="GetCunniglus" value="Receive cunnilingus" />
 						<input type="button" id="RideCowgirl" value="Ride cowgirl" />
+						<input type="button" id="Insertion" value="Insertion" />
 					</div>
 				</div>
 				<input type="button" id="Unbirth" value="Unbirth" />
@@ -605,6 +606,7 @@
 			<div>
 				<div id="Breast">
 					<input type="button" id="BreastVore" value="Breast vore">
+					<input type="button" id="BreastFeed" value="Breast feed"/>
 				</div>
 			</div>
 			<div>
@@ -682,7 +684,6 @@
 		</div>
 		<div id="Quest" class="None">
 			<h1>Quests</h1>
-			<p id="QuestText" class="TextBox"></p>
 			<div id="QuestStart">
 				<input type="button" id="BanditLord" value="Banditlord" />
 				<input type="button" id="ElfHunt" value="Elf Hunt" />
@@ -790,6 +791,8 @@
 					<input type="button" id="KickOut" value="Kick out" />
 				</div>
 			</div>
+			<input type="button" id="ImpregOrgy" value="Impregnate servants" title="Spend the day fucking you servants, until your balls are completely emptied."/>
+			<input type="button" id="GetImpregOrgy" value="Get impregnated" title="Spend the day getting fucked by your virile servants, till all of their balls content have been emptied into your orifices."/>
 			<br><input type="button" id="LeaveDorm" value="Leave dorm">
 			<div id="KickYesNo" class="None">
 				<input type="button" id="KickYes" value="Yes">
@@ -845,12 +848,17 @@
 			<p id="DormEnemyOrgasm"></p>
 			<p id="DormPlayerOrgasm"></p>
 		</div>
-		<div class="e">
+		<div class="e Grid">
+			<div>
 			<input type="button" id="DormDrainMasc" value="Siphon masculinity" />
 			<input type="button" id="DormDrainFemi" value="Siphon femininity" />
 			<input type="button" id="DormInjFemi" value="Inject femininity" />
 			<input type="button" id="DormInjMasc" value="Inject masculinity" />
+			</div>
+			<div>
 			<input type="button" id="Impregnate" value="Try to impregnate" />
+			<input type="button" id="GetImpregnated" value="Get impregnated" />
+			</div>
 			<input type="button" id="LeaveDormSex" value="Leave" />
 		</div>
 	</div>
@@ -972,6 +980,7 @@
 	<script src="JavaScript/CheckFlags.js"></script>
 	<script src="JavaScript/CurrentMap.js"></script>
 	<script src="JavaScript/DateTracker.js"></script>
+	<script src="JavaScript/Dorm.js"></script>
 	<script src="JavaScript/DrainChanes.js"></script>
 	<script src="JavaScript/DropSystem.js"></script>
 	<script src="JavaScript/EssenceCheck.js"></script>

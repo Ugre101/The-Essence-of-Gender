@@ -2,7 +2,7 @@ function FluidsEngine() {
     if (player.Balls.length > 0) {
         for (var b = 0; b < player.Balls.length; b++) {
             player.Balls[b].CumMax = Math.round(player.Balls[b].Size * 400);
-            player.Balls[b].CumBaseRate = player.Balls[b].CumMax / 50000;
+            player.Balls[b].CumBaseRate = player.Balls[b].CumMax / 500;
             if (player.Balls[b].Cum < player.Balls[b].CumMax) {
                 player.Balls[b].Cum += Math.max(0, player.Balls[b].CumRate + player.Balls[b].CumBaseRate);
             }
@@ -48,4 +48,21 @@ function FluidsEngine() {
     if (false) {
         EventLog("You breasts are so full that they have started leaking.")
     }
+
+    if (House.Dormmates.length > 0) {
+        for (var e = 0; e < House.Dormmates.length; e++) {
+            EssenceCheck(House.Dormmates[e]);
+            if (House.Dormmates[e].Balls.length > 0) {
+                for (var b = 0; b < House.Dormmates[e].Balls.length; b++) {
+                    House.Dormmates[e].Balls[b].CumMax = Math.round(House.Dormmates[e].Balls[b].Size * 400);
+                    House.Dormmates[e].Balls[b].CumBaseRate = House.Dormmates[e].Balls[b].CumMax / 500;
+                    if (House.Dormmates[e].Balls[b].Cum < House.Dormmates[e].Balls[b].CumMax) {
+                        House.Dormmates[e].Balls[b].Cum += Math.max(0, House.Dormmates[e].Balls[b].CumRate + House.Dormmates[e].Balls[b].CumBaseRate);
+                    }
+                }
+            }
+
+        }
+    }
+
 }
