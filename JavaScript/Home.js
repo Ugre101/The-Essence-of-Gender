@@ -361,8 +361,8 @@
     document.getElementById("DormInjMasc").addEventListener("click", function () {
         var e = House.Dormmates[MateIndex];
         if (player.Masc > 0) {
-            e.Masc += min(100, player.Masc);
-            player.Masc -= min(100, player.Masc);
+            e.Masc += Math.min(100, player.Masc);
+            player.Masc -= Math.min(100, player.Masc);
             EssenceCheck(e);
             if (Settings.EssenceAuto) {
                 EssenceCheck(player);
@@ -375,8 +375,8 @@
     document.getElementById("DormInjFemi").addEventListener("click", function () {
         var e = House.Dormmates[MateIndex];
         if (player.Femi > 0) {
-            e.Femi += min(100, player.Femi);
-            player.Femi -= min(100, player.Femi);
+            e.Femi += Math.min(100, player.Femi);
+            player.Femi -= Math.min(100, player.Femi);
             EssenceCheck(e);
             if (Settings.EssenceAuto) {
                 EssenceCheck(player);
