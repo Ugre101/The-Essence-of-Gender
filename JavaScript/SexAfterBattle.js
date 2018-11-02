@@ -20,19 +20,19 @@
         console.log(a);
         return;
     });
-    document.getElementById("GiveCunniglus").addEventListener("click", function () {
+    document.getElementById("GiveCunnilingus").addEventListener("click", function () {
         if (Settings.ImgPack) {
-            ImgChose(player, "GiveCunniglus", enemies[EnemyIndex]);
+            ImgChose(player, "GiveCunnilingus", enemies[EnemyIndex]);
         }
         enemies[EnemyIndex].Arousal += SexAttack / 2;
         player.Arousal += ESexAttack / 3;
-        if (LastPressed == "GiveCunniglus") {
+        if (LastPressed == "GiveCunnilingus") {
             document.getElementById("SexText").innerHTML = "You eat their " + enemies[EnemyIndex].Pussies[0].Type + " pussy out.";
         } else {
             document.getElementById("SexText").innerHTML = "You go between the opponent legs and eat their " + enemies[EnemyIndex].Pussies[0].Type + " pussy out.";
         }
         CheckArousal();
-        LastPressed = "GiveCunniglus";
+        LastPressed = "GiveCunnilingus";
         return;
     });
     document.getElementById("GiveRimjob").addEventListener("click", function () {
@@ -66,13 +66,13 @@
         LastPressed = "Scissoring";
         return;
     });
-    document.getElementById("GetCunniglus").addEventListener("click", function () {
+    document.getElementById("GetCunnilingus").addEventListener("click", function () {
         if (Settings.ImgPack) {
-            ImgChose(player, "GetCunniglus", enemies[EnemyIndex]);
+            ImgChose(player, "GetCunnilingus", enemies[EnemyIndex]);
         }
         enemies[EnemyIndex].Arousal += SexAttack / 3;
         player.Arousal += ESexAttack / 2;
-        if (LastPressed == "GetCunniglus") {
+        if (LastPressed == "GetCunnilingus") {
             document.getElementById("SexText").innerHTML = "Holding their head agianst your " + player.Pussies[0].Type + " pussy they " +
                 "eat you out with thier " + enemies[EnemyIndex].Race + " tounge.";
         } else {
@@ -80,7 +80,7 @@
                 "understands what you want and start eating you what with thier " + enemies[EnemyIndex].Race + " tounge.";
         }
         CheckArousal();
-        LastPressed = "GetCunniglus";
+        LastPressed = "GetCunnilingus";
         return;
     });
     document.getElementById("RideCowgirl").addEventListener("click", function () {

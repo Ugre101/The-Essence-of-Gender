@@ -107,9 +107,9 @@
             enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
             player.Vore.Breast.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
-            var i = "Left";
+            var i = "left";
             if (Math.random() > 0.5)
-                i = "Right";
+                i = "right";
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them into your " + i + " nipple.";
             document.getElementById("PlayerMouth").style.display = 'none';
             document.getElementById("PlayerVagina").style.display = 'none';
