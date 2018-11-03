@@ -61,8 +61,13 @@ function Use(item) {
         else if (z < 0)
             EventLog("Bleh. That ruined your night's sleep.");
     } else if (thing.Name === "Troll Milk") {
+<<<<<<< HEAD
         var z = Math.min(Math.round(player.MaxHealth / 10), player.MaxHealth - player.Health);
         player.Health += z;
+=======
+        var z = Math.min(Math.round(player.MaxWillHealth / 10), player.MaxWillHealth - player.WillHealth);
+        player.WillHealth += z;
+>>>>>>> pr/17
         EventLog("Bottoms up!");
         if (z > 0)
             EventLog("You gained " + z + " willpower back!");

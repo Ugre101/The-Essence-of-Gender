@@ -47,7 +47,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "OralVore", enemies[EnemyIndex]);
             }
-            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
+            enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
             player.Vore.Stomach.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them down your throat!";
@@ -66,7 +66,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "Unbirth", enemies[EnemyIndex]);
             }
-            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
+            enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
             player.Vore.Vagina.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove into your pussy!";
@@ -85,7 +85,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "CockVore", enemies[EnemyIndex]);
             }
-            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
+            enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
             player.Vore.Balls.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them down into your cockslit, watching the bulge travel down your shaft.";
@@ -104,12 +104,12 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "BreastVore", enemies[EnemyIndex]);
             }
-            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
+            enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
             player.Vore.Breast.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
-            var i = "Left";
+            var i = "left";
             if (Math.random() > 0.5)
-                i = "Right";
+                i = "right";
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them into your " + i + " nipple.";
             document.getElementById("PlayerMouth").style.display = 'none';
             document.getElementById("PlayerVagina").style.display = 'none';
@@ -126,7 +126,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "AnalVore", enemies[EnemyIndex]);
             }
-            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
+            enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
             player.Vore.Anal.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them into your bowels!";
@@ -517,6 +517,9 @@
         if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
             document.getElementById("FasterDigestion").value = "Faster digestion +" + player.Vore.VorePerks.FasterDigestion.Count;
         }
+		if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
+            document.getElementById("AbsorbStats").value = "Drain Stats when fully digested" + player.Vore.VorePerks.AbsorbStats.Count;
+        }
         if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
             document.getElementById("HigerCapacity").value = "Higer capacity +" + player.Vore.VorePerks.HigerCapacity.Count;
         }
@@ -528,6 +531,8 @@
 
     function VorePerkHandler(perket) {
         player.Vore.VorePoints--;
+		if (perket === "AbsorbStats")
+			player.Vore.VorePoints -= 9;
         if (player.Vore.VorePerks.hasOwnProperty(perket)) {
             player.Vore.VorePerks[perket].Count++;
         } else {
@@ -545,6 +550,15 @@
             return;
         }
     });
+	document.getElementById("AbsorbStats").addEventListener("click", function () {
+		if(player.Vore.VorePoints > 9) {
+			try{if(player.Vore.VorePerks.AbsorbStats.Counter > 9) return;}
+			finally{
+			VorePerkHandler("AbsorbStats");
+			}
+		}
+		else return;
+	});
     document.getElementById("AbsorbEssence").addEventListener("mouseover", function (e) {
         document.getElementById("VorePerkMenuText").innerHTML = e.target.title;
     });
@@ -676,6 +690,15 @@
                 }
 
                 if (player.Vore.Stomach[e].Weight < 0) {
+					if(player.Vore.VorePerks.hasOwnProperty("AbsorbStats")){
+						var snowA = Math.max(10 - player.Vore.VorePerks.AbsorbStats.Count, 1);
+						player.Str += Math.round(player.Vore.Stomach[e].Str / snowA);
+						player.Int += Math.round(player.Vore.Stomach[e].Int / snowA);
+						player.Charm += Math.round(player.Vore.Stomach[e].Charm / snowA);
+						player.Will += Math.round(player.Vore.Stomach[e].Willpower / snowA);
+						player.Will += Math.round(player.Vore.Stomach[e].End / snowA);
+						player.SexSkill += Math.round(player.Vore.Stomach[e].SexSkill / snowA);
+					}
                     EventLog("You have digested " + player.Vore.Stomach[e].Name + " " + player.Vore.Stomach[e].Race + " " + player.Vore.Stomach[e].FirstName + " " + player.Vore.Stomach[e].LastName);
                     player.Vore.Stomach.splice(e, 1);
                 }
@@ -711,6 +734,15 @@
                     player.Vore.Exp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
                 };
                 if (player.Vore.Vagina[e].Weight < 0) {
+					if(player.Vore.VorePerks.hasOwnProperty("AbsorbStats")){
+						var snowA = Math.max(10 - player.Vore.VorePerks.AbsorbStats.Count, 1);
+						player.Str += Math.round(player.Vore.Vagina[e].Str / snowA);
+						player.Int += Math.round(player.Vore.Vagina[e].Int / snowA);
+						player.Charm += Math.round(player.Vore.Vagina[e].Charm / snowA);
+						player.Will += Math.round(player.Vore.Vagina[e].Willpower / snowA);
+						player.Will += Math.round(player.Vore.Vagina[e].End / snowA);
+						player.SexSkill += Math.round(player.Vore.Vagina[e].SexSkill / snowA);
+					}
                     EventLog("The only trace left of " + player.Vore.Vagina[e].Name + " " + player.Vore.Vagina[e].Race + " " + player.Vore.Vagina[e].FirstName + " " + player.Vore.Vagina[e].Lastname + " is a trail of pussy discharge traveling down your legs.");
                     player.Vore.Vagina.splice(e, 1);
                 }
@@ -771,6 +803,15 @@
                     }
                 }
                 if (player.Vore.Breast[e].Weight < 0) {
+					if(player.Vore.VorePerks.hasOwnProperty("AbsorbStats")){
+						var snowA = Math.max(10 - player.Vore.VorePerks.AbsorbStats.Count, 1);
+						player.Str += Math.round(player.Vore.Breast[e].Str / snowA);
+						player.Int += Math.round(player.Vore.Breast[e].Int / snowA);
+						player.Charm += Math.round(player.Vore.Breast[e].Charm / snowA);
+						player.Will += Math.round(player.Vore.Breast[e].Willpower / snowA);
+						player.Will += Math.round(player.Vore.Breast[e].End / snowA);
+						player.SexSkill += Math.round(player.Vore.Breast[e].SexSkill / snowA);
+					}
                     EventLog("There is nothing but milk left of " + player.Vore.Breast[e].Name + " " + player.Vore.Breast[e].Race + " " + player.Vore.Breast[e].FirstName + " " + player.Vore.Breast[e].Lastname);
                     player.Vore.Breast.splice(e, 1);
                 }
@@ -816,6 +857,15 @@
                     }
                 }
                 if (player.Vore.Balls[e].Weight < 0) {
+					if(player.Vore.VorePerks.hasOwnProperty("AbsorbStats")){
+						var snowA = Math.max(10 - player.Vore.VorePerks.AbsorbStats.Count, 1);
+						player.Str += Math.round(player.Vore.Balls[e].Str / snowA);
+						player.Int += Math.round(player.Vore.Balls[e].Int / snowA);
+						player.Charm += Math.round(player.Vore.Balls[e].Charm / snowA);
+						player.Will += Math.round(player.Vore.Balls[e].Willpower / snowA);
+						player.Will += Math.round(player.Vore.Balls[e].End / snowA);
+						player.SexSkill += Math.round(player.Vore.Balls[e].SexSkill / snowA);
+					}
                     EventLog("There is nothing but cum left of the " + player.Vore.Balls[e].Name + " " + player.Vore.Balls[e].Race + " " + player.Vore.Balls[e].FirstName + " " + player.Vore.Balls[e].Lastname);
                     player.Vore.Balls.splice(e, 1);
                 }
@@ -853,6 +903,15 @@
                     player.Vore.Exp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
                 };
                 if (player.Vore.Anal[e].Weight < 0) {
+					if(player.Vore.VorePerks.hasOwnProperty("AbsorbStats")){
+						var snowA = Math.max(10 - player.Vore.VorePerks.AbsorbStats.Count, 1);
+						player.Str += Math.round(player.Vore.Anal[e].Str / snowA);
+						player.Int += Math.round(player.Vore.Anal[e].Int / snowA);
+						player.Charm += Math.round(player.Vore.Anal[e].Charm / snowA);
+						player.Will += Math.round(player.Vore.Anal[e].Willpower / snowA);
+						player.Will += Math.round(player.Vore.Anal[e].End / snowA);
+						player.SexSkill += Math.round(player.Vore.Anal[e].SexSkill / snowA);
+					}
                     player.Vore.Anal.splice(e, 1);
                 }
             } else {

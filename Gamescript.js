@@ -116,6 +116,7 @@
         Vore: false,
         ImgPack: false,
         EssenceAuto: true,
+		LogLength: 100,
         Pronun: {
             Status: false,
             Herm: "hermaphrodite",
@@ -253,6 +254,15 @@
         DisplayNone();
         document.getElementById("PronunForm").style.display = 'block'
     });
+	
+	document.getElementById("Log+10").addEventListener("click", function () {
+        Settings.LogLength += 10;
+    });
+	
+	document.getElementById("Log-10").addEventListener("click", function () {
+        Settings.LogLength -= 10;
+    });
+	
     document.getElementById("AcceptPronun").addEventListener("click", function () {
         DisplayNone();
         document.getElementById("optionpage").style.display = 'block';
@@ -1068,10 +1078,21 @@
 
     // Event log
     var LogHistory = "";
+	var LogArray = [];
 
     function EventLog(LogText) {
         var newText = LogText + "<br>";
-        LogHistory = newText + LogHistory;
+		LogArray[LogArray.length] = newText;
+		var i = Math.min(LogArray.length, Settings.LogLength);
+		LogHistory = "";
+		while (i < LogArray.length)
+		{
+			LogHistory = LogArray[i] + LogHistory;
+			i++;
+			if(i > Settings.LogLength)
+				break;
+		}
+        //LogHistory = newText + LogHistory;
         document.getElementById("EventText").innerHTML = LogHistory;
     }
     document.getElementById("HideEventLog").addEventListener("click", function () {
