@@ -237,6 +237,8 @@
         DisplayNone();
         document.getElementById("optionpage").style.display = 'block';
         document.getElementById("ImgPack").value = "Img pack: " + Settings.ImgPack;
+        document.getElementById("LogLength").innerHTML = Settings.LogLength;
+        console.log(Settings.LogLength)
     });
     var FontSize = 1;
     document.getElementById("FontSmaller").addEventListener("click", function () {
@@ -257,10 +259,12 @@
 	
 	document.getElementById("Log+10").addEventListener("click", function () {
         Settings.LogLength += 10;
+        document.getElementById("LogLength").innerHTML = Settings.LogLength;
     });
 	
 	document.getElementById("Log-10").addEventListener("click", function () {
         Settings.LogLength -= 10;
+        document.getElementById("LogLength").innerHTML = Settings.LogLength;
     });
 	
     document.getElementById("AcceptPronun").addEventListener("click", function () {
@@ -1077,24 +1081,18 @@
     }
 
     // Event log
-    var LogHistory = "";
 	var LogArray = [];
 
     function EventLog(LogText) {
         var newText = LogText + "<br>";
-		LogArray[LogArray.length] = newText;
-		var i = Math.min(LogArray.length, Settings.LogLength);
-		LogHistory = "";
-		while (i < LogArray.length)
-		{
-			LogHistory = LogArray[i] + LogHistory;
-			i++;
-			if(i > Settings.LogLength)
-				break;
-		}
+        LogArray.unshift(newText);
+        while (LogArray.length > Settings.LogLength) {
+            LogArray.pop();
+        }
         //LogHistory = newText + LogHistory;
-        document.getElementById("EventText").innerHTML = LogHistory;
+        document.getElementById("EventText").innerHTML = LogArray;
     }
+
     document.getElementById("HideEventLog").addEventListener("click", function () {
         if (document.getElementById("EventLogPart").style.display == 'none') {
             document.getElementById("EventLogPart").style.display = 'block';
@@ -1509,6 +1507,7 @@
         player.Fat = Math.max(0.1, player.Fat);
         player.Muscle = Math.max(1, player.Muscle);
         player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);
+        player.Height = Math.max(1, player.Height);
         player.Health = Math.max(1, player.Health);
         player.WillHealth = Math.max(1, player.WillHealth);
 
