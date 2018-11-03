@@ -22,11 +22,11 @@ function TfEngine(Tf_to) {
                         TF.Counter = 0;
                         GenitalChange("elf");
                     } else if (TF.Counter == 500) {
-                        EventLog("Your skin feels smooth like silk.")
+                        EventLog("Your skin feels smooth as silk.")
                     }
                 } else {
                     if (TF.Counter > 1000) {
-                        EventLog("You are now a elf!");
+                        EventLog("You are now an elf!");
                         player.Race = "elf";
                         TF.Status = false;
                         TF.Counter = 0;
@@ -44,7 +44,7 @@ function TfEngine(Tf_to) {
                         TF.Counter = 0;
                         GenitalChange("human");
                     } else if (TF.Counter == 500) {
-                        EventLog("Your body starts to feel familiar.");
+                        EventLog("Your body starts to feel familiar...");
                     }
                 } else {
                     if (TF.Counter > 1000) {
@@ -53,37 +53,39 @@ function TfEngine(Tf_to) {
                         TF.Status = false;
                         TF.Counter = 0;
                     } else if (TF.Counter == 500) {
-                        EventLog("Your body starts to feel familiar.");
+                        EventLog("Your body starts to feel familiar...");
                     }
                 }
                 break;
             case "equine taur":
                 if (player.SecondRace != "equine taur") {
                     if (TF.Counter > 1000) {
-                        EventLog("Completing the transformation you are now a centaur with a horses lower body and a " + player.Race + " upper body.");
+                        EventLog("Completing the transformation, you are now a centaur with a horse's lower body and a " + player.Race + "'s upper body.");
                         player.SecondRace = "equine taur";
                         TF.Status = false;
                         TF.Counter = 0;
                         GenitalChange("equine");
                     } else if (TF.Counter == 300) {
-                        EventLog("The changes to your lower body is so dramatic you fall to the ground, while trying to regain balance you see your torso split into two. The lower one horizontal to the ground and the upper one vertical.")
-                    } else if (TF.Counter == 600) {
-                        EventLog("Your legs transform to those of horse and where the split between the old and new torso is you grow a second set of  horse legs.");
-                    } else if (TF.Counter == 800) {
-                        EventLog("You genitals shifts position and transform into their equine equivalent.");
+                        EventLog("The changes to your lower body is so dramatic that you fall to the ground. Trying to get back up, you see your torso split, bending in half, then stretching back.")
+                    } else if (TF.Counter == 400) {
+                        EventLog("Where your torso split you grow a second set of legs, and watch as all four legs transform to those of a horse.");
+					}	else if (TF.Counter == 600) {
+                        EventLog("You feel your lower torso growing wider, soon resembling a horse's torso.");
+                    } 	else if (TF.Counter == 800) {
+                        EventLog("Your genitals shift around as they transform into their equine equivalent.");
                     }
                 }
                 break;
             case "equine":
                 if (player.SecondRace != "equine") {
                     if (TF.Counter > 1000) {
-                        EventLog("Completing the transformation you are now a satyr with equine lower body and a " + player.Race + " upperbody.");
+                        EventLog("Completing the transformation, you are now a satyr with an equine lower body and a " + player.Race + " upperbody.");
                         player.SecondRace = "equine";
                         TF.Status = false;
                         TF.Counter = 0;
                         GenitalChange("equine");
                     } else if (TF.Counter == 300) {
-                        EventLog("The skin on your legs thickens and grows a thin layer of fur. Your toes fuse together transforming into hooves.")
+                        EventLog("The skin on your legs thicken and grow a thin layer of fur. Your toes fuse together, transforming into hooves.")
                     } else if (TF.Counter == 600) {
                         EventLog("Your genitals transform into their equine equivalent.")
                     }
@@ -94,10 +96,12 @@ function TfEngine(Tf_to) {
                         TF.Status = false;
                         TF.Counter = 0;
                         GenitalChange("equine");
-                    } else if (TF.Counter == 500) {
-                        EventLog("");
-                    }
+                    } else if (TF.Counter == 300) {
+                        EventLog("The fur that covered your legs continues to spread upwards, soon covering your entire torso.");
+                    }else if (TF.Counter == 600) {
+                        EventLog("You see your face stretch out, shifting into a horse's muzzle.");
                 }
+			}
         }
     }
 }
