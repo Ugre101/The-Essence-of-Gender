@@ -87,6 +87,9 @@
            position: absolute;
            right: 0;
        }
+       #WolrdMapContainer {
+           display: none;
+       }
    }
 
    div.None {
