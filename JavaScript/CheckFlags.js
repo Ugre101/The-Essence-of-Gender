@@ -175,4 +175,8 @@
             }
             console.log("Added brothel settings");
         }
+        if (!Settings.hasOwnProperty("LogLength")){
+            Settings.LogLength = 100;
+            console.log("Added Settings loglengt");
+        }
     }

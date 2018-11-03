@@ -518,7 +518,7 @@
             document.getElementById("FasterDigestion").value = "Faster digestion +" + player.Vore.VorePerks.FasterDigestion.Count;
         }
 		if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
-            document.getElementById("AbsorbStats").value = "Drain Stats when fully digested" + player.Vore.VorePerks.AbsorbStats.Count;
+            document.getElementById("AbsorbStats").value = "Drain Stats +" + player.Vore.VorePerks.AbsorbStats.Count; //Had to shorten value as text got outside button
         }
         if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
             document.getElementById("HigerCapacity").value = "Higer capacity +" + player.Vore.VorePerks.HigerCapacity.Count;
@@ -552,10 +552,10 @@
     });
 	document.getElementById("AbsorbStats").addEventListener("click", function () {
 		if(player.Vore.VorePoints > 9) {
-			try{if(player.Vore.VorePerks.AbsorbStats.Counter > 9) return;}
-			finally{
+	/*		try{if(player.Vore.VorePerks.AbsorbStats.Counter > 9) return;}
+			finally{} Had to comment out breaks game for me as there is no counter*/ 
 			VorePerkHandler("AbsorbStats");
-			}
+			
 		}
 		else return;
 	});

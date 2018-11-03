@@ -308,7 +308,7 @@
    }
 
    div.Options {
-       width: 500px;
+       width: 600px;
        max-width: 50%;
        height: auto;
        padding: 10px;
@@ -316,6 +316,9 @@
        border-radius: 5px;
        background-color: rgb(235, 235, 228);
        text-align: center;
+   }
+   #LogLength {
+       display: inline-block;
    }
 
    #EssenceOptionsMenu {
