@@ -105,6 +105,29 @@
         LastPressed = "RideCowgirl";
         return;
     });
+    document.getElementById("Insertion").addEventListener("click", function () {
+        if (Settings.ImgPack) {
+            ImgChose(player, "Insertion", enemies[EnemyIndex]);
+        }
+        enemies[EnemyIndex].Arousal += SexAttack;
+        player.Arousal += ESexAttack;
+        if (LastPressed == "Insertion") {
+            document.getElementById("SexText").innerHTML = "Allow them only short breaks you continue masturbate with you living dildo.";
+        } else {
+            RL = RandomInt(0, enemies[EnemyIndex].Dicks.length - 1);
+            PRL = RandomInt(0, player.Pussies.length - 1);
+
+            document.getElementById("SexText").innerHTML = "Due their small size conventional sex would be difficult, but looking closer at them you realize they are about the size of a dildo. " +
+            "Grabbing them you bring them to your " + player.Pussies[PRL].Size + "cm deep " + player.Pussies[PRL].Type +" vagina, telling them look closely at the wet fold they are about to be better acquitted  with. Feet first you insert them into your pussy, slow at first but once sure they can survive it you go rougher."
+        }
+        if (player.Pussies[PRL].Virgin) {
+            player.Pussies[PRL].Virgin = false;
+            document.getElementById("SexText").innerHTML += "<br>You have lost your virginity to your little dildo!"
+        }
+        CheckArousal();
+        LastPressed = "Insertion";
+        return;
+    });
     // Dick
     document.getElementById("Missionary").addEventListener("click", function () {
         if (Settings.ImgPack) {
@@ -198,6 +221,25 @@
         }
         CheckArousal();
         LastPressed = "GetRimjob";
+        return;
+    });
+    document.getElementById("BreastFeed").addEventListener("click", function() {
+        if (Settings.ImgPack) {
+            ImgChose(player, "BreastFeed", enemies[EnemyIndex]);
+        }
+        enemies[EnemyIndex].Arousal += SexAttack*1.2;
+        player.Arousal += ESexAttack;
+        for (var b = 0; b < player.Boobies.length; b++) {
+            player.Boobies[b].Milk -= 100 / player.Boobies.length;
+        } 
+        if (LastPressed == "BreastFeed") {
+            document.getElementById("SexText").innerHTML = "You feed them 100ml milk.";
+        } else {
+            document.getElementById("SexText").innerHTML = "The urge to nurture is strong due the hormones released from your lactating breasts, wanting release you take your opponent into your lap and guiding their head to your fullest breast. " + 
+            "At first they assumed you wanted them you suck on your nipples for pleasure but once their mouth was full and you showing no signs of releasing the pressure on the back of their head they learned to swallow your milk. Quickly falling in love with the taste you can release your hand from their head as they are not considering to stop feeding."
+        }
+        CheckArousal();
+        LastPressed = "BreastFeed";
         return;
     });
 

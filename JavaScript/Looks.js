@@ -35,10 +35,8 @@ function DickLook(who) {
 function BallLook(who) {
     if (who.Balls.length > 0) {
         var balls = "";
-        var cum = "";
         for (var b = 0; b < who.Balls.length; b++) {
             balls += IntToOne(b) + "pair of " + who.Balls[b].Size + "cm wide balls, ";
-            var cum = "which are filled with " + Math.round((who.Balls[b].Cum / 1000) * 100) / 100 + "Liters of cum.<br>"
             balls += "which are filled with " + (who.Balls[b].Cum / 1000).toFixed(2) + "Liters of cum"
         }
         return balls + ".<br><br>";
@@ -189,16 +187,19 @@ function Fitness(who) {
         b = "with massive muscle";
     }
 
-    if ((who.Fat / who.Weight) * 100 <= 31 && who.Muscle < who.Height * 0.18) {
+
+    if ((who.Fat / who.Weight) * 100 <= 25) {
+        c = "."
+    } else if ((who.Fat / who.Weight) * 100 <= 31 && who.Muscle < who.Height * 0.18) {
         c = " covered in fat.";
-    } else if ((who.Fat / who.Weight) * 100 <= 36 && who.Muscle < who.Height * 0.20) {
+    } else if ((who.Fat / who.Weight) * 100 <= 38 && who.Muscle < who.Height * 0.20) {
         c = " buried in fat.";
-    } else if ((who.Fat / who.Weight) * 100 <= 50 && who.Muscle > who.Height * 0.22) {
+    } else if ((who.Fat / who.Weight) * 100 <= 55 && who.Muscle > who.Height * 0.22) {
         c = "... Otherwise, you couldn't move.";
-    } else if ((who.Fat / who.Weight) * 100 <= 50) {
-        c = "... No-one knows how you move.";
+    } else if ((who.Fat / who.Weight) * 100 <= 55 && who.Muscle < who.Height * 0.22) {
+        c = "... Your weight is a burden to your ability to move.";
     } else {
-        c = ".";
+        c = "... No-one knows how you move.";
     }
 
     return a + b + c;
