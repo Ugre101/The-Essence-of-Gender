@@ -74,10 +74,10 @@
         player.Arousal += ESexAttack / 2;
         if (LastPressed == "GetCunnilingus") {
             document.getElementById("SexText").innerHTML = "Holding their head agianst your " + player.Pussies[0].Type + " pussy they " +
-                "eat you out with thier " + enemies[EnemyIndex].Race + " tounge.";
+                "eat you out with their " + enemies[EnemyIndex].Race + " tounge.";
         } else {
             document.getElementById("SexText").innerHTML = "You command your  opponent to get down on their knees, then you grab their head using it to grind your " + player.Pussies[0].Type + " pussy agianst until they " +
-                "understands what you want and start eating you what with thier " + enemies[EnemyIndex].Race + " tounge.";
+                "understands what you want and start eating you what with their " + enemies[EnemyIndex].Race + " tounge.";
         }
         CheckArousal();
         LastPressed = "GetCunnilingus";
@@ -95,7 +95,7 @@
             RL = RandomInt(0, enemies[EnemyIndex].Dicks.length - 1);
             PRL = RandomInt(0, player.Pussies.length - 1);
 
-            document.getElementById("SexText").innerHTML = "Laying your  opponent down on thier back, you position yourself ontop of them and ride their " + enemies[EnemyIndex].Dicks[RL].Size + "cm " + enemies[EnemyIndex].Dicks[RL].Type + " dick.<br>Their dick " + Tightness(enemies[EnemyIndex], player, "B") + " your pussy.";
+            document.getElementById("SexText").innerHTML = "Laying your  opponent down on their back, you position yourself ontop of them and ride their " + enemies[EnemyIndex].Dicks[RL].Size + "cm " + enemies[EnemyIndex].Dicks[RL].Type + " dick.<br>Their dick " + Tightness(enemies[EnemyIndex], player, "B") + " your pussy.";
         }
         if (player.Pussies[PRL].Virgin) {
             player.Pussies[PRL].Virgin = false;
@@ -116,7 +116,7 @@
             document.getElementById("SexText").innerHTML = "You continue fucking their " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + player.Dicks[PRL].Size + "cm " + player.Dicks[PRL].Type + " dick.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
         } else {
             PRL = RandomInt(0, player.Dicks.length - 1);
-            document.getElementById("SexText").innerHTML = "Positioning your  opponent on thier back you fuck their " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + player.Dicks[PRL].Size + "cm " + player.Dicks[PRL].Type + " dick.<br> Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
+            document.getElementById("SexText").innerHTML = "Positioning your  opponent on their back you fuck their " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + player.Dicks[PRL].Size + "cm " + player.Dicks[PRL].Type + " dick.<br> Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
         }
         if (player.Dicks[PRL].Virgin) {
             player.Dicks[PRL].Virgin = false;

@@ -47,7 +47,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "OralVore", enemies[EnemyIndex]);
             }
-            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
+            enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
             player.Vore.Stomach.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them down your throat!";
@@ -66,7 +66,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "Unbirth", enemies[EnemyIndex]);
             }
-            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
+            enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
             player.Vore.Vagina.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove into your pussy!";
@@ -85,7 +85,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "CockVore", enemies[EnemyIndex]);
             }
-            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
+            enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
             player.Vore.Balls.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them down into your cockslit, watching the bulge travel down your shaft.";
@@ -104,7 +104,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "BreastVore", enemies[EnemyIndex]);
             }
-            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
+            enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
             player.Vore.Breast.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             var i = "left";
@@ -126,7 +126,7 @@
             if (Settings.ImgPack) {
                 ImgChose(player, "AnalVore", enemies[EnemyIndex]);
             }
-            enemies[EnemyIndex].StartWeigth = enemies[EnemyIndex].Weight;
+            enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
             player.Vore.Anal.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them into your bowels!";
