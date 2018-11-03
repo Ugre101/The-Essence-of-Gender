@@ -38,9 +38,9 @@ function CheckArousal() {
                 ee.Pregnant.Status = false;
             } else if (!ee.Pregnant.Status) {
                 for (var b = 0; b < player.Balls.length; b++) {
-                    if (player.Balls[b].Cum > 50) {
+                    if (player.Balls[b].Cum > 10) {
                         Impregnate(ee, player, "A", "");
-                        player.Balls[b].Cum -= 50;
+                        player.Balls[b].Cum -= 10;
                     }
                 }
             }

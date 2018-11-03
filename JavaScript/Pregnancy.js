@@ -8,7 +8,6 @@ function PregnanyEngine() {
             }
         }
     }
-
     if (player.Pregnant.Babies.length < 1) {
         player.Pregnant.Status = false;
     }
@@ -24,7 +23,7 @@ function PregnanyEngine() {
                     player.Children.push(Child);
                     EventLog("You have given birth!")
                     player.Pregnant.Babies.splice(e, 1);
-                    if (player.Pregnant.Babies.length > 1) {
+                    if (player.Pregnant.Babies.length < 1) {
                         player.Pregnant.Status = false;
                     }
                 } else {

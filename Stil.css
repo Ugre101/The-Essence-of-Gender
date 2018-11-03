@@ -458,7 +458,7 @@
            "b c c d"
            "e e e e";
        grid-template-columns: repeat(4, 1fr);
-       grid-gap: 1em 0; 
+       grid-gap: 1em 0;
        width: 1400px;
        max-width: 95%;
        padding: 2em;
@@ -549,10 +549,11 @@
        border: 1px solid black;
        border-radius: 5px;
    }
+
    #InjectMenu {
-    border: 1px solid black;
-    border-radius: 5px;
-}
+       border: 1px solid black;
+       border-radius: 5px;
+   }
 
    #Home {
        background-color: rgb(192, 189, 192);
@@ -562,6 +563,7 @@
        max-height: 95%;
        border: 2px solid black;
        border-radius: 5px;
+       overflow: auto;
    }
 
    #ButtonMates {
@@ -570,13 +572,26 @@
        grid-column-gap: 3px;
        grid-row-gap: 3px;
        justify-content: center;
-       overflow: auto;
    }
 
    #DivMates>div>div {
+       position: relative;
        float: left;
-       margin-left: 1em;
+       height: auto;
+       width: 30vw;
+       margin: 1em;
        padding: 1em;
+       box-shadow: 0 0 1px 1px black;
+       border-radius: 10px;
+       overflow: auto;
+   }
+
+   #DivMates>div>div>div {
+       position: absolute;
+       top: 0;
+       right: 0;
+       padding: 1em;
+       margin: 1em;
        box-shadow: 0 0 1px 1px black;
        border-radius: 10px;
    }

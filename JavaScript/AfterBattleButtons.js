@@ -98,6 +98,22 @@ function AfterBattleButtons() {
     document.getElementById("GetRimjob").style.display = 'block';
     document.getElementById("GiveRimjob").style.display = 'block';
 
+    if (enemies[EnemyIndex].Height * 9 < player.Height) {
+        document.getElementById("Insertion").style.display = 'block';
+    } else {
+        document.getElementById("Insertion").style.display = 'none';
+    }
+
+    var Milktotal = 0;
+    for (var b = 0; b < player.Boobies.length; b++) {
+        Milktotal += player.Boobies[b].Milk;
+    }
+    if (Milktotal > 100) {
+        document.getElementById("BreastFeed").style.display = 'block';
+    } else {
+        document.getElementById("BreastFeed").style.display = 'none';
+    }
+
     if (Settings.Vore) {
         if (StomachCapacity() > enemies[EnemyIndex].Weight) {
             document.getElementById("OralVore").style.display = 'block';

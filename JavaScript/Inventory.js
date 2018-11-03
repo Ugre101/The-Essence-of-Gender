@@ -54,7 +54,7 @@ function Use(item) {
         EventLog("What's in the bag? It's " + z + " coins!");
     } else if (thing.Name === "Orc brew") {
         var z = Math.min(Math.round(player.MaxHealth / 10), player.MaxHealth - player.Health);
-        player.health += z;
+        player.Health += z;
         EventLog("Bottoms up!");
         if (z > 0)
             EventLog("You gained " + z + " health back!");

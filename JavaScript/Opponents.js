@@ -361,6 +361,18 @@ function EncounterCave4() {
         OP.Masc = RandomInt(1500, 3000);
     }
     EssenceCheck(OP);
+    if (OP.Pussies.length > 0) {
+        var a = RandomInt(1, 8);
+        if (a < 8) {
+            OP.Pussies[0].Virgin = false;
+        }
+    }
+    if (OP.Dicks.length > 0) {
+        var b = RandomInt(1, 8);
+        if (b < 8) {
+            OP.Dicks[0].Virgin = false;
+        }
+    }
     RaceBonus(OP);
     EvilNameGiver(OP);
     return OP;
