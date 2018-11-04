@@ -46,7 +46,7 @@ function PregnanyEngine() {
         if (House.Dormmates[e].hasOwnProperty("Pregnant")) {
             if (House.Dormmates[e].Pregnant.Status) {
                 House.Dormmates[e].Pregnant.Baby++;
-                if (House.Dormmates[e].Pregnant.Baby > 2) {
+                if (House.Dormmates[e].Pregnant.Baby > 274) {
                     if (Array.isArray(House.Dormmates[e].Children)) {
                         var Child = {
                             AgeCounter: 0,
