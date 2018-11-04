@@ -128,6 +128,8 @@ var Wave = 0;
 document.getElementById("EnterDungeon").addEventListener("click", function () {
     enemies = [FirstWave(), SecondWave(), ThirdWave(), FourthWave(), SuccubusBoss()];
     document.getElementById("FirstDungeon").style.display = 'none';
+    document.getElementById("FirstDungeonText").innerHTML = "Wave " + (Wave+2);
+  
     document.getElementById("Encounter").style.display = 'grid';
     document.getElementById("BattleText").innerHTML = null;
     document.getElementById("BattleText2").innerHTML = null;
@@ -166,7 +168,7 @@ document.getElementById("DungenoLose").addEventListener("click", function() {
     document.getElementById("LoseSubmit").style.display = 'inline-block';
     document.getElementById("LosePlayerOrgasm").innerHTML = " ";
     enemies = [];
-
+    Dungeon = false;
 });
 document.getElementById("LeaveDungeon").addEventListener("click", function () {
     enemies = [];
