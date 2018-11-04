@@ -93,7 +93,7 @@
 			<p id="EventText"></p>
 		</div>
 		<div>
-			<input type="button" id="HideFuilds" value="Hide" />
+			<input type="button" id="HideFluids" value="Hide" />
 			<h2>Fluids</h2>
 		</div>
 		<div id="FluidPart">
@@ -191,7 +191,7 @@
 
 		<div>
 			<input type="button" id="GainWill" value="Willpower" title="Gives you more WillPower">
-			<input type="button" id="GainSex" value="Sex skil" title="When having sex your enemy gains more arousal">
+			<input type="button" id="GainSex" value="Sex skill" title="When having sex your enemy gains more arousal">
 		</div>
 		<br>
 		<div>
@@ -208,7 +208,7 @@
 			<input type="button" id="ExtraWillHealth" value="Extra Will Health" title="Increase willpower by 20">
 			<input type="button" id="FasterRest" value="Faster Rest" title="Increases your passive rest with +0.01hp/tick. This will also increase rate burning fat.">
 			<input type="button" id="StealMore" value="More essence" title="Increases the amount of essence you take when your enemy orgasms">
-			<input type="button" id="GiveEssence" value="Give essence" title="Makes your enemy gain femininity and/or masculinity when you orgasm">
+			<input type="button" id="GiveEssence" value="Give essence" title="Gives your enemy your femininity and/or masculinity when you orgasm">
 		</div>
 
 		<input type="button" id="LeavePerkMenu" value="Done">
@@ -977,7 +977,28 @@
 		<input type="button" id="LeaveFarmOwner" value="Bye" />
 	</div>
 
-
+	<script>
+	/*Clearing mouseover text for all buttons that *don't* have text. WIP.
+	var q = [];
+	for(var i = 0; i < document.getElementsByTagName('input').length; i++)
+		{
+		if(document.getElementsByTagName('TextBox')[i] != "Use"&&document.getElementsByTagName('TextBox')[i] != "Equip"&&document.getElementsByTagName('TextBox')[i] != "Drop")
+		{
+		for(var j = 0; j < document.getElementsByTagName('TextBox').length; i++)
+		{
+		if(document.getElementsByTagName('TextBox')[j] != "EventLog")
+		{
+			document.getElementsByTagName('input')[i].addEventListener("mouseover", function () {
+			document.getElementsByTagName('TextBox')[j].innerHTML = "";
+			
+			}
+		);
+		q[j] = document.getElementsByTagName('TextBox')[j].id;
+		}
+		}
+		}
+		}*/
+	</script>
 	<script src="JavaScript/AfterBattleButtons.js"></script>
 	<script src="JavaScript/Bar.js"></script>
 	<script src="JavaScript/BlackMarket.js"></script>

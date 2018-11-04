@@ -1101,13 +1101,13 @@
             document.getElementById("HideEventLog").value = "Show";
         }
     });
-    document.getElementById("HideFuilds").addEventListener("click", function () {
+    document.getElementById("HideFluids").addEventListener("click", function () {
         if (document.getElementById("FluidPart").style.display == 'none') {
             document.getElementById("FluidPart").style.display = 'block';
-            document.getElementById("HideFuilds").value = "Hide";
+            document.getElementById("HideFluids").value = "Hide";
         } else {
             document.getElementById("FluidPart").style.display = 'none';
-            document.getElementById("HideFuilds").value = 'Show';
+            document.getElementById("HideFluids").value = 'Show';
         }
     });
 

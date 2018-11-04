@@ -506,7 +506,6 @@
         }
         document.getElementById("BallsContent").innerHTML = food;
         document.getElementById("CumDigestion").innerHTML = "Cum transformation " + Settings.VoreSettings.CumTF;
-
     });
     document.getElementById("CumDigestion").addEventListener("click", function () {
         Settings.VoreSettings.CumTF = !Settings.VoreSettings.CumTF;
@@ -596,6 +595,7 @@
 	document.getElementById("AbsorbStats").addEventListener("click", function () {
 		if(player.Vore.VorePoints > 9) {
 			try{if(player.Vore.VorePerks.AbsorbStats.Counter > 9) return;}
+			catch{}
 			finally{
 			VorePerkHandler("AbsorbStats");
 			}
@@ -703,10 +703,13 @@
 
         for (var e = 0; e < player.Vore.Stomach.length; e++) {
             if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
-                if (Settings.VoreSettings.AbsorbEssence == "Both" || Settings.VoreSettings.AbsorbEssence == "Masculinity") {
-                    if (player.Vore.Stomach[e].Masc > 0) {
-                        player.Vore.Stomach[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-                        player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+			if(!player.Vore.Stomach[e].hasOwnProperty("LastName"))
+				player.Vore.Stomach[e].LastName = "";
+			
+			if (Settings.VoreSettings.AbsorbEssence == "Both" || Settings.VoreSettings.AbsorbEssence == "Masculinity") {
+				if (player.Vore.Stomach[e].Masc > 0) {
+					player.Vore.Stomach[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+					player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
                     }
                 }
                 if (Settings.VoreSettings.AbsorbEssence == "Both" || Settings.VoreSettings.AbsorbEssence == "Femininity") {
@@ -754,6 +757,8 @@
             }
         }
         for (var e = 0; e < player.Vore.Vagina.length; e++) {
+			if(!player.Vore.Stomach[e].hasOwnProperty("LastName"))
+				player.Vore.Stomach[e].LastName = "";
             if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
                 if (player.Vore.Vagina[e].Masc > 0) {
                     player.Vore.Vagina[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
@@ -814,6 +819,8 @@
             }
         }
         for (var e = 0; e < player.Vore.Breast.length; e++) {
+			if(!player.Vore.Stomach[e].hasOwnProperty("LastName"))
+				player.Vore.Stomach[e].LastName = "";
             if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
                 if (player.Vore.Breast[e].Masc > 0) {
                     player.Vore.Breast[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
@@ -867,6 +874,8 @@
             }
         }
         for (var e = 0; e < player.Vore.Balls.length; e++) {
+			if(!player.Vore.Stomach[e].hasOwnProperty("LastName"))
+				player.Vore.Stomach[e].LastName = "";
             if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
                 if (player.Vore.Balls[e].Masc > 0) {
                     player.Vore.Balls[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
@@ -922,6 +931,8 @@
             }
         }
         for (var e = 0; e < player.Vore.Anal.length; e++) {
+			if(!player.Vore.Stomach[e].hasOwnProperty("LastName"))
+				player.Vore.Stomach[e].LastName = "";
             if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
                 if (player.Vore.Anal[e].Masc > 0) {
                     player.Vore.Anal[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
