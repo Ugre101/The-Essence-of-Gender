@@ -803,3 +803,17 @@
        max-height: 40vh;
        overflow: auto;
    }
+
+   #ChildrenMenu {
+       height: auto;
+       width: 50%;
+       background-color: rgb(235, 235, 228);
+       border: 2px solid black;
+       border-radius: 5px;
+   }
+   #ChildCorner {
+       display: grid;
+       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+       grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
+       overflow: auto;
+   }
