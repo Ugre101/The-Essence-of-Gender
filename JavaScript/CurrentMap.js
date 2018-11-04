@@ -189,7 +189,7 @@ function CurrentMap() {
                         enemies = [EncounterCave4(), EncounterCave4(), EncounterCave4(), EncounterCave4()]
                     }
                     if (Npcs.length < 1) {
-                        Npcs = [Tempsson];
+                        Npcs = [FirstDungeon];
                     }
                     backmap = new Image;
                     backmap.src = "Tiles/Cave3.png";

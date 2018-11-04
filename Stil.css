@@ -87,6 +87,7 @@
            position: absolute;
            right: 0;
        }
+
        #WolrdMapContainer {
            display: none;
        }
@@ -320,8 +321,10 @@
        background-color: rgb(235, 235, 228);
        text-align: center;
    }
+
    #LogLength {
        display: inline-block;
+       border: 1px solid black;
    }
 
    #EssenceOptionsMenu {
@@ -336,8 +339,12 @@
    }
 
    #Sizes>input[type=button] {
-       max-width: 30%;
-       max-height: 4vh;
+       max-width: 25%;
+   }
+
+   #FontSize {
+       display: inline-block;
+       border: 1px solid black;
    }
 
    div.LPMenu {
@@ -397,7 +404,7 @@
        text-align: center;
    }
 
-   @media (max-height:550px) {
+   @media screen and (max-height:800px) {
        div.container {
            position: absolute;
            bottom: 0;

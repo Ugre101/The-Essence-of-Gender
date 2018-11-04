@@ -239,16 +239,19 @@
         document.getElementById("optionpage").style.display = 'block';
         document.getElementById("ImgPack").value = "Img pack: " + Settings.ImgPack;
         document.getElementById("LogLength").innerHTML = Settings.LogLength;
+        document.getElementById("FontSize").innerHTML = Math.round(FontSize*100)/100 + "em"
         console.log(Settings.LogLength)
     });
     var FontSize = 1;
     document.getElementById("FontSmaller").addEventListener("click", function () {
         FontSize -= 0.05;
         document.body.style.fontSize = FontSize + "em";
+        document.getElementById("FontSize").innerHTML = Math.round(FontSize*100)/100 + "em"
     });
     document.getElementById("FontBigger").addEventListener("click", function () {
         FontSize += 0.05;
         document.body.style.fontSize = FontSize + "em";
+        document.getElementById("FontSize").innerHTML = Math.round(FontSize*100)/100 + "em"
     });
     var OldMap;
     var MapProcent = 0.9;
@@ -486,6 +489,7 @@
     function UpdateStats() {
         document.getElementById("status").style.display = 'none';
         document.getElementById("buttons").style.display = 'none';
+        document.getElementById("EmptyButtons").style.display = 'none';
         document.getElementById("EventLog").style.display = 'none';
         document.getElementById("BattleEnemy").innerHTML = enemies[EnemyIndex].Name + "<br>" + enemies[EnemyIndex].Race + " " + Pronun(CheckGender(enemies[EnemyIndex]));
         document.getElementById("EnemyStatusHealth").innerHTML = enemies[EnemyIndex].Health;
@@ -1084,6 +1088,7 @@
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
     var BlackMartket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
+    var FirstDungeon = new Npc("FirstDungeon", "Dungeon",grid * 8, grid * 18, grid *4, grid * 2, "RGB(133,94,66)");
 
     // Character 
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");

@@ -66,7 +66,8 @@
 			life of your own. How will you fare in this world where the weak submit and the strong dominate?</p>
 		<p id="looks"></p>
 		<br><br>
-		<p>Your first stop on this adventure is the local outpost marked with an C on your map where rest for the night and recover</p>
+		<p>Your first stop on this adventure is the local outpost marked with an C on your map where rest for the night and
+			recover</p>
 		<div>
 			<p>Notes: You can move with mouse, wasd or arrow keys</p>
 			<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually?</label>
@@ -239,6 +240,7 @@
 	</div>
 
 	<div id="ChildrenMenu" class="None">
+		<div id="ChildCorner"></div>
 		<input type="button" id="LeaveChildrenMenu" value="close" />
 	</div>
 
@@ -305,6 +307,7 @@
 			<label for="Sizes">Font size</label>
 			<div id="Sizes">
 				<input type="button" id="FontSmaller" value="-" />
+				<p id="FontSize"></p>
 				<input type="button" id="FontBigger" value="+" />
 			</div>
 		</div>
@@ -612,7 +615,7 @@
 			<div>
 				<div id="Breast">
 					<input type="button" id="BreastVore" value="Breast vore">
-					<input type="button" id="BreastFeed" value="Breast feed"/>
+					<input type="button" id="BreastFeed" value="Breast feed" />
 				</div>
 			</div>
 			<div>
@@ -628,6 +631,9 @@
 			<div>
 				<div id="StopSex">
 					<input type="button" id="StopSexButton" value="Stop sex" />
+				</div>
+				<div id="DungeonStop" class="">
+					<input type="button" id="DungeonStopButton" value="Stop sex" />
 				</div>
 				<div id="CaptureOpponent">
 					<input type="button" id="Capture" value="Take home" />
@@ -670,6 +676,7 @@
 			<input type="button" id="LoseSubmit" value="Submit" />
 			<input type="button" id="LoseStruggle" value="Struggle" />
 			<input type="button" id="LeaveLose" value="Leave" />
+			<input type="button" id="DungenoLose" value="Leave" />
 		</div>
 
 	</div>
@@ -797,8 +804,8 @@
 					<input type="button" id="KickOut" value="Kick out" />
 				</div>
 			</div>
-			<input type="button" id="ImpregOrgy" value="Impregnate servants" title="Spend the day fucking you servants, until your balls are completely emptied."/>
-			<input type="button" id="GetImpregOrgy" value="Get impregnated" title="Spend the day getting fucked by your virile servants, till all of their balls content have been emptied into your orifices."/>
+			<input type="button" id="ImpregOrgy" value="Impregnate servants" title="Spend the day fucking you servants, until your balls are completely emptied." />
+			<input type="button" id="GetImpregOrgy" value="Get impregnated" title="Spend the day getting fucked by your virile servants, till all of their balls content have been emptied into your orifices." />
 			<br><input type="button" id="LeaveDorm" value="Leave dorm">
 			<div id="KickYesNo" class="None">
 				<input type="button" id="KickYes" value="Yes">
@@ -856,14 +863,14 @@
 		</div>
 		<div class="e Grid">
 			<div>
-			<input type="button" id="DormDrainMasc" value="Siphon masculinity" />
-			<input type="button" id="DormDrainFemi" value="Siphon femininity" />
-			<input type="button" id="DormInjFemi" value="Inject femininity" />
-			<input type="button" id="DormInjMasc" value="Inject masculinity" />
+				<input type="button" id="DormDrainMasc" value="Siphon masculinity" />
+				<input type="button" id="DormDrainFemi" value="Siphon femininity" />
+				<input type="button" id="DormInjFemi" value="Inject femininity" />
+				<input type="button" id="DormInjMasc" value="Inject masculinity" />
 			</div>
 			<div>
-			<input type="button" id="Impregnate" value="Try to impregnate" />
-			<input type="button" id="GetImpregnated" value="Get impregnated" />
+				<input type="button" id="Impregnate" value="Try to impregnate" />
+				<input type="button" id="GetImpregnated" value="Get impregnated" />
 			</div>
 			<input type="button" id="LeaveDormSex" value="Leave" />
 		</div>
@@ -965,9 +972,13 @@
 	</div>
 
 	<div id="FarmOwner" class="None Building">
-		<p id="FarmOwnerText" class="TextBox">Standing before you, a centaur who introduce himself as Teoivz, looking at him it’s evident he spends many hours working on the farm. His human upper body possess muscle forged from years of work,
-			 his equine lower body is not one from a race horse but a work horse.<br>Throwing an eye towards his genitals, it’s hard to guess the exact size his two members retracted inside their penile sheath but it's obvious that they are well capable of stretching a maiden.
-			</p>
+		<p id="FarmOwnerText" class="TextBox">Standing before you, a centaur who introduce himself as Teoivz, looking at him
+			it’s evident he spends many hours working on the farm. His human upper body possess muscle forged from years of
+			work,
+			his equine lower body is not one from a race horse but a work horse.<br>Throwing an eye towards his genitals, it’s
+			hard to guess the exact size his two members retracted inside their penile sheath but it's obvious that they are
+			well capable of stretching a maiden.
+		</p>
 		<div>
 			<input type="button" id="" value="(Placeholder)Need help?" />
 			<input type="button" id="EquineTaurTF" value="Buy Equine-Taur Essence" title="Do you lack endurance? Want to able to work like a horse? One dose of this and you will turn to a taur hybrid of equine and you current race." />
@@ -975,6 +986,18 @@
 			<input type="button" id="" value="(Placeholder)Bovine Essence" />
 		</div>
 		<input type="button" id="LeaveFarmOwner" value="Bye" />
+	</div>
+
+	<div id="FirstDungeon" class="None Building">
+		<p id="FirstDungeonText" class="TextBox"></p>
+		<input type="button" id="LeaveFirstDungeon" value="Leave" />
+		<input type="button" id="EnterDungeon" value="Enter" />
+	</div>
+
+	<div id="DungeonSystem" class="None Building">
+		<p id="DungeonText" class="TextBox"></p>
+		<div id="DungeonButtons"></div>
+		<input type="button" id="LeaveDungeon" value="Turn back" />
 	</div>
 
 
@@ -1012,6 +1035,7 @@
 	<script src="JavaScript/Racebonus.js"></script>
 	<script src="JavaScript/Save.js"></script>
 	<script src="JavaScript/SexAfterBattle.js"></script>
+	<script src="JavaScript/SuccubusDungeon.js"></script>
 	<script src="JavaScript/TfEngine.js"></script>
 	<script src="JavaScript/TheFarm.js"></script>
 	<script src="JavaScript/Townhall.js"></script>

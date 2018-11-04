@@ -511,6 +511,7 @@
     document.getElementById("VorePerks").addEventListener("click", function () {
         document.getElementById("VoreButtons").style.display = 'none';
         document.getElementById("VorePerkMenu").style.display = 'block';
+        document.getElementById("VorePerkPointsLeft").innerHTML = "You have " + player.Vore.VorePoints + " perk points left.";
         if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
             document.getElementById("AbsorbEssence").value = "AbsorbEssence +" + player.Vore.VorePerks.AbsorbEssence.Count;
         }
