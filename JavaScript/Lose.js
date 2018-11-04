@@ -27,6 +27,7 @@ function Lose() {
     document.getElementById("Encounter").style.display = 'none';
     document.getElementById("Lose").style.display = 'grid';
     document.getElementById("LeaveLose").style.display = 'none';
+    document.getElementById("DungenoLose").style.display = 'none';
     document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronun(CheckGender(enemies[EnemyIndex])) + " " + enemies[EnemyIndex].Race + " " + enemies[EnemyIndex].Name;
     return;
 }
@@ -79,7 +80,11 @@ document.getElementById("LoseSubmit").addEventListener("click", function () {
     Lose();
     document.getElementById("LoseStruggle").style.display = 'none';
     document.getElementById("LoseSubmit").style.display = 'none';
-    document.getElementById("LeaveLose").style.display = 'inline-block';
+    if (Dungeon) {
+        document.getElementById("DungenoLose").style.display = 'inline-block';
+    } else {
+        document.getElementById("LeaveLose").style.display = 'inline-block';
+    }
 });
 document.getElementById("LoseStruggle").addEventListener("click", function () {
     document.getElementById("LoseSexText").innerHTML = "You struggle";
@@ -130,7 +135,11 @@ document.getElementById("LoseStruggle").addEventListener("click", function () {
     Lose();
     document.getElementById("LoseStruggle").style.display = 'none';
     document.getElementById("LoseSubmit").style.display = 'none';
-    document.getElementById("LeaveLose").style.display = 'inline-block';
+    if (Dungeon) {
+        document.getElementById("DungenoLose").style.display = 'inline-block';
+    } else {
+        document.getElementById("LeaveLose").style.display = 'inline-block';
+    }
 })
 document.getElementById("LeaveLose").addEventListener("click", function () {
     battle = false;
