@@ -1085,12 +1085,9 @@
 		LogArray[LogArray.length] = newText;
 		var i = Math.min(LogArray.length, Settings.LogLength);
 		LogHistory = "";
-		while (i < LogArray.length)
+		for (var j = 0; j < i; j++)
 		{
-			LogHistory = LogArray[i] + LogHistory;
-			i++;
-			if(i > Settings.LogLength)
-				break;
+			LogHistory = LogArray[j] + LogHistory;
 		}
         //LogHistory = newText + LogHistory;
         document.getElementById("EventText").innerHTML = LogHistory;

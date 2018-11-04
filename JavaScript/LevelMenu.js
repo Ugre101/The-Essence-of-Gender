@@ -7,7 +7,7 @@
         document.getElementById("GainStr").value = "Strength " + player.Str;
         document.getElementById("GainCha").value = "Charm: " + player.Charm;
         document.getElementById("GainEnd").value = "Endurance: " + player.End;
-        document.getElementById("GainInt").value = "Intelegence: " + player.Int;
+        document.getElementById("GainInt").value = "Intelligence: " + player.Int;
         document.getElementById("GainWill").value = "Willpower: " + player.Will;
         document.getElementById("GainSex").value = "Sex Skill: " + player.SexSkill;
     });
@@ -56,7 +56,7 @@
         if (player.SkillPoints > 0) {
             player.Int++;
             player.SkillPoints--;
-            document.getElementById("GainInt").value = "Intelegence: " + player.Int;
+            document.getElementById("GainInt").value = "Intelligence: " + player.Int;
             document.getElementById("SkillPointsLeft").innerHTML = "You have " + player.SkillPoints + " skill points left.";
         } else {
             return;

@@ -113,6 +113,17 @@
     document.getElementById("BlackMarketWhy").addEventListener("mouseover", function (e) {
         document.getElementById("BlackMarketText").innerHTML = e.target.title;
     });
+	
+	var clearText = ["SellLimbs","LimbSale","SellDicks","SellDickSize","SellBalls","SellBallSize","SellBreasts","SellBreastSize","SellVaginas","SellVaignaSize","SellFemininity","SellMasculinity"];
+	
+	for (var q = 0; q < clearText.length; q++)
+	{
+		document.getElementById(clearText[q]).addEventListener("mouseover", function () {
+			document.getElementById("BlackMarketText").innerHTML = "";
+		}
+	);}
+			
+	
     document.getElementById("BlackMarketWhy").addEventListener("click", function () {
         document.getElementById("BlackMarketText").innerHTML = "Yeah we are only buying essence here, you see we have a contract with guys in the capital where we can sell for a lot more to nobles.  Nobles you might ask aren’t they the ones who preach about how you should only have as much essence you can conquer!" +
             " The thing is though while they say trading essence are forbidden and for the weak, the rich don’t follow the rules they only pretend to in order to maintain their image. ";

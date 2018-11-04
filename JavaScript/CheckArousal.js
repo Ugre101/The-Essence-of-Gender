@@ -46,7 +46,7 @@ function CheckArousal() {
             }
         }
         if (ImpregActions.female.indexOf(LastPressed) != -1) {
-            document.getElementById("SexText").innerHTML = "Feeling that you are close you push yourself as deep as you can in their sweet pussy."
+            document.getElementById("SexText").innerHTML = "Feeling yourself getting close, you push yourself as deep as you can into them."
             if (player.Balls.length > 0) {
                 var Cum = 0;
                 for (var b = 0; b < player.Balls.length; b++) {
@@ -54,7 +54,10 @@ function CheckArousal() {
                     player.Balls[b].Cum -= player.Balls[b].Cum / 10;
                 }
                 Cum = Math.round((Cum / 1000) * 100) / 100;
-                document.getElementById("SexText").innerHTML += "<br>You release " + Cum + "L of cum into their pussy.";
+				if(Cum < 1)
+					document.getElementById("SexText").innerHTML += "<br>You release " + Cum*1000 + "mL of cum into their pussy.";
+				else
+					document.getElementById("SexText").innerHTML += "<br>You release " + Cum + "L of cum into their pussy.";
             }
         }
         AfterBattleButtons();
