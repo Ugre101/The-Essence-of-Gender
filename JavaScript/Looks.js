@@ -24,7 +24,7 @@ function DickLook(who) {
             if (who.Dicks[d].Virgin) {
                 virgin = " virgin"
             }
-            dicks += IntToOne(d) + who.Dicks[d].Size + "cm long " + who.Dicks[d].Type + virgin + " dick";
+            dicks += IntToOne(d) + CmToInch(who.Dicks[d].Size) + " long " + who.Dicks[d].Type + virgin + " dick";
         }
         return dicks + ".<br><br>";
     } else {
@@ -36,7 +36,7 @@ function BallLook(who) {
     if (who.Balls.length > 0) {
         var balls = "";
         for (var b = 0; b < who.Balls.length; b++) {
-            balls += IntToOne(b) + "pair of " + who.Balls[b].Size + "cm wide balls, ";
+            balls += IntToOne(b) + "pair of " + CmToInch(who.Balls[b].Size) + " wide balls, ";
             balls += "which are filled with " + (who.Balls[b].Cum / 1000).toFixed(2) + "Liters of cum"
         }
         return balls + ".<br><br>";
@@ -57,7 +57,7 @@ function PussyLook(who) {
                 virgin = " virgin"
             }
             who.Pussies[p].Type + virgin + " pussy <br>";
-            pussies += IntToOne(p) + who.Pussies[p].Size + "cm deep " + who.Pussies[p].Type + virgin + " pussy";
+            pussies += IntToOne(p) + CmToInch(who.Pussies[p].Size) + " deep " + who.Pussies[p].Type + virgin + " pussy";
         }
         return pussies + "<br><br>";
     } else {

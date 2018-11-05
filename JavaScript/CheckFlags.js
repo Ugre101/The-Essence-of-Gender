@@ -170,4 +170,8 @@
             Settings.LogLength = 100;
             console.log("Added Settings loglengt");
         }
+        if (!Settings.hasOwnProperty("Inch")) {
+            Settings.Inch = false;
+        }
+        
     }

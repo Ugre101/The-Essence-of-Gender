@@ -133,7 +133,8 @@
         Brothel: {
             ServeMasc: true,
             ServeFemi: true
-        }
+        },
+        Inch: false
     }
 
     // Start values for canvas
@@ -240,7 +241,7 @@
         document.getElementById("ImgPack").value = "Img pack: " + Settings.ImgPack;
         document.getElementById("LogLength").innerHTML = Settings.LogLength;
         document.getElementById("FontSize").innerHTML = Math.round(FontSize*100)/100 + "em"
-        console.log(Settings.LogLength)
+        document.getElementById("Inch").value = "Inch " + Settings.Inch;
     });
     var FontSize = 1;
     document.getElementById("FontSmaller").addEventListener("click", function () {
@@ -279,6 +280,17 @@
         Settings.Pronun.Female = document.getElementById("Female").value;
         Settings.Pronun.Doll = document.getElementById("Doll").value;
         Settings.Pronun.Status = true;
+    });
+    document.getElementById("Inch").addEventListener("click", function() {
+        switch (Settings.Inch) {
+            case true:
+                Settings.Inch = false;
+                break;
+            default:
+                Settings.Inch = true;
+                break;
+        }
+        document.getElementById("Inch").value = "Inch " + Settings.Inch;
     });
 
     // LocalPotal
@@ -394,7 +406,7 @@
             questText += "<div><h4>" + player.Quests[e].Name + "</h4>" + "Completed: " + player.Quests[e].Completed + " <br>Count: " +
                 player.Quests[e].Count + "<br><br></div>";
         }
-        document.getElementById("TownhallText").innerHTML = questText;
+        document.getElementById("QuestTexts").innerHTML = questText;
     });
     document.getElementById("QuestsLeave").addEventListener("click", function () {
         battle = false;
@@ -932,16 +944,16 @@
             player.Gold += 0.001 * House.Dormmates.length;
             for (var esf = 0; House.Dormmates.length > esf; esf++) {
                 if (Settings.Brothel.ServeMasc && Settings.Brothel.ServeFemi) {
-                    House.Dormmates[esf].Masc += 0.1 * House.Brothel;
-                    House.Dormmates[esf].Femi += 0.1 * House.Brothel;
+                    House.Dormmates[esf].Masc += 0.05 * House.Brothel;
+                    House.Dormmates[esf].Femi += 0.05 * House.Brothel;
                 } else if (Settings.Brothel.ServeFemi) {
-                    House.Dormmates[esf].Femi += 0.2 * House.Brothel;
+                    House.Dormmates[esf].Femi += 0.1 * House.Brothel;
                 } else if (Settings.Brothel.ServeMasc) {
-                    House.Dormmates[esf].Masc += 0.2 * House.Brothel;
+                    House.Dormmates[esf].Masc += 0.1 * House.Brothel;
                 }
             }
             if (House.hasOwnProperty("Brothel")) {
-                player.Gold += 0.001 * House.Dormmates.length * House.Brothel;
+                player.Gold += 0.01 * House.Dormmates.length * House.Brothel;
             }
         }
     };
@@ -1294,7 +1306,7 @@
         // Live update for Looksmenu
         document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
 
-        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
+        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + " a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
             ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and a " + player.Skincolor + " skin color.";
 
         if (player.Pregnant.Babies.length > 0) {
@@ -1331,17 +1343,6 @@
             DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W");
             DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N");
             Doors = [DoorE, DoorS, DoorN, DoorW];
-        }
-
-        if (House.Dormmates.length > 0) {
-            player.Gold += 0.001 * House.Dormmates.length;
-            for (var esf = 0; House.Dormmates.length > esf; esf++) {
-                House.Dormmates[esf].Masc += 0.0001;
-                House.Dormmates[esf].Femi += 0.0001;
-            }
-            if (House.hasOwnProperty("Brothel")) {
-                player.Gold += 0.001 * House.Dormmates.length * House.Brothel;
-            }
         }
         if (Settings.Vore) {
             document.getElementById("VoreLooks").style.display = 'inline-block';
