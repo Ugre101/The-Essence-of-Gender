@@ -15,7 +15,7 @@ document.getElementById("ElfTF").addEventListener("click", function () {
         document.getElementById("WitchHutText").innerHTML = "You can't afford the potion";
     }
 });
-document.getElementById("ElfTF").addEventListener("mouseover", function (e) {
+document.getElementById("WitchHut").addEventListener("mouseover", function (e) {
     document.getElementById("WitchHutText").innerHTML = e.target.title;
 });
 document.getElementById("HumanTF").addEventListener("click", function () {
@@ -35,10 +35,6 @@ document.getElementById("HumanTF").addEventListener("click", function () {
         document.getElementById("WitchHutText").innerHTML = "You can't afford the potion";
     }
 });
-document.getElementById("HumanTF").addEventListener("mouseover", function (e) {
-    document.getElementById("WitchHutText").innerHTML = e.target.title;
-});
-
 document.getElementById("EyeColor").addEventListener("click", function () {
     if (document.getElementById("EyeColorShop").style.display == 'block') {
         document.getElementById("EyeColorShop").style.display = 'none';

@@ -390,7 +390,7 @@ document.getElementById("ImpregOrgy").addEventListener("click", function () {
     }
     FluidsEngine();
 });
-document.getElementById("ImpregOrgy").addEventListener("mouseover", function (e) {
+document.getElementById("TheDorm").addEventListener("mouseover", function (e) {
     document.getElementById("HomeText").innerHTML = e.target.title;
 });
 document.getElementById("GetImpregOrgy").addEventListener("click", function () {
@@ -411,9 +411,6 @@ document.getElementById("GetImpregOrgy").addEventListener("click", function () {
         }
     }
     document.getElementById("HomeText").innerHTML += "<br><br> By the end of the night they have cummed " + (Math.round(CumTotal/1000*100)/100) + "L into you.";
-});
-document.getElementById("GetImpregOrgy").addEventListener("mouseover", function (e) {
-    document.getElementById("HomeText").innerHTML = e.target.title;
 });
 document.getElementById("LeaveDorm").addEventListener("click", function () {
     document.getElementById("HomeStart").style.display = 'block';
