@@ -15,7 +15,7 @@ function DickLook(who) {
     if (who.Dicks.length > 0) {
         var dicks = "";
         var virgin = " ";
-        if (who.SecondRace == "equine taur") {
+        if (who.SecondRace == "centaur") {
             dicks = "Under your equine body retracted into their penile sheath you find "
         } else if (who.SecondRace == "equine") {
             dicks = "Retracted into their penile sheath you find "
@@ -49,8 +49,8 @@ function PussyLook(who) {
     if (who.Pussies.length > 0) {
         var pussies = "";
         var virgin = " ";
-        if (who.SecondRace == "equine taur") {
-            pussies = "At your equine backside is your mare genitals ";
+        if (who.SecondRace == "centaur") {
+            pussies = "At your equine backside are your mare genitals, ";
         }
         for (var p = 0; p < who.Pussies.length; p++) {
             if (who.Pussies[p].Virgin) {

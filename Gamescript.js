@@ -963,6 +963,14 @@
             player.Anal[e].Type = what;
         }
     }
+	
+	function addMilk(amount) {
+		for(var b = 0; b < player.Boobies.length; b++)
+		{
+			if (player.Boobies[b].Milk <= player.Boobies[b].MilkMax)
+				player.Boobies[b].Milk += Math.min(player.Boobies[b].MilkMax - player.Boobies[b].Milk, amount);
+		}
+	}
 
     function RaceDesc(who) {
         switch (who.Race) {
@@ -971,7 +979,7 @@
                     return "human";
                 } else if (who.SecondRace == "elf") {
                     return "half elf";
-                } else if (who.SecondRace == "equine taur") {
+                } else if (who.SecondRace == "centaur") {
                     return "centaur";
                 } else if (who.SecondRace == "equine") {
                     return "satyr";
@@ -981,7 +989,7 @@
                     return "half elf";
                 } else if (who.SecondRace == "elf") {
                     return "elf";
-                } else if (who.SecondRace == "equine taur") {
+                } else if (who.SecondRace == "centaur") {
                     return "centaur";
                 } else if (who.SecondRace == "equine") {
                     return "satyr";
@@ -991,7 +999,7 @@
                     return "humanoid equine";
                 } else if (who.SecondRace == "elf") {
                     return "humanoid equine";
-                } else if (who.SecondRace == "equine taur") {
+                } else if (who.SecondRace == "centaur") {
                     return "anthropomorphic centaur";
                 } else if (who.SecondRace == "equine") {
                     return "equine";
