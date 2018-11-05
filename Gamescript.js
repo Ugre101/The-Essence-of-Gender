@@ -1107,7 +1107,7 @@
             document.getElementById("HideFluids").value = "Hide";
         } else {
             document.getElementById("FluidPart").style.display = 'none';
-            document.getElementById("HideFluids").value = 'Show';
+            document.getElementById("HideFluids	").value = 'Show';
         }
     });
 
