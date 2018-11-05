@@ -8,7 +8,7 @@
         }
         Flags.Date.Day++;
         document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
-        document.getElementById("HomeText").innerHTML = "You sleept.";
+        document.getElementById("HomeText").innerHTML = "You sleep well, restoring your health and willpower.";
     });
     document.getElementById("UpgradeHome").addEventListener("click", function () {
         document.getElementById("HomeStart").style.display = 'none';

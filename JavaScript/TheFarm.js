@@ -1,7 +1,7 @@
     // Start Farm
     document.getElementById("EquineTaurTF").addEventListener("click", function () {
-        if (player.SecondRace == "equine taur") {
-            document.getElementById("FarmOwnerText").innerHTML = "You already are a equine taur!"
+        if (player.SecondRace == "centaur") {
+            document.getElementById("FarmOwnerText").innerHTML = "You're already a centaur!"
             return;
         }
         if (TF.Status) {
@@ -10,7 +10,7 @@
         }
         if (player.Gold >= 250) {
             player.Gold -= 250;
-            TfEngine("equine taur");
+            TfEngine("centaur");
         } else {
             document.getElementById("FarmOwnerText").innerHTML = "Insufficient gold.";
             return;

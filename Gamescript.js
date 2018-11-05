@@ -184,7 +184,7 @@
     document.getElementById("Begin").addEventListener("click", function () {
         document.getElementById("startgame").style.display = 'inline-block';
         document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
-        ", who weighs " + player.Weight + "kg and Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor + 
+        ", who weighs " + player.Weight + "kg and Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor +
         " skin colour, this hopefully the last time you see this body absent of any details or personality, as today marks the day you will forge your own way in this world.";
 
         requestAnimationFrame(loop);
@@ -261,17 +261,17 @@
         DisplayNone();
         document.getElementById("PronunForm").style.display = 'block'
     });
-	
+
 	document.getElementById("Log+10").addEventListener("click", function () {
         Settings.LogLength += 10;
         document.getElementById("LogLength").innerHTML = Settings.LogLength;
     });
-	
+
 	document.getElementById("Log-10").addEventListener("click", function () {
         Settings.LogLength -= 10;
         document.getElementById("LogLength").innerHTML = Settings.LogLength;
     });
-	
+
     document.getElementById("AcceptPronun").addEventListener("click", function () {
         DisplayNone();
         document.getElementById("optionpage").style.display = 'block';
@@ -975,6 +975,14 @@
             player.Anal[e].Type = what;
         }
     }
+	
+	function addMilk(amount) {
+		for(var b = 0; b < player.Boobies.length; b++)
+		{
+			if (player.Boobies[b].Milk <= player.Boobies[b].MilkMax)
+				player.Boobies[b].Milk += Math.min(player.Boobies[b].MilkMax - player.Boobies[b].Milk, amount);
+		}
+	}
 
     function RaceDesc(who) {
         switch (who.Race) {
@@ -983,7 +991,7 @@
                     return "human";
                 } else if (who.SecondRace == "elf") {
                     return "half elf";
-                } else if (who.SecondRace == "equine taur") {
+                } else if (who.SecondRace == "centaur") {
                     return "centaur";
                 } else if (who.SecondRace == "equine") {
                     return "satyr";
@@ -993,7 +1001,7 @@
                     return "half elf";
                 } else if (who.SecondRace == "elf") {
                     return "elf";
-                } else if (who.SecondRace == "equine taur") {
+                } else if (who.SecondRace == "centaur") {
                     return "centaur";
                 } else if (who.SecondRace == "equine") {
                     return "satyr";
@@ -1003,7 +1011,7 @@
                     return "humanoid equine";
                 } else if (who.SecondRace == "elf") {
                     return "humanoid equine";
-                } else if (who.SecondRace == "equine taur") {
+                } else if (who.SecondRace == "centaur") {
                     return "anthropomorphic centaur";
                 } else if (who.SecondRace == "equine") {
                     return "equine";
@@ -1058,13 +1066,13 @@
             document.getElementById("HideEventLog").value = "Show";
         }
     });
-    document.getElementById("HideFuilds").addEventListener("click", function () {
+    document.getElementById("HideFluids").addEventListener("click", function () {
         if (document.getElementById("FluidPart").style.display == 'none') {
             document.getElementById("FluidPart").style.display = 'block';
-            document.getElementById("HideFuilds").value = "Hide";
+            document.getElementById("HideFluids").value = "Hide";
         } else {
             document.getElementById("FluidPart").style.display = 'none';
-            document.getElementById("HideFuilds").value = 'Show';
+            document.getElementById("HideFluids	").value = 'Show';
         }
     });
 
@@ -1102,7 +1110,7 @@
     var BlackMartket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
     var FirstDungeon = new Npc("FirstDungeon", "Dungeon",grid * 8, grid * 18, grid *4, grid * 2, "RGB(133,94,66)");
 
-    // Character 
+    // Character
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
 
     var Npcs = [];
@@ -1186,7 +1194,7 @@
         }
     }
     var a = document.documentElement.clientHeight;
-    
+
 
     function testsa(e) {
         for (var b = e; b < enemies.length; b++) {

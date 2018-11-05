@@ -57,18 +57,18 @@ function TfEngine(Tf_to) {
                     }
                 }
                 break;
-            case "equine taur":
-                if (player.SecondRace != "equine taur") {
+            case "centaur":
+                if (player.SecondRace != "centaur") {
                     if (TF.Counter > 1000) {
                         EventLog("Completing the transformation, you are now a centaur with a horse's lower body and a " + player.Race + "'s upper body.");
-                        player.SecondRace = "equine taur";
+                        player.SecondRace = "centaur";
                         TF.Status = false;
                         TF.Counter = 0;
                         GenitalChange("equine");
                     } else if (TF.Counter == 300) {
                         EventLog("The changes to your lower body is so dramatic that you fall to the ground. Trying to get back up, you see your torso split, bending in half, then stretching back.")
                     } else if (TF.Counter == 400) {
-                        EventLog("Where your torso split you grow a second set of legs, and watch as all four legs transform to those of a horse.");
+                        EventLog("Where your torso split you grow a second set of legs; all four legs transform to those of a horse.");
 					}	else if (TF.Counter == 600) {
                         EventLog("You feel your lower torso growing wider, soon resembling a horse's torso.");
                     } 	else if (TF.Counter == 800) {
