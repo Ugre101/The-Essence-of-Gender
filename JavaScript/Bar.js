@@ -27,7 +27,7 @@ document.getElementById("EatBar").addEventListener("click", function () {
         return;
     }
 });
-document.getElementById("EatBar").addEventListener("mouseover", function (e) {
+document.getElementById("Bar").addEventListener("mouseover", function (e) {
     document.getElementById("BarText").innerHTML = e.target.title;
 });
 document.getElementById("EatBarMedium").addEventListener("click", function () {
@@ -47,9 +47,6 @@ document.getElementById("EatBarMedium").addEventListener("click", function () {
         return;
     }
 });
-document.getElementById("EatBarMedium").addEventListener("mouseover", function (e) {
-    document.getElementById("BarText").innerHTML = e.target.title;
-});
 document.getElementById("EatBarLarge").addEventListener("click", function () {
     if (player.Gold > 10) {
         player.Fat += 8;
@@ -64,7 +61,4 @@ document.getElementById("EatBarLarge").addEventListener("click", function () {
         player.WillHealth += 70;
         return;
     }
-});
-document.getElementById("EatBarLarge").addEventListener("mouseover", function (e) {
-    document.getElementById("BarText").innerHTML = e.target.title;
 });

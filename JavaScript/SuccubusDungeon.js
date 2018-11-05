@@ -123,6 +123,21 @@ function SuccubusBoss() {
     EvilNameGiver(OP);
     return OP;
 }
+function SuccubusBossUnique() {
+    var OP = new enemy("Dungeon Mistress", "Succubus", 0, 9999, RandomInt(20, 25), RandomInt(60, 75), RandomInt(65, 80), RandomInt(65, 80),
+        RandomInt(45, 65), RandomInt(105, 145), 0, 0, 800, 800, 1500, 1500, RandomInt(2, 18) * grid, RandomInt(2, 18) * grid,
+        RandomInt(300, 400), RandomInt(200, 340), 'purple', grid, RandomInt(50, 70), RandomInt(150, 180), RandomInt(20, 30), RandomInt(15, 35));
+    EssenceCheck(OP);
+    if (OP.Pussies.length > 0) {
+        var a = RandomInt(1, 8);
+        if (a < 8) {
+            OP.Pussies[0].Virgin = false;
+        }
+    }
+    RaceBonus(OP);
+    EvilNameGiver(OP);
+    return OP;
+}
 var Dungeon = false;
 var Wave = 0;
 document.getElementById("EnterDungeon").addEventListener("click", function () {

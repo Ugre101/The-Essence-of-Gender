@@ -44,25 +44,5 @@ document.getElementById("WitchShop").addEventListener("click", function (e) {
     }
 });
 document.getElementById("WitchShop").addEventListener("mouseover", function (e) {
-    var Chosen;
-    if (e.target.type == "button") {
-        Chosen = String(e.target.id);
-        if (Chosen == "Grow") {
-            document.getElementById("WitchShopText").innerHTML = e.target.title;
-        } else if (Chosen == "Shrink") {
-            document.getElementById("WitchShopText").innerHTML = e.target.title
-        } else if (Chosen == "FertilityAdd") {
-            document.getElementById("WitchShopText").innerHTML = e.target.title
-        } else if (Chosen == "FertilitySub") {
-            document.getElementById("WitchShopText").innerHTML = e.target.title
-        } else if (Chosen == "VirilityAdd") {
-            document.getElementById("WitchShopText").innerHTML = e.target.title
-        } else if (Chosen == "VirilitySub") {
-            document.getElementById("WitchShopText").innerHTML = e.target.title
-        } else if (Chosen == "CumRateAdd") {
-            document.getElementById("WitchShopText").innerHTML = e.target.title
-        } else if (Chosen == "CumRateSub") {
-            document.getElementById("WitchShopText").innerHTML = e.target.title
-        }
-    }
+    document.getElementById("WitchShopText").innerHTML = e.target.title;
 });

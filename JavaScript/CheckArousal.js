@@ -60,8 +60,8 @@ function CheckArousal() {
             var cum = Cumming(player);
             document.getElementById("SexText").innerHTML += "<br>Felling close you grab their head and push your dick deeper down their throat cumming " + cum + "L down their into their stomach."
             ee.Cumin.Stomach += cum;
-            if (ee.Cumin.Stomach > (ee.Height / 100)*2) {
-                document.getElementById("SexText").innerHTML += " Their stomach is overflowing with cum, the moment you pull out ."
+            if (ee.Cumin.Stomach > (ee.Height / 100) * 2) {
+                document.getElementById("SexText").innerHTML += " Their stomach is overflowing with cum, the moment you pull out they drool cum."
             } else if (ee.Cumin.Stomach > ee.Height / 100) {
                 document.getElementById("SexText").innerHTML += " Their stomach is filled with cum."
             }

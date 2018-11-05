@@ -44,7 +44,7 @@
         }
         document.getElementById("UpgradeBed").value = "Upgrade bedroom " + BedCost + "g";
     });
-    document.getElementById("UpgradeBed").addEventListener("mouseover", function (e) {
+    document.getElementById("Upgrades").addEventListener("mouseover", function (e) {
         document.getElementById("HomeText").innerHTML = e.target.title;
     });
     document.getElementById("BuildDorm").addEventListener("click", function () {
@@ -64,11 +64,6 @@
         var DormCost = Math.round(250 * Math.pow(1.2, House.Dorm));
         document.getElementById("BuildDorm").value = "Build dorm " + DormCost + "g";
     });
-
-    document.getElementById("BuildDorm").addEventListener("mouseover", function (e) {
-        document.getElementById("HomeText").innerHTML = e.target.title;
-    });
-
     document.getElementById("BuildGym").addEventListener("click", function () {
         var Gymcost = Math.round(200 * Math.pow(1.2, House.Gym));
         if (player.Gold > Gymcost) {
@@ -82,9 +77,6 @@
             Gymcost = Math.round(200 * Math.pow(1.2, House.Gym));
             document.getElementById("BuildGym").value = "Build gym " + Gymcost + "g";
         }
-    });
-    document.getElementById("BuildGym").addEventListener("mouseover", function (e) {
-        document.getElementById("HomeText").innerHTML = e.target.title;
     });
     document.getElementById("BuildKitchen").addEventListener("click", function () {
         var Kitchencost = Math.round(200 * Math.pow(1.2, House.Kitchen));
@@ -100,9 +92,6 @@
         var Kitchencost = Math.round(200 * Math.pow(1.2, House.Kitchen));
         document.getElementById("BuildKitchen").value = "Build kitchen " + Kitchencost + "g";
     });
-    document.getElementById("BuildKitchen").addEventListener("mouseover", function (e) {
-        document.getElementById("HomeText").innerHTML = e.target.title;
-    });
     document.getElementById("BuildPortal").addEventListener("click", function () {
         if (player.Gold > 1000 && !House.hasOwnProperty("Portal")) {
             player.Gold -= 1000;
@@ -113,9 +102,6 @@
         } else {
             document.getElementById("HomeText").innerHTML = "You are to poor to buy a portal you peasant!"
         }
-    });
-    document.getElementById("BuildPortal").addEventListener("mouseover", function (e) {
-        document.getElementById("HomeText").innerHTML = e.target.title;
     });
     document.getElementById("BuildBrothel").addEventListener("click", function () {
         var Brothelcost = Math.round(500 * Math.pow(1.2, House.Brothel))
@@ -131,9 +117,6 @@
         }
         Brothelcost = Math.round(500 * Math.pow(1.2, House.Brothel));
         document.getElementById("BuildBrothel").value = "Upgrade brothel " + Brothelcost + "g";
-    });
-    document.getElementById("BuildBrothel").addEventListener("mouseover", function (e) {
-        document.getElementById("HomeText").innerHTML = e.target.title;
     });
     document.getElementById("LeaveUpgradeHome").addEventListener("click", function () {
         document.getElementById("Upgrades").style.display = 'none';

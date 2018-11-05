@@ -538,7 +538,9 @@
    div.SexLog {
        min-height: 100px;
        width: 70%;
-       border: 1px solid black;
+       box-shadow: 0 0 1px 1px black;
+       border-radius: 15px;
+       padding: 0.5em;
        background-color: rgb(168, 163, 168);
        grid-area: c;
    }
