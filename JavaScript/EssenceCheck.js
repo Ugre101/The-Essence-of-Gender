@@ -61,10 +61,10 @@
          who.Balls.pop();
      } else if (who.Masc >= 50 && who.Balls.length == 0) {
          var Ball = {
-             Size: 2,
+             Size: Math.round(who.Masc/50),
              Type: who.Race,
-             CumMax: 2,
-             Cum: 0,
+             CumMax: Math.round(who.Masc/50)*400,
+             Cum: Math.round(who.Masc/50)*350,
              CumRate: 0,
              CumBaseRate: 0.5
          }

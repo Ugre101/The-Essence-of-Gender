@@ -394,7 +394,7 @@
             questText += "<div><h4>" + player.Quests[e].Name + "</h4>" + "Completed: " + player.Quests[e].Completed + " <br>Count: " +
                 player.Quests[e].Count + "<br><br></div>";
         }
-        document.getElementById("TownhallText").innerHTML = questText;
+        document.getElementById("QuestTexts").innerHTML = questText;
     });
     document.getElementById("QuestsLeave").addEventListener("click", function () {
         battle = false;
