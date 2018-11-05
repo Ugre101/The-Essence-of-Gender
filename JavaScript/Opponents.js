@@ -1,16 +1,16 @@
-function enemy(EnemyName, EnemyRace, EnemyMasculinity, EnemmyFemininity, Strength,
-    Endurance, Willpower, Charm, Intelegence, SexSkill, Arousal, Orgasm, EnemyHealth, EnemyFullHealth,
+function enemy(EnemyName, EnemyRace, EnemyMasculinity, EnemyFemininity, Strength,
+    Endurance, Willpower, Charm, Intelligence, SexSkill, Arousal, Orgasm, EnemyHealth, EnemyFullHealth,
     EnemyWillHealth, EnemyFullWillHealth, EnemyXPos, EnemyYPos, ExpDrop, GoldDrop, Color, Size, Weight,
     Height, Muscle, Fat) {
     this.Name = EnemyName;
     this.Race = EnemyRace;
     this.Masc = EnemyMasculinity;
-    this.Femi = EnemmyFemininity
+    this.Femi = EnemyFemininity
     this.Str = Strength;
     this.End = Endurance;
     this.Willpower = Willpower;
     this.Charm = Charm;
-    this.Int = Intelegence;
+    this.Int = Intelligence;
     this.SexSkill = SexSkill;
     this.Health = EnemyHealth;
     this.FullHealth = EnemyFullHealth;

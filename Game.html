@@ -70,8 +70,9 @@
 			recover</p>
 		<div>
 			<p>Notes: You can move with mouse, wasd or arrow keys</p>
-			<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually?</label>
+			<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually? (Also: vore?)</label>
 			<input type="button" id="StartAutoEssence" value="Auto TF true" />
+			<input type="button" id="VoreStart" value="Vore false" />
 			<br><input type="button" id="startgame" value="Start game" />
 		</div>
 	</div>
@@ -93,7 +94,7 @@
 			<p id="EventText"></p>
 		</div>
 		<div>
-			<input type="button" id="HideFuilds" value="Hide" />
+			<input type="button" id="HideFluids" value="Hide" />
 			<h2>Fluids</h2>
 		</div>
 		<div id="FluidPart">
@@ -191,7 +192,7 @@
 
 		<div>
 			<input type="button" id="GainWill" value="Willpower" title="Gives you more WillPower">
-			<input type="button" id="GainSex" value="Sex skil" title="When having sex your enemy gains more arousal">
+			<input type="button" id="GainSex" value="Sex skill" title="When having sex your enemy gains more arousal">
 		</div>
 		<br>
 		<div>
@@ -208,7 +209,7 @@
 			<input type="button" id="ExtraWillHealth" value="Extra Will Health" title="Increase willpower by 20">
 			<input type="button" id="FasterRest" value="Faster Rest" title="Increases your passive rest with +0.01hp/tick. This will also increase rate burning fat.">
 			<input type="button" id="StealMore" value="More essence" title="Increases the amount of essence you take when your enemy orgasms">
-			<input type="button" id="GiveEssence" value="Give essence" title="Makes your enemy gain femininity and/or masculinity when you orgasm">
+			<input type="button" id="GiveEssence" value="Give essence" title="Gives your enemy your femininity and/or masculinity when you orgasm">
 		</div>
 
 		<input type="button" id="LeavePerkMenu" value="Done">
@@ -412,7 +413,7 @@
 	<div id="PerkOptionsMenu" class="Options None">
 		<label for="Skip">Skip Sex</label>
 		<input type="button" id="Skip" value="Skip">
-		<label for="Vore">Vore (Aplha)</label>
+		<label for="Vore">Vore (Alpha)</label>
 		<input type="button" id="Vore" value="Vore false" />
 		<br><br><input type="button" id="PerkOptionsLeave" value="Leave" />
 	</div>
@@ -485,7 +486,7 @@
 			<div>
 				<input type="button" id="AbsorbEssence" value="Absorb prey essence" title="Absorb essence of masculinity and femininity from your prey">
 				<input type="button" id="FasterDigestion" value="Faster digestion" title="Digest your prey faster, also speeds up gain of fat, cum and milk">
-				<input type="button" id="HigerCapacity" value="Higer capacity" title="Increase the total weight of prey your body can hold">
+				<input type="button" id="HigherCapacity" value="Higher capacity" title="Increase the total weight of prey your body can hold">
 				<input type="button" id="AbsorbHeight" value="Absorb height" title="Grow taller by absorbing height from your prey. (Growth limit [160cm + 20 * perklevel] t.ex. perk level 3 allows you to grow to 220cm)">
 				<input type="button" id="AbsorbStats" value="Absorb prey stats" title="Get stronger while digesting! (Costs 10 levels, max effectiveness of 10)">
 				<input type="button" id="" value="" title="">
@@ -997,7 +998,6 @@
 		<div id="DungeonButtons"></div>
 		<input type="button" id="LeaveDungeon" value="Turn back" />
 	</div>
-
 
 	<script src="JavaScript/AfterBattleButtons.js"></script>
 	<script src="JavaScript/Bar.js"></script>
