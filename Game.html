@@ -292,36 +292,39 @@
 				<label for="textcolor">Textcolor</label>
 				<input type="color" id="textcolor" value="#000000" />
 			</div>
-		</div>
-		<div>
-			<label for="textfont">Textfont</label>
-			<select id="textfont">
-				<option value="Times New Roman', Times, serif">Times New Roman</option>
-				<option value="Verdana, Geneva, sans-serif" selected>Verdana</option>
-				<option value="Arial, Helvetica, sans-serif">Ariel</option>
-				<option value="Tahoma, Geneva, sans-serif">Tahoma</option>
-				<option value="Impact,Charcoal,sans-serif">Impact</option>
-				<option value="Trebuchet MS, Helvetica, sans-serif">Trebuchet MS</option>
-			</select>
-		</div>
-		<div>
-			<label for="Sizes">Font size</label>
-			<div id="Sizes">
-				<input type="button" id="FontSmaller" value="-" />
-				<p id="FontSize"></p>
-				<input type="button" id="FontBigger" value="+" />
+			<div>
+				<label for="textfont">Textfont</label>
+				<select id="textfont">
+					<option value="Times New Roman', Times, serif">Times New Roman</option>
+					<option value="Verdana, Geneva, sans-serif" selected>Verdana</option>
+					<option value="Arial, Helvetica, sans-serif">Ariel</option>
+					<option value="Tahoma, Geneva, sans-serif">Tahoma</option>
+					<option value="Impact,Charcoal,sans-serif">Impact</option>
+					<option value="Trebuchet MS, Helvetica, sans-serif">Trebuchet MS</option>
+				</select>
 			</div>
-		</div>
-		<div>
-			<label for="MapScale">Map size</label>
-			<select id="MapScale">
-				<option value="0.5">Small(50%)</option>
-				<option value="0.6">Small+(60%)</option>
-				<option value="0.7">Medium(70%)</option>
-				<option value="0.8" selected>Medium+(80%)</option>
-				<option value="0.9">Large(90%)</option>
-				<option value="0.98">Max(98%)</option>
-			</select>
+			<div>
+				<label for="Sizes">Font size</label>
+				<div id="Sizes">
+					<input type="button" id="FontSmaller" value="-" />
+					<p id="FontSize"></p>
+					<input type="button" id="FontBigger" value="+" />
+				</div>
+			</div>
+			<div>
+				<label for="MapScale">Map size</label>
+				<select id="MapScale">
+					<option value="0.5">Small(50%)</option>
+					<option value="0.6">Small+(60%)</option>
+					<option value="0.7">Medium(70%)</option>
+					<option value="0.8" selected>Medium+(80%)</option>
+					<option value="0.9">Large(90%)</option>
+					<option value="0.98">Max(98%)</option>
+				</select>
+			</div>
+			<div>
+				<input type="button" id="Inch" value="Inch false" />
+			</div>
 		</div>
 		<div>
 			<input type="button" id="ImgPack" value="ImgPack(No included)" />
@@ -980,7 +983,7 @@
 			<input type="button" id="EquineTF" value="Buy Equine Essence" title="Want more lower body strength? Lucky for you this essence will make you to the mare or stallion of your dreams! One dose will turn your lower body to a set of humanoid equine legs while two doses will turn you to a anthropomorphic equine." />
 			<input type="button" id="" value="(Placeholder)Bovine Essence" />
 		</div>
-		<input type="button" id="FarmOwnerLooks" value="Looks"/>
+		<input type="button" id="FarmOwnerLooks" value="Looks" />
 		<input type="button" id="LeaveFarmOwner" value="Bye" />
 	</div>
 
@@ -1014,6 +1017,8 @@
 	<script src="JavaScript/HemScale.js"></script>
 	<script src="JavaScript/Home.js"></script>
 	<script src="JavaScript/Impregnate.js"></script>
+	<script src="JavaScript/InferiorUnit.js"></script>
+	<script src="JavaScript/Items.js"></script>
 	<script src="JavaScript/Inventory.js"></script>
 	<script src="JavaScript/LevelMenu.js"></script>
 	<script src="JavaScript/Loader.js"></script>

@@ -15,7 +15,7 @@ function Items(Things) {
         var Thing = Things[e];
         console.log(Thing);
         var item = "<div title=\"" + Thing.Title + "\">" + Thing.Name + " (" + Thing.Quantity + "\)"
-        if (Thing.Use === "Yes") {
+        if (Thing.hasOwnProperty("Use")) {
             item += "<input type=\"button\" onclick=\"Use(" + e + ")\" value=\"Use\">"
         }
         if (Thing.Equip === "Yes") {
@@ -33,6 +33,10 @@ function Items(Things) {
 
 function Use(item) {
     var thing = player.Inventory[item];
+    if (thing.hasOwnProperty("Use") && typeof thing.Use == 'function') {
+        thing.Use(player);
+    } else {
+        console.log("this item has not been refactored: " + item.Name);
     switch (thing.Name) {
         case "Orc cum":
             player.Masc += 50;
@@ -122,6 +126,7 @@ function Use(item) {
             EventLog("Uh... Something went wrong...");
             break;
     }
+}
     player.Inventory[item].Quantity--;
     if (player.Inventory[item].Quantity <= 0)
         player.Inventory.splice(item, 1);

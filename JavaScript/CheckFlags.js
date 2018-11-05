@@ -120,16 +120,7 @@
 
         if (Array.isArray(player.Inventory)) {
             if (player.Inventory.length < 1) {
-                var Blade = {
-                    Name: "Blade",
-                    Use: "Yes",
-                    Equip: "Yes",
-                    Drop: "Yes",
-                    Does: "Temp+5",
-                    Quantity: 1,
-                    Title: "Temp_Tempsson legendary temp sword gives +999 to testing."
-                }
-                player.Inventory.push(Blade);
+                player.Inventory.push(ItemDict.blade);
             }
         } else {
             player.Inventory = [];
@@ -175,8 +166,62 @@
             }
             console.log("Added brothel settings");
         }
-        if (!Settings.hasOwnProperty("LogLength")){
+        if (!Settings.hasOwnProperty("LogLength")) {
             Settings.LogLength = 100;
             console.log("Added Settings loglengt");
         }
+        if (!Settings.hasOwnProperty("Inch")) {
+            Settings.Inch = false;
+        }
+        for (var e = 0; e < player.Inventory.length; e++) {
+            switch (player.Inventory[e].Name) {
+                case "Amazon's Girdle":
+                    player.Inventory[e].Use = ItemDict.amazonGirdle.Use;
+                    break;
+                case "Orc cum":
+                    player.Inventory[e].Use = ItemDict.orcCum.Use;
+                    break;
+                case "Fairy dust":
+                    player.Inventory[e].Use = ItemDict.fairyDust.Use;
+                    break;
+                case "Humanity":
+                    player.Inventory[e].Use = ItemDict.humanity.Use;
+                    break;
+                case "Pouch":
+                    player.Inventory[e].Use = ItemDict.pouch.Use;
+                    break;
+                case "Small Pouch":
+                    player.Inventory[e].Use = ItemDict.halfPouch.Use;
+                    break;
+                case "Orc brew":
+                    player.Inventory[e].Use = ItemDict.orcBrew.Use;
+                    break;
+                case "Troll Milk":
+                    player.Inventory[e].Use = ItemDict.trollMilk.Use;
+                    break;
+                case "Elven hair":
+                    player.Inventory[e].Use = ItemDict.elvenHair.Use;
+                    break;
+                case "Milk Jug":
+                    player.Inventory[e].Use = ItemDict.milkJug.Use;
+                    break;
+                case "Fertility idol":
+                    player.Inventory[e].Use = ItemDict.fertilityIdol.Use;
+                    break;
+                case "Cocky rock":
+                    player.Inventory[e].Use = ItemDict.cockyRock.Use;
+                    break;
+                case "Infernal semen":
+                    player.Inventory[e].Use = ItemDict.infernalSemen.Use;
+                    break;
+                case "Infernal milk":
+                    player.Inventory[e].Use = ItemDict.infernalMilk.Use;
+                    break;
+            }
+        }
+
+
+
+
+
     }

@@ -1,14 +1,25 @@
 function CheckArousal() {
     var ee = enemies[EnemyIndex];
-    var ImpregActions ={
-        male : ["DoggyStyle","DoggyStyleAnal" , "Missionary"],
-        female:["DoggyStyle","Missionary"]};
+    var ImpregActions = ["DoggyStyle", "DoggyStyleAnal", "Missionary"];
     if (ee.Arousal >= 100) {
         ee.Orgasm++;
         ee.SessionOrgasm++;
         ee.Arousal = 0;
         if (LastPressed == "RideCowgirl" && !player.Pregnant.Status) {
             Impregnate(player, ee, "B", "");
+        }
+        if (LastPressed == "GiveBlowjob") {
+            var cum = Cumming(ee);
+            document.getElementById("SexText").innerHTML += "<br>Reading their body language you know they are close to cumming."
+            if (cum > 0) {
+                document.getElementById("SexText").innerHTML += " You swallowed " + cum + "L of their cum."
+            }
+        } else if (LastPressed == "RideCowgirl") {
+            var cum = Cumming(ee);
+            document.getElementById("SexText").innerHTML += "<br>Reading their body language you know they are close to cumming."
+            if (cum > 0) {
+                document.getElementById("SexText").innerHTML += " Pushing them deep inside you they release " + cum + "L cum into your pussy."
+            }
         }
     }
     if (player.Arousal > 100) {
@@ -31,8 +42,7 @@ function CheckArousal() {
         }
         EssenceCheck(ee);
 
-        if (ImpregActions.male.indexOf(LastPressed) != -1) {
-
+        if (ImpregActions.indexOf(LastPressed) != -1) {
             if (!ee.hasOwnProperty("Pregnant")) {
                 ee.Pregnant = {}
                 ee.Pregnant.Status = false;
@@ -45,26 +55,31 @@ function CheckArousal() {
                 }
             }
         }
-        if (ImpregActions.female.indexOf(LastPressed) != -1) {
-            document.getElementById("SexText").innerHTML = "Feeling yourself getting close, you push yourself as deep as you can into them."
-            if (player.Balls.length > 0) {
-                var Cum = 0;
-                for (var b = 0; b < player.Balls.length; b++) {
-                    Cum += player.Balls[b].Cum / 10;
-                    player.Balls[b].Cum -= player.Balls[b].Cum / 10;
-                }
-                Cum = Math.round((Cum / 1000) * 100) / 100;
-				if(Cum < 1)
-					document.getElementById("SexText").innerHTML += "<br>You release " + Cum*1000 + "mL of cum into their pussy.";
-				else
-					document.getElementById("SexText").innerHTML += "<br>You release " + Cum + "L of cum into their pussy.";
+        if (LastPressed == "GetBlowjob") {
+            console.log(true)
+            var cum = Cumming(player);
+            document.getElementById("SexText").innerHTML += "<br>Felling close you grab their head and push your dick deeper down their throat cumming " + cum + "L down their into their stomach."
+            ee.Cumin.Stomach += cum;
+            if (ee.Cumin.Stomach > (ee.Height / 100)*2) {
+                document.getElementById("SexText").innerHTML += " Their stomach is overflowing with cum, the moment you pull out ."
+            } else if (ee.Cumin.Stomach > ee.Height / 100) {
+                document.getElementById("SexText").innerHTML += " Their stomach is filled with cum."
             }
+        } else if (LastPressed == "Missionary") {
+            var cum = Cumming(player);
+            document.getElementById("SexText").innerHTML += "<br>"
+        } else if (LastPressed == "DoggyStyle") {
+            var cum = Cumming(player);
+            document.getElementById("SexText").innerHTML += "<br>"
+        } else if (LastPressed == "DoggyStyleAnal") {
+            var cum = Cumming(player);
+            document.getElementById("SexText").innerHTML += "<br>"
         }
         AfterBattleButtons();
         CheckArousal();
     }
 
-    document.getElementById("PlayerLooks").innerHTML = BoobLook(player) + PussyLook(player) + DickLook(player);
+    document.getElementById("PlayerLooks").innerHTML = BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
     if (player.Pregnant.Babies.length > 0) {
         var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
         if (age < 1) {
@@ -74,7 +89,7 @@ function CheckArousal() {
         }
         document.getElementById("PlayerLooks").innerHTML += "<br>" + age;
     }
-    document.getElementById("EnemyLooks").innerHTML = BoobLook(ee) + PussyLook(ee) + DickLook(ee);
+    document.getElementById("EnemyLooks").innerHTML = BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
     if (ee.hasOwnProperty("Pregnant")) {
         if (ee.Pregnant.Status) {
             document.getElementById("EnemyLooks").innerHTML += "<br>Pregnant";
@@ -143,6 +158,20 @@ function CheckArousal() {
         document.getElementById("PlayerVagina").style.display = 'none';
         document.getElementById("PlayerDick").style.display = 'none';
         document.getElementById("Anal").style.display = 'none';
+        document.getElementById("Breast").style.display = 'none';
         return;
+    }
+}
+
+function Cumming(who) {
+    if (who.Balls.length > 0) {
+        var Cum = 0;
+        for (var b = 0; b < who.Balls.length; b++) {
+            Cum += Math.min(who.Balls[b].Cum, Math.max(100, who.Balls[b].Cum / 8));
+            who.Balls[b].Cum -= Math.min(who.Balls[b].Cum, Math.max(100, who.Balls[b].Cum / 8));
+            console.log(Cum)
+        }
+        Cum = Math.round((Cum / 1000) * 100) / 100;
+        return Cum;
     }
 }

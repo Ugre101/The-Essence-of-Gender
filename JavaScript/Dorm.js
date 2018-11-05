@@ -69,7 +69,7 @@ function MateDiv(e) {
         DormName += " " + rm.LastName;
     };
     document.getElementById(e).innerHTML = "<div>" + DormName + "<br>" + rm.Name + " " + rm.Race + "<br>" + Pronun(CheckGender(rm)) +
-        "<br><br>Height: " + Math.round(rm.Height) + "cm<br>Weight: " + Math.round(rm.Weight) + "kg<br>Muscle: " + Math.round(rm.Muscle) + "kg<br>Fat: " + Math.round(rm.Fat) +
+        "<br><br>Height: " + CmToInch(Math.round(rm.Height)) + "<br>Weight: " + Math.round(rm.Weight) + "kg<br>Muscle: " + Math.round(rm.Muscle) + "kg<br>Fat: " + Math.round(rm.Fat) +
         "kg<br>" + PregnantStatus + "<br><br>" + BoobLook(rm) + DickLook(rm) + BallLook(rm) + PussyLook(rm) + "<div> Strength: " + rm.Str +
         "<br>Charm: " + rm.Charm + "<br>Endurance: " + rm.End + "<br>Int: " + rm.Int + "<br>Sexskill: " + rm.SexSkill +
         "<br> Willpower: " + rm.Willpower + "</div></div>   "
@@ -87,6 +87,8 @@ document.getElementById("KickYes").addEventListener("click", function () {
     document.getElementById("KickYesNo").style.display = 'none';
     document.getElementById("HomeStart").style.display = 'block';
     document.getElementById("TheDorm").style.display = 'none';
+    document.getElementById("ImpregOrgy").style.display = 'inline-block';
+    document.getElementById("GetImpregOrgy").style.display = 'inline-block';
     House.Dormmates.splice(MateIndex, 1);
     return;
 });
@@ -300,7 +302,7 @@ document.getElementById("GetImpregnated").addEventListener("click", function () 
     var e = House.Dormmates[MateIndex];
     if (Setup) {
         document.getElementById("DormSexText").innerHTML = "Desiring to get pregnant you call " + e.FirstName + " " + e.LastName + " a servant whom you feel are worthy " +
-            "fathering you child. Firmly pushing them down on the bed you get on top them straddling their face grinding your pussy against their mouth, once you feel ready you shift focus to their groin removing their clothes and free their " + e.Dicks[0].Size + "cm " + e.Dicks[0].Type + " dick. " +
+            "fathering you child. Firmly pushing them down on the bed you get on top them straddling their face grinding your pussy against their mouth, once you feel ready you shift focus to their groin removing their clothes and free their " + CmToInch(e.Dicks[0].Size) + " " + e.Dicks[0].Type + " dick. " +
             "Positions your pussy on top of their glans letting it slowly enter, once accustomed speeding up."
     } else {
         document.getElementById("DormSexText").innerHTML = "Not giving up you continue riding them.";
