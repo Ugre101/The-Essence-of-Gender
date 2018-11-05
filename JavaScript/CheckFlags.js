@@ -120,16 +120,7 @@
 
         if (Array.isArray(player.Inventory)) {
             if (player.Inventory.length < 1) {
-                var Blade = {
-                    Name: "Blade",
-                    Use: "Yes",
-                    Equip: "Yes",
-                    Drop: "Yes",
-                    Does: "Temp+5",
-                    Quantity: 1,
-                    Title: "Temp_Tempsson legendary temp sword gives +999 to testing."
-                }
-                player.Inventory.push(Blade);
+                player.Inventory.push(ItemDict.blade);
             }
         } else {
             player.Inventory = [];
