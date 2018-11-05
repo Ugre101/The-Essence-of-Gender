@@ -9,24 +9,16 @@ function CheckArousal() {
             Impregnate(player, ee, "B", "");
         }
         if (LastPressed == "GiveBlowjob") {
-            var cum = 0;
-            for (var e = 0; e < ee.Balls.length; e++) {
-                cum += ee.Balls[e].Cum*0.3;
-                ee.Balls[e].Cum -= cum;
-            }
+            var cum = Cumming(ee);
             document.getElementById("SexText").innerHTML += "<br>Reading their body language you know they are close to cumming."
             if (cum > 0) {
-                document.getElementById("SexText").innerHTML += " You swallowed " + cum/1000 + "L of their cum."
+                document.getElementById("SexText").innerHTML += " You swallowed " + cum + "L of their cum."
             }
         } else if (LastPressed == "RideCowgirl") {
-            var cum = 0;
-            for (var e = 0; e < ee.Balls.length; e++) {
-                cum += ee.Balls[e].Cum*0.3;
-                ee.Balls[e].Cum -= cum;
-            }
+            var cum = Cumming(ee);
             document.getElementById("SexText").innerHTML += "<br>Reading their body language you know they are close to cumming."
             if (cum > 0) {
-                document.getElementById("SexText").innerHTML += " Pushing them deep inside you they release " + cum/1000 + "L cum into your pussy."
+                document.getElementById("SexText").innerHTML += " Pushing them deep inside you they release " + cum + "L cum into your pussy."
             }
         }
     }
@@ -175,8 +167,9 @@ function Cumming(who) {
     if (who.Balls.length > 0) {
         var Cum = 0;
         for (var b = 0; b < who.Balls.length; b++) {
-            Cum += who.Balls[b].Cum / 10;
-            who.Balls[b].Cum -= who.Balls[b].Cum / 10;
+            Cum += Math.min(who.Balls[b].Cum, Math.max(100, who.Balls[b].Cum / 8));
+            who.Balls[b].Cum -= Math.min(who.Balls[b].Cum, Math.max(100, who.Balls[b].Cum / 8));
+            console.log(Cum)
         }
         Cum = Math.round((Cum / 1000) * 100) / 100;
         return Cum;

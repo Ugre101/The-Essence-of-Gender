@@ -167,10 +167,11 @@ document.getElementById("DungenoLose").addEventListener("click", function() {
     document.getElementById("LoseStruggle").style.display = 'inline-block';
     document.getElementById("LoseSubmit").style.display = 'inline-block';
     document.getElementById("LosePlayerOrgasm").innerHTML = " ";
+    document.getElementById("EventLog").style.display = 'block';
     enemies = [];
     Dungeon = false;
 });
-document.getElementById("LeaveDungeon").addEventListener("click", function () {
+document.getElementById("LeaveFirstDungeon").addEventListener("click", function () {
     enemies = [];
     battle = false;
     player.Orgasm = 0;
