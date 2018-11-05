@@ -553,6 +553,7 @@
     document.getElementById("VorePerks").addEventListener("click", function () {
         document.getElementById("VoreButtons").style.display = 'none';
         document.getElementById("VorePerkMenu").style.display = 'block';
+        document.getElementById("VorePerkPointsLeft").innerHTML = "You have " + player.Vore.VorePoints + " perk points left.";
         if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
             document.getElementById("AbsorbEssence").value = "AbsorbEssence +" + player.Vore.VorePerks.AbsorbEssence.Count;
         }
@@ -560,7 +561,7 @@
             document.getElementById("FasterDigestion").value = "Faster digestion +" + player.Vore.VorePerks.FasterDigestion.Count;
         }
 		if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
-            document.getElementById("AbsorbStats").value = "Drain Stats when fully digested" + player.Vore.VorePerks.AbsorbStats.Count;
+            document.getElementById("AbsorbStats").value = "Drain Stats +" + player.Vore.VorePerks.AbsorbStats.Count; //Had to shorten value as text got outside button
         }
         if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
             document.getElementById("HigherCapacity").value = "Higher capacity +" + player.Vore.VorePerks.HigherCapacity.Count;
@@ -594,14 +595,12 @@
     });
 	document.getElementById("AbsorbStats").addEventListener("click", function () {
 		if(player.Vore.VorePoints > 9) {
-			try{if(player.Vore.VorePerks.AbsorbStats.Counter > 9) return;}
-			catch{}
-			finally{
-			VorePerkHandler("AbsorbStats");
-			}
-		}
-		else return;
-	});
+			if(!player.Vore.VorePerks.hasOwnProperty("AbsorbStats"))
+				VorePerkHandler("AbsorbStats");
+			else if(player.Vore.VorePerks.AbsorbStats.Count < 10) 
+				VorePerkHandler("AbsorbStats");
+			else return;
+	}});
 	document.getElementById("AbsorbStats").addEventListener("mouseover", function (e) {
         document.getElementById("VorePerkMenuText").innerHTML = e.target.title;
     });

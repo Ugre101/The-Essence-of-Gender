@@ -4,6 +4,13 @@ function AfterBattleButtons() {
     } else {
         document.getElementById("CaptureOpponent").style.display = "none"
     }
+    if (Dungeon) {
+        document.getElementById("DungeonStop").style.display = 'block';
+        document.getElementById("StopSex").style.display = 'none';
+    } else {
+        document.getElementById("StopSex").style.display = 'block';
+        document.getElementById("DungeonStop").style.display = 'none';
+    }
 
     switch (CheckGender(enemies[EnemyIndex])) {
         case "female":
