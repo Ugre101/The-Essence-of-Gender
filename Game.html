@@ -66,7 +66,8 @@
 			life of your own. How will you fare in this world where the weak submit and the strong dominate?</p>
 		<p id="looks"></p>
 		<br><br>
-		<p>Your first stop on this adventure is the local outpost marked with an C on your map where rest for the night and recover</p>
+		<p>Your first stop on this adventure is the local outpost marked with an C on your map where rest for the night and
+			recover</p>
 		<div>
 			<p>Notes: You can move with mouse, wasd or arrow keys</p>
 			<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually?</label>
@@ -239,6 +240,7 @@
 	</div>
 
 	<div id="ChildrenMenu" class="None">
+		<div id="ChildCorner"></div>
 		<input type="button" id="LeaveChildrenMenu" value="close" />
 	</div>
 
@@ -289,35 +291,39 @@
 				<label for="textcolor">Textcolor</label>
 				<input type="color" id="textcolor" value="#000000" />
 			</div>
-		</div>
-		<div>
-			<label for="textfont">Textfont</label>
-			<select id="textfont">
-				<option value="Times New Roman', Times, serif">Times New Roman</option>
-				<option value="Verdana, Geneva, sans-serif" selected>Verdana</option>
-				<option value="Arial, Helvetica, sans-serif">Ariel</option>
-				<option value="Tahoma, Geneva, sans-serif">Tahoma</option>
-				<option value="Impact,Charcoal,sans-serif">Impact</option>
-				<option value="Trebuchet MS, Helvetica, sans-serif">Trebuchet MS</option>
-			</select>
-		</div>
-		<div>
-			<label for="Sizes">Font size</label>
-			<div id="Sizes">
-				<input type="button" id="FontSmaller" value="-" />
-				<input type="button" id="FontBigger" value="+" />
+			<div>
+				<label for="textfont">Textfont</label>
+				<select id="textfont">
+					<option value="Times New Roman', Times, serif">Times New Roman</option>
+					<option value="Verdana, Geneva, sans-serif" selected>Verdana</option>
+					<option value="Arial, Helvetica, sans-serif">Ariel</option>
+					<option value="Tahoma, Geneva, sans-serif">Tahoma</option>
+					<option value="Impact,Charcoal,sans-serif">Impact</option>
+					<option value="Trebuchet MS, Helvetica, sans-serif">Trebuchet MS</option>
+				</select>
 			</div>
-		</div>
-		<div>
-			<label for="MapScale">Map size</label>
-			<select id="MapScale">
-				<option value="0.5">Small(50%)</option>
-				<option value="0.6">Small+(60%)</option>
-				<option value="0.7">Medium(70%)</option>
-				<option value="0.8" selected>Medium+(80%)</option>
-				<option value="0.9">Large(90%)</option>
-				<option value="0.98">Max(98%)</option>
-			</select>
+			<div>
+				<label for="Sizes">Font size</label>
+				<div id="Sizes">
+					<input type="button" id="FontSmaller" value="-" />
+					<p id="FontSize"></p>
+					<input type="button" id="FontBigger" value="+" />
+				</div>
+			</div>
+			<div>
+				<label for="MapScale">Map size</label>
+				<select id="MapScale">
+					<option value="0.5">Small(50%)</option>
+					<option value="0.6">Small+(60%)</option>
+					<option value="0.7">Medium(70%)</option>
+					<option value="0.8" selected>Medium+(80%)</option>
+					<option value="0.9">Large(90%)</option>
+					<option value="0.98">Max(98%)</option>
+				</select>
+			</div>
+			<div>
+				<input type="button" id="Inch" value="Inch false" />
+			</div>
 		</div>
 		<div>
 			<input type="button" id="ImgPack" value="ImgPack(No included)" />
@@ -325,6 +331,7 @@
 		</div>
 		<div>
 			<input type="button" id="Log+10" value="+10 to Event Log" />
+			<p id="LogLength"></p>
 			<input type="button" id="Log-10" value="-10 to Event Log" />
 		</div>
 		<div>
@@ -611,7 +618,7 @@
 			<div>
 				<div id="Breast">
 					<input type="button" id="BreastVore" value="Breast vore">
-					<input type="button" id="BreastFeed" value="Breast feed"/>
+					<input type="button" id="BreastFeed" value="Breast feed" />
 				</div>
 			</div>
 			<div>
@@ -627,6 +634,9 @@
 			<div>
 				<div id="StopSex">
 					<input type="button" id="StopSexButton" value="Stop sex" />
+				</div>
+				<div id="DungeonStop" class="">
+					<input type="button" id="DungeonStopButton" value="Stop sex" />
 				</div>
 				<div id="CaptureOpponent">
 					<input type="button" id="Capture" value="Take home" />
@@ -669,6 +679,7 @@
 			<input type="button" id="LoseSubmit" value="Submit" />
 			<input type="button" id="LoseStruggle" value="Struggle" />
 			<input type="button" id="LeaveLose" value="Leave" />
+			<input type="button" id="DungenoLose" value="Leave" />
 		</div>
 
 	</div>
@@ -796,8 +807,8 @@
 					<input type="button" id="KickOut" value="Kick out" />
 				</div>
 			</div>
-			<input type="button" id="ImpregOrgy" value="Impregnate servants" title="Spend the day fucking you servants, until your balls are completely emptied."/>
-			<input type="button" id="GetImpregOrgy" value="Get impregnated" title="Spend the day getting fucked by your virile servants, till all of their balls content have been emptied into your orifices."/>
+			<input type="button" id="ImpregOrgy" value="Impregnate servants" title="Spend the day fucking you servants, until your balls are completely emptied." />
+			<input type="button" id="GetImpregOrgy" value="Get impregnated" title="Spend the day getting fucked by your virile servants, till all of their balls content have been emptied into your orifices." />
 			<br><input type="button" id="LeaveDorm" value="Leave dorm">
 			<div id="KickYesNo" class="None">
 				<input type="button" id="KickYes" value="Yes">
@@ -855,14 +866,14 @@
 		</div>
 		<div class="e Grid">
 			<div>
-			<input type="button" id="DormDrainMasc" value="Siphon masculinity" />
-			<input type="button" id="DormDrainFemi" value="Siphon femininity" />
-			<input type="button" id="DormInjFemi" value="Inject femininity" />
-			<input type="button" id="DormInjMasc" value="Inject masculinity" />
+				<input type="button" id="DormDrainMasc" value="Siphon masculinity" />
+				<input type="button" id="DormDrainFemi" value="Siphon femininity" />
+				<input type="button" id="DormInjFemi" value="Inject femininity" />
+				<input type="button" id="DormInjMasc" value="Inject masculinity" />
 			</div>
 			<div>
-			<input type="button" id="Impregnate" value="Try to impregnate" />
-			<input type="button" id="GetImpregnated" value="Get impregnated" />
+				<input type="button" id="Impregnate" value="Try to impregnate" />
+				<input type="button" id="GetImpregnated" value="Get impregnated" />
 			</div>
 			<input type="button" id="LeaveDormSex" value="Leave" />
 		</div>
@@ -964,16 +975,27 @@
 	</div>
 
 	<div id="FarmOwner" class="None Building">
-		<p id="FarmOwnerText" class="TextBox">Standing before you, a centaur who introduce himself as Teoivz, looking at him it’s evident he spends many hours working on the farm. His human upper body possess muscle forged from years of work,
-			 his equine lower body is not one from a race horse but a work horse.<br>Throwing an eye towards his genitals, it’s hard to guess the exact size his two members retracted inside their penile sheath but it's obvious that they are well capable of stretching a maiden.
-			</p>
+		<p id="FarmOwnerText" class="TextBox"></p>
 		<div>
 			<input type="button" id="" value="(Placeholder)Need help?" />
 			<input type="button" id="EquineTaurTF" value="Buy Equine-Taur Essence" title="Do you lack endurance? Want to able to work like a horse? One dose of this and you will turn to a taur hybrid of equine and you current race." />
 			<input type="button" id="EquineTF" value="Buy Equine Essence" title="Want more lower body strength? Lucky for you this essence will make you to the mare or stallion of your dreams! One dose will turn your lower body to a set of humanoid equine legs while two doses will turn you to a anthropomorphic equine." />
 			<input type="button" id="" value="(Placeholder)Bovine Essence" />
 		</div>
+		<input type="button" id="FarmOwnerLooks" value="Looks" />
 		<input type="button" id="LeaveFarmOwner" value="Bye" />
+	</div>
+
+	<div id="FirstDungeon" class="None Building">
+		<p id="FirstDungeonText" class="TextBox"></p>
+		<input type="button" id="LeaveFirstDungeon" value="Leave" />
+		<input type="button" id="EnterDungeon" value="Go deeper" />
+	</div>
+
+	<div id="DungeonSystem" class="None Building">
+		<p id="DungeonText" class="TextBox"></p>
+		<div id="DungeonButtons"></div>
+		<input type="button" id="LeaveDungeon" value="Turn back" />
 	</div>
 
 
@@ -983,6 +1005,7 @@
 	<script src="JavaScript/CheckArousal.js"></script>
 	<script src="JavaScript/CheckDoor.js"></script>
 	<script src="JavaScript/CheckFlags.js"></script>
+	<script src="JavaScript/Children.js"></script>
 	<script src="JavaScript/CurrentMap.js"></script>
 	<script src="JavaScript/DateTracker.js"></script>
 	<script src="JavaScript/Dorm.js"></script>
@@ -994,6 +1017,8 @@
 	<script src="JavaScript/HemScale.js"></script>
 	<script src="JavaScript/Home.js"></script>
 	<script src="JavaScript/Impregnate.js"></script>
+	<script src="JavaScript/InferiorUnit.js"></script>
+	<script src="JavaScript/Items.js"></script>
 	<script src="JavaScript/Inventory.js"></script>
 	<script src="JavaScript/LevelMenu.js"></script>
 	<script src="JavaScript/Loader.js"></script>
@@ -1008,9 +1033,12 @@
 	<script src="JavaScript/Pregnancy.js"></script>
 	<script src="JavaScript/PrintMap.js"></script>
 	<script src="JavaScript/Racebonus.js"></script>
+	<script src="JavaScript/Save.js"></script>
 	<script src="JavaScript/SexAfterBattle.js"></script>
+	<script src="JavaScript/SuccubusDungeon.js"></script>
 	<script src="JavaScript/TfEngine.js"></script>
 	<script src="JavaScript/TheFarm.js"></script>
+	<script src="JavaScript/Townhall.js"></script>
 	<script src="JavaScript/Vore.js"></script>
 	<script src="JavaScript/WitchShop.js"></script>
 	<script src="JavaScript/WitchHut.js"></script>

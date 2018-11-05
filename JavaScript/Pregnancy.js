@@ -18,7 +18,9 @@ function PregnanyEngine() {
                 if (player.hasOwnProperty("Children")) {
                     var Child = {
                         AgeCounter: 0,
-                        Race: player.Pregnant.Babies[e].BabyRace
+                        Race: player.Pregnant.Babies[e].BabyRace,
+                        Mother: player.Pregnant.Babies[e].Mother,
+                        Father: player.Pregnant.Babies[e].Father
                     };
                     player.Children.push(Child);
                     EventLog("You have given birth!")
@@ -48,7 +50,9 @@ function PregnanyEngine() {
                     if (Array.isArray(House.Dormmates[e].Children)) {
                         var Child = {
                             AgeCounter: 0,
-                            Race: House.Dormmates[e].Race
+                            Race: House.Dormmates[e].Race,
+                            Mother: House.Dormmates[e].Pregnant.Mother,
+                            Father: House.Dormmates[e].Pregnant.Father
                         };
                         House.Dormmates[e].Children.push(Child);
                         House.Dormmates[e].Pregnant.Baby = 0;

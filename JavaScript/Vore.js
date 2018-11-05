@@ -51,10 +51,6 @@
             player.Vore.Stomach.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them down your throat!";
-            document.getElementById("PlayerMouth").style.display = 'none';
-            document.getElementById("PlayerVagina").style.display = 'none';
-            document.getElementById("PlayerDick").style.display = 'none';
-            document.getElementById("Anal").style.display = 'none';
             HideVore();
         } else {
             document.getElementById("SexText").innerHTML = "You cannot fit more into your stomach!";
@@ -70,10 +66,6 @@
             player.Vore.Vagina.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove into your pussy!";
-            document.getElementById("PlayerMouth").style.display = 'none';
-            document.getElementById("PlayerVagina").style.display = 'none';
-            document.getElementById("PlayerDick").style.display = 'none';
-            document.getElementById("Anal").style.display = 'none';
             HideVore();
         } else {
             document.getElementById("SexText").innerHTML = "You cannot fit more into your vagina!";
@@ -89,10 +81,6 @@
             player.Vore.Balls.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them down into your cockslit, watching the bulge travel down your shaft.";
-            document.getElementById("PlayerMouth").style.display = 'none';
-            document.getElementById("PlayerVagina").style.display = 'none';
-            document.getElementById("PlayerDick").style.display = 'none';
-            document.getElementById("Anal").style.display = 'none';
             HideVore();
         } else {
             document.getElementById("SexText").innerHTML = "You cannot fit more into your balls!";
@@ -111,10 +99,6 @@
             if (Math.random() > 0.5)
                 i = "right";
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them into your " + i + " nipple.";
-            document.getElementById("PlayerMouth").style.display = 'none';
-            document.getElementById("PlayerVagina").style.display = 'none';
-            document.getElementById("PlayerDick").style.display = 'none';
-            document.getElementById("Anal").style.display = 'none';
             HideVore();
         } else {
             document.getElementById("SexText").innerHTML = "You cannot fit them into your breasts!";
@@ -130,10 +114,6 @@
             player.Vore.Anal.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
             document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them into your bowels!";
-            document.getElementById("PlayerMouth").style.display = 'none';
-            document.getElementById("PlayerVagina").style.display = 'none';
-            document.getElementById("PlayerDick").style.display = 'none';
-            document.getElementById("Anal").style.display = 'none';
             HideVore();
         } else {
             document.getElementById("SexText").innerHTML = "You cannot fit more into your bowels!";
@@ -149,6 +129,11 @@
         document.getElementById("BreastVore").style.display = 'none';
         document.getElementById("DrainMenu").style.display = 'none';
         document.getElementById("InjectMenu").style.display = 'none';
+        document.getElementById("PlayerMouth").style.display = 'none';
+        document.getElementById("PlayerVagina").style.display = 'none';
+        document.getElementById("PlayerDick").style.display = 'none';
+        document.getElementById("Anal").style.display = 'none';
+        document.getElementById("CaptureOpponent").style.display = 'none';
     }
 
     function PreyButton(ps, from, index) {
@@ -511,6 +496,7 @@
     document.getElementById("VorePerks").addEventListener("click", function () {
         document.getElementById("VoreButtons").style.display = 'none';
         document.getElementById("VorePerkMenu").style.display = 'block';
+        document.getElementById("VorePerkPointsLeft").innerHTML = "You have " + player.Vore.VorePoints + " perk points left.";
         if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
             document.getElementById("AbsorbEssence").value = "AbsorbEssence +" + player.Vore.VorePerks.AbsorbEssence.Count;
         }
@@ -518,7 +504,7 @@
             document.getElementById("FasterDigestion").value = "Faster digestion +" + player.Vore.VorePerks.FasterDigestion.Count;
         }
 		if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
-            document.getElementById("AbsorbStats").value = "Drain Stats when fully digested" + player.Vore.VorePerks.AbsorbStats.Count;
+            document.getElementById("AbsorbStats").value = "Drain Stats +" + player.Vore.VorePerks.AbsorbStats.Count; //Had to shorten value as text got outside button
         }
         if (player.Vore.VorePerks.hasOwnProperty("HigerCapacity")) {
             document.getElementById("HigerCapacity").value = "Higer capacity +" + player.Vore.VorePerks.HigerCapacity.Count;
@@ -551,14 +537,17 @@
         }
     });
 	document.getElementById("AbsorbStats").addEventListener("click", function () {
-		if(player.Vore.VorePoints > 9) {
-			try{if(player.Vore.VorePerks.AbsorbStats.Counter > 9) return;}
-			finally{
-			VorePerkHandler("AbsorbStats");
-			}
-		}
-		else return;
-	});
+    if(player.Vore.hasOwnProperty("AbsorbStats"))
+    {
+      if(player.Vore.VorePoints > 9 && player.Vore.AbsorbStats < 10)
+      {
+  			VorePerkHandler("AbsorbStats");
+      }
+      else return;
+    }
+    else VorePerkHandler("AbsorbStats");
+  });
+  
     document.getElementById("AbsorbEssence").addEventListener("mouseover", function (e) {
         document.getElementById("VorePerkMenuText").innerHTML = e.target.title;
     });

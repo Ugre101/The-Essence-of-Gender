@@ -133,7 +133,8 @@
         Brothel: {
             ServeMasc: true,
             ServeFemi: true
-        }
+        },
+        Inch: false
     }
 
     // Start values for canvas
@@ -231,21 +232,27 @@
         document.getElementById("EssenceOptionsMenu").style.display = 'none';
         document.getElementById("PronunForm").style.display = 'none';
         document.getElementById("Inventory").style.display = 'none';
+        document.getElementById("ChildrenMenu").style.display = 'none';
     }
 
     document.getElementById("Options").addEventListener("click", function () {
         DisplayNone();
         document.getElementById("optionpage").style.display = 'block';
         document.getElementById("ImgPack").value = "Img pack: " + Settings.ImgPack;
+        document.getElementById("LogLength").innerHTML = Settings.LogLength;
+        document.getElementById("FontSize").innerHTML = Math.round(FontSize*100)/100 + "em"
+        document.getElementById("Inch").value = "Inch " + Settings.Inch;
     });
     var FontSize = 1;
     document.getElementById("FontSmaller").addEventListener("click", function () {
         FontSize -= 0.05;
         document.body.style.fontSize = FontSize + "em";
+        document.getElementById("FontSize").innerHTML = Math.round(FontSize*100)/100 + "em"
     });
     document.getElementById("FontBigger").addEventListener("click", function () {
         FontSize += 0.05;
         document.body.style.fontSize = FontSize + "em";
+        document.getElementById("FontSize").innerHTML = Math.round(FontSize*100)/100 + "em"
     });
     var OldMap;
     var MapProcent = 0.9;
@@ -257,10 +264,12 @@
 	
 	document.getElementById("Log+10").addEventListener("click", function () {
         Settings.LogLength += 10;
+        document.getElementById("LogLength").innerHTML = Settings.LogLength;
     });
 	
 	document.getElementById("Log-10").addEventListener("click", function () {
         Settings.LogLength -= 10;
+        document.getElementById("LogLength").innerHTML = Settings.LogLength;
     });
 	
     document.getElementById("AcceptPronun").addEventListener("click", function () {
@@ -271,6 +280,17 @@
         Settings.Pronun.Female = document.getElementById("Female").value;
         Settings.Pronun.Doll = document.getElementById("Doll").value;
         Settings.Pronun.Status = true;
+    });
+    document.getElementById("Inch").addEventListener("click", function() {
+        switch (Settings.Inch) {
+            case true:
+                Settings.Inch = false;
+                break;
+            default:
+                Settings.Inch = true;
+                break;
+        }
+        document.getElementById("Inch").value = "Inch " + Settings.Inch;
     });
 
     // LocalPotal
@@ -386,78 +406,12 @@
             questText += "<div><h4>" + player.Quests[e].Name + "</h4>" + "Completed: " + player.Quests[e].Completed + " <br>Count: " +
                 player.Quests[e].Count + "<br><br></div>";
         }
-        document.getElementById("TownhallText").innerHTML = questText;
+        document.getElementById("QuestTexts").innerHTML = questText;
     });
     document.getElementById("QuestsLeave").addEventListener("click", function () {
         battle = false;
         document.getElementById("ShowQuests").style.display = 'none';
         document.getElementById("map").style.display = 'block';
-    });
-
-    document.getElementById("Save").addEventListener("click", function () {
-        DisplayNone();
-        document.getElementById("SaveMenu").style.display = 'block';
-
-        if (localStorage.getItem('SaveDate1') !== null) {
-            document.getElementById("SavePlayer1").value = localStorage.getItem('SaveDate1');
-        }
-        if (localStorage.getItem('SaveDate2') !== null) {
-            document.getElementById("SavePlayer2").value = localStorage.getItem('SaveDate2');
-        }
-        if (localStorage.getItem('SaveDate3') !== null) {
-            document.getElementById("SavePlayer3").value = localStorage.getItem('SaveDate3');
-        }
-        if (localStorage.getItem('SaveDate4') !== null) {
-            document.getElementById("SavePlayer4").value = localStorage.getItem('SaveDate4');
-        }
-        if (localStorage.getItem('SaveDate5') !== null) {
-            document.getElementById("SavePlayer5").value = localStorage.getItem('SaveDate5');
-        }
-    });
-    document.getElementById("SaveLeave").addEventListener("click", function () {
-        battle = false;
-        document.getElementById("SaveMenu").style.display = 'none';
-        document.getElementById("map").style.display = 'block';
-    })
-    document.getElementById("SavePlayer1").addEventListener("click", function () {
-        var SaveArray = [player, House, Flags, Settings];
-        localStorage.setItem('SavedPlayer1', JSON.stringify(SaveArray));
-        localStorage.setItem('SaveDate1', Date());
-        document.getElementById("SavePlayer1").value = Date();
-        document.getElementById("LoadPlayer1").value = Date();
-    });
-    document.getElementById("SavePlayer2").addEventListener("click", function () {
-        var SaveArray = [player, House, Flags, Settings];
-        localStorage.setItem('SavedPlayer2', JSON.stringify(SaveArray));
-        localStorage.setItem('SaveDate2', Date());
-        document.getElementById("SavePlayer2").value = Date();
-        document.getElementById("LoadPlayer2").value = Date();
-    });
-    document.getElementById("SavePlayer3").addEventListener("click", function () {
-        var SaveArray = [player, House, Flags, Settings];
-        localStorage.setItem('SavedPlayer3', JSON.stringify(SaveArray));
-        localStorage.setItem('SaveDate3', Date());
-        document.getElementById("SavePlayer3").value = Date();
-        document.getElementById("LoadPlayer3").value = Date();
-    });
-    document.getElementById("SavePlayer4").addEventListener("click", function () {
-        var SaveArray = [player, House, Flags, Settings];
-        localStorage.setItem('SavedPlayer4', JSON.stringify(SaveArray));
-        localStorage.setItem('SaveDate4', Date());
-        document.getElementById("SavePlayer4").value = Date();
-        document.getElementById("LoadPlayer4").value = Date();
-    });
-    document.getElementById("SavePlayer5").addEventListener("click", function () {
-        var SaveArray = [player, House, Flags, Settings];
-        localStorage.setItem('SavedPlayer5', JSON.stringify(SaveArray));
-        localStorage.setItem('SaveDate5', Date());
-        document.getElementById("SavePlayer5").value = Date();
-        document.getElementById("LoadPlayer5").value = Date();
-    });
-    document.getElementById("SaveText").addEventListener("click", function () {
-        var SaveArray = [player, House, Flags, Settings];
-        var uriContent = "data:application/octet-stream," + encodeURIComponent(JSON.stringify(SaveArray));
-        newWindow = window.open(uriContent, 'neuesDokument');
     });
 
     function RandomInt(min, max) {
@@ -547,6 +501,7 @@
     function UpdateStats() {
         document.getElementById("status").style.display = 'none';
         document.getElementById("buttons").style.display = 'none';
+        document.getElementById("EmptyButtons").style.display = 'none';
         document.getElementById("EventLog").style.display = 'none';
         document.getElementById("BattleEnemy").innerHTML = enemies[EnemyIndex].Name + "<br>" + enemies[EnemyIndex].Race + " " + Pronun(CheckGender(enemies[EnemyIndex]));
         document.getElementById("EnemyStatusHealth").innerHTML = enemies[EnemyIndex].Health;
@@ -989,16 +944,16 @@
             player.Gold += 0.001 * House.Dormmates.length;
             for (var esf = 0; House.Dormmates.length > esf; esf++) {
                 if (Settings.Brothel.ServeMasc && Settings.Brothel.ServeFemi) {
-                    House.Dormmates[esf].Masc += 0.1 * House.Brothel;
-                    House.Dormmates[esf].Femi += 0.1 * House.Brothel;
+                    House.Dormmates[esf].Masc += 0.05 * House.Brothel;
+                    House.Dormmates[esf].Femi += 0.05 * House.Brothel;
                 } else if (Settings.Brothel.ServeFemi) {
-                    House.Dormmates[esf].Femi += 0.2 * House.Brothel;
+                    House.Dormmates[esf].Femi += 0.1 * House.Brothel;
                 } else if (Settings.Brothel.ServeMasc) {
-                    House.Dormmates[esf].Masc += 0.2 * House.Brothel;
+                    House.Dormmates[esf].Masc += 0.1 * House.Brothel;
                 }
             }
             if (House.hasOwnProperty("Brothel")) {
-                player.Gold += 0.001 * House.Dormmates.length * House.Brothel;
+                player.Gold += 0.01 * House.Dormmates.length * House.Brothel;
             }
         }
     };
@@ -1077,24 +1032,23 @@
     }
 
     // Event log
-    var LogHistory = "";
 	var LogArray = [];
+    var LogHistory = "";
 
     function EventLog(LogText) {
         var newText = LogText + "<br>";
-		LogArray[LogArray.length] = newText;
-		var i = Math.min(LogArray.length, Settings.LogLength);
-		LogHistory = "";
-		while (i < LogArray.length)
-		{
-			LogHistory = LogArray[i] + LogHistory;
-			i++;
-			if(i > Settings.LogLength)
-				break;
-		}
+        LogArray.unshift(newText);
+        while (LogArray.length > Settings.LogLength) {
+            LogArray.pop();
+        }
+        LogHistory = "";
+        for (var e = 0; e < LogArray.length; e++) {
+            LogHistory += LogArray[e];
+        }
         //LogHistory = newText + LogHistory;
         document.getElementById("EventText").innerHTML = LogHistory;
     }
+
     document.getElementById("HideEventLog").addEventListener("click", function () {
         if (document.getElementById("EventLogPart").style.display == 'none') {
             document.getElementById("EventLogPart").style.display = 'block';
@@ -1146,6 +1100,7 @@
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
     var BlackMartket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
+    var FirstDungeon = new Npc("FirstDungeon", "Dungeon",grid * 8, grid * 18, grid *4, grid * 2, "RGB(133,94,66)");
 
     // Character 
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
@@ -1200,137 +1155,6 @@
             return;
         });
     }
-    // Questsystem
-
-    var ChosenQuest
-    document.getElementById("QuestMenu").addEventListener("click", function () {
-        document.getElementById("TownhallStart").style.display = 'none';
-        document.getElementById("Quest").style.display = 'block';
-        document.getElementById("QuestStart").style.display = 'block';
-        document.getElementById("QuestButtons").style.display = 'none';
-        document.getElementById("ElfHuntReward").style.display = 'none';
-        document.getElementById("BanditLordReward").style.display = 'none';
-        document.getElementById("QuestReward").style.display = 'none';
-        if (player.Quests.length > 0) {
-            for (var i = 0; i < player.Quests.length; i++) {
-                document.getElementById(player.Quests[i].Name).style.display = 'none';
-                if (player.Quests[i].Completed) {
-                    document.getElementById("QuestReward").style.display = 'block';
-                    document.getElementById(player.Quests[i].Name + "Reward").style.display = 'inline-block';
-                }
-            }
-        };
-    });
-    document.getElementById("BanditLord").addEventListener("click", function () {
-        document.getElementById("LeaveQuest").style.display = 'none';
-        if (Flags.BanditLord) {
-            document.getElementById("TownhallText").innerHTML = "The bandit are still humiliated from the defeat of their lord, but if you are willing please defeat them again to make sure they don't regain their confidence."
-        } else {
-            document.getElementById("TownhallText").innerHTML = "The bandits up to the north has become braver with their new leader, if you are strong enough please beat them into submission. <br> <br>" +
-                "You will be greatly awarded for your effort and we will grant you the right to buy the old mansion located east from the city."
-        }
-        ChosenQuest = "BanditLord";
-        document.getElementById("QuestButtons").style.display = 'block';
-        document.getElementById("QuestStart").style.display = 'none';
-        document.getElementById("QuestReward").style.display = 'none';
-    });
-    document.getElementById("ElfHunt").addEventListener("click", function () {
-        document.getElementById("TownhallText").innerHTML = "The elves to the south is becoming a problem, defeat atleast three of them and you will be awarded."
-        document.getElementById("QuestButtons").style.display = 'block';
-        document.getElementById("QuestStart").style.display = 'none';
-        document.getElementById("QuestReward").style.display = 'none';
-        ChosenQuest = "ElfHunt";
-    });
-    document.getElementById("BanditLordReward").addEventListener("click", function () {
-        if (Flags.BanditLord) {
-            document.getElementById("TownhallText").innerHTML = "You are rewared: 300Exp and 500gold";
-        } else {
-            if (!Flags.BanditLord) {
-                Flags.BanditLord = true
-            };
-            document.getElementById("TownhallText").innerHTML = "You are now allowed to buy a house. <br> You are rewared: 300Exp and 500gold";
-            document.getElementById("BuyHouse").style.display = 'inline-block';
-        }
-        player.Exp += 300;
-        player.Gold += 500;
-        for (var i = 0; i < player.Quests.length; i++) {
-            if (player.Quests[i].Name === "BanditLord") {
-                player.Quests.splice(i, 1);
-            }
-        }
-        document.getElementById("BanditLord").style.display = 'inline-block';
-        document.getElementById("BanditLordReward").style.display = 'none';
-    });
-    document.getElementById("ElfHuntReward").addEventListener("click", function () {
-        document.getElementById("TownhallText").innerHTML = "You are rewared: 100Exp and 200gold";
-        player.Exp += 100;
-        player.Gold += 200;
-        for (var i = 0; i < player.Quests.length; i++) {
-            if (player.Quests[i].Name === "ElfHunt") {
-                player.Quests.splice(i, 1);
-            }
-        }
-        document.getElementById("ElfHunt").style.display = 'inline-block';
-        document.getElementById("ElfHuntReward").style.display = 'none';
-    });
-    document.getElementById("QuestAccept").addEventListener("click", function () {
-        document.getElementById("Quest").style.display = 'none';
-        document.getElementById("TownhallStart").style.display = 'block';
-        var Quest = {
-            Name: ChosenQuest,
-            Count: 0,
-            Completed: false
-        }
-        player.Quests.push(Quest);
-        document.getElementById("TownhallText").innerHTML = "";
-        document.getElementById("LeaveQuest").style.display = 'inline-block';
-
-    });
-    document.getElementById("QuestDecline").addEventListener("click", function () {
-        document.getElementById("QuestButtons").style.display = 'none';
-        document.getElementById("QuestStart").style.display = 'block';
-        document.getElementById("QuestReward").style.display = 'block';
-        document.getElementById("LeaveQuest").style.display = 'inline-block';
-        document.getElementById("TownhallText").innerHTML = "";
-    });
-    document.getElementById("LeaveQuest").addEventListener("click", function () {
-        document.getElementById("Quest").style.display = 'none';
-        document.getElementById("TownhallStart").style.display = 'block';
-        document.getElementById("LeaveQuest").style.display = 'inline-block';
-        document.getElementById("TownhallText").innerHTML = "";
-    });
-    // Slut på questsystem
-
-    document.getElementById("BuyHouse").addEventListener("click", function () {
-        if (player.Gold > 100) {
-            document.getElementById("BuyHouse").style.display = 'none';
-            House.Owned = true;
-            return;
-        } else {
-            return;
-        }
-    });
-    document.getElementById("Services").addEventListener("click", function () {
-        document.getElementById("TownhallStart").style.display = 'none';
-        document.getElementById("Service").style.display = 'block';
-    });
-    document.getElementById("NameChange").addEventListener("click", function () {
-        document.getElementById("NameChangeForm").style.display = 'block';
-        document.getElementById("firstname2").value = player.Name;
-        document.getElementById("lastname2").value = player.Lastname;
-    });
-    document.getElementById("AcceptName").addEventListener("click", function () {
-        player.Name = document.getElementById("firstname2").value;
-        player.Lastname = document.getElementById("lastname2").value;
-        document.getElementById("NameChangeForm").style.display = 'none';
-    });
-    document.getElementById("ServicesLeave").addEventListener("click", function () {
-        document.getElementById("TownhallStart").style.display = 'block';
-        document.getElementById("Service").style.display = 'none';
-        document.getElementById("NameChangeForm").style.display = 'none';
-    });
-
-    // Slut på Items 
 
     function PrintDoor(NESW) {
         this.NESW = NESW;
@@ -1482,7 +1306,7 @@
         // Live update for Looksmenu
         document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
 
-        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
+        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + " a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
             ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and a " + player.Skincolor + " skin color.";
 
         if (player.Pregnant.Babies.length > 0) {
@@ -1509,6 +1333,7 @@
         player.Fat = Math.max(0.1, player.Fat);
         player.Muscle = Math.max(1, player.Muscle);
         player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);
+        player.Height = Math.max(1, player.Height);
         player.Health = Math.max(1, player.Health);
         player.WillHealth = Math.max(1, player.WillHealth);
 
@@ -1518,17 +1343,6 @@
             DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W");
             DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N");
             Doors = [DoorE, DoorS, DoorN, DoorW];
-        }
-
-        if (House.Dormmates.length > 0) {
-            player.Gold += 0.001 * House.Dormmates.length;
-            for (var esf = 0; House.Dormmates.length > esf; esf++) {
-                House.Dormmates[esf].Masc += 0.0001;
-                House.Dormmates[esf].Femi += 0.0001;
-            }
-            if (House.hasOwnProperty("Brothel")) {
-                player.Gold += 0.001 * House.Dormmates.length * House.Brothel;
-            }
         }
         if (Settings.Vore) {
             document.getElementById("VoreLooks").style.display = 'inline-block';

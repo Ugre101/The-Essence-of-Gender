@@ -114,6 +114,11 @@ function EncounterStart() {
             OP.Dicks[0].Virgin = false;
         }
     }
+    OP.Cumin = {
+        Stomach: 0,
+        Pussy: 0,
+        Anal: 0
+    }
     RaceBonus(OP);
     NameGiver(OP);
     return OP;
@@ -135,6 +140,11 @@ function EncounterPath1() {
         if (b < 5) {
             OP.Dicks[0].Virgin = false;
         }
+    }
+    OP.Cumin = {
+        Stomach: 0,
+        Pussy: 0,
+        Anal: 0
     }
     RaceBonus(OP);
     NameGiver(OP);
@@ -158,6 +168,11 @@ function EncounterPath2() {
             OP.Dicks[0].Virgin = false;
         }
     }
+    OP.Cumin = {
+        Stomach: 0,
+        Pussy: 0,
+        Anal: 0
+    }
     RaceBonus(OP);
     NameGiver(OP);
     return OP;
@@ -179,6 +194,11 @@ function EncounterBandit() {
         if (b < 5) {
             OP.Dicks[0].Virgin = false;
         }
+    }
+    OP.Cumin = {
+        Stomach: 0,
+        Pussy: 0,
+        Anal: 0
     }
     RaceBonus(OP);
     NameGiver(OP);
@@ -202,6 +222,11 @@ function EncounterBanditLord() {
             OP.Dicks[0].Virgin = false;
         }
     }
+    OP.Cumin = {
+        Stomach: 0,
+        Pussy: 0,
+        Anal: 0
+    }
     RaceBonus(OP);
     NameGiver(OP);
     return OP;
@@ -224,6 +249,11 @@ function EncounterForest() {
             OP.Dicks[0].Virgin = false;
         }
     }
+    OP.Cumin = {
+        Stomach: 0,
+        Pussy: 0,
+        Anal: 0
+    }
     RaceBonus(OP);
     NameGiver(OP);
     return OP;
@@ -245,6 +275,11 @@ function EncounterForest2() {
         if (b < 5) {
             OP.Dicks[0].Virgin = false;
         }
+    }
+    OP.Cumin = {
+        Stomach: 0,
+        Pussy: 0,
+        Anal: 0
     }
     RaceBonus(OP);
     NameGiver(OP);
@@ -278,6 +313,11 @@ function EncounterPathToWitch2() {
             OP.Dicks[0].Virgin = false;
         }
     }
+    OP.Cumin = {
+        Stomach: 0,
+        Pussy: 0,
+        Anal: 0
+    }
     RaceBonus(OP);
     NameGiver(OP);
     return OP;
@@ -299,6 +339,11 @@ function EncounterCave1() {
         if (b < 5) {
             OP.Dicks[0].Virgin = false;
         }
+    }
+    OP.Cumin = {
+        Stomach: 0,
+        Pussy: 0,
+        Anal: 0
     }
     RaceBonus(OP);
     EvilNameGiver(OP);
@@ -322,6 +367,11 @@ function EncounterCave2() {
             OP.Dicks[0].Virgin = false;
         }
     }
+    OP.Cumin = {
+        Stomach: 0,
+        Pussy: 0,
+        Anal: 0
+    }
     RaceBonus(OP);
     EvilNameGiver(OP);
     return OP;
@@ -343,6 +393,11 @@ function EncounterCave3() {
         if (b < 5) {
             OP.Dicks[0].Virgin = false;
         }
+    }
+    OP.Cumin = {
+        Stomach: 0,
+        Pussy: 0,
+        Anal: 0
     }
     RaceBonus(OP);
     EvilNameGiver(OP);
@@ -372,6 +427,11 @@ function EncounterCave4() {
         if (b < 8) {
             OP.Dicks[0].Virgin = false;
         }
+    }
+    OP.Cumin = {
+        Stomach: 0,
+        Pussy: 0,
+        Anal: 0
     }
     RaceBonus(OP);
     EvilNameGiver(OP);

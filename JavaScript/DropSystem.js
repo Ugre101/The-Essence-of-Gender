@@ -1,15 +1,17 @@
-function SnowInventoryAdd(item) {
+function SnowInventoryAdd(item, quantity = 1) {
     var i = 0;
     for (i = 0; i < player.Inventory.length; i++) {
         var q = false;
         if (player.Inventory[i].Name === item.Name) {
-            player.Inventory[i].Quantity++;
+            player.Inventory[i].Quantity += quantity;
             q = true;
             break;
         }
     }
-    if (!q)
+    if (!q) {
+        item.Quantity = quantity;
         player.Inventory.push(item);
+    }
 }
 
 function DropSystem(who) {
@@ -18,202 +20,59 @@ function DropSystem(who) {
     if (r <= dropRate[e.Name]) {
         switch (e.Name) {
             case "Banditlord":
-                var OrcCum = {
-                    Name: "Orc cum",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Masc+50",
-                    Quantity: 1,
-                    Title: "Quite nasty, but it will give you extra masculinity."
-                }
-                SnowInventoryAdd(OrcCum);
+                SnowInventoryAdd(ItemDict.orcCum);
                 break;
             case "Commoner":
-                var HalfPouch = {
-                    Name: "Pouch",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Gives gold.",
-                    Quantity: 1,
-                    Title: "Jingles faintly; probably has money in it."
-                }
-                SnowInventoryAdd(HalfPouch);
+                SnowInventoryAdd(ItemDict.halfPouch);
                 break;
             case "Farmer":
-                var Dairy = {
-                    Name: "Milk Jug",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Increases lactation",
-                    Quantity: 1,
-                    Title: "It'll go straight to your chest!"
-                }
-                SnowInventoryAdd(Dairy);
+                SnowInventoryAdd(ItemDict.milkJug);
                 break;
             case "Thug":
-                var HalfPouch = {
-                    Name: "Pouch",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Gives gold.",
-                    Quantity: 1,
-                    Title: "Jingles faintly; probably has money in it."
-                }
-                SnowInventoryAdd(HalfPouch);
+                SnowInventoryAdd(ItemDict.halfPouch);
                 break;
             default:
                 break;
         }
     }
+    var r = Math.random();
     if (r <= dropRate[e.Race]) {
         switch (e.Race) {
             case "Fairy":
-                var FairyDust = {
-                    Name: "Fairy dust",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Shrinks you 5 cm",
-                    Quantity: 1,
-                    Title: "Sparkly, commonly used as prank item to shrink people."
-                }
-                SnowInventoryAdd(FairyDust);
+                SnowInventoryAdd(ItemDict.fairyDust);
                 break;
             case "Human":
-                var Human = {
-                    Name: "Humanity",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Makes you human",
-                    Quantity: 1,
-                    Title: "One way to get your humanity back."
-                }
-                SnowInventoryAdd(Human);
+                SnowInventoryAdd(ItemDict.humanity);
                 break;
             case "Halfling":
-                var Pouch = {
-                    Name: "HalfPouch",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Gives gold.",
-                    Quantity: 1,
-                    Title: "Jingles faintly; probably has money in it."
-                }
-                SnowInventoryAdd(Pouch);
+                SnowInventoryAdd(ItemDict.pouch);
                 break;
             case "Orc":
-                var brew = {
-                    Name: "Orc brew",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Heals 10% of HP.",
-                    Quantity: 1,
-                    Title: "Low-quality beer. It'll heal a bit."
-                }
-                SnowInventoryAdd(brew);
+                SnowInventoryAdd(ItemDict.orcBrew);
                 break;
             case "Troll":
-                var TMilk = {
-                    Name: "Troll Milk",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Restores 10% of willpower.",
-                    Quantity: 1,
-                    Title: "Smells like it's already gone sour. Increases focus."
-                }
-                SnowInventoryAdd(TMilk);
+                SnowInventoryAdd(ItemDict.trollMilk);
                 break;
             case "Elf":
-                var EHair = {
-                    Name: "Elven hair",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Elf TF",
-                    Quantity: 1,
-                    Title: "This is all you need to become an elf, no potions needed."
-                }
-                SnowInventoryAdd(EHair);
+                SnowInventoryAdd(ItemDict.elvenHair);
                 break;
             case "Amazon":
-                var Girdle = {
-                    Name: "Amazon's Girdle",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Balances gender",
-                    Quantity: 1,
-                    Title: "Brings your essences closer together in strength."
-                }
-                SnowInventoryAdd(Girdle);
+                SnowInventoryAdd(ItemDict.amazonGirdle);
                 break;
             case "Dark Elf":
-                var EHair = {
-                    Name: "Elven hair",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Elf TF",
-                    Quantity: 1,
-                    Title: "This is all you need to become an elf, no potions needed."
-                }
-                SnowInventoryAdd(EHair);
+                SnowInventoryAdd(ItemDict.elvenHair);
                 break;
             case "Goblin":
-                var Female = {
-                    Name: "Fertility idol",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Increases femininity",
-                    Quantity: 1,
-                    Title: "Brings out your feminine side."
-                }
-                SnowInventoryAdd(Female);
+                SnowInventoryAdd(ItemDict.fertilityIdol);
                 break;
             case "Imp":
-                var Male = {
-                    Name: "Cocky rock",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Increases masculinity",
-                    Quantity: 1,
-                    Title: "Brings out your masculine side."
-                }
-                SnowInventoryAdd(Male);
+                SnowInventoryAdd(ItemDict.cockyRock);
                 break;
             case "Demon":
-                var MaxMale = {
-                    Name: "Infernal semen",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Turns femininity into masculinity",
-                    Quantity: 1,
-                    Title: "Turns your feminine side into another masculine one."
-                }
-                SnowInventoryAdd(MaxMale);
+                SnowInventoryAdd(ItemDict.infernalSemen);
                 break;
             case "Dhampir":
-                var MaxFemale = {
-                    Name: "Infernal milk",
-                    Use: "Yes",
-                    Equip: "No",
-                    Drop: "Yes",
-                    Does: "Turns masculinity into femininity",
-                    Quantity: 1,
-                    Title: "Turns your masculine side into another feminine one."
-                }
-                SnowInventoryAdd(MaxFemale);
+                SnowInventoryAdd(ItemDict.infernalMilk);
                 break;
             default:
                 break;
