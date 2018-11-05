@@ -36,7 +36,7 @@ document.getElementById("ExtraHealth").addEventListener("click", function () {
         return;
     }
 });
-document.getElementById("ExtraHealth").addEventListener("mouseover", function (e) {
+document.getElementById("PerksMenu").addEventListener("mouseover", function (e) {
     document.getElementById("PerkMenuText").innerHTML = e.target.title;
 });
 document.getElementById("ExtraWillHealth").addEventListener("click", function () {
@@ -46,18 +46,12 @@ document.getElementById("ExtraWillHealth").addEventListener("click", function ()
         return;
     }
 });
-document.getElementById("ExtraWillHealth").addEventListener("mouseover", function (e) {
-    document.getElementById("PerkMenuText").innerHTML = e.target.title;
-});
 document.getElementById("FasterRest").addEventListener("click", function () {
     if (player.PerkPoints > 0) {
         PerkHandler("FasterRest");
     } else {
         return;
     }
-});
-document.getElementById("FasterRest").addEventListener("mouseover", function (e) {
-    document.getElementById("PerkMenuText").innerHTML = e.target.title;
 });
 document.getElementById("StealMore").addEventListener("click", function () {
     if (player.PerkPoints > 0) {
@@ -67,9 +61,6 @@ document.getElementById("StealMore").addEventListener("click", function () {
         return;
     }
 });
-document.getElementById("StealMore").addEventListener("mouseover", function (e) {
-    document.getElementById("PerkMenuText").innerHTML = e.target.title;
-});
 document.getElementById("GiveEssence").addEventListener("click", function () {
     if (player.PerkPoints > 0) {
         PerkHandler("GiveEssence");
@@ -77,7 +68,4 @@ document.getElementById("GiveEssence").addEventListener("click", function () {
     } else {
         return;
     }
-});
-document.getElementById("GiveEssence").addEventListener("mouseover", function (e) {
-    document.getElementById("PerkMenuText").innerHTML = e.target.title;
 });

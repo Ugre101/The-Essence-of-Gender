@@ -116,7 +116,7 @@
         Vore: false,
         ImgPack: false,
         EssenceAuto: true,
-		LogLength: 100,
+        LogLength: 100,
         Pronun: {
             Status: false,
             Herm: "hermaphrodite",
@@ -135,6 +135,15 @@
             ServeFemi: true
         },
         Inch: false
+    }
+
+    var Partners = {
+        FirstName: "Sarischa",
+        LastName: "Alomendi",
+        Equal: false,
+        Yours: false,
+        Like: 0,
+        Submit: 0
     }
 
     // Start values for canvas
@@ -184,8 +193,8 @@
     document.getElementById("Begin").addEventListener("click", function () {
         document.getElementById("startgame").style.display = 'inline-block';
         document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
-        ", who weighs " + player.Weight + "kg and Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor +
-        " skin colour, this hopefully the last time you see this body absent of any details or personality, as today marks the day you will forge your own way in this world.";
+            ", who weighs " + player.Weight + "kg and Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor +
+            " skin colour, this hopefully the last time you see this body absent of any details or personality, as today marks the day you will forge your own way in this world.";
 
         requestAnimationFrame(loop);
         DateEngine();
@@ -240,19 +249,19 @@
         document.getElementById("optionpage").style.display = 'block';
         document.getElementById("ImgPack").value = "Img pack: " + Settings.ImgPack;
         document.getElementById("LogLength").innerHTML = Settings.LogLength;
-        document.getElementById("FontSize").innerHTML = Math.round(FontSize*100)/100 + "em"
+        document.getElementById("FontSize").innerHTML = Math.round(FontSize * 100) / 100 + "em"
         document.getElementById("Inch").value = "Inch " + Settings.Inch;
     });
     var FontSize = 1;
     document.getElementById("FontSmaller").addEventListener("click", function () {
         FontSize -= 0.05;
         document.body.style.fontSize = FontSize + "em";
-        document.getElementById("FontSize").innerHTML = Math.round(FontSize*100)/100 + "em"
+        document.getElementById("FontSize").innerHTML = Math.round(FontSize * 100) / 100 + "em"
     });
     document.getElementById("FontBigger").addEventListener("click", function () {
         FontSize += 0.05;
         document.body.style.fontSize = FontSize + "em";
-        document.getElementById("FontSize").innerHTML = Math.round(FontSize*100)/100 + "em"
+        document.getElementById("FontSize").innerHTML = Math.round(FontSize * 100) / 100 + "em"
     });
     var OldMap;
     var MapProcent = 0.9;
@@ -262,12 +271,12 @@
         document.getElementById("PronunForm").style.display = 'block'
     });
 
-	document.getElementById("Log+10").addEventListener("click", function () {
+    document.getElementById("Log+10").addEventListener("click", function () {
         Settings.LogLength += 10;
         document.getElementById("LogLength").innerHTML = Settings.LogLength;
     });
 
-	document.getElementById("Log-10").addEventListener("click", function () {
+    document.getElementById("Log-10").addEventListener("click", function () {
         Settings.LogLength -= 10;
         document.getElementById("LogLength").innerHTML = Settings.LogLength;
     });
@@ -281,7 +290,7 @@
         Settings.Pronun.Doll = document.getElementById("Doll").value;
         Settings.Pronun.Status = true;
     });
-    document.getElementById("Inch").addEventListener("click", function() {
+    document.getElementById("Inch").addEventListener("click", function () {
         switch (Settings.Inch) {
             case true:
                 Settings.Inch = false;
@@ -975,14 +984,13 @@
             player.Anal[e].Type = what;
         }
     }
-	
-	function addMilk(amount) {
-		for(var b = 0; b < player.Boobies.length; b++)
-		{
-			if (player.Boobies[b].Milk <= player.Boobies[b].MilkMax)
-				player.Boobies[b].Milk += Math.min(player.Boobies[b].MilkMax - player.Boobies[b].Milk, amount);
-		}
-	}
+
+    function addMilk(amount) {
+        for (var b = 0; b < player.Boobies.length; b++) {
+            if (player.Boobies[b].Milk <= player.Boobies[b].MilkMax)
+                player.Boobies[b].Milk += Math.min(player.Boobies[b].MilkMax - player.Boobies[b].Milk, amount);
+        }
+    }
 
     function RaceDesc(who) {
         switch (who.Race) {
@@ -1040,7 +1048,7 @@
     }
 
     // Event log
-	var LogArray = [];
+    var LogArray = [];
     var LogHistory = "";
 
     function EventLog(LogText) {

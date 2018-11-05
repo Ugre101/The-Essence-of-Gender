@@ -22,7 +22,7 @@
             return;
         }
     });
-    document.getElementById("GainStr").addEventListener("mouseover", function (e) {
+    document.getElementById("LevelMenu").addEventListener("mouseover", function (e) {
         document.getElementById("LevelMenuText").innerHTML = e.target.title;
     });
     document.getElementById("GainCha").addEventListener("click", function () {
@@ -35,9 +35,6 @@
             return;
         }
     });
-    document.getElementById("GainCha").addEventListener("mouseover", function (e) {
-        document.getElementById("LevelMenuText").innerHTML = e.target.title;
-    });
     document.getElementById("GainEnd").addEventListener("click", function () {
         if (player.SkillPoints > 0) {
             player.End++;
@@ -49,9 +46,6 @@
             return;
         }
     });
-    document.getElementById("GainEnd").addEventListener("mouseover", function (e) {
-        document.getElementById("LevelMenuText").innerHTML = e.target.title;
-    });
     document.getElementById("GainInt").addEventListener("click", function () {
         if (player.SkillPoints > 0) {
             player.Int++;
@@ -61,9 +55,6 @@
         } else {
             return;
         }
-    });
-    document.getElementById("GainInt").addEventListener("mouseover", function (e) {
-        document.getElementById("LevelMenuText").innerHTML = e.target.title;
     });
     document.getElementById("GainWill").addEventListener("click", function () {
         if (player.SkillPoints > 0) {
@@ -76,9 +67,6 @@
             return;
         }
     });
-    document.getElementById("GainWill").addEventListener("mouseover", function (e) {
-        document.getElementById("LevelMenuText").innerHTML = e.target.title;
-    });
     document.getElementById("GainSex").addEventListener("click", function () {
         if (player.SkillPoints > 0) {
             player.SexSkill++;
@@ -88,9 +76,6 @@
         } else {
             return;
         }
-    });
-    document.getElementById("GainSex").addEventListener("mouseover", function (e) {
-        document.getElementById("LevelMenuText").innerHTML = e.target.title;
     });
     // level menu return
     document.getElementById("No").addEventListener("click", function () {
