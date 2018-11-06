@@ -88,7 +88,8 @@
         Kitchen: 0,
         Gym: 0,
         Brothel: 0,
-        Dormmates: []
+        Dormmates: [],
+        Portal: false
     };
 
     // Flag variables
@@ -101,7 +102,8 @@
             Month: 0,
             Day: 0,
             Hour: 0
-        }
+        },
+        BeatSuccubus: false
     };
 
     // Settings variables
@@ -138,12 +140,14 @@
     }
 
     var Partners = {
-        FirstName: "Sarischa",
-        LastName: "Alomendi",
-        Equal: false,
-        Yours: false,
-        Like: 0,
-        Submit: 0
+        Succubus: {
+            FirstName: "Sarischa",
+            LastName: "Alomendi",
+            Equal: false,
+            Yours: false,
+            Like: 0,
+            Submit: 0
+        }
     }
 
     // Start values for canvas
@@ -193,7 +197,7 @@
     document.getElementById("Begin").addEventListener("click", function () {
         document.getElementById("startgame").style.display = 'inline-block';
         document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
-            ", who weighs " + player.Weight + "kg and Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor +
+            ", who weighs " + KgToPound(player.Weight) + " and Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor +
             " skin colour, this hopefully the last time you see this body absent of any details or personality, as today marks the day you will forge your own way in this world.";
 
         requestAnimationFrame(loop);
@@ -211,6 +215,7 @@
         document.getElementById("buttons").style.display = 'block';
         document.getElementById("status").style.display = 'block';
         document.getElementById("EventLog").style.display = 'block';
+        document.getElementById("BuyHouse").style.display = 'none'
         if (window.innerHeight < 800) {
             document.getElementById("FirstButtons").style.display = 'block';
             document.getElementById("SecondButtnos").style.display = 'none';
@@ -655,6 +660,22 @@
             document.getElementById("map").style.display = 'block';
             document.getElementById("status").style.display = 'block';
             document.getElementById("buttons").style.display = 'block';
+        } else if (Dungeon) {
+            document.getElementById("SexText").innerHTML = HeightSystem(player, enemies[EnemyIndex]);
+            document.getElementById("AfterBattle").style.display = 'grid';
+            document.getElementById("SexButtons").style.display = 'grid';
+            if (Settings.ImgPack) {
+                document.getElementById("AfterBattle").classList.remove("AfterBattle");
+                document.getElementById("AfterBattle").classList.add("AfterBattleImg");
+                document.getElementById("MyImg").style.display = 'block';
+
+            } else {
+                document.getElementById("AfterBattle").classList.add("AfterBattle");
+                document.getElementById("AfterBattle").classList.remove("AfterBattleImg");
+                document.getElementById("MyImg").style.display = 'none';
+            }
+            CheckArousal();
+            AfterBattleButtons();
         } else {
             document.getElementById("SexText").innerHTML = HeightSystem(player, enemies[EnemyIndex]);
             document.getElementById("AfterBattle").style.display = 'grid';
@@ -1080,7 +1101,7 @@
             document.getElementById("HideFluids").value = "Hide";
         } else {
             document.getElementById("FluidPart").style.display = 'none';
-            document.getElementById("HideFluids	").value = 'Show';
+            document.getElementById("HideFluids").value = 'Show';
         }
     });
 
@@ -1333,7 +1354,7 @@
                 document.getElementById("looks2").innerHTML += "<br><br> You are " + Math.round(player.Pregnant.Babies[0].BabyAge / 30) + " months pregnant."
             }
         }
-        document.getElementById("StatusFitness").innerHTML = "Age: " + player.Age + "years old<br>Weight: " + Math.round(player.Weight) + "kg<br>" + "Fat: " + Math.round(player.Fat) + "kg<br>Muscle: " + Math.round(player.Muscle) + "kg<br>" + Fitness(player);
+        document.getElementById("StatusFitness").innerHTML = "Age: " + player.Age + "years old<br>Weight: " + KgToPound(player.Weight) + "<br>" + "Fat: " + KgToPound(player.Fat) + "<br>Muscle: " + KgToPound(player.Muscle) + "<br>" + Fitness(player);
         document.getElementById("genitals2").innerHTML = BoobLook(player) + DickLook(player) + BallLook(player) + PussyLook(player);
         // End live update Looksmenu
 
