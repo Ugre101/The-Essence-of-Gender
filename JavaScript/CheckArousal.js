@@ -56,7 +56,6 @@ function CheckArousal() {
             }
         }
         if (LastPressed == "GetBlowjob") {
-            console.log(true)
             var cum = Cumming(player);
             document.getElementById("SexText").innerHTML += "<br>Felling close you grab their head and push your dick deeper down their throat cumming " + cum + "L down their into their stomach."
             ee.Cumin.Stomach += cum;
@@ -98,8 +97,12 @@ function CheckArousal() {
 
 
     var PlayerMaxOrgasm = Math.round(player.End / 8);
-    SexAttack = Math.round((RandomInt(4, 7) * player.SexSkill) / 2);
-    ESexAttack = Math.round((RandomInt(4, 7) * enemies[EnemyIndex].SexSkill) / 2);
+    BaseSexAttack = Math.round((RandomInt(4, 7) * player.SexSkill) / 2);
+    BaseESexAttack = Math.round((RandomInt(4, 7) * enemies[EnemyIndex].SexSkill) / 2);
+    SexAttack = Math.min(RandomInt(45,77) ,BaseSexAttack * (BaseSexAttack / BaseESexAttack));
+    ESexAttack = Math.max(RandomInt(6, 12), BaseESexAttack * (BaseESexAttack / BaseSexAttack));
+
+
     document.getElementById("PName").innerHTML = player.Name + " " + player.Lastname + "<br>" + player.Race + " " + Pronun(CheckGender(player));
     document.getElementById("EName").innerHTML = " " + ee.FirstName + " " + ee.LastName + "<br>" + ee.Name + " " + ee.Race + " " + Pronun(CheckGender(ee));
     document.getElementById("Mascu").innerHTML = Math.round(player.Masc);
@@ -128,18 +131,11 @@ function CheckArousal() {
 
 
     document.getElementById("SexStats").innerHTML = " ";
-    if (ee.Orgasm > 0) {
-        document.getElementById("EnemyOrgasm").style.display = 'block';
-        document.getElementById("EnemyOrgasm").innerHTML = "Enemy have orgasmed: " + ee.Orgasm + " times";
-    } else {
-        document.getElementById("EnemyOrgasm").style.display = 'none';
-    }
-    if (player.Orgasm > 0) {
-        document.getElementById("PlayerOrgasm").style.display = 'block';
-        document.getElementById("PlayerOrgasm").innerHTML = "You have orgasmed: " + player.Orgasm + " times"
-    } else {
-        document.getElementById("PlayerOrgasm").style.display = 'none';
-    }
+    document.getElementById("EnemyOrgasm").style.display = 'block';
+    document.getElementById("EnemyOrgasm").innerHTML = ee.Orgasm;
+    document.getElementById("PlayerOrgasm").style.display = 'block';
+    document.getElementById("PlayerOrgasm").innerHTML = player.Orgasm;
+
     if (player.SessionOrgasm > 0) {
         document.getElementById("InjectMenu").style.display = 'block';
     } else {
@@ -169,7 +165,6 @@ function Cumming(who) {
         for (var b = 0; b < who.Balls.length; b++) {
             Cum += Math.min(who.Balls[b].Cum, Math.max(100, who.Balls[b].Cum / 8));
             who.Balls[b].Cum -= Math.min(who.Balls[b].Cum, Math.max(100, who.Balls[b].Cum / 8));
-            console.log(Cum)
         }
         Cum = Math.round((Cum / 1000) * 100) / 100;
         return Cum;

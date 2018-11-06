@@ -40,5 +40,25 @@ function DateTracker() {
             player.Health -= 1;
             player.WillHealth -= 1;
         }
+        if (Settings.Vore) {
+            if (player.Vore.VorePerks.hasOwnProperty("PredatorsMeta")) {
+                var RestRate = player.Vore.VorePerks.PredatorsMeta.Count * 2;
+                if (player.Health < player.MaxHealth && player.Fat >= player.Height / 100) {
+                    if ((player.Health + RestRate) > player.MaxHealth) {
+                        player.Health = player.MaxHealth;
+                    } else {
+                        player.Health += RestRate;
+                    }
+                }
+                if (player.WillHealth < player.MaxWillHealth && player.Fat >= player.Height / 100) {
+                    if ((player.WillHealth + RestRate) > player.MaxWillHealth) {
+                        player.WillHealth = player.MaxWillHealth;
+                    } else {
+                        player.WillHealth += RestRate;
+                    }
+                }
+                player.Fat -= RestRate/20;
+            }
+        }
     }
 }

@@ -88,7 +88,7 @@ function PussyButtons() {
     var Inputs = [];
     for (var e = 0; e < player.Pussies.length; e++) {
         var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerPussy(" + e + "); PussyButtons();\">" +
-            player.Pussies[e].Size + "cm " + EssenceCost(player.Pussies[e]) + "Feminity</button  >"
+        CmToInch(player.Pussies[e].Size) + " " + EssenceCost(player.Pussies[e]) + "Feminity</button  >"
         Inputs += Input;
     }
     document.getElementById("PussyButtons").innerHTML = Inputs;
@@ -137,7 +137,7 @@ function DickButtons() {
     var Inputs = [];
     for (var e = 0; e < player.Dicks.length; e++) {
         var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerDick(" + e + "); DickButtons();\">" +
-            player.Dicks[e].Size + "cm " + EssenceCost(player.Dicks[e]) + "Masculinity</button  >"
+        CmToInch(player.Dicks[e].Size) + " " + EssenceCost(player.Dicks[e]) + "Masculinity</button  >"
         Inputs += Input;
     }
     document.getElementById("DickButtons").innerHTML = Inputs;
@@ -181,7 +181,7 @@ function BallsButtons() {
     var Inputs = [];
     for (var e = 0; e < player.Balls.length; e++) {
         var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerBalls(" + e + "); BallsButtons();\">" +
-            player.Balls[e].Size + "cm " + EssenceCost(player.Balls[e]) + "Masculinity</button  >"
+        CmToInch(player.Balls[e].Size) + " " + EssenceCost(player.Balls[e]) + "Masculinity</button  >"
         Inputs += Input;
     }
     document.getElementById("BallsButtons").innerHTML = Inputs;

@@ -489,7 +489,7 @@
 				<input type="button" id="HigherCapacity" value="Higher capacity" title="Increase the total weight of prey your body can hold">
 				<input type="button" id="AbsorbHeight" value="Absorb height" title="Grow taller by absorbing height from your prey. (Growth limit [160cm + 20 * perklevel] t.ex. perk level 3 allows you to grow to 220cm)">
 				<input type="button" id="AbsorbStats" value="Absorb prey stats" title="Get stronger while digesting! (Costs 10 levels, max effectiveness of 10)">
-				<input type="button" id="" value="" title="">
+				<input type="button" id="PredatorsMeta" value="(Placeholder)Predators metabolism" title="Increase your fat burn rate and makes you recover faster.">
 			</div>
 
 			<input type="button" id="LeaveVorePerkMenu" value="Done">
@@ -546,17 +546,21 @@
 			<div id="Mascu" class="Masc"></div>
 			<label for="Femin">Femininity</label>
 			<div id="Femin" class="Femi"></div>
-			<label for="PArousal">Arousal</label>
-			<div id="PArousal" class="Arousal"></div>
+			<div class="TwoCollum">
+				<div>
+					<label for="PArousal">Arousal</label>
+					<div id="PArousal" class="Arousal"></div>
+				</div>
+				<div>
+					<label for="PlayerOrgasm">Orgasms</label>
+					<div id="PlayerOrgasm" class="Arousal"></div>
+				</div>
+			</div>
 			<p id="PlayerLooks"></p>
 		</div>
 		<div id="SexLog" class="SexLog">
 			<p id="SexText"></p>
 			<p id="SexStats"></p>
-			<div class="TwoCollum">
-				<p id="PlayerOrgasm"></p>
-				<p id="EnemyOrgasm"></p>
-			</div>
 		</div>
 		<div id="EnemySex" class="EnemySex">
 			<p id="EName"></p>
@@ -564,8 +568,16 @@
 			<div id="EMascu" class="Masc"></div>
 			<label for="EFemin">Femininity</label>
 			<div id="EFemin" class="Femi"></div>
-			<label for="EArousal">Arousal</label>
-			<div id="EArousal" class="Arousal"></div>
+			<div class="TwoCollum">
+				<div>
+					<label for="EArousal">Arousal</label>
+					<div id="EArousal" class="Arousal"></div>
+				</div>
+				<div>
+					<label for="EnemyOrgasm">Orgasms</label>
+					<div id="EnemyOrgasm" class="Arousal"></div>
+				</div>
+			</div>
 			<p id="EnemyLooks"></p>
 		</div>
 		<img id="MyImg" class="f">

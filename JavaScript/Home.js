@@ -140,6 +140,11 @@
                 player.Area = "TempLand";
                 player.Map = "TempCity";
                 LeaveHome();
+            } else if (Chosen == "Lumindera") {
+                return;
+                player.Area = "Lumindera";
+                player.Map = "nice";
+                LeaveHome();
             }
         }
     });

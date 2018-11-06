@@ -173,6 +173,11 @@
         }
         if (!Settings.hasOwnProperty("Inch")) {
             Settings.Inch = false;
+            console.log("Added Inch")
+        }
+        if (!Flags.hasOwnProperty("BeatSuccubus")) {
+            Flags.BeatSuccubus = false;
+            console.log("Added beat succubus");
         }
         for (var e = 0; e < player.Inventory.length; e++) {
             switch (player.Inventory[e].Name) {
@@ -220,9 +225,4 @@
                     break;
             }
         }
-
-
-
-
-
     }

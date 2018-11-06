@@ -81,7 +81,8 @@ const ItemDict = {
                 EventLog("You gained " + z + " health back!");
             else if (z < 0)
                 EventLog("Bleh. That ruined your night's sleep.");
-        }
+        },
+        Title: "Heals?"
     }, 
     trollMilk: {
         Name: "Troll Milk",
