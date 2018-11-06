@@ -671,6 +671,13 @@
             player.Vore.Level++;
             player.Vore.VorePoints++;
         }
+        let expModifier = {
+            stomach: 1/40 /1000,
+            vagina: 1 /1000,
+            breasts: 1 /1000,
+            balls: 1 /1000,
+            anal:1/2 /1000,
+        }
         document.getElementById("VoreLevel").innerHTML = player.Vore.Level;
         document.getElementById("VoreLevel").style.width = 100 * (player.Vore.Exp / VoreMaxExp) + "%";
         document.getElementById("ShowStomach").innerHTML = "Stomach<br>" + Math.round(MaxStomachCapacity() - StomachCapacity()) + "kg prey <br> " + Math.round(MaxStomachCapacity()) + "kg Max";
@@ -712,13 +719,13 @@
             }
             if (Settings.VoreSettings.StomachDigestion) {
                 player.Vore.Stomach[e].Weight -= 0.001;
-                player.Vore.StomachExp += 0.001;
-                player.Vore.Exp += 0.001;
+                player.Vore.StomachExp += expModifier.stomach * player.Vore.Stomach[e].Weight;
+                player.Vore.Exp += expModifier.stomach * player.Vore.Stomach[e].Weight;
                 player.Fat += 0.0005;
                 if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
                     player.Vore.Stomach[e].Weight -= 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
-                    player.Vore.StomachExp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
-                    player.Vore.Exp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.StomachExp += player.Vore.VorePerks.FasterDigestion.Count * expModifier.stomach * player.Vore.Stomach[e].Weight;
+                    player.Vore.Exp += player.Vore.VorePerks.FasterDigestion.Count * expModifier.stomach * player.Vore.Stomach[e].Weight;
                     player.Fat += 0.0005 * player.Vore.VorePerks.FasterDigestion.Count;
                 }
 
@@ -736,8 +743,8 @@
                     player.Vore.Stomach.splice(e, 1);
                 }
             } else {
-                player.Vore.StomachExp += 0.0005;
-                player.Vore.Exp += 0.0005;
+                player.Vore.StomachExp += 0.5 * expModifier.stomach * player.Vore.Stomach[e].Weight;
+                player.Vore.Exp += 0.5 * expModifier.stomach * player.Vore.Stomach[e].Weight;
             }
         }
         for (var e = 0; e < player.Vore.Vagina.length; e++) {
@@ -759,12 +766,12 @@
             }
             if (Settings.VoreSettings.VCumDigestion) {
                 player.Vore.Vagina[e].Weight -= 0.001;
-                player.Vore.Vagina[e].VaginaExp += 0.001;
-                player.Vore.Exp += 0.001;
+                player.Vore.Vagina[e].VaginaExp += expModifier.vagina * player.Vore.Vagina[e].Weight;
+                player.Vore.Exp += expModifier.vagina * player.Vore.Vagina[e].Weight;
                 if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
                     player.Vore.Vagina[e].Weight -= 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
-                    player.Vore.Vagina[e].VaginaExp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
-                    player.Vore.Exp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.Vagina[e].VaginaExp += player.Vore.VorePerks.FasterDigestion.Count * expModifier.vagina * player.Vore.Vagina[e].Weight;
+                    player.Vore.Exp += player.Vore.VorePerks.FasterDigestion.Count * expModifier.vagina * player.Vore.Vagina[e].Weight;
                 };
                 if (player.Vore.Vagina[e].Weight < 0) {
 					if(player.Vore.VorePerks.hasOwnProperty("AbsorbStats")){
@@ -796,8 +803,8 @@
                     }
                 }
             } else {
-                player.Vore.VaginaExp += 0.0005;
-                player.Vore.Exp += 0.0005;
+                player.Vore.VaginaExp += 0.5 * expModifier.vagina * player.Vore.Vagina[e].Weight;
+                player.Vore.Exp += 0.5 * expModifier.vagina * player.Vore.Vagina[e].Weight;
             }
         }
         for (var e = 0; e < player.Vore.Breast.length; e++) {
@@ -820,12 +827,12 @@
             }
             if (Settings.VoreSettings.MilkTF) {
                 player.Vore.Breast[e].Weight -= 0.001;
-                player.Vore.BreastExp += 0.001;
-                player.Vore.Exp += 0.001;
+                player.Vore.BreastExp += expModifier.breasts * player.Vore.Breast[e].Weight;
+                player.Vore.Exp += expModifier.breasts * player.Vore.Breast[e].Weight;
                 if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
                     player.Vore.Breast[e].Weight -= 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
-                    player.Vore.Breast[e].BreastExp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
-                    player.Vore.Exp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.Breast[e].BreastExp += player.Vore.VorePerks.FasterDigestion.Count * expModifier.breasts * player.Vore.Breast[e].Weight;
+                    player.Vore.Exp += player.Vore.VorePerks.FasterDigestion.Count * expModifier.breasts * player.Vore.Breast[e].Weight;
                 };
                 for (var b = 0; b < player.Boobies.length; b++) {
                     if (player.Boobies[b].Milk < player.Boobies[b].MilkMax) {
@@ -849,8 +856,8 @@
                     player.Vore.Breast.splice(e, 1);
                 }
             } else {
-                player.Vore.BreastExp += 0.0005;
-                player.Vore.Exp += 0.0005;
+                player.Vore.BreastExp += 0.5 * expModifier.breasts * player.Vore.Breast[e].Weight;
+                player.Vore.Exp += 0.5 * expModifier.breasts * player.Vore.Breast[e].Weight;
             }
         }
         for (var e = 0; e < player.Vore.Balls.length; e++) {
@@ -873,12 +880,12 @@
             }
             if (Settings.VoreSettings.CumTF) {
                 player.Vore.Balls[e].Weight -= 0.001;
-                player.Vore.BallsExp += 0.001;
-                player.Vore.Exp += 0.001;
+                player.Vore.BallsExp += expModifier.balls * player.Vore.Balls[e].Weight;
+                player.Vore.Exp += expModifier.balls * player.Vore.Balls[e].Weight;
                 if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
                     player.Vore.Balls[e].Weight -= 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
-                    player.Vore.Balls[e].BallsExp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
-                    player.Vore.Exp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.Balls[e].BallsExp += player.Vore.VorePerks.FasterDigestion.Count * expModifier.balls * player.Vore.Balls[e].Weight;
+                    player.Vore.Exp += player.Vore.VorePerks.FasterDigestion.Count * expModifier.balls * player.Vore.Balls[e].Weight;
                 };
                 for (var b = 0; b < player.Balls.length; b++) {
                     if (player.Balls[b].Cum < player.Balls[b].CumMax) {
@@ -904,8 +911,8 @@
 					return;
                 }
             } else {
-                player.Vore.BallsExp += 0.0005;
-                player.Vore.Exp += 0.001;
+                player.Vore.BallsExp += 0.5 * expModifier.balls * player.Vore.Balls[e].Weight;
+                player.Vore.Exp += 0.5 * expModifier.balls * player.Vore.Balls[e].Weight;
             }
         }
         for (var e = 0; e < player.Vore.Anal.length; e++) {
@@ -927,14 +934,14 @@
             }
             if (Settings.VoreSettings.AnalDigestion) {
                 player.Vore.Anal[e].Weight -= 0.001;
-                player.Vore.AnalExp += 0.001;
-                player.Vore.Exp += 0.001;
+                player.Vore.AnalExp += expModifier.anal * player.Vore.Anal[e].Weight;
+                player.Vore.Exp += expModifier.anal * player.Vore.Anal[e].Weight;
                 player.Fat += 0.0005;
 
                 if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
                     player.Vore.Anal[e].Weight -= 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
-                    player.Vore.Anal[e].AnalExp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
-                    player.Vore.Exp += 0.001 * player.Vore.VorePerks.FasterDigestion.Count;
+                    player.Vore.Anal[e].AnalExp += player.Vore.VorePerks.FasterDigestion.Count * expModifier.anal * player.Vore.Anal[e].Weight;
+                    player.Vore.Exp += player.Vore.VorePerks.FasterDigestion.Count * expModifier.anal * player.Vore.Anal[e].Weight;
                 };
                 if (player.Vore.Anal[e].Weight < 0) {
 					if(player.Vore.VorePerks.hasOwnProperty("AbsorbStats")){
@@ -949,8 +956,8 @@
                     player.Vore.Anal.splice(e, 1);
                 }
             } else {
-                player.Vore.AnalExp += 0.0005;
-                player.Vore.Exp += 0.001;
+                player.Vore.AnalExp += 0.5 * expModifier.anal * player.Vore.Anal[e].Weight;
+                player.Vore.Exp += 0.5 * expModifier.anal * player.Vore.Anal[e].Weight;
             }
         }
     }
