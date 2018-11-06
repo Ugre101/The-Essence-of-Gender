@@ -98,7 +98,7 @@ document.getElementById("LeaveQuest").addEventListener("click", function () {
 // Slut på questsystem
 
 document.getElementById("BuyHouse").addEventListener("click", function () {
-    if (player.Gold > 100) {
+    if (player.Gold >= 100) {
         document.getElementById("BuyHouse").style.display = 'none';
         House.Owned = true;
         return;
