@@ -1,9 +1,9 @@
 function EssenceCost(what) {
-    return Math.round((10 * Math.pow(1.1, what.Size)));
+    return Math.min(2000, Math.round((10 * Math.pow(1.1, what.Size))));
 };
 
 function EssenceExtraCost(what) {
-    return Math.round((30 * Math.pow(5, what.length)));
+    return Math.round((30 * Math.pow(3, what.length)));
 };
 
 document.getElementById("EssenceAuto").addEventListener("click", function () {

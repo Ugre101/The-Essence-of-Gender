@@ -57,7 +57,9 @@ function DateTracker() {
                         player.WillHealth += RestRate;
                     }
                 }
-                player.Fat -= RestRate/20;
+                if ((player.Fat / player.Weight) * 100 > 18) {
+                    player.Fat -= player.Fat/100 * player.Vore.VorePerks.PredatorsMeta.Count;
+                }
             }
         }
     }

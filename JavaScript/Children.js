@@ -21,7 +21,7 @@ function Childs() {
             if (House.Dormmates[e].Children.length > 0) {
                 Children += "<div>" + House.Dormmates[e].FirstName + " " + House.Dormmates[e].LastName + "<br>"
                 for (var i = 0; i < House.Dormmates[e].Children.length; i++) {
-                    Child = "<button type=\"button\">Child" + (e + 1) + "</button>"
+                    Child = "<button type=\"button\">Child" + (i + 1) + "</button>"
                     Children += Child;
                 }
                 Children += "</div>"
