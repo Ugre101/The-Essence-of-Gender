@@ -1151,6 +1151,10 @@
         for (var j = 0; j < enemies.length; j++) {
             if (sprite.x >= enemies[j].XPos && sprite.x < enemies[j].XPos + enemies[j].Size &&
                 sprite.y >= enemies[j].YPos && sprite.y < enemies[j].YPos + enemies[j].Size && battle == false) {
+                if (mousedowner != -1) {
+                    clearInterval(mousedowner);
+                    mousedowner = -1;
+                }
                 document.getElementById("map").style.display = 'none';
                 document.getElementById("Encounter").style.display = 'grid';
                 document.getElementById("BattleText").innerHTML = null;
@@ -1168,6 +1172,10 @@
         for (var n = 0; n < Npcs.length; n++) {
             if (sprite.x >= Npcs[n].X && sprite.x < Npcs[n].X + Npcs[n].Width &&
                 sprite.y >= Npcs[n].Y && sprite.y < Npcs[n].Y + Npcs[n].Height) {
+                if (mousedowner != -1) {
+                    clearInterval(mousedowner);
+                    mousedowner = -1;
+                }
                 battle = true;
                 sprite.x = startarea.width / 2 - grid;
                 sprite.y = startarea.height / 2;
@@ -1433,19 +1441,35 @@
     });
 */
 
+    var mousedowner = -1;
     startarea.addEventListener('mousedown', function (e) {
-        var MapRect = startarea.getBoundingClientRect();
-        var cx = e.pageX;
-        var cy = e.pageY;
-        if (cx - MapRect.left > sprite.x + 1.5 * grid && sprite.x < (startarea.width - 2 * grid) && battle == false) {
-            sprite.x += grid;
-        } else if (cx - MapRect.left + grid / 2 < sprite.x && sprite.x > grid && battle == false) {
-            sprite.x -= grid;
+        if (mousedowner == -1) {
+            mousedownfunc();
+            //mousedowner = setInterval(mousedownfunc, 50);
         }
-        if (cy - MapRect.top > sprite.y + 1.5 * grid && sprite.y < (startarea.height - 2 * grid) && battle == false) {
-            sprite.y += grid;
-        } else if (cy - MapRect.top + grid / 2 < sprite.y && sprite.y > grid && battle == false) {
-            sprite.y -= grid;
+
+        function mousedownfunc() {
+            var MapRect = startarea.getBoundingClientRect();
+            var cx = e.pageX;
+            var cy = e.pageY;
+            if (cx - MapRect.left > sprite.x + 1.5 * grid && sprite.x < (startarea.width - 2 * grid) && battle == false) {
+                sprite.x += grid;
+            } else if (cx - MapRect.left + grid / 2 < sprite.x && sprite.x > grid && battle == false) {
+                sprite.x -= grid;
+            }
+            if (cy - MapRect.top > sprite.y + 1.5 * grid && sprite.y < (startarea.height - 2 * grid) && battle == false) {
+                sprite.y += grid;
+            } else if (cy - MapRect.top + grid / 2 < sprite.y && sprite.y > grid && battle == false) {
+                sprite.y -= grid;
+            }
+            Touching();
+            CheckDoor();
+        }
+    });
+    startarea.addEventListener('mouseup', function () {
+        if (mousedowner != -1) {
+            clearInterval(mousedowner);
+            mousedowner = -1;
         }
         Touching();
         CheckDoor();

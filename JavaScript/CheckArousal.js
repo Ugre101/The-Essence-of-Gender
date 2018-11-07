@@ -66,13 +66,22 @@ function CheckArousal() {
             }
         } else if (LastPressed == "Missionary") {
             var cum = Cumming(player);
-            document.getElementById("SexText").innerHTML += "<br>"
+            document.getElementById("SexText").innerHTML += "<br>Feeling close you thrust deep";
+            if (cum > 0) {
+                document.getElementById("SexText").innerHTML += ", releasing " + cum + "l cum into their pussy."
+            }
         } else if (LastPressed == "DoggyStyle") {
             var cum = Cumming(player);
-            document.getElementById("SexText").innerHTML += "<br>"
+            document.getElementById("SexText").innerHTML += "<br>Feeling close you thrust deep into their pussy"
+            if (cum > 0) {
+                document.getElementById("SexText").innerHTML += ", releasing " + cum + "l cum into their pussy."
+            }
         } else if (LastPressed == "DoggyStyleAnal") {
             var cum = Cumming(player);
-            document.getElementById("SexText").innerHTML += "<br>"
+            document.getElementById("SexText").innerHTML += "<br>Feeling close you thrust deeps"
+            if (cum > 0) {
+                document.getElementById("SexText").innerHTML += ", releasing " + cum + "l cum into their bowels."
+            }
         }
         AfterBattleButtons();
         CheckArousal();
@@ -100,7 +109,7 @@ function CheckArousal() {
     BaseSexAttack = Math.round((RandomInt(4, 7) * player.SexSkill) / 2);
     BaseESexAttack = Math.round((RandomInt(4, 7) * enemies[EnemyIndex].SexSkill) / 2);
     SexAttack = Math.min(RandomInt(45,77) ,BaseSexAttack * (BaseSexAttack / BaseESexAttack));
-    ESexAttack = Math.max(RandomInt(6, 12), BaseESexAttack * (BaseESexAttack / BaseSexAttack));
+    ESexAttack = Math.max(RandomInt(15, 32), BaseESexAttack * (BaseESexAttack / BaseSexAttack));
 
 
     document.getElementById("PName").innerHTML = player.Name + " " + player.Lastname + "<br>" + player.Race + " " + Pronun(CheckGender(player));
