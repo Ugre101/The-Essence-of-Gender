@@ -6,6 +6,16 @@ document.getElementById("Dorm").addEventListener("click", function () {
     document.getElementById("LeaveDorm").style.display = 'inline-block'
     document.getElementById("flex").style.display = 'none';
     ButtonMates();
+
+    if (House.Dormmates.length > 0 && player.Balls.length > 0) {
+        document.getElementById("ImpregOrgy").style.display = 'inline-block';
+        document.getElementById("GetImpregOrgy").style.display = 'inline-block';
+    } else {
+        document.getElementById("ImpregOrgy").style.display = 'none';
+        document.getElementById("GetImpregOrgy").style.display = 'none';
+    }
+
+
 });
 
 function ButtonMates() {
@@ -140,23 +150,27 @@ function DormSex() {
     document.getElementById("DormEnemyLooks").innerHTML = BoobLook(e) + DickLook(e) + BallLook(e) + PussyLook(e);
     SexColor(player, "PlayerDorm");
     SexColor(e, "EnemyDorm");
-    if (e.Pregnant.Status || player.Dicks.length == 0) {
+    if (e.Pregnant.Status || player.Balls.length == 0) {
         document.getElementById("Impregnate").style.display = 'none';
     } else {
         document.getElementById("Impregnate").style.display = 'inline-block';
     }
     if (player.Pregnant.Status) {
         document.getElementById("GetImpregnated").style.display = 'none';
-            var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
-            if (age < 1) {
-                document.getElementById("DormPlayerLooks").innerHTML += "<br>Impregnated";
-            } else {
-                document.getElementById("DormPlayerLooks").innerHTML += "<br>" + age + " months pregnant";
-            }
-        
-        
+        var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
+        if (age < 1) {
+            document.getElementById("DormPlayerLooks").innerHTML += "<br>Impregnated";
+        } else {
+            document.getElementById("DormPlayerLooks").innerHTML += "<br>" + age + " months pregnant";
+        }
+
+
     } else {
-        document.getElementById("GetImpregnated").style.display = 'inline-block';
+        if (e.Balls.length < 1) {
+            document.getElementById("GetImpregnated").style.display = 'none';
+        } else {
+            document.getElementById("GetImpregnated").style.display = 'inline-block';
+        }
     }
 
     if (e.hasOwnProperty("Pregnant")) {
@@ -410,7 +424,7 @@ document.getElementById("GetImpregOrgy").addEventListener("click", function () {
             }
         }
     }
-    document.getElementById("HomeText").innerHTML += "<br><br> By the end of the night they have cummed " + (Math.round(CumTotal/1000*100)/100) + "L into you.";
+    document.getElementById("HomeText").innerHTML += "<br><br> By the end of the night they have cummed " + (Math.round(CumTotal / 1000 * 100) / 100) + "L into you.";
 });
 document.getElementById("LeaveDorm").addEventListener("click", function () {
     document.getElementById("HomeStart").style.display = 'block';

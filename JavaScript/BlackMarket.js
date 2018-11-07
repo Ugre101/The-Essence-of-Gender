@@ -107,7 +107,7 @@
     document.getElementById("SellMasculinity").addEventListener("click", function () {
         if (player.Masc >= 50) {
             player.Masc -= 50;
-            player.Gold += 50;
+            player.Gold += 100;
         }
     });
     document.getElementById("BlackMarket").addEventListener("mouseover", function (e) {

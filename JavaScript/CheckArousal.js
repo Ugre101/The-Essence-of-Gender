@@ -145,7 +145,7 @@ function CheckArousal() {
     document.getElementById("PlayerOrgasm").style.display = 'block';
     document.getElementById("PlayerOrgasm").innerHTML = player.Orgasm;
 
-    if (player.SessionOrgasm > 0) {
+    if (player.SessionOrgasm > 0  && player.Perks.GiveEssence.Count > 0) {
         document.getElementById("InjectMenu").style.display = 'block';
     } else {
         document.getElementById("InjectMenu").style.display = 'none';

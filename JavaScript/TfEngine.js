@@ -30,6 +30,7 @@ function TfEngine(Tf_to) {
                         player.Race = "elf";
                         TF.Status = false;
                         TF.Counter = 0;
+                        GenitalChange("elf");
                     } else if (TF.Counter == 500) {
                         EventLog("Your ears grow to a pointy shape.");
                     }
@@ -52,6 +53,7 @@ function TfEngine(Tf_to) {
                         player.Race = "human";
                         TF.Status = false;
                         TF.Counter = 0;
+                        GenitalChange("human")
                     } else if (TF.Counter == 500) {
                         EventLog("Your body starts to feel familiar...");
                     }
