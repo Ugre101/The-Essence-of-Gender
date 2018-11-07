@@ -584,11 +584,16 @@
         }
     });
     document.getElementById("AbsorbStats").addEventListener("click", function () {
-        if (player.Vore.hasOwnProperty("AbsorbStats")) {
-            if (player.Vore.VorePoints > 9 && player.Vore.AbsorbStats < 10) {
-                VorePerkHandler("AbsorbStats");
-            } else return;
-        }
+            if (player.Vore.VorePoints > 9)	{
+				if(!player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
+					VorePerkHandler("AbsorbStats");
+				} else if(player.Vore.VorePerks.AbsorbStats.Count < 10) {
+					console.log(player.Vore.VorePerks.AbsorbStats.Count);
+					VorePerkHandler("AbsorbStats");
+				}
+            } else {
+				return;
+        } 
     });
     document.getElementById("VorePerkMenu").addEventListener("mouseover", function (e) {
         document.getElementById("VorePerkMenuText").innerHTML = e.target.title;
