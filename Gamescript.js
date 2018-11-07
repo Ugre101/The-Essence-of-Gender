@@ -6,6 +6,9 @@
         Will: 10,
         End: 10,
         SexSkill: 10,
+		printStats: "",
+		printPerks: "",
+		printVore: "",
         Orgasm: 0,
         Arousal: 0,
         Gold: 0,
@@ -242,6 +245,7 @@
         document.getElementById("PerkOptionsMenu").style.display = 'none';
         document.getElementById("ShowQuests").style.display = 'none';
         document.getElementById("DetailedInfo").style.display = 'none';
+		document.getElementById("Levels").style.display = 'none';
         document.getElementById("ShowVore").style.display = 'none';
         document.getElementById("EssenceOptionsMenu").style.display = 'none';
         document.getElementById("PronunForm").style.display = 'none';
@@ -405,10 +409,32 @@
         document.getElementById("ExtraStats").innerHTML = "Virility: " + player.Virility + "<br>Fertility: " + player.Fertility + "<br>Essence drain: " + player.EssenceDrain +
             "<br>Give essence: " + player.GiveEssence + "<br> passive rest rate: " + player.RestRate;
     });
+	
+	    document.getElementById("Perks").addEventListener("click", function () {
+			printS();
+        DisplayNone();
+		document.getElementById("Levels").style.display = 'block';
+        document.getElementById("StatLevels").innerHTML = player.printStats;
+		document.getElementById("PerkLevels").innerHTML = player.printPerks;
+		if(Settings.Vore)
+		{
+			document.getElementById("VLevels").innerHTML = player.printVore;
+		}
+		else
+			document.getElementById("VLevels").innerHTML = "";
+    });
+	
+	
     document.getElementById("CloseExtra").addEventListener("click", function () {
         battle = false;
         document.getElementById("map").style.display = 'block';
         document.getElementById("DetailedInfo").style.display = 'none';
+    });
+	
+	document.getElementById("CloseLevel").addEventListener("click", function () {
+        battle = false;
+        document.getElementById("map").style.display = 'block';
+		document.getElementById("Levels").style.display = 'none';
     });
 
     document.getElementById("Quests").addEventListener("click", function () {
@@ -1491,3 +1517,27 @@
 		}
 	});
 		
+	function printS() {
+		player.printStats = "Str: "+player.Str + "<br>End: " + player.End + "<br>Will: " + player.Will + "<br>Charm: " + player.Charm + "<br>Int: " + player.Int + "<br>Skill: " + player.SexSkill+"<br>";
+		player.printPerks = "";
+		for(var i = 0; i < Object.keys(player.Perks).length - 1; i++)
+		{
+			if(Object.keys(player.Perks)[i].Count > 0)
+			{
+			player.printPerks += Object.keys(player.Perks)[i] + ": " + Object.keys(player.Perks)[i].Count +"<br>";
+			}
+		}
+		console.log(Settings.Vore);
+		if(Settings.Vore)
+		{
+			player.printVore = "";
+			var v = player.Vore.VorePerks;
+			console.log(Object.keys(v).length);
+			if(Object.keys(v).length > 0) {
+				for (var i = 0; i < Object.keys(v).length - 1; i++)
+				{
+					player.printVore += v[Object.keys(v)[i]]+"<br>";
+				}
+			}
+		}
+	}
