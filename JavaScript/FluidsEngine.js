@@ -26,7 +26,7 @@ function FluidsEngine() {
     } else {
         document.getElementById("CumBar").style.display = 'none';
     }
-    if (player.Boobies.length > 0) {
+    if (player.Boobies.length > 0 && player.Boobies[0].MilkMax > 0) {
         document.getElementById("MilkBar").style.display = 'block';
 		var milkPenalty = 10;
 		if(player.Pregnant.Status)
