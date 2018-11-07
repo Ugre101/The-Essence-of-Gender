@@ -196,9 +196,9 @@
     // Ge karaktär start värden
     document.getElementById("Begin").addEventListener("click", function () {
         document.getElementById("startgame").style.display = 'inline-block';
-        document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
-            ", who weighs " + KgToPound(player.Weight) + " and Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor +
-            " skin colour, this hopefully the last time you see this body absent of any details or personality, as today marks the day you will forge your own way in this world.";
+        document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.Lastname + ", a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
+            ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Haircolor + " hair and " + player.Skincolor +
+            " skin; hopefully the last time you see your body absent of any other details or personality.<br><br>For today, you will forge your own way in this world.";
 
         requestAnimationFrame(loop);
         DateEngine();
@@ -1136,8 +1136,8 @@
     var WitchHut = new Npc("WitchHut", "Witch hut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
-    var BlackMartket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
-    var FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)");
+    var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
+    var FirstDungeon = new Npc("FirstDungeon", "Dungeon",grid * 8, grid * 18, grid *4, grid * 2, "RGB(133,94,66)");
 
     // Character
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
@@ -1146,14 +1146,18 @@
 
     var NpcName;
     var EnemyIndex;
+	var mousedowner = false;
+	var mFunction;
+	var mouseX; var mouseY;
 
     function Touching() {
         for (var j = 0; j < enemies.length; j++) {
             if (sprite.x >= enemies[j].XPos && sprite.x < enemies[j].XPos + enemies[j].Size &&
                 sprite.y >= enemies[j].YPos && sprite.y < enemies[j].YPos + enemies[j].Size && battle == false) {
-                if (mousedowner != -1) {
-                    clearInterval(mousedowner);
-                    mousedowner = -1;
+                if (mousedowner) {
+                    clearInterval(mFunction);
+                    mousedowner = false;
+					console.log("Touching");
                 }
                 document.getElementById("map").style.display = 'none';
                 document.getElementById("Encounter").style.display = 'grid';
@@ -1172,9 +1176,10 @@
         for (var n = 0; n < Npcs.length; n++) {
             if (sprite.x >= Npcs[n].X && sprite.x < Npcs[n].X + Npcs[n].Width &&
                 sprite.y >= Npcs[n].Y && sprite.y < Npcs[n].Y + Npcs[n].Height) {
-                if (mousedowner != -1) {
-                    clearInterval(mousedowner);
-                    mousedowner = -1;
+                if (mousedowner) {
+                    clearInterval(mFunction);
+                    mousedowner = false;
+					console.log("Touching2");
                 }
                 battle = true;
                 sprite.x = startarea.width / 2 - grid;
@@ -1351,8 +1356,8 @@
         // Live update for Looksmenu
         document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
 
-        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + " a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
-            ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and a " + player.Skincolor + " skin color.";
+        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + ", a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
+            ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and " + player.Skincolor + " skin.";
 
         if (player.Pregnant.Babies.length > 0) {
             if (player.Pregnant.Babies[0].BabyAge < 30) {
@@ -1396,6 +1401,8 @@
         if (TF.Status) {
             TfEngine();
         }
+//		if (BonusTF.Status) {TfBoost();}
+		
         if (!battle && Settings.EssenceAuto) {
             Laglimiter++;
             if (Laglimiter % 80 == 0) {
@@ -1438,34 +1445,49 @@
     });
 */
 
-    var mousedowner = -1;
-    startarea.addEventListener('mousedown', function (e) {
-        if (mousedowner == -1) {
-            mousedownfunc();
-            //mousedowner = setInterval(mousedownfunc, 50);
-        }
+	function mousedownfunc() {
+		var MapRect = startarea.getBoundingClientRect();
+		if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x < (startarea.width - 2 * grid)) {
+			sprite.x += grid;
+		} else if (mouseX - MapRect.left + grid / 2 < sprite.x && sprite.x > grid) {
+			sprite.x -= grid;
+		}
+		if (mouseY - MapRect.top > sprite.y + 1.5 * grid && sprite.y < (startarea.height - 2 * grid)) {
+			sprite.y += grid;
+		} else if (mouseY - MapRect.top + grid / 2 < sprite.y && sprite.y > grid) {
+			sprite.y -= grid;
+		}
+		Touching();
+		CheckDoor();
+	}
 
-        function mousedownfunc() {
-            var MapRect = startarea.getBoundingClientRect();
-            var cx = e.pageX;
-            var cy = e.pageY;
-            if (cx - MapRect.left > sprite.x + 1.5 * grid && sprite.x < (startarea.width - 2 * grid) && battle == false) {
-                sprite.x += grid;
-            } else if (cx - MapRect.left + grid / 2 < sprite.x && sprite.x > grid && battle == false) {
-                sprite.x -= grid;
-            }
-            if (cy - MapRect.top > sprite.y + 1.5 * grid && sprite.y < (startarea.height - 2 * grid) && battle == false) {
-                sprite.y += grid;
-            } else if (cy - MapRect.top + grid / 2 < sprite.y && sprite.y > grid && battle == false) {
-                sprite.y -= grid;
-            }
-            Touching();
-            CheckDoor();
+    startarea.addEventListener('mousedown', function (e) {
+        if (!mousedowner) {
+            mousedowner = true;
+			mouseX = e.pageX;
+			mouseY = e.pageY;
+			console.log(e.pageX+ " "+ e.pageY);
+			mFunction = setInterval(mousedownfunc, 100);
         }
-    });
+	});
+
     startarea.addEventListener('mouseup', function () {
-        if (mousedowner != -1) {
-            clearInterval(mousedowner);
-            mousedowner = -1;
+        if (mousedowner) {
+            clearInterval(mFunction);
+			console.log("MouseUp");
+            mousedowner = false;
         }
     });
+
+	startarea.addEventListener('mousemove', function (e) {
+		if (mousedowner)
+		{
+			if(mouseX != e.pageX || mouseY != e.pageY)
+			{
+				console.log(e.pageX+ " "+ e.pageY);
+				mouseX = e.pageX;
+				mouseY = e.pageY;
+			}
+		}
+	});
+		

@@ -16,39 +16,44 @@ function FluidsEngine() {
             TotalCum += player.Balls[e].Cum;
             TotalCumMax += player.Balls[e].CumMax
         }
-        var CumProcent = TotalCum / TotalCumMax;
+        var CumPercent = TotalCum / TotalCumMax;
         if (false) {
             EventLog("Your balls are so full that you can barely hold it!")
         }
         document.getElementById("FluidCum").innerHTML = Math.round((Math.round(TotalCum) / 1000) * 10) / 10 + "L";
-        document.getElementById("FluidCum").style.width = CumProcent * 100 + "%";
+        document.getElementById("FluidCum").style.width = CumPercent * 100 + "%";
 
     } else {
         document.getElementById("CumBar").style.display = 'none';
     }
-    var TotalMilk = 0,
-        TotalMilkMax = 0;
-    for (var b = 0; b < player.Boobies.length; b++) {
-        if (player.Boobies[b].Milk < player.Boobies[b].MilkMax) {
-            player.Boobies[b].Milk += player.Boobies[b].MilkBaseRate + player.Boobies[b].MilkRate;
+    if (player.Boobies.length > 0 && player.Boobies[0].MilkMax > 0) {
+        document.getElementById("MilkBar").style.display = 'block';
+		var milkPenalty = 10;
+		if(player.Pregnant.Status)
+			milkPenalty = 0;
+        var TotalMilk = 0,
+            TotalMilkMax = 0;
+		for (var b = 0; b < player.Boobies.length; b++) {
+            player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 400);
+			if(player.Boobies[b].MilkBaseRate > milkPenalty)
+			{
+				player.Boobies[b].Milk += player.Boobies[b].MilkRate - milkPenalty;
+			}
+		}
+        for (var e = 0; e < player.Boobies.length; e++) {
+            TotalMilk += player.Boobies[e].Milk;
+            TotalMilkMax += player.Boobies[e].MilkMax
         }
-        if (player.Boobies[b].Milk > 0.1) {
-            player.Boobies[b].Milk = Math.max(0, player.Boobies[b].Milk);
-            TotalMilk += player.Boobies[b].Milk;
-            TotalMilkMax += player.Boobies[b].MilkMax;
-            document.getElementById("MilkBar").style.display = 'block';
-        } else {
-            document.getElementById("MilkBar").style.display = 'none';
+        var MilkPercent = TotalMilk / TotalMilkMax;
+        if (false) {
+            EventLog("You breasts are so full that they have started leaking!")
         }
-    }
-    var MilkProcent = TotalMilk / TotalMilkMax;
-    document.getElementById("FluidMilk").innerHTML = Math.round((Math.round(TotalMilk) / 1000) * 10) / 10 + "L";
-    document.getElementById("FluidMilk").style.width = MilkProcent * 100 + "%";
+        document.getElementById("FluidMilk").innerHTML = Math.round((Math.round(TotalMilk) / 1000) * 10) / 10 + "L";
+        document.getElementById("FluidMilk").style.width = MilkPercent * 100 + "%";
 
-    if (false) {
-        EventLog("You breasts are so full that they have started leaking.")
+    } else {
+        document.getElementById("MilkBar").style.display = 'none';
     }
-
     if (House.Dormmates.length > 0) {
         for (var e = 0; e < House.Dormmates.length; e++) {
             EssenceCheck(House.Dormmates[e]);

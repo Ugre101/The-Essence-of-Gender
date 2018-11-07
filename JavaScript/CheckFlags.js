@@ -70,8 +70,9 @@
                 player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 600);
                 player.Boobies[b].MilkRate = 0;
                 player.Boobies[b].MilkBaseRate = 0;
-
             }
+			if (player.Boobies[b].MilkMax < 600)
+				player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 600);
         }
         if (!player.Pregnant.hasOwnProperty("Babies")) {
             player.Pregnant = {};

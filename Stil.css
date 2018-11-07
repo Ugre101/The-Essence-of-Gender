@@ -88,7 +88,7 @@
            right: 0;
        }
 
-       #WolrdMapContainer {
+       #WorldMapContainer {
            display: none;
        }
    }
@@ -102,7 +102,7 @@
        left: 0;
    }
 
-   div.rigth {
+   div.right {
        position: absolute;
        right: 0;
    }
@@ -175,7 +175,7 @@
        width: 100%;
    }
 
-   .TwoCollum {
+   .TwoColumn {
        display: grid;
        grid-template-columns: 1fr 1fr;
        grid-gap: 1em;
@@ -253,7 +253,7 @@
        z-index: -1;
    }
 
-   #WolrdMapContainer {
+   #WorldMapContainer {
        position: absolute;
        right: 2vh;
        top: 2vh;
@@ -434,6 +434,10 @@
        border-radius: 5px;
        border: 2px solid black;
        background-color: rgb(235, 235, 228);
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
    }
 
    #BattleLog {
@@ -481,6 +485,10 @@
        border: 2px solid black;
        background-color: rgb(192, 189, 192);
        justify-items: center;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
    }
 
    div.AfterBattleImg {

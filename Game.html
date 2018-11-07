@@ -38,7 +38,7 @@
 				<select id="haircolor">
 					<option value="blonde">Blonde</option>
 					<option value="brown">Brown</option>
-					<option value="dark brown">Darkbrown</option>
+					<option value="dark brown">Dark Brown</option>
 					<option value="black">Black</option>
 					<option value="red">Red</option>
 				</select>
@@ -62,14 +62,12 @@
 
 	<!-- page2: Start page set tone, necessary start info and start settings -->
 	<div id="page2" class="None">
-		<p>After celebrating your coming of age is it time for you to leave your family home and make a
-			life of your own. How will you fare in this world where the weak submit and the strong dominate?</p>
+		<p>After celebrating your coming of age, it is time for you to leave your family's home and make a
+			life on your own. How will you fare in this world where the weak submit and the strong dominate?</p>
 		<p id="looks"></p>
-		<br><br>
-		<p>Your first stop on this adventure is the local outpost marked with an C on your map where rest for the night and
-			recover</p>
+		<p>Your first stop on this adventure is the local outpost marked with a C on your map. You can rest for the night and recover here.</p>
 		<div>
-			<p>Notes: You can move with mouse, wasd or arrow keys</p>
+			<p>Notes: You can move with mouse, wasd or arrow keys.</p>
 			<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually? (Also: vore?)</label>
 			<input type="button" id="StartAutoEssence" value="Auto TF true" />
 			<input type="button" id="VoreStart" value="Vore false" />
@@ -79,7 +77,7 @@
 
 	<div id="map" class="None">
 		<canvas id="hem"></canvas>
-		<div id="WolrdMapContainer">
+		<div id="WorldMapContainer">
 			<canvas id="WorldMap"></canvas>
 			<p id="StatusArea">Start</p>
 		</div>
@@ -98,7 +96,7 @@
 			<h2>Fluids</h2>
 		</div>
 		<div id="FluidPart">
-			<div class="TwoCollum">
+			<div class="TwoColumn">
 				<div id="CumBar">
 					<label for="FluidCum">Cum</label>
 					<div class="FullFluidBar">
@@ -275,7 +273,7 @@
 	</div>
 
 	<div id="optionpage" class="Options None">
-		<div class="TwoCollum">
+		<div class="TwoColumn">
 			<div>
 				<label for="backcolor">Backcolor</label>
 				<input type="color" id="backcolor" value="#9099a7" />
@@ -375,7 +373,7 @@
 			<br><input type="button" id="EssenceAuto" value="Essence Auto" />
 			<p>Warning: if you play on manual, switching to auto will change you according to your current Femininity
 				and Masculinity, so if you have spent a lot of Essence it will be lost.</p>
-			<div id="ManualGrowth" class="TwoCollum None">
+			<div id="ManualGrowth" class="TwoColumn None">
 				<input type="button" id="GrowBreast" value="Breast menu" />
 				<input type="button" id="GrowPussy" value="Pussy menu" />
 				<input type="button" id="GrowDick" value="Dick menu" />
@@ -546,7 +544,7 @@
 			<div id="Mascu" class="Masc"></div>
 			<label for="Femin">Femininity</label>
 			<div id="Femin" class="Femi"></div>
-			<div class="TwoCollum">
+			<div class="TwoColumn">
 				<div>
 					<label for="PArousal">Arousal</label>
 					<div id="PArousal" class="Arousal"></div>
@@ -568,7 +566,7 @@
 			<div id="EMascu" class="Masc"></div>
 			<label for="EFemin">Femininity</label>
 			<div id="EFemin" class="Femi"></div>
-			<div class="TwoCollum">
+			<div class="TwoColumn">
 				<div>
 					<label for="EArousal">Arousal</label>
 					<div id="EArousal" class="Arousal"></div>
@@ -1049,6 +1047,7 @@
 	<script src="JavaScript/Save.js"></script>
 	<script src="JavaScript/SexAfterBattle.js"></script>
 	<script src="JavaScript/SuccubusDungeon.js"></script>
+	<script src="JavaScript/TfBonus.js"></script>
 	<script src="JavaScript/TfEngine.js"></script>
 	<script src="JavaScript/TheFarm.js"></script>
 	<script src="JavaScript/Townhall.js"></script>
