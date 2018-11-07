@@ -37,7 +37,9 @@
                 CumTF: true,
                 ChildTF: false,
                 VCumDigestion: true,
-                MilkTF: true
+                MilkTF: true,
+                AnalDigestion: true,
+                AbsorbEssence: true
             }
         }
     });
@@ -80,7 +82,9 @@
                 CumTF: true,
                 ChildTF: false,
                 VCumDigestion: true,
-                MilkTF: true
+                MilkTF: true,
+                AnalDigestion: true,
+                AbsorbEssence: true
             }
         }
     });
