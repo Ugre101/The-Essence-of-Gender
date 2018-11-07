@@ -734,7 +734,7 @@
                         player.Int += Math.round(player.Vore.Stomach[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Stomach[e].Charm / snowA);
                         player.Will += Math.round(player.Vore.Stomach[e].Willpower / snowA);
-                        player.Will += Math.round(player.Vore.Stomach[e].End / snowA);
+                        player.End += Math.round(player.Vore.Stomach[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Stomach[e].SexSkill / snowA);
                     }
                     EventLog("You have digested " + player.Vore.Stomach[e].Name + " " + player.Vore.Stomach[e].Race + " " + player.Vore.Stomach[e].FirstName + " " + player.Vore.Stomach[e].LastName);
@@ -788,7 +788,7 @@
                         player.Int += Math.round(player.Vore.Vagina[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Vagina[e].Charm / snowA);
                         player.Will += Math.round(player.Vore.Vagina[e].Willpower / snowA);
-                        player.Will += Math.round(player.Vore.Vagina[e].End / snowA);
+                        player.End += Math.round(player.Vore.Vagina[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Vagina[e].SexSkill / snowA);
                     }
                     EventLog("The only trace left of " + player.Vore.Vagina[e].Name + " " + player.Vore.Vagina[e].Race + " " + player.Vore.Vagina[e].FirstName + " " + player.Vore.Vagina[e].LastName + " is a trail of pussy discharge traveling down your legs.");
@@ -867,7 +867,7 @@
                         player.Int += Math.round(player.Vore.Breast[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Breast[e].Charm / snowA);
                         player.Will += Math.round(player.Vore.Breast[e].Willpower / snowA);
-                        player.Will += Math.round(player.Vore.Breast[e].End / snowA);
+                        player.End += Math.round(player.Vore.Breast[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Breast[e].SexSkill / snowA);
                     }
                     EventLog("There is nothing but milk left of " + player.Vore.Breast[e].Name + " " + player.Vore.Breast[e].Race + " " + player.Vore.Breast[e].FirstName + " " + player.Vore.Breast[e].LastName);
@@ -931,7 +931,7 @@
                         player.Int += Math.round(player.Vore.Balls[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Balls[e].Charm / snowA);
                         player.Will += Math.round(player.Vore.Balls[e].Willpower / snowA);
-                        player.Will += Math.round(player.Vore.Balls[e].End / snowA);
+                        player.End += Math.round(player.Vore.Balls[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Balls[e].SexSkill / snowA);
                     }
                     EventLog("There is nothing but cum left of the " + player.Vore.Balls[e].Name + " " + player.Vore.Balls[e].Race + " " + player.Vore.Balls[e].FirstName + " " + player.Vore.Balls[e].LastName);
@@ -988,7 +988,7 @@
                         player.Int += Math.round(player.Vore.Anal[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Anal[e].Charm / snowA);
                         player.Will += Math.round(player.Vore.Anal[e].Willpower / snowA);
-                        player.Will += Math.round(player.Vore.Anal[e].End / snowA);
+                        player.End += Math.round(player.Vore.Anal[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Anal[e].SexSkill / snowA);
                     }
                     player.Vore.Anal.splice(e, 1);
