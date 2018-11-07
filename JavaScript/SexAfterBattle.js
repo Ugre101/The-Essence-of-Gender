@@ -272,11 +272,16 @@
         document.getElementById("PlayerVagina").style.display = 'block';
         document.getElementById("PlayerDick").style.display = 'block';
         document.getElementById("Anal").style.display = 'block';
+        document.getElementById("Breast").style.display = 'block';
+        document.getElementById("EnemyVagina").style.display = 'block';
+        document.getElementById("EnemyDick").style.display = 'block';
         document.getElementById("map").style.display = 'block';
         document.getElementById("status").style.display = 'block';
         document.getElementById("buttons").style.display = 'block';
         document.getElementById("DrainMenu").style.display = 'block';
         document.getElementById("InjectMenu").style.display = 'block';
+        document.getElementById("EventLog").style.display = 'block';
+        LastPressed = " ";
         return;
     });
 
