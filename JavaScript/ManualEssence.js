@@ -1,3 +1,8 @@
+function ManualGrowthScale() {
+    return (player.Height / 160)
+ } // I put this a function to make it easier to trial different formulas.
+ 
+
 function EssenceCost(what) {
     return Math.min(2000, Math.round((10 * Math.pow(1.1, what.Size))));
 };
@@ -57,7 +62,7 @@ function BiggerChest(index) {
     var cost = EssenceCost(player.Boobies[index]);
     if (player.Femi >= cost) {
         player.Femi -= cost;
-        player.Boobies[index].Size++;
+        player.Boobies[index].Size += 1 * ManualGrowthScale();
     }
 }
 document.getElementById("GrowPussy").addEventListener("click", function () {
@@ -98,7 +103,7 @@ function BiggerPussy(index) {
     var cost = EssenceCost(player.Pussies[index]);
     if (player.Femi >= cost) {
         player.Femi -= cost;
-        player.Pussies[index].Size++;
+        player.Pussies[index].Size += 1 * ManualGrowthScale();
     }
 }
 document.getElementById("GrowDick").addEventListener("click", function () {
@@ -129,7 +134,7 @@ function BiggerDick(index) {
     var cost = EssenceCost(player.Dicks[index]);
     if (player.Masc >= cost) {
         player.Masc -= cost;
-        player.Dicks[index].Size++;
+        player.Dicks[index].Size += 1 * ManualGrowthScale();
     }
 }
 
@@ -173,7 +178,7 @@ function BiggerBalls(index) {
     var cost = EssenceCost(player.Balls[index]);
     if (player.Masc >= cost) {
         player.Masc -= cost;
-        player.Balls[index].Size++;
+        player.Balls[index].Size += 1 * ManualGrowthScale();
     }
 };
 
