@@ -222,6 +222,13 @@
        width: 500px;
        height: auto;
        text-align: center;
+       font-weight: lighter;
+       color: #9e3c8f;
+       letter-spacing: 0.1em;
+   }
+
+   #StartPage>h1 {
+       text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
    }
 
    #CharCreator {
@@ -357,39 +364,16 @@
        border-radius: 5px;
        text-align: center;
        position: relative;
+       padding-bottom: 1em;
    }
 
-   #LevelMenuText {
+   p.MenuText {
        min-height: 5em;
        height: auto;
        box-shadow: 0 0 1px 1px black;
        border-radius: 10px;
        background-color: rgb(255, 255, 255);
-       width: 50%;
-       margin: 1em auto 1em auto;
-       padding: 1em;
-       text-align: center;
-   }
-
-   #PerkMenuText {
-       min-height: 5em;
-       height: auto;
-       box-shadow: 0 0 1px 1px black;
-       border-radius: 10px;
-       background-color: rgb(255, 255, 255);
-       width: 50%;
-       margin: 1em auto 1em auto;
-       padding: 1em;
-       text-align: center;
-   }
-
-   #VorePerkMenuText {
-       min-height: 5em;
-       height: auto;
-       box-shadow: 0 0 1px 1px black;
-       border-radius: 10px;
-       background-color: rgb(255, 255, 255);
-       width: 70%;
+       width: 75%;
        margin: 1em auto 1em auto;
        padding: 1em;
        text-align: center;
@@ -434,10 +418,10 @@
        border-radius: 5px;
        border: 2px solid black;
        background-color: rgb(235, 235, 228);
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
+       -webkit-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+       user-select: none;
    }
 
    #BattleLog {
@@ -485,10 +469,10 @@
        border: 2px solid black;
        background-color: rgb(192, 189, 192);
        justify-items: center;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
+       -webkit-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+       user-select: none;
    }
 
    div.AfterBattleImg {
@@ -585,9 +569,15 @@
        max-width: 58%;
        min-height: 50%;
        max-height: 95%;
-       border: 2px solid black;
+       box-shadow: 0 0 2px 1px black;
        border-radius: 5px;
        overflow: auto;
+       padding: 1em;
+   }
+
+   #Upgrades {
+       width: 100%;
+       text-align: center;
    }
 
    #ButtonMates {
@@ -822,6 +812,7 @@
        border: 2px solid black;
        border-radius: 5px;
    }
+
    #ChildCorner {
        display: grid;
        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

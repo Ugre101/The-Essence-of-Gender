@@ -144,8 +144,8 @@
 
     var Partners = {
         Succubus: {
-            FirstName: "Sarischa",
-            LastName: "Alomendi",
+            FirstName: "Lynnlea",
+            LastName: "Qinienne",
             Equal: false,
             Yours: false,
             Like: 0,
@@ -409,7 +409,7 @@
         document.getElementById("ExtraStats").innerHTML = "Virility: " + player.Virility + "<br>Fertility: " + player.Fertility + "<br>Essence drain: " + player.EssenceDrain +
             "<br>Give essence: " + player.GiveEssence + "<br> passive rest rate: " + player.RestRate;
     });
-	
+
 	    document.getElementById("Perks").addEventListener("click", function () {
 			printS();
         DisplayNone();
@@ -423,14 +423,14 @@
 		else
 			document.getElementById("VLevels").innerHTML = "";
     });
-	
-	
+
+
     document.getElementById("CloseExtra").addEventListener("click", function () {
         battle = false;
         document.getElementById("map").style.display = 'block';
         document.getElementById("DetailedInfo").style.display = 'none';
     });
-	
+
 	document.getElementById("CloseLevel").addEventListener("click", function () {
         battle = false;
         document.getElementById("map").style.display = 'block';
@@ -687,21 +687,28 @@
             document.getElementById("status").style.display = 'block';
             document.getElementById("buttons").style.display = 'block';
         } else if (Dungeon) {
-            document.getElementById("SexText").innerHTML = HeightSystem(player, enemies[EnemyIndex]);
-            document.getElementById("AfterBattle").style.display = 'grid';
-            document.getElementById("SexButtons").style.display = 'grid';
-            if (Settings.ImgPack) {
-                document.getElementById("AfterBattle").classList.remove("AfterBattle");
-                document.getElementById("AfterBattle").classList.add("AfterBattleImg");
-                document.getElementById("MyImg").style.display = 'block';
-
+            if (Wave == 4 && false) {
+                document.getElementById("DungeonSystem").style.display = 'block';
+                document.getElementById("DungeonText").innerHTML = "What should you do with her?";
+                document.getElementById("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" +
+                "<input type=\"button\" id=\"MakeSubmut\" value=\"Make her understand her place.\" >";
             } else {
-                document.getElementById("AfterBattle").classList.add("AfterBattle");
-                document.getElementById("AfterBattle").classList.remove("AfterBattleImg");
-                document.getElementById("MyImg").style.display = 'none';
+                document.getElementById("SexText").innerHTML = HeightSystem(player, enemies[EnemyIndex]);
+                document.getElementById("AfterBattle").style.display = 'grid';
+                document.getElementById("SexButtons").style.display = 'grid';
+                if (Settings.ImgPack) {
+                    document.getElementById("AfterBattle").classList.remove("AfterBattle");
+                    document.getElementById("AfterBattle").classList.add("AfterBattleImg");
+                    document.getElementById("MyImg").style.display = 'block';
+
+                } else {
+                    document.getElementById("AfterBattle").classList.add("AfterBattle");
+                    document.getElementById("AfterBattle").classList.remove("AfterBattleImg");
+                    document.getElementById("MyImg").style.display = 'none';
+                }
+                CheckArousal();
+                AfterBattleButtons();
             }
-            CheckArousal();
-            AfterBattleButtons();
         } else {
             document.getElementById("SexText").innerHTML = HeightSystem(player, enemies[EnemyIndex]);
             document.getElementById("AfterBattle").style.display = 'grid';
@@ -1163,7 +1170,7 @@
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
     var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
-    var FirstDungeon = new Npc("FirstDungeon", "Dungeon",grid * 8, grid * 18, grid *4, grid * 2, "RGB(133,94,66)");
+    var FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)");
 
     // Character
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
@@ -1172,9 +1179,10 @@
 
     var NpcName;
     var EnemyIndex;
-	var mousedowner = false;
-	var mFunction;
-	var mouseX; var mouseY;
+    var mousedowner = false;
+    var mFunction;
+    var mouseX;
+    var mouseY;
 
     function Touching() {
         for (var j = 0; j < enemies.length; j++) {
@@ -1183,7 +1191,7 @@
                 if (mousedowner) {
                     clearInterval(mFunction);
                     mousedowner = false;
-					console.log("Touching");
+                    console.log("Touching");
                 }
                 document.getElementById("map").style.display = 'none';
                 document.getElementById("Encounter").style.display = 'grid';
@@ -1205,7 +1213,7 @@
                 if (mousedowner) {
                     clearInterval(mFunction);
                     mousedowner = false;
-					console.log("Touching2");
+                    console.log("Touching2");
                 }
                 battle = true;
                 sprite.x = startarea.width / 2 - grid;
@@ -1272,6 +1280,12 @@
 
     function PrintEnemies() {
         for (var e = 0; e < enemies.length; e++) {
+            for (var i = e + 1; i < enemies.length; i++) {
+                if (enemies[e].XPos == enemies[i].XPos) {
+                    enemies[e].XPos = RandomInt(2, 18) * grid;
+                }
+            }
+
             ctx.fillStyle = enemies[e].Color;
             ctx.fillRect(enemies[e].XPos, enemies[e].YPos, enemies[e].Size, enemies[e].Size);
             var color;
@@ -1427,8 +1441,8 @@
         if (TF.Status) {
             TfEngine();
         }
-//		if (BonusTF.Status) {TfBoost();}
-		
+        //		if (BonusTF.Status) {TfBoost();}
+
         if (!battle && Settings.EssenceAuto) {
             Laglimiter++;
             if (Laglimiter % 80 == 0) {
@@ -1471,30 +1485,30 @@
     });
 */
 
-	function mousedownfunc() {
-		var MapRect = startarea.getBoundingClientRect();
-		if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x < (startarea.width - 2 * grid)) {
-			sprite.x += grid;
-		} else if (mouseX - MapRect.left + grid / 2 < sprite.x && sprite.x > grid) {
-			sprite.x -= grid;
-		}
-		if (mouseY - MapRect.top > sprite.y + 1.5 * grid && sprite.y < (startarea.height - 2 * grid)) {
-			sprite.y += grid;
-		} else if (mouseY - MapRect.top + grid / 2 < sprite.y && sprite.y > grid) {
-			sprite.y -= grid;
-		}
-		Touching();
-		CheckDoor();
-	}
+    function mousedownfunc() {
+        var MapRect = startarea.getBoundingClientRect();
+        if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x < (startarea.width - 2 * grid)) {
+            sprite.x += grid;
+        } else if (mouseX - MapRect.left + grid / 2 < sprite.x && sprite.x > grid) {
+            sprite.x -= grid;
+        }
+        if (mouseY - MapRect.top > sprite.y + 1.5 * grid && sprite.y < (startarea.height - 2 * grid)) {
+            sprite.y += grid;
+        } else if (mouseY - MapRect.top + grid / 2 < sprite.y && sprite.y > grid) {
+            sprite.y -= grid;
+        }
+        Touching();
+        CheckDoor();
+    }
 
     startarea.addEventListener('mousedown', function (e) {
         if (!mousedowner) {
             mousedowner = true;
-			mouseX = e.pageX;
-			mouseY = e.pageY;
-			mFunction = setInterval(mousedownfunc, 100);
+            mouseX = e.pageX;
+            mouseY = e.pageY;
+            mFunction = setInterval(mousedownfunc, 100);
         }
-	});
+    });
 
     document.addEventListener('mouseup', function () {
         if (mousedowner) {
@@ -1512,7 +1526,7 @@
 			}
 		}
 	});
-		
+
 	function printS() {
 		player.printStats = "Str: "+player.Str + "<br>End: " + player.End + "<br>Will: " + player.Will + "<br>Charm: " + player.Charm + "<br>Int: " + player.Int + "<br>Skill: " + player.SexSkill+"<br>";
 		player.printPerks = "";

@@ -65,7 +65,8 @@
 		<p>After celebrating your coming of age, it is time for you to leave your family's home and make a
 			life on your own. How will you fare in this world where the weak submit and the strong dominate?</p>
 		<p id="looks"></p>
-		<p>Your first stop on this adventure is the local outpost marked with a C on your map. You can rest for the night and recover here.</p>
+		<p>Your first stop on this adventure is the local outpost marked with a C on your map. You can rest for the night and
+			recover here.</p>
 		<div>
 			<p>Notes: You can move with mouse, wasd or arrow keys.</p>
 			<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually? (Also: vore?)</label>
@@ -122,10 +123,10 @@
 				<input type="button" id="ShowInventory" value="Inventory" />
 				<input type="button" id="Save" value="Save" />
 				<input type="button" id="Load" value="Load" />
-				<input type="button" id="Options" value="Options" />
 				<input type="button" id="MoreButtons" value="More buttons" />
 			</div>
 			<div id="SecondButtnos">
+				<input type="button" id="Options" value="Options" />
 				<input type="button" id="EssenceOptions" value="Essence" />
 				<input type="button" id="VoreLooks" value="Vore" />
 				<input type="button" id="LessButtons" value="Less buttons" />
@@ -176,7 +177,7 @@
 
 	<div id="LevelMenu" class="LPMenu None">
 		<h1>Level Menu</h1>
-		<p id="LevelMenuText"></p>
+		<p id="LevelMenuText" class="MenuText"></p>
 		<p id="SkillPointsLeft"></p>
 		<div>
 			<input type="button" id="GainStr" value="Strength" title="Makes hit stronger">
@@ -200,7 +201,7 @@
 	</div>
 
 	<div id="PerksMenu" class="LPMenu None">
-		<p id="PerkMenuText"></p>
+		<p id="PerkMenuText" class="MenuText"></p>
 		<p id="PerkPointsLeft"></p>
 		<div>
 			<input type="button" id="ExtraHealth" value="Extra Health" title="Increase max health by 20">
@@ -242,12 +243,12 @@
 	<div id="Levels" class="None Looks">
 		<h3>Stats:</h3>
 		<p id="StatLevels"></p>
-		<h3>Perks:</h3>		
+		<h3>Perks:</h3>
 		<p id="PerkLevels"></p>
 		<p id="VLevels"></p>
 		<input type="button" id="CloseLevel" value="Close" />
 	</div>
-	
+
 	<div id="ChildrenMenu" class="None">
 		<div id="ChildCorner"></div>
 		<input type="button" id="LeaveChildrenMenu" value="close" />
@@ -427,7 +428,7 @@
 	</div>
 
 	<div id="Inventory" class="None">
-		<p id="InventoryText" class="TextBox"></p>
+		<p id="InventoryText" class="MenuText"></p>
 		<div id="InventoryBag"></div>
 		<input type="button" id="InventoryLeave" value="Close" />
 	</div>
@@ -489,14 +490,14 @@
 			<input type="button" id="regurgitateAnal" value="regurgitate" />
 		</div>
 		<div id="VorePerkMenu">
-			<p id="VorePerkMenuText"></p>
+			<p id="VorePerkMenuText" class="MenuText"></p>
 			<p id="VorePerkPointsLeft"></p>
 			<div>
 				<input type="button" id="AbsorbEssence" value="Absorb prey essence" title="Absorb essence of masculinity and femininity from your prey">
 				<input type="button" id="FasterDigestion" value="Faster digestion" title="Digest your prey faster, also speeds up gain of fat, cum and milk">
 				<input type="button" id="HigherCapacity" value="Higher capacity" title="Increase the total weight of prey your body can hold">
 				<input type="button" id="AbsorbHeight" value="Absorb height" title="Grow taller by absorbing height from your prey. (Growth limit [160cm + 20 * perklevel] t.ex. perk level 3 allows you to grow to 220cm)">
-				<input type="button" id="AbsorbStats" value="Absorb prey stats" title="Get stronger while digesting! (Costs 10 levels, max effectiveness of 10)">
+				<input type="button" id="AbsorbStats" value="Absorb prey stats" title="Get stronger while digesting! (Costs 10 perk points, max level of 10)">
 				<input type="button" id="PredatorsMeta" value="Predators metabolism" title="Increase your fat burn rate and makes you recover faster, burn more fat the fatter you are.">
 			</div>
 
@@ -794,11 +795,11 @@
 			<div>
 				<input type="button" id="Sleep" value="Sleep" />
 				<input type="button" id="Dorm" value="Dorm" />
-				<input type="button" id="Brothel" value="Brothel" />
 			</div>
 			<div>
 				<input type="button" id="UpgradeHome" value="Home upgrades" />
 				<input type="button" id="Portal" value="Portal" />
+				<input type="button" id="Brothel" value="Brothel" />
 			</div>
 			<br>
 			<div>
@@ -1060,7 +1061,7 @@
 	<script src="JavaScript/Save.js"></script>
 	<script src="JavaScript/SexAfterBattle.js"></script>
 	<script src="JavaScript/SuccubusDungeon.js"></script>
-<!--	<script src="JavaScript/TfBonus.js"></script> -->
+	<!--	<script src="JavaScript/TfBonus.js"></script> -->
 	<script src="JavaScript/TfEngine.js"></script>
 	<script src="JavaScript/TheFarm.js"></script>
 	<script src="JavaScript/Townhall.js"></script>
