@@ -1,9 +1,15 @@
 function AfterBattleButtons() {
     if (enemies[EnemyIndex].Orgasm > 4 && House.Dormmates.length < (House.Dorm * 3)) {
-        document.getElementById("CaptureOpponent").style.display = "block"
+        if (Dungeon) {
+            document.getElementById("DungeonCaptureOpponent").style.display = 'block'
+        } else {
+            document.getElementById("CaptureOpponent").style.display = 'block'
+        }
     } else {
         document.getElementById("CaptureOpponent").style.display = "none"
+        document.getElementById("DungeonCaptureOpponent").style.display = 'none'
     }
+
     if (Dungeon) {
         document.getElementById("DungeonStop").style.display = 'block';
         document.getElementById("StopSex").style.display = 'none';

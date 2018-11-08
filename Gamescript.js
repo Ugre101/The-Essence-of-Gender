@@ -1492,25 +1492,21 @@
             mousedowner = true;
 			mouseX = e.pageX;
 			mouseY = e.pageY;
-			console.log(e.pageX+ " "+ e.pageY);
 			mFunction = setInterval(mousedownfunc, 100);
         }
 	});
 
-    startarea.addEventListener('mouseup', function () {
+    document.addEventListener('mouseup', function () {
         if (mousedowner) {
             clearInterval(mFunction);
-			console.log("MouseUp");
             mousedowner = false;
         }
     });
-
 	startarea.addEventListener('mousemove', function (e) {
 		if (mousedowner)
 		{
 			if(mouseX != e.pageX || mouseY != e.pageY)
 			{
-				console.log(e.pageX+ " "+ e.pageY);
 				mouseX = e.pageX;
 				mouseY = e.pageY;
 			}
