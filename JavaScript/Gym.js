@@ -4,7 +4,7 @@ document.getElementById("Train").addEventListener("click", function () {
         var burn = Math.round(gains * 4);
         player.Muscle += gains;
         player.Fat -= burn;
-        document.getElementById("GymText").innerHTML = "You burn " + burn + "kg of fat and gain " + gains + "kg of muscle."
+        document.getElementById("GymText").innerHTML = "You burn " + KgToPound(burn) + " of fat and gain " + KgToPound(gains) + " of muscle."
         LastTrainDay = Flags.Date.Day;
         LastTrainMonth = Flags.Date.Month;
     } else {
@@ -15,7 +15,7 @@ document.getElementById("BurnFat").addEventListener("click", function () {
     if (player.Fat > player.Weight * 0.1) {
         var burn = Math.round(player.Fat * 0.09);
         player.Fat -= burn;
-        document.getElementById("GymText").innerHTML = "You speent an hour doing cardio, when stepping on the scale in the shower room you are happy to see you lost " + burn + "kg.";
+        document.getElementById("GymText").innerHTML = "You speent an hour doing cardio, when stepping on the scale in the shower room you are happy to see you lost " + KgToPound(burn) + ".";
     } else {
         document.getElementById("GymText").innerHTML = "Buring more fat would be dangerous!";
     }

@@ -9,6 +9,15 @@ function CmToInch(cm) {
             return Inch + " inches"
         }
     } else {
-        return cm + "cm";
+        return Math.round(cm) + "cm";
     }
 }
+
+function KgToPound(kg) {
+    if (Settings.Inch) {
+        return Math.round(kg*2.2046) + "lb"
+    }
+    else {
+        return Math.round(kg) + "kg";
+    }
+} 

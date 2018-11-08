@@ -123,6 +123,7 @@ function SuccubusBoss() {
     EvilNameGiver(OP);
     return OP;
 }
+
 function SuccubusBossUnique() {
     var OP = new enemy("Dungeon Mistress", "Succubus", 0, 9999, RandomInt(20, 25), RandomInt(60, 75), RandomInt(65, 80), RandomInt(65, 80),
         RandomInt(45, 65), RandomInt(105, 145), 0, 0, 800, 800, 1500, 1500, RandomInt(2, 18) * grid, RandomInt(2, 18) * grid,
@@ -141,10 +142,15 @@ function SuccubusBossUnique() {
 var Dungeon = false;
 var Wave = 0;
 document.getElementById("EnterDungeon").addEventListener("click", function () {
-    enemies = [FirstWave(), SecondWave(), ThirdWave(), FourthWave(), SuccubusBoss()];
+    enemies = [];
+    if (false) {
+        enemies = [FirstWave(), SecondWave(), ThirdWave(), FourthWave(), SuccubusBossUnique()];
+    } else {
+        enemies = [FirstWave(), SecondWave(), ThirdWave(), FourthWave(), SuccubusBoss()];
+    }
     document.getElementById("FirstDungeon").style.display = 'none';
-    document.getElementById("FirstDungeonText").innerHTML = "Wave " + (Wave+2);
-  
+    document.getElementById("FirstDungeonText").innerHTML = "Wave " + (Wave + 2);
+
     document.getElementById("Encounter").style.display = 'grid';
     document.getElementById("BattleText").innerHTML = null;
     document.getElementById("BattleText2").innerHTML = null;
@@ -155,7 +161,7 @@ document.getElementById("EnterDungeon").addEventListener("click", function () {
     UpdateStats();
     Dungeon = true;
 });
-document.getElementById("DungeonStopButton").addEventListener("click", function() {
+document.getElementById("DungeonStopButton").addEventListener("click", function () {
     player.Orgasm = 0;
     document.getElementById("AfterBattle").style.display = 'none';
     document.getElementById("PlayerMouth").style.display = 'block';
@@ -170,10 +176,18 @@ document.getElementById("DungeonStopButton").addEventListener("click", function(
 
     document.getElementById("FirstDungeon").style.display = 'block';
     Wave++;
-
+    if (Wave == 4 && !Flags.BeatSuccubus && false) {
+        Flags.BeatSuccubus = true;
+        document.getElementById("FirstDungeonText").innerHTML = "Having beaten her you found a teleport shard to a new world,"
+        if (House.Portal) {
+            document.getElementById("FirstDungeonText").innerHTML += " you can use it at your portal at home!"
+        } else {
+            document.getElementById("FirstDungeonText").innerHTML += " you should build a portal at your mansion so you can use it."
+        }
+    }
     LastPressed = " ";
 });
-document.getElementById("DungenoLose").addEventListener("click", function() {
+document.getElementById("DungenoLose").addEventListener("click", function () {
     battle = false;
     document.getElementById("Lose").style.display = 'none';
     document.getElementById("map").style.display = 'block';
