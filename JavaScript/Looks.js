@@ -88,7 +88,7 @@ function AnalLook(who) {
 }
 
 function BoobSizeConvertor(Size) {
-    switch (Size) {
+    switch (Math.round(Size)) {
         case 0:
         case 1:
             return "flat";

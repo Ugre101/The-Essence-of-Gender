@@ -25,14 +25,16 @@
                     CumTF: false,
                     ChildTF: false,
                     VCumDigestion: false,
-                    MilkTF: false
-
+                    MilkTF: false,
+                    AnalDigestion: false
                 }
             }
             if (!Settings.VoreSettings.hasOwnProperty("AbsorbEssence")) {
                 Settings.VoreSettings.AbsorbEssence = "Both";
             }
         }
+        if (!Settings.VoreSettings.hasOwnProperty("AnalDigestion"))
+            Settings.VoreSettings.AnalDigestion = false;
         if (!Settings.hasOwnProperty("EssenceAuto")) {
             Settings.EssenceAuto = true;
             console.log("Added EssenceAuto");
@@ -71,8 +73,8 @@
                 player.Boobies[b].MilkRate = 0;
                 player.Boobies[b].MilkBaseRate = 0;
             }
-			if (player.Boobies[b].MilkMax < 600)
-				player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 600);
+            if (player.Boobies[b].MilkMax < 600)
+                player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 600);
         }
         if (!player.Pregnant.hasOwnProperty("Babies")) {
             player.Pregnant = {};
