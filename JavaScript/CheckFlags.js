@@ -223,6 +223,15 @@
                 case "Infernal milk":
                     player.Inventory[e].Use = ItemDict.infernalMilk.Use;
                     break;
+                case "Milk+":
+                    player.Inventory[e].Use = ItemDict.SuccMilk.Use;
+                    break;
+                case "Semen+":
+                    player.Inventory[e].Use = ItemDict.IncSemen.Use;
+                    break;
+                case "Book":
+                    player.Inventory[e].Use = ItemDict.book.Use;
+                    break;
             }
         }
     }

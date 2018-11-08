@@ -40,7 +40,7 @@ var RacesWitch = ["Human", "Elf", "Dark elf"];
 var RacesCave = ["Goblin", "Imp"];
 var RacesCave2 = ["Goblin", "Demon"];
 var RacesCave3 = ["Dhampir", "Demon"];
-var RacesCave4 = ["Succubus", "incubus"];
+var RacesCave4 = ["Succubus", "Incubus"];
 
 var dropRate = {
     "Human": 1.00,
@@ -57,7 +57,10 @@ var dropRate = {
     "Imp": 1.00,
     "Goblin": 1.00,
     "Dhampir": 1.00,
-    "Demon": 1.00
+    "Demon": 1.00,
+    "Succubus": 1.00, 
+    "Incubus": 1.00,
+    "Witch": 1.00
 }
 
 var FemaleFirstNames = ["Veronica", "Kyra", "Lauryn", "Alicja", "Tate", "Colleen", "Melody", "Pippa", "Keziah", "Melissa", "Lana", "Marie", "Molly", "Sandra", "Dannielle", "Yusra", "Laiba", "Gabrielle", "Syeda", "Amirah"];

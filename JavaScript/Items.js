@@ -14,7 +14,7 @@ const ItemDict = {
         Name: "Orc cum",
         Use: function(who){
             who.Masc += 50;
-            //if (who == player)
+            //if (who == who.
             EventLog("After drinking the orc cum, "+who.Name+" absorbs the manly essence of it.");
         },
         Equip: "No",
@@ -50,7 +50,7 @@ const ItemDict = {
         Use: function(who) {
             var z = Math.round(Math.random() * 40) + 10;
             z = parseInt(z);
-            player.Gold += z;
+            who.Gold += z;
             EventLog("What's in the bag? It's " + z + " coins!");
         },
         Equip: "No",
@@ -63,7 +63,7 @@ const ItemDict = {
         Use: function(who) {
             var z = Math.round(Math.random() * 40) + 10;
             z = parseInt(z);
-            player.Gold += z;
+            who.Gold += z;
             EventLog("What's in the bag? It's " + z + " coins!");
         },
         Equip: "No",
@@ -74,7 +74,7 @@ const ItemDict = {
     orcBrew: {
         Name: "Orc brew",
         Use: function(who) {
-            var z = Math.min(Math.round(player.MaxHealth / 10), player.MaxHealth - player.Health);
+            var z = Math.min(Math.round(who.MaxHealth / 10), who.MaxHealth - who.Health);
             who.Health += z;
             EventLog("Bottoms up!");
             if (z > 0)
@@ -87,8 +87,8 @@ const ItemDict = {
     trollMilk: {
         Name: "Troll Milk",
         Use: function(who) {
-            var z = Math.min(Math.round(player.MaxWillHealth / 10), player.MaxWillHealth - player.WillHealth);
-            player.WillHealth += z;
+            var z = Math.min(Math.round(who.MaxWillHealth / 10), who.MaxWillHealth - who.WillHealth);
+            who.WillHealth += z;
             EventLog("Bottoms up!");
             if (z > 0)
                 EventLog("You gained " + z + " willpower back!");
@@ -114,16 +114,16 @@ const ItemDict = {
     amazonGirdle: {
         Name: "Amazon's Girdle",
         Use: function(who) {
-            if (player.Masc > player.Femi + 100) {
-                player.Masc -= 50;
-                player.Femi += 50;
-            } else if (player.Masc + 100 < player.Femi) {
-                player.Masc += 50;
-                player.Femi -= 50;
+            if (who.Masc > who.Femi + 100) {
+                who.Masc -= 50;
+                who.Femi += 50;
+            } else if (who.Masc + 100 < who.Femi) {
+                who.Masc += 50;
+                who.Femi -= 50;
             } else {
-                var z = Math.round((player.Masc + player.Femi) / 2);
-                player.Masc = z;
-                player.Femi = z;
+                var z = Math.round((who.Masc + who.Femi) / 2);
+                who.Masc = z;
+                who.Femi = z;
             }
             EventLog("Tightening the girdle, you feel your essences balancing...");
         },
@@ -135,8 +135,8 @@ const ItemDict = {
     milkJug: {
         Name: "Milk Jug",
         Use: function(who) {
-            for (var i = 0; i < player.Boobies.length; i++) {
-                player.Boobies[i].MilkRate += 0.1;
+            for (var i = 0; i < who.Boobies.length; i++) {
+                who.Boobies[i].MilkRate += 0.1;
             }
             EventLog("Chugging the jug, you feel a shudder run through your chest...");
         },
@@ -148,7 +148,7 @@ const ItemDict = {
     fertilityIdol: {
         Name: "Fertility idol",
         Use: function(who) {
-            player.Femi += 100;
+            who.Femi += 100;
             EventLog("You absorb the statue's latent energies.");
         },
         Equip: "No",
@@ -159,7 +159,7 @@ const ItemDict = {
     cockyRock: {
         Name: "Cocky rock",
         Use: function(who) {
-            player.Masc += 100;
+            who.Masc += 100;
             EventLog("You absorb the rock's male essence.");
         },
         Equip: "No",
@@ -170,8 +170,8 @@ const ItemDict = {
     infernalSemen: {
         Name: "Infernal semen",
         Use: function(who) {
-            player.Masc += player.Femi;
-            player.Femi = 0;
+            who.Masc += who.Femi;
+            who.Femi = 0;
             EventLog("The infernally-hot semen burns your feminine essence, leaving you 100% male.");
         },
         Equip: "No",
@@ -182,14 +182,133 @@ const ItemDict = {
     infernalMilk: {
         Name: "Infernal milk",
         Use: function(who) {
-            player.Femi += player.Masc;
-            player.Masc = 0;
+            who.Femi += who.Masc;
+            who.Masc = 0;
             EventLog("The infernally-hot milk burns your masculine essence, leaving you 100% female.");
         },
         Equip: "No",
         Drop: "Yes",
         Does: "Turns masculinity into femininity",
         Title: "Turns your masculine side into another feminine one."
+    },
+	    SuccMilk: {
+        Name: "Milk+",
+        Use: function(who) {
+			var a = "", 
+			    b = "";
+            if(Settings.EssenceAuto == false && who.Boobies.length < 2)
+			{
+				if(who.Boobies[0].Size < 6)
+				{
+					who.Boobies[0].Size = 6;
+					a = "your breasts swell";
+				}
+				who.Boobies[1] = who.Boobies[0];
+				a += ", as another pair grow right below them to the same size!";
+			}
+			else if(Settings.EssenceAuto == false)
+			{
+				var c = 0;
+				for(var i = 0; i < who.Boobies.length; i++)
+				{
+					if(who.Boobies[i].Size < 6)
+					{
+						who.Boobies[i].Size = 6;
+						c++;
+					}
+				}
+				if (c > 0)
+					a = "your smallest breasts swell to D-cups!";
+			}
+			else if(who.Femi <= 3560)
+			{
+				who.Femi = 3561;
+				a = "your chest explodes with activity, leaving you with a feminized body, complete with massive breasts!";
+			}
+			else a = "your boobs vibrate with energy...";
+			FluidsEngine();
+			for(var i = 0; i < who.Boobies.length; i++)
+			{
+				if(who.Boobies[i].Milk < who.Boobies[i].MilkMax)
+				{
+				who.Boobies[i].Milk = who.Boobies[i].MilkMax;
+				b = "<br>A few seconds later, they're completely filled with milk!";
+				}
+			}
+			
+            EventLog("Feeling a flush of heat in your chest, you glance down just in time to see " + a + b);
+			FluidsEngine();
+        },
+        Equip: "No",
+        Drop: "Yes",
+        Does: "Makes you filled with milk!",
+        Title: "Guarantees milkiness."
+    },
+	    IncSemen: {
+        Name: "Semen+",
+        Use: function(who) {
+			var a = "", 
+			    b = "";
+            if(Settings.EssenceAuto == false && who.Balls.length < 2)
+			{
+				a = "your balls"
+				if(who.Balls[0].Size < 6)
+				{
+					who.Balls[0].Size = 6;
+					a += " swell";
+				}
+				who.Balls[1] = who.Balls[0];
+				a += ", as another pair grow right beside them to the same size!";
+			}
+			else if(Settings.EssenceAuto == false)
+			{
+				var c = 0;
+				for(var i = 0; i < who.Balls.length; i++)
+				{
+					if(who.Balls[i].Size < 6)
+					{
+						who.Balls[i].Size = 6;
+						c++;
+					}
+				}
+				if (c > 0)
+					a = "your smallest balls swell in size!";
+			}
+			else if(who.Masc <= 3560)
+			{
+				who.Masc = 3561;
+				a = "your groin explode with activity, leaving you with a masculinized body, complete with massive dicks and balls!";
+			}
+			else a = "your balls vibrate with energy...";
+			FluidsEngine();
+			for(var i = 0; i < who.Balls.length; i++)
+			{
+				if(who.Balls[i].Cum < who.Balls[i].CumMax)
+				{
+				who.Balls[i].Cum = who.Balls[i].CumMax;
+				b = " A few seconds later, they're completely filled with cum!";
+				}
+			FluidsEngine();
+			}
+			
+            EventLog("Feeling a flush of heat in your groin, you glance down just in time to see " + a + b);
+        },
+        Equip: "No",
+        Drop: "Yes",
+        Does: "Makes you filled with cum!",
+        Title: "Guarantees cum-filling."
+    },
+	    book: {
+        Name: "Book",
+        Use: function(who) {
+			who.Int++;
+			who.Arousal = 100;
+            EventLog("A dirty magazine, that's made you extremely aroused...");
+        },
+        Equip: "No",
+        Drop: "Yes",
+        Does: "Int +1",
+        Title: "Magically connects to another dimension's internet, but only shows porn."
     },
     blade: {
         // currently used in TestFlags.js

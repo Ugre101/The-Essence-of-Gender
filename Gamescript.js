@@ -1546,7 +1546,7 @@
 			if(Object.keys(v).length > 0) {
 				for (var i = 0; i < Object.keys(v).length - 1; i++)
 				{
-					player.printVore += v[Object.keys(v)[i]]+"<br>";
+					player.printVore += Object.keys(v)[i] + ": " + v[Object.keys(v)[i]].Count+"<br>";
 				}
 			}
 		}

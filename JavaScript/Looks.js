@@ -40,9 +40,9 @@ function BallLook(who) {
 			if(who.Balls[b].Cum / 1000 > 1) {
             balls += "filled with " + (who.Balls[b].Cum / 1000).toFixed(2) + " liters of cum.";
 			}
-			else balls += "filled with " + who.Balls[b].Cum + "mL of cum.";
+			else balls += "filled with " + who.Balls[b].Cum.toFixed(0) + "mL of cum.";
         }
-        return balls + ".<br><br>";
+        return balls + "<br><br>";
     } else {
         return "";
     }
@@ -72,12 +72,12 @@ function BoobLook(who) {
     if (who.Boobies.length > 0) {
         var boobies = "";
         for (var b = 0; b < who.Boobies.length; b++) {
-			if(who.Boobies[b].Size > 0||who.Boobies[b].Size < 28) {
+			if(who.Boobies[b].Size > 1 && who.Boobies[b].Size < 28) {
             boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
 			} else {boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
 			}
         }
-        return boobies + "<br><br>";
+        return boobies + ".<br><br>";
     } else {
         return "";
     }
@@ -145,7 +145,7 @@ function BoobSizeConvertor(Size) {
         case 27:
             return "Large O";
         default:
-            return "Scale-breaking"
+            return "scale-breaking"
     }
 }
 
