@@ -690,7 +690,7 @@
             if (Wave == 4 && false) {
                 document.getElementById("DungeonSystem").style.display = 'block';
                 document.getElementById("DungeonText").innerHTML = "What should you do with her?";
-                document.getElementById("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" +
+                document.getElementById("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" + 
                 "<input type=\"button\" id=\"MakeSubmut\" value=\"Make her understand her place.\" >";
             } else {
                 document.getElementById("SexText").innerHTML = HeightSystem(player, enemies[EnemyIndex]);
