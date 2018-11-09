@@ -6,9 +6,9 @@
         Will: 10,
         End: 10,
         SexSkill: 10,
-		printStats: "",
-		printPerks: "",
-		printVore: "",
+        printStats: "",
+        printPerks: "",
+        printVore: "",
         Orgasm: 0,
         Arousal: 0,
         Gold: 0,
@@ -80,7 +80,23 @@
             HairColor: "brown",
             HairLength: "shoulder"
         },
-        FoodStomach: []
+        FoodStomach: [],
+        Vore: {
+            Level: 0,
+            Exp: 0,
+            VorePoints: 0,
+            VorePerks: {},
+            Stomach: [],
+            StomachExp: 0,
+            Vagina: [],
+            VaginaExp: 0,
+            Balls: [],
+            BallsExp: 0,
+            Anal: [],
+            AnalExp: 0,
+            Breast: [],
+            BreastExp: 0
+        }
     };
 
     // House variable
@@ -139,7 +155,15 @@
             ServeMasc: true,
             ServeFemi: true
         },
-        Inch: false
+        Inch: false,
+        VoreSettings: {
+            StomachDigestion: true,
+            CumTF: true,
+            ChildTF: false,
+            VCumDigestion: true,
+            MilkTF: true,
+            AnalDigestion: true
+        }
     }
 
     var Partners = {
@@ -245,7 +269,7 @@
         document.getElementById("PerkOptionsMenu").style.display = 'none';
         document.getElementById("ShowQuests").style.display = 'none';
         document.getElementById("DetailedInfo").style.display = 'none';
-		document.getElementById("Levels").style.display = 'none';
+        document.getElementById("Levels").style.display = 'none';
         document.getElementById("ShowVore").style.display = 'none';
         document.getElementById("EssenceOptionsMenu").style.display = 'none';
         document.getElementById("PronunForm").style.display = 'none';
@@ -410,18 +434,16 @@
             "<br>Give essence: " + player.GiveEssence + "<br> passive rest rate: " + player.RestRate;
     });
 
-	    document.getElementById("Perks").addEventListener("click", function () {
-			printS();
+    document.getElementById("Perks").addEventListener("click", function () {
+        printS();
         DisplayNone();
-		document.getElementById("Levels").style.display = 'block';
+        document.getElementById("Levels").style.display = 'block';
         document.getElementById("StatLevels").innerHTML = player.printStats;
-		document.getElementById("PerkLevels").innerHTML = player.printPerks;
-		if(Settings.Vore)
-		{
-			document.getElementById("VLevels").innerHTML = player.printVore;
-		}
-		else
-			document.getElementById("VLevels").innerHTML = "";
+        document.getElementById("PerkLevels").innerHTML = player.printPerks;
+        if (Settings.Vore) {
+            document.getElementById("VLevels").innerHTML = player.printVore;
+        } else
+            document.getElementById("VLevels").innerHTML = "";
     });
 
 
@@ -431,10 +453,10 @@
         document.getElementById("DetailedInfo").style.display = 'none';
     });
 
-	document.getElementById("CloseLevel").addEventListener("click", function () {
+    document.getElementById("CloseLevel").addEventListener("click", function () {
         battle = false;
         document.getElementById("map").style.display = 'block';
-		document.getElementById("Levels").style.display = 'none';
+        document.getElementById("Levels").style.display = 'none';
     });
 
     document.getElementById("Quests").addEventListener("click", function () {
@@ -690,8 +712,8 @@
             if (Wave == 4 && false) {
                 document.getElementById("DungeonSystem").style.display = 'block';
                 document.getElementById("DungeonText").innerHTML = "What should you do with her?";
-                document.getElementById("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" + 
-                "<input type=\"button\" id=\"MakeSubmut\" value=\"Make her understand her place.\" >";
+                document.getElementById("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" +
+                    "<input type=\"button\" id=\"MakeSubmit\" value=\"Make her understand her place.\" >";
             } else {
                 document.getElementById("SexText").innerHTML = HeightSystem(player, enemies[EnemyIndex]);
                 document.getElementById("AfterBattle").style.display = 'grid';
@@ -1101,46 +1123,6 @@
         player.Fat -= 0.002;
     }
 
-    // Event log
-    var LogArray = [];
-    var LogHistory = "";
-
-    function EventLog(LogText) {
-        var newText = LogText + "<br>";
-        LogArray.unshift(newText);
-        while (LogArray.length > Settings.LogLength) {
-            LogArray.pop();
-        }
-        LogHistory = "";
-        for (var e = 0; e < LogArray.length; e++) {
-            LogHistory += LogArray[e];
-        }
-        //LogHistory = newText + LogHistory;
-        document.getElementById("EventText").innerHTML = LogHistory;
-    }
-
-    document.getElementById("HideEventLog").addEventListener("click", function () {
-        if (document.getElementById("EventLogPart").style.display == 'none') {
-            document.getElementById("EventLogPart").style.display = 'block';
-            document.getElementById("HideEventLog").value = "Hide";
-        } else {
-            document.getElementById("EventLogPart").style.display = 'none';
-            document.getElementById("HideEventLog").value = "Show";
-        }
-    });
-    document.getElementById("HideFluids").addEventListener("click", function () {
-        if (document.getElementById("FluidPart").style.display == 'none') {
-            document.getElementById("FluidPart").style.display = 'block';
-            document.getElementById("HideFluids").value = "Hide";
-        } else {
-            document.getElementById("FluidPart").style.display = 'none';
-            document.getElementById("HideFluids").value = 'Show';
-        }
-    });
-
-    // End Event log
-
-
     function MakeDoor(x, y, width, height, NESW) {
         this.x = x,
             this.y = y,
@@ -1516,38 +1498,30 @@
             mousedowner = false;
         }
     });
-	startarea.addEventListener('mousemove', function (e) {
-		if (mousedowner)
-		{
-			if(mouseX != e.pageX || mouseY != e.pageY)
-			{
-				mouseX = e.pageX;
-				mouseY = e.pageY;
-			}
-		}
-	});
+    startarea.addEventListener('mousemove', function (e) {
+        if (mousedowner) {
+            if (mouseX != e.pageX || mouseY != e.pageY) {
+                mouseX = e.pageX;
+                mouseY = e.pageY;
+            }
+        }
+    });
 
-	function printS() {
-		player.printStats = "Str: "+player.Str + "<br>End: " + player.End + "<br>Will: " + player.Will + "<br>Charm: " + player.Charm + "<br>Int: " + player.Int + "<br>Skill: " + player.SexSkill+"<br>";
-		player.printPerks = "";
-		for(var i = 0; i < Object.keys(player.Perks).length - 1; i++)
-		{
-			if(Object.keys(player.Perks)[i].Count > 0)
-			{
-			player.printPerks += Object.keys(player.Perks)[i] + ": " + Object.keys(player.Perks)[i].Count +"<br>";
-			}
-		}
-		console.log(Settings.Vore);
-		if(Settings.Vore)
-		{
-			player.printVore = "";
-			var v = player.Vore.VorePerks;
-			console.log(Object.keys(v).length);
-			if(Object.keys(v).length > 0) {
-				for (var i = 0; i < Object.keys(v).length - 1; i++)
-				{
-					player.printVore += Object.keys(v)[i] + ": " + v[Object.keys(v)[i]].Count+"<br>";
-				}
-			}
-		}
-	}
+    function printS() {
+        player.printStats = "Str: " + player.Str + "<br>End: " + player.End + "<br>Will: " + player.Will + "<br>Charm: " + player.Charm + "<br>Int: " + player.Int + "<br>Skill: " + player.SexSkill + "<br>";
+        player.printPerks = "";
+        for (var i = 0; i < Object.keys(player.Perks).length; i++) {
+            if (player.Perks[Object.keys(player.Perks)[i]].Count > 0) {
+                player.printPerks += Object.keys(player.Perks)[i] + ": " + player.Perks[Object.keys(player.Perks)[i]].Count + "<br>";
+            }
+        }
+        if (Settings.Vore) {
+            player.printVore = "";
+            var v = player.Vore.VorePerks;
+            if (Object.keys(v).length > 0) {
+                for (var i = 0; i < Object.keys(v).length; i++) {
+                    player.printVore += Object.keys(v)[i] + ": " + v[Object.keys(v)[i]].Count + "<br>";
+                }
+            }
+        }
+    }

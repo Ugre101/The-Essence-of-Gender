@@ -38,7 +38,7 @@
                 ChildTF: false,
                 VCumDigestion: true,
                 MilkTF: true,
-				AnalDigestion: true
+                AnalDigestion: true
             }
         }
     });
@@ -82,7 +82,7 @@
                 ChildTF: false,
                 VCumDigestion: true,
                 MilkTF: true,
-				AnalDigestion: true
+                AnalDigestion: true
             }
         }
     });
@@ -704,30 +704,26 @@
                     case "None":
                         break;
                     case "Masculinity":
-						if(player.Vore.Stomach[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Stomach[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
+                        if (player.Vore.Stomach[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Stomach[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
                         break;
                     case "Femininity":
-						if(player.Vore.Stomach[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Stomach[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}                        
-						break;
+                        if (player.Vore.Stomach[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Stomach[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
+                        break;
                     default:
-						if(player.Vore.Stomach[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Stomach[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
-						if(player.Vore.Stomach[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Stomach[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
+                        if (player.Vore.Stomach[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Stomach[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
+                        if (player.Vore.Stomach[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Stomach[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
                         break;
                 }
             }
@@ -774,30 +770,26 @@
                     case "None":
                         break;
                     case "Masculinity":
-						if(player.Vore.Vagina[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Vagina[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
+                        if (player.Vore.Vagina[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Vagina[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
                         break;
                     case "Femininity":
-						if(player.Vore.Vagina[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Vagina[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}                        
-						break;
+                        if (player.Vore.Vagina[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Vagina[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
+                        break;
                     default:
-						if(player.Vore.Vagina[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Vagina[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
-						if(player.Vore.Vagina[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Vagina[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
+                        if (player.Vore.Vagina[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Vagina[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
+                        if (player.Vore.Vagina[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Vagina[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
                         break;
                 }
             }
@@ -856,30 +848,26 @@
                     case "None":
                         break;
                     case "Masculinity":
-						if(player.Vore.Breast[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Breast[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
+                        if (player.Vore.Breast[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Breast[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
                         break;
                     case "Femininity":
-						if(player.Vore.Breast[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Breast[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}                        
-						break;
+                        if (player.Vore.Breast[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Breast[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
+                        break;
                     default:
-						if(player.Vore.Breast[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Breast[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
-						if(player.Vore.Breast[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Breast[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
+                        if (player.Vore.Breast[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Breast[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
+                        if (player.Vore.Breast[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Breast[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
                         break;
                 }
             }
@@ -931,30 +919,26 @@
                     case "None":
                         break;
                     case "Masculinity":
-						if(player.Vore.Balls[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Balls[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
+                        if (player.Vore.Balls[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Balls[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
                         break;
                     case "Femininity":
-						if(player.Vore.Balls[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Balls[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}                        
-						break;
+                        if (player.Vore.Balls[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Balls[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
+                        break;
                     default:
-						if(player.Vore.Balls[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Balls[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
-						if(player.Vore.Balls[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Balls[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
+                        if (player.Vore.Balls[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Balls[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
+                        if (player.Vore.Balls[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Balls[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
                         break;
                 }
             }
@@ -1008,30 +992,26 @@
                     case "None":
                         break;
                     case "Masculinity":
-						if(player.Vore.Anal[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Anal[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
+                        if (player.Vore.Anal[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Anal[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
                         break;
                     case "Femininity":
-						if(player.Vore.Anal[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Anal[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}                        
-						break;
+                        if (player.Vore.Anal[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Anal[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
+                        break;
                     default:
-						if(player.Vore.Anal[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Anal[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
-						if(player.Vore.Anal[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001)
-						{
-							player.Vore.Anal[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-							player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
-						}
+                        if (player.Vore.Anal[e].Masc >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Anal[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
+                        if (player.Vore.Anal[e].Femi >= player.Vore.VorePerks.AbsorbEssence.Count * 0.001) {
+                            player.Vore.Anal[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                            player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * 0.001;
+                        }
                         break;
                 }
             }

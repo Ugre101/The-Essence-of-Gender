@@ -15,6 +15,7 @@
 
 	<div id="StartPage">
 		<h1>The Essence of Gender</h1>
+		<br>
 		<input type="button" id="GoToCharCreator" value="Start game" />
 		<br>
 		<input type="button" id="LoadButton" value="Load game" />
@@ -619,10 +620,17 @@
 			<div>
 				<div id="PlayerDick">
 					<div id="Dick">
-						<input type="button" id="Missionary" value="Missionary" />
-						<input type="button" id="DoggyStyle" value="Doggy style" />
-						<input type="button" id="GetBlowjob" value="Receive blowjob" />
-						<input type="button" id="DoggyStyleAnal" value="Anal doggy style" />
+						<input type="button" id="DickAction" value="DickActions One" />
+						<div id="DickOne">
+							<input type="button" id="Missionary" value="Missionary" />
+							<input type="button" id="GetBlowjob" value="Receive blowjob" />
+							<input type="button" id="DoggyStyleAnal" value="Anal doggy style" />
+						</div>
+						<div id="DickTwo" class="None">
+							<input type="button" id="DoggyStyle" value="Doggy style" />
+							<input type="button" id="DualPen" value="" />
+							<input type="button" id="Multipen" value="" />
+						</div>
 					</div>
 				</div>
 				<input type="button" id="CockVore" value="Cock vore" />
@@ -762,7 +770,7 @@
 		<p id="BarText" class="TextBox">The local tavern is small and cozy, quite calm for being a tavern but not that
 			surprising given the small number of patrons. The smell from the kitchen is very appetizing, maybe you should buy a
 			meal?</p>
-		<input type="button" id="RestBar" value="Rest 25g" title="Spend the night to recover health and will" />
+		<input type="button" id="RestBar" value="Rest 5g" title="Spend the night to recover health and will" />
 		<input type="button" id="EatBar" value="Medium meal 10g" title="+2kg fat" />
 		<input type="button" id="EatBarMedium" value="Large meal 30g" title="+4kg fat" />
 		<input type="button" id="EatBarLarge" value="Buffet 50g" title="+8kg fat" /> <br><br><input type="button" id="LeaveBar"
@@ -1037,6 +1045,7 @@
 	<script src="JavaScript/DrainChanges.js"></script>
 	<script src="JavaScript/DropSystem.js"></script>
 	<script src="JavaScript/EssenceCheck.js"></script>
+	<script src="JavaScript/EventLog.js"></script>
 	<script src="JavaScript/FluidsEngine.js"></script>
 	<script src="JavaScript/Gym.js"></script>
 	<script src="JavaScript/HemScale.js"></script>

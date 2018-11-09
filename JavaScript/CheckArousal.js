@@ -13,15 +13,13 @@ function CheckArousal() {
             document.getElementById("SexText").innerHTML += "<br>Reading their body language, you know they are close to cumming."
             if (cum > 0) {
                 document.getElementById("SexText").innerHTML += " You swallow " + cum + "L of their cum."
-            }
-			else document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
+            } else document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
         } else if (LastPressed == "RideCowgirl") {
             var cum = Cumming(ee);
             document.getElementById("SexText").innerHTML += "<br>Reading their body language, you know they are close to cumming."
             if (cum > 0) {
                 document.getElementById("SexText").innerHTML += " Pulling them deep inside you, they release " + cum + "L of cum into your pussy."
-            }
-			else document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
+            } else document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
         }
     }
     if (player.Arousal > 100) {
@@ -71,22 +69,19 @@ function CheckArousal() {
             document.getElementById("SexText").innerHTML += "<br>Feeling close you thrust deep";
             if (cum > 0) {
                 document.getElementById("SexText").innerHTML += ", releasing " + cum + "L of cum into their pussy."
-            }
-			else document.getElementById("SexText").innerHTML += ", but nothing comes out."
+            } else document.getElementById("SexText").innerHTML += ", but nothing comes out."
         } else if (LastPressed == "DoggyStyle") {
             var cum = Cumming(player);
             document.getElementById("SexText").innerHTML += "<br>Feeling close you thrust deep into their pussy"
             if (cum > 0) {
                 document.getElementById("SexText").innerHTML += ", releasing " + cum + "L of cum into their pussy."
-            }
-			else document.getElementById("SexText").innerHTML += ", but nothing comes out."
+            } else document.getElementById("SexText").innerHTML += ", but nothing comes out."
         } else if (LastPressed == "DoggyStyleAnal") {
             var cum = Cumming(player);
             document.getElementById("SexText").innerHTML += "<br>Feeling close you thrust deep into their bowels"
             if (cum > 0) {
                 document.getElementById("SexText").innerHTML += ", releasing " + cum + "L of cum into their bowels."
-            }
-			else document.getElementById("SexText").innerHTML += ", but nothing comes out."
+            } else document.getElementById("SexText").innerHTML += ", but nothing comes out."
         }
         AfterBattleButtons();
         CheckArousal();
@@ -113,7 +108,7 @@ function CheckArousal() {
     var PlayerMaxOrgasm = Math.round(player.End / 8);
     BaseSexAttack = Math.round((RandomInt(4, 7) * player.SexSkill) / 2);
     BaseESexAttack = Math.round((RandomInt(4, 7) * enemies[EnemyIndex].SexSkill) / 2);
-    SexAttack = Math.min(RandomInt(45,77) ,BaseSexAttack * (BaseSexAttack / BaseESexAttack));
+    SexAttack = Math.min(RandomInt(45, 77), BaseSexAttack * (BaseSexAttack / BaseESexAttack));
     ESexAttack = Math.max(RandomInt(15, 32), BaseESexAttack * (BaseESexAttack / BaseSexAttack));
 
 
@@ -150,7 +145,7 @@ function CheckArousal() {
     document.getElementById("PlayerOrgasm").style.display = 'block';
     document.getElementById("PlayerOrgasm").innerHTML = player.Orgasm;
 
-    if (player.SessionOrgasm > 0  && player.Perks.GiveEssence.Count > 0) {
+    if (player.SessionOrgasm > 0 && player.Perks.GiveEssence.Count > 0) {
         document.getElementById("InjectMenu").style.display = 'block';
     } else {
         document.getElementById("InjectMenu").style.display = 'none';
@@ -184,3 +179,11 @@ function Cumming(who) {
         return Cum;
     }
 }
+
+document.getElementById("EnemySex").addEventListener("mouseover", function () {
+    var ee = enemies[EnemyIndex];
+    document.getElementById("SexStats").innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
+});
+document.getElementById("EnemySex").addEventListener("mouseout", function () {
+    document.getElementById("SexStats").innerHTML = " ";
+});
