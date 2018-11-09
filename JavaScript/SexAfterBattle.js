@@ -232,7 +232,7 @@
             player.Boobies[b].Milk -= 100 / player.Boobies.length;
         } 
         if (LastPressed == "BreastFeed") {
-            document.getElementById("SexText").innerHTML = "You continue feeding them your milk, releiving the pressure in your chest.";
+            document.getElementById("SexText").innerHTML = "You continue feeding them your milk, relieving the pressure in your chest.";
         } else {
             document.getElementById("SexText").innerHTML = "The urge to nurture is strong due the hormones released from your lactating breasts. Wanting release, you take them into your lap and guide "+HisHer(enemies[EnemyIndex])+" head to your fullest breast. " + 
             "At first they assumed you wanted them you suck on your nipples for pleasure, but once their mouth was full they had no choice but to swallow. As they quickly fell in love with the taste, you remove your hand from their head unnoticed, they don't think about stopping their feeding."
