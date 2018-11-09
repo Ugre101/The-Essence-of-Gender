@@ -123,6 +123,7 @@
             Hour: 0
         },
         BeatSuccubus: false,
+        FairiesBeaten: 0,
         FirstCityLike: 0
     };
 
@@ -1158,6 +1159,8 @@
             this.Height = height,
             this.Color = Color
     };
+
+
     var Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
     var Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
     var Bar = new Npc("Bar", "Bar", 14 * grid, 14 * grid, grid * 5.5, grid * 5.5, "RGB(133,94,66)")
@@ -1167,7 +1170,11 @@
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
     var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
+    var FarmBarn = new Npc("FarmBarn", "Barn", grid, grid, grid, grid, "RGB(133,94,66)");
+
+    // Dungeons
     var FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)");
+
 
     // Character
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
