@@ -709,7 +709,7 @@
             content += e.StartWeight;
         }
         var fullness = content / MaxStomachCapacity() || 0; // prevent NaN if maxCapacity is 0
-         // stomach fullness should be able to vary between 0 and 2
+        // stomach fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.StomachDigestion) {
             player.Vore.StomachExp += fullness * digestionCount * progress;
             player.Vore.Exp += fullness * digestionCount * progress;
@@ -754,7 +754,7 @@
             }
             if (Settings.VoreSettings.StomachDigestion) {
                 player.Vore.Stomach[e].Weight -= progress * digestionCount;
-                player.Fat += progress/2 * digestionCount;
+                player.Fat += progress / 2 * digestionCount;
 
                 if (player.Vore.Stomach[e].Weight < 0) {
                     if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
@@ -777,7 +777,7 @@
             content += e.StartWeight;
         }
         var fullness = content / MaxVaginaCapacity() || 0; // prevent NaN if maxCapacity is 0
-         // Vagina fullness should be able to vary between 0 and 2
+        // Vagina fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.VCumDigestion) {
             player.Vore.VaginaExp += fullness * digestionCount * progress;
             player.Vore.Exp += fullness * digestionCount * progress;
@@ -855,7 +855,7 @@
             content += e.StartWeight;
         }
         var fullness = content / MaxBreastCapacity() || 0; // prevent NaN if maxCapacity is 0
-         // Breast fullness should be able to vary between 0 and 2
+        // Breast fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.MilkTF) {
             player.Vore.BreastExp += fullness * digestionCount * progress;
             player.Vore.Exp += fullness * digestionCount * progress;
@@ -923,7 +923,7 @@
             content += e.StartWeight;
         }
         var fullness = content / MaxBallsCapacity() || 0; // prevent NaN if maxCapacity is 0
-         // Balls fullness should be able to vary between 0 and 2
+        // Balls fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.CumTF) {
             player.Vore.BallsExp += fullness * digestionCount * progress;
             player.Vore.Exp += fullness * digestionCount * progress;
@@ -992,7 +992,7 @@
             content += e.StartWeight;
         }
         var fullness = content / MaxAnalCapacity() || 0; // prevent NaN if maxCapacity is 0
-         // Anal fullness should be able to vary between 0 and 2
+        // Anal fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.AnalDigestion) {
             player.Vore.AnalExp += fullness * digestionCount * progress;
             player.Vore.Exp += fullness * digestionCount * progress;
@@ -1033,7 +1033,7 @@
             }
             if (Settings.VoreSettings.AnalDigestion) {
                 player.Vore.Anal[e].Weight -= progress * digestionCount;
-                player.Fat += progress/2 * digestionCount;
+                player.Fat += progress / 2 * digestionCount;
                 if (player.Vore.Anal[e].Weight < 0) {
                     if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
                         var snowA = Math.max(10 - player.Vore.VorePerks.AbsorbStats.Count, 1);
