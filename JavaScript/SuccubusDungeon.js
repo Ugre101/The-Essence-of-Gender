@@ -185,7 +185,35 @@ document.getElementById("DungeonStopButton").addEventListener("click", function 
             document.getElementById("FirstDungeonText").innerHTML += " you should build a portal at your mansion so you can use it."
         }
     }
+    if (Wave == 5) {
+        Wave = 0;
+        document.getElementById("FirstDungeonText").innerHTML += "<br><br> You beat the dungeon more to come!"
+    }
     LastPressed = " ";
+    return;
+});
+document.getElementById("DungeonCapture").addEventListener("click", function () {
+    House.Dormmates.push(enemies[EnemyIndex]);
+    player.Orgasm = 0;
+    document.getElementById("AfterBattle").style.display = 'none';
+    document.getElementById("PlayerMouth").style.display = 'block';
+    document.getElementById("PlayerVagina").style.display = 'block';
+    document.getElementById("PlayerDick").style.display = 'block';
+    document.getElementById("Anal").style.display = 'block';
+    document.getElementById("Breast").style.display = 'block';
+    document.getElementById("EnemyVagina").style.display = 'block';
+    document.getElementById("EnemyDick").style.display = 'block';
+    document.getElementById("DrainMenu").style.display = 'block';
+    document.getElementById("InjectMenu").style.display = 'block';
+    document.getElementById("FirstDungeon").style.display = 'block';
+    Wave++;
+    LastPressed = " ";
+    if (Wave == 5) {
+        Wave = 0;
+        document.getElementById("FirstDungeonText").innerHTML += "<br><br> You beat the dungeon more to come!"
+    }
+    LastPressed = " ";
+    return;
 });
 document.getElementById("DungenoLose").addEventListener("click", function () {
     battle = false;
@@ -199,6 +227,7 @@ document.getElementById("DungenoLose").addEventListener("click", function () {
     document.getElementById("EventLog").style.display = 'block';
     enemies = [];
     Dungeon = false;
+    Wave = 0;
 });
 document.getElementById("LeaveFirstDungeon").addEventListener("click", function () {
     enemies = [];
@@ -219,5 +248,23 @@ document.getElementById("LeaveFirstDungeon").addEventListener("click", function 
     document.getElementById("EventLog").style.display = 'block';
     LastPressed = " ";
     Dungeon = false;
+    Wave = 0;
     return;
 });
+
+// change these to document.get... adventlistners
+function MakeHerEqual() {
+    // Some friendly sex
+    Partners.Succubus.Equal = true;
+    Partners.Succubus.Yours = true;
+    Partners.Succubus.Like += 100;
+}
+function MakeHerSubmit() {
+    // Some rougher sex
+    Partners.Succubus.Equal = false;
+    Partners.Succubus.Yours = true;
+    Partners.Succubus.Submit += 100; // Points so it's possible to change route, but 100 is a lot so this choice matters
+}
+function UseAndIgonore() {
+    // Sex where you skip taking her as partner
+}

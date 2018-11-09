@@ -1,13 +1,13 @@
-function IntToOne(int) {
-    switch (int) {
+function IntToOne(i) {
+    switch (i) {
         case 0:
             return "A "
         case 1:
             return ", below it there is a second "
         case 2:
-            return ". Followed by a third "
+            return ", followed by a third "
         default:
-            return " and a ";
+            return ", and a "+i+"th ";
     }
 }
 
@@ -16,9 +16,9 @@ function DickLook(who) {
         var dicks = "";
         var virgin = " ";
         if (who.SecondRace == "centaur") {
-            dicks = "Under your equine body retracted into their penile sheath you find "
+            dicks = "Under your equine body, retracted into their penile sheath, you find "
         } else if (who.SecondRace == "equine") {
-            dicks = "Retracted into their penile sheath you find "
+            dicks = "Retracted into their penile sheath, you find "
         }
         for (var d = 0; d < who.Dicks.length; d++) {
             if (who.Dicks[d].Virgin) {
@@ -37,9 +37,12 @@ function BallLook(who) {
         var balls = "";
         for (var b = 0; b < who.Balls.length; b++) {
             balls += IntToOne(b) + "pair of " + CmToInch(who.Balls[b].Size) + " wide balls, ";
-            balls += "which are filled with " + (who.Balls[b].Cum / 1000).toFixed(2) + "Liters of cum"
+			if(who.Balls[b].Cum / 1000 > 1) {
+            balls += "filled with " + (who.Balls[b].Cum / 1000).toFixed(2) + " liters of cum.";
+			}
+			else balls += "filled with " + who.Balls[b].Cum.toFixed(0) + "mL of cum.";
         }
-        return balls + ".<br><br>";
+        return balls + "<br><br>";
     } else {
         return "";
     }
@@ -69,9 +72,12 @@ function BoobLook(who) {
     if (who.Boobies.length > 0) {
         var boobies = "";
         for (var b = 0; b < who.Boobies.length; b++) {
-            boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
+			if(who.Boobies[b].Size > 1 && who.Boobies[b].Size < 28) {
+            boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
+			} else {boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
+			}
         }
-        return boobies + "<br><br>";
+        return boobies + ".<br><br>";
     } else {
         return "";
     }
@@ -82,64 +88,64 @@ function AnalLook(who) {
 }
 
 function BoobSizeConvertor(Size) {
-    switch (Size) {
+    switch (Math.round(Size)) {
         case 0:
         case 1:
             return "flat";
         case 2:
-            return "AA size";
+            return "AA";
         case 3:
-            return "A size";
+            return "A";
         case 4:
-            return "B size";
+            return "B";
         case 5:
-            return "C size";
+            return "C";
         case 6:
-            return "D size";
+            return "D";
         case 7:
-            return "DD size";
+            return "DD";
         case 8:
-            return "F size";
+            return "F";
         case 9:
-            return "Large F size";
+            return "Large F";
         case 10:
-            return "G size";
+            return "G";
         case 11:
-            return "Large G size";
+            return "Large G";
         case 12:
-            return "H size";
+            return "H";
         case 13:
-            return "Large H size";
+            return "Large H";
         case 14:
-            return "I size";
+            return "I";
         case 15:
-            return "Large I size";
+            return "Large I";
         case 16:
-            return "J size";
+            return "J";
         case 17:
-            return "Large J size";
+            return "Large J";
         case 18:
-            return "K size";
+            return "K";
         case 19:
-            return "Large L size";
+            return "Large K";
         case 20:
-            return "M size";
+            return "L";
         case 21:
-            return "Large M size";
+            return "Large L";
         case 22:
-            return "N size";
+            return "M";
         case 23:
-            return "Large N size";
+            return "Large M";
         case 24:
-            return "O size";
+            return "N";
         case 25:
-            return "Large O size";
+            return "Large N";
         case 26:
-            return "P size";
+            return "O";
         case 27:
-            return "Large P size";
+            return "Large O";
         default:
-            return "Scale-breaking"
+            return "scale-breaking"
     }
 }
 

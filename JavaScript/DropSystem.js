@@ -31,6 +31,9 @@ function DropSystem(who) {
             case "Thug":
                 SnowInventoryAdd(ItemDict.halfPouch);
                 break;
+            case "Witch":
+                SnowInventoryAdd(ItemDict.book);
+                break;
             default:
                 break;
         }
@@ -73,6 +76,12 @@ function DropSystem(who) {
                 break;
             case "Dhampir":
                 SnowInventoryAdd(ItemDict.infernalMilk);
+                break;
+			case "Succubus":
+                SnowInventoryAdd(ItemDict.SuccMilk);
+                break;
+			case "Incubus":
+                SnowInventoryAdd(ItemDict.IncSemen);
                 break;
             default:
                 break;

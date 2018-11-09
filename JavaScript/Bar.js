@@ -1,6 +1,6 @@
 document.getElementById("RestBar").addEventListener("click", function () {
-    if (player.Gold >= 25 && (player.Health < player.MaxHealth || player.WillHealth < player.MaxWillHealth)) {
-        player.Gold -= 25;
+    if (player.Gold >= 5 && (player.Health < player.MaxHealth || player.WillHealth < player.MaxWillHealth)) {
+        player.Gold -= 5;
         player.Health = player.MaxHealth;
         player.WillHealth = player.MaxWillHealth;
         Flags.Date.Day++;

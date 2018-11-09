@@ -146,7 +146,7 @@ function CurrentMap() {
 
                     }
                     if (Npcs.length < 1) {
-                        Npcs = [BlackMartket]
+                        Npcs = [BlackMarket]
                     }
                     PrintMap("Outlaws");
                     backmap = new Image;

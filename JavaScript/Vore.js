@@ -552,7 +552,11 @@
             document.getElementById("FasterDigestion").value = "Faster digestion +" + player.Vore.VorePerks.FasterDigestion.Count;
         }
         if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
-            document.getElementById("AbsorbStats").value = "Drain Stats +" + player.Vore.VorePerks.AbsorbStats.Count; //Had to shorten value as text got outside button
+            if (player.Vore.VorePerks.AbsorbStats.Count > 9) {
+                document.getElementById("AbsorbStats").style.display = 'none';
+            } else {
+                document.getElementById("AbsorbStats").value = "Drain Stats +" + player.Vore.VorePerks.AbsorbStats.Count; //Had to shorten value as text got outside button
+            }
         }
         if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
             document.getElementById("HigherCapacity").value = "Higher capacity +" + player.Vore.VorePerks.HigherCapacity.Count;
@@ -588,10 +592,15 @@
         }
     });
     document.getElementById("AbsorbStats").addEventListener("click", function () {
-        if (player.Vore.hasOwnProperty("AbsorbStats")) {
-            if (player.Vore.VorePoints > 9 && player.Vore.AbsorbStats < 10) {
+        if (player.Vore.VorePoints > 9) {
+            if (!player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
                 VorePerkHandler("AbsorbStats");
-            } else return;
+            } else if (player.Vore.VorePerks.AbsorbStats.Count < 10) {
+                console.log(player.Vore.VorePerks.AbsorbStats.Count);
+                VorePerkHandler("AbsorbStats");
+            }
+        } else {
+            return;
         }
     });
     document.getElementById("VorePerkMenu").addEventListener("mouseover", function (e) {
@@ -717,19 +726,22 @@
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = max(0, player.Vore.VorePerks.AbsorbEssence.Count * progress)
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Masc)
                         player.Vore.Stomach[e].Masc -= shift;
                         player.Masc += shift;
                         break;
                     case "Femininity":
-                        player.Vore.Stomach[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Femi)
+                        player.Vore.Stomach[e].Femi -= shift;
+                        player.Femi += shift;
                         break;
                     default:
-                        player.Vore.Stomach[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Vore.Stomach[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Masc)
+                        player.Vore.Stomach[e].Masc -= shift;
+                        player.Masc += shift;
+                        shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Femi)
+                        player.Vore.Stomach[e].Femi -= shift;
+                        player.Femi += shift;
                         break;
                 }
             }
@@ -751,7 +763,7 @@
                         player.Int += Math.round(player.Vore.Stomach[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Stomach[e].Charm / snowA);
                         player.Will += Math.round(player.Vore.Stomach[e].Willpower / snowA);
-                        player.Will += Math.round(player.Vore.Stomach[e].End / snowA);
+                        player.End += Math.round(player.Vore.Stomach[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Stomach[e].SexSkill / snowA);
                     }
                     EventLog("You have digested " + player.Vore.Stomach[e].Name + " " + player.Vore.Stomach[e].Race + " " + player.Vore.Stomach[e].FirstName + " " + player.Vore.Stomach[e].LastName);
@@ -779,18 +791,22 @@
                     case "None":
                         break;
                     case "Masculinity":
-                        player.Vore.Vagina[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Masc);
+                        player.Vore.Vagina[e].Masc -= shift;
+                        player.Masc += shift;
                         break;
                     case "Femininity":
-                        player.Vore.Vagina[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Femi);
+                        player.Vore.Vagina[e].Femi -= shift;
+                        player.Femi += shift;
                         break;
                     default:
-                        player.Vore.Vagina[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Vore.Vagina[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Masc);
+                        player.Vore.Vagina[e].Masc -= shift;
+                        player.Masc += shift;
+                        shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Femi);
+                        player.Vore.Vagina[e].Femi -= shift;
+                        player.Femi += shift;
                         break;
                 }
             }
@@ -809,7 +825,7 @@
                         player.Int += Math.round(player.Vore.Vagina[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Vagina[e].Charm / snowA);
                         player.Will += Math.round(player.Vore.Vagina[e].Willpower / snowA);
-                        player.Will += Math.round(player.Vore.Vagina[e].End / snowA);
+                        player.End += Math.round(player.Vore.Vagina[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Vagina[e].SexSkill / snowA);
                     }
                     EventLog("The only trace left of " + player.Vore.Vagina[e].Name + " " + player.Vore.Vagina[e].Race + " " + player.Vore.Vagina[e].FirstName + " " + player.Vore.Vagina[e].LastName + " is a trail of pussy discharge traveling down your legs.");
@@ -853,18 +869,22 @@
                     case "None":
                         break;
                     case "Masculinity":
-                        player.Vore.Breast[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Masc)
+                        player.Vore.Breast[e].Masc -= shift;
+                        player.Masc += shift;
                         break;
                     case "Femininity":
-                        player.Vore.Breast[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Femi)
+                        player.Vore.Breast[e].Femi -= shift;
+                        player.Femi += shift;
                         break;
                     default:
-                        player.Vore.Breast[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Vore.Breast[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Masc)
+                        player.Vore.Breast[e].Masc -= shift;
+                        player.Masc += shift;
+                        shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Femi)
+                        player.Vore.Breast[e].Femi -= shift;
+                        player.Femi += shift;
                         break;
                 }
             }
@@ -889,7 +909,7 @@
                         player.Int += Math.round(player.Vore.Breast[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Breast[e].Charm / snowA);
                         player.Will += Math.round(player.Vore.Breast[e].Willpower / snowA);
-                        player.Will += Math.round(player.Vore.Breast[e].End / snowA);
+                        player.End += Math.round(player.Vore.Breast[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Breast[e].SexSkill / snowA);
                     }
                     EventLog("There is nothing but milk left of " + player.Vore.Breast[e].Name + " " + player.Vore.Breast[e].Race + " " + player.Vore.Breast[e].FirstName + " " + player.Vore.Breast[e].LastName);
@@ -917,18 +937,22 @@
                     case "None":
                         break;
                     case "Masculinity":
-                        player.Vore.Balls[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Masc)
+                        player.Vore.Balls[e].Masc -= shift;
+                        player.Masc += shift;
                         break;
                     case "Femininity":
-                        player.Vore.Balls[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Femi)
+                        player.Vore.Balls[e].Femi -= shift;
+                        player.Femi += shift;
                         break;
                     default:
-                        player.Vore.Balls[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Vore.Balls[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Masc)
+                        player.Vore.Balls[e].Masc -= shift;
+                        player.Masc += shift;
+                        shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Femi)
+                        player.Vore.Balls[e].Femi -= shift;
+                        player.Femi += shift;
                         break;
                 }
             }
@@ -953,7 +977,7 @@
                         player.Int += Math.round(player.Vore.Balls[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Balls[e].Charm / snowA);
                         player.Will += Math.round(player.Vore.Balls[e].Willpower / snowA);
-                        player.Will += Math.round(player.Vore.Balls[e].End / snowA);
+                        player.End += Math.round(player.Vore.Balls[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Balls[e].SexSkill / snowA);
                     }
                     EventLog("There is nothing but cum left of the " + player.Vore.Balls[e].Name + " " + player.Vore.Balls[e].Race + " " + player.Vore.Balls[e].FirstName + " " + player.Vore.Balls[e].LastName);
@@ -982,18 +1006,22 @@
                     case "None":
                         break;
                     case "Masculinity":
-                        player.Vore.Anal[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Masc)
+                        player.Vore.Anal[e].Masc -= shift;
+                        player.Masc += shift;
                         break;
                     case "Femininity":
-                        player.Vore.Anal[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Femi)
+                        player.Vore.Anal[e].Femi -= shift;
+                        player.Femi += shift;
                         break;
                     default:
-                        player.Vore.Anal[e].Masc -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Masc += player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Vore.Anal[e].Femi -= player.Vore.VorePerks.AbsorbEssence.Count * progress;
-                        player.Femi += player.Vore.VorePerks.AbsorbEssence.Count * progress;
+                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Masc)
+                        player.Vore.Anal[e].Masc -= shift;
+                        player.Masc += shift;
+                        shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Femi)
+                        player.Vore.Anal[e].Femi -= shift;
+                        player.Femi += shift;
                         break;
                 }
             }
@@ -1013,7 +1041,7 @@
                         player.Int += Math.round(player.Vore.Anal[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Anal[e].Charm / snowA);
                         player.Will += Math.round(player.Vore.Anal[e].Willpower / snowA);
-                        player.Will += Math.round(player.Vore.Anal[e].End / snowA);
+                        player.End += Math.round(player.Vore.Anal[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Anal[e].SexSkill / snowA);
                     }
                     player.Vore.Anal.splice(e, 1);

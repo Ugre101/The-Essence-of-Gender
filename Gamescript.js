@@ -6,6 +6,9 @@
         Will: 10,
         End: 10,
         SexSkill: 10,
+        printStats: "",
+        printPerks: "",
+        printVore: "",
         Orgasm: 0,
         Arousal: 0,
         Gold: 0,
@@ -77,7 +80,23 @@
             HairColor: "brown",
             HairLength: "shoulder"
         },
-        FoodStomach: []
+        FoodStomach: [],
+        Vore: {
+            Level: 0,
+            Exp: 0,
+            VorePoints: 0,
+            VorePerks: {},
+            Stomach: [],
+            StomachExp: 0,
+            Vagina: [],
+            VaginaExp: 0,
+            Balls: [],
+            BallsExp: 0,
+            Anal: [],
+            AnalExp: 0,
+            Breast: [],
+            BreastExp: 0
+        }
     };
 
     // House variable
@@ -136,13 +155,21 @@
             ServeMasc: true,
             ServeFemi: true
         },
-        Inch: false
+        Inch: false,
+        VoreSettings: {
+            StomachDigestion: true,
+            CumTF: true,
+            ChildTF: false,
+            VCumDigestion: true,
+            MilkTF: true,
+            AnalDigestion: true
+        }
     }
 
     var Partners = {
         Succubus: {
-            FirstName: "Sarischa",
-            LastName: "Alomendi",
+            FirstName: "Lynnlea",
+            LastName: "Qinienne",
             Equal: false,
             Yours: false,
             Like: 0,
@@ -196,9 +223,9 @@
     // Ge karaktär start värden
     document.getElementById("Begin").addEventListener("click", function () {
         document.getElementById("startgame").style.display = 'inline-block';
-        document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.Lastname + " a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
-            ", who weighs " + KgToPound(player.Weight) + " and Looking at yourself in a mirror you see " + player.Haircolor + " hair and a " + player.Skincolor +
-            " skin colour, this hopefully the last time you see this body absent of any details or personality, as today marks the day you will forge your own way in this world.";
+        document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.Lastname + ", a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
+            ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Haircolor + " hair and " + player.Skincolor +
+            " skin; hopefully the last time you see your body absent of any other details or personality.<br><br>For today, you will forge your own way in this world.";
 
         requestAnimationFrame(loop);
         DateEngine();
@@ -242,6 +269,7 @@
         document.getElementById("PerkOptionsMenu").style.display = 'none';
         document.getElementById("ShowQuests").style.display = 'none';
         document.getElementById("DetailedInfo").style.display = 'none';
+        document.getElementById("Levels").style.display = 'none';
         document.getElementById("ShowVore").style.display = 'none';
         document.getElementById("EssenceOptionsMenu").style.display = 'none';
         document.getElementById("PronunForm").style.display = 'none';
@@ -405,10 +433,30 @@
         document.getElementById("ExtraStats").innerHTML = "Virility: " + player.Virility + "<br>Fertility: " + player.Fertility + "<br>Essence drain: " + player.EssenceDrain +
             "<br>Give essence: " + player.GiveEssence + "<br> passive rest rate: " + player.RestRate;
     });
+
+    document.getElementById("Perks").addEventListener("click", function () {
+        printS();
+        DisplayNone();
+        document.getElementById("Levels").style.display = 'block';
+        document.getElementById("StatLevels").innerHTML = player.printStats;
+        document.getElementById("PerkLevels").innerHTML = player.printPerks;
+        if (Settings.Vore) {
+            document.getElementById("VLevels").innerHTML = player.printVore;
+        } else
+            document.getElementById("VLevels").innerHTML = "";
+    });
+
+
     document.getElementById("CloseExtra").addEventListener("click", function () {
         battle = false;
         document.getElementById("map").style.display = 'block';
         document.getElementById("DetailedInfo").style.display = 'none';
+    });
+
+    document.getElementById("CloseLevel").addEventListener("click", function () {
+        battle = false;
+        document.getElementById("map").style.display = 'block';
+        document.getElementById("Levels").style.display = 'none';
     });
 
     document.getElementById("Quests").addEventListener("click", function () {
@@ -661,21 +709,28 @@
             document.getElementById("status").style.display = 'block';
             document.getElementById("buttons").style.display = 'block';
         } else if (Dungeon) {
-            document.getElementById("SexText").innerHTML = HeightSystem(player, enemies[EnemyIndex]);
-            document.getElementById("AfterBattle").style.display = 'grid';
-            document.getElementById("SexButtons").style.display = 'grid';
-            if (Settings.ImgPack) {
-                document.getElementById("AfterBattle").classList.remove("AfterBattle");
-                document.getElementById("AfterBattle").classList.add("AfterBattleImg");
-                document.getElementById("MyImg").style.display = 'block';
-
+            if (Wave == 4 && false) {
+                document.getElementById("DungeonSystem").style.display = 'block';
+                document.getElementById("DungeonText").innerHTML = "What should you do with her?";
+                document.getElementById("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" +
+                    "<input type=\"button\" id=\"MakeSubmut\" value=\"Make her understand her place.\" >";
             } else {
-                document.getElementById("AfterBattle").classList.add("AfterBattle");
-                document.getElementById("AfterBattle").classList.remove("AfterBattleImg");
-                document.getElementById("MyImg").style.display = 'none';
+                document.getElementById("SexText").innerHTML = HeightSystem(player, enemies[EnemyIndex]);
+                document.getElementById("AfterBattle").style.display = 'grid';
+                document.getElementById("SexButtons").style.display = 'grid';
+                if (Settings.ImgPack) {
+                    document.getElementById("AfterBattle").classList.remove("AfterBattle");
+                    document.getElementById("AfterBattle").classList.add("AfterBattleImg");
+                    document.getElementById("MyImg").style.display = 'block';
+
+                } else {
+                    document.getElementById("AfterBattle").classList.add("AfterBattle");
+                    document.getElementById("AfterBattle").classList.remove("AfterBattleImg");
+                    document.getElementById("MyImg").style.display = 'none';
+                }
+                CheckArousal();
+                AfterBattleButtons();
             }
-            CheckArousal();
-            AfterBattleButtons();
         } else {
             document.getElementById("SexText").innerHTML = HeightSystem(player, enemies[EnemyIndex]);
             document.getElementById("AfterBattle").style.display = 'grid';
@@ -1068,46 +1123,6 @@
         player.Fat -= 0.002;
     }
 
-    // Event log
-    var LogArray = [];
-    var LogHistory = "";
-
-    function EventLog(LogText) {
-        var newText = LogText + "<br>";
-        LogArray.unshift(newText);
-        while (LogArray.length > Settings.LogLength) {
-            LogArray.pop();
-        }
-        LogHistory = "";
-        for (var e = 0; e < LogArray.length; e++) {
-            LogHistory += LogArray[e];
-        }
-        //LogHistory = newText + LogHistory;
-        document.getElementById("EventText").innerHTML = LogHistory;
-    }
-
-    document.getElementById("HideEventLog").addEventListener("click", function () {
-        if (document.getElementById("EventLogPart").style.display == 'none') {
-            document.getElementById("EventLogPart").style.display = 'block';
-            document.getElementById("HideEventLog").value = "Hide";
-        } else {
-            document.getElementById("EventLogPart").style.display = 'none';
-            document.getElementById("HideEventLog").value = "Show";
-        }
-    });
-    document.getElementById("HideFluids").addEventListener("click", function () {
-        if (document.getElementById("FluidPart").style.display == 'none') {
-            document.getElementById("FluidPart").style.display = 'block';
-            document.getElementById("HideFluids").value = "Hide";
-        } else {
-            document.getElementById("FluidPart").style.display = 'none';
-            document.getElementById("HideFluids").value = 'Show';
-        }
-    });
-
-    // End Event log
-
-
     function MakeDoor(x, y, width, height, NESW) {
         this.x = x,
             this.y = y,
@@ -1136,7 +1151,7 @@
     var WitchHut = new Npc("WitchHut", "Witch hut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
-    var BlackMartket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
+    var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
     var FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)");
 
     // Character
@@ -1146,14 +1161,19 @@
 
     var NpcName;
     var EnemyIndex;
+    var mousedowner = false;
+    var mFunction;
+    var mouseX;
+    var mouseY;
 
     function Touching() {
         for (var j = 0; j < enemies.length; j++) {
             if (sprite.x >= enemies[j].XPos && sprite.x < enemies[j].XPos + enemies[j].Size &&
                 sprite.y >= enemies[j].YPos && sprite.y < enemies[j].YPos + enemies[j].Size && battle == false) {
-                if (mousedowner != -1) {
-                    clearInterval(mousedowner);
-                    mousedowner = -1;
+                if (mousedowner) {
+                    clearInterval(mFunction);
+                    mousedowner = false;
+                    console.log("Touching");
                 }
                 document.getElementById("map").style.display = 'none';
                 document.getElementById("Encounter").style.display = 'grid';
@@ -1172,9 +1192,10 @@
         for (var n = 0; n < Npcs.length; n++) {
             if (sprite.x >= Npcs[n].X && sprite.x < Npcs[n].X + Npcs[n].Width &&
                 sprite.y >= Npcs[n].Y && sprite.y < Npcs[n].Y + Npcs[n].Height) {
-                if (mousedowner != -1) {
-                    clearInterval(mousedowner);
-                    mousedowner = -1;
+                if (mousedowner) {
+                    clearInterval(mFunction);
+                    mousedowner = false;
+                    console.log("Touching2");
                 }
                 battle = true;
                 sprite.x = startarea.width / 2 - grid;
@@ -1241,6 +1262,12 @@
 
     function PrintEnemies() {
         for (var e = 0; e < enemies.length; e++) {
+            for (var i = e + 1; i < enemies.length; i++) {
+                if (enemies[e].XPos == enemies[i].XPos) {
+                    enemies[e].XPos = RandomInt(2, 18) * grid;
+                }
+            }
+
             ctx.fillStyle = enemies[e].Color;
             ctx.fillRect(enemies[e].XPos, enemies[e].YPos, enemies[e].Size, enemies[e].Size);
             var color;
@@ -1351,8 +1378,8 @@
         // Live update for Looksmenu
         document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
 
-        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + " a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
-            ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and a " + player.Skincolor + " skin color.";
+        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + ", a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
+            ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and " + player.Skincolor + " skin.";
 
         if (player.Pregnant.Babies.length > 0) {
             if (player.Pregnant.Babies[0].BabyAge < 30) {
@@ -1396,6 +1423,8 @@
         if (TF.Status) {
             TfEngine();
         }
+        //		if (BonusTF.Status) {TfBoost();}
+
         if (!battle && Settings.EssenceAuto) {
             Laglimiter++;
             if (Laglimiter % 80 == 0) {
@@ -1438,34 +1467,61 @@
     });
 */
 
-    var mousedowner = -1;
-    startarea.addEventListener('mousedown', function (e) {
-        if (mousedowner == -1) {
-            mousedownfunc();
-            //mousedowner = setInterval(mousedownfunc, 50);
+    function mousedownfunc() {
+        var MapRect = startarea.getBoundingClientRect();
+        if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x < (startarea.width - 2 * grid)) {
+            sprite.x += grid;
+        } else if (mouseX - MapRect.left + grid / 2 < sprite.x && sprite.x > grid) {
+            sprite.x -= grid;
         }
+        if (mouseY - MapRect.top > sprite.y + 1.5 * grid && sprite.y < (startarea.height - 2 * grid)) {
+            sprite.y += grid;
+        } else if (mouseY - MapRect.top + grid / 2 < sprite.y && sprite.y > grid) {
+            sprite.y -= grid;
+        }
+        Touching();
+        CheckDoor();
+    }
 
-        function mousedownfunc() {
-            var MapRect = startarea.getBoundingClientRect();
-            var cx = e.pageX;
-            var cy = e.pageY;
-            if (cx - MapRect.left > sprite.x + 1.5 * grid && sprite.x < (startarea.width - 2 * grid) && battle == false) {
-                sprite.x += grid;
-            } else if (cx - MapRect.left + grid / 2 < sprite.x && sprite.x > grid && battle == false) {
-                sprite.x -= grid;
-            }
-            if (cy - MapRect.top > sprite.y + 1.5 * grid && sprite.y < (startarea.height - 2 * grid) && battle == false) {
-                sprite.y += grid;
-            } else if (cy - MapRect.top + grid / 2 < sprite.y && sprite.y > grid && battle == false) {
-                sprite.y -= grid;
-            }
-            Touching();
-            CheckDoor();
+    startarea.addEventListener('mousedown', function (e) {
+        if (!mousedowner) {
+            mousedowner = true;
+            mouseX = e.pageX;
+            mouseY = e.pageY;
+            mFunction = setInterval(mousedownfunc, 100);
         }
     });
-    startarea.addEventListener('mouseup', function () {
-        if (mousedowner != -1) {
-            clearInterval(mousedowner);
-            mousedowner = -1;
+
+    document.addEventListener('mouseup', function () {
+        if (mousedowner) {
+            clearInterval(mFunction);
+            mousedowner = false;
         }
     });
+    startarea.addEventListener('mousemove', function (e) {
+        if (mousedowner) {
+            if (mouseX != e.pageX || mouseY != e.pageY) {
+                mouseX = e.pageX;
+                mouseY = e.pageY;
+            }
+        }
+    });
+
+    function printS() {
+        player.printStats = "Str: " + player.Str + "<br>End: " + player.End + "<br>Will: " + player.Will + "<br>Charm: " + player.Charm + "<br>Int: " + player.Int + "<br>Skill: " + player.SexSkill + "<br>";
+        player.printPerks = "";
+        for (var i = 0; i < Object.keys(player.Perks).length; i++) {
+            if (player.Perks[Object.keys(player.Perks)[i]].Count > 0) {
+                player.printPerks += Object.keys(player.Perks)[i] + ": " + player.Perks[Object.keys(player.Perks)[i]].Count + "<br>";
+            }
+        }
+        if (Settings.Vore) {
+            player.printVore = "";
+            var v = player.Vore.VorePerks;
+            if (Object.keys(v).length > 0) {
+                for (var i = 0; i < Object.keys(v).length; i++) {
+                    player.printVore += Object.keys(v)[i] + ": " + v[Object.keys(v)[i]].Count + "<br>";
+                }
+            }
+        }
+    }

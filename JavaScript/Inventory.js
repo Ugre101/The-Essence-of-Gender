@@ -100,7 +100,7 @@ function Use(item) {
             break;
         case "Milk Jug":
             for (var i = 0; i < player.Boobies.length; i++) {
-                player.Boobies[i].MilkRate += 0.1;
+                player.Boobies[i].MilkBaseRate += 0.1;
             }
             EventLog("Chugging the jug, you feel a shudder run through your chest...");
             break;

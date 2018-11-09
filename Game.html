@@ -15,6 +15,7 @@
 
 	<div id="StartPage">
 		<h1>The Essence of Gender</h1>
+		<br>
 		<input type="button" id="GoToCharCreator" value="Start game" />
 		<br>
 		<input type="button" id="LoadButton" value="Load game" />
@@ -38,7 +39,7 @@
 				<select id="haircolor">
 					<option value="blonde">Blonde</option>
 					<option value="brown">Brown</option>
-					<option value="dark brown">Darkbrown</option>
+					<option value="dark brown">Dark Brown</option>
 					<option value="black">Black</option>
 					<option value="red">Red</option>
 				</select>
@@ -62,14 +63,13 @@
 
 	<!-- page2: Start page set tone, necessary start info and start settings -->
 	<div id="page2" class="None">
-		<p>After celebrating your coming of age is it time for you to leave your family home and make a
-			life of your own. How will you fare in this world where the weak submit and the strong dominate?</p>
+		<p>After celebrating your coming of age, it is time for you to leave your family's home and make a
+			life on your own. How will you fare in this world where the weak submit and the strong dominate?</p>
 		<p id="looks"></p>
-		<br><br>
-		<p>Your first stop on this adventure is the local outpost marked with an C on your map where rest for the night and
-			recover</p>
+		<p>Your first stop on this adventure is the local outpost marked with a C on your map. You can rest for the night and
+			recover here.</p>
 		<div>
-			<p>Notes: You can move with mouse, wasd or arrow keys</p>
+			<p>Notes: You can move with mouse, wasd or arrow keys.</p>
 			<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually? (Also: vore?)</label>
 			<input type="button" id="StartAutoEssence" value="Auto TF true" />
 			<input type="button" id="VoreStart" value="Vore false" />
@@ -79,7 +79,7 @@
 
 	<div id="map" class="None">
 		<canvas id="hem"></canvas>
-		<div id="WolrdMapContainer">
+		<div id="WorldMapContainer">
 			<canvas id="WorldMap"></canvas>
 			<p id="StatusArea">Start</p>
 		</div>
@@ -98,7 +98,7 @@
 			<h2>Fluids</h2>
 		</div>
 		<div id="FluidPart">
-			<div class="TwoCollum">
+			<div class="TwoColumn">
 				<div id="CumBar">
 					<label for="FluidCum">Cum</label>
 					<div class="FullFluidBar">
@@ -124,10 +124,10 @@
 				<input type="button" id="ShowInventory" value="Inventory" />
 				<input type="button" id="Save" value="Save" />
 				<input type="button" id="Load" value="Load" />
-				<input type="button" id="Options" value="Options" />
 				<input type="button" id="MoreButtons" value="More buttons" />
 			</div>
 			<div id="SecondButtnos">
+				<input type="button" id="Options" value="Options" />
 				<input type="button" id="EssenceOptions" value="Essence" />
 				<input type="button" id="VoreLooks" value="Vore" />
 				<input type="button" id="LessButtons" value="Less buttons" />
@@ -178,7 +178,7 @@
 
 	<div id="LevelMenu" class="LPMenu None">
 		<h1>Level Menu</h1>
-		<p id="LevelMenuText"></p>
+		<p id="LevelMenuText" class="MenuText"></p>
 		<p id="SkillPointsLeft"></p>
 		<div>
 			<input type="button" id="GainStr" value="Strength" title="Makes hit stronger">
@@ -202,7 +202,7 @@
 	</div>
 
 	<div id="PerksMenu" class="LPMenu None">
-		<p id="PerkMenuText"></p>
+		<p id="PerkMenuText" class="MenuText"></p>
 		<p id="PerkPointsLeft"></p>
 		<div>
 			<input type="button" id="ExtraHealth" value="Extra Health" title="Increase max health by 20">
@@ -227,6 +227,7 @@
 		<p id="StatusFitness"></p>
 		<input type="button" id="CloseLooks" value="Close" />
 		<input type="button" id="ExtraInfo" value="Detailed info" />
+		<input type="button" id="Perks" value="Levels" />
 	</div>
 
 	<div id="DetailedInfo" class="None Looks">
@@ -238,6 +239,15 @@
 		<br>
 		<p id="ExtraStats"></p>
 		<input type="button" id="CloseExtra" value="Close" />
+	</div>
+
+	<div id="Levels" class="None Looks">
+		<h3>Stats:</h3>
+		<p id="StatLevels"></p>
+		<h3>Perks:</h3>
+		<p id="PerkLevels"></p>
+		<p id="VLevels"></p>
+		<input type="button" id="CloseLevel" value="Close" />
 	</div>
 
 	<div id="ChildrenMenu" class="None">
@@ -275,7 +285,7 @@
 	</div>
 
 	<div id="optionpage" class="Options None">
-		<div class="TwoCollum">
+		<div class="TwoColumn">
 			<div>
 				<label for="backcolor">Backcolor</label>
 				<input type="color" id="backcolor" value="#9099a7" />
@@ -375,7 +385,7 @@
 			<br><input type="button" id="EssenceAuto" value="Essence Auto" />
 			<p>Warning: if you play on manual, switching to auto will change you according to your current Femininity
 				and Masculinity, so if you have spent a lot of Essence it will be lost.</p>
-			<div id="ManualGrowth" class="TwoCollum None">
+			<div id="ManualGrowth" class="TwoColumn None">
 				<input type="button" id="GrowBreast" value="Breast menu" />
 				<input type="button" id="GrowPussy" value="Pussy menu" />
 				<input type="button" id="GrowDick" value="Dick menu" />
@@ -419,7 +429,7 @@
 	</div>
 
 	<div id="Inventory" class="None">
-		<p id="InventoryText" class="TextBox"></p>
+		<p id="InventoryText" class="MenuText"></p>
 		<div id="InventoryBag"></div>
 		<input type="button" id="InventoryLeave" value="Close" />
 	</div>
@@ -481,14 +491,14 @@
 			<input type="button" id="regurgitateAnal" value="regurgitate" />
 		</div>
 		<div id="VorePerkMenu">
-			<p id="VorePerkMenuText"></p>
+			<p id="VorePerkMenuText" class="MenuText"></p>
 			<p id="VorePerkPointsLeft"></p>
 			<div>
 				<input type="button" id="AbsorbEssence" value="Absorb prey essence" title="Absorb essence of masculinity and femininity from your prey">
 				<input type="button" id="FasterDigestion" value="Faster digestion" title="Digest your prey faster, also speeds up gain of fat, cum and milk">
 				<input type="button" id="HigherCapacity" value="Higher capacity" title="Increase the total weight of prey your body can hold">
 				<input type="button" id="AbsorbHeight" value="Absorb height" title="Grow taller by absorbing height from your prey. (Growth limit [160cm + 20 * perklevel] t.ex. perk level 3 allows you to grow to 220cm)">
-				<input type="button" id="AbsorbStats" value="Absorb prey stats" title="Get stronger while digesting! (Costs 10 levels, max effectiveness of 10)">
+				<input type="button" id="AbsorbStats" value="Absorb prey stats" title="Get stronger while digesting! (Costs 10 perk points, max level of 10)">
 				<input type="button" id="PredatorsMeta" value="Predators metabolism" title="Increase your fat burn rate and makes you recover faster, burn more fat the fatter you are.">
 			</div>
 
@@ -546,7 +556,7 @@
 			<div id="Mascu" class="Masc"></div>
 			<label for="Femin">Femininity</label>
 			<div id="Femin" class="Femi"></div>
-			<div class="TwoCollum">
+			<div class="TwoColumn">
 				<div>
 					<label for="PArousal">Arousal</label>
 					<div id="PArousal" class="Arousal"></div>
@@ -568,7 +578,7 @@
 			<div id="EMascu" class="Masc"></div>
 			<label for="EFemin">Femininity</label>
 			<div id="EFemin" class="Femi"></div>
-			<div class="TwoCollum">
+			<div class="TwoColumn">
 				<div>
 					<label for="EArousal">Arousal</label>
 					<div id="EArousal" class="Arousal"></div>
@@ -610,10 +620,17 @@
 			<div>
 				<div id="PlayerDick">
 					<div id="Dick">
-						<input type="button" id="Missionary" value="Missionary" />
-						<input type="button" id="DoggyStyle" value="Doggy style" />
-						<input type="button" id="GetBlowjob" value="Receive blowjob" />
-						<input type="button" id="DoggyStyleAnal" value="Anal doggy style" />
+						<input type="button" id="DickAction" value="DickActions One" />
+						<div id="DickOne">
+							<input type="button" id="Missionary" value="Missionary" />
+							<input type="button" id="GetBlowjob" value="Receive blowjob" />
+							<input type="button" id="DoggyStyleAnal" value="Anal doggy style" />
+						</div>
+						<div id="DickTwo" class="None">
+							<input type="button" id="DoggyStyle" value="Doggy style" />
+							<input type="button" id="DualPen" value="" />
+							<input type="button" id="Multipen" value="" />
+						</div>
 					</div>
 				</div>
 				<input type="button" id="CockVore" value="Cock vore" />
@@ -653,6 +670,9 @@
 				</div>
 				<div id="CaptureOpponent">
 					<input type="button" id="Capture" value="Take home" />
+				</div>
+				<div id="DungeonCaptureOpponent">
+					<input type="button" id="DungeonCapture" value="Take home" />
 				</div>
 			</div>
 		</div>
@@ -750,7 +770,7 @@
 		<p id="BarText" class="TextBox">The local tavern is small and cozy, quite calm for being a tavern but not that
 			surprising given the small number of patrons. The smell from the kitchen is very appetizing, maybe you should buy a
 			meal?</p>
-		<input type="button" id="RestBar" value="Rest 25g" title="Spend the night to recover health and will" />
+		<input type="button" id="RestBar" value="Rest 5g" title="Spend the night to recover health and will" />
 		<input type="button" id="EatBar" value="Medium meal 10g" title="+2kg fat" />
 		<input type="button" id="EatBarMedium" value="Large meal 30g" title="+4kg fat" />
 		<input type="button" id="EatBarLarge" value="Buffet 50g" title="+8kg fat" /> <br><br><input type="button" id="LeaveBar"
@@ -783,11 +803,11 @@
 			<div>
 				<input type="button" id="Sleep" value="Sleep" />
 				<input type="button" id="Dorm" value="Dorm" />
-				<input type="button" id="Brothel" value="Brothel" />
 			</div>
 			<div>
 				<input type="button" id="UpgradeHome" value="Home upgrades" />
 				<input type="button" id="Portal" value="Portal" />
+				<input type="button" id="Brothel" value="Brothel" />
 			</div>
 			<br>
 			<div>
@@ -1022,9 +1042,10 @@
 	<script src="JavaScript/CurrentMap.js"></script>
 	<script src="JavaScript/DateTracker.js"></script>
 	<script src="JavaScript/Dorm.js"></script>
-	<script src="JavaScript/DrainChanes.js"></script>
+	<script src="JavaScript/DrainChanges.js"></script>
 	<script src="JavaScript/DropSystem.js"></script>
 	<script src="JavaScript/EssenceCheck.js"></script>
+	<script src="JavaScript/EventLog.js"></script>
 	<script src="JavaScript/FluidsEngine.js"></script>
 	<script src="JavaScript/Gym.js"></script>
 	<script src="JavaScript/HemScale.js"></script>
@@ -1049,6 +1070,7 @@
 	<script src="JavaScript/Save.js"></script>
 	<script src="JavaScript/SexAfterBattle.js"></script>
 	<script src="JavaScript/SuccubusDungeon.js"></script>
+	<!--	<script src="JavaScript/TfBonus.js"></script> -->
 	<script src="JavaScript/TfEngine.js"></script>
 	<script src="JavaScript/TheFarm.js"></script>
 	<script src="JavaScript/Townhall.js"></script>
