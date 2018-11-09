@@ -726,20 +726,20 @@
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Masc)
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Masc)
                         player.Vore.Stomach[e].Masc -= shift;
                         player.Masc += shift;
                         break;
                     case "Femininity":
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Femi)
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Femi)
                         player.Vore.Stomach[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                     default:
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Masc)
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Masc)
                         player.Vore.Stomach[e].Masc -= shift;
                         player.Masc += shift;
-                        shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Femi)
+                        shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Femi)
                         player.Vore.Stomach[e].Femi -= shift;
                         player.Femi += shift;
                         break;
@@ -791,20 +791,20 @@
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Masc);
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Masc);
                         player.Vore.Vagina[e].Masc -= shift;
                         player.Masc += shift;
                         break;
                     case "Femininity":
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Femi);
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Femi);
                         player.Vore.Vagina[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                     default:
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Masc);
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Masc);
                         player.Vore.Vagina[e].Masc -= shift;
                         player.Masc += shift;
-                        shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Femi);
+                        shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Femi);
                         player.Vore.Vagina[e].Femi -= shift;
                         player.Femi += shift;
                         break;
@@ -869,20 +869,20 @@
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Masc)
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Masc)
                         player.Vore.Breast[e].Masc -= shift;
                         player.Masc += shift;
                         break;
                     case "Femininity":
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Femi)
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Femi)
                         player.Vore.Breast[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                     default:
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Masc)
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Masc)
                         player.Vore.Breast[e].Masc -= shift;
                         player.Masc += shift;
-                        shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Femi)
+                        shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Femi)
                         player.Vore.Breast[e].Femi -= shift;
                         player.Femi += shift;
                         break;
@@ -937,20 +937,20 @@
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Masc)
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Masc)
                         player.Vore.Balls[e].Masc -= shift;
                         player.Masc += shift;
                         break;
                     case "Femininity":
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Femi)
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Femi)
                         player.Vore.Balls[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                     default:
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Masc)
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Masc)
                         player.Vore.Balls[e].Masc -= shift;
                         player.Masc += shift;
-                        shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Femi)
+                        shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Femi)
                         player.Vore.Balls[e].Femi -= shift;
                         player.Femi += shift;
                         break;
@@ -1006,20 +1006,20 @@
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Masc)
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Masc)
                         player.Vore.Anal[e].Masc -= shift;
                         player.Masc += shift;
                         break;
                     case "Femininity":
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Femi)
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Femi)
                         player.Vore.Anal[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                     default:
-                        var shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Masc)
+                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Masc)
                         player.Vore.Anal[e].Masc -= shift;
                         player.Masc += shift;
-                        shift = min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Femi)
+                        shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Femi)
                         player.Vore.Anal[e].Femi -= shift;
                         player.Femi += shift;
                         break;
