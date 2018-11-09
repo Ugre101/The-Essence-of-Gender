@@ -181,6 +181,9 @@
             Flags.BeatSuccubus = false;
             console.log("Added beat succubus");
         }
+        if (!Flags.hasOwnProperty("FirstCityLike")) {
+            Flags.FirstCityLike = 0;
+        }
         for (var e = 0; e < player.Inventory.length; e++) {
             switch (player.Inventory[e].Name) {
                 case "Amazon's Girdle":

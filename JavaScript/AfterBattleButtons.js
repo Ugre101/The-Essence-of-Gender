@@ -28,6 +28,16 @@ function AfterBattleButtons() {
                 document.getElementById("DoggyStyle").style.display = 'block';
                 document.getElementById("DoggyStyleAnal").style.display = 'block';
                 document.getElementById("GetBlowjob").style.display = 'block';
+                if (player.Dicks.length > 1) {
+                    document.getElementById("DualPen").style.display = 'block'
+                } else {
+                    document.getElementById("DualPen").style.display = 'none'
+                }
+                if (player.Dicks.length > 2 && enemies[EnemyIndex].Pussies.length > 1) {
+                    document.getElementById("Multipen").style.display = 'block';
+                } else {
+                    document.getElementById("Multipen").style.display = 'none';
+                }
             } else {
                 document.getElementById("PlayerDick").style.display = 'none';
             }
@@ -50,6 +60,16 @@ function AfterBattleButtons() {
                 document.getElementById("DoggyStyle").style.display = 'block';
                 document.getElementById("DoggyStyleAnal").style.display = 'block';
                 document.getElementById("GetBlowjob").style.display = 'block';
+                if (player.Dicks.length > 1) {
+                    document.getElementById("DualPen").style.display = 'block'
+                } else {
+                    document.getElementById("DualPen").style.display = 'none'
+                }
+                if (player.Dicks.length > 2 && enemies[EnemyIndex].Pussies.length > 1) {
+                    document.getElementById("Multipen").style.display = 'block';
+                } else {
+                    document.getElementById("Multipen").style.display = 'none';
+                }
             } else {
                 document.getElementById("PlayerDick").style.display = 'none';
             }
@@ -59,12 +79,16 @@ function AfterBattleButtons() {
                 document.getElementById("Scissoring").style.display = 'block';
                 document.getElementById("GetCunnilingus").style.display = 'block';
                 document.getElementById("RideCowgirl").style.display = 'block';
+                if (enemies[EnemyIndex].Dicks.length > 1) {
+                    document.getElementById("GetDualPen").style.display = 'block';
+                } else {
+                    document.getElementById("GetDualPen").style.display = 'none';
+                }
             } else {
                 document.getElementById("PlayerVagina").style.display = 'none';
             }
             break;
         case "male":
-            console.log(true)
             document.getElementById("GiveBlowjob").style.display = 'block';
             document.getElementById("GiveCunnilingus").style.display = 'none';
             if (player.Dicks.length > 0) {
@@ -82,6 +106,11 @@ function AfterBattleButtons() {
                 document.getElementById("Scissoring").style.display = 'none';
                 document.getElementById("GetCunnilingus").style.display = 'block';
                 document.getElementById("RideCowgirl").style.display = 'block';
+                if (enemies[EnemyIndex].Dicks.length > 1) {
+                    document.getElementById("GetDualPen").style.display = 'block';
+                } else {
+                    document.getElementById("GetDualPen").style.display = 'none';
+                }
             } else {
                 document.getElementById("PlayerVagina").style.display = 'none';
             }

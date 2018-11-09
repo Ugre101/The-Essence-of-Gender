@@ -122,7 +122,8 @@
             Day: 0,
             Hour: 0
         },
-        BeatSuccubus: false
+        BeatSuccubus: false,
+        FirstCityLike: 0
     };
 
     // Settings variables
@@ -465,8 +466,15 @@
 
         var questText = " ";
         for (var e = 0; e < player.Quests.length; e++) {
+            var Tier = "";
+            if (player.Quests[e].hasOwnProperty("Tier")){
+                Tier = "<br>Tier: " + player.Quests[e].Tier; 
+                if (player.Quests[e].Tier > 4) {
+                    Tier += " max";
+                }
+            }
             questText += "<div><h4>" + player.Quests[e].Name + "</h4>" + "Completed: " + player.Quests[e].Completed + " <br>Count: " +
-                player.Quests[e].Count + "<br><br></div>";
+                player.Quests[e].Count + Tier + "<br><br></div>";
         }
         document.getElementById("QuestTexts").innerHTML = questText;
     });
@@ -688,11 +696,18 @@
         player.SessionOrgasm = 0;
         document.getElementById("Encounter").style.display = 'none';
         for (var i = 0; i < player.Quests.length; i++) {
-            if (player.Quests[i].Name === "ElfHunt" && !player.Quests[i].Completed) {
+            if (player.Quests[i].Name === "ElfHunt") {
                 if (enemies[EnemyIndex].Race == "Elf") {
                     player.Quests[i].Count++;
                     if (player.Quests[i].Count >= 3) {
                         player.Quests[i].Completed = true;
+                        if (player.Quests[i].Count % 3 == 0) {
+                            if (!player.Quests[i].hasOwnProperty("Tier")) {
+                                player.Quests[i].Tier = 1
+                            } else if (player.Quests[i].Tier < 5){
+                                player.Quests[i].Tier++;
+                            }
+                        }
                     }
                 }
             }
@@ -713,7 +728,7 @@
                 document.getElementById("DungeonSystem").style.display = 'block';
                 document.getElementById("DungeonText").innerHTML = "What should you do with her?";
                 document.getElementById("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" +
-                    "<input type=\"button\" id=\"MakeSubmut\" value=\"Make her understand her place.\" >";
+                    "<input type=\"button\" id=\"MakeSubmit\" value=\"Make her understand her place.\" >";
             } else {
                 document.getElementById("SexText").innerHTML = HeightSystem(player, enemies[EnemyIndex]);
                 document.getElementById("AfterBattle").style.display = 'grid';
@@ -1491,18 +1506,40 @@
             mFunction = setInterval(mousedownfunc, 100);
         }
     });
-
+    startarea.addEventListener('touchstart', function (e) {
+        if (!mousedowner) {
+            mousedowner = true;
+            mouseX = e.touches[e.touches.length - 1].clientX;
+            mouseY = e.touches[e.touches.length - 1].clientY;
+            mFunction = setInterval(mousedownfunc, 100);
+        }
+    });
     document.addEventListener('mouseup', function () {
         if (mousedowner) {
             clearInterval(mFunction);
             mousedowner = false;
         }
     });
+    document.addEventListener('touchend', function () {
+        if (mousedowner) {
+            clearInterval(mFunction);
+            mousedowner = false;
+        }
+    });
+
     startarea.addEventListener('mousemove', function (e) {
         if (mousedowner) {
             if (mouseX != e.pageX || mouseY != e.pageY) {
                 mouseX = e.pageX;
                 mouseY = e.pageY;
+            }
+        }
+    });
+    startarea.addEventListener('touchmove', function (e) {
+        if (mousedowner) {
+            if (mouseX != e.touches[e.touches.length - 1].clientX || e.touches[e.touches.length - 1].clientY) {
+                mouseX = e.touches[e.touches.length - 1].clientX;
+                mouseY = e.touches[e.touches.length - 1].clientY;
             }
         }
     });

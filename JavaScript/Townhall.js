@@ -58,14 +58,19 @@ document.getElementById("BanditLordReward").addEventListener("click", function (
     document.getElementById("BanditLordReward").style.display = 'none';
 });
 document.getElementById("ElfHuntReward").addEventListener("click", function () {
-    document.getElementById("TownhallText").innerHTML = "You are rewared: 100Exp and 200gold";
-    player.Exp += 100;
-    player.Gold += 200;
+    var Tier = 1;
     for (var i = 0; i < player.Quests.length; i++) {
         if (player.Quests[i].Name === "ElfHunt") {
+            if (player.Quests[i].hasOwnProperty("Tier")) {
+                Tier += Math.pow(2, player.Quests[i].Tier - 1)
+            }
             player.Quests.splice(i, 1);
         }
     }
+    document.getElementById("TownhallText").innerHTML = "You are rewarded: " + 50 * Tier + "Exp and " + 100 * Tier + "gold";
+    player.Exp += 50 * Tier;
+    player.Gold += 100 * Tier;
+    Flags.FirstCityLike += 1 * Tier;
     document.getElementById("ElfHunt").style.display = 'inline-block';
     document.getElementById("ElfHuntReward").style.display = 'none';
 });
@@ -124,4 +129,7 @@ document.getElementById("ServicesLeave").addEventListener("click", function () {
     document.getElementById("TownhallStart").style.display = 'block';
     document.getElementById("Service").style.display = 'none';
     document.getElementById("NameChangeForm").style.display = 'none';
+});
+document.getElementById("TownHallRep").addEventListener("click", function () {
+    document.getElementById("TownhallText").innerHTML = Flags.FirstCityLike + "<br> They temp temp you.";
 });

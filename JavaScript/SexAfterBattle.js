@@ -220,6 +220,31 @@ document.getElementById("DoggyStyleAnal").addEventListener("click", function () 
     LastPressed = "DoggyStyleAnal";
     return;
 });
+document.getElementById("DualPen").addEventListener("click", function () {
+    enemies[EnemyIndex].Arousal += SexAttack*2;
+    player.Arousal += ESexAttack*2;
+    if (LastPressed == "DualPen") {
+        document.getElementById("SexText").innerHTML = "You keep " + HisHer(enemies[EnemyIndex]) + " head down and fuck " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
+    } else {
+        document.getElementById("SexText").innerHTML = "You order you opponent down on " + HisHer(enemies[EnemyIndex]) + " knees, and position yourself behind them. Pushing " + HisHer(enemies[EnemyIndex]) + " head down, you start fucking " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
+    }
+    if (player.Dicks[0].Virgin) {
+        player.Dicks[0].Virgin = false;
+        document.getElementById("SexText").innerHTML += "<br>Your first dick is no longer virgin!"
+    }
+    if (player.Dicks[1].Virgin) {
+        player.Dicks[1].Virgin = false;
+        document.getElementById("SexText").innerHTML += "<br>Your second dick is no longer virgin!"
+    }
+
+    CheckArousal();
+    LastPressed = "DoggyStyleAnal";
+    return;
+});
+document.getElementById("Multipen").addEventListener("click", function () {
+
+})
+
 document.getElementById("GetRimjob").addEventListener("click", function () {
     if (Settings.ImgPack) {
         ImgChose(player, "GetRimjob", enemies[EnemyIndex]);
