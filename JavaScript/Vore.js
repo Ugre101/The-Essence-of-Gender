@@ -1048,7 +1048,6 @@
                 }
             }
         }
-        EssenceCheck(player);
     }
 
     function VoreCapacity(vorePart) {
