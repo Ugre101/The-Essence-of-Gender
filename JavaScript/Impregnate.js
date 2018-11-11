@@ -9,6 +9,17 @@ function Impregnate(who, by, mode, where) {
     if (mode == "A") {
         var Impregnation = RandomInt(0, 100);
         switch (CheckGender(who)) {
+            case "cuntboy":
+                if (by.Virility >= Impregnation) {
+                    who.Pregnant.Status = true;
+                    who.Pregnant.Baby = 0;
+                    who.Pregnant.BabyRace = Father.Race;
+                    who.Pregnant.Father = by.Name + " " + by.Lastname;
+                    who.Pregnant.Mother = who.FirstName + " " + who.LastName;
+                    Flags.Impregnations++;
+                    document.getElementById(where + "SexText").innerHTML = "You have impregnated him!"
+                }
+                break;
             case "female":
                 if (by.Virility >= Impregnation) {
                     who.Pregnant.Status = true;
@@ -42,6 +53,17 @@ function Impregnate(who, by, mode, where) {
                     document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate him!"
                 }
                 break;
+            case "dickgirl":
+                if (by.Virility - 60 >= Impregnation) {
+                    who.Pregnant.Status = true;
+                    who.Pregnant.Baby = 0;
+                    who.Pregnant.BabyRace = Father.Race;
+                    who.Pregnant.Father = by.Name + " " + by.Lastname;
+                    who.Pregnant.Mother = who.FirstName + " " + who.LastName;
+                    Flags.Impregnations++;
+                    document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate her!"
+                }
+                break;
             default:
                 if (by.Virility - 60 >= Impregnation) {
                     who.Pregnant.Status = true;
@@ -63,6 +85,7 @@ function Impregnate(who, by, mode, where) {
             Mother: who.Name + " " + who.Lastname
         }
         switch (CheckGender(who)) {
+            case "cuntboy":
             case "female":
                 if (who.Fertility >= Impregnation) {
                     who.Pregnant.Status = true;
@@ -79,6 +102,7 @@ function Impregnate(who, by, mode, where) {
                     document.getElementById(where + "SexText").innerHTML = "You have been impregnated!"
                 }
                 break;
+            case "dickgirl":
             case "male":
                 if (who.Fertility - 50 >= Impregnation) {
                     who.Pregnant.Status = true;

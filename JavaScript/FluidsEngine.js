@@ -35,7 +35,7 @@ function FluidsEngine() {
             TotalMilkMax = 0;
 		for (var b = 0; b < player.Boobies.length; b++) {
             player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 400);
-			if(player.Boobies[b].MilkBaseRate > milkPenalty)
+			if(player.Boobies[b].MilkRate > milkPenalty)
 			{
 				player.Boobies[b].Milk += player.Boobies[b].MilkRate - milkPenalty;
 			}
