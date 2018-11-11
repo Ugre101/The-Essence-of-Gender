@@ -19,6 +19,7 @@ function AfterBattleButtons() {
     }
 
     switch (CheckGender(enemies[EnemyIndex])) {
+        case "cuntboy":
         case "female":
             document.getElementById("GiveCunnilingus").style.display = 'block';
             document.getElementById("GiveBlowjob").style.display = 'none';
@@ -88,6 +89,7 @@ function AfterBattleButtons() {
                 document.getElementById("PlayerVagina").style.display = 'none';
             }
             break;
+        case "dickgirl":
         case "male":
             document.getElementById("GiveBlowjob").style.display = 'block';
             document.getElementById("GiveCunnilingus").style.display = 'none';

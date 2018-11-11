@@ -24,7 +24,9 @@
         Boobies: [
             Boob = {
                 Size: 1,
-                Type: "human"
+                Type: "human",
+                Milk: 0,
+                MilkBaseRate: 0
             }
         ],
         Anal: [
@@ -250,6 +252,8 @@
             document.getElementById("SecondButtnos").style.display = 'none';
             document.getElementById("MoreButtons").style.display = 'inline-block';
             document.getElementById("LessButtons").style.display = 'inline-block';
+            FontSize = 0.75;
+            document.body.style.fontSize = FontSize + "em";
         } else {
             document.getElementById("SecondButtnos").style.display = 'block';
             document.getElementById("FirstButtons").style.display = 'block';
@@ -468,8 +472,8 @@
         var questText = " ";
         for (var e = 0; e < player.Quests.length; e++) {
             var Tier = "";
-            if (player.Quests[e].hasOwnProperty("Tier")){
-                Tier = "<br>Tier: " + player.Quests[e].Tier; 
+            if (player.Quests[e].hasOwnProperty("Tier")) {
+                Tier = "<br>Tier: " + player.Quests[e].Tier;
                 if (player.Quests[e].Tier > 4) {
                     Tier += " max";
                 }
@@ -505,6 +509,8 @@
                 } else {
                     return gender;
                 }
+            case "cuntboy":
+                return gender;
             case "male":
                 if (Settings.Pronun.Status) {
                     return Settings.Pronun.Male
@@ -517,6 +523,8 @@
                 } else {
                     return gender;
                 }
+            case "dickgirl":
+                return gender;
             case "doll":
                 if (Settings.Pronun.Status) {
                     return Settings.Pronun.Doll
@@ -530,8 +538,12 @@
         var gender;
         if (who.Dicks.length > 0 && who.Pussies.length > 0) {
             gender = "hermaphrodite";
+        } else if (who.Dicks.length > 0 && who.Boobies[0].Size > 0) {
+            gender = "dickgirl";
         } else if (who.Dicks.length > 0) {
             gender = "male";
+        } else if (who.Pussies.length > 0 && who.Boobies[0].Size < 1) {
+            gender = "cuntboy";
         } else if (who.Pussies.length > 0) {
             gender = "female";
         } else {
@@ -705,7 +717,7 @@
                         if (player.Quests[i].Count % 3 == 0) {
                             if (!player.Quests[i].hasOwnProperty("Tier")) {
                                 player.Quests[i].Tier = 1
-                            } else if (player.Quests[i].Tier < 5){
+                            } else if (player.Quests[i].Tier < 5) {
                                 player.Quests[i].Tier++;
                             }
                         }
@@ -874,10 +886,12 @@
 
     function SexColor(who, where) {
         switch (CheckGender(who)) {
+            case "cuntboy":
             case "female":
                 document.getElementById(where + "Sex").style.backgroundColor = "rgba(255, 192, 203, 0.7)";
                 document.getElementById(where + "Sex").style.border = "1px solid rgba(255, 192, 203)";
                 break;
+            case "dickgirl":
             case "male":
                 document.getElementById(where + "Sex").style.backgroundColor = "rgba(0, 0, 255, 0.3)";
                 document.getElementById(where + "Sex").style.border = "1px solid rgba(0, 0, 255)";
@@ -1294,9 +1308,11 @@
             ctx.fillRect(enemies[e].XPos, enemies[e].YPos, enemies[e].Size, enemies[e].Size);
             var color;
             switch (CheckGender(enemies[e])) {
+                case "cuntboy":
                 case "female":
                     color = "Pink";
                     break;
+                case "dickgirl":
                 case "male":
                     color = "Blue";
                     break;
