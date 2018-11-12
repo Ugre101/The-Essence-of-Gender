@@ -21,23 +21,28 @@ function FluidsEngine() {
             EventLog("Your balls are so full that you can barely hold it!")
         }
         document.getElementById("FluidCum").innerHTML = Math.round((Math.round(TotalCum) / 1000) * 10) / 10 + "L";
-        document.getElementById("FluidCum").style.width = CumPercent * 100 + "%";
+        document.getElementById("FluidCum").style.width = Math.min(1, CumPercent) * 100 + "%";
 
     } else {
         document.getElementById("CumBar").style.display = 'none';
     }
-    if (player.Boobies.length > 0 && player.Boobies[0].MilkMax > 0) {
+    function GotMilk(who) {
+        for (var e of who.Boobies) {
+            if (e.MilkRate > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    if (player.Boobies.length > 0 && GotMilk(player)) {
         document.getElementById("MilkBar").style.display = 'block';
-		var milkPenalty = 10;
-		if(player.Pregnant.Status)
-			milkPenalty = 0;
         var TotalMilk = 0,
             TotalMilkMax = 0;
 		for (var b = 0; b < player.Boobies.length; b++) {
             player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 400);
-			if(player.Boobies[b].MilkRate > milkPenalty)
+			if(player.Boobies[b].MilkRate > 0)
 			{
-				player.Boobies[b].Milk += player.Boobies[b].MilkRate - milkPenalty;
+				player.Boobies[b].Milk += player.Boobies[b].MilkRate;
 			}
 		}
         for (var e = 0; e < player.Boobies.length; e++) {
@@ -49,7 +54,7 @@ function FluidsEngine() {
             EventLog("You breasts are so full that they have started leaking!")
         }
         document.getElementById("FluidMilk").innerHTML = Math.round((Math.round(TotalMilk) / 1000) * 10) / 10 + "L";
-        document.getElementById("FluidMilk").style.width = MilkPercent * 100 + "%";
+        document.getElementById("FluidMilk").style.width = Math.min(1, MilkPercent) * 100 + "%";
 
     } else {
         document.getElementById("MilkBar").style.display = 'none';

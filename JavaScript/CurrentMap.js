@@ -137,7 +137,7 @@ function CurrentMap() {
                     PrintDoor("W");
                     if (enemies.length < 1) {}
                     if (Npcs.length < 1) {
-                        Npcs = [FarmOwner]
+                        Npcs = [FarmOwner, FarmBarn]
                     }
                     PrintMap("Farm");
                     break;

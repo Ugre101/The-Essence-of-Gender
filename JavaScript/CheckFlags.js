@@ -108,6 +108,10 @@
             House.Brothel = 0;
             console.log("Added brothel")
         }
+        if (!House.hasOwnProperty("Nursery")) {
+            House.Nursery = 0;
+            console.log("Added Nursery")
+        }
 
         if (window.innerHeight < 800) {
             document.getElementById("FirstButtons").style.display = 'block';
@@ -184,59 +188,12 @@
         if (!Flags.hasOwnProperty("FirstCityLike")) {
             Flags.FirstCityLike = 0;
         }
-        for (var e = 0; e < player.Inventory.length; e++) {
-            switch (player.Inventory[e].Name) {
-                case "Amazon's Girdle":
-                    player.Inventory[e].Use = ItemDict.amazonGirdle.Use;
-                    break;
-                case "Orc cum":
-                    player.Inventory[e].Use = ItemDict.orcCum.Use;
-                    break;
-                case "Fairy dust":
-                    player.Inventory[e].Use = ItemDict.fairyDust.Use;
-                    break;
-                case "Humanity":
-                    player.Inventory[e].Use = ItemDict.humanity.Use;
-                    break;
-                case "Pouch":
-                    player.Inventory[e].Use = ItemDict.pouch.Use;
-                    break;
-                case "Small Pouch":
-                    player.Inventory[e].Use = ItemDict.halfPouch.Use;
-                    break;
-                case "Orc brew":
-                    player.Inventory[e].Use = ItemDict.orcBrew.Use;
-                    break;
-                case "Troll Milk":
-                    player.Inventory[e].Use = ItemDict.trollMilk.Use;
-                    break;
-                case "Elven hair":
-                    player.Inventory[e].Use = ItemDict.elvenHair.Use;
-                    break;
-                case "Milk Jug":
-                    player.Inventory[e].Use = ItemDict.milkJug.Use;
-                    break;
-                case "Fertility idol":
-                    player.Inventory[e].Use = ItemDict.fertilityIdol.Use;
-                    break;
-                case "Cocky rock":
-                    player.Inventory[e].Use = ItemDict.cockyRock.Use;
-                    break;
-                case "Infernal semen":
-                    player.Inventory[e].Use = ItemDict.infernalSemen.Use;
-                    break;
-                case "Infernal milk":
-                    player.Inventory[e].Use = ItemDict.infernalMilk.Use;
-                    break;
-                case "Milk+":
-                    player.Inventory[e].Use = ItemDict.SuccMilk.Use;
-                    break;
-                case "Semen+":
-                    player.Inventory[e].Use = ItemDict.IncSemen.Use;
-                    break;
-                case "Book":
-                    player.Inventory[e].Use = ItemDict.book.Use;
-                    break;
+        for (var e of player.Inventory) {
+            var itemarray = Object.values(ItemDict);
+            for (var b of itemarray) {
+                if (e.Name === b.Name) {
+                    e.Use = b.Use
+                }
             }
         }
     }
