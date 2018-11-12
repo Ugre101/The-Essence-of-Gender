@@ -179,7 +179,7 @@ function Cumming(who) {
     if (who.Balls.length > 0) {
         var Cum = 0;
         for (var b = 0; b < who.Balls.length; b++) {
-            Cum += Math.min(who.Balls[b].Cum, Math.max(100, who.Balls[b].Cum / 8));
+            Cum += Math.min(who.Balls[b].Cum, Math.max(10, who.Balls[b].Cum / 8));
             who.Balls[b].Cum -= Math.min(who.Balls[b].Cum, Math.max(100, who.Balls[b].Cum / 8));
         }
         Cum = Math.round((Cum / 1000) * 100) / 100;

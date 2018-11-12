@@ -3,7 +3,7 @@
  } // I put this a function to make it easier to trial different formulas.
 
  function EssenceCheck(who) {
-	 //if (Settings.BalanceParts) {BalanceEssenceCheck(who);} else {
+     //if (Settings.BalanceParts) {BalanceEssenceCheck(who);} else {
      if (!who.hasOwnProperty("Dicks")) {
          who.Dicks = [];
      }
@@ -44,7 +44,11 @@
      } else if (who.Dicks.length > 0) {
          var dicktotal = 0;
          for (var e = 0; e < who.Dicks.length; e++) {
-             who.Dicks[e].Type = who.Race;
+             if (who.hasOwnProperty("SecondRace")) {
+                 who.Dicks[e].Type = who.SecondRace;
+             } else {
+                 who.Dicks[e].Type = who.Race;
+             }
              who.Dicks[e].Size = Math.min(who.Height / 3, Math.max(who.Masc / 30 * GrowthScale(who) - dicktotal, who.Height * 0.03));
              if (e == who.Dicks.length - 1 && who.Masc / 30 - dicktotal > who.Height / 3 && Settings.MaxLimbs.MaxDicks > e) {
                  var Dick = {
@@ -68,8 +72,8 @@
          var Ball = {
              Size: who.Masc / 50 * GrowthScale(who),
              Type: who.Race,
-             CumMax: who.Masc / 50 * 400,
-             Cum: who.Masc / 50 * 350,
+             CumMax: 1/3 * Math.PI * Math.pow(who.Masc/50 * GrowthScale(who), 3),
+             Cum: 1/6 * Math.PI * Math.pow(who.Masc/50, 3),
              CumRate: 0,
              CumBaseRate: 0.5
          }
@@ -77,7 +81,11 @@
      } else if (who.Balls.length > 0) {
          var ballstotal = 0;
          for (var e = 0; e < who.Balls.length; e++) {
-             who.Balls[e].Type = who.Race;
+             if (who.hasOwnProperty("SecondRace")) {
+                who.Balls[e].Type = who.SecondRace;
+            } else {
+                who.Balls[e].Type = who.Race;
+            }
              who.Balls[e].Size = Math.min(who.Height / 4, Math.max(who.Masc / 50 * GrowthScale(who) - ballstotal, who.Height * 0.02));
              if (e == who.Balls.length - 1 && who.Masc / 50 - ballstotal > who.Height / 3 && Settings.MaxLimbs.MaxBalls > e) {
                  var Ball = {
@@ -111,7 +119,11 @@
      } else if (who.Pussies.length > 0) {
          var pussytotal = 0;
          for (var e = 0; e < who.Pussies.length; e++) {
-             who.Pussies[e].Type = who.Race;
+            if (who.hasOwnProperty("SecondRace")) {
+                who.Pussies[e].Type = who.SecondRace;
+            } else {
+                who.Pussies[e].Type = who.Race;
+            }
              who.Pussies[e].Size = Math.min(who.Height / 3, Math.max(who.Femi / 30 * GrowthScale(who) - pussytotal, who.Height * 0.03));
              if (e == who.Pussies.length - 1 && who.Femi / 30 - pussytotal > who.Height / 3 && Settings.MaxLimbs.MaxVaginas > e) {
                  var Pussy = {
@@ -131,10 +143,14 @@
 
      var boobtotal = 0;
      for (var e = 0; e < who.Boobies.length; e++) {
-         who.Boobies[e].Type = who.Race;
-         who.Boobies[e].Size = Math.min(who.Height / 3, Math.max(who.Femi / 60 * GrowthScale(who) - boobtotal, 0));
-         who.Boobies[e].MilkMax = Math.round(who.Boobies[e].Size * 400);
-         if (e == who.Boobies.length - 1 && who.Femi / 60 - boobtotal > who.Height / 3 && Settings.MaxLimbs.MaxBoobs > e) {
+         if (who.hasOwnProperty("SecondRace")) {
+            who.Boobies[e].Type = who.SecondRace;
+        } else {
+            who.Boobies[e].Type = who.Race;
+        }
+         who.Boobies[e].Size = Math.min(who.Height / 3, Math.max(who.Femi / 45 * GrowthScale(who) - boobtotal, 0));
+         who.Boobies[e].MilkMax = 1/3 * Math.PI * Math.pow(who.Femi/45 * GrowthScale(who), 3);
+         if (e == who.Boobies.length - 1 && who.Femi / 45 - boobtotal > who.Height / 3 && Settings.MaxLimbs.MaxBoobs > e) {
              var Boob = {
                  Size: 0,
                  Type: who.Race,
@@ -145,7 +161,7 @@
              }
              who.Boobies.push(Boob);
          }
-         if (who.Femi / 60 - boobtotal < 0 && e > 0 || e >= Settings.MaxLimbs.MaxBoobs) {
+         if (who.Femi / 45 - boobtotal < 0 && e > 0 || e >= Settings.MaxLimbs.MaxBoobs) {
              who.Boobies.pop();
          } else {
              boobtotal += who.Boobies[e].Size;
