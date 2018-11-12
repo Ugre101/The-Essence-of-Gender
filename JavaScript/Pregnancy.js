@@ -36,7 +36,7 @@ function PregnanyEngine() {
         for (var b = 0; b < player.Boobies.length; b++) {
             if (player.Boobies[b].Milk < player.Boobies[b].MilkMax) {
                 player.Boobies[b].MilkBaseRate = player.Boobies[b].MilkMax / 50000;
-                player.Boobies[b].Milk += player.Boobies[b].MilkBaseRate + player.Boobies[b].MilkRate;
+                player.Boobies[b].Milk += player.Boobies[b].MilkBaseRate;
             }
         }
     } else {

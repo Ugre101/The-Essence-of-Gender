@@ -24,7 +24,9 @@
         Boobies: [
             Boob = {
                 Size: 1,
-                Type: "human"
+                Type: "human",
+                Milk: 0,
+                MilkBaseRate: 0
             }
         ],
         Anal: [
@@ -122,7 +124,9 @@
             Day: 0,
             Hour: 0
         },
-        BeatSuccubus: false
+        BeatSuccubus: false,
+        FairiesBeaten: 0,
+        FirstCityLike: 0
     };
 
     // Settings variables
@@ -248,6 +252,8 @@
             document.getElementById("SecondButtnos").style.display = 'none';
             document.getElementById("MoreButtons").style.display = 'inline-block';
             document.getElementById("LessButtons").style.display = 'inline-block';
+            FontSize = 0.75;
+            document.body.style.fontSize = FontSize + "em";
         } else {
             document.getElementById("SecondButtnos").style.display = 'block';
             document.getElementById("FirstButtons").style.display = 'block';
@@ -465,8 +471,15 @@
 
         var questText = " ";
         for (var e = 0; e < player.Quests.length; e++) {
+            var Tier = "";
+            if (player.Quests[e].hasOwnProperty("Tier")) {
+                Tier = "<br>Tier: " + player.Quests[e].Tier;
+                if (player.Quests[e].Tier > 4) {
+                    Tier += " max";
+                }
+            }
             questText += "<div><h4>" + player.Quests[e].Name + "</h4>" + "Completed: " + player.Quests[e].Completed + " <br>Count: " +
-                player.Quests[e].Count + "<br><br></div>";
+                player.Quests[e].Count + Tier + "<br><br></div>";
         }
         document.getElementById("QuestTexts").innerHTML = questText;
     });
@@ -496,6 +509,8 @@
                 } else {
                     return gender;
                 }
+            case "cuntboy":
+                return gender;
             case "male":
                 if (Settings.Pronun.Status) {
                     return Settings.Pronun.Male
@@ -508,6 +523,8 @@
                 } else {
                     return gender;
                 }
+            case "dickgirl":
+                return gender;
             case "doll":
                 if (Settings.Pronun.Status) {
                     return Settings.Pronun.Doll
@@ -521,8 +538,12 @@
         var gender;
         if (who.Dicks.length > 0 && who.Pussies.length > 0) {
             gender = "hermaphrodite";
+        } else if (who.Dicks.length > 0 && who.Boobies[0].Size > 0) {
+            gender = "dickgirl";
         } else if (who.Dicks.length > 0) {
             gender = "male";
+        } else if (who.Pussies.length > 0 && who.Boobies[0].Size < 1) {
+            gender = "cuntboy";
         } else if (who.Pussies.length > 0) {
             gender = "female";
         } else {
@@ -688,11 +709,18 @@
         player.SessionOrgasm = 0;
         document.getElementById("Encounter").style.display = 'none';
         for (var i = 0; i < player.Quests.length; i++) {
-            if (player.Quests[i].Name === "ElfHunt" && !player.Quests[i].Completed) {
+            if (player.Quests[i].Name === "ElfHunt") {
                 if (enemies[EnemyIndex].Race == "Elf") {
                     player.Quests[i].Count++;
                     if (player.Quests[i].Count >= 3) {
                         player.Quests[i].Completed = true;
+                        if (player.Quests[i].Count % 3 == 0) {
+                            if (!player.Quests[i].hasOwnProperty("Tier")) {
+                                player.Quests[i].Tier = 1
+                            } else if (player.Quests[i].Tier < 5) {
+                                player.Quests[i].Tier++;
+                            }
+                        }
                     }
                 }
             }
@@ -858,10 +886,12 @@
 
     function SexColor(who, where) {
         switch (CheckGender(who)) {
+            case "cuntboy":
             case "female":
                 document.getElementById(where + "Sex").style.backgroundColor = "rgba(255, 192, 203, 0.7)";
                 document.getElementById(where + "Sex").style.border = "1px solid rgba(255, 192, 203)";
                 break;
+            case "dickgirl":
             case "male":
                 document.getElementById(where + "Sex").style.backgroundColor = "rgba(0, 0, 255, 0.3)";
                 document.getElementById(where + "Sex").style.border = "1px solid rgba(0, 0, 255)";
@@ -1143,6 +1173,8 @@
             this.Height = height,
             this.Color = Color
     };
+
+
     var Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
     var Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
     var Bar = new Npc("Bar", "Bar", 14 * grid, 14 * grid, grid * 5.5, grid * 5.5, "RGB(133,94,66)")
@@ -1152,7 +1184,11 @@
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
     var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
+    var FarmBarn = new Npc("FarmBarn", "Barn", grid, grid, grid, grid, "RGB(133,94,66)");
+
+    // Dungeons
     var FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)");
+
 
     // Character
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
@@ -1272,9 +1308,11 @@
             ctx.fillRect(enemies[e].XPos, enemies[e].YPos, enemies[e].Size, enemies[e].Size);
             var color;
             switch (CheckGender(enemies[e])) {
+                case "cuntboy":
                 case "female":
                     color = "Pink";
                     break;
+                case "dickgirl":
                 case "male":
                     color = "Blue";
                     break;
@@ -1491,18 +1529,40 @@
             mFunction = setInterval(mousedownfunc, 100);
         }
     });
-
+    startarea.addEventListener('touchstart', function (e) {
+        if (!mousedowner) {
+            mousedowner = true;
+            mouseX = e.touches[e.touches.length - 1].clientX;
+            mouseY = e.touches[e.touches.length - 1].clientY;
+            mFunction = setInterval(mousedownfunc, 100);
+        }
+    });
     document.addEventListener('mouseup', function () {
         if (mousedowner) {
             clearInterval(mFunction);
             mousedowner = false;
         }
     });
+    document.addEventListener('touchend', function () {
+        if (mousedowner) {
+            clearInterval(mFunction);
+            mousedowner = false;
+        }
+    });
+
     startarea.addEventListener('mousemove', function (e) {
         if (mousedowner) {
             if (mouseX != e.pageX || mouseY != e.pageY) {
                 mouseX = e.pageX;
                 mouseY = e.pageY;
+            }
+        }
+    });
+    startarea.addEventListener('touchmove', function (e) {
+        if (mousedowner) {
+            if (mouseX != e.touches[e.touches.length - 1].clientX || e.touches[e.touches.length - 1].clientY) {
+                mouseX = e.touches[e.touches.length - 1].clientX;
+                mouseY = e.touches[e.touches.length - 1].clientY;
             }
         }
     });

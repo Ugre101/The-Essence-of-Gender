@@ -58,7 +58,7 @@ var dropRate = {
     "Goblin": 1.00,
     "Dhampir": 1.00,
     "Demon": 1.00,
-    "Succubus": 1.00, 
+    "Succubus": 1.00,
     "Incubus": 1.00,
     "Witch": 1.00
 }
@@ -73,11 +73,13 @@ var EvilLastNames = ["Crimson", "Kane", "Duke", "Interfector", "Geulimja", "Ebon
 
 function NameGiver(who) {
     switch (CheckGender(who)) {
+        case "cuntboy":
         case "male":
             who.FirstName = RandomString(MaleFirstNames);
             break;
         case "hermaphrodite":
         case "female":
+        case "dickgirl":
         case "doll":
             who.FirstName = RandomString(FemaleFirstNames);
             break;
@@ -87,10 +89,12 @@ function NameGiver(who) {
 
 function EvilNameGiver(who) {
     switch (CheckGender(who)) {
+        case "cuntboy":
         case "male":
             who.FirstName = RandomString(EvilMaleFirstNames);
             break;
         case "hermaphrodite":
+        case "dickgirl":
         case "female":
         case "doll":
             who.FirstName = RandomString(EvilFemaleFirstNames);
@@ -297,6 +301,7 @@ function EncounterPathToWitch2() {
 
     switch (CheckGender(OP)) {
         case "male":
+        case "cuntboy":
         case "doll":
             OP.Name = "Wizard"
             break;

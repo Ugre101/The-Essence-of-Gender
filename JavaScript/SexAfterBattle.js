@@ -9,10 +9,15 @@ document.getElementById("GiveBlowjob").addEventListener("click", function () {
     enemies[EnemyIndex].Arousal += SexAttack / 2
     player.Arousal += ESexAttack / 3;
     if (LastPressed == "GiveBlowjob") {
-        document.getElementById("SexText").innerHTML = "You suck your opponent's " + enemies[EnemyIndex].Dicks[RL].Type + " " + enemies[EnemyIndex].Dicks[RL].Size + "cm dick.";
+        document.getElementById("SexText").innerHTML = "Your head continues to bob on their length as your tongue plays with their tip electing soft moans from your opponent. " + enemies[EnemyIndex].FirstName + " begins to softly hump into your throat, you meet each thrust by pushing your head down as far as you can. You emphasis their thrusts by sucking hard on their throbbing length. You feel their hand being placed on your head pushing you deeper into their crotch."
+        if (enemies[EnemyIndex].Balls.length > 0) {
+            document.getElementById("SexText").innerHTML += " Your lips meet their " + CmToInch(enemies[EnemyIndex].Balls[0].Size) + " nuts as they start to slap into your chin with each hump."
+        }
+        document.getElementById("SexText").innerHTML += " Their breathing becomes deep and labored as you milk the their cock for what it’s worth"
     } else {
         RL = RandomInt(0, enemies[EnemyIndex].Dicks.length - 1);
-        document.getElementById("SexText").innerHTML = "You go down on your knees you and suck your opponent's " + enemies[EnemyIndex].Dicks[RL].Type + " " + enemies[EnemyIndex].Dicks[RL].Size + "cm dick.";
+        document.getElementById("SexText").innerHTML = "Your foe lays on their back, chest heaving with exhaustion from the recent fight. You make your way up to " + enemies[EnemyIndex].FirstName + "'s body and start walking in between their legs spreading them apart. In-between lies their " + CmToInch(enemies[EnemyIndex].Dicks[RL].Size) + " " + enemies[EnemyIndex].Dicks[RL].Type + " cock lewdly hanging to the side as it heaves side to side with each breath of your foe." +
+            " You lick your lips in anticipation as you lower your head to your prize, wrapping your tongue around the base of the dick and start sucking. They still lies on their stomach still spent from the battle. You grab their torso and flip them on their back for your viewing pleasure. Their dick lays flat against their stomach twitching almost expectantly. You lower your head between their legs and just before the they has time to protest you begin tending to their cock causing them to gasp."
     }
     CheckArousal();
     LastPressed = "GiveBlowjob";
@@ -190,9 +195,18 @@ document.getElementById("GetBlowjob").addEventListener("click", function () {
     enemies[EnemyIndex].Arousal += SexAttack / 3;
     player.Arousal += ESexAttack / 2;
     if (LastPressed == "GetBlowjob") {
-        document.getElementById("SexText").innerHTML = "You hold " + HisHer(enemies[EnemyIndex]) + " head, guiding them as they suck your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
+       // document.getElementById("SexText").innerHTML = "You continue humping your new toy with a constant pace. Your rhythm doesn’t falter as you use your muscles to the best of their ability. You lean back as you hilt into the back of their throat, eliciting a moan from you as you start breeding deep."
+        if (player.Balls.length > 0) {
+            document.getElementById("SexText").innerHTML = "Continuing to thrust your " + CmToInch(player.Balls[0].Size) + " balls slap repeatedly against your foe, causing them to grunt in annoyance." +
+                "Your thrusting continues as you make proper use of your opponent’ s mouth. You grab your foe 's forearm and guide it to your sac, grunting in demand as they start to fondle you.<br><br> Your pounding of their throat continues even as your abdomen starts bumping into their nose with each thrust. Muffled groans escape from your mouth as " + enemies[EnemyIndex].FirstName + "'s mouth is pumped by your throbbing cock. They grunts as your cock snakes its way through their mouth greedily humps their throat."
+        } else {
+            document.getElementById("SexText").innerHTML = "Your thrusting continues as you make proper use of your opponent’ s mouth. Your pounding of their throat continues even as your abdomen starts bumping into their nose with each thrust. Muffled groans escape from your mouth as "+enemies[EnemyIndex].FirstName+"'s mouth is pumped by your throbbing cock. They grunts as your cock snakes its way through their mouth greedily humps their throat."
+        }
     } else {
-        document.getElementById("SexText").innerHTML = "Commanding your opponent to " + HisHer(enemies[EnemyIndex]) + " knees, you grab " + HisHer(enemies[EnemyIndex]) + " head, guiding them to sucking your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
+        document.getElementById("SexText").innerHTML = "You walk up to your defeated adversary as they attempt to get back on their feet. You stop them by catching their head and tilting it up to your face. You look back down at your crotch and nod to your " + CmToInch(player.Dicks[0].Size) + " cock expectantly." +
+            " Just as your prize gets the idea and moves closer you eagerly thrust your hips into their mouth. You hold their head close starting a steady rhythm as you use their hole."
+        // "Your last blow sends your foe recoiling back losing their footing and crashing to the floor. You make your way up to them until you cast a shadow of their body. Your adversary groans as they start to rise, only to be met with the sight of your (insert player dick size. small, average, hefty, enormous) member. Stunned by the position they are in you grab the back of their head and guide their mouth to its rightful place and begin to enjoy your prize"
+
     }
     CheckArousal();
     LastPressed = "GetBlowjob";
@@ -220,6 +234,31 @@ document.getElementById("DoggyStyleAnal").addEventListener("click", function () 
     LastPressed = "DoggyStyleAnal";
     return;
 });
+document.getElementById("DualPen").addEventListener("click", function () {
+    enemies[EnemyIndex].Arousal += SexAttack * 2;
+    player.Arousal += ESexAttack * 2;
+    if (LastPressed == "DualPen") {
+        document.getElementById("SexText").innerHTML = "You keep " + HisHer(enemies[EnemyIndex]) + " head down and fuck " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
+    } else {
+        document.getElementById("SexText").innerHTML = "You order you opponent down on " + HisHer(enemies[EnemyIndex]) + " knees, and position yourself behind them. Pushing " + HisHer(enemies[EnemyIndex]) + " head down, you start fucking " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
+    }
+    if (player.Dicks[0].Virgin) {
+        player.Dicks[0].Virgin = false;
+        document.getElementById("SexText").innerHTML += "<br>Your first dick is no longer virgin!"
+    }
+    if (player.Dicks[1].Virgin) {
+        player.Dicks[1].Virgin = false;
+        document.getElementById("SexText").innerHTML += "<br>Your second dick is no longer virgin!"
+    }
+
+    CheckArousal();
+    LastPressed = "DoggyStyleAnal";
+    return;
+});
+document.getElementById("Multipen").addEventListener("click", function () {
+
+})
+
 document.getElementById("GetRimjob").addEventListener("click", function () {
     if (Settings.ImgPack) {
         ImgChose(player, "GetRimjob", enemies[EnemyIndex]);

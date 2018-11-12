@@ -1,6 +1,10 @@
 function DrainChangesEnemy(eold, ecurrent) {
     var b = " ";
     switch (CheckGender(eold)) {
+        case "dickgirl":
+            if (eold.Boobies[0].Size > ecurrent.Boobies[0].Size) {
+                b = "You see their breasts shrinking."
+            }
         case "male":
             if (ecurrent.Dicks.length > 0) {
                 if (eold.Dicks[0].Size > ecurrent.Dicks[0].Size) {
@@ -10,6 +14,7 @@ function DrainChangesEnemy(eold, ecurrent) {
                 b = "You see their dick shrinking completely into their body, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
             }
             break;
+        case "cuntboy":
         case "female":
             if (ecurrent.Pussies.length > 0) {
                 if (eold.Pussies[0].Size > ecurrent.Pussies[0].Size && eold.Boobies[0].Size > ecurrent.Boobies[0].Size) {
@@ -54,6 +59,7 @@ function DrainChanges(old, current, eold, ecurrent) {
     var b = " ";
 
     switch (CheckGender(old)) {
+        case "dickgirl":
         case "male":
             if (old.Dicks[0].Size < current.Dicks[0].Size) {
                 a = "You feel your dick growing.";
@@ -66,6 +72,7 @@ function DrainChanges(old, current, eold, ecurrent) {
             }
             b = DrainChangesEnemy(eold, ecurrent);
             break;
+        case "cuntboy":
         case "female":
             if (old.Pussies[0].Size < current.Pussies[0].Size && old.Boobies[0].Size < current.Boobies[0].Size) {
                 a = "You feel both your breasts and pussy growing.";

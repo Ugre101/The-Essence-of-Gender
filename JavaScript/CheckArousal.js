@@ -10,10 +10,13 @@ function CheckArousal() {
         }
         if (LastPressed == "GiveBlowjob") {
             var cum = Cumming(ee);
-            document.getElementById("SexText").innerHTML += "<br>Reading their body language, you know they are close to cumming."
+            document.getElementById("SexText").innerHTML = "Your opponent’s grip on your head tightens as they start humping you mouth in earnest. You gladly oblige their request starting to deepthroat them to the base of their cock. Their rhythm starts to falter as you push their cock to the back of your throat." +
+                " You push your head deep into their crotch as they make one last desperate thrust"
+
             if (cum > 0) {
-                document.getElementById("SexText").innerHTML += " You swallow " + cum + "L of their cum."
-            } else document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
+                document.getElementById("SexText").innerHTML += "depositing " + cum + "L deep into your gullet."
+            } else document.getElementById("SexText").innerHTML += "."
+            document.getElementById("SexText").innerHTML += "Your opponent takes deep breathes as they lie completely spent. You rise from between their legs admiring your work and begin to plan your next move."
         } else if (LastPressed == "RideCowgirl") {
             var cum = Cumming(ee);
             document.getElementById("SexText").innerHTML += "<br>Reading their body language, you know they are close to cumming."
@@ -57,12 +60,16 @@ function CheckArousal() {
         }
         if (LastPressed == "GetBlowjob") {
             var cum = Cumming(player);
-            document.getElementById("SexText").innerHTML += "<br>Feeling close, you grab their head and push your dick deeper down their throat, cumming " + cum + "L into their stomach."
+            document.getElementById("SexText").innerHTML = "You reach down grip firmly on your opponent’s head while giving a bestial grunt as you approach your climax. You ram your cock as far as you can into " + enemies[EnemyIndex].FirstName + "'s throat."
+            if (player.Balls.length > 0) {
+                document.getElementById("SexText").innerHTML += "Your balls tense up as you pump your ("+cum+"L) load down their gullet. You continue to thrust desperately, holding your opponent tight as you empty your sac into them. You kneel over your foe's head making small jabs into their mouth as each wave of cum is sent to their stomach."
+            }
+            document.getElementById("SexText").innerHTML += "You stand there for a while enjoying your afterglow before you pull out causing your opponent to fall over gasp for air. You smile deviously as you ponder how you should use them next";
             ee.Cumin.Stomach += cum;
             if (ee.Cumin.Stomach > (ee.Height / 100) * 2) {
-                document.getElementById("SexText").innerHTML += " Their stomach is overfilled with your cum; as you pull out, your excess cum follows."
+                document.getElementById("SexText").innerHTML += "<br><br> Their stomach is overfilled with your cum; as you pull out, your excess cum follows."
             } else if (ee.Cumin.Stomach > ee.Height / 100) {
-                document.getElementById("SexText").innerHTML += " Their stomach bulges visibly, filled with your cum."
+                document.getElementById("SexText").innerHTML += "<br><br> Their stomach bulges visibly, filled with your cum."
             }
         } else if (LastPressed == "Missionary") {
             var cum = Cumming(player);

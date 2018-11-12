@@ -21,7 +21,7 @@
 
        html,
        body {
-           overflow: visible;
+           overflow: auto;
        }
    }
 
@@ -47,10 +47,23 @@
        width: 20vw;
        border: 2px solid black;
        border-radius: 10px 0 0 0;
-
    }
 
-   #EventLog>div>h2 {
+   @media screen and (max-height: 500px),
+   screen and (max-width: 500px) {
+       #EventLog {
+           position: absolute;
+           bottom: 0;
+           right: 0;
+           background-color: rgb(137, 129, 168);
+           height: auto;
+           width: 80%;
+           border: 2px solid black;
+           border-radius: 10px 0 0 0;
+       }
+   }
+
+   #EventLog>h2 {
        display: inline-block;
        margin: 0;
    }
@@ -68,11 +81,7 @@
        overflow: auto;
    }
 
-   #EventLog>div {
-       margin: 0.2em 0;
-   }
-
-   #EventLog>div>input[type=button] {
+   #EventLog>input[type=button] {
        width: 25%;
        left: 0;
    }
@@ -101,6 +110,7 @@
        position: absolute;
        left: 0;
    }
+
 
    div.right {
        position: absolute;
@@ -328,6 +338,7 @@
        border-radius: 5px;
        background-color: rgb(235, 235, 228);
        text-align: center;
+       overflow: auto;
    }
 
    #LogLength {
@@ -389,6 +400,7 @@
        text-align: center;
    }
 
+
    @media screen and (max-height:800px) {
        div.container {
            position: absolute;
@@ -404,7 +416,6 @@
        background-color: rgb(137, 129, 168);
        border-right: 2px solid black;
        text-align: center;
-
    }
 
    #Encounter {
@@ -533,7 +544,7 @@
        box-shadow: 0 0 1px 1px black;
        border-radius: 15px;
        padding: 0.5em;
-       background-color: rgb(168, 163, 168);
+       background-color: rgb(230, 230, 230);
        grid-area: c;
    }
 
