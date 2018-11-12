@@ -171,6 +171,7 @@
             MilkTF: true,
             AnalDigestion: true
         }
+		//BalanceParts: true
     }
 
     var Partners = {

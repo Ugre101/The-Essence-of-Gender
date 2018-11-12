@@ -150,4 +150,6 @@ document.getElementById("LeaveLose").addEventListener("click", function () {
     document.getElementById("LoseStruggle").style.display = 'inline-block';
     document.getElementById("LoseSubmit").style.display = 'inline-block';
     document.getElementById("LosePlayerOrgasm").innerHTML = " ";
+    document.getElementById("EventLog").style.display = 'block';
+    LastPressed = " ";
 });

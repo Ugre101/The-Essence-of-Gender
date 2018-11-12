@@ -7,7 +7,7 @@ function IntToOne(i) {
         case 2:
             return ", followed by a third "
         default:
-            return ", and a "+i+"th ";
+            return ", and a "+(i+1)+"th ";
     }
 }
 
@@ -24,7 +24,7 @@ function DickLook(who) {
             if (who.Dicks[d].Virgin) {
                 virgin = " virgin"
             }
-            dicks += IntToOne(d) + CmToInch(who.Dicks[d].Size) + " long " + who.Dicks[d].Type + virgin + " dick";
+            dicks += IntToOne(d) + CmToInch(who.Dicks[d].Size) + " long " + who.Dicks[d].Type.toLowerCase() + virgin + " dick";
         }
         return dicks + ".<br><br>";
     } else {
@@ -60,9 +60,9 @@ function PussyLook(who) {
                 virgin = " virgin"
             }
             who.Pussies[p].Type + virgin + " pussy <br>";
-            pussies += IntToOne(p) + CmToInch(who.Pussies[p].Size) + " deep " + who.Pussies[p].Type + virgin + " pussy";
+            pussies += IntToOne(p) + CmToInch(who.Pussies[p].Size) + " deep " + who.Pussies[p].Type.toLowerCase() + virgin + " pussy";
         }
-        return pussies + "<br><br>";
+        return pussies + ".<br><br>";
     } else {
         return "";
     }
@@ -72,7 +72,9 @@ function BoobLook(who) {
     if (who.Boobies.length > 0) {
         var boobies = "";
         for (var b = 0; b < who.Boobies.length; b++) {
-			if(who.Boobies[b].Size > 1 && who.Boobies[b].Size < 28) {
+			if(b == 0 && (Math.round(who.Boobies[0].Size) == 2 || Math.round(who.Boobies[0].Size) == 3)) {
+			boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";			
+			} else if(Math.round(who.Boobies[b].Size) > 1 && Math.round(who.Boobies[b].Size < 28)) {
             boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
 			} else {boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
 			}
