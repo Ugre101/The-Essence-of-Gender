@@ -302,7 +302,7 @@ const ItemDict = {
         Name: "Book",
         Use: function(who) {
 			who.Int++;
-			who.Arousal = 100;
+			who.Arousal = 99;
             EventLog("A dirty magazine, that's made you extremely aroused...");
         },
         Equip: "No",
@@ -319,5 +319,30 @@ const ItemDict = {
         Does: "Temp+5",
         Quantity: 1,
         Title: "Temp_Tempsson legendary temp sword gives +999 to testing."
+    },
+    Milker: {
+        Name: "Milker",
+        Use: function(who) {
+            for (var e of player.Boobies) {
+                if (e.Milk > 0) {
+                    e.Milk = 0
+                    
+                }
+            }
+        },
+        Equip: "No",
+        Drop: "Yes",
+        Does: "Milk you",
+        Title: "Milk yourself"
+    },
+    MilkBottle: {
+        Name: "Milk",
+        Use: function(who) {
+            //Drink milk
+        },
+        Equip: "No",
+        Drop: "Yes",
+        Does: "...",
+        Title: "A bottle of milk."
     }
 }

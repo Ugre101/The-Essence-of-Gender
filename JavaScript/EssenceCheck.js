@@ -1,7 +1,7 @@
  function GrowthScale(who) {
-    return (who.Height / 160)
+     return (who.Height / 160)
  } // I put this a function to make it easier to trial different formulas.
- 
+
  function EssenceCheck(who) {
      if (!who.hasOwnProperty("Dicks")) {
          who.Dicks = [];
@@ -65,10 +65,10 @@
          who.Balls.pop();
      } else if (who.Masc >= 50 && who.Balls.length == 0) {
          var Ball = {
-             Size: who.Masc/50 * GrowthScale(who),
+             Size: who.Masc / 50 * GrowthScale(who),
              Type: who.Race,
-             CumMax: who.Masc/50*400,
-             Cum: who.Masc/50*350,
+             CumMax: who.Masc / 50 * 400,
+             Cum: who.Masc / 50 * 350,
              CumRate: 0,
              CumBaseRate: 0.5
          }
@@ -132,10 +132,15 @@
      for (var e = 0; e < who.Boobies.length; e++) {
          who.Boobies[e].Type = who.Race;
          who.Boobies[e].Size = Math.min(who.Height / 3, Math.max(who.Femi / 60 * GrowthScale(who) - boobtotal, 0));
+         who.Boobies[e].MilkMax = Math.round(who.Boobies[e].Size * 400);
          if (e == who.Boobies.length - 1 && who.Femi / 60 - boobtotal > who.Height / 3 && Settings.MaxLimbs.MaxBoobs > e) {
              var Boob = {
                  Size: 0,
-                 Type: who.Race
+                 Type: who.Race,
+                 Milk: 0,
+                 MilkBaseRate: 0,
+                 MilkRate: 0,
+                 MilkMax: 0
              }
              who.Boobies.push(Boob);
          }

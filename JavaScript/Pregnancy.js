@@ -42,40 +42,56 @@ function PregnanyEngine() {
     } else {
         player.Pregnant.Status = false;
     }
-    for (var e = 0; e < House.Dormmates.length; e++) {
-        if (House.Dormmates[e].hasOwnProperty("Pregnant")) {
-            if (House.Dormmates[e].Pregnant.Status) {
-                House.Dormmates[e].Pregnant.Baby++;
-                if (House.Dormmates[e].Pregnant.Baby > 274) {
-                    if (Array.isArray(House.Dormmates[e].Children)) {
+    for (var e of House.Dormmates) {
+        if (e.hasOwnProperty("Pregnant")) {
+            if (e.Pregnant.Status) {
+                e.Pregnant.Baby++;
+                if (e.Pregnant.Baby > 274) {
+                    if (Array.isArray(e.Children)) {
                         var Child = {
                             AgeCounter: 0,
                             Race: House.Dormmates[e].Race,
-                            Mother: House.Dormmates[e].Pregnant.Mother,
-                            Father: House.Dormmates[e].Pregnant.Father
+                            Mother: e.Pregnant.Mother,
+                            Father: e.Pregnant.Father
                         };
-                        House.Dormmates[e].Children.push(Child);
-                        House.Dormmates[e].Pregnant.Baby = 0;
-                        House.Dormmates[e].Pregnant.Status = false;
-                        EventLog(House.Dormmates[e].FirstName + " " + House.Dormmates[e].LastName + " have given birth!");
+                        e.Children.push(Child);
+                        e.Pregnant.Baby = 0;
+                        e.Pregnant.Status = false;
+                        EventLog(e.FirstName + " " + e.LastName + " have given birth!");
                     } else {
-                        House.Dormmates[e].Children = [];
+                        e.Children = [];
                     }
                 }
             }
         }
-        if (Array.isArray(House.Dormmates[e].Children)) {
-            if (House.Dormmates[e].Children.length > 0) {
-                for (var b = 0; b < House.Dormmates[e].Children.length; b++) {
-                    House.Dormmates[e].Children[b].AgeCounter++;
-                    if (House.Dormmates[e].Children[b].AgeCounter % 365 == 0) {
-                        var age = Math.round(House.Dormmates[e].Children[b].AgeCounter / 365);
-                        EventLog("Your child with " + House.Dormmates[e].FirstName + " " + House.Dormmates[e].LastName + " has grown " + age + " years old.");
+        if (Array.isArray(e.Children)) {
+            if (e.Children.length > 0) {
+                for (var b of e.Children) {
+                    var age = Math.round(b.AgeCounter / 365);
+                    b.AgeCounter++;
+                    if (b.AgeCounter % 365 == 0) {
+                        EventLog("Your child with " + e.FirstName + " " + e.LastName + " has grown " + age + " years old.");
                     }
+                    if (House.Nursery > 0 && age < 18) {
+                        if (!b.hasOwnProperty("NuseryBoost")) {
+                            b.NuseryBoost = 0;
+                        } else {
+                            b.NuseryBoost += House.Nursery
+                            if (b.NuseryBoost > 40) {
+                                console.log("Extra day")
+                                b.NuseryBoost = 0;
+                                b.AgeCounter++ //Faster ageing with nusery
+                                if (b.AgeCounter % 365 == 0) {
+                                    EventLog("Your child with " + e.FirstName + " " + e.LastName + " has grown " + age + " years old.");
+                                }
+                            }
+                        }
+                    }
+                    // Need to add death of age.
                 }
             }
         } else {
-            House.Dormmates[e].Children = [];
+            e.Children = [];
         }
     }
 }
