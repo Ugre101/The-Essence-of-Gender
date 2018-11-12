@@ -97,6 +97,7 @@
          }
 	 }
 
+	 var pussytotal = Math.floor(who.Femi / 1500 + 1); //Every 1500 gets you more pussies
      if (who.Femi < 30 && who.Pussies.length > 0) {
          who.Pussies.pop();
          who.Boobies[0].Size = 0;
@@ -114,7 +115,6 @@
 			 console.log("Pop 1");
 		 }
      } else if (who.Femi >= 1500) {
-         var pussytotal = Math.floor(who.Femi / 1500 + 1); //Every 1500 gets you more pussies
          for (var e = 0; e < pussytotal; e++) {
 				if(e > who.Pussies.length) { //Need more pussies?
 					var Pussy = {
@@ -149,7 +149,7 @@
 		 //Start of balancing organs
      } else if (who.Femi >= 1000) {
          var boobtotal = Math.floor(who.Femi / 1000 + 1); //Every 1000 gets you more boobs
-         for (var e = 0; e < boobtotal; e++) {
+         for (var e = 0; e <= boobtotal; e++) {
 			if(e > who.Boobies.length) { //Need more boobs?
 				var Boob = {
 					 Size: 0,
