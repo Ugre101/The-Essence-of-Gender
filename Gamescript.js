@@ -26,7 +26,9 @@
                 Size: 1,
                 Type: "human",
                 Milk: 0,
-                MilkBaseRate: 0
+                MilkBaseRate: 0,
+                MilkRate: 0,
+                MilkMax: 0
             }
         ],
         Anal: [
@@ -110,7 +112,8 @@
         Gym: 0,
         Brothel: 0,
         Dormmates: [],
-        Portal: false
+        Portal: false,
+        Nursery: 0
     };
 
     // Flag variables
@@ -175,6 +178,14 @@
         Succubus: {
             FirstName: "Lynnlea",
             LastName: "Qinienne",
+            Equal: false,
+            Yours: false,
+            Like: 0,
+            Submit: 0
+        },
+        FarmOwner: {
+            FirstName: "Teoviz",
+            LastName: "",
             Equal: false,
             Yours: false,
             Like: 0,
@@ -1185,14 +1196,14 @@
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
     var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
-    var FarmBarn = new Npc("FarmBarn", "Barn", grid, grid, grid, grid, "RGB(133,94,66)");
-
     // Dungeons
     var FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)");
 
 
-    // Character
+    // Farm
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
+    var FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
+
 
     var Npcs = [];
 
@@ -1276,16 +1287,17 @@
         }
     }
 
+    var needPrint = ["FarmBarn", "FarmOwner"]
     function PrintNpcs() {
-        for (var e = 0; e < Npcs.length; e++) {
-            if (Npcs[e].Name == "FarmOwner") {
-                ctx.fillStyle = Npcs[e].Color;
-                ctx.fillRect(Npcs[e].X, Npcs[e].Y, Npcs[e].Width, Npcs[e].Height);
+        for (var e of Npcs) {
+            if (needPrint.indexOf(e.Name) > -1) {
+                ctx.fillStyle = e.Color;
+                ctx.fillRect(e.X, e.Y, e.Width, e.Height);
             }
             ctx.fillStyle = Settings.TextColor;
             ctx.font = "4vh Arial";
             ctx.textAlign = "center";
-            ctx.fillText(Npcs[e].RealName, Npcs[e].X + Npcs[e].Width / 2, Npcs[e].Y + Npcs[e].Height / 1.8);
+            ctx.fillText(e.RealName, e.X + e.Width / 2, e.Y + e.Height / 1.8);
         }
     }
     var a = document.documentElement.clientHeight;

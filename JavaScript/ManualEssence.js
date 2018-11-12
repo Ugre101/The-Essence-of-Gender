@@ -1,7 +1,7 @@
 function ManualGrowthScale() {
     return (player.Height / 160)
- } // I put this a function to make it easier to trial different formulas.
- 
+} // I put this a function to make it easier to trial different formulas.
+
 
 function EssenceCost(what) {
     return Math.min(2000, Math.round((10 * Math.pow(1.1, what.Size))));
@@ -40,7 +40,12 @@ document.getElementById("GrowExtraBreasts").addEventListener("click", function (
         player.Femi -= cost;
         var Boob = {
             Size: 0,
-            Type: player.Race
+            Type: player.Race,
+            Milk: 0,
+            MilkBaseRate: 0,
+            MilkRate: 0,
+            MilkMax: 0
+
         }
         player.Boobies.push(Boob);
     }
@@ -63,6 +68,7 @@ function BiggerChest(index) {
     if (player.Femi >= cost) {
         player.Femi -= cost;
         player.Boobies[index].Size += 1 * ManualGrowthScale();
+        player.Boobies[index].MilkMax = Math.round(player.Boobies[b].Size * 400);
     }
 }
 document.getElementById("GrowPussy").addEventListener("click", function () {
@@ -93,7 +99,7 @@ function PussyButtons() {
     var Inputs = [];
     for (var e = 0; e < player.Pussies.length; e++) {
         var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerPussy(" + e + "); PussyButtons();\">" +
-        CmToInch(player.Pussies[e].Size) + " " + EssenceCost(player.Pussies[e]) + "Feminity</button  >"
+            CmToInch(player.Pussies[e].Size) + " " + EssenceCost(player.Pussies[e]) + "Feminity</button  >"
         Inputs += Input;
     }
     document.getElementById("PussyButtons").innerHTML = Inputs;
@@ -142,7 +148,7 @@ function DickButtons() {
     var Inputs = [];
     for (var e = 0; e < player.Dicks.length; e++) {
         var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerDick(" + e + "); DickButtons();\">" +
-        CmToInch(player.Dicks[e].Size) + " " + EssenceCost(player.Dicks[e]) + "Masculinity</button  >"
+            CmToInch(player.Dicks[e].Size) + " " + EssenceCost(player.Dicks[e]) + "Masculinity</button  >"
         Inputs += Input;
     }
     document.getElementById("DickButtons").innerHTML = Inputs;
@@ -186,7 +192,7 @@ function BallsButtons() {
     var Inputs = [];
     for (var e = 0; e < player.Balls.length; e++) {
         var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerBalls(" + e + "); BallsButtons();\">" +
-        CmToInch(player.Balls[e].Size) + " " + EssenceCost(player.Balls[e]) + "Masculinity</button  >"
+            CmToInch(player.Balls[e].Size) + " " + EssenceCost(player.Balls[e]) + "Masculinity</button  >"
         Inputs += Input;
     }
     document.getElementById("BallsButtons").innerHTML = Inputs;

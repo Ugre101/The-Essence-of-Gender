@@ -8,52 +8,52 @@
     function LimbSale() {
         var SellDicks = [];
         for (var e = 0; e < player.Dicks.length; e++) {
-            var temp = "<button onclick=\"SellDicks(" + e + "); LimbSale()\">Dick: " + (e + 1) + ", " + player.Dicks[e].Size + "cm</button>";
+            var temp = "<button onclick=\"SellDicks(" + e + "); LimbSale()\">Dick: " + (e + 1) + ", " + CmToInch(player.Dicks[e].Size) + "</button>";
             SellDicks += temp;
         }
         document.getElementById("SellDicks").innerHTML = SellDicks;
         var SellDickSize = [];
         for (var e = 0; e < player.Dicks.length; e++) {
-            var temp = "<button onclick=\"SellDickSize(" + e + "); LimbSale()\">Dick: " + (e + 1) + ", " + player.Dicks[e].Size + "cm</button>";
+            var temp = "<button onclick=\"SellDickSize(" + e + "); LimbSale()\">Dick: " + (e + 1) + ", " + CmToInch(player.Dicks[e].Size) + "</button>";
             SellDickSize += temp;
         }
         document.getElementById("SellDickSize").innerHTML = SellDickSize;
 
         var SellBalls = [];
         for (var e = 0; e < player.Balls.length; e++) {
-            var temp = "<button onclick=\"SellBalls(" + e + "); LimbSale()\">Ball: " + (e + 1) + ", " + player.Balls[e].Size + "cm</button>";
+            var temp = "<button onclick=\"SellBalls(" + e + "); LimbSale()\">Ball: " + (e + 1) + ", " + CmToInch(player.Balls[e].Size) + "</button>";
             SellBalls += temp;
         }
         document.getElementById("SellBalls").innerHTML = SellBalls;
         var SellBallSize = [];
         for (var e = 0; e < player.Balls.length; e++) {
-            var temp = "<button onclick=\"SellBallSize(" + e + "); LimbSale()\">Ball: " + (e + 1) + ", " + player.Balls[e].Size + "cm</button>";
+            var temp = "<button onclick=\"SellBallSize(" + e + "); LimbSale()\">Ball: " + (e + 1) + ", " + CmToInch(player.Balls[e].Size) + "</button>";
             SellBallSize += temp;
         }
         document.getElementById("SellBallSize").innerHTML = SellBallSize;
 
         var SellBreasts = [];
         for (var e = 1; e < player.Boobies.length; e++) {
-            var temp = "<button onclick=\"SellBreasts(" + e + "); LimbSale()\">Boobs: " + (e + 1) + ", " + player.Boobies[e].Size + "cm</button>";
+            var temp = "<button onclick=\"SellBreasts(" + e + "); LimbSale()\">Boobs: " + (e + 1) + ", " + CmToInch(player.Boobies[e].Size) + "</button>";
             SellBreasts += temp;
         }
         document.getElementById("SellBreasts").innerHTML = SellBreasts;
         var SellBreastSize = [];
         for (var e = 0; e < player.Boobies.length; e++) {
-            var temp = "<button onclick=\"SellBreastSize(" + e + "); LimbSale()\">Boobs: " + (e + 1) + ", " + player.Boobies[e].Size + "cm</button>";
+            var temp = "<button onclick=\"SellBreastSize(" + e + "); LimbSale()\">Boobs: " + (e + 1) + ", " + CmToInch(player.Boobies[e].Size) + "</button>";
             SellBreastSize += temp;
         }
         document.getElementById("SellBreastSize").innerHTML = SellBreastSize;
 
         var SellVaginas = [];
         for (var e = 0; e < player.Pussies.length; e++) {
-            var temp = "<button onclick=\"SellVaginas(" + e + "); LimbSale()\">Pussy: " + (e + 1) + ", " + player.Pussies[e].Size + "cm</button>";
+            var temp = "<button onclick=\"SellVaginas(" + e + "); LimbSale()\">Pussy: " + (e + 1) + ", " + CmToInch(player.Pussies[e].Size) + "</button>";
             SellVaginas += temp;
         }
         document.getElementById("SellVaginas").innerHTML = SellVaginas;
         var SellVaignaSize = [];
         for (var e = 0; e < player.Pussies.length; e++) {
-            var temp = "<button onclick=\"SellVaignaSize(" + e + "); LimbSale()\">Pussy: " + (e + 1) + ", " + player.Pussies[e].Size + "cm</button>";
+            var temp = "<button onclick=\"SellVaignaSize(" + e + "); LimbSale()\">Pussy: " + (e + 1) + ", " + CmToInch(player.Pussies[e].Size) + "</button>";
             SellVaignaSize += temp;
         }
         document.getElementById("SellVaignaSize").innerHTML = SellVaignaSize;
@@ -65,8 +65,12 @@
     }
 
     function SellDickSize(e) {
-        player.Gold += 25;
-        player.Dicks[e].Size--;
+        if (player.Dicks[e].Size - 1 < 1) {
+            player.Dicks[e].Size = 1;
+        } else {
+            player.Gold += 25;
+            player.Dicks[e].Size--;
+        }
     }
 
     function SellBalls(e) {
@@ -75,8 +79,12 @@
     }
 
     function SellBallSize(e) {
-        player.Gold += 25;
-        player.Balls[e].Size--;
+        if (player.Balls[e].Size - 1 < 1) {
+            player.Balls[e].Size = 1;
+        } else {
+            player.Gold += 25;
+            player.Balls[e].Size--;
+        }
     }
 
     function SellBreasts(e) {
@@ -85,8 +93,12 @@
     }
 
     function SellBreastSize(e) {
-        player.Gold += 25;
-        player.Boobies[e].Size--;
+        if (player.Boobies[e].Size - 1 < 0) {
+            player.Boobies[e].Size = 0;
+        } else {
+            player.Gold += 25;
+            player.Boobies[e].Size--;
+        }
     }
 
     function SellVaginas(e) {
@@ -95,19 +107,29 @@
     }
 
     function SellVaignaSize(e) {
-        player.Gold += 25;
-        player.Pussies[e].Size--;
+        if (player.Pussies[e].Size - 1 < 1) {
+            player.Pussies[e].Size = 1;
+        } else {
+            player.Gold += 25;
+            player.Pussies[e].Size--;
+        }
     }
     document.getElementById("SellFemininity").addEventListener("click", function () {
         if (player.Femi >= 50) {
             player.Femi -= 50;
             player.Gold += 100;
+        } else {
+            player.Gold += Math.max(0, player.Femi);
+            player.Femi = 0;
         }
     });
     document.getElementById("SellMasculinity").addEventListener("click", function () {
         if (player.Masc >= 50) {
             player.Masc -= 50;
             player.Gold += 100;
+        } else {
+            player.Gold += Math.max(0, player.Masc);
+            player.Masc = 0;
         }
     });
     document.getElementById("BlackMarket").addEventListener("mouseover", function (e) {

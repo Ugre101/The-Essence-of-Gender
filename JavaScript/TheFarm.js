@@ -36,8 +36,42 @@
             return;
         }
     });
-    document.getElementById("FarmOwnerLooks").addEventListener("click", function() {
-        document.getElementById("FarmOwnerText").innerHTML = "Standing before you, a centaur who introduce himself as Teoivz, looking at him it’s evident he spends many hours working on the farm. His human upper body possess muscle forged from years of work, "+
-	    "his equine lower body is not one from a race horse but a work horse.<br>Throwing an eye towards his genitals, it’s	hard to guess the exact size his two members retracted inside their penile sheath but it's obvious that they are well capable of stretching a maiden."
+    document.getElementById("FarmOwnerLooks").addEventListener("click", function () {
+        document.getElementById("FarmOwnerText").innerHTML = "Standing before you, a centaur who introduce himself as Teoivz, looking at him it’s evident he spends many hours working on the farm. His human upper body possess muscle forged from years of work, " +
+            "his equine lower body is not one from a race horse but a work horse.<br>Throwing an eye towards his genitals, it’s	hard to guess the exact size his two members retracted inside their penile sheath but it's obvious that they are well capable of stretching a maiden."
     });
-    // End Farm
+    // End FarmOwner
+
+    // The FarmBarn
+    document.getElementById("Milker500").addEventListener("click", function () {
+        if (player.Gold >= 500) {
+            // Add milker
+        } else {
+            // You can't afford 
+        }
+    });
+    document.getElementById("MilkAdd").addEventListener("click", function () {
+        // extra non-preg milkrate 
+    });
+    document.getElementById("MilkSub").addEventListener("click", function () {
+        // Lower milkrate
+    });
+    document.getElementById("DrinkFresh").addEventListener("click", function () {
+        // Drink milk Maybe fuck a bovine furry?
+        // Get healed + temp boost to hp & will stronger than bar meal
+    });
+    document.getElementById("GetMilked").addEventListener("click", function () {
+        // Sell milk(maybe cum to?), this can trigger a event where farmowner tries to fuck you
+        // depenent on your stats you can turn it around or get away, if your stats are to weak you get fucked.
+    });
+    // Barn Milk Event
+    document.getElementById("BarnAccept").addEventListener("click", function () {
+        // Let him fuck you
+    });
+    document.getElementById("BarnDom").addEventListener("click", function () {
+        // Turn it around if you have enough strength
+    });
+    document.getElementById("BarnTease").addEventListener("click", function () {
+        // Get away
+    })
+    // End FarmBarn

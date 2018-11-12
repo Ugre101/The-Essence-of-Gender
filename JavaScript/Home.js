@@ -6,7 +6,11 @@
         if (player.WillHealth < player.MaxWillHealth + House.BedLevel * 5) {
             player.WillHealth = player.MaxWillHealth + House.BedLevel * 5;
         }
-        Flags.Date.Day++;
+        battle = false;
+        for (var e = 0; e < 8; e++) {
+            DateTracker();
+        }
+        battle = true;
         document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
         document.getElementById("HomeText").innerHTML = "You sleep well, restoring your health and willpower.";
     });
@@ -27,6 +31,8 @@
         document.getElementById("BuildKitchen").value = "Build kitchen " + Kitchencost + "g";
         var Brothelcost = Math.round(500 * Math.pow(1.2, House.Brothel));
         document.getElementById("BuildBrothel").value = "Build brothel " + Brothelcost + "g";
+        var Nurserycost = Math.round(200 * Math.pow(1.2, House.Nursery));
+        document.getElementById("BuildNursery").value = "Upgrade nursery " + Nurserycost + "g"
     });
     document.getElementById("UpgradeBed").addEventListener("click", function () {
         var BedCost = Math.round(50 * Math.pow(1.2, House.BedLevel));
@@ -105,7 +111,7 @@
     });
     document.getElementById("BuildBrothel").addEventListener("click", function () {
         var Brothelcost = Math.round(500 * Math.pow(1.2, House.Brothel))
-        if (player.Gold > Brothelcost) {
+        if (player.Gold >= Brothelcost) {
             player.Gold -= Brothelcost;
             if (House.Brothel < 1) {
                 document.getElementById("HomeText").innerHTML = "You have built a brothel where your servants will whore themself out, allowing you to gain extra income."
@@ -118,6 +124,21 @@
         Brothelcost = Math.round(500 * Math.pow(1.2, House.Brothel));
         document.getElementById("BuildBrothel").value = "Upgrade brothel " + Brothelcost + "g";
     });
+    document.getElementById("BuildNursery").addEventListener("click", function () {
+        var Nurserycost = Math.round(200 * Math.pow(1.2, House.Nursery));
+        if (player.Gold >= Nurserycost) {
+            player.Gold -= Nurserycost;
+            if (House.Nursery < 1) {
+                document.getElementById("HomeText").innerHTML = "You have built a nursery."
+            } else {
+                document.getElementById("HomeText").innerHTML = "You upgrade your nursery.";
+            }
+            House.Nursery++;
+        }
+        var Nurserycost = Math.round(200 * Math.pow(1.2, House.Nursery));
+        document.getElementById("BuildNursery").value = "Upgrade nursery " + Nurserycost + "g";
+
+    })
     document.getElementById("LeaveUpgradeHome").addEventListener("click", function () {
         document.getElementById("Upgrades").style.display = 'none';
         document.getElementById("HomeStart").style.display = 'block';

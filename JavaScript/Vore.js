@@ -496,7 +496,7 @@
             food += PreyButton(ps, "Balls", e);
         }
         document.getElementById("BallsContent").innerHTML = food;
-        document.getElementById("CumDigestion").innerHTML = "Cum transformation " + Settings.VoreSettings.CumTF;
+        document.getElementById("CumDigestion").value = "Cum transformation " + Settings.VoreSettings.CumTF;
     });
     document.getElementById("CumDigestion").addEventListener("click", function () {
         Settings.VoreSettings.CumTF = !Settings.VoreSettings.CumTF;
@@ -706,9 +706,17 @@
         // Stomach
         var content = 0;
         for (var e of player.Vore.Stomach) {
-            content += e.StartWeight;
+            content += e.Weight;
         }
-        var fullness = content / MaxStomachCapacity() || 0; // prevent NaN if maxCapacity is 0
+        while (content > MaxStomachCapacity()) {
+            enemies.push(player.Vore.Stomach[player.Vore.Stomach.length - 1]);
+            player.Vore.Stomach.pop();
+            content = 0;
+            for (var e of player.Vore.Stomach) {
+                content += e.Weight;
+            }
+        }
+        var fullness = content / MaxStomachCapacity() || 0.1; // prevent NaN if maxCapacity is 0
         // stomach fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.StomachDigestion) {
             player.Vore.StomachExp += fullness * digestionCount * progress;
@@ -774,9 +782,17 @@
         // Vagina
         var content = 0;
         for (var e of player.Vore.Vagina) {
-            content += e.StartWeight;
+            content += e.Weight;
         }
-        var fullness = content / MaxVaginaCapacity() || 0; // prevent NaN if maxCapacity is 0
+        while (content > MaxVaginaCapacity()) {
+            enemies.push(player.Vore.Vagina[player.Vore.Vagina.length - 1]);
+            player.Vore.Vagina.pop();
+            content = 0;
+            for (var e of player.Vore.Vagina) {
+                content += e.Weight;
+            }
+        }
+        var fullness = content / MaxVaginaCapacity() || 0.1; // prevent NaN if maxCapacity is 0
         // Vagina fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.VCumDigestion) {
             player.Vore.VaginaExp += fullness * digestionCount * progress;
@@ -852,9 +868,17 @@
         // Breast
         var content = 0;
         for (var e of player.Vore.Breast) {
-            content += e.StartWeight;
+            content += e.Weight;
         }
-        var fullness = content / MaxBreastCapacity() || 0; // prevent NaN if maxCapacity is 0
+        while (content > MaxBreastCapacity()) {
+            enemies.push(player.Vore.Breast[player.Vore.Breast.length - 1]);
+            player.Vore.Breast.pop();
+            content = 0;
+            for (var e of player.Vore.Breast) {
+                content += e.Weight;
+            }
+        }
+        var fullness = content / MaxBreastCapacity() || 0.1; // prevent NaN if maxCapacity is 0
         // Breast fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.MilkTF) {
             player.Vore.BreastExp += fullness * digestionCount * progress;
@@ -920,9 +944,17 @@
         // Balls
         var content = 0;
         for (var e of player.Vore.Balls) {
-            content += e.StartWeight;
+            content += e.Weight;
         }
-        var fullness = content / MaxBallsCapacity() || 0; // prevent NaN if maxCapacity is 0
+        while (content > MaxBallsCapacity()) {
+            enemies.push(player.Vore.Balls[player.Vore.Balls.length - 1]);
+            player.Vore.Balls.pop();
+            content = 0;
+            for (var e of player.Vore.Balls) {
+                content += e.Weight;
+            }
+        }
+        var fullness = content / MaxBallsCapacity() || 0.1; // prevent NaN if maxCapacity is 0
         // Balls fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.CumTF) {
             player.Vore.BallsExp += fullness * digestionCount * progress;
@@ -989,9 +1021,17 @@
         // Anal
         var content = 0;
         for (var e of player.Vore.Anal) {
-            content += e.StartWeight;
+            content += e.Weight;
         }
-        var fullness = content / MaxAnalCapacity() || 0; // prevent NaN if maxCapacity is 0
+        while (content > MaxAnalCapacity()) {
+            enemies.push(player.Vore.Anal[player.Vore.Anal.length - 1]);
+            player.Vore.Anal.pop();
+            content = 0;
+            for (var e of player.Vore.Anal) {
+                content += e.Weight;
+            }
+        }
+        var fullness = content / MaxAnalCapacity() || 0.1; // prevent NaN if maxCapacity is 0
         // Anal fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.AnalDigestion) {
             player.Vore.AnalExp += fullness * digestionCount * progress;

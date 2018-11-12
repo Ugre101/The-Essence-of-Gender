@@ -49,20 +49,6 @@
        border-radius: 10px 0 0 0;
    }
 
-   @media screen and (max-height: 500px),
-   screen and (max-width: 500px) {
-       #EventLog {
-           position: absolute;
-           bottom: 0;
-           right: 0;
-           background-color: rgb(137, 129, 168);
-           height: auto;
-           width: 80%;
-           border: 2px solid black;
-           border-radius: 10px 0 0 0;
-       }
-   }
-
    #EventLog>h2 {
        display: inline-block;
        margin: 0;
@@ -822,6 +808,8 @@
        background-color: rgb(235, 235, 228);
        border: 2px solid black;
        border-radius: 5px;
+       text-align: center;
+       padding: 0.5em;
    }
 
    #ChildCorner {
