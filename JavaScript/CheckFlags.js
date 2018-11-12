@@ -29,6 +29,9 @@
                     AnalDigestion: false
                 }
             }
+			//More load fixing
+			if(!Settings.VoreSettings.hasOwnProperty("AnalDigestion"))
+				Settings.VoreSettings.AnalDigestion = false;
             if (!Settings.VoreSettings.hasOwnProperty("AbsorbEssence")) {
                 Settings.VoreSettings.AbsorbEssence = "Both";
             }
