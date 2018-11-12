@@ -9,12 +9,17 @@ function CmToInch(cm) {
             return Inch + " inches"
         }
     } else {
-        return Math.round(cm) + "cm";
+        if (cm < 1) {
+            return Math.round(cm * 10) + "mm"
+        } else {
+            return Math.round(cm) + "cm";
+        }
     }
 }
+
 function CmToInchDecimal(cm) {
     if (Settings.Inch) {
-        var Inch = Math.round(cm / 2.54 * 10)/10;
+        var Inch = Math.round(cm / 2.54 * 10) / 10;
         var Feet = Math.floor(Inch / 12)
         Inch = Inch % 12;
         if (Feet > 0) {
@@ -23,15 +28,14 @@ function CmToInchDecimal(cm) {
             return Inch + " inches"
         }
     } else {
-        return Math.round(cm*10)/10 + "cm";
+        return Math.round(cm * 10) / 10 + "cm";
     }
 }
 
 function KgToPound(kg) {
     if (Settings.Inch) {
-        return Math.round(kg*2.2046) + "lb"
-    }
-    else {
+        return Math.round(kg * 2.2046) + "lb"
+    } else {
         return Math.round(kg) + "kg";
     }
-} 
+}
