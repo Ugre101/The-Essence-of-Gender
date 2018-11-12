@@ -82,7 +82,7 @@
             Eyes: "brown",
             HairStyle: "curly",
             HairColor: "brown",
-            HairLength: "shoulder"
+            HairLength: "shoulder-"
         },
         FoodStomach: [],
         Vore: {
@@ -170,8 +170,8 @@
             VCumDigestion: true,
             MilkTF: true,
             AnalDigestion: true
-        }
-		//BalanceParts: true
+        },
+		BalanceParts: false
     }
 
     var Partners = {
@@ -250,6 +250,17 @@
     document.getElementById("StartAutoEssence").addEventListener("click", function () {
         Settings.EssenceAuto = !Settings.EssenceAuto;
         document.getElementById("StartAutoEssence").value = "Auto TF " + Settings.EssenceAuto;
+		if(Settings.BalanceParts) {
+			Settings.BalanceParts = false;
+			document.getElementById("Balance").value = "Balance " + Settings.BalanceParts;
+		}
+    });
+
+    document.getElementById("Balance").addEventListener("click", function () {
+		if(Settings.EssenceAuto) {
+        Settings.BalanceParts = !Settings.BalanceParts;
+        document.getElementById("Balance").value = "Balance " + Settings.BalanceParts;
+		}
     });
 
     document.getElementById("startgame").addEventListener("click", function () {
@@ -261,13 +272,13 @@
         document.getElementById("BuyHouse").style.display = 'none'
         if (window.innerHeight < 800) {
             document.getElementById("FirstButtons").style.display = 'block';
-            document.getElementById("SecondButtnos").style.display = 'none';
+            document.getElementById("SecondButtons").style.display = 'none';
             document.getElementById("MoreButtons").style.display = 'inline-block';
             document.getElementById("LessButtons").style.display = 'inline-block';
             FontSize = 0.75;
             document.body.style.fontSize = FontSize + "em";
         } else {
-            document.getElementById("SecondButtnos").style.display = 'block';
+            document.getElementById("SecondButtons").style.display = 'block';
             document.getElementById("FirstButtons").style.display = 'block';
             document.getElementById("MoreButtons").style.display = 'none';
             document.getElementById("LessButtons").style.display = 'none';
@@ -369,11 +380,11 @@
     // More buttons for small screen height
     document.getElementById("MoreButtons").addEventListener("click", function () {
         document.getElementById("FirstButtons").style.display = 'none';
-        document.getElementById("SecondButtnos").style.display = 'block';
+        document.getElementById("SecondButtons").style.display = 'block';
     });
     document.getElementById("LessButtons").addEventListener("click", function () {
         document.getElementById("FirstButtons").style.display = 'block';
-        document.getElementById("SecondButtnos").style.display = 'none';
+        document.getElementById("SecondButtons").style.display = 'none';
     });
 
     // Save options
@@ -402,10 +413,20 @@
         document.getElementById("Skip").value = "Skip " + Settings.Skip;
         document.getElementById("OptionGiveEssence").value = Settings.GiveEssence;
         document.getElementById("Vore").value = "Vore " + Settings.Vore;
+        document.getElementById("MBalance").value = "Balance " + Settings.BalanceParts;
     });
     document.getElementById("Skip").addEventListener("click", function () {
         Settings.Skip = !Settings.Skip;
         document.getElementById("Skip").value = "Skip " + Settings.Skip;
+    });
+    document.getElementById("MBalance").addEventListener("click", function () {
+		if(Settings.EssenceAuto) {
+			Settings.BalanceParts = !Settings.BalanceParts;
+			document.getElementById("MBalance").value = "Balance " + Settings.BalanceParts;
+		}
+		EssenceCheck(player);
+		for(var q = 0; q < enemies.length; q++)
+			EssenceCheck(enemies[q]);
     });
     document.getElementById("OptionGiveEssence").addEventListener("click", function () {
         switch (Settings.GiveEssence) {
@@ -446,7 +467,10 @@
     document.getElementById("ExtraInfo").addEventListener("click", function () {
         DisplayNone();
         document.getElementById("DetailedInfo").style.display = 'block';
-        document.getElementById("FullRace").innerHTML = player.Race + " " + player.SecondRace;
+		if(player.Race != player.SecondRace)
+			document.getElementById("FullRace").innerHTML = player.Race + " " + player.SecondRace;
+		else
+			document.getElementById("FullRace").innerHTML = "Fully " + player.SecondRace;
         document.getElementById("Pregnancy").innerHTML = "Times you have impregnated: " + Flags.Impregnations + "<br> Times you have been pregnant: " + Flags.Pregnations;
         document.getElementById("ExtraStats").innerHTML = "Virility: " + player.Virility + "<br>Fertility: " + player.Fertility + "<br>Essence drain: " + player.EssenceDrain +
             "<br>Give essence: " + player.GiveEssence + "<br> passive rest rate: " + player.RestRate;
@@ -592,7 +616,7 @@
         return counts;
     }
 
-    // function to update player & enemy stats, check if you won or lose and deal damage to player
+    // function to update player & enemy stats, check if you win or lose and deal damage to player
     function UpdateStats() {
         document.getElementById("status").style.display = 'none';
         document.getElementById("buttons").style.display = 'none';

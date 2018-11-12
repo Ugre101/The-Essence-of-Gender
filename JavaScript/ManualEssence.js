@@ -16,6 +16,8 @@ document.getElementById("EssenceAuto").addEventListener("click", function () {
     if (Settings.EssenceAuto) {
         document.getElementById("EssenceAuto").value = "Essence Auto";
         document.getElementById("ManualGrowth").style.display = 'none';
+		document.getElementById("MBalance").style.visibility = 'visible';
+		
     } else {
         document.getElementById("EssenceAuto").value = "Essence Manual";
         document.getElementById("ManualGrowth").style.display = 'block';
@@ -23,6 +25,9 @@ document.getElementById("EssenceAuto").addEventListener("click", function () {
         document.getElementById("GrowExtraPussy").value = "Extra pussy " + EssenceExtraCost(player.Pussies) + "F";
         document.getElementById("GrowExtraDick").value = "Extra dick " + EssenceExtraCost(player.Dicks) + "M";
         document.getElementById("GrowExtraBalls").value = "Extra balls " + EssenceExtraCost(player.Balls) + "M";
+		Settings.BalanceParts = false;
+		document.getElementById("MBalance").style.visibility = 'hidden';
+		document.getElementById("MBalance").value = "Balance "+Settings.BalanceParts;
     }
 });
 document.getElementById("GrowBreast").addEventListener("click", function () {

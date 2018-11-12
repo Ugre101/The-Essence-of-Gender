@@ -118,11 +118,11 @@
 
         if (window.innerHeight < 800) {
             document.getElementById("FirstButtons").style.display = 'block';
-            document.getElementById("SecondButtnos").style.display = 'none';
+            document.getElementById("SecondButtons").style.display = 'none';
             document.getElementById("MoreButtons").style.display = 'inline-block';
             document.getElementById("LessButtons").style.display = 'inline-block';
         } else {
-            document.getElementById("SecondButtnos").style.display = 'block';
+            document.getElementById("SecondButtons").style.display = 'block';
             document.getElementById("FirstButtons").style.display = 'block';
             document.getElementById("MoreButtons").style.display = 'none';
             document.getElementById("LessButtons").style.display = 'none';
@@ -166,7 +166,7 @@
                 Eyes: "brown",
                 HairStyle: "curly",
                 HairColor: player.Haircolor,
-                HairLength: "shoulder length "
+                HairLength: "shoulder-length"
             }
         }
         if (!Settings.hasOwnProperty("Brothel")) {
@@ -199,4 +199,7 @@
                 }
             }
         }
+		if(!Settings.hasOwnProperty("BalanceParts")){
+			Settings.BalanceParts = false;
     }
+	}
