@@ -26,14 +26,6 @@ function FluidsEngine() {
     } else {
         document.getElementById("CumBar").style.display = 'none';
     }
-    function GotMilk(who) {
-        for (var e of who.Boobies) {
-            if (e.MilkRate > 0) {
-                return true;
-            }
-        }
-        return false;
-    }
     if (player.Boobies.length > 0 && GotMilk(player)) {
         document.getElementById("MilkBar").style.display = 'block';
         var TotalMilk = 0,
@@ -74,5 +66,13 @@ function FluidsEngine() {
 
         }
     }
-
 }
+//Well, this disables *everything* below. Moving it out of the function.
+    function GotMilk(who) {
+        for (var e of who.Boobies) {
+            if (e.MilkRate > 0) {
+                return true;
+            }
+        }
+        return false;
+    }

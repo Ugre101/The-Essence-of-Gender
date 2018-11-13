@@ -9,8 +9,8 @@ function RaceBonus(who) {
             who.Str += 1;
             break;
         case "Fairy":
-            who.Height = who.Height / 9;
-            who.Weight = who.Weight / 9;
+            who.Height = Math.ceil(who.Height / 9);
+            who.Weight = Math.ceil(who.Weight / 9);
             who.Size = who.Size * 0.4;
             break;
         case "Elf":
