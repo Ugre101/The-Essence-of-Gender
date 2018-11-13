@@ -1493,7 +1493,9 @@
         }
         if (Settings.Vore) {
             document.getElementById("VoreLooks").style.display = 'inline-block';
-            VoreEngine();
+            if (!battle) {
+                VoreEngine();
+            }
         }
         if (TF.Status) {
             TfEngine();

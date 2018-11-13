@@ -1,3 +1,12 @@
+
+document.getElementById("WorldMapContainer").addEventListener("click", function () {
+    if (document.getElementById("WorldMapPart").style.display == 'none') {
+        document.getElementById("WorldMapPart").style.display = 'block';
+        PrintMap();
+    } else {
+        document.getElementById("WorldMapPart").style.display = 'none';
+    }
+});
 var WorldMap = document.getElementById("WorldMap");
 var World = WorldMap.getContext("2d");
 
@@ -10,7 +19,7 @@ function TilePainter(x, y, w, h) {
 
 }
 
-function PrintMap(karta) {
+function PrintMap(karta=null) {
     World.fillStyle = "#404040";
     World.fillRect(0, 0, WorldMap.width, WorldMap.height);
 

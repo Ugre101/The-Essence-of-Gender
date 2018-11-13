@@ -263,6 +263,11 @@
        text-align: center;
    }
 
+   #HideWorldMap {
+       height: 20px;
+       width: 60px;
+   }
+
    @media (max-width: 700px) {
        #WorldMap {
            right: 0;
