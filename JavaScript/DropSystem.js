@@ -77,10 +77,10 @@ function DropSystem(who) {
             case "Dhampir":
                 SnowInventoryAdd(ItemDict.infernalMilk);
                 break;
-			case "Succubus":
+            case "Succubus":
                 SnowInventoryAdd(ItemDict.SuccMilk);
                 break;
-			case "Incubus":
+            case "Incubus":
                 SnowInventoryAdd(ItemDict.IncSemen);
                 break;
             default:

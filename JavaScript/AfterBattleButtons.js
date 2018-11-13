@@ -191,6 +191,4 @@ function AfterBattleButtons() {
         document.getElementById("BreastVore").style.display = 'none'
         document.getElementById("AnalVore").style.display = 'none';
     }
-
-
 }

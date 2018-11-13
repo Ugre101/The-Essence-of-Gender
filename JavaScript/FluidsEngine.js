@@ -30,13 +30,13 @@ function FluidsEngine() {
         document.getElementById("MilkBar").style.display = 'block';
         var TotalMilk = 0,
             TotalMilkMax = 0;
-		for (var b = 0; b < player.Boobies.length; b++) {
+        for (var b = 0; b < player.Boobies.length; b++) {
             player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 400);
-			if(player.Boobies[b].MilkRate > 0)
-			{
-				player.Boobies[b].Milk += player.Boobies[b].MilkRate;
-			}
-		}
+            if(player.Boobies[b].MilkRate > 0)
+            {
+                player.Boobies[b].Milk += player.Boobies[b].MilkRate;
+            }
+        }
         for (var e = 0; e < player.Boobies.length; e++) {
             TotalMilk += player.Boobies[e].Milk;
             TotalMilkMax += player.Boobies[e].MilkMax
@@ -69,10 +69,10 @@ function FluidsEngine() {
 }
 //Well, this disables *everything* below. Moving it out of the function.
 function GotMilk(who) {
-	for (var e of who.Boobies) {
-		if (e.MilkRate > 0) {
-			return true;
-		}
-	}
-	return false;
+    for (var e of who.Boobies) {
+        if (e.MilkRate > 0) {
+            return true;
+        }
+    }
+    return false;
 }

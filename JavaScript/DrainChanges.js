@@ -68,7 +68,7 @@ function DrainChanges(old, current, eold, ecurrent) {
                 a = "You feel your breasts grow bigger.";
             }
             if (current.Pussies.length > 0) {
-                a = "You gave grown a pussy!"
+                a = "You've grown a pussy!"
             }
             b = DrainChangesEnemy(eold, ecurrent);
             break;

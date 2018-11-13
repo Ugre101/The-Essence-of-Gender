@@ -10,6 +10,7 @@ document.getElementById("RestBar").addEventListener("click", function () {
         return;
     }
 });
+
 document.getElementById("EatBar").addEventListener("click", function () {
     if (player.Gold > 10) {
         player.Fat += 2;
@@ -27,9 +28,11 @@ document.getElementById("EatBar").addEventListener("click", function () {
         return;
     }
 });
+
 document.getElementById("Bar").addEventListener("mouseover", function (e) {
     document.getElementById("BarText").innerHTML = e.target.title;
 });
+
 document.getElementById("EatBarMedium").addEventListener("click", function () {
     if (player.Gold > 30) {
         player.Fat += 4;
@@ -47,6 +50,7 @@ document.getElementById("EatBarMedium").addEventListener("click", function () {
         return;
     }
 });
+
 document.getElementById("EatBarLarge").addEventListener("click", function () {
     if (player.Gold > 10) {
         player.Fat += 8;

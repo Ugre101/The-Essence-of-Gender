@@ -14,15 +14,17 @@ function CheckArousal() {
                 " You push your head deep into their crotch as they make one last desperate thrust"
 
             if (cum > 0) {
-                document.getElementById("SexText").innerHTML += "depositing " + cum + "L deep into your gullet."
+                document.getElementById("SexText").innerHTML += ", depositing " + cum + "L deep into your gullet."
             } else document.getElementById("SexText").innerHTML += "."
             document.getElementById("SexText").innerHTML += "Your opponent takes deep breathes as they lie completely spent. You rise from between their legs admiring your work and begin to plan your next move."
+            LastPressed = "";
         } else if (LastPressed == "RideCowgirl") {
             var cum = Cumming(ee);
             document.getElementById("SexText").innerHTML += "<br>Reading their body language, you know they are close to cumming."
             if (cum > 0) {
                 document.getElementById("SexText").innerHTML += " Pulling them deep inside you, they release " + cum + "L of cum into your pussy."
             } else document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
+            LastPressed == "";
         }
     }
     if (player.Arousal > 100) {
@@ -111,13 +113,11 @@ function CheckArousal() {
         }
     }
 
-
     var PlayerMaxOrgasm = Math.round(player.End / 8);
     BaseSexAttack = Math.round((RandomInt(4, 7) * player.SexSkill) / 2);
     BaseESexAttack = Math.round((RandomInt(4, 7) * enemies[EnemyIndex].SexSkill) / 2);
     SexAttack = Math.min(RandomInt(45, 77), BaseSexAttack * (BaseSexAttack / BaseESexAttack));
     ESexAttack = Math.max(RandomInt(15, 32), BaseESexAttack * (BaseESexAttack / BaseSexAttack));
-
 
     document.getElementById("PName").innerHTML = player.Name + " " + player.Lastname + "<br>" + player.Race + " " + Pronun(CheckGender(player));
     document.getElementById("EName").innerHTML = " " + ee.FirstName + " " + ee.LastName + "<br>" + ee.Name + " " + ee.Race + " " + Pronun(CheckGender(ee));
@@ -144,7 +144,6 @@ function CheckArousal() {
     document.getElementById("EMascu").style.width = ee.Masc * DelatMed + "%";
     document.getElementById("EFemin").style.width = ee.Femi * DelatMed + "%";
     document.getElementById("EArousal").style.width = Math.max(1, ee.Arousal) + "%";
-
 
     document.getElementById("SexStats").innerHTML = " ";
     document.getElementById("EnemyOrgasm").style.display = 'block';
@@ -191,6 +190,7 @@ document.getElementById("EnemySex").addEventListener("mouseover", function () {
     var ee = enemies[EnemyIndex];
     document.getElementById("SexStats").innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
 });
+
 document.getElementById("EnemySex").addEventListener("mouseout", function () {
     document.getElementById("SexStats").innerHTML = " ";
 });
