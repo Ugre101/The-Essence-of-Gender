@@ -3,7 +3,7 @@
  } // I put this a function to make it easier to trial different formulas.
 
  function EssenceCheck(who) {
-     //if (Settings.BalanceParts) {BalanceEssenceCheck(who);} else {
+	 if (Settings.BalanceParts) {BalanceEssenceCheck(who);} else {
      if (!who.hasOwnProperty("Dicks")) {
          who.Dicks = [];
      }
@@ -179,4 +179,5 @@
          who.Anal[0].Size = who.Height / 12;
      }
      return;
+ }
  }

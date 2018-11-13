@@ -73,6 +73,7 @@
 			<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually? (Also: vore?)</label>
 			<input type="button" id="StartAutoEssence" value="Auto TF true" />
 			<input type="button" id="VoreStart" value="Vore false" />
+			<input type="button" id="Balance" value="Balance False" />
 			<br><input type="button" id="startgame" value="Start game" />
 		</div>
 	</div>
@@ -123,7 +124,7 @@
 				<input type="button" id="Load" value="Load" />
 				<input type="button" id="MoreButtons" value="More buttons" />
 			</div>
-			<div id="SecondButtnos">
+			<div id="SecondButtons">
 				<input type="button" id="Options" value="Options" />
 				<input type="button" id="Quests" value="Quests" />
 				<input type="button" id="EssenceOptions" value="Essence" />
@@ -380,9 +381,10 @@
 				<input type="button" id="BallsMore" value="Balls++" />
 			</div>
 
-			<label for="EssenceAuto">Is essence body changes Auto or Manual</label>
-			<br><input type="button" id="EssenceAuto" value="Essence Auto" />
-			<p>Warning: if you play on manual, switching to auto will change you according to your current Femininity
+			<label for="EssenceAuto">Are essence body changes Automatic or Manual?</label>
+			<br><input type="button" id="EssenceAuto" value="Essence Auto" /><br>
+			<input type="button" id="MBalance" value="Balance false" />
+			<p>Warning: if you play on manual, switching to Auto will change you according to your current Femininity
 				and Masculinity, so if you have spent a lot of Essence it will be lost.</p>
 			<div id="ManualGrowth" class="TwoColumn None">
 				<input type="button" id="GrowBreast" value="Breast menu" />
@@ -1024,16 +1026,16 @@
 	</div>
 	<div id="FarmBarn" class="None Building">
 		<p id="FarmBarnText" class="TextBox"></p>
-		<input type="button" id="Milker500" value="(placeholder)Milker 500g" title="Does your breast overfill all the time? Does it feel like a waste seeing, your milk drip away? Buy today; a portal milker! " />
-		<input type="button" id="MilkAdd" value="(placeholder)Milk booster" title="Do you not even produce enough milk to feed a single bady? Or maybe you want to feed your whole family or even your town??! Well this is for your humble or crazy needs!" />
-		<input type="button" id="MilkSub" value="(placeholder)Milk stopper" title="" />
-		<input type="button" id="DrinkFresh" value="(placeholder)Drink fresh milk" />
-		<input type="button" id="GetMilked" value="(placeholder)Get milked" />
+		<input type="button" id="Milker500" value="(placeholder)Milker 500g" title="Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away? Buy today; a portable milker! " />
+		<input type="button" id="MilkAdd" value="(placeholder)Milk booster" title="Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?! Well, this is for your humble (or crazy) needs!" />
+		<input type="button" id="MilkSub" value="(placeholder)Milk stopper" title="Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.'" />
+		<input type="button" id="DrinkFresh" value="(placeholder)Drink fresh milk" title="It's not yours. You think." />
+		<input type="button" id="GetMilked" value="(placeholder)Get milked" title="Mooooooooooooo!"/>
 		<input type="button" id="LeaveFarmBarn" value="Leave" />
 		<div id="MilkEvent" class="None">
 			<input type="button" id="BarnAccept" value="Accept" /> <!-- Get fucked -->
 			<input type="button" id="BarnDom" value="Turn situation around" /> <!-- Needs strength -->
-			<input type="button" id="BarnTease" value="Tease" /> <!-- Get away by making him cum without fucking yuo -->
+			<input type="button" id="BarnTease" value="Tease" /> <!-- Get away by making him cum without fucking you -->
 		</div>
 	</div>
 
