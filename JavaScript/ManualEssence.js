@@ -16,8 +16,8 @@ document.getElementById("EssenceAuto").addEventListener("click", function () {
     if (Settings.EssenceAuto) {
         document.getElementById("EssenceAuto").value = "Essence Auto";
         document.getElementById("ManualGrowth").style.display = 'none';
-		document.getElementById("MBalance").style.visibility = 'visible';
-		
+        document.getElementById("MBalance").style.visibility = 'visible';
+        
     } else {
         document.getElementById("EssenceAuto").value = "Essence Manual";
         document.getElementById("ManualGrowth").style.display = 'block';
@@ -25,20 +25,23 @@ document.getElementById("EssenceAuto").addEventListener("click", function () {
         document.getElementById("GrowExtraPussy").value = "Extra pussy " + EssenceExtraCost(player.Pussies) + "F";
         document.getElementById("GrowExtraDick").value = "Extra dick " + EssenceExtraCost(player.Dicks) + "M";
         document.getElementById("GrowExtraBalls").value = "Extra balls " + EssenceExtraCost(player.Balls) + "M";
-		Settings.BalanceParts = false;
-		document.getElementById("MBalance").style.visibility = 'hidden';
-		document.getElementById("MBalance").value = "Balance "+Settings.BalanceParts;
+        Settings.BalanceParts = false;
+        document.getElementById("MBalance").style.visibility = 'hidden';
+        document.getElementById("MBalance").value = "Balance "+Settings.BalanceParts;
     }
 });
+
 document.getElementById("GrowBreast").addEventListener("click", function () {
     document.getElementById("EssenceStart").style.display = 'none';
     document.getElementById("BreastMenu").style.display = 'block';
     BreastButtons();
 });
+
 document.getElementById("GrowBreastBack").addEventListener("click", function () {
     document.getElementById("EssenceStart").style.display = 'block';
     document.getElementById("BreastMenu").style.display = 'none';
 });
+
 document.getElementById("GrowExtraBreasts").addEventListener("click", function () {
     var cost = EssenceExtraCost(player.Boobies);
     if (player.Femi >= cost) {
@@ -81,10 +84,12 @@ document.getElementById("GrowPussy").addEventListener("click", function () {
     document.getElementById("PussyMenu").style.display = 'block';
     PussyButtons();
 });
+
 document.getElementById("GrowPussyBack").addEventListener("click", function () {
     document.getElementById("EssenceStart").style.display = 'block';
     document.getElementById("PussyMenu").style.display = 'none';
 });
+
 document.getElementById("GrowExtraPussy").addEventListener("click", function () {
     var cost = EssenceExtraCost(player.Pussies);
     if (player.Femi >= cost) {
@@ -117,15 +122,18 @@ function BiggerPussy(index) {
         player.Pussies[index].Size += 1 * ManualGrowthScale();
     }
 }
+
 document.getElementById("GrowDick").addEventListener("click", function () {
     document.getElementById("EssenceStart").style.display = 'none';
     document.getElementById("DickMenu").style.display = 'block';
     DickButtons();
 });
+
 document.getElementById("GrowDickBack").addEventListener("click", function () {
     document.getElementById("EssenceStart").style.display = 'block';
     document.getElementById("DickMenu").style.display = 'none';
 });
+
 document.getElementById("GrowExtraDick").addEventListener("click", function () {
     var cost = EssenceExtraCost(player.Dicks);
     if (player.Masc >= cost) {
@@ -158,15 +166,18 @@ function DickButtons() {
     }
     document.getElementById("DickButtons").innerHTML = Inputs;
 }
+
 document.getElementById("GrowBalls").addEventListener("click", function () {
     document.getElementById("EssenceStart").style.display = 'none';
     document.getElementById("BallsMenu").style.display = 'block';
     BallsButtons();
 });
+
 document.getElementById("GrowBallsBack").addEventListener("click", function () {
     document.getElementById("EssenceStart").style.display = 'block';
     document.getElementById("BallsMenu").style.display = 'none';
 });
+
 document.getElementById("GrowExtraBalls").addEventListener("click", function () {
     var cost = EssenceExtraCost(player.Balls);
     if (player.Masc >= cost) {

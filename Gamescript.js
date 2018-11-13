@@ -171,7 +171,13 @@
             MilkTF: true,
             AnalDigestion: true
         },
-		BalanceParts: false
+        BalanceParts: false,
+		BalanceSettings: {
+			StepPussy: 1500,
+			StepBoobs: 1000,
+			StepPenis: 1000,
+			StepBalls: 1500
+		}
     }
 
     var Partners = {
@@ -247,6 +253,7 @@
         DateEngine();
 
     });
+
     document.getElementById("StartAutoEssence").addEventListener("click", function () {
         Settings.EssenceAuto = !Settings.EssenceAuto;
         document.getElementById("StartAutoEssence").value = "Auto TF " + Settings.EssenceAuto;
@@ -315,11 +322,13 @@
         document.getElementById("Inch").value = "Inch " + Settings.Inch;
     });
     var FontSize = 1;
+
     document.getElementById("FontSmaller").addEventListener("click", function () {
         FontSize -= 0.05;
         document.body.style.fontSize = FontSize + "em";
         document.getElementById("FontSize").innerHTML = Math.round(FontSize * 100) / 100 + "em"
     });
+
     document.getElementById("FontBigger").addEventListener("click", function () {
         FontSize += 0.05;
         document.body.style.fontSize = FontSize + "em";
@@ -352,6 +361,7 @@
         Settings.Pronun.Doll = document.getElementById("Doll").value;
         Settings.Pronun.Status = true;
     });
+
     document.getElementById("Inch").addEventListener("click", function () {
         switch (Settings.Inch) {
             case true:
@@ -382,6 +392,7 @@
         document.getElementById("FirstButtons").style.display = 'none';
         document.getElementById("SecondButtons").style.display = 'block';
     });
+
     document.getElementById("LessButtons").addEventListener("click", function () {
         document.getElementById("FirstButtons").style.display = 'block';
         document.getElementById("SecondButtons").style.display = 'none';
@@ -415,10 +426,12 @@
         document.getElementById("Vore").value = "Vore " + Settings.Vore;
         document.getElementById("MBalance").value = "Balance " + Settings.BalanceParts;
     });
+	
     document.getElementById("Skip").addEventListener("click", function () {
         Settings.Skip = !Settings.Skip;
         document.getElementById("Skip").value = "Skip " + Settings.Skip;
     });
+	
     document.getElementById("MBalance").addEventListener("click", function () {
 		if(Settings.EssenceAuto) {
 			Settings.BalanceParts = !Settings.BalanceParts;
@@ -428,6 +441,7 @@
 		for(var q = 0; q < enemies.length; q++)
 			EssenceCheck(enemies[q]);
     });
+	
     document.getElementById("OptionGiveEssence").addEventListener("click", function () {
         switch (Settings.GiveEssence) {
             case "Both":
@@ -451,6 +465,7 @@
         document.getElementById("PerkOptionsMenu").style.display = 'none';
         document.getElementById("map").style.display = 'block'
     });
+
     document.getElementById("Looks").addEventListener("click", function () {
         DisplayNone();
         if (Settings.EssenceAuto) {
@@ -464,6 +479,7 @@
         document.getElementById("map").style.display = 'block';
         document.getElementById("ShowLooks").style.display = 'none';
     });
+
     document.getElementById("ExtraInfo").addEventListener("click", function () {
         DisplayNone();
         document.getElementById("DetailedInfo").style.display = 'block';
@@ -487,7 +503,6 @@
         } else
             document.getElementById("VLevels").innerHTML = "";
     });
-
 
     document.getElementById("CloseExtra").addEventListener("click", function () {
         battle = false;
@@ -519,6 +534,7 @@
         }
         document.getElementById("QuestTexts").innerHTML = questText;
     });
+
     document.getElementById("QuestsLeave").addEventListener("click", function () {
         battle = false;
         document.getElementById("ShowQuests").style.display = 'none';
@@ -723,6 +739,7 @@
         UpdateStats();
         return;
     });
+
     document.getElementById("Tease").addEventListener("click", function () {
         var PAttack = (RandomInt(1, 5) * player.Charm) / 2;
         enemies[EnemyIndex].WillHealth -= PAttack;
@@ -970,6 +987,7 @@
         CheckArousal();
         return;
     });
+
     document.getElementById("DrainF").addEventListener("click", function () {
         var old = JSON.parse(JSON.stringify(player));
         var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
@@ -996,6 +1014,7 @@
         CheckArousal();
         return;
     })
+
     document.getElementById("InjectM").addEventListener("click", function () {
         var q = Math.min(player.GiveEssence, player.Masc);
         var old = JSON.parse(JSON.stringify(player));
@@ -1024,6 +1043,7 @@
         CheckArousal();
         return;
     });
+
     document.getElementById("InjectF").addEventListener("click", function () {
         var q = Math.min(player.GiveEssence, player.Femi);
         var old = JSON.parse(JSON.stringify(player));
@@ -1568,6 +1588,7 @@
             mFunction = setInterval(mousedownfunc, 100);
         }
     });
+
     startarea.addEventListener('touchstart', function (e) {
         if (!mousedowner) {
             mousedowner = true;
@@ -1576,12 +1597,14 @@
             mFunction = setInterval(mousedownfunc, 100);
         }
     });
+
     document.addEventListener('mouseup', function () {
         if (mousedowner) {
             clearInterval(mFunction);
             mousedowner = false;
         }
     });
+
     document.addEventListener('touchend', function () {
         if (mousedowner) {
             clearInterval(mFunction);
@@ -1597,6 +1620,7 @@
             }
         }
     });
+
     startarea.addEventListener('touchmove', function (e) {
         if (mousedowner) {
             if (mouseX != e.touches[e.touches.length - 1].clientX || e.touches[e.touches.length - 1].clientY) {

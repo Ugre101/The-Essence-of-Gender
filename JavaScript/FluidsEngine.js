@@ -68,11 +68,11 @@ function FluidsEngine() {
     }
 }
 //Well, this disables *everything* below. Moving it out of the function.
-    function GotMilk(who) {
-        for (var e of who.Boobies) {
-            if (e.MilkRate > 0) {
-                return true;
-            }
-        }
-        return false;
-    }
+function GotMilk(who) {
+	for (var e of who.Boobies) {
+		if (e.MilkRate > 0) {
+			return true;
+		}
+	}
+	return false;
+}
