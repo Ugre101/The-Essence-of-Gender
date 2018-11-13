@@ -1090,16 +1090,6 @@
         }
     }
 
-    function VoreCapacity(vorePart) {
-        var capacity = 0;
-        if (typeof vorePart == "array")
-            for (var innerVorePart of vorePart)
-                capacity += VoreCapacity(innerVorePart);
-        else
-            capacity += vorePart.Size || 0;
-        return capacity
-    }
-
     function StomachCapacity() {
         var capacity = player.Height / 3
         var sub = 0;

@@ -263,6 +263,15 @@
        text-align: center;
    }
 
+   #HideWorldMap {
+       position: absolute;
+       right: 3vh;
+       top: 50vh;
+       height: 5vh;
+       width: 10vh;
+       text-align: center;
+   }
+
    @media (max-width: 700px) {
        #WorldMap {
            right: 0;
