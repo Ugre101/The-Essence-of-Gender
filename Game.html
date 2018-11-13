@@ -79,7 +79,7 @@
 
 	<div id="map" class="None">
 		<canvas id="hem"></canvas>
-		<div id="WorldMapContainer">
+		<div id="WorldMapContainer" title="Click to hide or show">
 			<div id="WorldMapPart">
 				<canvas id="WorldMap"></canvas>
 			</div>
@@ -90,7 +90,7 @@
 	<div id="EventLog" class="None">
 		<input type="button" id="HideEventLog" value="Hide" />
 		<h2>Event Log</h2>
-		<div id="EventLogPart">
+		<div id="EventLogPart" title="Click to enlarge">
 			<p id="EventText"></p>
 		</div>
 		<input type="button" id="HideFluids" value="Hide" />
@@ -332,17 +332,17 @@
 				</select>
 			</div>
 			<div>
-				<input type="button" id="Inch" value="Inch false" />
+				<input type="button" id="Inch" value="Inch false" title="Switches to imperial units, pound, inch..."/>
 			</div>
 		</div>
 		<div>
 			<input type="button" id="ImgPack" value="ImgPack(No included)" />
-			<input type="button" id="SetPronun" value="Change pronuns" />
+			<input type="button" id="SetPronun" value="Change pronuns" title="Set your prefered pronuns for different genders."/>
 		</div>
 		<div>
-			<input type="button" id="Log+10" value="+10 to Event Log" />
+			<input type="button" id="Log+10" value="+10 to Event Log" title=""/>
 			<p id="LogLength"></p>
-			<input type="button" id="Log-10" value="-10 to Event Log" />
+			<input type="button" id="Log-10" value="-10 to Event Log" title=""/>
 		</div>
 		<div>
 			<input type="button" id="PerkOptions" value="Fetish options" />
@@ -366,9 +366,9 @@
 		<p id="EssenceTracker"></p>
 		<div id="EssenceStart">
 			<label for="OptionGiveEssence">Give Essence</label>
-			<input type="button" id="OptionGiveEssence" value="Both" />
+			<input type="button" id="OptionGiveEssence" value="Both" title="If you have the give essence perk this set what essence you give to your opponents when you orgasm."/>
 			<label for="NoExtra">Set max dicks/boobs/pussies/balls for you and opponents.</label>
-			<input type="button" id="NoExtra" value="Set max boobs/dicks etc" title="On auto you can't grow more than the set amount of dick, pussy, balls and breast. This settings always effect opponents. Setting t.ex. dick to zero will make all opponents female or doll likewise setting dick to zero makes all opponents male or doll." />
+			<input type="button" id="NoExtra" value="Set max boobs/dicks etc" title="On auto you can't grow more than the set amount of dick, pussy, balls and breast. This settings always effect opponents. Setting t.ex. dick to zero will make all opponents female or doll likewise setting pussies to zero makes all opponents male or doll." />
 			<div id="MaxMenu" class="None">
 				<input type="button" id="BoobsLess" value="Boobs--" />
 				<input type="button" id="BoobsMore" value="Boobs++" />

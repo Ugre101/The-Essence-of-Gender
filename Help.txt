@@ -12,7 +12,10 @@ If your siphon amount is higher than what they have left you will only get what 
 
 Once you leave an area the enemies there will get deleted and when you return there will be new ones generated.
 
-Clicking on the text in eventlog will enlarge eventlog text-box.
+
+Thing you can click on:
+	EventlogText: will enlarge; click again for it to return to normal size.
+	Minimap: Click on minimap or text under minimap for it to disappear and click agian for it to return.
 
 Stats:
 	Strength: Make you hit harder and allow you to gain muscle at the gym.
