@@ -264,12 +264,8 @@
    }
 
    #HideWorldMap {
-       position: absolute;
-       right: 3vh;
-       top: 50vh;
-       height: 5vh;
-       width: 10vh;
-       text-align: center;
+       height: 20px;
+       width: 60px;
    }
 
    @media (max-width: 700px) {

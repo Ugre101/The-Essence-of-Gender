@@ -1,12 +1,10 @@
 
-document.getElementById("HideWorldMap").addEventListener("click", function () {
-    if (document.getElementById("WorldMapContainer").style.display == 'none') {
-        document.getElementById("WorldMapContainer").style.display = 'block';
+document.getElementById("WorldMapContainer").addEventListener("click", function () {
+    if (document.getElementById("WorldMapPart").style.display == 'none') {
+        document.getElementById("WorldMapPart").style.display = 'block';
         PrintMap();
-        document.getElementById("HideWorldMap").value = "Hide";
     } else {
-        document.getElementById("WorldMapContainer").style.display = 'none';
-        document.getElementById("HideWorldMap").value = "Show";
+        document.getElementById("WorldMapPart").style.display = 'none';
     }
 });
 var WorldMap = document.getElementById("WorldMap");
