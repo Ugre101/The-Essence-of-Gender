@@ -4,7 +4,7 @@ function ManualGrowthScale() {
 
 
 function EssenceCost(what) {
-    return Math.min(2000, Math.round((10 * Math.pow(1.1, what.Size))));
+    return Math.min(2000, Math.round((10 * Math.pow(1.09, what.Size))));
 };
 
 function EssenceExtraCost(what) {
