@@ -72,6 +72,7 @@ document.getElementById("BallsMore").addEventListener("click", function () {
     document.getElementById("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
 });
 
+
 document.getElementById("NoExtra").addEventListener("click", function () {
     if (document.getElementById("MaxMenu").style.display == 'none') {
         document.getElementById("MaxMenu").style.display = 'block';

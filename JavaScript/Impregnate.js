@@ -50,7 +50,7 @@ function Impregnate(who, by, mode, where) {
                     who.Pregnant.Father = by.Name + " " + by.Lastname;
                     who.Pregnant.Mother = who.FirstName + " " + who.LastName;
                     Flags.Impregnations++;
-                    document.getElementById(where + "SexText").innerHTML = "Somehow, your extreme virility has managed to impregnate him!"
+                    document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate him!"
                 }
                 break;
             case "dickgirl":
@@ -61,7 +61,7 @@ function Impregnate(who, by, mode, where) {
                     who.Pregnant.Father = by.Name + " " + by.Lastname;
                     who.Pregnant.Mother = who.FirstName + " " + who.LastName;
                     Flags.Impregnations++;
-                    document.getElementById(where + "SexText").innerHTML = "Somehow, your extreme virility has managed to impregnate her!"
+                    document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate her!"
                 }
                 break;
             default:
@@ -72,7 +72,7 @@ function Impregnate(who, by, mode, where) {
                     who.Pregnant.Father = by.Name + " " + by.Lastname;
                     who.Pregnant.Mother = who.FirstName + " " + who.LastName;
                     Flags.Impregnations++;
-                    document.getElementById(where + "SexText").innerHTML = "Somehow, your extreme virility has managed to impregnate the doll!"
+                    document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnated the doll!"
                 }
                 break;
         }
@@ -108,7 +108,7 @@ function Impregnate(who, by, mode, where) {
                     who.Pregnant.Status = true;
                     player.Pregnant.Babies.push(Baby);
                     Flags.Pregnations++;
-                    document.getElementById(where + "SexText").innerHTML = "Somehow, due your extreme fertility and their virility, you have been impregnated!"
+                    document.getElementById(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
                 }
                 break;
             default:
@@ -116,7 +116,7 @@ function Impregnate(who, by, mode, where) {
                     who.Pregnant.Status = true;
                     player.Pregnant.Babies.push(Baby);
                     Flags.Pregnations++;
-                    document.getElementById(where + "SexText").innerHTML = "Somehow, due your extreme fertility and their virility, you have been impregnated!"
+                    document.getElementById(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
                 }
                 break;
         }

@@ -37,10 +37,10 @@ function BallLook(who) {
         var balls = "";
         for (var b = 0; b < who.Balls.length; b++) {
             balls += IntToOne(b) + "pair of " + CmToInch(who.Balls[b].Size) + " wide balls, ";
-            if(who.Balls[b].Cum / 1000 > 1) {
+			if(who.Balls[b].Cum / 1000 > 1) {
             balls += "filled with " + (who.Balls[b].Cum / 1000).toFixed(2) + " liters of cum";
-            }
-            else balls += "filled with " + who.Balls[b].Cum.toFixed(0) + "mL of cum";
+			}
+			else balls += "filled with " + who.Balls[b].Cum.toFixed(0) + "mL of cum";
         }
         return balls + "<br><br>";
     } else {
@@ -72,12 +72,12 @@ function BoobLook(who) {
     if (who.Boobies.length > 0) {
         var boobies = "";
         for (var b = 0; b < who.Boobies.length; b++) {
-            if(b == 0 && (Math.round(who.Boobies[0].Size) == 2 || Math.round(who.Boobies[0].Size) == 3)) {
-            boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";            
-            } else if(Math.round(who.Boobies[b].Size) > 1 && Math.round(who.Boobies[b].Size < 28)) {
+			if(b == 0 && (Math.round(who.Boobies[0].Size) == 2 || Math.round(who.Boobies[0].Size) == 3)) {
+			boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";			
+			} else if(Math.round(who.Boobies[b].Size) > 1 && Math.round(who.Boobies[b].Size < 28)) {
             boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
-            } else {boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
-            }
+			} else {boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
+			}
         }
         return boobies + ".<br><br>";
     } else {

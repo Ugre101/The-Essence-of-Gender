@@ -252,7 +252,7 @@ document.getElementById("LeaveFirstDungeon").addEventListener("click", function 
     return;
 });
 
-// change these to document.get... eventlistener
+// change these to document.get... adventlistners
 function MakeHerEqual() {
     // Some friendly sex
     Partners.Succubus.Equal = true;
@@ -265,6 +265,6 @@ function MakeHerSubmit() {
     Partners.Succubus.Yours = true;
     Partners.Succubus.Submit += 100; // Points so it's possible to change route, but 100 is a lot so this choice matters
 }
-function UseAndIgnore() {
+function UseAndIgonore() {
     // Sex where you skip taking her as partner
 }

@@ -1,3 +1,4 @@
+
 // default items. You can still create others if they respect the template
 const ItemDict = {
     itemTemplate: {
@@ -190,106 +191,106 @@ const ItemDict = {
         Does: "Turns masculinity into femininity",
         Title: "Turns your masculine side into another feminine one."
     },
-        SuccMilk: {
+	    SuccMilk: {
         Name: "Milk+",
         Use: function(who) {
-            var a = "", 
-                b = "";
+			var a = "", 
+			    b = "";
             if(Settings.EssenceAuto == false && who.Boobies.length < 2)
-            {
-                if(who.Boobies[0].Size < 6)
-                {
-                    who.Boobies[0].Size = 6;
-                    a = "your breasts swell";
-                }
-                who.Boobies[1] = who.Boobies[0];
-                a += ", as another pair grow right below them to the same size!";
-            }
-            else if(Settings.EssenceAuto == false)
-            {
-                var c = 0;
-                for(var i = 0; i < who.Boobies.length; i++)
-                {
-                    if(who.Boobies[i].Size < 6)
-                    {
-                        who.Boobies[i].Size = 6;
-                        c++;
-                    }
-                }
-                if (c > 0)
-                    a = "your smallest breasts swell to D-cups!";
-            }
-            else if(who.Femi <= 3560)
-            {
-                who.Femi = 3561;
-                a = "your chest explodes with activity, leaving you with a feminized body, complete with massive breasts!";
-            }
-            else a = "your boobs vibrate with energy...";
-            FluidsEngine();
-            for(var i = 0; i < who.Boobies.length; i++)
-            {
-                if(who.Boobies[i].Milk < who.Boobies[i].MilkMax)
-                {
-                who.Boobies[i].Milk = who.Boobies[i].MilkMax;
-                b = "<br>A few seconds later, they're completely filled with milk!";
-                }
-            }
-            
+			{
+				if(who.Boobies[0].Size < 6)
+				{
+					who.Boobies[0].Size = 6;
+					a = "your breasts swell";
+				}
+				who.Boobies[1] = who.Boobies[0];
+				a += ", as another pair grow right below them to the same size!";
+			}
+			else if(Settings.EssenceAuto == false)
+			{
+				var c = 0;
+				for(var i = 0; i < who.Boobies.length; i++)
+				{
+					if(who.Boobies[i].Size < 6)
+					{
+						who.Boobies[i].Size = 6;
+						c++;
+					}
+				}
+				if (c > 0)
+					a = "your smallest breasts swell to D-cups!";
+			}
+			else if(who.Femi <= 3560)
+			{
+				who.Femi = 3561;
+				a = "your chest explodes with activity, leaving you with a feminized body, complete with massive breasts!";
+			}
+			else a = "your boobs vibrate with energy...";
+			FluidsEngine();
+			for(var i = 0; i < who.Boobies.length; i++)
+			{
+				if(who.Boobies[i].Milk < who.Boobies[i].MilkMax)
+				{
+				who.Boobies[i].Milk = who.Boobies[i].MilkMax;
+				b = "<br>A few seconds later, they're completely filled with milk!";
+				}
+			}
+			
             EventLog("Feeling a flush of heat in your chest, you glance down just in time to see " + a + b);
-            FluidsEngine();
+			FluidsEngine();
         },
         Equip: "No",
         Drop: "Yes",
         Does: "Makes you filled with milk!",
         Title: "Guarantees milkiness."
     },
-        IncSemen: {
+	    IncSemen: {
         Name: "Semen+",
         Use: function(who) {
-            var a = "", 
-                b = "";
+			var a = "", 
+			    b = "";
             if(Settings.EssenceAuto == false && who.Balls.length < 2)
-            {
-                a = "your balls"
-                if(who.Balls[0].Size < 6)
-                {
-                    who.Balls[0].Size = 6;
-                    a += " swell";
-                }
-                who.Balls[1] = who.Balls[0];
-                a += ", as another pair grow right beside them to the same size!";
-            }
-            else if(Settings.EssenceAuto == false)
-            {
-                var c = 0;
-                for(var i = 0; i < who.Balls.length; i++)
-                {
-                    if(who.Balls[i].Size < 6)
-                    {
-                        who.Balls[i].Size = 6;
-                        c++;
-                    }
-                }
-                if (c > 0)
-                    a = "your smallest balls swell in size!";
-            }
-            else if(who.Masc <= 3560)
-            {
-                who.Masc = 3561;
-                a = "your groin explode with activity, leaving you with a masculinized body, complete with massive dicks and balls!";
-            }
-            else a = "your balls vibrate with energy...";
-            FluidsEngine();
-            for(var i = 0; i < who.Balls.length; i++)
-            {
-                if(who.Balls[i].Cum < who.Balls[i].CumMax)
-                {
-                who.Balls[i].Cum = who.Balls[i].CumMax;
-                b = " A few seconds later, they're completely filled with cum!";
-                }
-            FluidsEngine();
-            }
-            
+			{
+				a = "your balls"
+				if(who.Balls[0].Size < 6)
+				{
+					who.Balls[0].Size = 6;
+					a += " swell";
+				}
+				who.Balls[1] = who.Balls[0];
+				a += ", as another pair grow right beside them to the same size!";
+			}
+			else if(Settings.EssenceAuto == false)
+			{
+				var c = 0;
+				for(var i = 0; i < who.Balls.length; i++)
+				{
+					if(who.Balls[i].Size < 6)
+					{
+						who.Balls[i].Size = 6;
+						c++;
+					}
+				}
+				if (c > 0)
+					a = "your smallest balls swell in size!";
+			}
+			else if(who.Masc <= 3560)
+			{
+				who.Masc = 3561;
+				a = "your groin explode with activity, leaving you with a masculinized body, complete with massive dicks and balls!";
+			}
+			else a = "your balls vibrate with energy...";
+			FluidsEngine();
+			for(var i = 0; i < who.Balls.length; i++)
+			{
+				if(who.Balls[i].Cum < who.Balls[i].CumMax)
+				{
+				who.Balls[i].Cum = who.Balls[i].CumMax;
+				b = " A few seconds later, they're completely filled with cum!";
+				}
+			FluidsEngine();
+			}
+			
             EventLog("Feeling a flush of heat in your groin, you glance down just in time to see " + a + b);
         },
         Equip: "No",
@@ -297,11 +298,11 @@ const ItemDict = {
         Does: "Makes you filled with cum!",
         Title: "Guarantees cum-filling."
     },
-        book: {
+	    book: {
         Name: "Book",
         Use: function(who) {
-            who.Int++;
-            who.Arousal = 99;
+			who.Int++;
+			who.Arousal = 99;
             EventLog("A dirty magazine, that's made you extremely aroused...");
         },
         Equip: "No",

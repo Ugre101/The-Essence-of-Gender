@@ -6,6 +6,7 @@ document.getElementById("Dorm").addEventListener("click", function () {
     document.getElementById("LeaveDorm").style.display = 'inline-block'
     document.getElementById("flex").style.display = 'none';
     ButtonMates();
+
     if (House.Dormmates.length > 0 && player.Balls.length > 0) {
         document.getElementById("ImpregOrgy").style.display = 'inline-block';
         document.getElementById("GetImpregOrgy").style.display = 'inline-block';
@@ -13,6 +14,8 @@ document.getElementById("Dorm").addEventListener("click", function () {
         document.getElementById("ImpregOrgy").style.display = 'none';
         document.getElementById("GetImpregOrgy").style.display = 'none';
     }
+
+
 });
 
 function ButtonMates() {
@@ -32,17 +35,14 @@ function ButtonMates() {
             case "doll":
                 color = "Beige";
                 break;
-            default:
-                color = "Silver";
-                break;
         }
         var DormName = "";
         if (House.Dormmates[e].hasOwnProperty("FirstName")) {
             DormName += House.Dormmates[e].FirstName;
-        }
+        };
         if (House.Dormmates[e].hasOwnProperty("LastName")) {
             DormName += " " + House.Dormmates[e].LastName;
-        }
+        };
         var Input = "<button type=\"button\" class=\"" + color + "\" onclick=\"MateDiv(" + e + ")\">" + DormName + "<br>" +
             House.Dormmates[e].Name + " " + House.Dormmates[e].Race + "</button  >"
         Inputs += Input;
@@ -163,6 +163,8 @@ function DormSex() {
         } else {
             document.getElementById("DormPlayerLooks").innerHTML += "<br>" + age + " months pregnant";
         }
+
+
     } else {
         if (e.Balls.length < 1) {
             document.getElementById("GetImpregnated").style.display = 'none';
@@ -170,6 +172,7 @@ function DormSex() {
             document.getElementById("GetImpregnated").style.display = 'inline-block';
         }
     }
+
     if (e.hasOwnProperty("Pregnant")) {
         if (e.Pregnant.Status) {
             var age = Math.round(e.Pregnant.Baby / 10000);
@@ -190,6 +193,7 @@ function DormSex() {
     } else {
         DelatMed = 100 / e.Femi;
     }
+
     document.getElementById("DormMascu").style.width = player.Masc * DelatMed + "%";
     document.getElementById("DormFemin").style.width = player.Femi * DelatMed + "%";
     document.getElementById("DormEMascu").style.width = e.Masc * DelatMed + "%";

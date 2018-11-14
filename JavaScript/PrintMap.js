@@ -1,3 +1,4 @@
+
 document.getElementById("WorldMapContainer").addEventListener("click", function () {
     if (document.getElementById("WorldMapPart").style.display == 'none') {
         document.getElementById("WorldMapPart").style.display = 'block';
