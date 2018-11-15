@@ -215,7 +215,7 @@ document.getElementById("DungeonCapture").addEventListener("click", function () 
     LastPressed = " ";
     return;
 });
-document.getElementById("DungenoLose").addEventListener("click", function () {
+document.getElementById("DungeonLose").addEventListener("click", function () {
     battle = false;
     document.getElementById("Lose").style.display = 'none';
     document.getElementById("map").style.display = 'block';
