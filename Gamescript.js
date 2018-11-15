@@ -172,12 +172,12 @@
             AnalDigestion: true
         },
         BalanceParts: false,
-		BalanceSettings: {
-			StepPussy: 1500,
-			StepBoobs: 1000,
-			StepPenis: 1000,
-			StepBalls: 1500
-		}
+        BalanceSettings: {
+            StepPussy: 1500,
+            StepBoobs: 1000,
+            StepPenis: 1000,
+            StepBalls: 1500
+        }
     }
 
     var Partners = {
@@ -257,17 +257,17 @@
     document.getElementById("StartAutoEssence").addEventListener("click", function () {
         Settings.EssenceAuto = !Settings.EssenceAuto;
         document.getElementById("StartAutoEssence").value = "Auto TF " + Settings.EssenceAuto;
-		if(Settings.BalanceParts) {
-			Settings.BalanceParts = false;
-			document.getElementById("Balance").value = "Balance " + Settings.BalanceParts;
-		}
+        if (Settings.BalanceParts) {
+            Settings.BalanceParts = false;
+            document.getElementById("Balance").value = "Balance " + Settings.BalanceParts;
+        }
     });
 
     document.getElementById("Balance").addEventListener("click", function () {
-		if(Settings.EssenceAuto) {
-        Settings.BalanceParts = !Settings.BalanceParts;
-        document.getElementById("Balance").value = "Balance " + Settings.BalanceParts;
-		}
+        if (Settings.EssenceAuto) {
+            Settings.BalanceParts = !Settings.BalanceParts;
+            document.getElementById("Balance").value = "Balance " + Settings.BalanceParts;
+        }
     });
 
     document.getElementById("startgame").addEventListener("click", function () {
@@ -426,22 +426,22 @@
         document.getElementById("Vore").value = "Vore " + Settings.Vore;
         document.getElementById("MBalance").value = "Balance " + Settings.BalanceParts;
     });
-	
+
     document.getElementById("Skip").addEventListener("click", function () {
         Settings.Skip = !Settings.Skip;
         document.getElementById("Skip").value = "Skip " + Settings.Skip;
     });
-	
+
     document.getElementById("MBalance").addEventListener("click", function () {
-		if(Settings.EssenceAuto) {
-			Settings.BalanceParts = !Settings.BalanceParts;
-			document.getElementById("MBalance").value = "Balance " + Settings.BalanceParts;
-		}
-		EssenceCheck(player);
-		for(var q = 0; q < enemies.length; q++)
-			EssenceCheck(enemies[q]);
+        if (Settings.EssenceAuto) {
+            Settings.BalanceParts = !Settings.BalanceParts;
+            document.getElementById("MBalance").value = "Balance " + Settings.BalanceParts;
+        }
+        EssenceCheck(player);
+        for (var q = 0; q < enemies.length; q++)
+            EssenceCheck(enemies[q]);
     });
-	
+
     document.getElementById("OptionGiveEssence").addEventListener("click", function () {
         switch (Settings.GiveEssence) {
             case "Both":
@@ -483,10 +483,10 @@
     document.getElementById("ExtraInfo").addEventListener("click", function () {
         DisplayNone();
         document.getElementById("DetailedInfo").style.display = 'block';
-		if(player.Race != player.SecondRace)
-			document.getElementById("FullRace").innerHTML = player.Race + " " + player.SecondRace;
-		else
-			document.getElementById("FullRace").innerHTML = "Fully " + player.SecondRace;
+        if (player.Race != player.SecondRace)
+            document.getElementById("FullRace").innerHTML = player.Race + " " + player.SecondRace;
+        else
+            document.getElementById("FullRace").innerHTML = "Fully " + player.SecondRace;
         document.getElementById("Pregnancy").innerHTML = "Times you have impregnated: " + Flags.Impregnations + "<br> Times you have been pregnant: " + Flags.Pregnations;
         document.getElementById("ExtraStats").innerHTML = "Virility: " + player.Virility + "<br>Fertility: " + player.Fertility + "<br>Essence drain: " + player.EssenceDrain +
             "<br>Give essence: " + player.GiveEssence + "<br> passive rest rate: " + player.RestRate;
@@ -633,203 +633,8 @@
     }
 
     // function to update player & enemy stats, check if you win or lose and deal damage to player
-    function UpdateStats() {
-        document.getElementById("status").style.display = 'none';
-        document.getElementById("buttons").style.display = 'none';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("EventLog").style.display = 'none';
-        document.getElementById("BattleEnemy").innerHTML = enemies[EnemyIndex].Name + "<br>" + enemies[EnemyIndex].Race + " " + Pronun(CheckGender(enemies[EnemyIndex]));
-        document.getElementById("EnemyStatusHealth").innerHTML = enemies[EnemyIndex].Health;
-        document.getElementById("EnemyStatusHealth").style.width = 100 * (enemies[EnemyIndex].Health / enemies[EnemyIndex].FullHealth) + "%";
-        document.getElementById("EnemyStatusWillHealth").innerHTML = enemies[EnemyIndex].WillHealth;
-        document.getElementById("EnemyStatusWillHealth").style.width = 100 * (enemies[EnemyIndex].WillHealth / enemies[EnemyIndex].FullWillHealth) + "%";
-        document.getElementById("StatusName2").innerHTML = player.Name + " " + player.Lastname;
-
-        document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
-        if (player.Health <= player.MaxHealth) {
-            document.getElementById("StatusHealth2").style.width = 100 * (player.Health / player.MaxHealth) + "%";
-        } else {
-            document.getElementById("StatusHealth2").style.width = 103 + "%";
-        }
-        document.getElementById("StatusWillHealth2").innerHTML = Math.round(player.WillHealth);
-        if (player.WillHealth <= player.MaxWillHealth) {
-            document.getElementById("StatusWillHealth2").style.width = 100 * (player.WillHealth / player.MaxWillHealth) + "%";
-        } else {
-            document.getElementById("StatusWillHealth2").style.width = 103 + "%";
-        }
-
-        if (enemies[EnemyIndex].Health <= 0) {
-            WinBattle();
-            return;
-        } else if (enemies[EnemyIndex].WillHealth <= 0) {
-            WinBattle();
-            return;
-        } else if (player.Health <= 0) {
-            Lose();
-            player.Health = 0;
-            return;
-        } else if (player.WillHealth <= 0) {
-            Lose();
-            player.WillHealth = 0;
-            return;
-        } else if (!FirstRound) {
-            EnemyAttack();
-            return;
-        } else {
-            FirstRound = false;
-            return;
-        }
-    }
-    var Winner = false;
-
-    function EnemyAttack() {
-
-        if (enemies[EnemyIndex].Str >= enemies[EnemyIndex].Charm) {
-            var EAttack = (RandomInt(1, 5) * enemies[EnemyIndex].Str) / 2;
-            player.Health -= EAttack;
-            document.getElementById("BattleText2").innerHTML = "Your opponent hits you for " + EAttack + " dmg.";
-            document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
-            if (player.Health <= player.MaxHealth) {
-                document.getElementById("StatusHealth2").style.width = 100 * (player.Health / player.MaxHealth) + "%";
-            } else {
-                document.getElementById("StatusHealth2").style.width = 103 + "%";
-            }
-            document.getElementById("StatusWillHealth2").innerHTML = Math.round(player.WillHealth);
-            if (player.WillHealth <= player.MaxWillHealth) {
-                document.getElementById("StatusWillHealth2").style.width = 100 * (player.WillHealth / player.MaxWillHealth) + "%";
-            } else {
-                document.getElementById("StatusWillHealth2").style.width = 103 + "%";
-            }
-            if (player.Health <= EAttack) {
-                UpdateStats();
-                return;
-            }
-            return;
-        } else if (enemies[EnemyIndex].Str < enemies[EnemyIndex].Charm) {
-            var EAttack = (RandomInt(1, 5) * enemies[EnemyIndex].Charm) / 2;
-            player.WillHealth -= EAttack;
-            document.getElementById("BattleText2").innerHTML = "Your opponent teased you for " + EAttack + " will dmg.";
-            document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
-            if (player.Health <= player.MaxHealth) {
-                document.getElementById("StatusHealth2").style.width = 100 * (player.Health / player.MaxHealth) + "%";
-            } else {
-                document.getElementById("StatusHealth2").style.width = 103 + "%";
-            }
-            document.getElementById("StatusWillHealth2").innerHTML = Math.round(player.WillHealth);
-            if (player.WillHealth <= player.MaxWillHealth) {
-                document.getElementById("StatusWillHealth2").style.width = 100 * (player.WillHealth / player.MaxWillHealth) + "%";
-            } else {
-                document.getElementById("StatusWillHealth2").style.width = 103 + "%";
-            }
-            if (player.WillHealth <= EAttack) {
-                UpdateStats();
-                return;
-            }
-            return;
-        }
-    }
 
     var enemies = [];
-
-    // Battle attack buttons
-    document.getElementById("Hit").addEventListener("click", function () {
-        var PAttack = (RandomInt(1, 5) * player.Str) / 2;
-        enemies[EnemyIndex].Health -= PAttack;
-        document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " dmg.";
-        UpdateStats();
-        return;
-    });
-
-    document.getElementById("Tease").addEventListener("click", function () {
-        var PAttack = (RandomInt(1, 5) * player.Charm) / 2;
-        enemies[EnemyIndex].WillHealth -= PAttack;
-        document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " will dmg."
-        UpdateStats();
-        return;
-    });
-
-
-    // Function to call when battle is won
-    var SexAttack;
-    var ESexAttack;
-
-    function WinBattle() {
-        FirstRound = true;
-        Winner = true;
-        player.Exp += enemies[EnemyIndex].Exp;
-        player.Gold += enemies[EnemyIndex].Gold;
-        enemies[EnemyIndex].SessionOrgasm = 0;
-        player.SessionOrgasm = 0;
-        document.getElementById("Encounter").style.display = 'none';
-        for (var i = 0; i < player.Quests.length; i++) {
-            if (player.Quests[i].Name === "ElfHunt") {
-                if (enemies[EnemyIndex].Race == "Elf") {
-                    player.Quests[i].Count++;
-                    if (player.Quests[i].Count >= 3) {
-                        player.Quests[i].Completed = true;
-                        if (player.Quests[i].Count % 3 == 0) {
-                            if (!player.Quests[i].hasOwnProperty("Tier")) {
-                                player.Quests[i].Tier = 1
-                            } else if (player.Quests[i].Tier < 5) {
-                                player.Quests[i].Tier++;
-                            }
-                        }
-                    }
-                }
-            }
-            if (player.Quests[i].Name === "BanditLord" && !player.Quests[i].Completed) {
-                if (enemies[EnemyIndex].Name === "Banditlord") {
-                    player.Quests[i].Completed = true;
-                }
-            }
-        }
-        DropSystem(enemies[EnemyIndex]);
-        if (Settings.Skip) {
-            battle = false;
-            document.getElementById("map").style.display = 'block';
-            document.getElementById("status").style.display = 'block';
-            document.getElementById("buttons").style.display = 'block';
-        } else if (Dungeon) {
-            if (Wave == 4 && false) {
-                document.getElementById("DungeonSystem").style.display = 'block';
-                document.getElementById("DungeonText").innerHTML = "What should you do with her?";
-                document.getElementById("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" +
-                    "<input type=\"button\" id=\"MakeSubmit\" value=\"Make her understand her place.\" >";
-            } else {
-                document.getElementById("SexText").innerHTML = HeightSystem(player, enemies[EnemyIndex]);
-                document.getElementById("AfterBattle").style.display = 'grid';
-                document.getElementById("SexButtons").style.display = 'grid';
-                if (Settings.ImgPack) {
-                    document.getElementById("AfterBattle").classList.remove("AfterBattle");
-                    document.getElementById("AfterBattle").classList.add("AfterBattleImg");
-                    document.getElementById("MyImg").style.display = 'block';
-
-                } else {
-                    document.getElementById("AfterBattle").classList.add("AfterBattle");
-                    document.getElementById("AfterBattle").classList.remove("AfterBattleImg");
-                    document.getElementById("MyImg").style.display = 'none';
-                }
-                CheckArousal();
-                AfterBattleButtons();
-            }
-        } else {
-            document.getElementById("SexText").innerHTML = HeightSystem(player, enemies[EnemyIndex]);
-            document.getElementById("AfterBattle").style.display = 'grid';
-            document.getElementById("SexButtons").style.display = 'grid';
-            if (Settings.ImgPack) {
-                document.getElementById("AfterBattle").classList.remove("AfterBattle");
-                document.getElementById("AfterBattle").classList.add("AfterBattleImg");
-                document.getElementById("MyImg").style.display = 'block';
-
-            } else {
-                document.getElementById("AfterBattle").classList.add("AfterBattle");
-                document.getElementById("AfterBattle").classList.remove("AfterBattleImg");
-                document.getElementById("MyImg").style.display = 'none';
-            }
-            CheckArousal();
-            AfterBattleButtons();
-        }
-    }
 
     document.getElementById("ImgPack").addEventListener("click", function () {
         switch (Settings.ImgPack) {
@@ -1265,10 +1070,13 @@
                 if (mousedowner) {
                     clearInterval(mFunction);
                     mousedowner = false;
-                    console.log("Touching");
                 }
                 document.getElementById("map").style.display = 'none';
                 document.getElementById("Encounter").style.display = 'grid';
+                document.getElementById("status").style.display = 'none';
+                document.getElementById("buttons").style.display = 'none';
+                document.getElementById("EmptyButtons").style.display = 'none';
+                document.getElementById("EventLog").style.display = 'none';
                 document.getElementById("BattleText").innerHTML = null;
                 document.getElementById("BattleText2").innerHTML = null;
                 battle = true;
@@ -1287,7 +1095,6 @@
                 if (mousedowner) {
                     clearInterval(mFunction);
                     mousedowner = false;
-                    console.log("Touching2");
                 }
                 battle = true;
                 sprite.x = startarea.width / 2 - grid;
@@ -1332,6 +1139,7 @@
     }
 
     var needPrint = ["FarmBarn", "FarmOwner"]
+
     function PrintNpcs() {
         for (var e of Npcs) {
             if (needPrint.indexOf(e.Name) > -1) {

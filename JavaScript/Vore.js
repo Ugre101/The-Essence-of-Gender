@@ -88,7 +88,6 @@
             }
         }
     });
-
     document.getElementById("OralVore").addEventListener("click", function () {
         if (enemies[EnemyIndex].Weight < StomachCapacity()) {
             if (Settings.ImgPack) {
