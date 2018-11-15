@@ -208,7 +208,7 @@ document.getElementById("DungeonCapture").addEventListener("click", function () 
     document.getElementById("FirstDungeon").style.display = 'block';
     Wave++;
     LastPressed = " ";
-    if (Wave == 5) {
+    if (Wave == 4) {
         Wave = 0;
         document.getElementById("FirstDungeonText").innerHTML += "<br><br> You beat the dungeon more to come!"
     }

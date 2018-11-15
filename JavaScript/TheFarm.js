@@ -52,15 +52,15 @@
     });
     document.getElementById("MilkAdd").addEventListener("click", function () {
         // extra non-preg milkrate
-        if (player.Gold >= 50) {
-            player.Gold -= 50;
+        if (player.Gold >= 30) {
+            player.Gold -= 30;
             for (var e of player.Boobies) {
                 e.MilkRate++;
                 if (false) {
                     // if milkrate is over certain value say stuff like wow gogly amounts etc...
                 }
             }
-            document.getElementById("FarmBarnText").innerHTML = "Your breasts natrual milk productions increases."
+            document.getElementById("FarmBarnText").innerHTML = "Your breasts milk production increases."
         } else {
             // you are broke
             document.getElementById("FarmBarnText").innerHTML = "Sorry you can't afford this."
@@ -73,6 +73,7 @@
             for (var e of player.Boobies) {
                 if (e.MilkRate - 1 < 0) {
                     e.MilkRate = 0;
+                    document.getElementById("FarmBarnText").innerHTML = "Your "
                 } else {
                     e.MilkRate--;
                 }
@@ -80,7 +81,7 @@
                     // if milkrate is over certain value say stuff like wow gogly amounts etc...
                 }
             }
-            document.getElementById("FarmBarnText").innerHTML = "Your breasts natrual milk productions increases."
+            document.getElementById("FarmBarnText").innerHTML = "Your breasts milk production increases."
         } else {
             // you are broke
             document.getElementById("FarmBarnText").innerHTML = "Sorry you can't afford this."

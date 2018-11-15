@@ -333,17 +333,17 @@
 				</select>
 			</div>
 			<div>
-				<input type="button" id="Inch" value="Inch false" title="Switches to imperial units, pound, inch..."/>
+				<input type="button" id="Inch" value="Inch false" title="Switches to imperial units, pound, inch..." />
 			</div>
 		</div>
 		<div>
 			<input type="button" id="ImgPack" value="ImgPack(No included)" />
-			<input type="button" id="SetPronun" value="Change pronuns" title="Set your prefered pronuns for different genders."/>
+			<input type="button" id="SetPronun" value="Change pronuns" title="Set your prefered pronuns for different genders." />
 		</div>
 		<div>
-			<input type="button" id="Log+10" value="+10 to Event Log" title=""/>
+			<input type="button" id="Log+10" value="+10 to Event Log" title="" />
 			<p id="LogLength"></p>
-			<input type="button" id="Log-10" value="-10 to Event Log" title=""/>
+			<input type="button" id="Log-10" value="-10 to Event Log" title="" />
 		</div>
 		<div>
 			<input type="button" id="PerkOptions" value="Fetish options" />
@@ -367,7 +367,7 @@
 		<p id="EssenceTracker"></p>
 		<div id="EssenceStart">
 			<label for="OptionGiveEssence">Give Essence</label>
-			<input type="button" id="OptionGiveEssence" value="Both" title="If you have the give essence perk this set what essence you give to your opponents when you orgasm."/>
+			<input type="button" id="OptionGiveEssence" value="Both" title="If you have the give essence perk this set what essence you give to your opponents when you orgasm." />
 			<label for="NoExtra">Set max dicks/boobs/pussies/balls for you and opponents.</label>
 			<input type="button" id="NoExtra" value="Set max boobs/dicks etc" title="On auto you can't grow more than the set amount of dick, pussy, balls and breast. This settings always effect opponents. Setting t.ex. dick to zero will make all opponents female or doll likewise setting pussies to zero makes all opponents male or doll." />
 			<div id="MaxMenu" class="None">
@@ -541,9 +541,17 @@
 			<p id="BattleText"></p>
 			<p id="BattleText2"></p>
 		</div>
-		<div class="e">
-			<input type="button" id="Hit" value="Hit" />
-			<input type="button" id="Tease" value="Tease" />
+		<div class="e Grid">
+			<div>
+				<input type="button" id="Hit" value="Hit" />
+			</div>
+			<div>
+				<input type="button" id="Tease" value="Tease" />
+			</div>
+			<div>
+				<input type="button" id="FleeBattle" value="Flee" />
+				<input type="button" id="Surrender" value="Surrender" />
+			</div>
 		</div>
 
 
@@ -1028,10 +1036,10 @@
 	<div id="FarmBarn" class="None Building">
 		<p id="FarmBarnText" class="TextBox"></p>
 		<input type="button" id="Milker500" value="(placeholder)Milker 500g" title="Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away? Buy today; a portable milker! " />
-		<input type="button" id="MilkAdd" value="(placeholder)Milk booster" title="Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?! Well, this is for your humble (or crazy) needs!" />
-		<input type="button" id="MilkSub" value="(placeholder)Milk stopper" title="Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.'" />
+		<input type="button" id="MilkAdd" value="Milk booster 30g" title="Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?! Well, this is for your humble (or crazy) needs!" />
+		<input type="button" id="MilkSub" value="Milk stopper 50g" title="Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.' #Note this does not affect lacation rate from pregnancy. />
 		<input type="button" id="DrinkFresh" value="(placeholder)Drink fresh milk" title="It's not yours. You think." />
-		<input type="button" id="GetMilked" value="(placeholder)Get milked" title="Mooooooooooooo!"/>
+		<input type="button" id="GetMilked" value="(placeholder)Get milked" title="Mooooooooooooo!" />
 		<input type="button" id="LeaveFarmBarn" value="Leave" />
 		<div id="MilkEvent" class="None">
 			<input type="button" id="BarnAccept" value="Accept" /> <!-- Get fucked -->
@@ -1061,6 +1069,7 @@
 	<script src="JavaScript/CheckFlags.js"></script>
 	<script src="JavaScript/Children.js"></script>
 	<script src="JavaScript/CurrentMap.js"></script>
+	<script src="JavaScript/Combat.js"></script>
 	<script src="JavaScript/DateTracker.js"></script>
 	<script src="JavaScript/Dorm.js"></script>
 	<script src="JavaScript/DrainChanges.js"></script>
