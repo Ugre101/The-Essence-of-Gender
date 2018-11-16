@@ -193,12 +193,8 @@
     });
 
     function LeaveHome() {
-        battle = false;
-        document.getElementById("Home").style.display = 'none';
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("status").style.display = 'block';
+        document.getElementById("Home").style.display = 'none';       
         document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EventLog").style.display = 'block';
+        DisplayGame();
     }
     // End home

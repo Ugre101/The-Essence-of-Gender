@@ -14,7 +14,7 @@ function Items(Things) {
     for (var e = 0; e < Things.length; e++) {
         var Thing = Things[e];
         console.log(Thing);
-        var item = "<div title=\"" + Thing.Title + "\">" + Thing.Name + " (" + Thing.Quantity + "\)"
+        var item = "<div title=\"" + Thing.Title + "\"><p>" + Thing.Name + " (" + Thing.Quantity + "\)</p>"
         if (Thing.hasOwnProperty("Use")) {
             item += "<input type=\"button\" onclick=\"Use(" + e + ")\" value=\"Use\">"
         }
@@ -143,7 +143,6 @@ function Drop(item) {
 
 }
 document.getElementById("InventoryLeave").addEventListener("click", function () {
-    battle = false;
     document.getElementById("Inventory").style.display = 'none';
-    document.getElementById("map").style.display = 'block';
+    DisplayGame();
 });

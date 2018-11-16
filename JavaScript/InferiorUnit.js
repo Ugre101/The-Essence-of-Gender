@@ -39,3 +39,19 @@ function KgToPound(kg) {
         return Math.round(kg) + "kg";
     }
 }
+
+function LToGal(L) {
+    if (Settings.Inch) {
+        if (Math.round(0.264172052 * L) < 1) {
+            return Math.round(L * 4.22675284) + "cups"
+        } else {
+            return Math.round(L * 0.264172052) + "gallon"
+        }
+    } else {
+        if (L < 1) {
+            return Math.round(L * 10) + "dl";
+        } else {
+            return Math.round(L) + "L";
+        }
+    }
+}

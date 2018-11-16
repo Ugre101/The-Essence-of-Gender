@@ -72,10 +72,10 @@ function CheckArousal() {
                 document.getElementById("SexText").innerHTML += "<br><br> Their stomach bulges visibly, filled with your cum."
             }
         } else if (LastPressed == "Missionary") {
-            var cum = Cumming(player);
+            var cum = Cumming(player); // need to make more relatic desc e.g. you cum a bucket load?
             document.getElementById("SexText").innerHTML += "<br>Feeling close you thrust deep";
             if (cum > 0) {
-                document.getElementById("SexText").innerHTML += ", releasing " + cum + "L of cum into their pussy."
+                document.getElementById("SexText").innerHTML += ", releasing " + LToGal(cum) + " of cum into their pussy."
             } else document.getElementById("SexText").innerHTML += ", but nothing comes out."
         } else if (LastPressed == "DoggyStyle") {
             var cum = Cumming(player);

@@ -216,6 +216,5 @@ function BallsButtons() {
 
 document.getElementById("EssenceOptionsLeave").addEventListener("click", function () {
     DisplayNone();
-    battle = false;
-    document.getElementById("map").style.display = 'block'
+    DisplayGame();
 });

@@ -1,29 +1,45 @@
 function Lose(q) {
-	
+	var ee = enemies[EnemyIndex]
+	document.getElementById("LosePlayerLooks").innerHTML = BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
+    if (player.Pregnant.Babies.length > 0) {
+        var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
+        if (age < 1) {
+            age = "Impregnated";
+        } else {
+            age = age + " months pregnant";
+        }
+        document.getElementById("LosePlayerLooks").innerHTML += "<br>" + age;
+    }
+    document.getElementById("LoseEnemyLooks").innerHTML = BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
+    if (ee.hasOwnProperty("Pregnant")) {
+        if (ee.Pregnant.Status) {
+            document.getElementById("LoseEnemyLooks").innerHTML += "<br>Pregnant";
+        }
+    }
     Winner = false;
     document.getElementById("LosePName").innerHTML = player.Name + " " + player.Lastname;
-    document.getElementById("LoseEName").innerHTML = enemies[EnemyIndex].Name + "<br>" + enemies[EnemyIndex].Race + " " + Pronun(CheckGender(enemies[EnemyIndex]));
+    document.getElementById("LoseEName").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronun(CheckGender(ee));
     document.getElementById("LoseMascu").innerHTML = Math.round(player.Masc);
     document.getElementById("LoseFemin").innerHTML = Math.round(player.Femi);
-    document.getElementById("LoseEMascu").innerHTML = enemies[EnemyIndex].Masc;
-    document.getElementById("LoseEFemin").innerHTML = enemies[EnemyIndex].Femi;
+    document.getElementById("LoseEMascu").innerHTML = ee.Masc;
+    document.getElementById("LoseEFemin").innerHTML = ee.Femi;
     SexColor(player, "PlayerLose");
-    SexColor(enemies[EnemyIndex], "EnemyLose");
+    SexColor(ee, "EnemyLose");
     var DelatMed = 2;
-    if (player.Masc >= enemies[EnemyIndex].Masc && player.Masc >= enemies[EnemyIndex].Femi && player.Masc >= player.Femi) {
+    if (player.Masc >= ee.Masc && player.Masc >= ee.Femi && player.Masc >= player.Femi) {
         DelatMed = 100 / player.Masc;
-    } else if (player.Femi >= enemies[EnemyIndex].Masc && player.Femi >= enemies[EnemyIndex].Femi && player.Femi >= player.Masc) {
+    } else if (player.Femi >= ee.Masc && player.Femi >= ee.Femi && player.Femi >= player.Masc) {
         DelatMed = 100 / player.Femi;
-    } else if (enemies[EnemyIndex].Masc >= player.Masc && enemies[EnemyIndex].Masc >= enemies[EnemyIndex].Femi && enemies[EnemyIndex].Masc >= player.Femi) {
-        DelatMed = 100 / enemies[EnemyIndex].Masc;
+    } else if (ee.Masc >= player.Masc && ee.Masc >= ee.Femi && ee.Masc >= player.Femi) {
+        DelatMed = 100 / ee.Masc;
     } else {
-        DelatMed = 100 / enemies[EnemyIndex].Femi;
+        DelatMed = 100 / ee.Femi;
     }
 
     document.getElementById("LoseMascu").style.width = player.Masc * DelatMed + "%";
     document.getElementById("LoseFemin").style.width = player.Femi * DelatMed + "%";
-    document.getElementById("LoseEMascu").style.width = enemies[EnemyIndex].Masc * DelatMed + "%";
-    document.getElementById("LoseEFemin").style.width = enemies[EnemyIndex].Femi * DelatMed + "%";
+    document.getElementById("LoseEMascu").style.width = ee.Masc * DelatMed + "%";
+    document.getElementById("LoseEFemin").style.width = ee.Femi * DelatMed + "%";
 
     document.getElementById("Encounter").style.display = 'none';
     document.getElementById("Lose").style.display = 'grid';
@@ -32,7 +48,7 @@ function Lose(q) {
 	if(q === undefined) {
 		if(document.getElementById("LoseSexText").style.display = 'none')
 			document.getElementById("LoseSexText").style.display = 'block'
-		document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronun(CheckGender(enemies[EnemyIndex])) + " " + enemies[EnemyIndex].Race + " " + enemies[EnemyIndex].Name;
+		document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronun(CheckGender(ee)) + " " + ee.Race + " " + ee.Name;
 	} else
 		document.getElementById("LoseSexText").style.display = 'none';
     return;

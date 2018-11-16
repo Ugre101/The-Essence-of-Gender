@@ -277,19 +277,6 @@
         document.getElementById("status").style.display = 'block';
         document.getElementById("EventLog").style.display = 'block';
         document.getElementById("BuyHouse").style.display = 'none'
-        if (window.innerHeight < 800) {
-            document.getElementById("FirstButtons").style.display = 'block';
-            document.getElementById("SecondButtons").style.display = 'none';
-            document.getElementById("MoreButtons").style.display = 'inline-block';
-            document.getElementById("LessButtons").style.display = 'inline-block';
-            FontSize = 0.75;
-            document.body.style.fontSize = FontSize + "em";
-        } else {
-            document.getElementById("SecondButtons").style.display = 'block';
-            document.getElementById("FirstButtons").style.display = 'block';
-            document.getElementById("MoreButtons").style.display = 'none';
-            document.getElementById("LessButtons").style.display = 'none';
-        }
     });
 
     // Sets display to none used for menu buttons
@@ -311,6 +298,27 @@
         document.getElementById("PronunForm").style.display = 'none';
         document.getElementById("Inventory").style.display = 'none';
         document.getElementById("ChildrenMenu").style.display = 'none';
+        if (window.innerHeight < 600) {
+            document.getElementById("map").style.display = 'none';
+            document.getElementById("buttons").style.display = 'none';
+            document.getElementById("status").style.display = 'none';
+            document.getElementById("EventLog").style.display = 'none';
+        }
+    }
+
+    function DisplayGame() {
+        document.getElementById("map").style.display = 'block';
+        document.getElementById("buttons").style.display = 'block';
+        document.getElementById("status").style.display = 'block';
+        document.getElementById("EventLog").style.display = 'block';
+        battle = false;
+        if (MobileButtons) {
+            document.getElementById("buttons").style.width = 17 + "%";
+            document.getElementById("buttons").style.maxWidth = 260 + "px";
+            document.getElementById("FirstButtons").style.display = 'none';
+            document.getElementById("SecondButtons").style.display = 'none';
+            MobileButtons = false;
+        }
     }
 
     document.getElementById("Options").addEventListener("click", function () {
@@ -378,12 +386,8 @@
     document.getElementById("TeleportHome").addEventListener("click", function () {
         player.Area = "First";
         player.Map = "RoadToHome";
-        battle = false;
         document.getElementById("LocalPortal").style.display = 'none';
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("status").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EventLog").style.display = 'block';
+        DisplayGame();
     });
 
 
@@ -400,9 +404,9 @@
 
     // Save options
     document.getElementById("saveoptions").addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
         document.getElementById("optionpage").style.display = 'none';
+        DisplayGame();
+
         document.body.style.backgroundColor = document.getElementById("backcolor").value;
         MapColor = document.getElementById("MapColor").value;
         document.body.style.color = document.getElementById("textcolor").value;
@@ -461,9 +465,8 @@
     });
 
     document.getElementById("PerkOptionsLeave").addEventListener("click", function () {
-        battle = false;
         document.getElementById("PerkOptionsMenu").style.display = 'none';
-        document.getElementById("map").style.display = 'block'
+        DisplayGame();
     });
 
     document.getElementById("Looks").addEventListener("click", function () {
@@ -472,12 +475,29 @@
             EssenceCheck(player);
         }
         document.getElementById("ShowLooks").style.display = 'block';
+        // Update for Looksmenu #Moved it here because there is no need to have it update every loop.
+        document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
+
+        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + ", a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
+            ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and " + player.Skincolor + " skin.";
+
+        if (player.Pregnant.Babies.length > 0) {
+            if (player.Pregnant.Babies[0].BabyAge < 30) {
+                document.getElementById("looks2").innerHTML += "<br><br> You are pregnant"
+
+            } else {
+                document.getElementById("looks2").innerHTML += "<br><br> You are " + Math.round(player.Pregnant.Babies[0].BabyAge / 30) + " months pregnant."
+            }
+        }
+        document.getElementById("StatusFitness").innerHTML = "Age: " + player.Age + "years old<br>Weight: " + KgToPound(player.Weight) + "<br>" + "Fat: " + KgToPound(player.Fat) + "<br>Muscle: " + KgToPound(player.Muscle) + "<br>" + Fitness(player);
+        document.getElementById("genitals2").innerHTML = BoobLook(player) + DickLook(player) + BallLook(player) + PussyLook(player);
+        // End update Looksmenu
+
     });
 
     document.getElementById("CloseLooks").addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
         document.getElementById("ShowLooks").style.display = 'none';
+        DisplayGame();
     });
 
     document.getElementById("ExtraInfo").addEventListener("click", function () {
@@ -505,15 +525,13 @@
     });
 
     document.getElementById("CloseExtra").addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
         document.getElementById("DetailedInfo").style.display = 'none';
+        DisplayGame();
     });
 
     document.getElementById("CloseLevel").addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
         document.getElementById("Levels").style.display = 'none';
+        DisplayGame();
     });
 
     document.getElementById("Quests").addEventListener("click", function () {
@@ -536,9 +554,8 @@
     });
 
     document.getElementById("QuestsLeave").addEventListener("click", function () {
-        battle = false;
         document.getElementById("ShowQuests").style.display = 'none';
-        document.getElementById("map").style.display = 'block';
+        DisplayGame();
     });
 
     function RandomInt(min, max) {
@@ -1100,6 +1117,11 @@
                 sprite.x = startarea.width / 2 - grid;
                 sprite.y = startarea.height / 2;
                 UpdateNpc(Npcs[n].Name);
+                if (Settings.EssenceAuto) {
+                    document.getElementById("SellLimbs").style.display = 'none';
+                } else {
+                    document.getElementById("SellLimbs").style.display = 'inline-block';
+                }
             }
         }
     };
@@ -1278,39 +1300,8 @@
             document.getElementById("Hunger").innerHTML = null;
         }
 
-        // Live update for Looksmenu
-        document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
-
-        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + ", a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
-            ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and " + player.Skincolor + " skin.";
-
-        if (player.Pregnant.Babies.length > 0) {
-            if (player.Pregnant.Babies[0].BabyAge < 30) {
-                document.getElementById("looks2").innerHTML += "<br><br> You are pregnant"
-
-            } else {
-                document.getElementById("looks2").innerHTML += "<br><br> You are " + Math.round(player.Pregnant.Babies[0].BabyAge / 30) + " months pregnant."
-            }
-        }
-        document.getElementById("StatusFitness").innerHTML = "Age: " + player.Age + "years old<br>Weight: " + KgToPound(player.Weight) + "<br>" + "Fat: " + KgToPound(player.Fat) + "<br>Muscle: " + KgToPound(player.Muscle) + "<br>" + Fitness(player);
-        document.getElementById("genitals2").innerHTML = BoobLook(player) + DickLook(player) + BallLook(player) + PussyLook(player);
-        // End live update Looksmenu
-
         document.getElementById("EssenceTracker").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
         document.getElementById("BlackMarketEssence").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
-        if (Settings.EssenceAuto) {
-            document.getElementById("SellLimbs").style.display = 'none';
-        } else {
-            document.getElementById("SellLimbs").style.display = 'inline-block';
-        }
-
-        ExpCheck();
-        player.Fat = Math.max(0.1, player.Fat);
-        player.Muscle = Math.max(1, player.Muscle);
-        player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);
-        player.Height = Math.max(1, player.Height);
-        player.Health = Math.max(1, player.Health);
-        player.WillHealth = Math.max(1, player.WillHealth);
 
         if (Doors.length < 1) {
             DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E");
@@ -1329,11 +1320,21 @@
             TfEngine();
         }
         //		if (BonusTF.Status) {TfBoost();}
+        ExpCheck();
 
-        if (!battle && Settings.EssenceAuto) {
+        if (!battle) {
             Laglimiter++;
             if (Laglimiter % 80 == 0) {
-                EssenceCheck(player);
+                if (Settings.EssenceAuto) {
+                    EssenceCheck(player);
+                }
+                // Moved more stuff inside here to boost performance
+                player.Fat = Math.max(0.1, player.Fat);
+                player.Muscle = Math.max(1, player.Muscle);
+                player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);
+                player.Height = Math.max(1, player.Height);
+                player.Health = Math.max(1, player.Health);
+                player.WillHealth = Math.max(1, player.WillHealth);
             }
         };
     };

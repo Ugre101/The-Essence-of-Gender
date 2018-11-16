@@ -19,9 +19,8 @@ document.getElementById("Save").addEventListener("click", function () {
     }
 });
 document.getElementById("SaveLeave").addEventListener("click", function () {
-    battle = false;
     document.getElementById("SaveMenu").style.display = 'none';
-    document.getElementById("map").style.display = 'block';
+    DisplayGame();
 })
 document.getElementById("SavePlayer1").addEventListener("click", function () {
     var SaveArray = [player, House, Flags, Settings];

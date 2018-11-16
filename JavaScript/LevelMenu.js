@@ -78,8 +78,7 @@
         }
     });
     // level menu return
-    document.getElementById("No").addEventListener("click", function () {
-        battle = false;
+    document.getElementById("LeaveLevelMenu").addEventListener("click", function () {
         document.getElementById("LevelMenu").style.display = 'none';
-        document.getElementById("map").style.display = 'block';
+        DisplayGame();
     });
