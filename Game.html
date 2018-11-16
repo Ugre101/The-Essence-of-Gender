@@ -116,20 +116,23 @@
 
 	<div id="buttons" class="left buttons None">
 		<div class="container">
-			<div id="FirstButtons">
-				<input type="button" id="LevelButton" value="Level up">
-				<input type="button" id="Looks" value="Looks" />
-				<input type="button" id="ShowInventory" value="Inventory" />
-				<input type="button" id="Save" value="Save" />
-				<input type="button" id="Load" value="Load" />
-				<input type="button" id="MoreButtons" value="More buttons" />
-			</div>
-			<div id="SecondButtons">
-				<input type="button" id="Options" value="Options" />
-				<input type="button" id="Quests" value="Quests" />
-				<input type="button" id="EssenceOptions" value="Essence" />
-				<input type="button" id="VoreLooks" value="Vore" />
-				<input type="button" id="LessButtons" value="Less buttons" />
+			<div>
+				<input type="button" id="MobileButtons" value="Buttons" />
+				<div id="FirstButtons">
+					<input type="button" id="LevelButton" value="Level up">
+					<input type="button" id="Looks" value="Looks" />
+					<input type="button" id="ShowInventory" value="Inventory" />
+					<input type="button" id="Save" value="Save" />
+					<input type="button" id="Load" value="Load" />
+					<input type="button" id="MoreButtons" value="More buttons" />
+				</div>
+				<div id="SecondButtons">
+					<input type="button" id="Options" value="Options" />
+					<input type="button" id="Quests" value="Quests" />
+					<input type="button" id="EssenceOptions" value="Essence" />
+					<input type="button" id="VoreLooks" value="Vore" />
+					<input type="button" id="LessButtons" value="Less buttons" />
+				</div>
 			</div>
 		</div>
 	</div>
@@ -195,7 +198,7 @@
 		</div>
 		<br>
 		<div>
-			<input type="button" id="No" value="Done">
+			<input type="button" id="LeaveLevelMenu" value="Done">
 			<input type="button" id="PerkMenu" value="Perk Menu">
 		</div>
 	</div>
@@ -336,18 +339,32 @@
 				<input type="button" id="Inch" value="Inch false" title="Switches to imperial units, pound, inch..." />
 			</div>
 		</div>
-		<div>
-			<input type="button" id="ImgPack" value="ImgPack(No included)" />
-			<input type="button" id="SetPronun" value="Change pronuns" title="Set your prefered pronuns for different genders." />
+		<div class="TwoColumn">
+			<div>
+				<input type="button" id="ImgPack" value="ImgPack(No included)" />
+			</div>
+			<div>
+				<input type="button" id="SetPronun" value="Change pronuns" title="Set your prefered pronuns for different genders." />
+			</div>
 		</div>
-		<div>
-			<input type="button" id="Log+10" value="+10 to Event Log" title="" />
-			<p id="LogLength"></p>
-			<input type="button" id="Log-10" value="-10 to Event Log" title="" />
+		<div class="ThreeColumn">
+			<div>
+				<input type="button" id="Log+10" value="+10 to Event Log" title="" />
+			</div>
+			<div>
+				<p id="LogLength"></p>
+			</div>
+			<div>
+				<input type="button" id="Log-10" value="-10 to Event Log" title="" />
+			</div>
 		</div>
-		<div>
-			<input type="button" id="PerkOptions" value="Fetish options" />
-			<input type="button" id="saveoptions" value="Save options" />
+		<div class="TwoColumn">
+			<div>
+				<input type="button" id="PerkOptions" value="Fetish options" />
+			</div>
+			<div>
+				<input type="button" id="saveoptions" value="Save options" />
+			</div>
 		</div>
 	</div>
 
@@ -561,10 +578,16 @@
 		<h1 class="a">Sex</h1>
 		<div id="PlayerSex" class="PlayerSex">
 			<p id="PName"></p>
-			<label for="Mascu">Masculinity</label>
-			<div id="Mascu" class="Masc"></div>
-			<label for="Femin">Femininity</label>
-			<div id="Femin" class="Femi"></div>
+			<div class="TwoColumn">
+				<div>
+					<label for="Mascu">Masculinity</label>
+					<div id="Mascu" class="Masc"></div>
+				</div>
+				<div>
+					<label for="Femin">Femininity</label>
+					<div id="Femin" class="Femi"></div>
+				</div>
+			</div>
 			<div class="TwoColumn">
 				<div>
 					<label for="PArousal">Arousal</label>
@@ -583,10 +606,16 @@
 		</div>
 		<div id="EnemySex" class="EnemySex">
 			<p id="EName"></p>
-			<label for="EMascu">Masculinity</label>
-			<div id="EMascu" class="Masc"></div>
-			<label for="EFemin">Femininity</label>
-			<div id="EFemin" class="Femi"></div>
+			<div class="TwoColumn">
+				<div>
+					<label for="EMascu">Masculinity</label>
+					<div id="EMascu" class="Masc"></div>
+				</div>
+				<div>
+					<label for="EFemin">Femininity</label>
+					<div id="EFemin" class="Femi"></div>
+				</div>
+			</div>
 			<div class="TwoColumn">
 				<div>
 					<label for="EArousal">Arousal</label>
@@ -610,8 +639,8 @@
 					<div id="EnemyDick">
 						<input type="button" id="GiveBlowjob" value="Give blowjob" />
 					</div>
-					<input type="button" id="OralVore" value="Eat them" />
 				</div>
+				<input type="button" id="OralVore" value="Eat them" />
 			</div>
 			<!-- Vagina -->
 			<div>
@@ -625,8 +654,8 @@
 							<input type="button" id="GetDualPen" value="Get dual penetrated" />
 						</div>
 					</div>
-					<input type="button" id="Unbirth" value="Unbirth" />
 				</div>
+				<input type="button" id="Unbirth" value="Unbirth" />
 			</div>
 			<!-- Dick -->
 			<div>
@@ -644,8 +673,8 @@
 							<input type="button" id="Multipen" value="(placeholder)" />
 						</div>
 					</div>
-					<input type="button" id="CockVore" value="Cock vore" />
 				</div>
+				<input type="button" id="CockVore" value="Cock vore" />
 			</div>
 			<!-- Anal-->
 			<div>
@@ -659,9 +688,9 @@
 			</div>
 			<div>
 				<div id="Breast">
-					<input type="button" id="BreastVore" value="Breast vore">
 					<input type="button" id="BreastFeed" value="Breast feed" />
 				</div>
+				<input type="button" id="BreastVore" value="Breast vore">
 			</div>
 			<div>
 				<div id="DrainMenu">
@@ -720,12 +749,18 @@
 			<p id="LoseEnemyOrgasm"></p>
 			<p id="LosePlayerOrgasm"></p>
 		</div>
-		<div class="e">
-			<input type="button" id="LoseSubmit" value="Submit" />
-			<input type="button" id="LoseStruggle" value="Struggle" />
-<!--			<input type="button" id="Cycle" value="TEST!!"/>-->
-			<input type="button" id="LeaveLose" value="Leave" />
-			<input type="button" id="DungeonLose" value="Leave" />
+		<div class="e Grid">
+			<div>
+				<input type="button" id="LoseSubmit" value="Submit" />
+			</div>
+			<div>
+				<input type="button" id="LoseStruggle" value="Struggle" />
+			</div>
+			<!--			<input type="button" id="Cycle" value="TEST!!"/>-->
+			<div>
+				<input type="button" id="LeaveLose" value="Leave" />
+				<input type="button" id="DungeonLose" value="Leave" />
+			</div>
 		</div>
 
 	</div>
@@ -1037,7 +1072,7 @@
 		<p id="FarmBarnText" class="TextBox"></p>
 		<input type="button" id="Milker500" value="(placeholder)Milker 500g" title="Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away? Buy today; a portable milker! " />
 		<input type="button" id="MilkAdd" value="Milk booster 30g" title="Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?! Well, this is for your humble (or crazy) needs!" />
-		<input type="button" id="MilkSub" value="Milk stopper 50g" title="Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.' #Note this does not affect lacation rate from pregnancy. />
+		<input type="button" id="MilkSub" value="Milk stopper 50g" title="Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.' #Note this does not affect lacation rate from pregnancy." />
 		<input type="button" id="DrinkFresh" value="(placeholder)Drink fresh milk" title="It's not yours. You think." />
 		<input type="button" id="GetMilked" value="(placeholder)Get milked" title="Mooooooooooooo!" />
 		<input type="button" id="LeaveFarmBarn" value="Leave" />
@@ -1090,6 +1125,7 @@
 	<script src="JavaScript/Lose.js"></script>
 	<script src="JavaScript/ManualEssence.js"></script>
 	<script src="JavaScript/MaxLimbs.js"></script>
+	<script src="JavaScript/MobileSupport.js"></script>
 	<script src="JavaScript/NewGamePlus.js"></script>
 	<script src="JavaScript/Opponents.js"></script>
 	<script src="JavaScript/Perk.js"></script>

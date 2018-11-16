@@ -50,7 +50,7 @@ function PregnanyEngine() {
                     if (Array.isArray(e.Children)) {
                         var Child = {
                             AgeCounter: 0,
-                            Race: House.Dormmates[e].Race,
+                            Race: e.Race,
                             Mother: e.Pregnant.Mother,
                             Father: e.Pregnant.Father
                         };
