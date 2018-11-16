@@ -139,8 +139,7 @@ document.getElementById("Load").addEventListener("click", function () {
     }
 });
 document.getElementById("LoadLeave").addEventListener("click", function () {
-    battle = false;
     document.getElementById("LoadMenu").style.display = 'none';
-    document.getElementById("map").style.display = 'block';
+    DisplayGame();
 })
 // End Load handler

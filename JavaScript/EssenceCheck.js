@@ -51,9 +51,9 @@ function EssenceCheck(who) {
                 } else {
                     who.Dicks[e].Type = who.Race;
                 }
-                who.Dicks[e].Size = Math.sqrt(who.Masc) * GrowthScale(who);
-            //    who.Dicks[e].Size = Math.min(who.Height / 3, Math.max(who.Masc / 30 * GrowthScale(who) - dicktotal, who.Height * 0.03));
-                if (e == who.Dicks.length - 1 && who.Masc / 30 - dicktotal > who.Height / 3 && Settings.MaxLimbs.MaxDicks > e) {
+                who.Dicks[e].Size = Math.min(who.Height/3, Math.sqrt(who.Masc / (e + 1)) * GrowthScale(who));
+                //    who.Dicks[e].Size = Math.min(who.Height / 3, Math.max(who.Masc / 30 * GrowthScale(who) - dicktotal, who.Height * 0.03));
+                if (e == who.Dicks.length - 1 && who.Dicks[e].Size > who.Height / 4 && Settings.MaxLimbs.MaxDicks > e) {
                     var Dick = {
                         Size: 5,
                         Type: who.Race,
@@ -61,10 +61,8 @@ function EssenceCheck(who) {
                     }
                     who.Dicks.push(Dick);
                 }
-                if (who.Masc / 30 - dicktotal < 0 || e >= Settings.MaxLimbs.MaxDicks) {
+                if (Math.sqrt(who.Masc / (e + 1)) < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxDicks) {
                     who.Dicks.pop();
-                } else {
-                    dicktotal += who.Dicks[e].Size;
                 }
             }
         }

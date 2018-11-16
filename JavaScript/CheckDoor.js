@@ -2,10 +2,6 @@ function CheckDoor() {
     for (var i = 0; i < Doors.length; i++) {
         if (sprite.x >= Doors[i].x && sprite.x <= Doors[i].x + Doors[i].width &&
             sprite.y >= Doors[i].y && sprite.y <= Doors[i].y + Doors[i].height) {
-            if (mousedowner != -1) {
-                clearInterval(mousedowner);
-                mousedowner = -1;
-            }
             switch (player.Map) {
                 case "Start":
                     if (Doors[i].NESW == "E") {

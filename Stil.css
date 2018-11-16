@@ -177,6 +177,12 @@
        grid-gap: 1em;
        align-items: center;
    }
+   .ThreeColumn {
+    display: grid;
+    grid-template-columns: 1fr 0.1fr 1fr;
+    grid-gap: 0.1em;
+    align-items: center;
+}
 
    div.Building {
        background-color: rgb(235, 235, 228);
@@ -245,6 +251,12 @@
        border-radius: 5px;
        background-color: rgb(235, 235, 228);
    }
+   @media screen and (max-height:600px) {
+    #page2 {
+        height: 95%;
+        overflow: auto;
+    }
+}
 
    #page2>div {
        text-align: center;
@@ -324,12 +336,20 @@
        width: 600px;
        max-width: 50%;
        height: auto;
-       padding: 10px;
+       padding: 1em;
        border: 1px solid black;
        border-radius: 5px;
        background-color: rgb(235, 235, 228);
        text-align: center;
        overflow: auto;
+   }
+   @media screen and (max-height:800px) {
+    div.Options {
+        max-width: 95%;
+        padding: 0;
+        height: 95%;
+        overflow: auto;
+    }
    }
 
    #LogLength {
@@ -465,12 +485,15 @@
        grid-gap: 1em 0;
        width: 1400px;
        max-width: 95%;
+       max-height: 90%;
        padding: 2em;
        text-align: center;
        border-radius: 5px;
        border: 2px solid black;
        background-color: rgb(192, 189, 192);
        justify-items: center;
+       overflow: auto;
+
        -webkit-user-select: none;
        -moz-user-select: none;
        -ms-user-select: none;
@@ -496,6 +519,22 @@
        justify-items: center;
    }
 
+   div.PlayerSex {
+       border-radius: 60px;
+       grid-area: b;
+       width: 100%;
+       padding: 0 0.5em;
+       overflow: auto;
+   }
+
+   div.EnemySex {
+       border-radius: 60px;
+       grid-area: d;
+       width: 100%;
+       padding: 0 0.5em;
+       overflow: auto;
+   }
+
    @media screen and (max-height: 1000px) {
        div.AfterBattleImg {
            height: 90%;
@@ -512,7 +551,6 @@
            grid-template: "b c c d"
                "e e e e";
            grid-template-columns: repeat(4, 1fr);
-
        }
 
        div.AfterBattleImg>h1 {
@@ -521,6 +559,14 @@
 
        div.AfterBattle>h1 {
            display: none;
+       }
+
+       div.PlayerSex {
+           height: 68vh;
+       }
+
+       div.EnemySex {
+           height: 68vh;
        }
    }
 
@@ -534,25 +580,9 @@
        width: 70%;
        box-shadow: 0 0 1px 1px black;
        border-radius: 15px;
-       padding: 0.5em;
+       padding: 0.1em;
        background-color: rgb(230, 230, 230);
        grid-area: c;
-   }
-
-   div.PlayerSex {
-       border-radius: 60px;
-       grid-area: b;
-       width: 100%;
-       padding: 0 1em;
-       overflow: auto;
-   }
-
-   div.EnemySex {
-       border-radius: 60px;
-       grid-area: d;
-       width: 100%;
-       padding: 0 1em;
-       overflow: auto;
    }
 
    #DrainMenu {
@@ -677,12 +707,12 @@
        text-align: center;
    }
 
-   @media (max-height: 500px) {
+   @media (max-height: 600px) {
 
        input[type=text],
        select {
-           padding: 0.4vh;
-           margin: 0.5vh;
+           padding: 0.2em;
+           margin: 0;
        }
    }
 
@@ -766,7 +796,7 @@
        max-width: 90%;
        min-height: 300px;
        height: auto;
-       max-height: 90%;
+       max-height: 92%;
        text-align: center;
        padding: 1em;
    }
@@ -776,6 +806,7 @@
        grid-template-columns: 1fr 1fr;
        grid-gap: 1em;
        overflow: auto;
+       max-height: 60vh;
    }
 
    #InventoryBag>div {
@@ -784,12 +815,36 @@
        min-height: 30px;
    }
 
+   #InventoryBag>div>p {
+       display: inline-block;
+   }
+
    #InventoryBag>div>input[type=button] {
-       font-size: 0.6em;
        width: 15%;
        height: 100%;
        float: right;
-       margin: 0 1em;
+       margin: 0 0.1em;
+   }
+
+   @media screen and (max-height: 500px) {
+       #InventoryBag>div {
+           border: 1px solid black;
+           padding: 0;
+           height: auto;
+       }
+
+       #InventoryBag>div>p {
+           display: block;
+           padding: 0;
+           margin: 0;
+       }
+
+       #InventoryBag>div>input[type=button] {
+           width: 33%;
+           height: auto;
+           margin: 0;
+           padding: 0;
+       }
    }
 
    #VoreButtons {
@@ -810,11 +865,13 @@
    #ChildrenMenu {
        height: auto;
        width: 50%;
+       height: auto;
        background-color: rgb(235, 235, 228);
        border: 2px solid black;
        border-radius: 5px;
        text-align: center;
        padding: 0.5em;
+       overflow: auto;
    }
 
    #ChildCorner {

@@ -1,59 +1,50 @@
 function DrainChangesEnemy(eold, ecurrent) {
-    var b = " ";
-    switch (CheckGender(eold)) {
-        case "dickgirl":
-            if (eold.Boobies[0].Size > ecurrent.Boobies[0].Size) {
-                b = "You see their breasts shrinking."
+    var b = "";
+    if (eold.Dicks.length > ecurrent.Dicks.length) {
+        if (ecurrent.Dicks.length < 1) {
+            b = "You see their dick shrinking completely into their body, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
+        } else {
+            b = "They lost a dick"
+        }
+    } else if (ecurrent.Dicks.length > 0) {
+        for (var e = 0; e < eold.Dicks.length; e++) {
+            if (Math.round(eold.Dicks[e].Size) > Math.round(ecurrent.Dicks[e].Size)) {
+                b = "You see their dick shrinking." //Need to add what dick e.g. their second dick shrinks etc
+            } else if (Math.round(eold.Dicks[e].Size) > Math.round(ecurrent.Dicks[e].Size)) {
+                b = "You see their dick growing."
             }
-        case "male":
-            if (ecurrent.Dicks.length > 0) {
-                if (eold.Dicks[0].Size > ecurrent.Dicks[0].Size) {
-                    b = "You see their dick shrinking."
-                }
-            } else {
-                b = "You see their dick shrinking completely into their body, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
+        }
+    }
+    if (eold.Boobies.length > ecurrent.Boobies.length) {
+        b += "<br>They loost a breast row";
+    } else {
+        for (var e = 0; e < eold.Boobies.length; e++) {
+            if (eold.Boobies[e].Size > ecurrent.Boobies[e].Size) {
+                b += "<br>You see their breasts shrinking."
+            } else if (eold.Boobies[e].Size < ecurrent.Boobies[e].Size) {
+                b += "<br>You see their breasts growing."
             }
-            break;
-        case "cuntboy":
-        case "female":
-            if (ecurrent.Pussies.length > 0) {
-                if (eold.Pussies[0].Size > ecurrent.Pussies[0].Size && eold.Boobies[0].Size > ecurrent.Boobies[0].Size) {
-                    b = "You see their breasts shrinking and feel their pussy tightening."
-                } else if (eold.Pussies[0].Size > ecurrent.Pussies[0].Size) {
-                    b = "You feel their pussy tightening."
-                } else if (eold.Boobies[0].Size > ecurrent.Boobies[0].Size) {
-                    b = "You see their breasts shrinking."
-                }
-            } else {
-                b = "You see their pussy closing completely and disappear, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
+        }
+    }
+    if (eold.Pussies.length > ecurrent.Pussies.length) {
+        if (ecurrent.Pussies.length < 1) {
+            b += "<br>You see their pussy closing completely and disappear, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
+        } else {
+            b += "<br>They a lost a pussy."
+        }
+    } else if (ecurrent.Pussies.length > 0) {
+        for (var e = 0; e < eold.Pussies.length; e++) {
+            if (eold.Pussies[e].Size > ecurrent.Pussies[e].Size) {
+                b += "You feel their pussy tightening."
+            } else if (eold.Pussies[e].Size < ecurrent.Pussies[e].Size) {
+                b += "You feel their pussy growing." //Need better word/phrase than growing
             }
-            break;
-        case "hermaphrodite":
-            if (ecurrent.Dicks.length > 0) {
-                if (eold.Dicks[0].Size > ecurrent.Dicks[0].Size) {
-                    b = "You see their dick shrinking."
-                }
-            } else {
-                b = "You see their dick shrinking completely into their body, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
-            }
-            if (ecurrent.Pussies.length > 0) {
-                if (eold.Pussies[0].Size > ecurrent.Pussies[0].Size && eold.Boobies[0].Size > ecurrent.Boobies[0].Size) {
-                    b = "You see their breasts shrinking and feel their pussy tightening."
-                } else if (eold.Pussies[0].Size > ecurrent.Pussies[0].Size) {
-                    b = "You feel their pussy tightening."
-                } else if (eold.Boobies[0].Size > ecurrent.Boobies[0].Size) {
-                    b = "You see their breasts shrinking."
-                }
-            } else {
-                b = "You see their pussy closing completely and disappear, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
-            }
-            break;
-        default:
-            b = " "
+        }
     }
     return b;
 }
 
+//Need to do same for player
 function DrainChanges(old, current, eold, ecurrent) {
     var a = " ";
     var b = " ";

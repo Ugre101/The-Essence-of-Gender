@@ -57,7 +57,7 @@
             for (var e of player.Boobies) {
                 e.MilkRate++;
                 if (false) {
-                    // if milkrate is over certain value say stuff like wow gogly amounts etc...
+                    // if milkrate is over certain value say stuff like wow godly amounts etc...
                 }
             }
             document.getElementById("FarmBarnText").innerHTML = "Your breasts milk production increases."
