@@ -44,14 +44,13 @@ function EssenceCheck(who) {
             }
             who.Dicks.push(Dick);
         } else if (who.Dicks.length > 0) {
-            var dicktotal = 0;
             for (var e = 0; e < who.Dicks.length; e++) {
                 if (who.hasOwnProperty("SecondRace")) {
                     who.Dicks[e].Type = who.SecondRace;
                 } else {
                     who.Dicks[e].Type = who.Race;
                 }
-                who.Dicks[e].Size = Math.min(who.Height/3, Math.sqrt(who.Masc / (e + 1)) * GrowthScale(who));
+                who.Dicks[e].Size = Math.min(who.Height / 3, Math.sqrt(who.Masc / (e + 1)) * GrowthScale(who));
                 //    who.Dicks[e].Size = Math.min(who.Height / 3, Math.max(who.Masc / 30 * GrowthScale(who) - dicktotal, who.Height * 0.03));
                 if (e == who.Dicks.length - 1 && who.Dicks[e].Size > who.Height / 4 && Settings.MaxLimbs.MaxDicks > e) {
                     var Dick = {
@@ -80,15 +79,14 @@ function EssenceCheck(who) {
             }
             who.Balls.push(Ball);
         } else if (who.Balls.length > 0) {
-            var ballstotal = 0;
             for (var e = 0; e < who.Balls.length; e++) {
                 if (who.hasOwnProperty("SecondRace")) {
                     who.Balls[e].Type = who.SecondRace;
                 } else {
                     who.Balls[e].Type = who.Race;
                 }
-                who.Balls[e].Size = Math.min(who.Height / 4, Math.max(who.Masc / 50 * GrowthScale(who) - ballstotal, who.Height * 0.02));
-                if (e == who.Balls.length - 1 && who.Masc / 50 - ballstotal > who.Height / 3 && Settings.MaxLimbs.MaxBalls > e) {
+                who.Balls[e].Size = Math.min(who.Height / 4, Math.sqrt(who.Masc / (e + 2)) * GrowthScale(who));
+                if (e == who.Balls.length - 1 && who.Balls[e].Size > who.Height / 4 && Settings.MaxLimbs.MaxBalls > e) {
                     var Ball = {
                         Size: 2,
                         Type: who.Race,
@@ -99,10 +97,8 @@ function EssenceCheck(who) {
                     }
                     who.Balls.push(Ball);
                 }
-                if (who.Masc / 50 - ballstotal < 0 || e >= Settings.MaxLimbs.MaxBalls) {
+                if (Math.sqrt(who.Masc / (e + 2)) < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxBalls) {
                     who.Balls.pop();
-                } else {
-                    ballstotal += who.Balls[e].Size;
                 }
             }
         }

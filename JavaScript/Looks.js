@@ -37,14 +37,29 @@ function BallLook(who) {
         var balls = "";
         for (var b = 0; b < who.Balls.length; b++) {
             balls += IntToOne(b) + "pair of " + CmToInch(who.Balls[b].Size) + " wide balls, ";
-			if(who.Balls[b].Cum / 1000 > 1) {
-            balls += "filled with " + (who.Balls[b].Cum / 1000).toFixed(2) + " liters of cum";
-			}
-			else balls += "filled with " + who.Balls[b].Cum.toFixed(0) + "mL of cum";
+            balls += Filled(who.Balls[b]) + " cum";
         }
         return balls + "<br><br>";
     } else {
         return "";
+    }
+}
+function Filled(what) {
+    return "filled with "+LToGal(what.Cum/1000)
+    var Procent = what.Cum/what.CumMax;
+    console.log(Procent);
+    if (Procent > 0.9) {
+        return "engorged with"
+    } else if (Procent > 0.5) {
+        return "filled with"
+    } else if (Procent > 0.3) {
+        return ""
+    } else if (Procent > 0.1){
+        return "shrunken due their emptyness"
+    } else if (Procent > 0.01){
+        return "" 
+    } else {
+        return "completely emptied"
     }
 }
 
