@@ -48,7 +48,10 @@ function LToGal(L) {
             return Math.round(L * 0.264172052) + "gallon"
         }
     } else {
-        if (L < 1) {
+        if (L < 0.1) {
+            return Math.round(L * 100) + "cl";
+        }
+        else if (L < 1) {
             return Math.round(L * 10) + "dl";
         } else {
             return Math.round(L) + "L";
