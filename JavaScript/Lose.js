@@ -56,7 +56,7 @@ function Lose(q) {
 document.getElementById("LoseSubmit").addEventListener("click", function () {
     var take = Math.round(enemies[EnemyIndex].SexSkill);
     var selectScene = SnowScenes();
-	document.getElementById("LosePlayerOrgasm").innerHTML = loseScene(false, selectScene, CheckGender(enemies[EnemyIndex]), CheckGender(player));
+	document.getElementById("LosePlayerOrgasm").innerHTML = loseScene(false, selectScene, enemies[EnemyIndex], player);
 	if(selectScene === "forcedBJ" || selectScene === "getBJ" || selectScene === "getRidden" || selectScene === "getRiddenAnal") {
 		take = Math.min(take, player.Masc);
 		player.Masc -= take;
@@ -85,7 +85,7 @@ document.getElementById("LoseSubmit").addEventListener("click", function () {
 document.getElementById("LoseStruggle").addEventListener("click", function () {
     var take = Math.round(enemies[EnemyIndex].SexSkill);
     var selectScene = SnowScenes();
-	document.getElementById("LosePlayerOrgasm").innerHTML = loseScene(true, selectScene, CheckGender(enemies[EnemyIndex]), CheckGender(player));
+	document.getElementById("LosePlayerOrgasm").innerHTML = loseScene(true, selectScene, enemies[EnemyIndex], player);
 	if(selectScene === "forcedBJ" || selectScene === "getBJ" || selectScene === "getRidden" || selectScene === "getRiddenAnal") {
 		take = Math.min(take, player.Masc);
 		player.Masc -= take;
@@ -168,50 +168,83 @@ document.getElementById("LeaveLose").addEventListener("click", function () {
 		}
 	}
 });*/
-function loseScene(struggle, selectScene, eGender, pGender)
+
+//If you lose, and your opponent drains you. Set up for other uses, and milk if it gets implemented.
+function fluid(who, what){
+	var part;
+	if(what === "Cum")
+		part = "Balls";
+	else if(what === "Milk")
+		part = "Breasts";
+	else {
+		console.log("Fluid drain error! "+what);
+		return;
+	}
+	for(var i = 0; i < who.part.length; i++)
+		who.part[i].what = 0;
+}
+
+function loseScene(struggle, selectScene, Enemy, Player)
 {
+	var enemyCum;
+	var playerCum;
+	if(Enemy.hasOwnProperty("Balls"))
+	{
+		for(var i = 0; i < Enemy.Balls.length; i++)
+			enemyCum += Enemy.Balls[i].Size * 40;
+		enemyCum = LToGal(enemyCum);
+	}
+	
+	if(Player.hasOwnProperty("Balls"))
+	{
+		for(var i = 0; i < Player.Balls.length; i++)
+			playerCum += Player.Balls[0].Cum;
+		playerCum = LToGal(playerCum);
+	}
+	
 	var returnText;
 	if(struggle) {
 		switch(selectScene) {
 			case "forcedBJ":
-				returnText = "They force your head to their crotch, and start thrusting their dick into you. Despite your intentions, your body betrays you and orgasms as they cum down your throat."
+				returnText = Enemy.FirstName +" forces your head to their crotch, and start thrusting their "+ Enemy.Dicks[0] +" into your mouth. Despite your intentions, your body betrays you and orgasms as they cum "+ enemyCum +" down your throat."
 				break;
 			case "forcedCunn":
-				returnText = "They force your head to their crotch and force you to start eating them out. "
-				if(eGender === "hermaphrodite")
-					returnText += "Their balls cover your nose, forcing their musky scent into your nose. "
+				returnText = Enemy.FirstName +" forces your head to their crotch, forcing you to start eating them out. "
+				if(CheckGender(Enemy) === "hermaphrodite")
+					returnText += "Their "+Enemy.Balls[0].Size+"cm balls cover your face, forcing their musky scent into your nose. "
 				returnText += "Despite your intentions, your body betrays you and orgasms as they cover your face in girlcum."
-				if(eGender === "hermaphrodite")
+				if(CheckGender(Enemy) === "hermaphrodite")
 					returnText += "<br>You feel their balls twitch on your face, shooting cum over your back, eventually dripping into your hair."
 				break;
 			case "forcedRim":
-				if(eGender != "doll")
-					returnText = "Despite having more sensitive erogenous zones, they want to maximize your humiliation by forcing you to eat their ass out. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
-				else if(eGender === "doll" && player.Dicks.length <= 0)
-					returnText = "With no other way to get pleasure, they force you to the ground and sit on your face, giving you no other option than to eat their ass out for pleasure. "
+				if(CheckGender(Enemy) != "doll")
+					returnText = "Despite having more sensitive erogenous zones, "+Enemy.FirstName +" wants to maximize your humiliation by forcing you to eat their ass out. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
+				else if(CheckGender(Enemy) === "doll" && player.Dicks.length <= 0)
+					returnText = "With no other way to get pleasure, "+Enemy.FirstName +" forces you to the ground and sit on your face, giving you no other option than to eat their ass out for pleasure. "
 				else 
-					returnText = "Rather that let you use your dick on their only hole, they decide to force you to use your tongue. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
+					returnText = "Rather that let you use your dick on their only hole, "+Enemy.FirstName +" decides to force you to use your tongue. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
 				returnText += "<br>Despite your humiliating position, you find your body responding, reaching orgasm as you feel them shudder above you."
 				break;
 			case "getBJ":
-				returnText = "Forcing you onto your back, they expertly massage your cock and balls, quickly bringing you erect. "
+				returnText = "Forcing you onto your back, "+Enemy.FirstName+" expertly massages your cock and balls, quickly bringing you erect. "
 				if(player.Pussies.length > 0)
 					returnText += "They even tease your pussy a bit, all to make you cum quicker. "
-				returnText += "<br>Unable to put up more than a feeble struggle, you find yourself cumming down their throat seconds after their lips meet your dick's head."
+				returnText += "<br>Unable to put up more than a feeble struggle, you find yourself cumming "+playerCum+" down their throat seconds after their lips meet your dick's head.";
+				fluid(player,Cum);
 				break;
 			case "getCunn":
-				returnText = "Forcing you onto your back, they expertly finger your pussy, quickly making you wet. "
+				returnText = "Forcing you onto your back, "+Enemy.FirstName+" expertly fingers your pussy, quickly making you wet. "
 				if(player.Balls.length > 0)
 					returnText += "They even tease your balls a bit, all to make you cum quicker. "
 				returnText += "<br>Unable to put up more than a feeble struggle, you find yourself cumming around their tongue seconds after it penetrates your lower lips."
 				break;
 			case "getRim":
-				if (pGender === "doll" && enemies[EnemyIndex].Dicks.length > 0)
+				if (CheckGender(Player) === "doll" && enemies[EnemyIndex].Dicks.length > 0)
 					returnText = "Rather than use their penis on your ass, they'd rather find a pussy instead. "
-				else if (pGender != "doll")
+				else if (CheckGender(Player) != "doll")
 					returnText = "Rather than pleasuring your more sensitive organs, they've decided to humiliate you instead. "
 				returnText += "<br>Forcing you onto your stomach, your enemy repeatedly smacks your ass, bringing a blush to both sets of cheeks. Despite your humiliation (and your ass getting sore), you soon orgasm"
-				if(pGender === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")
 					returnText += ", spurting cum from your dick onto your belly and soaking your thighs."
 				else if(player.Dicks.length > 0)
 					returnText += ", spurting cum from your dick onto your belly."
@@ -222,7 +255,7 @@ function loseScene(struggle, selectScene, eGender, pGender)
 				break;
 			case "getFucked":
 				returnText = "Forcing you on your back, your enemy fondles your clit just enough for your body to betray you and your pussy to get wet. "
-				if(pGender === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")
 					returnText += "Moving your balls to the side, they thrust in to you."
 				else
 					returnText += "Spreading your lips with one hand, they thrust into you."
@@ -241,10 +274,10 @@ function loseScene(struggle, selectScene, eGender, pGender)
 				break;
 			case "getFuckedDoggy":
 				returnText = "Your enemy forces your beaten body to its hands and knees; you can't even muster the energy to collapse. Your body, however, has other plans, and you feel your pussy start to drip. Your opponent wastes little time, and quickly gets into position, soon thrusting deeply into you. "
-				if(pGender === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")
 					returnText += "With every thrust, you feel their balls tapping into yours, sending little bursts of unintended pleasure through your dick. "
 				returnText += "<br>It doesn't take long for you to cum, your pussy's walls quivering around their dick. "
-				if(pGender === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")
 					returnText += "Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
 				returnText += "Your enemy cums soon after, quickly filling your pussy and collapses onto your back, spent. "
 				/*if(player.Pregnant.Babies.length > 0)
@@ -264,7 +297,7 @@ function loseScene(struggle, selectScene, eGender, pGender)
 				if(player.Pussies.length > 0)
 					returnText += "Your body, however, has other plans, and you feel your pussy start to drip. Even with such a clear signal, though, your enemy positions themselves a little higher. "
 				returnText += "Having gotten into position, your enemy spreads your ass cheeks, and slowly works their dick into your bowels. Unable to respond, you feel your ass getting stretched. "
-				if(pGender === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")
 					returnText += "With every thrust, you feel their balls tapping your balls and clit, sending little bursts of unintended pleasure through your organs.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
 				else if (player.Pussies.length > 0)
 					returnText += "With every thrust, you feel their balls tapping your clit, sending little bursts of unintended pleasure through your pussy.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. "
@@ -343,16 +376,16 @@ function loseScene(struggle, selectScene, eGender, pGender)
 				break;
 			case "forcedCunn":
 				returnText = "They force your head to their crotch and you dive in, eagerly eating them out. "
-				if(eGender === "hermaphrodite")
+				if(CheckGender(Enemy) === "hermaphrodite")
 					returnText += "Their balls cover your nose, forcing their musky scent into your nose. "
 				returnText += "As they cover your face in girlcum, your body orgasms, proud of its job. "
-				if(eGender === "hermaphrodite")
+				if(CheckGender(Enemy) === "hermaphrodite")
 					returnText += "<br>As they cover your face, you feel their balls twitch, shooting cum over your back. As they wind down, their cum drips into your hair, arousing you further."
 				break;
 			case "forcedRim":
-				if(eGender != "doll")
+				if(CheckGender(Enemy) != "doll")
 					returnText = "Despite having more sensitive erogenous zones, they want to maximize your humiliation by forcing you to eat their ass out. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
-				else if(eGender === "doll" && player.Dicks.length <= 0)
+				else if(CheckGender(Enemy) === "doll" && player.Dicks.length <= 0)
 					returnText = "With no other way to get pleasure, they force you to the ground and sit on your face, giving you no other option than to eat their ass out. "
 				else 
 					returnText = "Rather that let you use your dick on their only hole, they decide to force you to use your tongue. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
@@ -360,22 +393,22 @@ function loseScene(struggle, selectScene, eGender, pGender)
 				break;
 			case "getBJ":
 				returnText = "Motioning you to lie down on your back, they expertly massage your cock and balls, quickly bringing you erect. "
-				if(pGender === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")
 					returnText += "They even tease your pussy a bit, adding to your growing pleasure. "
 				returnText += "<br>Eagerly responding to their actions, you find yourself cumming before they start blowing you, coating your stomach with your seed. Before you can go soft, though, they wrap their lips around your dick, giving you immense pleasure. Seconds later, you cum again, this time down their throat."
 				break;
 			case "getCunn":
 				returnText = "Motioning you to lie down on your back, they expertly finger your pussy, quickly making you wet. "
-				if(pGender === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")
 					returnText += "They even tease your balls a bit, adding to your growing pleasure. "
 				returnText += "<br>Eagerly responding to their actions, you find yourself cumming as their tongue approachess your cunt. "
-				if(pGender === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")
 					returnText += "<br>Your dick, refusing to be left out, coats your stomach with your seed. "
 				returnText += "Before you can recover, though, they start eating you out, quickly driving you to several more orgasms."
 				break;
 			case "getRim":
 				returnText = "<br>Motioning you onto your stomach, your enemy massages your butt cheeks, bringing you a surprising amount of pleasure. As they stick a finger up your ass, you orgasm"
-				if(pGender === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")
 					returnText += ", spurting cum from your dick onto your belly and soaking your thighs."
 				else if(player.Dicks.length > 0)
 					returnText += ", spurting cum from your dick onto your belly."
@@ -386,7 +419,7 @@ function loseScene(struggle, selectScene, eGender, pGender)
 				break;
 			case "getFucked":
 				returnText = "Motioning you onto your back, your enemy fondles your clit and lower lips, giving you a mini-orgasm. Appreciating your lack of resistance, they tenderly move above you. "
-				if(pGender === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")
 					returnText += "Shifting your balls to the side, they gently ease in to you."
 				else
 					returnText += "Spreading your lips with one hand, they gently ease in to you."
@@ -405,12 +438,12 @@ function loseScene(struggle, selectScene, eGender, pGender)
 				break;
 			case "getFuckedDoggy":
 				returnText = "Your enemy eases your beaten body to its hands and knees, making sure you can keep your balance. Your body instincively responds to the position, and you feel your pussy start to drip. Your opponent teases your cunt, causing your body to shudder, before getting into position and thrusting deeply into you. "
-				if(pGender === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")
 					returnText += "With every thrust, you feel their balls tapping into yours, sending little bursts of unintended pleasure through your dick. "
 				if(player.Boobies[0].size > 3) 
 					returnText += "Bending over your back, they reach down and fondle your nipples, not stopping their thrusts. You let out a low moan, your pleasure mounting ever higher. "
 				returnText += "<br>It doesn't take long for you to cum, your pussy's walls quivering around their dick. "
-				if(pGender === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")
 					returnText += "Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
 				returnText += "Your enemy cums soon after, quickly filling your pussy and collapses onto your back, spent. "
 				/*if(player.Pregnant.Babies.length > 0)
@@ -434,7 +467,7 @@ function loseScene(struggle, selectScene, eGender, pGender)
 				returnText += "Easing forwards, your enemy spreads your ass cheeks, and slowly works their dick into your bowels. Letting out a moan, you feel your ass getting stretched. "
 				if(player.Boobies[0].size > 3) 
 					returnText += "Bending over your back, they reach down and fondle your nipples, not stopping their thrusts. You let out a low moan, your pleasure mounting ever higher. "
-				if(pGender === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")
 					returnText += "With every thrust, you feel their balls tapping your balls and clit, sending little bursts of delicious pleasure through your organs.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
 				else if (player.Pussies.length > 0)
 					returnText += "With every thrust, you feel their balls tapping your clit, sending little bursts of delicious pleasure through your pussy.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. "

@@ -47,6 +47,26 @@ function LToGal(L) {
         } else {
             return Math.round(L * 0.264172052) + "gallon"
         }
+	}
+	else if(Settings.Approx) {
+		if(L < 10)
+			return "an almost-unnoticable amount"
+		else if(L < 50)
+			return "a few sprays"
+		else if(L < 100)
+			return "a decent load"
+		else if(L < 250)
+			return "a cupful"
+		else if(L < 750)
+			return "cupfuls"
+		else if(L < 2000)
+			return "a small bucket's worth"
+		else if(L <= 5000)
+			return "a bucket load"
+		else if(L > 5000)
+			return "a torrent of"
+		else
+			return "Snow's overfilled! (Error: " + L + ")";
     } else {
         if (L < 0.1) {
             return Math.round(L * 100) + "cl";

@@ -100,7 +100,8 @@
             AnalExp: 0,
             Breast: [],
             BreastExp: 0
-        }
+        },
+		cumGround: 0
     };
 
     // House variable
@@ -163,6 +164,7 @@
             ServeFemi: true
         },
         Inch: false,
+		Approx: false,
         VoreSettings: {
             StomachDigestion: true,
             CumTF: true,

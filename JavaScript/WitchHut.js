@@ -15,6 +15,24 @@ document.getElementById("ElfTF").addEventListener("click", function () {
         document.getElementById("WitchHutText").innerHTML = "You can't afford the potion";
     }
 });
+document.getElementById("PerkUp").addEventListener("click", function () {
+    if (player.Gold >= 1000) {
+        player.Gold -= 1000;
+        player.PerkPoints++;
+        document.getElementById("WitchHutText").innerHTML = "You eat the pill, and hear something like a bell ringing in your ears.";
+    } else {
+        document.getElementById("WitchHutText").innerHTML = "You can't afford the pill, and you don't have any emeralds to barter with.";
+    }
+});
+document.getElementById("VoreUp").addEventListener("click", function () {
+    if (player.Gold >= 1000) {
+        player.Gold -= 1000;
+		player.Vore.VorePoints++;
+        document.getElementById("WitchHutText").innerHTML = "You eat the pill, and get a strange feeling running through your entire body.";
+    } else {
+        document.getElementById("WitchHutText").innerHTML = "You can't afford the pill, and it looks so tasty...";
+    }
+});
 document.getElementById("WitchHut").addEventListener("mouseover", function (e) {
     document.getElementById("WitchHutText").innerHTML = e.target.title;
 });
