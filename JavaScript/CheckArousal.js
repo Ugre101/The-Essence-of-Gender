@@ -62,7 +62,7 @@ function CheckArousal() {
             var cum = Cumming(player);
             document.getElementById("SexText").innerHTML = "You reach down grip firmly on your opponent’s head while giving a bestial grunt as you approach your climax. You ram your cock as far as you can into " + enemies[EnemyIndex].FirstName + "'s throat."
             if (player.Balls.length > 0) {
-                document.getElementById("SexText").innerHTML += "Your balls tense up as you pump your ("+cum+"L) load down their gullet. You continue to thrust desperately, holding your opponent tight as you empty your sac into them. You kneel over your foe's head making small jabs into their mouth as each wave of cum is sent to their stomach."
+                document.getElementById("SexText").innerHTML += "Your balls tense up as you pump your (" + cum + "L) load down their gullet. You continue to thrust desperately, holding your opponent tight as you empty your sac into them. You kneel over your foe's head making small jabs into their mouth as each wave of cum is sent to their stomach."
             }
             document.getElementById("SexText").innerHTML += "You stand there for a while enjoying your afterglow before you pull out causing your opponent to fall over gasp for air. You smile deviously as you ponder how you should use them next";
             ee.Cumin.Stomach += cum;
@@ -94,7 +94,7 @@ function CheckArousal() {
         CheckArousal();
     }
 
-    document.getElementById("PlayerLooks").innerHTML = BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
+    //document.getElementById("PlayerLooks").innerHTML = BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
     if (player.Pregnant.Babies.length > 0) {
         var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
         if (age < 1) {
@@ -104,7 +104,7 @@ function CheckArousal() {
         }
         document.getElementById("PlayerLooks").innerHTML += "<br>" + age;
     }
-    document.getElementById("EnemyLooks").innerHTML = BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
+    //document.getElementById("EnemyLooks").innerHTML = BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
     if (ee.hasOwnProperty("Pregnant")) {
         if (ee.Pregnant.Status) {
             document.getElementById("EnemyLooks").innerHTML += "<br>Pregnant";
@@ -187,10 +187,57 @@ function Cumming(who) {
     }
 }
 
-document.getElementById("EnemySex").addEventListener("mouseover", function () {
+document.getElementById("EnemySex").addEventListener("click", function () {
+    console.log(document.getElementById("EnemyKinda").style.display)
+    console.log(document.getElementById("EnemyKinda").style.display == 'none')
+    if (document.getElementById("EnemyKinda").style.display == 'none') {
+        document.getElementById("SexStats").innerHTML = " ";
+        document.getElementById("EnemyKinda").style.display = 'block';
+        document.getElementById("EnemyExact").style.display = 'none';
+        document.getElementById("EnemyExact").innerHTML = "";
+    } else {
+        var ee = enemies[EnemyIndex];
+        document.getElementById("SexStats").innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
+        document.getElementById("EnemyKinda").style.display = 'none';
+        document.getElementById("EnemyExact").style.display = 'block';
+        document.getElementById("EnemyExact").innerHTML = "<p>" + ExactBoobLook(ee) + ExactPussyLook(ee) + ExactDickLook(ee) + ExactBallLook(ee) +
+            "</p>";
+    }
+});
+document.getElementById("EnemySex").addEventListener("mouseenter", function () {
     var ee = enemies[EnemyIndex];
     document.getElementById("SexStats").innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
+    document.getElementById("EnemyKinda").style.display = 'none';
+    document.getElementById("EnemyExact").style.display = 'block';
+    document.getElementById("EnemyExact").innerHTML = "<p>" + ExactBoobLook(ee) + ExactPussyLook(ee) + ExactDickLook(ee) + ExactBallLook(ee) +
+        "</p>";
 });
-document.getElementById("EnemySex").addEventListener("mouseout", function () {
+document.getElementById("EnemySex").addEventListener("mouseleave", function () {
     document.getElementById("SexStats").innerHTML = " ";
+    document.getElementById("EnemyKinda").style.display = 'block';
+    document.getElementById("EnemyExact").style.display = 'none';
+    document.getElementById("EnemyExact").innerHTML = "";
+});
+document.getElementById("PlayerSex").addEventListener("click", function () {
+    if (document.getElementById("playerKinda").style.display == 'none') {
+        document.getElementById("playerKinda").style.display = 'block';
+        document.getElementById("playerExact").style.display = 'none';
+        document.getElementById("playerExact").innerHTML = "";
+    } else {    
+        document.getElementById("playerKinda").style.display = 'none';
+        document.getElementById("playerExact").style.display = 'block';
+        document.getElementById("playerExact").innerHTML = "<p>" + ExactBoobLook(player) + ExactPussyLook(player) + ExactDickLook(player) + ExactBallLook(player) +
+            "</p>";
+    }
+});
+document.getElementById("PlayerSex").addEventListener("mouseenter", function () {
+    document.getElementById("playerKinda").style.display = 'none';
+    document.getElementById("playerExact").style.display = 'block';
+    document.getElementById("playerExact").innerHTML = "<p>" + ExactBoobLook(player) + ExactPussyLook(player) + ExactDickLook(player) + ExactBallLook(player) +
+        "</p>";
+});
+document.getElementById("PlayerSex").addEventListener("mouseleave", function () {
+    document.getElementById("playerKinda").style.display = 'block';
+    document.getElementById("playerExact").style.display = 'none';
+    document.getElementById("playerExact").innerHTML = "";
 });

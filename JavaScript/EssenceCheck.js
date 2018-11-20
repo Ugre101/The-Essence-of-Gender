@@ -1,6 +1,9 @@
 function GrowthScale(who) {
     return (who.Height / 160)
 } // I put this a function to make it easier to trial different formulas.
+function OrganSize(who, Essence, MaxDiv, e = 0, EssDiv = 1) {
+    return Math.min(who.Height / MaxDiv, Math.sqrt(who[Essence] / EssDiv * GrowthScale(who)) - e * 18 * GrowthScale(who))
+}
 
 function EssenceCheck(who) {
     if (Settings.BalanceParts) {
@@ -38,7 +41,7 @@ function EssenceCheck(who) {
             who.Dicks.pop();
         } else if (who.Masc >= 30 && who.Dicks.length == 0) {
             var Dick = {
-                Size: Math.max(player.Height * 0.03, who.Masc / 30 * GrowthScale(who)),
+                Size: OrganSize(who, "Masc", 3),
                 Type: who.Race,
                 Virgin: true
             }
@@ -50,17 +53,16 @@ function EssenceCheck(who) {
                 } else {
                     who.Dicks[e].Type = who.Race;
                 }
-                who.Dicks[e].Size = Math.min(who.Height / 3, Math.sqrt(who.Masc / (e + 1)) * GrowthScale(who));
-                //    who.Dicks[e].Size = Math.min(who.Height / 3, Math.max(who.Masc / 30 * GrowthScale(who) - dicktotal, who.Height * 0.03));
-                if (e == who.Dicks.length - 1 && who.Dicks[e].Size > who.Height / 4 && Settings.MaxLimbs.MaxDicks > e) {
+                who.Dicks[e].Size = OrganSize(who, "Masc", 3, e);
+                if (e == who.Dicks.length - 1 && who.Dicks[e].Size > who.Height / 5 && Settings.MaxLimbs.MaxDicks > e) {
                     var Dick = {
-                        Size: 5,
+                        Size: OrganSize(who, "Masc", 3, e + 1),
                         Type: who.Race,
                         Virgin: true
                     }
                     who.Dicks.push(Dick);
                 }
-                if (Math.sqrt(who.Masc / (e + 1)) < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxDicks) {
+                if (who.Dicks[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxDicks) {
                     who.Dicks.pop();
                 }
             }
@@ -70,10 +72,10 @@ function EssenceCheck(who) {
             who.Balls.pop();
         } else if (who.Masc >= 50 && who.Balls.length == 0) {
             var Ball = {
-                Size: who.Masc / 50 * GrowthScale(who),
+                Size: OrganSize(who, "Masc", 4, 0, 2),
                 Type: who.Race,
-                CumMax: 1 / 3 * Math.PI * Math.pow(who.Masc / 50 * GrowthScale(who), 3),
-                Cum: 1 / 6 * Math.PI * Math.pow(who.Masc / 50, 3),
+                CumMax: 1 / 3 * Math.PI * Math.pow(OrganSize(who, "Masc", 4, 0, 2), 3),
+                Cum: 1 / 6 * Math.PI * Math.pow(OrganSize(who, "Masc", 4, 0, 2), 3),
                 CumRate: 0,
                 CumBaseRate: 0.5
             }
@@ -85,19 +87,19 @@ function EssenceCheck(who) {
                 } else {
                     who.Balls[e].Type = who.Race;
                 }
-                who.Balls[e].Size = Math.min(who.Height / 4, Math.sqrt(who.Masc / (e + 2)) * GrowthScale(who));
-                if (e == who.Balls.length - 1 && who.Balls[e].Size > who.Height / 4 && Settings.MaxLimbs.MaxBalls > e) {
+                who.Balls[e].Size = OrganSize(who, "Masc", 4, e, 2)
+                if (e == who.Balls.length - 1 && who.Balls[e].Size > who.Height / 6 && Settings.MaxLimbs.MaxBalls > e) {
                     var Ball = {
-                        Size: 2,
+                        Size: OrganSize(who, "Masc", 4, e + 1, 2),
                         Type: who.Race,
-                        CumMax: 2,
-                        Cum: 0,
+                        CumMax: 1 / 3 * Math.PI * Math.pow(OrganSize(who, "Masc", 4, e + 1, 2), 3),
+                        Cum: 1 / 7 * Math.PI * Math.pow(OrganSize(who, "Masc", 4, e + 1, 2), 3),
                         CumRate: 0,
                         CumBaseRate: 0.5
                     }
                     who.Balls.push(Ball);
                 }
-                if (Math.sqrt(who.Masc / (e + 2)) < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxBalls) {
+                if (who.Balls[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxBalls) {
                     who.Balls.pop();
                 }
             }
@@ -108,60 +110,54 @@ function EssenceCheck(who) {
             who.Boobies[0].Size = 0;
         } else if (who.Femi >= 30 && who.Pussies.length == 0) {
             var Pussy = {
-                Size: Math.max(who.Height * 0.03, who.Femi / 25 * GrowthScale(who)),
+                Size: OrganSize(who, "Femi", 3),
                 Type: who.Race,
                 Virgin: true
             }
             who.Pussies.push(Pussy);
         } else if (who.Pussies.length > 0) {
-            var pussytotal = 0;
             for (var e = 0; e < who.Pussies.length; e++) {
                 if (who.hasOwnProperty("SecondRace")) {
                     who.Pussies[e].Type = who.SecondRace;
                 } else {
                     who.Pussies[e].Type = who.Race;
                 }
-                who.Pussies[e].Size = Math.sqrt(who.Femi) * GrowthScale(who);
-                if (e == who.Pussies.length - 1 && who.Femi / 30 - pussytotal > who.Height / 3 && Settings.MaxLimbs.MaxVaginas > e) {
+                who.Pussies[e].Size = OrganSize(who, "Femi", 3, e);
+                if (e == who.Pussies.length - 1 && who.Pussies[e].Size > who.Height / 5 && Settings.MaxLimbs.MaxVaginas > e) {
                     var Pussy = {
-                        Size: 5,
+                        Size: OrganSize(who, "Femi", 3, e + 1),
                         Type: who.Race,
                         Virgin: true
                     }
                     who.Pussies.push(Pussy);
                 }
-                if (who.Femi / 30 - pussytotal < 0 || e >= Settings.MaxLimbs.MaxVaginas) {
+                if (who.Pussies[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxVaginas) {
                     who.Pussies.pop();
-                } else {
-                    pussytotal += who.Pussies[e].Size
                 }
             }
         }
 
-        var boobtotal = 0;
         for (var e = 0; e < who.Boobies.length; e++) {
             if (who.hasOwnProperty("SecondRace")) {
                 who.Boobies[e].Type = who.SecondRace;
             } else {
                 who.Boobies[e].Type = who.Race;
             }
-            who.Boobies[e].Size = Math.min(who.Height / 3, Math.max(who.Femi / 45 * GrowthScale(who) - boobtotal, 0));
-            who.Boobies[e].MilkMax = 1 / 3 * Math.PI * Math.pow(who.Femi / 45 * GrowthScale(who), 3);
-            if (e == who.Boobies.length - 1 && who.Femi / 45 - boobtotal > who.Height / 3 && Settings.MaxLimbs.MaxBoobs > e) {
+            who.Boobies[e].Size = OrganSize(who, "Femi", 3, e)
+            who.Boobies[e].MilkMax = 1 / 3 * Math.PI * Math.pow(who.Boobies[e].Size, 3);
+            if (e == who.Boobies.length - 1 && who.Boobies[e].Size > who.Height / 5 && Settings.MaxLimbs.MaxBoobs > e) {
                 var Boob = {
-                    Size: 0,
+                    Size: OrganSize(who, "Femi", 3, e + 1),
                     Type: who.Race,
                     Milk: 0,
                     MilkBaseRate: 0,
                     MilkRate: 0,
-                    MilkMax: 0
+                    MilkMax: 1 / 3 * Math.PI * Math.pow(OrganSize(who, "Femi", 3, e + 1), 3)
                 }
                 who.Boobies.push(Boob);
             }
-            if (who.Femi / 45 - boobtotal < 0 && e > 0 || e >= Settings.MaxLimbs.MaxBoobs) {
+            if (who.Boobies.length > 1 && who.Boobies[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxBoobs) {
                 who.Boobies.pop();
-            } else {
-                boobtotal += who.Boobies[e].Size;
             }
         }
         if (who.Anal.length == 0) {

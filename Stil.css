@@ -25,8 +25,6 @@
        }
    }
 
-   /* css för att göra att texten på sidorna ser bra ut */
-
    #Fps {
        position: absolute;
        top: 0;
@@ -35,6 +33,19 @@
    canvas {
        border: 2px solid rgb(0, 0, 0);
        box-shadow: 0 0 2px 3px rgb(27, 26, 26);
+       -webkit-touch-callout: none;
+       /* iOS Safari */
+       -webkit-user-select: none;
+       /* Safari */
+       -khtml-user-select: none;
+       /* Konqueror HTML */
+       -moz-user-select: none;
+       /* Firefox */
+       -ms-user-select: none;
+       /* Internet Explorer/Edge */
+       user-select: none;
+       /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
    }
 
    #EventLog {
@@ -60,9 +71,9 @@
        box-shadow: 0 0 1px 1px black;
        border-radius: 10px 0 0 10px;
        background-color: rgb(255, 255, 255);
-       width: 91%;
-       margin: 0 0 0 1em;
-       padding: 0.5em 0.2em;
+       width: 95%;
+       margin: 0 0 0 0.5em;
+       padding: 0.5em 0.3em;
        text-align: center;
        overflow: auto;
    }
@@ -75,6 +86,12 @@
    #FluidPart {
        padding: 0 1em 1em 1em;
        text-align: center;
+   }
+
+   @media (max-height: 600px) {
+       #EventLog>h2 {
+           display: none;
+       }
    }
 
    @media (max-width: 600px) {
@@ -177,12 +194,13 @@
        grid-gap: 1em;
        align-items: center;
    }
+
    .ThreeColumn {
-    display: grid;
-    grid-template-columns: 1fr 0.1fr 1fr;
-    grid-gap: 0.1em;
-    align-items: center;
-}
+       display: grid;
+       grid-template-columns: 1fr 0.1fr 1fr;
+       grid-gap: 0.1em;
+       align-items: center;
+   }
 
    div.Building {
        background-color: rgb(235, 235, 228);
@@ -251,12 +269,13 @@
        border-radius: 5px;
        background-color: rgb(235, 235, 228);
    }
+
    @media screen and (max-height:600px) {
-    #page2 {
-        height: 95%;
-        overflow: auto;
-    }
-}
+       #page2 {
+           height: 95%;
+           overflow: auto;
+       }
+   }
 
    #page2>div {
        text-align: center;
@@ -343,13 +362,14 @@
        text-align: center;
        overflow: auto;
    }
+
    @media screen and (max-height:800px) {
-    div.Options {
-        max-width: 95%;
-        padding: 0;
-        height: 95%;
-        overflow: auto;
-    }
+       div.Options {
+           max-width: 95%;
+           padding: 0;
+           height: 95%;
+           overflow: auto;
+       }
    }
 
    #LogLength {
@@ -485,6 +505,7 @@
        grid-gap: 1em 0;
        width: 1400px;
        max-width: 95%;
+       min-height: 70%;
        max-height: 90%;
        padding: 2em;
        text-align: center;
@@ -523,6 +544,7 @@
        border-radius: 60px;
        grid-area: b;
        width: 100%;
+       height: auto;
        padding: 0 0.5em;
        overflow: auto;
    }
@@ -531,6 +553,7 @@
        border-radius: 60px;
        grid-area: d;
        width: 100%;
+       height: auto;
        padding: 0 0.5em;
        overflow: auto;
    }
@@ -560,14 +583,6 @@
        div.AfterBattle>h1 {
            display: none;
        }
-
-       div.PlayerSex {
-           height: 68vh;
-       }
-
-       div.EnemySex {
-           height: 68vh;
-       }
    }
 
    div.AfterBattleImg>img {
@@ -577,7 +592,7 @@
 
    div.SexLog {
        min-height: 100px;
-       width: 70%;
+       width: 80%;
        box-shadow: 0 0 1px 1px black;
        border-radius: 15px;
        padding: 0.1em;

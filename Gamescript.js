@@ -603,11 +603,20 @@
         }
     }
 
+    function CheckTitle(who) {
+        // Titles to seperate a herm with 30femi and 2500masc from a herm with 200femi and 200masc 
+        if (who.Masc < who.Femi) {
+            return "feminine"
+        } else if (who.Femi < who.Masc) {
+            return "masculine" // Need more titles for like ultra masculine
+        }
+    }
+
     function CheckGender(who) {
         var gender;
         if (who.Dicks.length > 0 && who.Pussies.length > 0) {
             gender = "hermaphrodite";
-        } else if (who.Dicks.length > 0 && who.Boobies[0].Size > 0) {
+        } else if (who.Dicks.length > 0 && Math.floor(who.Boobies[0].Size) > 0) {
             gender = "dickgirl";
         } else if (who.Dicks.length > 0) {
             gender = "male";
@@ -1053,19 +1062,23 @@
     };
 
 
+    //First Town
     var Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
     var Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
     var Bar = new Npc("Bar", "Bar", 14 * grid, 14 * grid, grid * 5.5, grid * 5.5, "RGB(133,94,66)")
+    // RtW
     var Gym = new Npc("Gym", "Gym", grid / 2, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
     var WitchShop = new Npc("WitchShop", "Witch shop", grid * 15, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
+    // Witch
     var WitchHut = new Npc("WitchHut", "Witch hut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
+    // Misc
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
+    var Barberer = new Npc("Barberer", "Hair salon" , grid, grid, grid * 5, grid*4, "RGB(133,94,66)")
+    // Outlaw
     var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
     // Dungeons
     var FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)");
-
-
     // Farm
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
     var FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
@@ -1235,7 +1248,6 @@
 
 
     var fps = [];
-    var timer = 0;
 
     function loop() {
         requestAnimationFrame(loop);
@@ -1246,83 +1258,68 @@
             var Thefps = fps[1] - fps[0];
             fps.pop();
             fps.pop();
-            timer++;
-            if (timer > 20) {
-                document.getElementById("Fps").innerHTML = Math.round(1000 / Thefps) + "fps";
-                timer = 0;
-            }
         }
         if (a != document.documentElement.clientHeight) {
             HemScale();
             a = document.documentElement.clientHeight
         };
 
-        switch (player.Map) {
-            case "Farm":
-            case "TempCity":
-                PaintBackground();
-                break;
-            default:
-                break;
-        }
-        CurrentMap();
         document.getElementById("StatusArea").innerHTML = "Area: " + player.Area + " and Map: " + player.Map;
-        if (enemies.length > 0) {
-            PrintEnemies();
-        };
-        if (Npcs.length > 0) {
-            PrintNpcs();
-        }
-        ctx.fillStyle = "BlueViolet";
-        ctx.fillRect(sprite.x, sprite.y, grid, grid);
 
         player.MaxHealth = player.End * 10 + player.Perks.ExtraHealth.Count * 20;
         player.MaxWillHealth = player.Will * 10 + player.Perks.ExtraWillHealth.Count * 20;
         document.getElementById("StatusName").innerHTML = player.Name + " " + player.Lastname;
         document.getElementById("StatusHealth").innerHTML = Math.round(player.Health);
-        if (player.Health <= player.MaxHealth) {
-            document.getElementById("StatusHealth").style.width = 100 * (player.Health / player.MaxHealth) + "%";
-        } else {
-            document.getElementById("StatusHealth").style.width = 103 + "%";
-        }
+        document.getElementById("StatusHealth").style.width = Math.min(100 * (player.Health / player.MaxHealth), 103) + "%";
         document.getElementById("StatusWillHealth").innerHTML = Math.round(player.WillHealth);
-        if (player.WillHealth <= player.MaxWillHealth) {
-            document.getElementById("StatusWillHealth").style.width = 100 * (player.WillHealth / player.MaxWillHealth) + "%";
-        } else {
-            document.getElementById("StatusWillHealth").style.width = 103 + "%";
-        }
+        document.getElementById("StatusWillHealth").style.width = Math.min(100 * (player.WillHealth / player.MaxWillHealth), 103) + "%";
         document.getElementById("StatusLevel").innerHTML = player.level;
-        document.getElementById("StatusLevel").style.width = 100 * (player.Exp / MaxExp) + "%";
-        document.getElementById("Gold").innerHTML = "Gold: " + Math.round(player.Gold);
-        if (player.Fat <= player.Height / 100 && !battle) {
+        document.getElementById("StatusLevel").style.width = Math.min(100 * (player.Exp / MaxExp), 100) + "%";
+        document.getElementById("Gold").innerHTML = "Gold: " + Math.floor(player.Gold);
+        if (player.Fat <= player.Height / 100) {
             document.getElementById("Hunger").innerHTML = "You are starving";
         } else {
             document.getElementById("Hunger").innerHTML = null;
         }
-
         document.getElementById("EssenceTracker").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
         document.getElementById("BlackMarketEssence").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
-
-        if (Doors.length < 1) {
-            DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E");
-            DoorS = new MakeDoor(startarea.width / 2 - 3 * grid, startarea.height - 2 * grid, grid * 5, grid, "S");
-            DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W");
-            DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N");
-            Doors = [DoorE, DoorS, DoorN, DoorW];
-        }
         if (Settings.Vore) {
             document.getElementById("VoreLooks").style.display = 'inline-block';
-            if (!battle) {
-                VoreEngine();
-            }
-        }
-        if (TF.Status) {
-            TfEngine();
         }
         //		if (BonusTF.Status) {TfBoost();}
         ExpCheck();
 
         if (!battle) {
+            switch (player.Map) {
+                case "Farm":
+                case "TempCity":
+                    PaintBackground();
+                    break;
+                default:
+                    break;
+            }
+            CurrentMap();
+            if (Settings.Vore) {
+                VoreEngine();
+            }
+            if (enemies.length > 0) {
+                PrintEnemies();
+            };
+            if (Npcs.length > 0) {
+                PrintNpcs();
+            }
+            ctx.fillStyle = "BlueViolet";
+            ctx.fillRect(sprite.x, sprite.y, grid, grid);
+            if (Doors.length < 1) {
+                DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E");
+                DoorS = new MakeDoor(startarea.width / 2 - 3 * grid, startarea.height - 2 * grid, grid * 5, grid, "S");
+                DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W");
+                DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N");
+                Doors = [DoorE, DoorS, DoorN, DoorW];
+            }
+            if (TF.Status) {
+                TfEngine();
+            }
             Laglimiter++;
             if (Laglimiter % 80 == 0) {
                 if (Settings.EssenceAuto) {
@@ -1335,6 +1332,7 @@
                 player.Height = Math.max(1, player.Height);
                 player.Health = Math.max(1, player.Health);
                 player.WillHealth = Math.max(1, player.WillHealth);
+                document.getElementById("Fps").innerHTML = Math.round(1000 / Thefps) + "fps";
             }
         };
     };

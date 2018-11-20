@@ -1,7 +1,7 @@
 function FluidsEngine() {
     if (player.Balls.length > 0) {
         for (var b = 0; b < player.Balls.length; b++) {
-            player.Balls[b].CumMax = Math.round(player.Balls[b].Size * 400);
+            player.Balls[b].CumMax = 1 / 3 * Math.PI * Math.pow(player.Balls[b].Size, 3),
             player.Balls[b].CumBaseRate = player.Balls[b].CumMax / 500;
             if (player.Balls[b].Cum < player.Balls[b].CumMax) {
                 player.Balls[b].Cum += Math.max(0, player.Balls[b].CumRate + player.Balls[b].CumBaseRate);
@@ -30,13 +30,15 @@ function FluidsEngine() {
         document.getElementById("MilkBar").style.display = 'block';
         var TotalMilk = 0,
             TotalMilkMax = 0;
-		for (var b = 0; b < player.Boobies.length; b++) {
-            player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 400);
-			if(player.Boobies[b].MilkRate > 0)
-			{
-				player.Boobies[b].Milk += player.Boobies[b].MilkRate;
-			}
-		}
+        for (var b = 0; b < player.Boobies.length; b++) {
+            if (!Settings.EssenceAuto) {
+                player.Boobies[b].MilkMax = 1 / 3 * Math.PI * Math.pow(player.Boobies[b].Size, 3);
+                console.log("true")
+            }
+            if (player.Boobies[b].MilkRate > 0) {
+                player.Boobies[b].Milk += player.Boobies[b].MilkRate;
+            }
+        }
         for (var e = 0; e < player.Boobies.length; e++) {
             TotalMilk += player.Boobies[e].Milk;
             TotalMilkMax += player.Boobies[e].MilkMax
@@ -56,7 +58,7 @@ function FluidsEngine() {
             EssenceCheck(House.Dormmates[e]);
             if (House.Dormmates[e].Balls.length > 0) {
                 for (var b = 0; b < House.Dormmates[e].Balls.length; b++) {
-                    House.Dormmates[e].Balls[b].CumMax = Math.round(House.Dormmates[e].Balls[b].Size * 400);
+                    House.Dormmates[e].Balls[b].CumMax = 1 / 3 * Math.PI * Math.pow(House.Dormmates[e].Balls[b].Size, 3),
                     House.Dormmates[e].Balls[b].CumBaseRate = House.Dormmates[e].Balls[b].CumMax / 500;
                     if (House.Dormmates[e].Balls[b].Cum < House.Dormmates[e].Balls[b].CumMax) {
                         House.Dormmates[e].Balls[b].Cum += Math.max(0, House.Dormmates[e].Balls[b].CumRate + House.Dormmates[e].Balls[b].CumBaseRate);
@@ -69,10 +71,10 @@ function FluidsEngine() {
 }
 //Well, this disables *everything* below. Moving it out of the function.
 function GotMilk(who) {
-	for (var e of who.Boobies) {
-		if (e.MilkRate > 0) {
-			return true;
-		}
-	}
-	return false;
+    for (var e of who.Boobies) {
+        if (e.MilkRate > 0) {
+            return true;
+        }
+    }
+    return false;
 }
