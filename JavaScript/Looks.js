@@ -7,11 +7,32 @@ function IntToOne(i) {
         case 2:
             return ", followed by a third "
         default:
-            return ", and a "+(i+1)+"th ";
+            return ", and a " + (i + 1) + "th ";
     }
 }
 
 function DickLook(who) {
+    if (who.Dicks.length > 0) {
+        var dicks = "";
+        var virgin = " ";
+        if (who.SecondRace == "centaur") {
+            dicks = "Under your equine body, retracted into their penile sheath, you find "
+        } else if (who.SecondRace == "equine") {
+            dicks = "Retracted into their penile sheath, you find "
+        }
+        for (var d = 0; d < who.Dicks.length; d++) {
+            if (who.Dicks[d].Virgin) {
+                virgin = " virgin"
+            }
+            dicks += IntToOne(d) + CmToInch(who.Dicks[d].Size) + " long " + who.Dicks[d].Type.toLowerCase() + virgin + " dick";
+        }
+        return dicks + ".<br><br>";
+    } else {
+        return "";
+    }
+}
+
+function ExactDickLook(who) {
     if (who.Dicks.length > 0) {
         var dicks = "";
         var virgin = " ";
@@ -44,6 +65,20 @@ function BallLook(who) {
         return "";
     }
 }
+
+function ExactBallLook(who) {
+    if (who.Balls.length > 0) {
+        var balls = "";
+        for (var b = 0; b < who.Balls.length; b++) {
+            balls += IntToOne(b) + "pair of " + CmToInch(who.Balls[b].Size) + " wide balls, ";
+            balls += "filled with " + LToGal(who.Balls[b].Cum / 1000) + " cum";
+        }
+        return balls + "<br><br>";
+    } else {
+        return "";
+    }
+}
+
 function Filled(what) {
     return "filled with "+LToGal(what.Cum/1000)
     var Procent = what.Cum/what.CumMax;
@@ -51,13 +86,15 @@ function Filled(what) {
     if (Procent > 0.9) {
         return "engorged with"
     } else if (Procent > 0.5) {
+    console.log(Percent);
+    } else if (Percent > 0.5) {
         return "filled with"
-    } else if (Procent > 0.3) {
+    } else if (Percent > 0.3) {
         return ""
-    } else if (Procent > 0.1){
-        return "shrunken due their emptyness"
-    } else if (Procent > 0.01){
-        return "" 
+    } else if (Percent > 0.1) {
+        return "shrunken due their emptiness"
+    } else if (Percent > 0.01) {
+        return ""
     } else {
         return "completely emptied"
     }
@@ -83,16 +120,55 @@ function PussyLook(who) {
     }
 }
 
+function ExactPussyLook(who) {
+    if (who.Pussies.length > 0) {
+        var pussies = "";
+        var virgin = " ";
+        if (who.SecondRace == "centaur") {
+            pussies = "At your equine backside are your mare genitals, ";
+        }
+        for (var p = 0; p < who.Pussies.length; p++) {
+            if (who.Pussies[p].Virgin) {
+                virgin = " virgin"
+            }
+            who.Pussies[p].Type + virgin + " pussy <br>";
+            pussies += IntToOne(p) + CmToInch(who.Pussies[p].Size) + " deep " + who.Pussies[p].Type.toLowerCase() + virgin + " pussy";
+        }
+        return pussies + ".<br><br>";
+    } else {
+        return "";
+    }
+}
+
 function BoobLook(who) {
     if (who.Boobies.length > 0) {
         var boobies = "";
         for (var b = 0; b < who.Boobies.length; b++) {
-			if(b == 0 && (Math.round(who.Boobies[0].Size) == 2 || Math.round(who.Boobies[0].Size) == 3)) {
-			boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";			
-			} else if(Math.round(who.Boobies[b].Size) > 1 && Math.round(who.Boobies[b].Size < 28)) {
-            boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
-			} else {boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
-			}
+            if (b == 0 && (Math.round(who.Boobies[0].Size) == 2 || Math.round(who.Boobies[0].Size) == 3)) {
+                boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
+            } else if (Math.round(who.Boobies[b].Size) > 1 && Math.round(who.Boobies[b].Size < 28)) {
+                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
+            } else {
+                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
+            }
+        }
+        return boobies + ".<br><br>";
+    } else {
+        return "";
+    }
+}
+
+function ExactBoobLook(who) {
+    if (who.Boobies.length > 0) {
+        var boobies = "";
+        for (var b = 0; b < who.Boobies.length; b++) {
+            if (b == 0 && (Math.round(who.Boobies[0].Size) == 2 || Math.round(who.Boobies[0].Size) == 3)) {
+                boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
+            } else if (Math.round(who.Boobies[b].Size) > 1 && Math.round(who.Boobies[b].Size < 28)) {
+                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
+            } else {
+                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
+            }
         }
         return boobies + ".<br><br>";
     } else {

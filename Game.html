@@ -11,7 +11,7 @@
 <body>
 	<!-- CharCreator: Form for user data-->
 
-	<div id="Fps"></div>
+	<div id="Fps" title="Main loop counter; it counts loops divided by sec"></div>
 
 	<div id="StartPage">
 		<h1>The Essence of Gender</h1>
@@ -577,56 +577,66 @@
 	<div id="AfterBattle" class="AfterBattle None">
 		<h1 class="a">Sex</h1>
 		<div id="PlayerSex" class="PlayerSex">
-			<p id="PName"></p>
-			<div class="TwoColumn">
-				<div>
-					<label for="Mascu">Masculinity</label>
-					<div id="Mascu" class="Masc"></div>
-				</div>
-				<div>
-					<label for="Femin">Femininity</label>
-					<div id="Femin" class="Femi"></div>
-				</div>
+			<div id="playerExact" class="None">
+
 			</div>
-			<div class="TwoColumn">
-				<div>
-					<label for="PArousal">Arousal</label>
-					<div id="PArousal" class="Arousal"></div>
+			<div id="playerKinda">
+				<p id="PName"></p>
+				<div class="TwoColumn">
+					<div>
+						<label for="Mascu">Masculinity</label>
+						<div id="Mascu" class="Masc"></div>
+					</div>
+					<div>
+						<label for="Femin">Femininity</label>
+						<div id="Femin" class="Femi"></div>
+					</div>
 				</div>
-				<div>
-					<label for="PlayerOrgasm">Orgasms</label>
-					<div id="PlayerOrgasm" class="Arousal"></div>
+				<div class="TwoColumn">
+					<div>
+						<label for="PArousal">Arousal</label>
+						<div id="PArousal" class="Arousal"></div>
+					</div>
+					<div>
+						<label for="PlayerOrgasm">Orgasms</label>
+						<div id="PlayerOrgasm" class="Arousal"></div>
+					</div>
 				</div>
+				<p id="PlayerLooks"></p>
 			</div>
-			<p id="PlayerLooks"></p>
 		</div>
 		<div id="SexLog" class="SexLog">
 			<p id="SexText"></p>
 			<p id="SexStats"></p>
 		</div>
 		<div id="EnemySex" class="EnemySex">
-			<p id="EName"></p>
-			<div class="TwoColumn">
-				<div>
-					<label for="EMascu">Masculinity</label>
-					<div id="EMascu" class="Masc"></div>
-				</div>
-				<div>
-					<label for="EFemin">Femininity</label>
-					<div id="EFemin" class="Femi"></div>
-				</div>
+			<div id="EnemyExact" class="None">
+
 			</div>
-			<div class="TwoColumn">
-				<div>
-					<label for="EArousal">Arousal</label>
-					<div id="EArousal" class="Arousal"></div>
+			<div id="EnemyKinda">
+				<p id="EName"></p>
+				<div class="TwoColumn">
+					<div>
+						<label for="EMascu">Masculinity</label>
+						<div id="EMascu" class="Masc"></div>
+					</div>
+					<div>
+						<label for="EFemin">Femininity</label>
+						<div id="EFemin" class="Femi"></div>
+					</div>
 				</div>
-				<div>
-					<label for="EnemyOrgasm">Orgasms</label>
-					<div id="EnemyOrgasm" class="Arousal"></div>
+				<div class="TwoColumn">
+					<div>
+						<label for="EArousal">Arousal</label>
+						<div id="EArousal" class="Arousal"></div>
+					</div>
+					<div>
+						<label for="EnemyOrgasm">Orgasms</label>
+						<div id="EnemyOrgasm" class="Arousal"></div>
+					</div>
 				</div>
+				<p id="EnemyLooks"></p>
 			</div>
-			<p id="EnemyLooks"></p>
 		</div>
 		<img id="MyImg" class="f">
 		<!-- Mouth -->
@@ -727,21 +737,42 @@
 	<div id="Lose" class="AfterBattle None">
 		<h1 class="a">Defeat</h1>
 		<div id="PlayerLoseSex" class="PlayerSex">
-			<p id="LosePName"></p>
-			<label for="LoseMascu">Masculinity</label>
-			<div id="LoseMascu" class="Masc"></div>
-			<label for="LoseFemin">Femininity</label>
-			<div id="LoseFemin" class="Femi"></div>
-			<p id="LosePlayerLooks"></p>
+			<div id="LoseplayerExact" class="None">
+
+			</div>
+			<div id="LoseplayerKinda">
+				<p id="LosePName"></p>
+				<div class="TwoColumn">
+					<div>
+						<label for="LoseMascu">Masculinity</label>
+						<div id="LoseMascu" class="Masc"></div>
+					</div>
+					<div>
+						<label for="LoseFemin">Femininity</label>
+						<div id="LoseFemin" class="Femi"></div>
+					</div>
+				</div>
+				<p id="LosePlayerLooks"></p>
+			</div>
 		</div>
 		<div id="EnemyLoseSex" class="EnemySex">
-			<p id="LoseEName"></p>
-			<label for="LoseEMascu">Masculinity</label>
-			<div id="LoseEMascu" class="Masc"></div>
-			<label for="LoseEFemin">Femininity</label>
-			<div id="LoseEFemin" class="Femi"></div>
-			<p id="LoseEnemyLooks"></p>
+			<div id="LoseEnemyExact" class="None">
 
+			</div>
+			<div id="LoseEnemyKinda">
+				<p id="LoseEName"></p>
+				<div class="TwoColumn">
+					<div>
+						<label for="LoseEMascu">Masculinity</label>
+						<div id="LoseEMascu" class="Masc"></div>
+					</div>
+					<div>
+						<label for="LoseEFemin">Femininity</label>
+						<div id="LoseEFemin" class="Femi"></div>
+					</div>
+				</div>
+				<p id="LoseEnemyLooks"></p>
+			</div>
 		</div>
 		<div id="LoseSexLog" class="SexLog">
 			<p id="LoseSexText"></p>

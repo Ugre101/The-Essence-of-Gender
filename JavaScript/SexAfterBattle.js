@@ -8,7 +8,7 @@ document.getElementById("GiveBlowjob").addEventListener("click", function () {
     }
     enemies[EnemyIndex].Arousal += SexAttack / 2
     player.Arousal += ESexAttack / 3;
-    if (LastPressed == "GiveBlowjob") {
+    if (LastPressed === "GiveBlowjob") {
         document.getElementById("SexText").innerHTML = "Your head continues to bob on their length as your tongue plays with their tip, electing soft moans from your opponent. As " + enemies[EnemyIndex].FirstName + " begins to softly hump into your throat, you meet each thrust by pushing your head down as far as you can. You emphasize their thrusts by sucking hard on their throbbing length. You feel their hand being placed on your head, pushing you deeper into their crotch."
         if (enemies[EnemyIndex].Balls.length > 0) {
             document.getElementById("SexText").innerHTML += " Your lips meet their crotch as their " + CmToInch(enemies[EnemyIndex].Balls[0].Size) + " nuts start to bump into your chin with each hump."
@@ -16,7 +16,7 @@ document.getElementById("GiveBlowjob").addEventListener("click", function () {
         document.getElementById("SexText").innerHTML += " Their breathing becomes deep and labored as you milk their cock for all it’s worth."
     } else {
         RL = RandomInt(0, enemies[EnemyIndex].Dicks.length - 1);
-        document.getElementById("SexText").innerHTML = "Your foe lays on their back, chest heaving with exhaustion from the recent fight. You make your way up to " + enemies[EnemyIndex].FirstName + "'s body and crouch between their legs, spreading them apart. In-between lies their " + CmToInch(enemies[EnemyIndex].Dicks[RL].Size) + " " + enemies[EnemyIndex].Dicks[RL].Type + " cock lewdly pulsing as it bobs side-to-side with each breath of your foe." +
+        document.getElementById("SexText").innerHTML = "Your foe lays on their back, chest heaving with exhaustion from the recent fight. You make your way up to " + enemies[EnemyIndex].FirstName + "'s body and crouch between their legs, spreading them apart. In-between lies their " + CmToInch(enemies[EnemyIndex].Dicks[RL].Size) + " " + enemies[EnemyIndex].Dicks[RL].Type + " cock lewdly pulsing as it bobs side-to-side with each breath of your foe." + 
             " You lick your lips in anticipation as you lower your head to your prize, wrapping your lips around the head of their dick and start sucking."// They still lies on their stomach still spent from the battle. You grab their torso and flip them on their back for your viewing pleasure. Their dick lays flat against their stomach twitching almost expectantly. You lower your head between their legs and just before the they has time to protest you begin tending to their cock causing them to gasp."
     }
     CheckArousal();
@@ -30,11 +30,11 @@ document.getElementById("GiveCunnilingus").addEventListener("click", function ()
     }
     enemies[EnemyIndex].Arousal += SexAttack / 2;
     player.Arousal += ESexAttack / 3;
-    if (LastPressed == "GiveCunnilingus") {
+    if (LastPressed === "GiveCunnilingus") {
         document.getElementById("SexText").innerHTML = "Keeping them in place, you continue your tongue-lashing, electing soft moans from your opponent. Barely able to move, all " + enemies[EnemyIndex].FirstName + "can do is rest their hand on your head. You reach one hand to their clit and gently pinch it, sending a fresh wave of pleasure through their body.";
     } else {
         RL = RandomInt(0, enemies[EnemyIndex].Pussies.length - 1);
-        document.getElementById("SexText").innerHTML = "Your foe lays on their back, chest heaving with exhaustion from the recent fight. You make your way up to " + enemies[EnemyIndex].FirstName + "'s body and crouch between their legs, spreading them apart. In-between lies their " + enemies[EnemyIndex].Pussies[RL].type + " pussy, engorged and dripping slightly, their clit twitching lewdly with each breath of your foe." +
+        document.getElementById("SexText").innerHTML = "Your foe lays on their back, chest heaving with exhaustion from the recent fight. You make your way up to " + enemies[EnemyIndex].FirstName + "'s body and crouch between their legs, spreading them apart. In-between lies their " + enemies[EnemyIndex].Pussies[RL].type + " pussy, engorged and dripping slightly, their clit twitching lewdly with each breath of your foe." + 
             " You lick your lips in anticipation as you lower your head to your prize, spreading their lower lips with your fingers, and start eating them out.";
     }
     CheckArousal();
@@ -47,7 +47,7 @@ document.getElementById("GiveRimjob").addEventListener("click", function () {
     }
     enemies[EnemyIndex].Arousal += SexAttack / 2;
     player.Arousal += ESexAttack / 3;
-    if (LastPressed == "GiveRimjob") {
+    if (LastPressed === "GiveRimjob") {
         document.getElementById("SexText").innerHTML = "You continue eating their ass out.";
     } else {
         document.getElementById("SexText").innerHTML = "You eat their ass out.";
@@ -63,10 +63,10 @@ document.getElementById("Scissoring").addEventListener("click", function () {
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
-    if (LastPressed == "Scissoring") {
+    if (LastPressed === "Scissoring") {
         document.getElementById("SexText").innerHTML = "As you continue to grind your pussy against " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy, you reach down and toy with their clit, bringing more pleasure-filled moans to your ears.";
     } else {
-        document.getElementById("SexText").innerHTML = "Looking down at "+enemies[EnemyIndex].FirstName+", you feel a twinge of arousal pulse through your crotch. Straddling your opponent's thigh, you lift their other leg and bring your crotches together, grinding your pussy against theirs. Not leaving it at that, you bring their hand to your clit, and moan as they start playing with it.";
+        document.getElementById("SexText").innerHTML = "Looking down at " + enemies[EnemyIndex].FirstName + ", you feel a twinge of arousal pulse through your crotch. Straddling your opponent's thigh, you lift their other leg and bring your crotches together, grinding your pussy against theirs. Not leaving it at that, you bring their hand to your clit, and moan as they start playing with it.";
     }
     CheckArousal();
     LastPressed = "Scissoring";
@@ -78,11 +78,11 @@ document.getElementById("GetCunnilingus").addEventListener("click", function () 
     }
     enemies[EnemyIndex].Arousal += SexAttack / 3;
     player.Arousal += ESexAttack / 2;
-    if (LastPressed == "GetCunnilingus") {
+    if (LastPressed === "GetCunnilingus") {
         document.getElementById("SexText").innerHTML = "Keeping them in place, you force them to continue eating you out, electing soft moans from your throat. Barely able to move, all " + enemies[EnemyIndex].FirstName + "can do is continue eating you out. You reach one hand to their head and gently pet it, telling them they're doing a good job.";
     } else {
 		RL = RandomInt(0, enemies[EnemyIndex].Pussies.length - 1);
-        document.getElementById("SexText").innerHTML = "Your foe lays on their back, chest heaving with exhaustion from the recent fight. You make your way up " + enemies[EnemyIndex].FirstName + "'s body, licking your lips in anticipation. Squatting above their head, you line your crotch up with their mouth. Grabbing their head, you grind their face against your " + player.Pussies[RL].Type + " pussy, until they " +
+        document.getElementById("SexText").innerHTML = "Your foe lays on their back, chest heaving with exhaustion from the recent fight. You make your way up " + enemies[EnemyIndex].FirstName + "'s body, licking your lips in anticipation. Squatting above their head, you line your crotch up with their mouth. Grabbing their head, you grind their face against your " + player.Pussies[RL].Type + " pussy, until they " + 
             "start eating you out with " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Race + " tounge.";
     }
     CheckArousal();
@@ -95,7 +95,7 @@ document.getElementById("RideCowgirl").addEventListener("click", function () {
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
-    if (LastPressed == "RideCowgirl") {
+    if (LastPressed === "RideCowgirl") {
         document.getElementById("SexText").innerHTML = "Planting one hand on their chest, you continue riding " + HisHer(enemies[EnemyIndex]) + " " + CmToInch(enemies[EnemyIndex].Dicks[RL].Size) + " " + enemies[EnemyIndex].Dicks[RL].Type + " dick at an erratic pace, enjoying their groans of pleasure with each thrust."
 		if(enemies[EnemyIndex].Balls.length > 0)
 			document.getElementById("SexText") += " Every time your crotch meets theirs, you can feel their balls twitch, getting ready to cum."
@@ -103,7 +103,7 @@ document.getElementById("RideCowgirl").addEventListener("click", function () {
     } else {
         RL = RandomInt(0, enemies[EnemyIndex].Dicks.length - 1);
         PRL = RandomInt(0, player.Pussies.length - 1);
-        document.getElementById("SexText").innerHTML = "Looking down at your defeated opponent, lying on " + HisHer(enemies[EnemyIndex]) + " back, you position yourself above their crotch. Spreading your lower lips with one hand and positioning " + HisHer(enemies[EnemyIndex]) + " " + CmToInch(enemies[EnemyIndex].Dicks[RL].Size) + " " + enemies[EnemyIndex].Dicks[RL].Type + " dick with your other, you wrap your "+player.Pussies[PRL].Type+" pussy around them.<br>Their dick " + Tightness(enemies[EnemyIndex], player, "B") + " your pussy.";
+        document.getElementById("SexText").innerHTML = "Looking down at your defeated opponent, lying on " + HisHer(enemies[EnemyIndex]) + " back, you position yourself above their crotch. Spreading your lower lips with one hand and positioning " + HisHer(enemies[EnemyIndex]) + " " + CmToInch(enemies[EnemyIndex].Dicks[RL].Size) + " " + enemies[EnemyIndex].Dicks[RL].Type + " dick with your other, you wrap your " + player.Pussies[PRL].Type + " pussy around them.<br>Their dick " + Tightness(enemies[EnemyIndex], player, "B") + " your pussy.";
     }
     if (player.Pussies[PRL].Virgin) {
         player.Pussies[PRL].Virgin = false;
@@ -119,13 +119,13 @@ document.getElementById("Insertion").addEventListener("click", function () {
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
-    if (LastPressed == "Insertion") {
+    if (LastPressed === "Insertion") {
         document.getElementById("SexText").innerHTML = "Allowing them only short breaks, you continue masturbating with your living dildo. Judging from their cute squeaks of pleasure, you're not the only one enjoying this.";
     } else {
         RL = RandomInt(0, enemies[EnemyIndex].Dicks.length - 1);
         PRL = RandomInt(0, player.Pussies.length - 1);
 
-        document.getElementById("SexText").innerHTML = "Due to their small size, conventional sex would be difficult; looking closer at their small form, however, you realize they are about the size of a dildo. to your much larger body. " +
+        document.getElementById("SexText").innerHTML = "Due to their small size, conventional sex would be difficult; looking closer at their small form, however, you realize they are about the size of a dildo. to your much larger body. " + 
             "Grabbing them you bring them to your " + CmToInch(player.Pussies[PRL].Size) + " deep " + player.Pussies[PRL].Type + " vagina, telling them look closely at the wet folds they are about to be better acquainted with. Feet first, you gently insert them into your pussy with a soft moan of pleasure. Once you're sure they can survive it, you pick up the pace."
     }
     if (player.Pussies[PRL].Virgin) {
@@ -157,7 +157,7 @@ document.getElementById("Missionary").addEventListener("click", function () {
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
-    if (LastPressed == "Missionary") {
+    if (LastPressed === "Missionary") {
         document.getElementById("SexText").innerHTML = "You continue fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
     } else {
         PRL = RandomInt(0, player.Dicks.length - 1);
@@ -180,17 +180,17 @@ document.getElementById("DualPen").addEventListener("click", function () {
 	}
 	if(enemies[EnemyIndex].Pussies.length > 0)
 	{
-		if (LastPressed == "DualPen") {
+		if (LastPressed === "DualPen") {
 			document.getElementById("SexText").innerHTML = "You continue fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy and ass with your " + player.Dicks[PRL].Type + " dicks, enjoying the contrast between their ass and pussy's tightness and flexibility, and your rods separated by a thin wall of their flesh.";
 			//Text 2: document.getElementById("SexText").innerHTML = "You pull your dicks out of " + HisHer(enemies[EnemyIndex]) + " holes slowly, enjoying the feeling of their pussy and ass trying to pull you back in. Without warning, you thrust forward suddenly, bottoming out again in an instant and forcing a shout of pleasure from their throat. You resume thrusting, a pleasured look on both of your faces."
 		} else {
-			document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you smile to yourself; they've got enough holes to use more than one dick. Spreading their legs, you line up your "+player.Dicks[0].Type" with their "+enemies[EnemyIndex].Pussies[0].Type + " pussy and ass, and press in slowly. As they adapt to your dicks, you start picking up speed, thrusting at an irregular pace due to all of the pleasure.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
+			document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you smile to yourself; they've got enough holes to use more than one dick. Spreading their legs, you line up your " + player.Dicks[0].Type + " with their " + enemies[EnemyIndex].Pussies[0].Type + " pussy and ass, and press in slowly. As they adapt to your dicks, you start picking up speed, thrusting at an irregular pace due to all of the pleasure.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
 		}
 	} else {
-		if (LastPressed == "DualPen") {
+		if (LastPressed === "DualPen") {
 			document.getElementById("SexText").innerHTML = "You continue fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
 		} else {
-			document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you notice a lack of vagina. Not willing to give one dick priority over the other, you spread their legs and line up your "+player.Dicks[0].Type" dicks with their ass, and press in slowly. To your surprise, they stretch around your dicks with only mild (vocalized) discomfort. As they adapt to your dicks, you start picking up speed, thrusting at an irregular pace due to all of the pleasure.";
+			document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you notice a lack of vagina. Not willing to give one dick priority over the other, you spread their legs and line up your " + player.Dicks[0].Type + " dicks with their ass, and press in slowly. To your surprise, they stretch around your dicks with only mild (vocalized) discomfort. As they adapt to your dicks, you start picking up speed, thrusting at an irregular pace due to all of the pleasure.";
 		}
 	}
 	if (player.Dicks[0].Virgin||player.Dicks[1].Virgin) {
@@ -217,8 +217,8 @@ document.getElementById("Multipen").addEventListener("click", function () {
 	if (Settings.ImgPack) { //Going to need to split this, surprise surprise.
 		ImgChose(player, "Multipen", enemies[EnemyIndex]);
 	}
-	if (LastPressed == "Multipen") {
-		document.getElementById("SexText").innerHTML = "Your mind's unable to handle the insane amount of pleasure, and you thrust wildly. Your entire world is focused on the pleasure your dicks are experiencing, fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " holes with your many dicks. Had you more awareness, you would've seen "+enemies[EnemyIndex].FirstName+"'s face in a state of ecstasy, unable to make a sound.";
+	if (LastPressed === "Multipen") {
+		document.getElementById("SexText").innerHTML = "Your mind's unable to handle the insane amount of pleasure, and you thrust wildly. Your entire world is focused on the pleasure your dicks are experiencing, fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " holes with your many dicks. Had you more awareness, you would've seen " + enemies[EnemyIndex].FirstName + "'s face in a state of ecstasy, unable to make a sound.";
 	}
 	else if(player.Dicks.length > enemies[EnemyIndex].Pussies.length + 1) //1st case: more dicks than all holes 
 	{
@@ -227,10 +227,10 @@ document.getElementById("Multipen").addEventListener("click", function () {
 		document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you're ecstatic to see enough holes for your arsenal of penises. Resolved to make this an unforgettable experience, you line up your dicks and slowly ease in. Amazed at how much they stretch around your dicks, and how good it feels, your mind barely registers their hips meeting yours. Unable to control your body any longer, your conscious thoughts takes a back seat as your hips thrust at a manic pace, drowning you in pleasure.";
 	}
 	/*else {//3rd case: They've got enough pussies for your dicks 
-		if (LastPressed == "Multipen") {
+		if (LastPressed === "Multipen") {
 			document.getElementById("SexText").innerHTML = "You continue fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
 		} else {
-			document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you notice a lack of vagina. Not willing to give one dick priority over the other, you spread their legs and line up your "+player.Dicks[0].Type" dicks with their ass, and press in slowly. To your surprise, they stretch around your dicks with only mild (vocalized) discomfort. As they adapt to your dicks, you start picking up speed, thrusting at an irregular pace due to all of the pleasure.";
+			document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you notice a lack of vagina. Not willing to give one dick priority over the other, you spread their legs and line up your " + player.Dicks[0].Type" dicks with their ass, and press in slowly. To your surprise, they stretch around your dicks with only mild (vocalized) discomfort. As they adapt to your dicks, you start picking up speed, thrusting at an irregular pace due to all of the pleasure.";
 		}
 	}*/
 	var v = false;
@@ -251,7 +251,7 @@ document.getElementById("DoggyStyle").addEventListener("click", function () {
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
-    if (LastPressed == "DoggyStyle") {
+    if (LastPressed === "DoggyStyle") {
         document.getElementById("SexText").innerHTML = "You continue fucking them from behind.<br>Their " + enemies[EnemyIndex].Pussies[0].Type + " pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.";
     } else {
         PRL = RandomInt(0, player.Dicks.length - 1);
@@ -272,15 +272,15 @@ document.getElementById("GetBlowjob").addEventListener("click", function () {
     }
     enemies[EnemyIndex].Arousal += SexAttack / 3;
     player.Arousal += ESexAttack / 2;
-    if (LastPressed == "GetBlowjob") {
+    if (LastPressed === "GetBlowjob") {
        // document.getElementById("SexText").innerHTML = "You continue humping your new toy at a constant pace. Your rhythm doesn’t falter as you use your muscles to the best of their ability. You lean back as you hilt into the back of their throat, eliciting a moan from you as you start breeding deep."
         if (player.Balls.length > 0) {
-            document.getElementById("SexText").innerHTML = "Continuing to thrust, your " + CmToInch(player.Balls[0].Size) + " balls slap repeatedly against your foe, causing them to grunt in annoyance." +
+            document.getElementById("SexText").innerHTML = "Continuing to thrust, your " + CmToInch(player.Balls[0].Size) + " balls slap repeatedly against your foe, causing them to grunt in annoyance." + 
                 "Your thrusting continues as you make proper use of your opponent’ s mouth. You grab your foe 's forearm and guide it to your sac, grunting in demand as they start to fondle you.<br><br>"
         }
-		document.getElementById("SexText").innerHTML = "Your thrusting continues as you make proper use of your opponent’s mouth. Your pounding of their throat continues even as your abdomen starts bumping into their nose with each thrust. Muffled groans escape from your mouth as "+enemies[EnemyIndex].FirstName+"’s mouth is pumped by your throbbing cock." //They moan as your cock snakes its way through their mouth greedily humps their throat."
+		document.getElementById("SexText").innerHTML = "Your thrusting continues as you make proper use of your opponent’s mouth. Your pounding of their throat continues even as your abdomen starts bumping into their nose with each thrust. Muffled groans escape from your mouth as " + enemies[EnemyIndex].FirstName + "’s mouth is pumped by your throbbing cock." //They moan as your cock snakes its way through their mouth greedily humps their throat."
     } else {
-        document.getElementById("SexText").innerHTML = "You walk up to your defeated adversary as they attempt to get back on their feet. You stop them by catching their head and tilting it up to your face. You look back down at your crotch and nod to your " + CmToInch(player.Dicks[0].Size) + " cock expectantly." +
+        document.getElementById("SexText").innerHTML = "You walk up to your defeated adversary as they attempt to get back on their feet. You stop them by catching their head and tilting it up to your face. You look back down at your crotch and nod to your " + CmToInch(player.Dicks[0].Size) + " cock expectantly." + 
             " Just as your prize gets the idea and moves closer you eagerly thrust your hips into their mouth. You hold their head close starting a steady rhythm as you use their hole."
         // "Your last blow sends your foe recoiling back losing their footing and crashing to the floor. You make your way up to them until you cast a shadow of their body. Your adversary groans as they start to rise, only to be met with the sight of your (insert player dick size. small, average, hefty, enormous) member. Stunned by the position they are in you grab the back of their head and guide their mouth to its rightful place and begin to enjoy your prize"
 
@@ -296,7 +296,7 @@ document.getElementById("DoggyStyleAnal").addEventListener("click", function () 
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
-    if (LastPressed == "DoggyStyleAnal") {
+    if (LastPressed === "DoggyStyleAnal") {
         document.getElementById("SexText").innerHTML = "You keep " + HisHer(enemies[EnemyIndex]) + " head down and fuck " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.";
     } else {
         PRL = RandomInt(0, player.Dicks.length - 1);
@@ -314,7 +314,7 @@ document.getElementById("DoggyStyleAnal").addEventListener("click", function () 
 document.getElementById("DualPen").addEventListener("click", function () {
     enemies[EnemyIndex].Arousal += SexAttack * 2;
     player.Arousal += ESexAttack * 2;
-    if (LastPressed == "DualPen") {
+    if (LastPressed === "DualPen") {
         document.getElementById("SexText").innerHTML = "You keep " + HisHer(enemies[EnemyIndex]) + " head down and fuck " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
     } else {
         document.getElementById("SexText").innerHTML = "You order you opponent down on " + HisHer(enemies[EnemyIndex]) + " knees, and position yourself behind them. Pushing " + HisHer(enemies[EnemyIndex]) + " head down, you start fucking " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
@@ -342,7 +342,7 @@ document.getElementById("GetRimjob").addEventListener("click", function () {
     }
     enemies[EnemyIndex].Arousal += SexAttack / 3;
     player.Arousal += ESexAttack / 2;
-    if (LastPressed == "GetRimjob") {
+    if (LastPressed === "GetRimjob") {
         document.getElementById("SexText").innerHTML = "You force your opponent to continue eating out your ass.";
     } else {
         document.getElementById("SexText").innerHTML = "You command your opponent to eat out your ass.";
@@ -360,10 +360,10 @@ document.getElementById("BreastFeed").addEventListener("click", function () {
     for (var b = 0; b < player.Boobies.length; b++) {
         player.Boobies[b].Milk -= 100 / player.Boobies.length;
     }
-    if (LastPressed == "BreastFeed") {
+    if (LastPressed === "BreastFeed") {
         document.getElementById("SexText").innerHTML = "You continue feeding them your milk, releiving the pressure in your chest.";
     } else {
-        document.getElementById("SexText").innerHTML = "The urge to nurture is strong due the hormones released from your lactating breasts. Wanting release, you take them into your lap and guide " + HisHer(enemies[EnemyIndex]) + " head to your fullest breast. " +
+        document.getElementById("SexText").innerHTML = "The urge to nurture is strong due the hormones released from your lactating breasts. Wanting release, you take them into your lap and guide " + HisHer(enemies[EnemyIndex]) + " head to your fullest breast. " + 
             "At first they assumed you wanted them you suck on your nipples for pleasure, but once their mouth was full they had no choice but to swallow. As they quickly fell in love with the taste, you remove your hand from their head unnoticed, they don't think about stopping their feeding."
     }
     CheckArousal();

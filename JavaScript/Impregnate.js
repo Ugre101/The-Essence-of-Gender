@@ -31,7 +31,7 @@ function playerBabyMaker(who, by) {
     Flags.Pregnations++;
 }
 
-function Impregnate(who, by, mode, where) {
+function Impregnate(who, by, mode = "A", where = "") {
     if (mode == "A") {
         var Impregnation = RandomInt(0, 100);
         switch (CheckGender(who)) {
