@@ -1,6 +1,14 @@
 var backmap;
 
 function CurrentMap() {
+	//Animal testing
+/*	var aSpawn = Math.random();
+	if (enemies.length < 1 && Settings.AnimalSpawn)
+	{
+		console.log("Animal?");
+		enemies = [animalSpawn(player.Height), animalSpawn(player.Height)];
+		return;
+	}*/
     switch (player.Area) {
         case "First":
             switch (player.Map) {

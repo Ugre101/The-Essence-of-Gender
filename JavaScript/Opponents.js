@@ -5,7 +5,7 @@ function enemy(EnemyName, EnemyRace, EnemyMasculinity, EnemyFemininity, Strength
     this.Name = EnemyName;
     this.Race = EnemyRace;
     this.Masc = EnemyMasculinity;
-    this.Femi = EnemyFemininity
+    this.Femi = EnemyFemininity;
     this.Str = Strength;
     this.End = Endurance;
     this.Willpower = Willpower;
@@ -41,6 +41,8 @@ var RacesCave = ["Goblin", "Imp"];
 var RacesCave2 = ["Goblin", "Demon"];
 var RacesCave3 = ["Dhampir", "Demon"];
 var RacesCave4 = ["Succubus", "Incubus"];
+// Feral concept list
+//var FeralEnemy = ["Squirrel", "Rabbit", "Cat", "Wolf", "Boar", "Deer", "Horse", "Lion", "Bear", "Rhino", "Elephant", "Dragon"];
 
 var dropRate = {
     "Human": 1.00,
@@ -128,6 +130,38 @@ function EncounterStart() {
     }
     RaceBonus(OP);
     NameGiver(OP);
+    return OP;
+}
+
+function animalSpawn(maxSize) { // Here's the mess of concept code
+	var randomAnimalScore = RandomInt(0,Math.floor(Math.min(Math.pow(maxSize/10,0.5),FeralEnemy.length))); // Spawns animals based on height - wolves and lower at start of the game
+	console.log("RandScore: "+randomAnimalScore);
+	var essence = 10 * Math.max(1, Math.pow(randomAnimalScore,2)); //The larger the creature, the greater its essence
+	console.log("Essence: "+essence);
+	var M = 0; var F = 0; //Only males or females, no intersex
+	console.log("M: "+M+" F: "+F);
+	if(Math.random() > 0.5) 
+		M = essence;
+	else F = essence;
+	var OP = new enemy("Feral", // Always named feral for description
+	FeralEnemy[randomAnimalScore], // Race is their species 
+	M, F, //Essence!
+	RandomInt(Math.floor(randomAnimalScore/2)+1, Math.floor(randomAnimalScore*1.5))+2, // Strength based on size
+	RandomInt(Math.floor(randomAnimalScore/2)+1, Math.floor(randomAnimalScore*1.5))+2, // Endurance based on size
+	RandomInt(Math.floor(randomAnimalScore/2)+1, Math.floor(randomAnimalScore*1.5))+2, // Unused willpower based on size
+	0, 0, 0, 0, 0, // No charm, Intelligence, SexSkill, Arousal, or Orgasm
+	Math.max(10,10*randomAnimalScore), Math.max(10,10*randomAnimalScore), 
+	Math.max(10,10*randomAnimalScore), Math.max(10,10*randomAnimalScore), // HP and Will based on size
+	RandomInt(2, 18) * grid, RandomInt(2, 18) * grid, // Same positioning
+	RandomInt(Math.floor(randomAnimalScore/2), Math.floor(randomAnimalScore*1.5)), RandomInt(randomAnimalScore+1, (randomAnimalScore+1)*10),  // XP and gold based on size 
+	'Chocolate', // Why not
+	grid * (Math.floor(randomAnimalScore/4) + 0.4), // Thought this determined dimensions, was supposed to be steps based on size
+	Math.max(0.5,Math.pow(3,randomAnimalScore/2)), // Why does weight affect size appearance?
+	Math.pow(5,randomAnimalScore), // Massive sizes!
+	Math.pow(2,randomAnimalScore), // Muscle?
+	Math.pow(2,randomAnimalScore)); // Fat?
+	EssenceCheck(OP); // They still have genitals
+    OP.LastName = ""; // No named animals
     return OP;
 }
 

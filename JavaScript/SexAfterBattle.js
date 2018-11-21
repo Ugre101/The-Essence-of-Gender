@@ -390,6 +390,13 @@ document.getElementById("StopSexButton").addEventListener("click", function () {
     document.getElementById("InjectMenu").style.display = 'block';
     document.getElementById("EventLog").style.display = 'block';
     LastPressed = " ";
+// Trying to have ferals disappear after combat	
+/*	console.log(enemies[EnemyIndex].FirstName);
+	if(enemies[EnemyIndex].FirstName === "Feral")
+	{
+		console.log("Removed");
+		enemies.splice(EnemyIndex, 1);
+	}*/
     return;
 });
 document.getElementById("Capture").addEventListener("click", function () {

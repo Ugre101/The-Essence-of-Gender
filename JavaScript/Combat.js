@@ -102,6 +102,11 @@ document.getElementById("Hit").addEventListener("click", function () {
 });
 
 document.getElementById("Tease").addEventListener("click", function () {
+	// Ferals shouldn't get aroused by you
+	/*if(enemies[EnemyIndex].FirstName === "Feral") {
+		document.getElementById("BattleText").innerHTML = "You try seduction, but they don't seem interested in you." 
+		return;
+	}*/
     var PAttack = (RandomInt(1, 5) * player.Charm) / 2;
     enemies[EnemyIndex].WillHealth -= PAttack;
     document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " will dmg."
@@ -139,6 +144,12 @@ function WinBattle() {
     player.Gold += ee.Gold;
     ee.SessionOrgasm = 0;
     player.SessionOrgasm = 0;
+	// No sex with animals (yet??)
+/*	if(ee.FirstName === "Feral")
+	{
+		player.SessionOrgasm = Math.round(player.End / 8);
+		player.Orgasm = Math.round(player.End / 8);
+	}*/
     document.getElementById("Encounter").style.display = 'none';
     for (var i = 0; i < player.Quests.length; i++) {
         if (player.Quests[i].Name === "ElfHunt") {

@@ -145,6 +145,8 @@
         Vore: false,
         ImgPack: false,
         EssenceAuto: true,
+		// For testing animals
+		// AnimalSpawn: true,
         LogLength: 100,
         Pronun: {
             Status: false,
