@@ -101,7 +101,11 @@
             Breast: [],
             BreastExp: 0
         },
-		cumGround: 0
+		cumGround: 0,
+		Spells: {
+			Fireball: 0,
+			FireballMax: 0
+		}
     };
 
     // House variable
@@ -286,6 +290,8 @@
     // Sets display to none used for menu buttons
     function DisplayNone() {
         battle = true;
+		if(player.hasOwnProperty("Spells"))
+			player.Spells.Fireball = player.Spells.FireballMax;
         document.getElementById("map").style.display = 'none'
         document.getElementById("optionpage").style.display = 'none';
         document.getElementById("ShowLooks").style.display = 'none';
@@ -347,7 +353,7 @@
         document.getElementById("FontSize").innerHTML = Math.round(FontSize * 100) / 100 + "em"
     });
     var OldMap;
-    var MapProcent = 0.9;
+    var MapPercent = 0.9;
 
     document.getElementById("SetPronun").addEventListener("click", function () {
         DisplayNone();
@@ -386,7 +392,7 @@
         document.getElementById("Inch").value = "Inch " + Settings.Inch;
     });
 
-    // LocalPotal
+    // LocalPortal
     document.getElementById("TeleportHome").addEventListener("click", function () {
         player.Area = "First";
         player.Map = "RoadToHome";
@@ -415,7 +421,7 @@
         MapColor = document.getElementById("MapColor").value;
         document.body.style.color = document.getElementById("textcolor").value;
         document.body.style.fontFamily = document.getElementById("textfont").value;
-        MapProcent = document.getElementById("MapScale").value;
+        MapPercent = document.getElementById("MapScale").value;
 
         Settings.BackColor = document.getElementById("backcolor").value;
         Settings.MapColor = document.getElementById("MapColor").value;
@@ -1114,6 +1120,8 @@
                 document.getElementById("BattleText").innerHTML = null;
                 document.getElementById("BattleText2").innerHTML = null;
                 battle = true;
+				if(player.hasOwnProperty("Spells"))
+					player.Spells.Fireball = player.Spells.FireballMax;
                 EnemyIndex = enemies.indexOf(enemies[j]);
                 enemies[j].Health = enemies[j].FullHealth;
                 enemies[j].WillHealth = enemies[j].FullWillHealth;
@@ -1131,6 +1139,8 @@
                     mousedowner = false;
                 }
                 battle = true;
+				if(player.hasOwnProperty("Spells"))
+					player.Spells.Fireball = player.Spells.FireballMax;
                 sprite.x = startarea.width / 2 - grid;
                 sprite.y = startarea.height / 2;
                 UpdateNpc(Npcs[n].Name);

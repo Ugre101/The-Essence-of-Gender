@@ -33,6 +33,17 @@ document.getElementById("VoreUp").addEventListener("click", function () {
         document.getElementById("WitchHutText").innerHTML = "You can't afford the pill, and it looks so tasty...";
     }
 });
+document.getElementById("FireSpell").addEventListener("click", function () {
+    if (player.Gold >= 500) {
+        player.Gold -= 500;
+		if (!player.hasOwnProperty("Spells"))
+			player.Spells = {FireballMax: 0, Fireball: 0};
+		player.Spells.FireballMax++;
+        document.getElementById("WitchHutText").innerHTML = "Putting the ball in your pocket, you hope it works as advertised.";
+    } else {
+        document.getElementById("WitchHutText").innerHTML = "You can't afford the ball; probably for the best, based on your pyromania...";
+    }
+});
 document.getElementById("WitchHut").addEventListener("mouseover", function (e) {
     document.getElementById("WitchHutText").innerHTML = e.target.title;
 });
