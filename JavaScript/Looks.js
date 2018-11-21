@@ -81,17 +81,17 @@ function ExactBallLook(who) {
 
 function Filled(what) {
     return "filled with " + LToGal(what.Cum / 1000)
-    var Procent = what.Cum / what.CumMax;
-    console.log(Procent);
-    if (Procent > 0.9) {
-        return "engorged with"
-    } else if (Procent > 0.5) {
+    var Percent = what.Cum / what.CumMax;
+    console.log(Percent);
+    if (Percent > 0.9) {
+        return "swollen with"
+    } else if (Percent > 0.5) {
         return "filled with"
-    } else if (Procent > 0.3) {
+    } else if (Percent > 0.3) {
         return ""
-    } else if (Procent > 0.1) {
-        return "shrunken due their emptyness"
-    } else if (Procent > 0.01) {
+    } else if (Percent > 0.1) {
+        return "shrunken due their emptiness"
+    } else if (Percent > 0.01) {
         return ""
     } else {
         return "completely emptied"

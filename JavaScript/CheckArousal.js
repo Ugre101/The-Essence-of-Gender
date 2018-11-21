@@ -1,6 +1,6 @@
 function CheckArousal() {
     var ee = enemies[EnemyIndex];
-    var ImpregActions = ["DoggyStyle", "DoggyStyleAnal", "Missionary"];
+    var ImpregActions = ["DoggyStyle", "DoggyStyleAnal", "Missionary", "DualPen", "Multipen"];
     if (ee.Arousal >= 100) {
         ee.Orgasm++;
         ee.SessionOrgasm++;
@@ -12,19 +12,20 @@ function CheckArousal() {
             var cum = Cumming(ee);
             document.getElementById("SexText").innerHTML = "Your opponent’s grip on your head tightens as they start humping you mouth in earnest. You gladly oblige their request starting to deepthroat them to the base of their cock. Their rhythm starts to falter as you push their cock to the back of your throat." +
                 " You push your head deep into their crotch as they make one last desperate thrust"
-
             if (cum > 0) {
-                document.getElementById("SexText").innerHTML += "depositing " + cum + "L deep into your gullet."
+                document.getElementById("SexText").innerHTML += ", depositing " + LToGal(cum) + " deep into your gullet."
             } else document.getElementById("SexText").innerHTML += "."
             document.getElementById("SexText").innerHTML += "Your opponent takes deep breathes as they lie completely spent. You rise from between their legs admiring your work and begin to plan your next move."
         } else if (LastPressed == "RideCowgirl") {
             var cum = Cumming(ee);
             document.getElementById("SexText").innerHTML += "<br>Reading their body language, you know they are close to cumming."
             if (cum > 0) {
-                document.getElementById("SexText").innerHTML += " Pulling them deep inside you, they release " + cum + "L of cum into your pussy."
+                document.getElementById("SexText").innerHTML += " Pulling them deep inside you, they release " + LToGal(cum) + " of cum into your pussy."
             } else document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
-        }
-    }
+        }else if (LastPressed == "GiveCunnilingus") {
+            document.getElementById("SexText").innerHTML += "<br>Reading their body language, you know they are close to cumming. Shoving your tongue as deep as you can into them, your face gets splashed with their nectar."
+            } else document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
+	}
     if (player.Arousal > 100) {
         player.Orgasm++;
         player.Arousal = 0;
@@ -60,36 +61,70 @@ function CheckArousal() {
         }
         if (LastPressed == "GetBlowjob") {
             var cum = Cumming(player);
-            document.getElementById("SexText").innerHTML = "You reach down grip firmly on your opponent’s head while giving a bestial grunt as you approach your climax. You ram your cock as far as you can into " + enemies[EnemyIndex].FirstName + "'s throat."
+            document.getElementById("SexText").innerHTML = "You reach down and grab your opponent’s head, giving a bestial grunt as you approach your climax. You ram your cock as far as you can into " + enemies[EnemyIndex].FirstName + "'s throat."
             if (player.Balls.length > 0) {
-                document.getElementById("SexText").innerHTML += "Your balls tense up as you pump your (" + cum + "L) load down their gullet. You continue to thrust desperately, holding your opponent tight as you empty your sac into them. You kneel over your foe's head making small jabs into their mouth as each wave of cum is sent to their stomach."
+                document.getElementById("SexText").innerHTML += "Your balls tense up as you pump your "+LToGal(cum)+" load down their gullet, thrusting erratically, holding your opponent tight as you empty your sac into them. You bend over their head, making small jabs into their mouth as each wave of cum is sent to their stomach."
             }
-            document.getElementById("SexText").innerHTML += "You stand there for a while enjoying your afterglow before you pull out causing your opponent to fall over gasp for air. You smile deviously as you ponder how you should use them next";
+            document.getElementById("SexText").innerHTML += "You stand there for a while, enjoying your afterglow, before you pull out, causing your opponent to fall over, gasping for air. You smile deviously as you ponder how you should use them next.";
             ee.Cumin.Stomach += cum;
             if (ee.Cumin.Stomach > (ee.Height / 100) * 2) {
-                document.getElementById("SexText").innerHTML += "<br><br> Their stomach is overfilled with your cum; as you pull out, your excess cum follows."
+                document.getElementById("SexText").innerHTML += "<br><br> Their stomach is overflowing with your cum; as you pull out, your excess cum follows.";
+				player.cumGround += ee.Cumin.Stomach - (ee.Height / 100) * 2;
+				ee.Cumin.Stomach = (ee.Height / 100) * 2;
             } else if (ee.Cumin.Stomach > ee.Height / 100) {
                 document.getElementById("SexText").innerHTML += "<br><br> Their stomach bulges visibly, filled with your cum."
             }
         } else if (LastPressed == "Missionary") {
-            var cum = Cumming(player); // need to make more relatic desc e.g. you cum a bucket load?
-            document.getElementById("SexText").innerHTML += "<br>Feeling close you thrust deep";
+            var cum = Cumming(player); 
+			ee.Cumin.Pussy += cum;
+            document.getElementById("SexText").innerHTML += "<br>Feeling close you thrust deep inside them";
             if (cum > 0) {
                 document.getElementById("SexText").innerHTML += ", releasing " + LToGal(cum) + " of cum into their pussy."
-            } else document.getElementById("SexText").innerHTML += ", but nothing comes out."
+				if (ee.Cumin.Pussy > (ee.Height / 100)) {
+                document.getElementById("SexText").innerHTML += "<br><br> Their quim is overflowing with your cum; as you pull out, your excess seed follows.";
+				player.cumGround += ee.Cumin.Pussy - ee.Height / 100;
+				ee.Cumin.Pussy = ee.Height / 100;
+				} else if (ee.Cumin.Stomach > ee.Height / 200) {
+                document.getElementById("SexText").innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
+				}
+            } else document.getElementById("SexText").innerHTML += ", but nothing comes out of your dick."
         } else if (LastPressed == "DoggyStyle") {
             var cum = Cumming(player);
-            document.getElementById("SexText").innerHTML += "<br>Feeling close you thrust deep into their pussy"
+			ee.Cumin.Pussy += cum;
+            document.getElementById("SexText").innerHTML += "<br>Feeling close, you firmly grab their hips, and thrust deep into their pussy"
             if (cum > 0) {
-                document.getElementById("SexText").innerHTML += ", releasing " + cum + "L of cum into their pussy."
+                document.getElementById("SexText").innerHTML += ", releasing " + LToGal(cum) + " of cum into their pussy."
+				if (ee.Cumin.Pussy > (ee.Height / 100)) {
+                document.getElementById("SexText").innerHTML += "<br><br> Their quim is overflowing with your cum; as you pull out, your excess seed follows.";
+				player.cumGround += ee.Cumin.Pussy - ee.Height / 100;
+				ee.Cumin.Pussy = ee.Height / 100;
+				} else if (ee.Cumin.Stomach > ee.Height / 200) {
+                document.getElementById("SexText").innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
+				}
             } else document.getElementById("SexText").innerHTML += ", but nothing comes out."
         } else if (LastPressed == "DoggyStyleAnal") {
             var cum = Cumming(player);
-            document.getElementById("SexText").innerHTML += "<br>Feeling close you thrust deep into their bowels"
+            document.getElementById("SexText").innerHTML += "<br>Feeling close, you firmly grab their waist, and thrust deep into their bowels"
             if (cum > 0) {
-                document.getElementById("SexText").innerHTML += ", releasing " + cum + "L of cum into their bowels."
+				ee.Cumin.Ass += cum;
+                document.getElementById("SexText").innerHTML += ", releasing " + LToGal(cum) + " of cum into their ass."
+				if (ee.Cumin.Ass > (ee.Height / 50)) {
+                document.getElementById("SexText").innerHTML += "<br><br> Their ass is overflowing with your cum; as you pull out, your excess seed leaks out."
+				player.cumGround += ee.Cumin.Ass - ee.Height / 50;
+				ee.Cumin.Ass = ee.Height / 50;
+				} else if (ee.Cumin.Stomach > ee.Height / 100) {
+                document.getElementById("SexText").innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
+				}
+            }
             } else document.getElementById("SexText").innerHTML += ", but nothing comes out."
-        }
+		if(player.cumGround > 20000)
+			document.getElementById("SexText").innerHTML += "<br><br>Your opponent is caked white and heavily panting, cum still flowing out of their overfilled holes. Your extreme output has covered them, and all of the ground nearby, in your semen. You're glad that you don't have to clean this up..."
+		else if(player.cumGround > 5000)
+			document.getElementById("SexText").innerHTML += "<br><br>You've covered your (ex-)opponent in your cum, and left a sizable puddle underneath them. They're still dripping..."
+		else if(player.cumGround > 500)
+			document.getElementById("SexText").innerHTML += "<br><br>You've made quite a mess; they weren't able to handle your output, and have been covered in what their body couldn't handle."
+		else if(player.cumGround > 0)
+			document.getElementById("SexText").innerHTML += "<br><br>Their body bulges with your load, but it's not enough - what they couldn't keep inside, they're now wearing outside."
         AfterBattleButtons();
         CheckArousal();
     }
