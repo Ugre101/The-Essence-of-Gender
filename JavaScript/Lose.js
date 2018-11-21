@@ -227,7 +227,6 @@ function loseScene(struggle, selectScene, Enemy, Player)
 			playerCum += Player.Balls[0].Cum;
 		playerCum = LToGal(playerCum);
 	}
-	
 	var returnText;
 	if (struggle) {
 		switch (selectScene) {
@@ -272,12 +271,12 @@ function loseScene(struggle, selectScene, Enemy, Player)
 				returnText += "<br>Forcing you onto your stomach, your enemy repeatedly smacks your ass, bringing a blush to both sets of cheeks. Despite your humiliation (and your ass getting sore), you soon orgasm"
 				if(CheckGender(Player) === "hermaphrodite")
 					returnText += ", spurting cum from your dick onto your belly and soaking your thighs."
-				else if(player.Dicks.length > 0)
+				else if (player.Dicks.length > 0)
 					returnText += ", spurting cum from your dick onto your belly."
-				else if(player.Pussies.length > 0)
-					returnText +=",  soaking your thighs."
+				else if (player.Pussies.length > 0)
+					returnText += ",  soaking your thighs."
 				else
-					returnText +=", shuddering in unwanted pleasure."
+					returnText += ", shuddering in unwanted pleasure."
 				break;
 			case "getFucked":
 				returnText = "Forcing you on your back, your enemy fondles your clit just enough for your body to betray you and your pussy to get wet. "
@@ -469,7 +468,7 @@ function loseScene(struggle, selectScene, Enemy, Player)
 				if (player.Boobies[0].size > 3)
 					returnText += "Bending over your back, they reach down and fondle your nipples, not stopping their thrusts. You let out a low moan, your pleasure mounting ever higher. "
 				returnText += "<br>It doesn't take long for you to cum, your pussy's walls quivering around their dick. "
-				if(CheckGender(Player) === "hermaphrodite")
+				if(CheckGender(Player) === "hermaphrodite")er
 					returnText += "Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
 				returnText += "Your enemy cums soon after, quickly filling your pussy and collapses onto your back, spent. "
 				/*if(player.Pregnant.Babies.length > 0)

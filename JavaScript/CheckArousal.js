@@ -129,7 +129,7 @@ function CheckArousal() {
         CheckArousal();
     }
 
-    document.getElementById("PlayerLooks").innerHTML = BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
+    //document.getElementById("PlayerLooks").innerHTML = BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
     if (player.Pregnant.Babies.length > 0) {
         var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
         if (age < 1) {
@@ -139,7 +139,7 @@ function CheckArousal() {
         }
         document.getElementById("PlayerLooks").innerHTML += "<br>" + age;
     }
-    document.getElementById("EnemyLooks").innerHTML = BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
+    //document.getElementById("EnemyLooks").innerHTML = BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
     if (ee.hasOwnProperty("Pregnant")) {
         if (ee.Pregnant.Status) {
             document.getElementById("EnemyLooks").innerHTML += "<br>Pregnant";
