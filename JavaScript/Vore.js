@@ -1060,8 +1060,10 @@
         for (var e = 0; e < player.Vore.Stomach.length; e++) {
             sub += player.Vore.Stomach[e].Weight;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
-            bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
+            capacity += 20;
+			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus - sub;
     }
@@ -1071,8 +1073,10 @@
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.StomachExp / 100;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
-            bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+            capacity += 20;
+			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus;
     }
@@ -1092,8 +1096,10 @@
         for (var e = 0; e < player.Vore.Vagina.length; e++) {
             sub += player.Vore.Vagina[e].Weight;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
-            bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+            capacity += 20;
+			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus - sub;
     }
@@ -1109,8 +1115,10 @@
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.VaginaExp / 100;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
-            bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+            capacity += 20;
+			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus;
     }
@@ -1127,8 +1135,10 @@
         for (var e = 0; e < player.Vore.Breast.length; e++) {
             sub += player.Vore.Breast[e].Weight;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
-            bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+            capacity += 20;
+			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus - sub;
     }
@@ -1141,8 +1151,10 @@
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.BreastExp / 100;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
-            bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+            capacity += 20;
+			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus;
     }
@@ -1162,8 +1174,10 @@
         for (var e = 0; e < player.Vore.Balls.length; e++) {
             sub += player.Vore.Balls[e].Weight;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
-            bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+            capacity += 20;
+			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus - sub;
     }
@@ -1179,8 +1193,10 @@
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.BallsExp / 100;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
-            bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+            capacity += 20;
+			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus;
     }
@@ -1194,8 +1210,10 @@
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.AnalExp / 100;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
-            bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+            capacity += 20;
+			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         for (var e = 0; e < player.Vore.Anal.length; e++) {
             sub += player.Vore.Anal[e].Weight;
@@ -1211,8 +1229,10 @@
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.AnalExp / 100;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
-            bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+            capacity += 20;
+			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus;
     }
