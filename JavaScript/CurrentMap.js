@@ -154,7 +154,7 @@ function CurrentMap() {
 
                     }
                     if (Npcs.length < 1) {
-                        Npcs = [BlackMarket]
+                        Npcs = [BlackMarket, PortalShop]
                     }
                     PrintMap("Outlaws");
                     backmap = new Image;

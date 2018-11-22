@@ -101,11 +101,11 @@
             Breast: [],
             BreastExp: 0
         },
-		cumGround: 0,
-		Spells: {
-			Fireball: 0,
-			FireballMax: 0
-		}
+        cumGround: 0,
+        Spells: {
+            Fireball: 0,
+            FireballMax: 0
+        }
     };
 
     // House variable
@@ -149,8 +149,8 @@
         Vore: false,
         ImgPack: false,
         EssenceAuto: true,
-		// For testing animals
-		// AnimalSpawn: true,
+        // For testing animals
+        // AnimalSpawn: true,
         LogLength: 100,
         Pronun: {
             Status: false,
@@ -170,7 +170,7 @@
             ServeFemi: true
         },
         Inch: false,
-		Approx: false,
+        Approx: false,
         VoreSettings: {
             StomachDigestion: true,
             CumTF: true,
@@ -290,8 +290,8 @@
     // Sets display to none used for menu buttons
     function DisplayNone() {
         battle = true;
-		if(player.hasOwnProperty("Spells"))
-			player.Spells.Fireball = player.Spells.FireballMax;
+        if (player.hasOwnProperty("Spells"))
+            player.Spells.Fireball = player.Spells.FireballMax;
         document.getElementById("map").style.display = 'none'
         document.getElementById("optionpage").style.display = 'none';
         document.getElementById("ShowLooks").style.display = 'none';
@@ -1084,14 +1084,17 @@
     // Misc
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
-    var Barberer = new Npc("Barberer", "Hair salon" , grid, grid, grid * 5, grid*4, "RGB(133,94,66)")
-    // Outlaw
+    var Barberer = new Npc("Barberer", "Hair salon", grid, grid, grid * 5, grid * 4, "RGB(133,94,66)");
+    var PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)"); 
+    //Outlaw
     var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
     // Dungeons
     var FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)");
     // Farm
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
     var FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
+
+
 
 
     var Npcs = [];
@@ -1120,9 +1123,25 @@
                 document.getElementById("BattleText").innerHTML = null;
                 document.getElementById("BattleText2").innerHTML = null;
                 battle = true;
-				if(player.hasOwnProperty("Spells"))
-					player.Spells.Fireball = player.Spells.FireballMax;
+                if (player.hasOwnProperty("Spells")) {
+                    document.getElementById("SpellBook").style.display = 'block';
+                    if (player.Spells.FireballMax > 0) {
+                        document.getElementById("Fireball").style.display = 'inline-block';
+                        player.Spells.Fireball = player.Spells.FireballMax;
+                    } else {
+                        document.getElementById("Fireball").style.display = 'none';
+                        console.log("NO Ball")
+                    }
+                } else {
+                    console.log("NO Spell")
+                    document.getElementById("SpellBook").style.display = 'none';
+                }
                 EnemyIndex = enemies.indexOf(enemies[j]);
+                if (enemies[EnemyIndex].FirstName === "Feral") {
+                    document.getElementById("Tease").style.display = 'none'
+                } else {
+                    document.getElementById("Tease").style.display = 'inline-block'
+                }
                 enemies[j].Health = enemies[j].FullHealth;
                 enemies[j].WillHealth = enemies[j].FullWillHealth;
                 EssenceCheck(enemies[j]);
@@ -1139,8 +1158,8 @@
                     mousedowner = false;
                 }
                 battle = true;
-				if(player.hasOwnProperty("Spells"))
-					player.Spells.Fireball = player.Spells.FireballMax;
+                if (player.hasOwnProperty("Spells"))
+                    player.Spells.Fireball = player.Spells.FireballMax;
                 sprite.x = startarea.width / 2 - grid;
                 sprite.y = startarea.height / 2;
                 UpdateNpc(Npcs[n].Name);

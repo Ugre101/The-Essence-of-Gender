@@ -25,7 +25,7 @@
         }
 
         OldMap = medium;
-        medium = Math.ceil((document.documentElement.clientHeight * MapProcent) / 20) * 20;
+        medium = Math.ceil((document.documentElement.clientHeight * MapPercent) / 20) * 20;
         startarea.width = medium;
         startarea.height = medium;
         var NewMap = medium;
@@ -58,6 +58,7 @@
         FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)")
         FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
         Barberer = new Npc("Barberer", "Hair salon" , grid, grid, grid * 5, grid*4, "RGB(133,94,66)")
+        PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)"); 
 
 
         return;
