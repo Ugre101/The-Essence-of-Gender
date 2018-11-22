@@ -6,8 +6,11 @@ function UpdateStats() {
     document.getElementById("EnemyStatusWillHealth").innerHTML = ee.WillHealth;
     document.getElementById("EnemyStatusWillHealth").style.width = 100 * (ee.WillHealth / ee.FullWillHealth) + "%";
     document.getElementById("StatusName2").innerHTML = player.Name + " " + player.Lastname;
-    try {document.getElementById("Fireball").value = "Fireball (" + player.Spells.Fireball + " left)";}
-	catch {document.getElementById("Fireball").value = "Fireball";}
+    try {
+        document.getElementById("Fireball").value = "Fireball (" + player.Spells.Fireball + " left)";
+    } catch {
+        document.getElementById("Fireball").value = "Fireball";
+    }
     document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
     if (player.Health <= player.MaxHealth) {
         document.getElementById("StatusHealth2").style.width = 100 * (player.Health / player.MaxHealth) + "%";
@@ -27,7 +30,8 @@ function UpdateStats() {
         Teased = false;
         WinBattle();
         return;
-    } else*/ if (ee.Health <= 0) {
+    } else*/
+    if (ee.Health <= 0) {
         WinBattle();
         Teased = false;
         return;
@@ -109,11 +113,7 @@ document.getElementById("Hit").addEventListener("click", function () {
 });
 
 document.getElementById("Tease").addEventListener("click", function () {
-    // Ferals shouldn't get aroused by you
-    /*if(enemies[EnemyIndex].FirstName === "Feral") {
-        document.getElementById("BattleText").innerHTML = "You try seduction, but they don't seem interested in you." 
-        return;
-    }*/
+    // Ferals shouldn't get aroused by you #Tease is now disabled if enemy is feral -Ugre
     var PAttack = (RandomInt(1, 5) * player.Charm) / 2;
     enemies[EnemyIndex].WillHealth -= PAttack;
     document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " will dmg."
@@ -121,19 +121,19 @@ document.getElementById("Tease").addEventListener("click", function () {
     return;
 });
 document.getElementById("Fireball").addEventListener("click", function () {
-    if(!player.hasOwnProperty("Spells")) {
+    if (!player.hasOwnProperty("Spells")) {
         document.getElementById("BattleText").innerHTML = "You wave your arms, but nothing happens. Maybe you should learn magic first...";
         UpdateStats();
         return;
     } else if (player.Spells.FireballMax <= 0) {
-                document.getElementById("BattleText").innerHTML = "You wave your arms, but nothing happens. Maybe you should learn magic first...";
+        document.getElementById("BattleText").innerHTML = "You wave your arms, but nothing happens. Maybe you should learn magic first...";
         UpdateStats();
         return;
     } else if (player.Spells.Fireball <= 0) {
         document.getElementById("BattleText").innerHTML = "You're exhausted, and can't cast another fireball...";
         UpdateStats();
         return;
-    } 
+    }
     var PAttack = (RandomInt(1, 5) * player.Int);
     enemies[EnemyIndex].WillHealth -= PAttack;
     enemies[EnemyIndex].Health -= PAttack;
@@ -173,12 +173,6 @@ function WinBattle() {
     player.Gold += ee.Gold;
     ee.SessionOrgasm = 0;
     player.SessionOrgasm = 0;
-    // No sex with animals (yet??)
-/*    if(ee.FirstName === "Feral")
-    {
-        player.SessionOrgasm = Math.round(player.End / 8);
-        player.Orgasm = Math.round(player.End / 8);
-    }*/
     document.getElementById("Encounter").style.display = 'none';
     for (var i = 0; i < player.Quests.length; i++) {
         if (player.Quests[i].Name === "ElfHunt") {
@@ -246,6 +240,11 @@ function WinBattle() {
             document.getElementById("MyImg").style.display = 'none';
         }
         CheckArousal();
-        AfterBattleButtons();
+        // No sex with animals (yet??) #Moved it to afterbattlebutton so it can be easier expanded -Ugre
+        if (enemies[EnemyIndex].Name === "Feral") {
+            AfterBattleButtons(false);
+        } else {
+            AfterBattleButtons();
+        }
     }
 }

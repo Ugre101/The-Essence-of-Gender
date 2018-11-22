@@ -75,7 +75,7 @@ function CheckDoor() {
                         } else {
                             document.getElementById("Dorm").style.display = "none"
                         }
-                        if (House.hasOwnProperty("Portal")) {
+                        if (House.Portal) {
                             document.getElementById("Portal").style.display = 'inline-block'
                         } else {
                             document.getElementById("Portal").style.display = 'none'
