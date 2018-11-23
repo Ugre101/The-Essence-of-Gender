@@ -18,7 +18,7 @@
         document.getElementById("HomeStart").style.display = 'none';
         document.getElementById("Upgrades").style.display = 'block';
         document.getElementById("HomeText").innerHTML = "";
-        if (House.hasOwnProperty("Portal")) {
+        if (House.Portal) {
             document.getElementById("BuildPortal").style.display = 'none';
         }
         var BedCost = Math.round(50 * Math.pow(1.2, House.BedLevel));
@@ -99,7 +99,7 @@
         document.getElementById("BuildKitchen").value = "Build kitchen " + Kitchencost + "g";
     });
     document.getElementById("BuildPortal").addEventListener("click", function () {
-        if (player.Gold > 1000 && !House.hasOwnProperty("Portal")) {
+        if (player.Gold >= 1000 && !House.Portal) {
             player.Gold -= 1000;
             House.Portal = true;
             document.getElementById("HomeText").innerHTML = "Congratulations you now own a personal portal, a true sign of wealth for peasants to envy!"

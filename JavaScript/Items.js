@@ -344,5 +344,23 @@ const ItemDict = {
         Drop: "Yes",
         Does: "...",
         Title: "A bottle of milk."
+    },
+    PocketPortal: {
+        Name: "Pocket portal",
+        Use: function(who) {
+            console.log(House)
+            if (House.Portal) {
+                who.Area = "First";
+                who.Map = "RoadToHome";
+                DisplayGame();
+                document.getElementById("Inventory").style.display = 'none';
+            } else {
+                document.getElementById("InventoryText").innerHTML = "What a waste...";
+            }
+        },
+        Equip: "No",
+        Does: "Teleport home",
+        Drop: "No",//I think?
+        Title: "Never walk home again!"
     }
 }
