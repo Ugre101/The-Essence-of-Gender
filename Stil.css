@@ -94,10 +94,11 @@
        }
    }
 
-   @media (max-width: 600px) {
+   @media (max-width: 400px) {
        #map {
            position: absolute;
            right: 0;
+           top: 0;
        }
 
        #WorldMapContainer {
@@ -300,9 +301,14 @@
    }
 
    @media (max-width: 700px) {
-       #WorldMap {
+       #WorldMapContainer {
            right: 0;
            top: 0;
+           height: 30vh;
+           width: 30vh;
+       }
+
+       #WorldMap {
            height: 30vh;
            width: 30vh;
        }

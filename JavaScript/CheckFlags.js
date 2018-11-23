@@ -209,10 +209,29 @@ function CheckFlags() {
         }
         console.log("Added Spells & Fireballs");
     }
-    if (!House.hasOwnProperty("Portal")){
+    if (!House.hasOwnProperty("Portal")) {
         House.Portal = false;
         console.log("Added house portal");
     }
     SnowInventoryAdd(ItemDict.PocketPortal, 99);
+    if (window.innerHeight < 600) {
+        document.getElementById("FirstButtons").style.display = 'none';
+        document.getElementById("SecondButtons").style.display = 'none';
+        document.getElementById("MoreButtons").style.display = 'inline-block';
+        document.getElementById("LessButtons").style.display = 'inline-block';
+        document.getElementById("MobileButtons").style.display = 'inline-block';
+    } else if (window.innerHeight < 800) {
+        document.getElementById("FirstButtons").style.display = 'block';
+        document.getElementById("SecondButtons").style.display = 'none';
+        document.getElementById("MoreButtons").style.display = 'inline-block';
+        document.getElementById("LessButtons").style.display = 'inline-block';
+        document.getElementById("MobileButtons").style.display = 'none';
+    } else {
+        document.getElementById("SecondButtons").style.display = 'block';
+        document.getElementById("FirstButtons").style.display = 'block';
+        document.getElementById("MoreButtons").style.display = 'none';
+        document.getElementById("LessButtons").style.display = 'none';
+        document.getElementById("MobileButtons").style.display = 'none';
+    }
 
 }

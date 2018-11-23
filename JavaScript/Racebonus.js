@@ -26,6 +26,9 @@ function RaceBonus(who) {
             who.SexSkill += 2;
             break;
         case "Imp":
+            if (who.Femi > who.Masc) {
+                who.Masc = who.Femi;
+            }
             who.Femi = 0;
             break;
         case "Demon":
@@ -36,6 +39,14 @@ function RaceBonus(who) {
             who.WillHealth += 40;
             who.WillFullHealth += 40;
             who.Will += 1;
+            break;
+        case "Succubus":
+            who.Femi += who.Masc;
+            who.Masc = 0;
+            break;
+        case "Incubus":
+            who.Masc += who.Femi;
+            who.Femi = 0;
             break;
     }
     return who;
