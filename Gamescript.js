@@ -218,7 +218,6 @@
     var sprite = {
         x: grid,
         y: grid,
-        karta: "Start"
     };
 
     document.getElementById("VoreLooks").style.display = 'none';
@@ -578,7 +577,6 @@
 
 
     var battle = false;
-    var FirstRound = true;
 
     function Pronun(gender) {
         switch (gender) {
@@ -1085,7 +1083,7 @@
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
     var Barberer = new Npc("Barberer", "Hair salon", grid, grid, grid * 5, grid * 4, "RGB(133,94,66)");
-    var PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)"); 
+    var PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)");
     //Outlaw
     var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
     // Dungeons
@@ -1147,7 +1145,7 @@
                 EssenceCheck(enemies[j]);
                 enemies[j].XPos = RandomInt(2, 18) * grid;
                 enemies[j].YPos = RandomInt(2, 18) * grid;
-                UpdateStats();
+                UpdateStats(true);
             }
         }
         for (var n = 0; n < Npcs.length; n++) {
@@ -1206,9 +1204,8 @@
         }
     }
 
-    var needPrint = ["FarmBarn", "FarmOwner"]
-
     function PrintNpcs() {
+        var needPrint = ["FarmBarn", "FarmOwner"]
         for (var e of Npcs) {
             if (needPrint.indexOf(e.Name) > -1) {
                 ctx.fillStyle = e.Color;
@@ -1220,8 +1217,6 @@
             ctx.fillText(e.RealName, e.X + e.Width / 2, e.Y + e.Height / 1.8);
         }
     }
-    var a = document.documentElement.clientHeight;
-
 
     function testsa(e) {
         for (var b = e; b < enemies.length; b++) {
@@ -1279,7 +1274,7 @@
         ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
     }
 
-
+    var WindowChange = document.documentElement.clientHeight;
     var fps = [];
 
     function loop() {
@@ -1292,9 +1287,9 @@
             fps.pop();
             fps.pop();
         }
-        if (a != document.documentElement.clientHeight) {
+        if (WindowChange != document.documentElement.clientHeight) {
             HemScale();
-            a = document.documentElement.clientHeight
+            WindowChange = document.documentElement.clientHeight
         };
 
         document.getElementById("StatusArea").innerHTML = "Area: " + player.Area + " and Map: " + player.Map;

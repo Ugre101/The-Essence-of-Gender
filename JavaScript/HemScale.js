@@ -6,16 +6,12 @@
             document.getElementById("MoreButtons").style.display = 'inline-block';
             document.getElementById("LessButtons").style.display = 'inline-block';
             document.getElementById("MobileButtons").style.display = 'inline-block';
-            FontSize = 0.75;
-            document.body.style.fontSize = FontSize + "em";
         } else if (window.innerHeight < 800) {
             document.getElementById("FirstButtons").style.display = 'block';
             document.getElementById("SecondButtons").style.display = 'none';
             document.getElementById("MoreButtons").style.display = 'inline-block';
             document.getElementById("LessButtons").style.display = 'inline-block';
             document.getElementById("MobileButtons").style.display = 'none';
-            FontSize = 0.95;
-            document.body.style.fontSize = FontSize + "em";
         } else {
             document.getElementById("SecondButtons").style.display = 'block';
             document.getElementById("FirstButtons").style.display = 'block';
@@ -23,7 +19,6 @@
             document.getElementById("LessButtons").style.display = 'none';
             document.getElementById("MobileButtons").style.display = 'none';
         }
-
         OldMap = medium;
         medium = Math.ceil((document.documentElement.clientHeight * MapPercent) / 20) * 20;
         startarea.width = medium;
@@ -57,8 +52,8 @@
         FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
         FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)")
         FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
-        Barberer = new Npc("Barberer", "Hair salon" , grid, grid, grid * 5, grid*4, "RGB(133,94,66)")
-        PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)"); 
+        Barberer = new Npc("Barberer", "Hair salon", grid, grid, grid * 5, grid * 4, "RGB(133,94,66)")
+        PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)");
 
 
         return;

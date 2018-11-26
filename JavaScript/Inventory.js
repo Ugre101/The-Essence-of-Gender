@@ -5,7 +5,22 @@ document.getElementById("ShowInventory").addEventListener("click", function () {
     document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
 });
 document.getElementById("InventoryBag").addEventListener("mouseover", function (e) {
-    document.getElementById("InventoryText").innerHTML = e.target.title;
+    if (e.target.type !== "button") {
+        if (e.target.nodeName === "P") { // So that text still show if you hover over <p></p>
+            document.getElementById("InventoryText").innerHTML = e.target.parentElement.title;
+        } else {
+            document.getElementById("InventoryText").innerHTML = e.target.title;
+        }
+    }
+});
+document.getElementById("InventoryBag").addEventListener("click", function (e) { // For mobile users
+    if (e.target.type !== "button") {
+        if (e.target.nodeName === "P") {
+            document.getElementById("InventoryText").innerHTML = e.target.parentElement.title;
+        } else {
+            document.getElementById("InventoryText").innerHTML = e.target.title;
+        }
+    }
 });
 
 function Items(Things) {
@@ -14,7 +29,7 @@ function Items(Things) {
             var temp = Things[e];
             console.log(temp)
             Things.splice(e, 1);
-            Things.unshift(temp);  // Put pocket portal first in inventory.
+            Things.unshift(temp); // Put pocket portal first in inventory.
         }
     }
     var Bag = "";

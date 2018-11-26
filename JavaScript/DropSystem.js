@@ -15,6 +15,26 @@ function SnowInventoryAdd(item, quantity = 1) {
 }
 
 function DropSystem(who) {
+    var dropRate = {
+        "Human": 1.00,
+        "Halfling": 1.00,
+        "Orc": 1.00,
+        "Troll": 1.00,
+        "Farmer": 1.00,
+        "Elf": 1.00,
+        "Amazon": 1.00,
+        "Fairy": 1.00,
+        "Commoner": 1.00,
+        "Thug": 1.00,
+        "Dark elf": 1.00,
+        "Imp": 1.00,
+        "Goblin": 1.00,
+        "Dhampir": 1.00,
+        "Demon": 1.00,
+        "Succubus": 1.00,
+        "Incubus": 1.00,
+        "Witch": 1.00
+    }
     var e = who;
     var r = Math.random();
     if (r <= dropRate[e.Name]) {
@@ -77,10 +97,10 @@ function DropSystem(who) {
             case "Dhampir":
                 SnowInventoryAdd(ItemDict.infernalMilk);
                 break;
-			case "Succubus":
+            case "Succubus":
                 SnowInventoryAdd(ItemDict.SuccMilk);
                 break;
-			case "Incubus":
+            case "Incubus":
                 SnowInventoryAdd(ItemDict.IncSemen);
                 break;
             default:

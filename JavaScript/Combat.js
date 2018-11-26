@@ -1,4 +1,4 @@
-function UpdateStats() {
+function UpdateStats(FirstRound = false) {
     var ee = enemies[EnemyIndex];
     document.getElementById("BattleEnemy").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronun(CheckGender(ee));
     document.getElementById("EnemyStatusHealth").innerHTML = ee.Health;
@@ -64,17 +64,9 @@ function EnemyAttack() {
         player.Health -= EAttack;
         document.getElementById("BattleText2").innerHTML = "Your opponent hits you for " + EAttack + " dmg.";
         document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
-        if (player.Health <= player.MaxHealth) {
-            document.getElementById("StatusHealth2").style.width = 100 * (player.Health / player.MaxHealth) + "%";
-        } else {
-            document.getElementById("StatusHealth2").style.width = 103 + "%";
-        }
+        document.getElementById("StatusHealth2").style.width = Math.min(103, 100 * (player.Health / player.MaxHealth)) + "%";
         document.getElementById("StatusWillHealth2").innerHTML = Math.round(player.WillHealth);
-        if (player.WillHealth <= player.MaxWillHealth) {
-            document.getElementById("StatusWillHealth2").style.width = 100 * (player.WillHealth / player.MaxWillHealth) + "%";
-        } else {
-            document.getElementById("StatusWillHealth2").style.width = 103 + "%";
-        }
+        document.getElementById("StatusWillHealth2").style.width = Math.min(103, 100 * (player.WillHealth / player.MaxWillHealth)) + "%";
         if (player.Health <= EAttack) {
             UpdateStats();
             return;
@@ -85,17 +77,10 @@ function EnemyAttack() {
         player.WillHealth -= EAttack;
         document.getElementById("BattleText2").innerHTML = "Your opponent teased you for " + EAttack + " will dmg.";
         document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
-        if (player.Health <= player.MaxHealth) {
-            document.getElementById("StatusHealth2").style.width = 100 * (player.Health / player.MaxHealth) + "%";
-        } else {
-            document.getElementById("StatusHealth2").style.width = 103 + "%";
-        }
+        document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
+        document.getElementById("StatusHealth2").style.width = Math.min(103, 100 * (player.Health / player.MaxHealth)) + "%";
         document.getElementById("StatusWillHealth2").innerHTML = Math.round(player.WillHealth);
-        if (player.WillHealth <= player.MaxWillHealth) {
-            document.getElementById("StatusWillHealth2").style.width = 100 * (player.WillHealth / player.MaxWillHealth) + "%";
-        } else {
-            document.getElementById("StatusWillHealth2").style.width = 103 + "%";
-        }
+        document.getElementById("StatusWillHealth2").style.width = Math.min(103, 100 * (player.WillHealth / player.MaxWillHealth)) + "%";
         if (player.WillHealth <= EAttack) {
             UpdateStats();
             return;
@@ -105,7 +90,7 @@ function EnemyAttack() {
 }
 // Battle attack buttons
 document.getElementById("Hit").addEventListener("click", function () {
-    var PAttack = (RandomInt(1, 5) * player.Str) / 2;
+    var PAttack = Math.floor(RandomInt(1, 5) * player.Str / 2);
     enemies[EnemyIndex].Health -= PAttack;
     document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " dmg.";
     UpdateStats();
@@ -114,7 +99,7 @@ document.getElementById("Hit").addEventListener("click", function () {
 
 document.getElementById("Tease").addEventListener("click", function () {
     // Ferals shouldn't get aroused by you #Tease is now disabled if enemy is feral -Ugre
-    var PAttack = (RandomInt(1, 5) * player.Charm) / 2;
+    var PAttack = Math.floor(RandomInt(1, 5) * player.Charm / 2);
     enemies[EnemyIndex].WillHealth -= PAttack;
     document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " will dmg."
     UpdateStats();
@@ -167,7 +152,6 @@ var ESexAttack;
 
 function WinBattle() {
     var ee = enemies[EnemyIndex];
-    FirstRound = true;
     Winner = true;
     player.Exp += ee.Exp;
     player.Gold += ee.Gold;

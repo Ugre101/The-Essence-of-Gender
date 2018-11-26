@@ -31,6 +31,7 @@ document.getElementById("BanditLord").addEventListener("click", function () {
     document.getElementById("QuestReward").style.display = 'none';
 });
 document.getElementById("ElfHunt").addEventListener("click", function () {
+    document.getElementById("LeaveQuest").style.display = 'none';
     document.getElementById("TownhallText").innerHTML = "The elves to the south is becoming a problem, defeat atleast three of them and you will be awarded."
     document.getElementById("QuestButtons").style.display = 'block';
     document.getElementById("QuestStart").style.display = 'none';
