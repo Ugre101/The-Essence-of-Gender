@@ -81,8 +81,7 @@
         Face: {
             Eyes: "brown",
             HairStyle: "curly",
-            HairColor: "brown",
-            HairLength: "shoulder-"
+            HairLength: "shoulder-length"
         },
         FoodStomach: [],
         Vore: {
@@ -233,16 +232,21 @@
         document.getElementById("CharCreator").style.display = 'none';
         document.getElementById("page2").style.display = 'block';
         document.getElementById("startgame").style.display = 'none';
-        player.Name = document.getElementById("firstname").value;
-        player.Lastname = document.getElementById("lastname").value;
-        player.Haircolor = document.getElementById("haircolor").value;
-        player.Skincolor = document.getElementById("skincolor").value;
+        console.log(document.getElementById("haircolor").value);
+        setupChar(document.getElementById("firstname").value, document.getElementById("lastname").value, document.getElementById("haircolor").value, document.getElementById("skincolor").value);
         player.MaxHealth = 100;
         player.MaxWillHealth = 100;
         player.Health = player.MaxHealth;
         player.WillHealth = player.MaxWillHealth;
         document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
     });
+
+    function setupChar(first, last, hair, skin) {
+        player.Name = first;
+        player.LastName = last;
+        player.Face.HairColor = hair;
+        player.Skincolor = skin;
+    }
 
     document.getElementById("BackHome").addEventListener("click", function () {
         document.getElementById("CharCreator").style.display = 'none';
