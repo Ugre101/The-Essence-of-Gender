@@ -1,5 +1,21 @@
 function AfterBattleButtons(Sex = true) {
     console.log(Sex)
+    document.getElementById("EnemyVagina").style.display = 'none';
+    document.getElementById("EnemyDick").style.display = 'none';
+    document.getElementById("PlayerVagina").style.display = 'none';
+    document.getElementById("PlayerDick").style.display = 'none';
+    document.getElementById("Anal").style.display = 'none';
+    document.getElementById("Breast").style.display = 'none';
+    document.getElementById("CaptureOpponent").style.display = 'none';
+    document.getElementById("DungeonCaptureOpponent").style.display = 'none';
+    document.getElementById("DungeonStop").style.display = 'none';
+    if(window.innerHeight > 800) {
+        document.getElementById("DickAction").style.display = 'none'
+        document.getElementById("DickOne").style.display = 'block'
+        document.getElementById("DickTwo").style.display = 'block'
+    } else  {
+        document.getElementById("DickAction").style.display = 'block'
+    }
     if (Sex) {
         if (enemies[EnemyIndex].Orgasm > 4 && House.Dormmates.length < (House.Dorm * 3)) {
             if (Dungeon) {
@@ -7,90 +23,67 @@ function AfterBattleButtons(Sex = true) {
             } else {
                 document.getElementById("CaptureOpponent").style.display = 'block'
             }
-        } else {
-            document.getElementById("CaptureOpponent").style.display = "none"
-            document.getElementById("DungeonCaptureOpponent").style.display = 'none'
         }
-
         if (Dungeon) {
             document.getElementById("DungeonStop").style.display = 'block';
             document.getElementById("StopSex").style.display = 'none';
         } else {
             document.getElementById("StopSex").style.display = 'block';
-            document.getElementById("DungeonStop").style.display = 'none';
         }
 
+        document.getElementById("Anal").style.display = 'block';
+        document.getElementById("Breast").style.display = 'block';
         switch (CheckGender(enemies[EnemyIndex])) {
             case "cuntboy":
             case "female":
-                document.getElementById("GiveCunnilingus").style.display = 'block';
-                document.getElementById("GiveBlowjob").style.display = 'none';
+                document.getElementById("EnemyVagina").style.display = 'block';
                 if (player.Dicks.length > 0) {
                     AllDick();
-                } else {
-                    document.getElementById("PlayerDick").style.display = 'none';
                 }
                 if (player.Pussies.length > 0) {
                     document.getElementById("PlayerVagina").style.display = 'block';
                     document.getElementById("Scissoring").style.display = 'block';
                     document.getElementById("GetCunnilingus").style.display = 'block';
                     document.getElementById("RideCowgirl").style.display = 'none';
-                } else {
-                    document.getElementById("PlayerVagina").style.display = 'none';
                 }
                 break;
             case "hermaphrodite":
-                document.getElementById("GiveCunnilingus").style.display = 'block';
-                document.getElementById("GiveBlowjob").style.display = 'block';
+                document.getElementById("EnemyVagina").style.display = 'block';
+                document.getElementById("EnemyDick").style.display = 'block';
                 if (player.Dicks.length > 0) {
                     AllDick();
-                } else {
-                    document.getElementById("PlayerDick").style.display = 'none';
                 }
                 if (player.Pussies.length > 0) {
                     AllPussy()
-                } else {
-                    document.getElementById("PlayerVagina").style.display = 'none';
                 }
                 break;
             case "dickgirl":
             case "male":
-                document.getElementById("GiveBlowjob").style.display = 'block';
-                document.getElementById("GiveCunnilingus").style.display = 'none';
+                document.getElementById("EnemyDick").style.display = 'block';
                 if (player.Dicks.length > 0) {
                     document.getElementById("PlayerDick").style.display = 'block';
                     document.getElementById("Missionary").style.display = 'none';
                     document.getElementById("DoggyStyle").style.display = 'none';
                     document.getElementById("DoggyStyleAnal").style.display = 'block';
                     document.getElementById("GetBlowjob").style.display = 'block';
-                } else {
-                    document.getElementById("PlayerDick").style.display = 'none';
                 }
                 if (player.Pussies.length > 0) {
                     AllPussy();
-                } else {
-                    document.getElementById("PlayerVagina").style.display = 'none';
                 }
                 break;
             case "doll":
-                document.getElementById("GiveCunnilingus").style.display = 'none';
-                document.getElementById("GiveBlowjob").style.display = 'none';
                 if (player.Dicks.length > 0) {
                     document.getElementById("PlayerDick").style.display = 'block';
                     document.getElementById("Missionary").style.display = 'none';
                     document.getElementById("DoggyStyle").style.display = 'none';
                     document.getElementById("DoggyStyleAnal").style.display = 'block';
                     document.getElementById("GetBlowjob").style.display = 'block';
-                } else {
-                    document.getElementById("PlayerDick").style.display = 'none';
                 }
                 if (player.Pussies.length > 0) {
                     document.getElementById("PlayerVagina").style.display = 'block';
                     document.getElementById("Scissoring").style.display = 'none';
                     document.getElementById("GetCunnilingus").style.display = 'block';
                     document.getElementById("RideCowgirl").style.display = 'none';
-                } else {
-                    document.getElementById("PlayerVagina").style.display = 'none';
                 }
         }
 
@@ -148,15 +141,6 @@ function AfterBattleButtons(Sex = true) {
         }
     } else {
         // Maybe pet the feral to get their race essence? As a way to get furry tf.
-        document.getElementById("EnemyVagina").style.display = 'none';
-        document.getElementById("EnemyDick").style.display = 'none';
-        document.getElementById("PlayerVagina").style.display = 'none';
-        document.getElementById("PlayerDick").style.display = 'none';
-        document.getElementById("Anal").style.display = 'none';
-        document.getElementById("Breast").style.display = 'none';
-        document.getElementById("CaptureOpponent").style.display = 'none';
-        document.getElementById("DungeonCaptureOpponent").style.display = 'none';
-        document.getElementById("DungeonStop").style.display = 'none';
         if (Settings.Vore) {
             if (StomachCapacity() > enemies[EnemyIndex].Weight) {
                 document.getElementById("OralVore").style.display = 'block';
