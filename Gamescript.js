@@ -116,7 +116,10 @@
         Gym: 0,
         Brothel: 0,
         Dormmates: [],
-        Portal: false,
+        Portal: {
+            Owned: false,
+            Mountain: false
+        },
         Nursery: 0
     };
 
@@ -1265,6 +1268,8 @@
     };
 
     function PaintBackground() {
+        var WorldMap = document.getElementById("WorldMap");
+        var World = WorldMap.getContext("2d");
         ctx.fillStyle = MapColor;
         World.fillStyle = MapColor;
         ctx.fillRect(0, 0, startarea.width, startarea.height);
@@ -1325,6 +1330,7 @@
             switch (player.Map) {
                 case "Farm":
                 case "TempCity":
+                case "MountainStart":
                     PaintBackground();
                     break;
                 default:

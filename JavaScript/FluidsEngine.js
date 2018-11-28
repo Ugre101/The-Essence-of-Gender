@@ -2,13 +2,11 @@ function FluidsEngine() {
     if (player.Balls.length > 0) {
         for (var b = 0; b < player.Balls.length; b++) {
             player.Balls[b].CumMax = 1 / 3 * Math.PI * Math.pow(player.Balls[b].Size, 3),
-            player.Balls[b].CumBaseRate = player.Balls[b].CumMax / 500;
+                player.Balls[b].CumBaseRate = player.Balls[b].CumMax / 500;
             if (player.Balls[b].Cum < player.Balls[b].CumMax) {
                 player.Balls[b].Cum += Math.max(0, player.Balls[b].CumRate + player.Balls[b].CumBaseRate);
             }
         }
-    }
-    if (player.Balls.length > 0) {
         document.getElementById("CumBar").style.display = 'block';
         var TotalCum = 0,
             TotalCumMax = 0;
@@ -33,7 +31,6 @@ function FluidsEngine() {
         for (var b = 0; b < player.Boobies.length; b++) {
             if (!Settings.EssenceAuto) {
                 player.Boobies[b].MilkMax = 1 / 3 * Math.PI * Math.pow(player.Boobies[b].Size, 3);
-                console.log("true")
             }
             if (player.Boobies[b].MilkRate > 0) {
                 player.Boobies[b].Milk += player.Boobies[b].MilkRate;
@@ -59,7 +56,7 @@ function FluidsEngine() {
             if (House.Dormmates[e].Balls.length > 0) {
                 for (var b = 0; b < House.Dormmates[e].Balls.length; b++) {
                     House.Dormmates[e].Balls[b].CumMax = 1 / 3 * Math.PI * Math.pow(House.Dormmates[e].Balls[b].Size, 3),
-                    House.Dormmates[e].Balls[b].CumBaseRate = House.Dormmates[e].Balls[b].CumMax / 500;
+                        House.Dormmates[e].Balls[b].CumBaseRate = House.Dormmates[e].Balls[b].CumMax / 500;
                     if (House.Dormmates[e].Balls[b].Cum < House.Dormmates[e].Balls[b].CumMax) {
                         House.Dormmates[e].Balls[b].Cum += Math.max(0, House.Dormmates[e].Balls[b].CumRate + House.Dormmates[e].Balls[b].CumBaseRate);
                     }
