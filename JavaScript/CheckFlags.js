@@ -210,10 +210,26 @@ function CheckFlags() {
         console.log("Added Spells & Fireballs");
     }
     if (!House.hasOwnProperty("Portal")) {
-        House.Portal = false;
-        console.log("Added house portal");
+        House.Portal = {
+            Owned: false,
+            Mountain: false
+        }
+        console.log("Added house portal owned false");
+    } else if (!House.Portal.hasOwnProperty("Owned")) {
+        if (House.Portal) {
+            House.Portal = {
+                Owned: true,
+                Mountain: false
+            }
+            console.log("Added house portal owned true");
+        } else {
+            House.Portal = {
+                Owned: false,
+                Mountain: false
+            }
+            console.log("Added house portal owned false");
+        }
     }
-    SnowInventoryAdd(ItemDict.PocketPortal, 99);
     if (window.innerHeight < 600) {
         document.getElementById("FirstButtons").style.display = 'none';
         document.getElementById("SecondButtons").style.display = 'none';

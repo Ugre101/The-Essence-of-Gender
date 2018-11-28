@@ -76,7 +76,7 @@ function BiggerChest(index) {
     if (player.Femi >= cost) {
         player.Femi -= cost;
         player.Boobies[index].Size += 1 * ManualGrowthScale();
-        player.Boobies[index].MilkMax = Math.round(player.Boobies[b].Size * 400);
+        player.Boobies[index].MilkMax = Math.round(player.Boobies[index].Size * 400);
     }
 }
 document.getElementById("GrowPussy").addEventListener("click", function () {

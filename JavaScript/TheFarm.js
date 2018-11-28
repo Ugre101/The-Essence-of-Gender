@@ -44,12 +44,26 @@ document.getElementById("FarmOwnerLooks").addEventListener("click", function () 
 
 // The FarmBarn
 document.getElementById("Milker500").addEventListener("click", function () {
-    if (player.Gold >= 500) {
+    if (player.Gold >= 499) {
+        player.Gold -= 499;
+        SnowInventoryAdd(ItemDict.Milker, 500);
         // Add milker
     } else {
         // You can't afford 
     }
 });
+document.getElementById("FarmBarn").addEventListener("mouseover", function (e) {
+    document.getElementById("FarmBarnText").innerHTML = e.target.title;
+});
+/*document.getElementById("InfinityMilker").addEventListener("click", function () {
+    if (player.Gold >= 7000) {
+        player.Gold -= 7000;
+        SnowInventoryAdd(ItemDict.Milker, Infinity);
+        // Add milker
+    } else {
+        // You can't afford 
+    }
+});*/
 document.getElementById("MilkAdd").addEventListener("click", function () {
     // extra non-preg milkrate
     if (player.Gold >= 30) {

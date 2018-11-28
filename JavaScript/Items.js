@@ -300,55 +300,110 @@ const ItemDict = {
         Title: "Temp_Tempsson legendary temp sword gives +999 to testing."
     },
     Milker: {
-        Name: "Milker",
-        Use: function (who) {
+        Name: "Milker500",
+        Use: function (who, item) {
             var Milktotal = 0;
-            for (var e of player.Boobies) {
+            for (var e of who.Boobies) {
                 if (e.Milk > 0) {
                     Milktotal += e.Milk;
                     e.Milk = 0
                 }
             }
-            var bottles = Math.round(Milktotal) //1L per bottle
-            SnowInventoryAdd(ItemDict.MilkBottle, bottles);
+            item.Quantity++; // Crude way to stop player from wasteing milker.
+            if (Math.round(Milktotal / 500) > 0) {
+                item.Quantity -= Math.max(1, Math.round(Milktotal / 1000));
+            }
+            if (Math.floor(Milktotal / 2000) > 0) {
+                SnowInventoryAdd(ItemDict.LargeMilkBottle, Math.floor(Milktotal / 2000))
+            }
+            if (Math.floor(Milktotal % 2000 / 1000 > 0)) {
+                SnowInventoryAdd(ItemDict.MilkBottle, Math.floor(Milktotal % 2000 / 1000))
+            }
+            if (Math.round((Milktotal % 1000 / 500))) { // Giving two bottles if over 1.5 seems fair
+                SnowInventoryAdd(ItemDict.SmallMilkBottle, Math.round((Milktotal % 1000 / 500)));
+            }
+            FluidsEngine();
         },
         Equip: "No",
         Drop: "Yes",
         Does: "Milk you",
         Title: "Milk yourself"
     },
-    MilkBottle: {
-        Name: "Milk",
+    SmallMilkBottle: {
+        Name: "Small milk bottle",
         Use: function (who) {
-            var a = RandomInt(1,20);
+            var a = RandomInt(1, 20);
             if (a > 18) {
-                for (var e of player.Boobies) {
+                for (var e of who.Boobies) {
                     e.MilkRate++;
-                    EventLog("After drinking the last of the milk you get a funny feeling in your chest.")
+                    EventLog("After drinking the milk you get a funny feeling in your chest.")
                 }
             }
-            player.Health += 20;
-            player.WillHealth += 20;
-            player.Fat += 0.2;
+            player.Health += 5;
+            player.WillHealth += 5;
+            player.Fat += 0.1;
             //Drink milk
         },
         Equip: "No",
         Drop: "Yes",
         Does: "...",
-        Title: "A 1L bottle of milk."
+        Title: "A half liter bottle filled milk."
+    },
+    MilkBottle: {
+        Name: "Milk bottle",
+        Use: function (who) {
+            var a = RandomInt(1, 20);
+            if (a > 17) {
+                for (var e of who.Boobies) {
+                    e.MilkRate++;
+                    EventLog("After drinking the milk you get a funny feeling in your chest.")
+                }
+            }
+            player.Health += 12;
+            player.WillHealth += 12;
+            player.Fat += 0.3;
+            //Drink milk
+        },
+        Equip: "No",
+        Drop: "Yes",
+        Does: "...",
+        Title: "A one liter bottle filled milk."
+    },
+    LargeMilkBottle: {
+        Name: "Large milk bottle",
+        Use: function (who) {
+            var a = RandomInt(1, 20);
+            if (a > 16) {
+                for (var e of who.Boobies) {
+                    e.MilkRate++;
+                    EventLog("After drinking the milk you get a funny feeling in your chest.")
+                }
+            }
+            player.Health += 30;
+            player.WillHealth += 30;
+            player.Fat += 0.5;
+            //Drink milk
+        },
+        Equip: "No",
+        Drop: "Yes",
+        Does: "...",
+        Title: "A two liter bottle filled milk."
     },
     PocketPortal: {
         Name: "Pocket portal",
-        Use: function (who) {
-            if (player.Map === "RoadToHome") {
-                document.getElementById("InventoryText").innerHTML = "..."
-            } else if (House.Portal) {
+        Use: function (who, item) {
+            console.log(House.Portal)
+            if (who.Map === "RoadToHome") {
+                document.getElementById("InventoryText").innerHTML = "... seriously?"
+                item.Quantity++;
+            } else if (House.Portal.Owned) {
                 who.Area = "First";
                 who.Map = "RoadToHome";
                 DisplayGame();
                 document.getElementById("Inventory").style.display = 'none';
             } else {
-                document.getElementById("InventoryText").innerHTML = "What a waste...";
+                item.Quantity++;
+                document.getElementById("InventoryText").innerHTML = "You have no house portal.";
             }
         },
         Equip: "No",

@@ -1,14 +1,14 @@
 var backmap;
 
 function CurrentMap() {
-	//Animal testing
-/*	var aSpawn = Math.random();
-	if (enemies.length < 1 && Settings.AnimalSpawn)
-	{
-		console.log("Animal?");
-		enemies = [animalSpawn(player.Height), animalSpawn(player.Height)];
-		return;
-	}*/
+    //Animal testing
+    /*	var aSpawn = Math.random();
+    	if (enemies.length < 1 && Settings.AnimalSpawn)
+    	{
+    		console.log("Animal?");
+    		enemies = [animalSpawn(player.Height), animalSpawn(player.Height)];
+    		return;
+    	}*/
     switch (player.Area) {
         case "First":
             switch (player.Map) {
@@ -182,7 +182,6 @@ function CurrentMap() {
                     ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                     break;
                 case "Cave3":
-                    PrintDoor("N");
                     if (enemies.length < 1) {
                         enemies = [EncounterCave3(), EncounterCave3(), EncounterCave3()]
                     }
@@ -203,6 +202,84 @@ function CurrentMap() {
                     backmap.src = "Tiles/Cave3.png";
                     ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                     PrintMap("Cave4")
+                    break;
+            }
+            break;
+        case "Mountain":
+            switch (player.Map) {
+                case "MountainStart":
+                    PrintDoor("S");
+                    PrintDoor("W");
+                    if (enemies.length < 1) {
+
+                    }
+                    if (Npcs.length < 1) {
+                        Npcs = [Portal];
+                    }
+                    PrintMap()
+                    break;
+                case "":
+                    if (enemies.length < 1) {
+
+                    }
+                    if (Npcs.length < 1) {
+                        Npcs = [Portal];
+                    }
+                    PrintMap()
+                    break;
+                case "":
+                    if (enemies.length < 1) {
+
+                    }
+                    if (Npcs.length < 1) {
+                        Npcs = [Portal];
+                    }
+                    PrintMap()
+                    break;
+                case "":
+                    if (enemies.length < 1) {
+
+                    }
+                    if (Npcs.length < 1) {
+                        Npcs = [Portal];
+                    }
+                    PrintMap()
+                    break;
+                case "":
+                    if (enemies.length < 1) {
+
+                    }
+                    if (Npcs.length < 1) {
+                        Npcs = [Portal];
+                    }
+                    PrintMap()
+                    break;
+                case "":
+                    if (enemies.length < 1) {
+
+                    }
+                    if (Npcs.length < 1) {
+                        Npcs = [Portal];
+                    }
+                    PrintMap()
+                    break;
+                case "":
+                    if (enemies.length < 1) {
+
+                    }
+                    if (Npcs.length < 1) {
+                        Npcs = [Portal];
+                    }
+                    PrintMap()
+                    break;
+                case "":
+                    if (enemies.length < 1) {
+
+                    }
+                    if (Npcs.length < 1) {
+                        Npcs = [Portal];
+                    }
+                    PrintMap()
                     break;
             }
             break;
