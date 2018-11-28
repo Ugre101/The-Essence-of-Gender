@@ -1,232 +1,232 @@
+function DoorHandler(NESW) {
+    if (NESW === "N") {
+        sprite.y = startarea.height - 3 * grid;
+        enemies = [];
+    } else if (NESW === "E") {
+        sprite.x = 2 * grid;
+        enemies = [];
+    } else if (NESW === "S") {
+        sprite.y = 2 * grid;
+        enemies = [];
+    } else if (NESW === "W") {
+        sprite.x = startarea.width - 3 * grid;
+        enemies = [];
+    }
+}
+
 function CheckDoor() {
     for (var i = 0; i < Doors.length; i++) {
+        var Door = Doors[i].NESW;
         if (sprite.x >= Doors[i].x && sprite.x <= Doors[i].x + Doors[i].width &&
             sprite.y >= Doors[i].y && sprite.y <= Doors[i].y + Doors[i].height) {
-            switch (player.Map) {
-                case "Start":
-                    if (Doors[i].NESW == "E") {
-                        sprite.x = grid * 2;
-                        player.Map = "RoadToCity1";
-                        enemies = [];
+            switch (player.Area) {
+                case "First":
+                    switch (player.Map) {
+                        case "Start":
+                            if (Door == "E") {
+                                player.Map = "RoadToCity1";
+                                DoorHandler("E");
+                            }
+                            break;
+                        case "RoadToCity1":
+                            if (Door == "S") {
+                                player.Map = "RoadToCity2";
+                                DoorHandler("S");
+                            } else if (Door == "W") {
+                                player.Map = "Start";
+                                DoorHandler("W");
+                            } else if (Door == "N") {
+                                player.Map = "Bandit";
+                                DoorHandler("N");
+                            }
+                            break;
+                        case "Bandit":
+                            if (Door == "S") {
+                                player.Map = "RoadToCity1";
+                                DoorHandler("S");
+                            }
+                            break;
+                        case "RoadToCity2":
+                            if (Door == "N") {
+                                player.Map = "RoadToCity1";
+                                DoorHandler("N");
+                            } else if (Door == "E") {
+                                player.Map = "City";
+                                DoorHandler("E");
+                            }
+                            break;
+                        case "City":
+                            if (Door == "W") {
+                                player.Map = "RoadToCity2";
+                                DoorHandler("W");
+                            } else if (Door == "E") {
+                                player.Map = "RoadToHome";
+                                DoorHandler("E");
+                            } else if (Door == "S") {
+                                player.Map = "Forest";
+                                DoorHandler("S");
+                            }
+                            break;
+                        case "RoadToHome":
+                            if (Door == "W") {
+                                player.Map = "City";
+                                DoorHandler("W");
+                            } else if (Door == "E" && House.Owned == true) {
+                                battle = true;
+                                sprite.x = startarea.width - 3 * grid;
+                                document.getElementById("map").style.display = 'none';
+                                document.getElementById("buttons").style.display = 'none';
+                                document.getElementById("EmptyButtons").style.display = 'block';
+                                document.getElementById("Home").style.display = 'block';
+                                if (House.Dorm > 0) {
+                                    document.getElementById("Dorm").style.display = "inline-block";
+                                } else {
+                                    document.getElementById("Dorm").style.display = "none"
+                                }
+                                if (House.Portal.Owned) {
+                                    document.getElementById("Portal").style.display = 'inline-block'
+                                } else {
+                                    document.getElementById("Portal").style.display = 'none'
+                                }
+                                if (House.Brothel > 0) {
+                                    document.getElementById("Brothel").style.display = 'inline-block';
+                                } else {
+                                    document.getElementById("Brothel").style.display = 'none';
+                                }
+                            } else if (Door == "N") {
+                                player.Map = "RoadToWitch";
+                                DoorHandler("N");
+                            }
+                            break;
+                        case "RoadToWitch":
+                            if (Door == "S") {
+                                player.Map = "RoadToHome";
+                                DoorHandler("S");
+                            } else if (Door == "N") {
+                                player.Map = "RoadToWitch2"
+                                DoorHandler("N");
+                            }
+                            break;
+                        case "RoadToWitch2":
+                            if (Door == "S") {
+                                player.Map = "RoadToWitch";
+                                DoorHandler("S");
+                            } else if (Door == "E") {
+                                player.Map = "Witch";
+                                DoorHandler("E");
+                            }
+                            break;
+                        case "Witch":
+                            if (Door == "W") {
+                                player.Map = "RoadToWitch2";
+                                DoorHandler("W");
+                            }
+                            break;
+                        case "Forest":
+                            if (Door == "N") {
+                                player.Map = "City";
+                                DoorHandler("N");
+                            } else if (Doors[i].NESW == "S") {
+                                player.Map = "Forest2";
+                                DoorHandler("S");
+                            }
+                            break;
+                        case "Forest2":
+                            if (Door == "N") {
+                                player.Map = "Forest";
+                                DoorHandler("N");
+                            } else if (Door == "S") {
+                                player.Map = "PathToOutlaws";
+                                player.Area = "Second";
+                                DoorHandler("S");
+                            }
+                            break;
                     }
                     break;
-                case "RoadToCity1":
-                    if (Doors[i].NESW == "S") {
-                        player.Map = "RoadToCity2";
-                        sprite.y = grid * 2;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "W") {
-                        player.Map = "Start";
-                        sprite.x = startarea.width - 3 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "N") {
-                        player.Map = "Bandit";
-                        sprite.y = startarea.height - 3 * grid;
-                        enemies = [];
+                case "Second":
+                    switch (player.Map) {
+                        case "PathToOutlaws":
+                            if (Door == "N") {
+                                player.Map = "Forest2";
+                                player.Area = "First";
+                                DoorHandler("N");
+                            } else if (Door == "W") {
+                                player.Map = "Cave1";
+                                DoorHandler("W");
+                            } else if (Door == "S") {
+                                player.Map = "PathToOutlaws2";
+                                DoorHandler("S");
+                            }
+                            break;
+                        case "PathToOutlaws2":
+                            if (Door == "N") {
+                                player.Map = "PathToOutlaws";
+                                DoorHandler("N");
+                            } else if (Door == "S") {
+                                player.Map = "Outlaws";
+                                DoorHandler("S");
+                            } else if (Door == "E") {
+                                player.Map = "Farm";
+                                DoorHandler("E");
+                            }
+                            break;
+                        case "Farm":
+                            if (Door == "W") {
+                                player.Map = "PathToOutlaws2";
+                                DoorHandler("W");
+                            }
+                            break;
+                        case "Outlaws":
+                            if (Door == "N") {
+                                player.Map = "PathToOutlaws2";
+                                DoorHandler("N");
+                            }
+                            break;
+                        case "Cave1":
+                            if (Door == "E") {
+                                player.Map = "PathToOutlaws";
+                                DoorHandler("E");
+                            } else if (Door == "W") {
+                                player.Map = "Cave2";
+                                DoorHandler("W");
+                            }
+                            break;
+                        case "Cave2":
+                            if (Door == "E") {
+                                player.Map = "Cave1";
+                                DoorHandler("E");
+                            } else if (Door == "S") {
+                                player.Map = "Cave3";
+                                DoorHandler("S");
+                            }
+                            break;
+                        case "Cave3":
+                            if (Door == "N") {
+                                player.Map = "Cave2";
+                                DoorHandler("N");
+                            } else if (Door == "S") {
+                                player.Map = "Cave4";
+                                DoorHandler("S");
+                            }
+                            break;
+                        case "Cave4":
+                            if (Door == "N") {
+                                player.Map = "Cave3";
+                                DoorHandler("N");
+                            }
                     }
                     break;
-                case "Bandit":
-                    if (Doors[i].NESW == "S") {
-                        player.Map = "RoadToCity1";
-                        sprite.y = 2 * grid;
-                        enemies = [];
+                case "Mountain":
+                    switch (player.Map) {
+                        case "MountainStart":
+                            if (Door == "S") {
+
+                            } else if (Door == "W") {
+                                
+                            }
+                            break;
                     }
-                    break;
-                case "RoadToCity2":
-                    if (Doors[i].NESW == "N") {
-                        player.Map = "RoadToCity1";
-                        sprite.y = startarea.height - 3 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "E") {
-                        player.Map = "City";
-                        sprite.x = 2 * grid;
-                        enemies = [];
-                    }
-                    break;
-                case "City":
-                    if (Doors[i].NESW == "W") {
-                        player.Map = "RoadToCity2";
-                        sprite.x = startarea.width - 3 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "E") {
-                        player.Map = "RoadToHome";
-                        sprite.x = 2 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "S") {
-                        player.Map = "Forest";
-                        sprite.y = grid * 2;
-                        enemies = [];
-                    }
-                    break;
-                case "RoadToHome":
-                    if (Doors[i].NESW == "W") {
-                        player.Map = "City";
-                        sprite.x = startarea.width - 3 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "E" && House.Owned == true) {
-                        battle = true;
-                        sprite.x = startarea.width - 3 * grid;
-                        document.getElementById("map").style.display = 'none';
-                        document.getElementById("buttons").style.display = 'none';
-                        document.getElementById("EmptyButtons").style.display = 'block';
-                        document.getElementById("Home").style.display = 'block';
-                        if (House.Dorm > 0) {
-                            document.getElementById("Dorm").style.display = "inline-block";
-                        } else {
-                            document.getElementById("Dorm").style.display = "none"
-                        }
-                        if (House.Portal.Owned) {
-                            document.getElementById("Portal").style.display = 'inline-block'
-                        } else {
-                            document.getElementById("Portal").style.display = 'none'
-                        }
-                        if (House.Brothel > 0) {
-                            document.getElementById("Brothel").style.display = 'inline-block';
-                        } else {
-                            document.getElementById("Brothel").style.display = 'none';
-                        }
-                    } else if (Doors[i].NESW == "N") {
-                        player.Map = "RoadToWitch";
-                        sprite.y = startarea.height - 3 * grid;
-                        enemies = [];
-                    }
-                    break;
-                case "RoadToWitch":
-                    if (Doors[i].NESW == "S") {
-                        player.Map = "RoadToHome";
-                        sprite.y = 2 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "N") {
-                        player.Map = "RoadToWitch2"
-                        sprite.y = startarea.height - 3 * grid
-                        enemies = [];
-                    }
-                    break;
-                case "RoadToWitch2":
-                    if (Doors[i].NESW == "S") {
-                        player.Map = "RoadToWitch";
-                        sprite.y = 2 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "E") {
-                        player.Map = "Witch";
-                        sprite.x = 2 * grid;
-                        enemies = [];
-                    }
-                    break;
-                case "Witch":
-                    {
-                        if (Doors[i].NESW == "W") {
-                            player.Map = "RoadToWitch2";
-                            sprite.x = startarea.width - 3 * grid;
-                            enemies = [];
-                        }
-                        break;
-                    }
-                case "Forest":
-                    if (Doors[i].NESW == "N") {
-                        player.Map = "City";
-                        sprite.y = startarea.height - 3 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "S") {
-                        player.Map = "Forest2";
-                        sprite.y = grid * 2;
-                        enemies = [];
-                    }
-                    break;
-                case "Forest2":
-                    if (Doors[i].NESW == "N") {
-                        player.Map = "Forest";
-                        sprite.y = startarea.height - 3 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "S") {
-                        player.Map = "PathToOutlaws";
-                        player.Area = "Second";
-                        sprite.y = 2 * grid;
-                        enemies = [];
-                    }
-                    break;
-                case "PathToOutlaws":
-                    if (Doors[i].NESW == "N") {
-                        player.Map = "Forest2";
-                        player.Area = "First";
-                        sprite.y = startarea.height - 3 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "W") {
-                        player.Map = "Cave1";
-                        sprite.x = startarea.width - 3 * grid;
-                        enemies = []
-                    } else if (Doors[i].NESW == "S") {
-                        player.Map = "PathToOutlaws2";
-                        sprite.y = 2 * grid;
-                        enemies = []
-                    }
-                    break;
-                case "PathToOutlaws2":
-                    if (Doors[i].NESW == "N") {
-                        player.Map = "PathToOutlaws";
-                        sprite.y = startarea.height - 3 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "S") {
-                        player.Map = "Outlaws";
-                        sprite.y = 2 * grid;
-                        enemies = []
-                    } else if (Doors[i].NESW == "E") {
-                        player.Map = "Farm";
-                        sprite.x = 2 * grid;
-                        enemies = [];
-                    }
-                    break;
-                case "Farm":
-                    if (Doors[i].NESW == "W") {
-                        player.Map = "PathToOutlaws2";
-                        sprite.x = startarea.width - 3 * grid;
-                    }
-                case "Outlaws":
-                    if (Doors[i].NESW == "N") {
-                        player.Map = "PathToOutlaws2";
-                        sprite.y = startarea.height - 3 * grid;
-                        enemies = [];
-                    }
-                    break;
-                case "Cave1":
-                    if (Doors[i].NESW == "E") {
-                        player.Map = "PathToOutlaws";
-                        sprite.x = 2 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "W") {
-                        player.Map = "Cave2";
-                        sprite.x = startarea.width - 3 * grid;
-                        enemies = [];
-                    }
-                    break;
-                case "Cave2":
-                    if (Doors[i].NESW == "E") {
-                        player.Map = "Cave1";
-                        sprite.x = 2 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "S") {
-                        player.Map = "Cave3";
-                        sprite.y = 2 * grid;
-                        enemies = [];
-                    }
-                    break;
-                case "Cave3":
-                    if (Doors[i].NESW == "N") {
-                        player.Map = "Cave2";
-                        sprite.y = startarea.height - 3 * grid;
-                        enemies = [];
-                    } else if (Doors[i].NESW == "S") {
-                        player.Map = "Cave4";
-                        sprite.y = 2 * grid;
-                        enemies = [];
-                    }
-                    break;
-                case "Cave4":
-                    if (Doors[i].NESW == "N") {
-                        player.Map = "Cave3";
-                        sprite.y = startarea.height - 3 * grid;
-                        enemies = [];
-                    }
+                    break
             }
         }
     }

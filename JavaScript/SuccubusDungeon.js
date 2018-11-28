@@ -86,21 +86,13 @@ document.getElementById("EnterDungeon").addEventListener("click", function () {
     } else {
         enemies = [FirstWave(), SecondWave(), ThirdWave(), FourthWave(), SuccubusBoss()];
     }
+
+    BattleSetup(enemies[Wave]);
+
     document.getElementById("FirstDungeon").style.display = 'none';
     document.getElementById("FirstDungeonText").innerHTML = "Wave " + (Wave + 2);
-
-    document.getElementById("status").style.display = 'none';
-    document.getElementById("buttons").style.display = 'none';
-    document.getElementById("EmptyButtons").style.display = 'none';
-    document.getElementById("EventLog").style.display = 'none';
-    document.getElementById("Encounter").style.display = 'grid';
-    document.getElementById("BattleText").innerHTML = null;
-    document.getElementById("BattleText2").innerHTML = null;
     EnemyIndex = enemies.indexOf(enemies[Wave]);
-    enemies[Wave].Health = enemies[Wave].FullHealth;
-    enemies[Wave].WillHealth = enemies[Wave].FullWillHealth;
     EssenceCheck(enemies[Wave]);
-    UpdateStats();
     Dungeon = true;
 });
 document.getElementById("DungeonStopButton").addEventListener("click", function () {

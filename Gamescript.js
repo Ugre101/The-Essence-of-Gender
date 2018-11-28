@@ -238,7 +238,7 @@
         document.getElementById("startgame").style.display = 'none';
         player.Name = document.getElementById("firstname").value;
         player.Lastname = document.getElementById("lastname").value;
-        player.Haircolor = document.getElementById("haircolor").value;
+        player.Face.Haircolor = document.getElementById("haircolor").value;
         player.Skincolor = document.getElementById("skincolor").value;
         player.MaxHealth = 100;
         player.MaxWillHealth = 100;
@@ -323,6 +323,7 @@
         document.getElementById("buttons").style.display = 'block';
         document.getElementById("status").style.display = 'block';
         document.getElementById("EventLog").style.display = 'block';
+        document.getElementById("EmptyButtons").style.display = 'none';
         battle = false;
         if (MobileButtons) {
             document.getElementById("buttons").style.width = 17 + "%";
@@ -1107,6 +1108,42 @@
     var mouseX;
     var mouseY;
 
+    function BattleSetup(who) {
+        document.getElementById("map").style.display = 'none';
+        document.getElementById("Encounter").style.display = 'grid';
+        document.getElementById("status").style.display = 'none';
+        document.getElementById("buttons").style.display = 'none';
+        document.getElementById("EmptyButtons").style.display = 'none';
+        document.getElementById("EventLog").style.display = 'none';
+        document.getElementById("BattleText").innerHTML = null;
+        document.getElementById("BattleText2").innerHTML = null;
+        battle = true;
+        if (player.hasOwnProperty("Spells")) {
+            document.getElementById("SpellBook").style.display = 'block';
+            if (player.Spells.FireballMax > 0) {
+                document.getElementById("Fireball").style.display = 'inline-block';
+                player.Spells.Fireball = player.Spells.FireballMax;
+            } else {
+                document.getElementById("Fireball").style.display = 'none';
+                document.getElementById("SpellBook").style.display = 'none';
+                console.log("NO Ball")
+            }
+        } else {
+            console.log("NO Spell")
+            document.getElementById("SpellBook").style.display = 'none';
+        }
+        if (who.FirstName === "Feral") {
+            document.getElementById("Tease").style.display = 'none'
+        } else {
+            document.getElementById("Tease").style.display = 'inline-block'
+        }
+        who.Health = who.FullHealth;
+        who.WillHealth = who.FullWillHealth;
+        UpdateStats(true);
+    }
+
+
+
     function Touching() {
         for (var j = 0; j < enemies.length; j++) {
             if (sprite.x >= enemies[j].XPos && sprite.x < enemies[j].XPos + enemies[j].Size &&
@@ -1115,40 +1152,12 @@
                     clearInterval(mFunction);
                     mousedowner = false;
                 }
-                document.getElementById("map").style.display = 'none';
-                document.getElementById("Encounter").style.display = 'grid';
-                document.getElementById("status").style.display = 'none';
-                document.getElementById("buttons").style.display = 'none';
-                document.getElementById("EmptyButtons").style.display = 'none';
-                document.getElementById("EventLog").style.display = 'none';
-                document.getElementById("BattleText").innerHTML = null;
-                document.getElementById("BattleText2").innerHTML = null;
-                battle = true;
-                if (player.hasOwnProperty("Spells")) {
-                    document.getElementById("SpellBook").style.display = 'block';
-                    if (player.Spells.FireballMax > 0) {
-                        document.getElementById("Fireball").style.display = 'inline-block';
-                        player.Spells.Fireball = player.Spells.FireballMax;
-                    } else {
-                        document.getElementById("Fireball").style.display = 'none';
-                        console.log("NO Ball")
-                    }
-                } else {
-                    console.log("NO Spell")
-                    document.getElementById("SpellBook").style.display = 'none';
-                }
                 EnemyIndex = enemies.indexOf(enemies[j]);
-                if (enemies[EnemyIndex].FirstName === "Feral") {
-                    document.getElementById("Tease").style.display = 'none'
-                } else {
-                    document.getElementById("Tease").style.display = 'inline-block'
-                }
-                enemies[j].Health = enemies[j].FullHealth;
-                enemies[j].WillHealth = enemies[j].FullWillHealth;
                 EssenceCheck(enemies[j]);
                 enemies[j].XPos = RandomInt(2, 18) * grid;
                 enemies[j].YPos = RandomInt(2, 18) * grid;
-                UpdateStats(true);
+
+                BattleSetup(enemies[j]);
             }
         }
         for (var n = 0; n < Npcs.length; n++) {
@@ -1208,7 +1217,7 @@
     }
 
     function PrintNpcs() {
-        var needPrint = ["FarmBarn", "FarmOwner"]
+        var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop"]
         for (var e of Npcs) {
             if (needPrint.indexOf(e.Name) > -1) {
                 ctx.fillStyle = e.Color;
