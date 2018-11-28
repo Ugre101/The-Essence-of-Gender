@@ -1,6 +1,7 @@
 function enemy(EnemyName, EnemyRace, Strength, Endurance, Willpower, Charm,
-    Intelligence, SexSkill, EnemyHealth, EnemyFullHealth, EnemyWillHealth, EnemyFullWillHealth,
-    ExpDrop, GoldDrop, Color, Size, Height, EnemySecondRace = EnemyRace) {
+    Intelligence, SexSkill, EnemyHealth, EnemyWillHealth, ExpDrop, GoldDrop, 
+    Color, Size, Height, EnemyFullHealth = EnemyHealth, 
+    EnemyFullWillHealth = EnemyWillHealth, EnemySecondRace = EnemyRace) {
     this.Name = EnemyName;
     this.Race = EnemyRace;
     this.Str = Strength;
@@ -10,14 +11,14 @@ function enemy(EnemyName, EnemyRace, Strength, Endurance, Willpower, Charm,
     this.Int = Intelligence;
     this.SexSkill = SexSkill;
     this.Health = EnemyHealth;
-    this.FullHealth = EnemyFullHealth;
     this.WillHealth = EnemyWillHealth;
-    this.FullWillHealth = EnemyFullWillHealth;
     this.Exp = ExpDrop;
     this.Gold = GoldDrop;
     this.Color = Color;
     this.Size = Size;
     this.Height = Height;
+    this.FullHealth = EnemyFullHealth;
+    this.FullWillHealth = EnemyFullWillHealth;
     this.SecondRace = EnemySecondRace;
 }
 
@@ -157,7 +158,7 @@ function EncounterStart() {
     var Races = ["Human", "Halfling"];
     var Names = ["Commoner", "Farmer", "Thug"];
     var OP = new enemy(RandomString(Names), RandomString(Races), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5),
-        RandomInt(2, 5), RandomInt(6, 9), 70, 70, 70, 70, RandomInt(15, 20), RandomInt(5, 15),
+        RandomInt(2, 5), RandomInt(6, 9), 70, 70, RandomInt(15, 20), RandomInt(5, 15),
         'Chocolate', grid, RandomInt(140, 180));
     EssenceGiver(OP, 20);
     FatMuscle(OP, 1, 1);
@@ -203,7 +204,7 @@ function EncounterPath1() {
     var RacesRoad = ["Human"];
     var Names = ["Commoner", "Farmer", "Thug"];
     var OP = new enemy(RandomString(Names), RandomString(RacesRoad), RandomInt(3, 6), RandomInt(3, 6), RandomInt(3, 6), RandomInt(3, 6),
-        RandomInt(3, 6), RandomInt(7, 10), 80, 80, 80, 80, RandomInt(20, 25), RandomInt(8, 18),
+        RandomInt(3, 6), RandomInt(7, 10), 80, 80, RandomInt(20, 25), RandomInt(8, 18),
         'Chocolate', grid, RandomInt(140, 180));
     EssenceGiver(OP, 25);
     FatMuscle(OP, 1, 1);
@@ -216,7 +217,7 @@ function EncounterPath2() {
     var RacesRoad = ["Human"];
     var Names = ["Commoner", "Farmer", "Thug"];
     var OP = new enemy(RandomString(Names), RandomString(RacesRoad), RandomInt(4, 7), RandomInt(4, 7), RandomInt(4, 7), RandomInt(4, 7),
-        RandomInt(4, 7), RandomInt(8, 12), 100, 100, 100, 100, RandomInt(23, 30), RandomInt(12, 25),
+        RandomInt(4, 7), RandomInt(8, 12), 100, 100, RandomInt(23, 30), RandomInt(12, 25),
         'green', grid, RandomInt(140, 180));
     EssenceGiver(OP, 30);
     FatMuscle(OP, 1, 1);
@@ -228,7 +229,7 @@ function EncounterPath2() {
 function EncounterBandit() {
     var RacesBandit = ["Orc", "Troll"];
     var OP = new enemy("Bandit", RandomString(RacesBandit), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15),
-        RandomInt(8, 15), RandomInt(10, 15), 170, 170, 170, 170, RandomInt(30, 45), RandomInt(30, 55),
+        RandomInt(8, 15), RandomInt(10, 15), 170, 170, RandomInt(30, 45), RandomInt(30, 55),
         'tomato ', grid, RandomInt(140, 180));
     EssenceGiver(OP, 100, "male");
     FatMuscle(OP, 1, 1);
@@ -240,7 +241,7 @@ function EncounterBandit() {
 function EncounterBanditLord() {
     var RacesBandit = ["Orc", "Troll"];
     var OP = new enemy("Banditlord", RandomString(RacesBandit), RandomInt(20, 35), RandomInt(10, 15), RandomInt(20, 35), RandomInt(20, 35),
-        RandomInt(20, 35), RandomInt(40, 60), 350, 350, 300, 300, RandomInt(55, 85), RandomInt(75, 150),
+        RandomInt(20, 35), RandomInt(40, 60), 350, 300, RandomInt(55, 85), RandomInt(75, 150),
         'tomato', 1.5 * grid, RandomInt(160, 200));
     EssenceGiver(OP, 200, "male");
     FatMuscle(OP, 1, 1);
@@ -255,7 +256,7 @@ function EncounterBanditLord() {
 function EncounterForest() {
     var RacesForest = ["Elf", "Amazon"];
     var OP = new enemy("Forest", RandomString(RacesForest), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13),
-        RandomInt(6, 13), RandomInt(8, 18), 150, 150, 150, 150, RandomInt(25, 40), RandomInt(25, 45),
+        RandomInt(6, 13), RandomInt(8, 18), 150, 150, RandomInt(25, 40), RandomInt(25, 45),
         'darkgreen', grid, RandomInt(140, 180));
     EssenceGiver(OP, 100);
     FatMuscle(OP, 1, 1);
@@ -267,7 +268,7 @@ function EncounterForest() {
 function EncounterForest2() {
     var RacesForest2 = ["Elf", "Fairy"];
     var OP = new enemy("Forest", RandomString(RacesForest2), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13),
-        RandomInt(6, 13), RandomInt(8, 18), 150, 150, 150, 150, RandomInt(25, 40), RandomInt(25, 45),
+        RandomInt(6, 13), RandomInt(8, 18), 150, 150, RandomInt(25, 40), RandomInt(25, 45),
         'darkgreen', grid, RandomInt(140, 180));
     EssenceGiver(OP, 120);
     FatMuscle(OP, 1, 1);
@@ -279,7 +280,7 @@ function EncounterForest2() {
 function EncounterPathToWitch2() {
     var RacesWitch = ["Human", "Elf", "Dark elf"];
     var OP = new enemy("Witch", RandomString(RacesWitch), RandomInt(1, 5), RandomInt(3, 7), RandomInt(7, 16), RandomInt(10, 40),
-        RandomInt(30, 70), RandomInt(20, 80), 150, 150, 300, 300, RandomInt(30, 60), RandomInt(30, 70),
+        RandomInt(30, 70), RandomInt(20, 80), 150, 300, RandomInt(30, 60), RandomInt(30, 70),
         'IndianRed', grid, RandomInt(140, 170));
     EssenceGiver(OP, 150);
     FatMuscle(OP, 1, 1);
@@ -301,7 +302,7 @@ function EncounterPathToWitch2() {
 function EncounterCave1() {
     var RacesCave = ["Goblin", "Imp"];
     var OP = new enemy("Lesser", RandomString(RacesCave), RandomInt(7, 10), RandomInt(7, 10), RandomInt(7, 10), RandomInt(0, 2),
-        RandomInt(1, 3), RandomInt(6, 15), 120, 120, 150, 150, RandomInt(25, 35), RandomInt(15, 30),
+        RandomInt(1, 3), RandomInt(6, 15), 120, 150, RandomInt(25, 35), RandomInt(15, 30),
         'red', grid, RandomInt(120, 140));
     EssenceGiver(OP, 90);
     FatMuscle(OP, 1, 1);
@@ -313,7 +314,7 @@ function EncounterCave1() {
 function EncounterCave2() {
     var RacesCave2 = ["Goblin", "Demon"];
     var OP = new enemy("Cave", RandomString(RacesCave2), RandomInt(12, 18), RandomInt(12, 18), RandomInt(12, 18), RandomInt(8, 12),
-        RandomInt(5, 8), RandomInt(16, 25), 190, 190, 210, 210, RandomInt(40, 60), RandomInt(35, 60),
+        RandomInt(5, 8), RandomInt(16, 25), 190, 210, RandomInt(40, 60), RandomInt(35, 60),
         'red', grid, RandomInt(150, 180));
     EssenceGiver(OP, 120);
     FatMuscle(OP, 1, 1);
@@ -325,7 +326,7 @@ function EncounterCave2() {
 function EncounterCave3() {
     var RacesCave3 = ["Dhampir", "Demon"];
     var OP = new enemy("Guard", RandomString(RacesCave3), RandomInt(25, 40), RandomInt(25, 40), RandomInt(22, 38), RandomInt(18, 22),
-        RandomInt(15, 18), RandomInt(50, 70), 370, 370, 400, 400, RandomInt(65, 85), RandomInt(55, 80),
+        RandomInt(15, 18), RandomInt(50, 70), 370, 400, RandomInt(65, 85), RandomInt(55, 80),
         'red', grid, RandomInt(160, 190));
     EssenceGiver(OP, 150);
     FatMuscle(OP, 1, 1);
@@ -337,7 +338,7 @@ function EncounterCave3() {
 function EncounterCave4() {
     var RacesCave4 = ["Succubus", "Incubus"];
     var OP = new enemy("Lesser", RandomString(RacesCave4), RandomInt(2, 5), RandomInt(35, 50), RandomInt(40, 55), RandomInt(40, 55),
-        RandomInt(20, 40), RandomInt(80, 120), 420, 420, 550, 550, RandomInt(85, 110), RandomInt(70, 120),
+        RandomInt(20, 40), RandomInt(80, 120), 420, 550, RandomInt(85, 110), RandomInt(70, 120),
         'purple', grid, RandomInt(150, 180));
     EssenceGiver(OP, 200);
     FatMuscle(OP, 1, 1);

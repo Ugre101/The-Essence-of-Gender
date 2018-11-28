@@ -1,6 +1,7 @@
 function FirstWave() {
+    var RacesCave = ["Goblin", "Imp"];
     var OP = new enemy("Guard", RandomString(RacesCave), RandomInt(10, 13), RandomInt(10, 13), RandomInt(10, 13), RandomInt(0, 2),
-        RandomInt(1, 3), RandomInt(9, 18), 150, 150, 180, 180, RandomInt(30, 40), RandomInt(20, 35),
+        RandomInt(1, 3), RandomInt(9, 18), 150, 180, RandomInt(30, 40), RandomInt(20, 35),
         'red', grid, RandomInt(120, 140));
     EssenceGiver(OP, 150);
     FatMuscle(OP, 1, 1);
@@ -10,8 +11,9 @@ function FirstWave() {
 }
 
 function SecondWave() {
+    var RacesCave2 = ["Goblin", "Demon"];
     var OP = new enemy("Guard", RandomString(RacesCave2), RandomInt(15, 21), RandomInt(15, 21), RandomInt(15, 21), RandomInt(11, 15),
-        RandomInt(8, 11), RandomInt(19, 28), 220, 220, 240, 240, RandomInt(45, 65), RandomInt(40, 65),
+        RandomInt(8, 11), RandomInt(19, 28), 220, 240, RandomInt(45, 65), RandomInt(40, 65),
         'red', grid, RandomInt(150, 180));
     EssenceGiver(OP, 150);
     FatMuscle(OP, 1, 1);
@@ -21,8 +23,9 @@ function SecondWave() {
 }
 
 function ThirdWave() {
+    var RacesCave3 = ["Dhampir", "Demon"];
     var OP = new enemy("Guard", RandomString(RacesCave3), RandomInt(30, 45), RandomInt(30, 45), RandomInt(27, 43), RandomInt(23, 27),
-        RandomInt(20, 23), RandomInt(55, 75), 420, 420, 450, 450, RandomInt(75, 95), RandomInt(65, 85),
+        RandomInt(20, 23), RandomInt(55, 75), 420, 450, RandomInt(75, 95), RandomInt(65, 85),
         'red', grid, RandomInt(160, 190));
     EssenceGiver(OP, 150);
     FatMuscle(OP, 1, 1);
@@ -32,8 +35,9 @@ function ThirdWave() {
 }
 
 function FourthWave() {
+    var RacesCave4 = ["Succubus", "Incubus"];
     var OP = new enemy("Guard", RandomString(RacesCave4), RandomInt(10, 15), RandomInt(50, 65), RandomInt(55, 70), RandomInt(55, 70),
-        RandomInt(35, 55), RandomInt(95, 135), 500, 500, 600, 600, RandomInt(110, 140), RandomInt(90, 140),
+        RandomInt(35, 55), RandomInt(95, 135), 500, 600, RandomInt(110, 140), RandomInt(90, 140),
         'purple', grid, RandomInt(150, 180));
     EssenceGiver(OP, 1500);
     FatMuscle(OP, 1, 1);
@@ -43,8 +47,9 @@ function FourthWave() {
 }
 
 function SuccubusBoss() {
+    var RacesCave4 = ["Succubus", "Incubus"];
     var OP = new enemy("Mistress", RandomString(RacesCave4), RandomInt(20, 25), RandomInt(60, 75), RandomInt(65, 80), RandomInt(65, 80),
-        RandomInt(45, 65), RandomInt(105, 145), 800, 800, 1500, 1500, RandomInt(300, 400), RandomInt(200, 340),
+        RandomInt(45, 65), RandomInt(105, 145), 800, 1500, RandomInt(300, 400), RandomInt(200, 340),
         'purple', grid, RandomInt(150, 180));
     EssenceGiver(OP, 150);
     FatMuscle(OP, 1, 1);
@@ -64,7 +69,7 @@ function SuccubusBoss() {
 
 function SuccubusBossUnique() {
     var OP = new enemy("Dungeon Mistress", "Succubus", RandomInt(20, 25), RandomInt(60, 75), RandomInt(65, 80), RandomInt(65, 80),
-        RandomInt(45, 65), RandomInt(105, 145), 800, 800, 1500, 1500, RandomInt(300, 400), RandomInt(200, 340),
+        RandomInt(45, 65), RandomInt(105, 145), 800, 1500, RandomInt(300, 400), RandomInt(200, 340),
         'purple', grid, RandomInt(150, 180));
     EssenceGiver(OP, 3000, "female");
     FatMuscle(OP, 1, 1);

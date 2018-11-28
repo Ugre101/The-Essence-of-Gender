@@ -1,6 +1,5 @@
 document.getElementById("ShowInventory").addEventListener("click", function () {
     DisplayNone();
-    console.log(player.Inventory)
     document.getElementById("Inventory").style.display = 'block';
     document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
 });
@@ -27,7 +26,6 @@ function Items(Things) {
     for (var e = 0; e < Things.length; e++) {
         if (Things[e].Name === "Pocket portal") {
             var temp = Things[e];
-            console.log(temp)
             Things.splice(e, 1);
             Things.unshift(temp); // Put pocket portal first in inventory.
         }
@@ -56,7 +54,7 @@ function Items(Things) {
 function Use(item) {
     var thing = player.Inventory[item];
     if (thing.hasOwnProperty("Use") && typeof thing.Use == 'function') {
-        thing.Use(player);
+        thing.Use(player, thing)
     } else {
         console.log("this item has not been refactored: " + item.Name);
         switch (thing.Name) {

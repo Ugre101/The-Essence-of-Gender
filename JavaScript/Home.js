@@ -18,7 +18,7 @@
         document.getElementById("HomeStart").style.display = 'none';
         document.getElementById("Upgrades").style.display = 'block';
         document.getElementById("HomeText").innerHTML = "";
-        if (House.Portal) {
+        if (House.Portal.Owned) {
             document.getElementById("BuildPortal").style.display = 'none';
         }
         var BedCost = Math.round(50 * Math.pow(1.2, House.BedLevel));
@@ -99,9 +99,9 @@
         document.getElementById("BuildKitchen").value = "Build kitchen " + Kitchencost + "g";
     });
     document.getElementById("BuildPortal").addEventListener("click", function () {
-        if (player.Gold >= 1000 && !House.Portal) {
+        if (player.Gold >= 1000 && !House.Portal.Owned) {
             player.Gold -= 1000;
-            House.Portal = true;
+            House.Portal.Owned = true;
             document.getElementById("HomeText").innerHTML = "Congratulations you now own a personal portal, a true sign of wealth for peasants to envy!"
             document.getElementById("BuildPortal").style.display = 'none';
             document.getElementById("Portal").style.display = 'inline-block';
@@ -147,6 +147,11 @@
     document.getElementById("Portal").addEventListener("click", function () {
         document.getElementById("HomeStart").style.display = 'none';
         document.getElementById("PortalMenu").style.display = 'block';
+        if (House.Portal.Mountain) {
+            document.getElementById("Mountain").style.display = 'inline-block';
+        } else {
+            document.getElementById("Mountain").style.display = 'none';
+        }
     });
     document.getElementById("LeavePortal").addEventListener("click", function () {
         document.getElementById("HomeStart").style.display = 'block';
@@ -157,15 +162,26 @@
         var Chosen;
         if (e.target.type == "button") {
             Chosen = String(e.target.id);
-            if (Chosen == "TempLand") {
-                player.Area = "TempLand";
-                player.Map = "TempCity";
-                LeaveHome();
-            } else if (Chosen == "Lumindera") {
-                return;
-                player.Area = "Lumindera";
-                player.Map = "nice";
-                LeaveHome();
+            switch (Chosen) {
+                case "TempLand":
+                    player.Area = Chosen;
+                    player.Map = "TempCity";
+                    LeaveHome();
+                    break
+                case "Mountain":
+                    player.Area = Chosen;
+                    player.Map = "MountainStart";
+                    LeaveHome();
+                    break
+                case "Lumindera":
+                    return;
+                    player.Area = "Lumindera";
+                    player.Map = "nice";
+                    LeaveHome();
+                    break;
+                default:
+                    break;
+
             }
         }
     });
@@ -193,7 +209,7 @@
     });
 
     function LeaveHome() {
-        document.getElementById("Home").style.display = 'none';       
+        document.getElementById("Home").style.display = 'none';
         document.getElementById("EmptyButtons").style.display = 'none';
         DisplayGame();
     }
