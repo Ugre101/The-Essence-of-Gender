@@ -92,6 +92,8 @@
             VorePerks: {},
             Stomach: [],
             StomachExp: 0,
+            TaurStomach: [],
+            TaurStomachExp: 0,
             Vagina: [],
             VaginaExp: 0,
             Balls: [],
@@ -105,6 +107,11 @@
         Spells: {
             Fireball: 0,
             FireballMax: 0
+        },
+        Blessings: {
+            Incubator: 0,
+            Broadmother: 0,
+            Malepreg: 0
         }
     };
 
@@ -238,7 +245,7 @@
         document.getElementById("startgame").style.display = 'none';
         player.Name = document.getElementById("firstname").value;
         player.Lastname = document.getElementById("lastname").value;
-        player.Face.Haircolor = document.getElementById("haircolor").value;
+        player.Face.HairColor = document.getElementById("haircolor").value;
         player.Skincolor = document.getElementById("skincolor").value;
         player.MaxHealth = 100;
         player.MaxWillHealth = 100;
@@ -256,7 +263,7 @@
     document.getElementById("Begin").addEventListener("click", function () {
         document.getElementById("startgame").style.display = 'inline-block';
         document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.Lastname + ", a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
-            ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Haircolor + " hair and " + player.Skincolor +
+            ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Face.HairColor + " hair and " + player.Skincolor +
             " skin; hopefully the last time you see your body absent of any other details or personality.<br><br>For today, you will forge your own way in this world.";
 
         requestAnimationFrame(loop);
@@ -1095,7 +1102,8 @@
     // Farm
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
     var FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
-
+    // Shrine
+    var MounatinShrine = new Npc("MounatinShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
 
 
 
@@ -1332,14 +1340,12 @@
         ExpCheck();
 
         if (!battle) {
-            switch (player.Map) {
-                case "Farm":
-                case "TempCity":
-                case "MountainStart":
-                    PaintBackground();
-                    break;
-                default:
-                    break;
+            var needPaint = ["Farm", "TempCity", "MountainStart", "MountainClimb", "MountainClimb2", "MountainClimb3",
+                "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8", "MountainClimb9",
+                "MountainClimb10", "MountainShrinePath", "MountainShrine"
+            ];
+            if (needPaint.indexOf(player.Map) > -1) {
+                PaintBackground();
             }
             CurrentMap();
             if (Settings.Vore) {

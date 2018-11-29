@@ -50,6 +50,7 @@ function CurrentMap() {
                     ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                     break;
                 case "City":
+                    Npcs = [];
                     enemies = [];
                     if (Npcs.length < 1) {
                         Npcs = [Townhall, Bar, Shop];
@@ -60,8 +61,11 @@ function CurrentMap() {
                     ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                     break;
                 case "RoadToHome":
-                    enemies = [];
                     Npcs = [];
+                    enemies = [];
+                    if (Npcs.length < 1) {
+                        Npcs = [Barberer];
+                    }
                     PrintMap("RoadToHome");
                     backmap = new Image;
                     backmap.src = "Tiles/RoadToHome.png";
@@ -99,7 +103,7 @@ function CurrentMap() {
                     break;
                 case "Forest":
                     if (enemies.length < 1) {
-                        enemies = [EncounterForest(), EncounterForest(), EncounterForest()];
+                        enemies = [EncounterForest(), EncounterForest(), EncounterForest(), RespawnBlocker()];
                     }
                     Npcs = [];
                     PrintMap("Forest");
@@ -109,7 +113,7 @@ function CurrentMap() {
                     break
                 case "Forest2":
                     if (enemies.length < 1) {
-                        enemies = [EncounterForest2(), EncounterForest2(), EncounterForest2(), EncounterForest2()];
+                        enemies = [EncounterForest2(), EncounterForest2(), EncounterForest2(), EncounterForest2(), RespawnBlocker()];
                     }
                     Npcs = []
                     PrintMap("Forest2");
@@ -218,61 +222,128 @@ function CurrentMap() {
                     }
                     PrintMap()
                     break;
-                case "":
+                case "MountainShrinePath":
+                    PrintDoor("E");
+                    PrintDoor("W");
+                    Npcs = [];
+                    if (enemies.length < 1) {
+                        var a = RandomInt(1, 3);
+                        enemies = [];
+                        for (var e = 0; e < a; e++) {
+                            enemies.push(EncounterMaiden());
+                        }
+                    }
+                    if (Npcs.length < 1) {}
+                    PrintMap()
+                    break;
+                case "MountainShrine":
+                    PrintDoor("E");
+                    PrintDoor("W");
+                    Npcs = [];
                     if (enemies.length < 1) {
 
                     }
                     if (Npcs.length < 1) {
-                        Npcs = [Portal];
+                        Npcs = [MounatinShrine];
                     }
                     PrintMap()
                     break;
-                case "":
+                case "MountainClimb":
+                    PrintDoor("S");
+                    PrintDoor("N");
+                    Npcs = [];
                     if (enemies.length < 1) {
 
                     }
                     if (Npcs.length < 1) {
-                        Npcs = [Portal];
+
                     }
                     PrintMap()
                     break;
-                case "":
+                case "MountainClimb2":
+                    PrintDoor("E");
+                    PrintDoor("N");
+                    Npcs = [];
                     if (enemies.length < 1) {
 
                     }
-                    if (Npcs.length < 1) {
-                        Npcs = [Portal];
-                    }
+                    if (Npcs.length < 1) {}
                     PrintMap()
                     break;
-                case "":
+                case "MountainClimb3":
+                    PrintDoor("E");
+                    PrintDoor("W");
+                    Npcs = [];
                     if (enemies.length < 1) {
 
                     }
-                    if (Npcs.length < 1) {
-                        Npcs = [Portal];
-                    }
+                    if (Npcs.length < 1) {}
                     PrintMap()
                     break;
-                case "":
+                case "MountainClimb4":
+                    PrintDoor("W");
+                    PrintDoor("N");
+                    Npcs = [];
                     if (enemies.length < 1) {
 
                     }
-                    if (Npcs.length < 1) {
-                        Npcs = [Portal];
-                    }
+                    if (Npcs.length < 1) {}
                     PrintMap()
                     break;
-                case "":
+                case "MountainClimb5":
+                    PrintDoor("S");
+                    PrintDoor("N");
+                    Npcs = [];
                     if (enemies.length < 1) {
 
                     }
-                    if (Npcs.length < 1) {
-                        Npcs = [Portal];
-                    }
+                    if (Npcs.length < 1) {}
                     PrintMap()
                     break;
-                case "":
+                case "MountainClimb6":
+                    PrintDoor("S");
+                    PrintDoor("N");
+                    Npcs = [];
+                    if (enemies.length < 1) {
+
+                    }
+                    if (Npcs.length < 1) {}
+                    PrintMap()
+                    break;
+                case "MountainClimb7":
+                    PrintDoor("S");
+                    PrintDoor("N");
+                    Npcs = [];
+                    if (enemies.length < 1) {
+
+                    }
+                    if (Npcs.length < 1) {}
+                    PrintMap()
+                    break;
+                case "MountainClimb8":
+                    PrintDoor("S");
+                    PrintDoor("W");
+                    Npcs = [];
+                    if (enemies.length < 1) {
+
+                    }
+                    if (Npcs.length < 1) {}
+                    PrintMap()
+                    break;
+                case "MountainClimb9":
+                    PrintDoor("W");
+                    PrintDoor("E");
+                    Npcs = [];
+                    if (enemies.length < 1) {
+
+                    }
+                    if (Npcs.length < 1) {}
+                    PrintMap()
+                    break;
+                case "MountainClimb10":
+                    PrintDoor("N");
+                    PrintDoor("E");
+                    Npcs = []
                     if (enemies.length < 1) {
 
                     }
