@@ -504,10 +504,11 @@
    }
 
    div.AfterBattle {
-       grid-template: "a a a a"
+       grid-template:
            "b c c d"
            "e e e e";
        grid-template-columns: repeat(4, 1fr);
+       grid-template-rows: 1fr 1fr;
        grid-gap: 1em 0;
        width: 1400px;
        max-width: 95%;
@@ -528,12 +529,13 @@
    }
 
    div.AfterBattleImg {
-       grid-template: "b a a a d"
+       grid-template:
            "b f f f d"
            "b f f f d"
            "c c c c c"
            "e e e e e";
        grid-template-columns: repeat(5, 1fr);
+       grid-template-rows: 1fr 1fr;
        grid-gap: 1em 0;
 
        width: 1400px;
@@ -567,27 +569,6 @@
    @media screen and (max-height: 1000px) {
        div.AfterBattleImg {
            height: 90%;
-           grid-template: "b f f f d"
-               "b f f f d"
-               "c c c c c"
-               "e e e e e";
-           grid-template-columns: repeat(5, 1fr);
-
-
-       }
-
-       div.AfterBattle {
-           grid-template: "b c c d"
-               "e e e e";
-           grid-template-columns: repeat(4, 1fr);
-       }
-
-       div.AfterBattleImg>h1 {
-           display: none;
-       }
-
-       div.AfterBattle>h1 {
-           display: none;
        }
    }
 
