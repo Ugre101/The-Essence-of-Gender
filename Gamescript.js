@@ -18,6 +18,20 @@
         PerkPoints: 0,
         Race: "human",
         SecondRace: "human",
+        isTaur: "false", // Testing
+        raceBonus: [
+            {type: "Height", amount: 1},
+            {type: "Weight", amount: 1},
+            {type: "Size", amount: 1},
+            {type: "Str", amount: 0},
+            {type: "Int", amount: 0},
+            {type: "Charm", amount: 0},
+            {type: "SexSkill", amount: 0},
+            {type: "Will", amount: 0},
+            {type: "WillHealth", amount: 0}
+            ],
+        ForcedMale: false,
+        ForcedFemale: false,
         Dicks: [],
         Balls: [],
         Pussies: [],
@@ -812,7 +826,10 @@
         var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
         if (player.EssenceDrain >= enemies[EnemyIndex].Masc && enemies[EnemyIndex].Masc > 0) {
             enemies[EnemyIndex].SessionOrgasm--;
-            player.Masc += enemies[EnemyIndex].Masc;
+            if(player.ForcedFemale)
+                player.Femi += enemies[EnemyIndex].Masc;
+            else
+                player.Masc += enemies[EnemyIndex].Masc;
             enemies[EnemyIndex].Masc = 0;
             EssenceCheck(enemies[EnemyIndex]);
             if (Settings.EssenceAuto) {
@@ -821,7 +838,10 @@
             document.getElementById("SexText").innerHTML = "You siphon the last essence of masculinity from them leaving them with no signs of masculinity left." + DrainChanges(old, player, eold, enemies[EnemyIndex]);
         } else if (player.EssenceDrain < enemies[EnemyIndex].Masc) {
             enemies[EnemyIndex].SessionOrgasm--;
-            player.Masc += player.EssenceDrain;
+            if(player.ForcedFemale)
+                player.Femi += player.EssenceDrain;
+            else
+                player.Masc += player.EssenceDrain;
             enemies[EnemyIndex].Masc -= player.EssenceDrain;
             EssenceCheck(enemies[EnemyIndex]);
             if (Settings.EssenceAuto) {
@@ -840,7 +860,10 @@
         var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
         if (player.EssenceDrain >= enemies[EnemyIndex].Femi && enemies[EnemyIndex].Femi > 0) {
             enemies[EnemyIndex].SessionOrgasm--;
-            player.Femi += enemies[EnemyIndex].Femi;
+            if(player.ForcedMale)
+                player.Masc += enemies[EnemyIndex].Femi;
+            else
+                player.Femi += enemies[EnemyIndex].Femi;
             enemies[EnemyIndex].Femi = 0;
             EssenceCheck(enemies[EnemyIndex]);
             if (Settings.EssenceAuto) {
@@ -849,7 +872,10 @@
             document.getElementById("SexText").innerHTML = "You siphon the last essence of femininity from them leaving them with no signs of femininity left. " + DrainChanges(old, player, eold, enemies[EnemyIndex]);
         } else if (player.EssenceDrain < enemies[EnemyIndex].Femi) {
             enemies[EnemyIndex].SessionOrgasm--;
-            player.Femi += player.EssenceDrain;
+            if(player.ForcedMale)
+                player.Masc += player.EssenceDrain;
+            else
+                player.Femi += player.EssenceDrain;
             enemies[EnemyIndex].Femi -= player.EssenceDrain;
             EssenceCheck(enemies[EnemyIndex]);
             if (Settings.EssenceAuto) {
