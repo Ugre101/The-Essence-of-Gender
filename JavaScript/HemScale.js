@@ -54,6 +54,7 @@
         FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
         Barberer = new Npc("Barberer", "Hair salon", grid, grid, grid * 5, grid * 4, "RGB(133,94,66)")
         PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)");
+        MounatinShrine = new Npc("MounatinShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
 
 
         return;

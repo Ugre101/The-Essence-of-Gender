@@ -510,10 +510,8 @@
        grid-template-columns: repeat(4, 1fr);
        grid-template-rows: 1fr 1fr;
        grid-gap: 1em 0;
-       width: 1400px;
-       max-width: 95%;
-       min-height: 70%;
-       max-height: 90%;
+       width: 90%;
+       height: 80%;
        padding: 2em;
        text-align: center;
        border-radius: 5px;
@@ -552,7 +550,7 @@
        border-radius: 60px;
        grid-area: b;
        width: 100%;
-       height: auto;
+       height: 100%;
        padding: 0 0.5em;
        overflow: auto;
    }
@@ -561,13 +559,21 @@
        border-radius: 60px;
        grid-area: d;
        width: 100%;
-       height: auto;
+       height: 100%;
        padding: 0 0.5em;
        overflow: auto;
    }
 
    @media screen and (max-height: 1000px) {
        div.AfterBattleImg {
+           height: 90%;
+           width: 100%;
+       }
+   }
+
+   @media screen and (max-height: 800px) {
+       div.AfterBattle {
+           width: 100%;
            height: 90%;
        }
    }

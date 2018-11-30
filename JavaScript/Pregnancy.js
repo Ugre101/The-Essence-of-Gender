@@ -80,7 +80,7 @@ function PregnanyEngine() {
                             if (b.NuseryBoost > 40) {
                                 console.log("Extra day")
                                 b.NuseryBoost = 0;
-                                b.AgeCounter++ //Faster ageing with nusery
+                                b.AgeCounter++ //Faster aging with nusery
                                 if (b.AgeCounter % 365 == 0) {
                                     EventLog("Your child with " + e.FirstName + " " + e.LastName + " has grown " + age + " years old.");
                                 }

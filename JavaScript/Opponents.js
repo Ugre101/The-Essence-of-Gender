@@ -1,6 +1,6 @@
 function enemy(EnemyName, EnemyRace, Strength, Endurance, Willpower, Charm,
-    Intelligence, SexSkill, EnemyHealth, EnemyWillHealth, ExpDrop, GoldDrop, 
-    Color, Size, Height, EnemyFullHealth = EnemyHealth, 
+    Intelligence, SexSkill, EnemyHealth, EnemyWillHealth, ExpDrop, GoldDrop,
+    Color, Size, Height, EnemyFullHealth = EnemyHealth,
     EnemyFullWillHealth = EnemyWillHealth, EnemySecondRace = EnemyRace) {
     this.Name = EnemyName;
     this.Race = EnemyRace;
@@ -67,56 +67,56 @@ function EvilNameGiver(who) {
 function EssenceGiver(who, amount, Genderlock = false) {
     if (Genderlock) {
         if (Genderlock == "male") {
-            who.Masc = RandomInt(1, 6) * amount;
+            who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
             who.Femi = 0;
             // it's a boy
         } else if (Genderlock == "cuntboy") {
-            who.Femi = RandomInt(1, 6) * amount;
-            who.Masc = 0;
+            who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
+            who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
             // it's a cuntboy, might add a penalty to allow more cuntboy and dickgirls
         } else if (Genderlock == "herm") {
-            who.Masc = RandomInt(1, 5) * amount;
-            who.Femi = RandomInt(1, 5) * amount;
+            who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
+            who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
         } else if (Genderlock == "dickgirl") {
-            who.Masc = RandomInt(1, 6) * amount;
-            who.Femi = 0;
+            who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
+            who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
             // it's a dickgirl
         } else if (Genderlock == "female") {
-            who.Femi = RandomInt(1, 6) * amount;
+            who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
             who.Masc = 0;
             // it's a girl
         }
     } else {
         var a = RandomInt(1, 13);
         if (a < 4) {
-            who.Masc = RandomInt(1, 6) * amount;
+            who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
             who.Femi = 0;
             // it's a boy
         } else if (a < 6) {
-            who.Masc = RandomInt(1, 4) * amount;
-            who.Femi = RandomInt(1, 6) * amount;
+            who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
+            who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
             // it's a cuntboy, might add a penalty to allow more cuntboy and dickgirls
         } else if (a < 9) {
-            who.Masc = RandomInt(1, 5) * amount;
-            who.Femi = RandomInt(1, 5) * amount;
+            who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
+            who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
         } else if (a < 11) {
-            who.Masc = RandomInt(1, 6) * amount;
-            who.Femi = RandomInt(1, 4) * amount;
+            who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
+            who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
             // it's a dickgirl
         } else if (a < 14) {
-            who.Femi = RandomInt(1, 6) * amount;
+            who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
             who.Masc = 0;
             // it's a girl
         }
     }
 }
 
-function FatMuscle(who, fat, muscle) {
-    var fatratio = who.Height / 100 * fat;
-    var muscleration = who.Height / 100 * muscle;
-    who.Fat = fatratio;
-    who.Muscle = muscleration;
-    who.Weight = who.Height + who.Fat + who.Muscle;
+function FatMuscle(who, minfatprocent, minweight) {
+    var fatratio = RandomInt(minfatprocent, minfatprocent + 10);
+    var muscleration = 100 - fatratio;
+    who.Fat = minweight / 200 * fatratio;
+    who.Muscle = minweight / 200 * muscleration;
+    who.Weight = minweight + who.Fat + who.Muscle;
 }
 
 function EnemySetup(who) {
@@ -160,10 +160,25 @@ function EncounterStart() {
     var OP = new enemy(RandomString(Names), RandomString(Races), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5),
         RandomInt(2, 5), RandomInt(6, 9), 70, 70, RandomInt(15, 20), RandomInt(5, 15),
         'Chocolate', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 20);
+    EssenceGiver(OP, 50);
+    FatMuscle(OP, 10, 50);
+    StandardEnemy(OP);
+    NameGiver(OP);
+    return OP;
+}
+
+function RespawnBlocker() {
+    var Races = ["Human", "Halfling"];
+    var Names = ["Commoner", "Farmer", "Thug"];
+    var OP = new enemy(RandomString(Names), RandomString(Races), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5),
+        RandomInt(2, 5), RandomInt(6, 9), 70, 70, RandomInt(15, 20), RandomInt(5, 15),
+        'Chocolate', grid, RandomInt(140, 180));
+    EssenceGiver(OP, 50);
     FatMuscle(OP, 1, 1);
     StandardEnemy(OP);
     NameGiver(OP);
+    OP.XPos = 99 * grid;
+    OP.YPos = 99 * grid;
     return OP;
 }
 
@@ -206,8 +221,8 @@ function EncounterPath1() {
     var OP = new enemy(RandomString(Names), RandomString(RacesRoad), RandomInt(3, 6), RandomInt(3, 6), RandomInt(3, 6), RandomInt(3, 6),
         RandomInt(3, 6), RandomInt(7, 10), 80, 80, RandomInt(20, 25), RandomInt(8, 18),
         'Chocolate', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 25);
-    FatMuscle(OP, 1, 1);
+    EssenceGiver(OP, 60);
+    FatMuscle(OP, 10, 50);
     StandardEnemy(OP);
     NameGiver(OP);
     return OP;
@@ -219,8 +234,8 @@ function EncounterPath2() {
     var OP = new enemy(RandomString(Names), RandomString(RacesRoad), RandomInt(4, 7), RandomInt(4, 7), RandomInt(4, 7), RandomInt(4, 7),
         RandomInt(4, 7), RandomInt(8, 12), 100, 100, RandomInt(23, 30), RandomInt(12, 25),
         'green', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 30);
-    FatMuscle(OP, 1, 1);
+    EssenceGiver(OP, 70);
+    FatMuscle(OP, 10, 50);
     StandardEnemy(OP);
     NameGiver(OP);
     return OP;
@@ -231,8 +246,8 @@ function EncounterBandit() {
     var OP = new enemy("Bandit", RandomString(RacesBandit), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15),
         RandomInt(8, 15), RandomInt(10, 15), 170, 170, RandomInt(30, 45), RandomInt(30, 55),
         'tomato ', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 100, "male");
-    FatMuscle(OP, 1, 1);
+    EssenceGiver(OP, 500, "male");
+    FatMuscle(OP, 7, 70);
     StandardEnemy(OP);
     NameGiver(OP);
     return OP;
@@ -243,8 +258,8 @@ function EncounterBanditLord() {
     var OP = new enemy("Banditlord", RandomString(RacesBandit), RandomInt(20, 35), RandomInt(10, 15), RandomInt(20, 35), RandomInt(20, 35),
         RandomInt(20, 35), RandomInt(40, 60), 350, 300, RandomInt(55, 85), RandomInt(75, 150),
         'tomato', 1.5 * grid, RandomInt(160, 200));
-    EssenceGiver(OP, 200, "male");
-    FatMuscle(OP, 1, 1);
+    EssenceGiver(OP, 1000, "male");
+    FatMuscle(OP, 7, 80);
     StandardEnemy(OP);
     OP.XPos = startarea.width / 2 - grid;
     OP.YPos = grid;
@@ -258,8 +273,8 @@ function EncounterForest() {
     var OP = new enemy("Forest", RandomString(RacesForest), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13),
         RandomInt(6, 13), RandomInt(8, 18), 150, 150, RandomInt(25, 40), RandomInt(25, 45),
         'darkgreen', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 100);
-    FatMuscle(OP, 1, 1);
+    EssenceGiver(OP, 300);
+    FatMuscle(OP, 11, 50);
     StandardEnemy(OP);
     NameGiver(OP);
     return OP;
@@ -270,8 +285,8 @@ function EncounterForest2() {
     var OP = new enemy("Forest", RandomString(RacesForest2), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13),
         RandomInt(6, 13), RandomInt(8, 18), 150, 150, RandomInt(25, 40), RandomInt(25, 45),
         'darkgreen', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 120);
-    FatMuscle(OP, 1, 1);
+    EssenceGiver(OP, 400);
+    FatMuscle(OP, 11, 50);
     StandardEnemy(OP);
     NameGiver(OP);
     return OP;
@@ -282,8 +297,8 @@ function EncounterPathToWitch2() {
     var OP = new enemy("Witch", RandomString(RacesWitch), RandomInt(1, 5), RandomInt(3, 7), RandomInt(7, 16), RandomInt(10, 40),
         RandomInt(30, 70), RandomInt(20, 80), 150, 300, RandomInt(30, 60), RandomInt(30, 70),
         'IndianRed', grid, RandomInt(140, 170));
-    EssenceGiver(OP, 150);
-    FatMuscle(OP, 1, 1);
+    EssenceGiver(OP, 350);
+    FatMuscle(OP, 10, 50);
     StandardEnemy(OP);
     NameGiver(OP);
     switch (CheckGender(OP)) {
@@ -304,8 +319,8 @@ function EncounterCave1() {
     var OP = new enemy("Lesser", RandomString(RacesCave), RandomInt(7, 10), RandomInt(7, 10), RandomInt(7, 10), RandomInt(0, 2),
         RandomInt(1, 3), RandomInt(6, 15), 120, 150, RandomInt(25, 35), RandomInt(15, 30),
         'red', grid, RandomInt(120, 140));
-    EssenceGiver(OP, 90);
-    FatMuscle(OP, 1, 1);
+    EssenceGiver(OP, 250);
+    FatMuscle(OP, 8, 40);
     StandardEnemy(OP);
     EvilNameGiver(OP);
     return OP;
@@ -316,8 +331,8 @@ function EncounterCave2() {
     var OP = new enemy("Cave", RandomString(RacesCave2), RandomInt(12, 18), RandomInt(12, 18), RandomInt(12, 18), RandomInt(8, 12),
         RandomInt(5, 8), RandomInt(16, 25), 190, 210, RandomInt(40, 60), RandomInt(35, 60),
         'red', grid, RandomInt(150, 180));
-    EssenceGiver(OP, 120);
-    FatMuscle(OP, 1, 1);
+    EssenceGiver(OP, 500);
+    FatMuscle(OP, 8, 60);
     StandardEnemy(OP);
     EvilNameGiver(OP);
     return OP;
@@ -328,8 +343,8 @@ function EncounterCave3() {
     var OP = new enemy("Guard", RandomString(RacesCave3), RandomInt(25, 40), RandomInt(25, 40), RandomInt(22, 38), RandomInt(18, 22),
         RandomInt(15, 18), RandomInt(50, 70), 370, 400, RandomInt(65, 85), RandomInt(55, 80),
         'red', grid, RandomInt(160, 190));
-    EssenceGiver(OP, 150);
-    FatMuscle(OP, 1, 1);
+    EssenceGiver(OP, 750);
+    FatMuscle(OP, 8, 70);
     StandardEnemy(OP);
     EvilNameGiver(OP);
     return OP;
@@ -340,8 +355,8 @@ function EncounterCave4() {
     var OP = new enemy("Lesser", RandomString(RacesCave4), RandomInt(2, 5), RandomInt(35, 50), RandomInt(40, 55), RandomInt(40, 55),
         RandomInt(20, 40), RandomInt(80, 120), 420, 550, RandomInt(85, 110), RandomInt(70, 120),
         'purple', grid, RandomInt(150, 180));
-    EssenceGiver(OP, 200);
-    FatMuscle(OP, 1, 1);
+    EssenceGiver(OP, 2000);
+    FatMuscle(OP, 10, 60);
     StandardEnemy(OP);
     EvilNameGiver(OP);
     return OP;

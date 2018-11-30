@@ -170,6 +170,39 @@ function PrintMap(karta = null) {
                 case "MountainStart":
                     CurrentTile(2, 2);
                     break;
+                case "MountainShrinePath":
+                    CurrentTile(1, 2);
+                    break;
+                case "MountainShrine":
+                    CurrentTile(0, 2);
+                    break;
+                case "MountainClimb":
+                    CurrentTile(2, 3);
+                    break;
+                case "MountainClimb2":
+                    CurrentTile(2, 4);
+                    break;
+                case "MountainClimb3":
+                    CurrentTile(3, 4);
+                    break;
+                case "MountainClimb4":
+                    CurrentTile(4, 4);
+                    break;
+                case "MountainClimb5":
+                    CurrentTile(4, 3);
+                    break;
+                case "MountainClimb6":
+                    CurrentTile(4, 2);
+                    break;
+                case "MountainClimb7":
+                    CurrentTile(4, 1);
+                    break;
+                case "MountainClimb8":
+                    CurrentTile(4, 0);
+                    break;
+                case "MountainClimb9":
+                    CurrentTile(3, 0);
+                    break;
             }
             break;
     }

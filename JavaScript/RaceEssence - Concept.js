@@ -148,9 +148,6 @@ function pRaceBonus () {
             break;
         else {
             switch (RaceAbsorb[i].Race) {
-                case "Human":
-                    console.log ("You get NOTHING!");
-                    break;
                 case "Halfling":
                     player.raceBonus[0].amount -= 0.5 * (RaceAbsorb[i].amount / 100);
                     player.raceBonus[1].amount -= 0.5 * (RaceAbsorb[i].amount / 100);
@@ -184,7 +181,7 @@ function pRaceBonus () {
                     player.raceBonus[8].amount += 20 * (RaceAbsorb[i].amount / 100);
                     break;
                 default: 
-                    console.log ("Error: Race not found. " + RaceAbsorb[i].Race);
+                    console.log (RaceAbsorb[i].Race + " has no perks yet.");
                     break;
             }
         }

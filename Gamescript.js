@@ -95,6 +95,7 @@
         Face: {
             Eyes: "brown",
             HairStyle: "curly",
+            HairColor: "brown",
             HairLength: "shoulder-length"
         },
         FoodStomach: [],
@@ -105,6 +106,8 @@
             VorePerks: {},
             Stomach: [],
             StomachExp: 0,
+            TaurStomach: [],
+            TaurStomachExp: 0,
             Vagina: [],
             VaginaExp: 0,
             Balls: [],
@@ -118,6 +121,11 @@
         Spells: {
             Fireball: 0,
             FireballMax: 0
+        },
+        Blessings: {
+            Incubator: 0,
+            Broadmother: 0,
+            Malepreg: 0
         }
     };
 
@@ -249,21 +257,16 @@
         document.getElementById("CharCreator").style.display = 'none';
         document.getElementById("page2").style.display = 'block';
         document.getElementById("startgame").style.display = 'none';
-        console.log(document.getElementById("haircolor").value);
-        setupChar(document.getElementById("firstname").value, document.getElementById("lastname").value, document.getElementById("haircolor").value, document.getElementById("skincolor").value);
+        player.Name = document.getElementById("firstname").value;
+        player.LastName = document.getElementById("lastname").value;
+        player.Face.HairColor = document.getElementById("haircolor").value;
+        player.Skincolor = document.getElementById("skincolor").value;
         player.MaxHealth = 100;
         player.MaxWillHealth = 100;
         player.Health = player.MaxHealth;
         player.WillHealth = player.MaxWillHealth;
         document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
     });
-
-    function setupChar(first, last, hair, skin) {
-        player.Name = first;
-        player.LastName = last;
-        player.Face.HairColor = hair;
-        player.Skincolor = skin;
-    }
 
     document.getElementById("BackHome").addEventListener("click", function () {
         document.getElementById("CharCreator").style.display = 'none';
@@ -634,7 +637,7 @@
     }
 
     function CheckTitle(who) {
-        // Titles to seperate a herm with 30femi and 2500masc from a herm with 200femi and 200masc
+        // Titles to seperate a herm with 30femi and 2500masc from a herm with 200femi and 200masc 
         if (who.Masc < who.Femi) {
             return "feminine"
         } else if (who.Femi < who.Masc) {
@@ -1125,7 +1128,8 @@
     // Farm
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
     var FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
-
+    // Shrine
+    var MounatinShrine = new Npc("MounatinShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
 
 
 
@@ -1362,14 +1366,12 @@
         ExpCheck();
 
         if (!battle) {
-            switch (player.Map) {
-                case "Farm":
-                case "TempCity":
-                case "MountainStart":
-                    PaintBackground();
-                    break;
-                default:
-                    break;
+            var needPaint = ["Farm", "TempCity", "MountainStart", "MountainClimb", "MountainClimb2", "MountainClimb3",
+                "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8", "MountainClimb9",
+                "MountainClimb10", "MountainShrinePath", "MountainShrine"
+            ];
+            if (needPaint.indexOf(player.Map) > -1) {
+                PaintBackground();
             }
             CurrentMap();
             if (Settings.Vore) {

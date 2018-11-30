@@ -31,7 +31,7 @@ House:
 	The kitchen adds passive fat gain for servants.
 	The gym adds passive muscle gain for servants at cost of fat.
 
-	Nusery: Speeds up ageing of children under 18; every day it gives 1*nusery build level to a boostcounter when that counter reaches 40  		the child will age an extra day. So nusery level 2 a child age one extra day every 20 days,
+	Nusery: Speeds up aging of children under 18; every day it gives 1*nusery build level to a boostcounter when that counter reaches 40  		the child will age an extra day. So nusery level 2 a child age one extra day every 20 days,
 	
 Gym: 
 	The amount of muscle you can gain at the gym is decided by your strength, height and muscle.

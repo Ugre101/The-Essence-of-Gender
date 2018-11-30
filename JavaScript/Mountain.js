@@ -1,10 +1,11 @@
-var MountainHalfRaces = ["human", "elf"] //
-var MountainRaces = ["dragon", "giant", "human", "harpy", ""]
+//var MountainHalfRaces = ["human", "elf"]
+//var MountainRaces = ["dragon", "giant", "human", "harpy", ""]
 
 // Mountain opponents
 // "Pure" Maiden
 function EncounterMaiden() {
-    var OP = new enemy("Pure", MountainHalfRaces, RandomInt(1, 10), RandomIn(1, 10), RandomInt(20, 50), RandomInt(0, 5),
+    var MountainHalfRaces = ["human", "elf"] //
+    var OP = new enemy("Pure", MountainHalfRaces, RandomInt(1, 10), RandomInt(1, 10), RandomInt(20, 50), RandomInt(0, 5),
         RandomInt(5, 20), RandomInt(0, 5), 2500, 5000, RandomInt(50, 250), RandomInt(30, 100),
         "Pink", grid, RandomInt(150, 170));
     EssenceGiver(OP, 1500, "female");
@@ -15,10 +16,11 @@ function EncounterMaiden() {
     /* Strong virgins, they are not virgin by choice it's their culture to not offer themself to anyone weaker
     which have made them very strong over generation but there is a lot of desire to be dominated.
     After beating them change their title to depraved or something.*/
-    
+
 }
 
 function EncounterDragonKind() {
+    var MountainHalfRaces = ["human", "elf"] //
     var OP = new enemy("Lesser", "Dragon", RandomInt(10, 50), RandomInt(10, 50), RandomInt(10, 30), RandomInt(30, 50),
         RandomInt(10, 50), RandomInt(10, 60), 5000, 5000, RandomInt(50, 500), RandomInt(50, 500),
         "Red", grid, RandomInt(160, 240), RandomString(MountainHalfRaces));
