@@ -273,7 +273,7 @@
     // Ge karaktär start värden
     document.getElementById("Begin").addEventListener("click", function () {
         document.getElementById("startgame").style.display = 'inline-block';
-        document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.Lastname + ", a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
+        document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.LastName + ", a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
             ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Haircolor + " hair and " + player.Skincolor +
             " skin; hopefully the last time you see your body absent of any other details or personality.<br><br>For today, you will forge your own way in this world.";
 
@@ -509,7 +509,7 @@
         // Update for Looksmenu #Moved it here because there is no need to have it update every loop.
         document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
 
-        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + ", a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
+        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.LastName + ", a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
             ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and " + player.Skincolor + " skin.";
 
         if (player.Pregnant.Babies.length > 0) {
@@ -1340,7 +1340,7 @@
 
         player.MaxHealth = player.End * 10 + player.Perks.ExtraHealth.Count * 20;
         player.MaxWillHealth = player.Will * 10 + player.Perks.ExtraWillHealth.Count * 20;
-        document.getElementById("StatusName").innerHTML = player.Name + " " + player.Lastname;
+        document.getElementById("StatusName").innerHTML = player.Name + " " + player.LastName;
         document.getElementById("StatusHealth").innerHTML = Math.round(player.Health);
         document.getElementById("StatusHealth").style.width = Math.min(100 * (player.Health / player.MaxHealth), 103) + "%";
         document.getElementById("StatusWillHealth").innerHTML = Math.round(player.WillHealth);
@@ -1374,6 +1374,7 @@
             CurrentMap();
             if (Settings.Vore) {
                 VoreEngine();
+                CheckSplit();
             }
             if (enemies.length > 0) {
                 PrintEnemies();

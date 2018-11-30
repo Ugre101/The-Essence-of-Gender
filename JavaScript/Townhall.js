@@ -119,11 +119,11 @@ document.getElementById("Services").addEventListener("click", function () {
 document.getElementById("NameChange").addEventListener("click", function () {
     document.getElementById("NameChangeForm").style.display = 'block';
     document.getElementById("firstname2").value = player.Name;
-    document.getElementById("lastname2").value = player.Lastname;
+    document.getElementById("lastname2").value = player.LastName;
 });
 document.getElementById("AcceptName").addEventListener("click", function () {
     player.Name = document.getElementById("firstname2").value;
-    player.Lastname = document.getElementById("lastname2").value;
+    player.LastName = document.getElementById("lastname2").value;
     document.getElementById("NameChangeForm").style.display = 'none';
 });
 document.getElementById("ServicesLeave").addEventListener("click", function () {

@@ -45,7 +45,7 @@ function Lose(q) {
 		}
 	}
 	Winner = false;
-	document.getElementById("LosePName").innerHTML = player.Name + " " + player.Lastname;
+	document.getElementById("LosePName").innerHTML = player.Name + " " + player.LastName;
 	document.getElementById("LoseEName").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronun(CheckGender(ee));
 	document.getElementById("LoseMascu").innerHTML = Math.round(player.Masc);
 	document.getElementById("LoseFemin").innerHTML = Math.round(player.Femi);

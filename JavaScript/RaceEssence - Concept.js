@@ -42,6 +42,10 @@ var RaceAbsorb = [
 
 // Function for checking values - AKA when transformation kicks in.
 function CheckSplit() {
+    split();
+}    
+
+function split(q){
     var totalAbsorb = 0;
     for (var i = 0; i < RaceAbsorb.length; i++) {
         totalAbsorb += RaceAbsorb[i].amount; 
@@ -56,7 +60,11 @@ function CheckSplit() {
                 RaceAbsorb[i].amount = Math.round(RaceAbsorb[i].amount / 2);
             }
         }
-        pRaceBonus();
+        if(typeof q != "undefined")
+            split(1);
+        else 
+            split(q+1);
+    } else if (q == 1) {
         EssenceBalance();
     }
 }
@@ -96,6 +104,7 @@ function EssenceBalance() { // Concept for calculating what species you're treat
     } else {
         console.log("You're unmistakably "+RaceAbsorb[0].Race+", but you're deep in an uncanny valley.");
     }
+    pRaceBonus();
 }
 
 function PotionDrunk(race) {
