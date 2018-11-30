@@ -16,9 +16,9 @@ var RaceAbsorb = [
     {Race: "Equine", amount: 0}
 ]
 // Function for initializing stats, placeholder
-/*function SnowCheck() {
-    if (!player.hasOwnAttribute("Essence_R")) {
-        if (FeralEnemy != 'undefined') {
+/*function SnowCheck () {
+    if (!player.hasOwnAttribute ("Essence_R")) {
+        if (FeralEnemy ! = 'undefined') {
             for (var i = 0; i < FeralEnemy.length; i++) {
                 player.Essence_R.FeralEnemy[i] = 0;
             }
@@ -41,88 +41,88 @@ var RaceAbsorb = [
 }*/
 
 // Function for checking values - AKA when transformation kicks in.
-function CheckSplit() {
-    split();
+function CheckSplit () {
+    split ();
 }    
 
-function split(q){
+function split (q) {
     var totalAbsorb = 0;
     for (var i = 0; i < RaceAbsorb.length; i++) {
         totalAbsorb += RaceAbsorb[i].amount; 
     }
     if (totalAbsorb >= 200) { // When total essence is over 200%
-        RaceAbsorb.sort(function(a,b){return b.amount - a.amount}); // Finding the new majority essence
-        for (var i = RaceAbsorb.length - 1; i > 0; i--) { // Clearing out anything below 1%
+        RaceAbsorb.sort (function (a,b) {return b.amount - a.amount}); // Finding the new majority essence
+        for (var i = RaceAbsorb.length - 1; i >= 0; i--) { // Clearing out anything below 1%
             if (RaceAbsorb[i].amount < 1) {
                 RaceAbsorb[i-1].amount += RaceAbsorb[i].amount;
                 RaceAbsorb[i].amount = 0;
             } else {
-                RaceAbsorb[i].amount = Math.round(RaceAbsorb[i].amount / 2);
+                RaceAbsorb[i].amount = Math.round (RaceAbsorb[i].amount / 2);
             }
         }
-        if(typeof q != "undefined")
-            split(1);
+        if (typeof q === "undefined")
+            split (1);
         else 
-            split(q+1);
+            split (q + 1);
     } else if (q == 1) {
-        EssenceBalance();
+        EssenceBalance ();
     }
 }
 
-function EssenceBalance() { // Concept for calculating what species you're treated as
+function EssenceBalance () { // Concept for calculating what species you're treated as
     var totalAbsorb = 0;
     for (var i = 0; i < RaceAbsorb.length; i++) {
         totalAbsorb += RaceAbsorb[i].amount; 
     }
-    var R1 = Math.round(100 * RaceAbsorb[0].amount / totalAbsorb);
-    var R2 = Math.round(100 * RaceAbsorb[1].amount / totalAbsorb);
-    var R3 = Math.round(100 * RaceAbsorb[2].amount / totalAbsorb);
+    var R1 = Math.round (100 * RaceAbsorb[0].amount / totalAbsorb);
+    var R2 = Math.round (100 * RaceAbsorb[1].amount / totalAbsorb);
+    var R3 = Math.round (100 * RaceAbsorb[2].amount / totalAbsorb);
     if (R1 > 99) {
-        console.log("You're fully "+RaceAbsorb[0].Race+"!");
-    } else if (R1 + R2 + R3 < 50) {
-        console.log("You're an unnatural mix of an assortment of creatures!");
+        console.log ("You're fully " + RaceAbsorb[0].Race + "!");
+    } else if (R1  +  R2  +  R3 < 50) {
+        console.log ("You're an unnatural mix of an assortment of creatures!");
     } else if (R1 > 90) {
-        console.log("You're indistinguishable from any other "+RaceAbsorb[0].Race);
+        console.log ("You're indistinguishable from any other " + RaceAbsorb[0].Race);
     } else if (R1 > 80) {
         if (R2 > 10) {
-            console.log("You're mostly "+RaceAbsorb[0].Race+", but you've got some " + RaceAbsorb[1].Race + " traits.");
+            console.log ("You're mostly " + RaceAbsorb[0].Race + ", but you've got some " +  RaceAbsorb[1].Race +  " traits.");
         } else {
-            console.log("You're mostly "+RaceAbsorb[0].Race+", but you've got other traits mixed in.");
+            console.log ("You're mostly " + RaceAbsorb[0].Race + ", but you've got other traits mixed in.");
         }
     } else if (R1 > 70) {
         if (R2 > 20) {
-            console.log("You're mostly "+RaceAbsorb[0].Race+", but could be confused for a half-" + RaceAbsorb[1].Race + ".");
-        } else if (R2 + R3 > 20) {
-            console.log("You're mostly "+RaceAbsorb[0].Race+", but you've added a few other traits, notably "+RaceAbsorb[1].Race+" and "+RaceAbsorb[2].Race+".");
+            console.log ("You're mostly " + RaceAbsorb[0].Race + ", but could be confused for a half-" +  RaceAbsorb[1].Race +  ".");
+        } else if (R2  +  R3 > 20) {
+            console.log ("You're mostly " + RaceAbsorb[0].Race + ", but you've added a few other traits, notably " + RaceAbsorb[1].Race + " and " + RaceAbsorb[2].Race + ".");
         } else {
-            console.log("You're mostly "+RaceAbsorb[0].Race+", but you've added a few other traits.");
+            console.log ("You're mostly " + RaceAbsorb[0].Race + ", but you've added a few other traits.");
         }
-    } else if (R1 < R2 + 10) {
-        console.log("You're half-"+RaceAbsorb[0].Race+", half "+RaceAbsorb[1].Race+".");
-    } else if (R1 < R2 + R3) {
-        console.log("You're a curious hybrid, a mix between "+RaceAbsorb[0].Race+", "+RaceAbsorb[1].Race+", and "+RaceAbsorb[2].Race+".");
+    } else if (R1 < R2  +  10) {
+        console.log ("You're half-" + RaceAbsorb[0].Race + ", half " + RaceAbsorb[1].Race + ".");
+    } else if (R1 < R2  +  R3) {
+        console.log ("You're a curious hybrid, a mix between " + RaceAbsorb[0].Race + ", " + RaceAbsorb[1].Race + ", and " + RaceAbsorb[2].Race + ".");
     } else {
-        console.log("You're unmistakably "+RaceAbsorb[0].Race+", but you're deep in an uncanny valley.");
+        console.log ("You're unmistakably a(n) " + RaceAbsorb[0].Race + ", but you're deep in an uncanny valley.");
     }
-    pRaceBonus();
+    pRaceBonus ();
 }
 
-function PotionDrunk(race) {
-    if(race === "centaur")
+function PotionDrunk (race) {
+    if (race === "centaur")
         player.isTaur = true;
     else {
         player.isTaur = false;
-        for(var i = 0; i < RaceAbsorb.length; i++) {
-            if(RaceAbsorb[i].Race === race) {
+        for (var i = 0; i < RaceAbsorb.length; i++) {
+            if (RaceAbsorb[i].Race === race) {
                 RaceAbsorb[i].amount += 50;
-                RaceAbsorb.sort(function(a,b){return a.amount - b.amount});
+                RaceAbsorb.sort (function (a,b) {return a.amount - b.amount});
                 break;
             }
         }
     }
 }
 
-function pRaceBonus() {
+function pRaceBonus () {
     for (var i = 0; i < player.raceBonus.length; i++)
         player.raceBonus[i].amount = 0;
     if (RaceAbsorb[0].amount > 90) {
@@ -144,47 +144,47 @@ function pRaceBonus() {
         player.ForcedMale = false;
     }
     for (var i = 0; i < RaceAbsorb.length; i++) {
-        if(RaceAbsorb[i].amount < 10)
+        if (RaceAbsorb[i].amount < 10)
             break;
         else {
             switch (RaceAbsorb[i].Race) {
                 case "Human":
-                    console.log("You get NOTHING!");
+                    console.log ("You get NOTHING!");
                     break;
                 case "Halfling":
-                    player.raceBonus[0].amount -= 0.5 * RaceAbsorb[i].amount;
-                    player.raceBonus[1].amount -= 0.5 * RaceAbsorb[i].amount;
-                    player.raceBonus[2].amount -= 0.2 * RaceAbsorb[i].amount;
+                    player.raceBonus[0].amount -= 0.5 * (RaceAbsorb[i].amount / 100);
+                    player.raceBonus[1].amount -= 0.5 * (RaceAbsorb[i].amount / 100);
+                    player.raceBonus[2].amount -= 0.2 * (RaceAbsorb[i].amount / 100);
                     break;
                 case "Orc":
-                    player.raceBonus[3].amount += RaceAbsorb[i].amount;
+                    player.raceBonus[3].amount += (RaceAbsorb[i].amount / 100);
                     break;
                 case "Fairy":
-                    player.raceBonus[0].amount -= 8 * RaceAbsorb[i].amount / 9;
-                    player.raceBonus[1].amount -= 8 * RaceAbsorb[i].amount / 9;
-                    player.raceBonus[2].amount -= 6 * RaceAbsorb[i].amount / 10;
+                    player.raceBonus[0].amount -= 8 * (RaceAbsorb[i].amount / 100) / 9;
+                    player.raceBonus[1].amount -= 8 * (RaceAbsorb[i].amount / 100) / 9;
+                    player.raceBonus[2].amount -= 6 * (RaceAbsorb[i].amount / 100) / 10;
                     break;
                 case "Elf":
-                    player.raceBonus[4].amount += 1 * RaceAbsorb[i].amount;
-                    player.raceBonus[5].amount += 1 * RaceAbsorb[i].amount;
+                    player.raceBonus[4].amount +=RaceAbsorb[i].amount / 100
+                    player.raceBonus[5].amount +=RaceAbsorb[i].amount / 100
                     break;
                 case "Dark elf":
-                    player.raceBonus[5].amount += 1 * RaceAbsorb[i].amount;
-                    player.raceBonus[6].amount += 1 * RaceAbsorb[i].amount;
+                    player.raceBonus[5].amount +=RaceAbsorb[i].amount / 100
+                    player.raceBonus[6].amount +=RaceAbsorb[i].amount / 100
                     break;
                 case "Amazon":
-                    player.raceBonus[3].amount += 1 * RaceAbsorb[i].amount;
-                    player.raceBonus[6].amount += 2;
+                    player.raceBonus[3].amount += RaceAbsorb[i].amount / 100;
+                    player.raceBonus[6].amount += 2 * (RaceAbsorb[i].amount / 100);
                     break;
                 case "Demon":
-                    player.raceBonus[8].amount += 20 * RaceAbsorb[i].amount;
+                    player.raceBonus[8].amount += 20 * (RaceAbsorb[i].amount / 100);
                     break;
                 case "Dhampir":
-                    player.raceBonus[7].amount += 1 * RaceAbsorb[i].amount;
-                    player.raceBonus[8].amount += 20 * RaceAbsorb[i].amount;
+                    player.raceBonus[7].amount +=RaceAbsorb[i].amount / 100
+                    player.raceBonus[8].amount += 20 * (RaceAbsorb[i].amount / 100);
                     break;
                 default: 
-                    console.log("Error: Race not found. "+RaceAbsorb[i].Race);
+                    console.log ("Error: Race not found. " + RaceAbsorb[i].Race);
                     break;
             }
         }
