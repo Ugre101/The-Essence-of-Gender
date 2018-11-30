@@ -140,7 +140,7 @@ function DormSex() {
     if (Settings.EssenceAuto) {
         EssenceCheck(player);
     }
-    document.getElementById("DormPName").innerHTML = player.Name + " " + player.Lastname;
+    document.getElementById("DormPName").innerHTML = player.Name + " " + player.LastName;
     document.getElementById("DormEName").innerHTML = e.Name + "<br>" + e.Race + " " + Pronun(CheckGender(e));
     document.getElementById("DormMascu").innerHTML = Math.round(player.Masc);
     document.getElementById("DormFemin").innerHTML = Math.round(player.Femi);

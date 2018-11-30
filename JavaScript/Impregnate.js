@@ -8,7 +8,7 @@ function BabyMaker(who, by) {
     who.Pregnant.Status = true;
     who.Pregnant.Baby = 0;
     who.Pregnant.BabyRace = Father.Race;
-    who.Pregnant.Father = by.Name + " " + by.Lastname;
+    who.Pregnant.Father = by.Name + " " + by.LastName;
     who.Pregnant.Mother = who.FirstName + " " + who.LastName;
     Flags.Impregnations++;
 }
@@ -24,7 +24,7 @@ function playerBabyMaker(who, by) {
         BabyAge: 0,
         BabyRace: Father.Race,
         Father: by.FirstName + " " + by.LastName,
-        Mother: who.Name + " " + who.Lastname
+        Mother: who.Name + " " + who.LastName
     }
     who.Pregnant.Status = true;
     player.Pregnant.Babies.push(Baby);

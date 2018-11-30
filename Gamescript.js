@@ -18,6 +18,20 @@
         PerkPoints: 0,
         Race: "human",
         SecondRace: "human",
+        isTaur: "false", // Testing
+        raceBonus: [
+            {type: "Height", amount: 1},
+            {type: "Weight", amount: 1},
+            {type: "Size", amount: 1},
+            {type: "Str", amount: 0},
+            {type: "Int", amount: 0},
+            {type: "Charm", amount: 0},
+            {type: "SexSkill", amount: 0},
+            {type: "Will", amount: 0},
+            {type: "WillHealth", amount: 0}
+            ],
+        ForcedMale: false,
+        ForcedFemale: false,
         Dicks: [],
         Balls: [],
         Pussies: [],
@@ -82,7 +96,7 @@
             Eyes: "brown",
             HairStyle: "curly",
             HairColor: "brown",
-            HairLength: "shoulder-"
+            HairLength: "shoulder-length"
         },
         FoodStomach: [],
         Vore: {
@@ -244,7 +258,7 @@
         document.getElementById("page2").style.display = 'block';
         document.getElementById("startgame").style.display = 'none';
         player.Name = document.getElementById("firstname").value;
-        player.Lastname = document.getElementById("lastname").value;
+        player.LastName = document.getElementById("lastname").value;
         player.Face.HairColor = document.getElementById("haircolor").value;
         player.Skincolor = document.getElementById("skincolor").value;
         player.MaxHealth = 100;
@@ -262,8 +276,8 @@
     // Ge karaktär start värden
     document.getElementById("Begin").addEventListener("click", function () {
         document.getElementById("startgame").style.display = 'inline-block';
-        document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.Lastname + ", a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
-            ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Face.HairColor + " hair and " + player.Skincolor +
+        document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.LastName + ", a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
+            ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Haircolor + " hair and " + player.Skincolor +
             " skin; hopefully the last time you see your body absent of any other details or personality.<br><br>For today, you will forge your own way in this world.";
 
         requestAnimationFrame(loop);
@@ -498,7 +512,7 @@
         // Update for Looksmenu #Moved it here because there is no need to have it update every loop.
         document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
 
-        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.Lastname + ", a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
+        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.LastName + ", a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
             ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and " + player.Skincolor + " skin.";
 
         if (player.Pregnant.Babies.length > 0) {
@@ -815,7 +829,10 @@
         var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
         if (player.EssenceDrain >= enemies[EnemyIndex].Masc && enemies[EnemyIndex].Masc > 0) {
             enemies[EnemyIndex].SessionOrgasm--;
-            player.Masc += enemies[EnemyIndex].Masc;
+            if(player.ForcedFemale)
+                player.Femi += enemies[EnemyIndex].Masc;
+            else
+                player.Masc += enemies[EnemyIndex].Masc;
             enemies[EnemyIndex].Masc = 0;
             EssenceCheck(enemies[EnemyIndex]);
             if (Settings.EssenceAuto) {
@@ -824,7 +841,10 @@
             document.getElementById("SexText").innerHTML = "You siphon the last essence of masculinity from them leaving them with no signs of masculinity left." + DrainChanges(old, player, eold, enemies[EnemyIndex]);
         } else if (player.EssenceDrain < enemies[EnemyIndex].Masc) {
             enemies[EnemyIndex].SessionOrgasm--;
-            player.Masc += player.EssenceDrain;
+            if(player.ForcedFemale)
+                player.Femi += player.EssenceDrain;
+            else
+                player.Masc += player.EssenceDrain;
             enemies[EnemyIndex].Masc -= player.EssenceDrain;
             EssenceCheck(enemies[EnemyIndex]);
             if (Settings.EssenceAuto) {
@@ -843,7 +863,10 @@
         var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
         if (player.EssenceDrain >= enemies[EnemyIndex].Femi && enemies[EnemyIndex].Femi > 0) {
             enemies[EnemyIndex].SessionOrgasm--;
-            player.Femi += enemies[EnemyIndex].Femi;
+            if(player.ForcedMale)
+                player.Masc += enemies[EnemyIndex].Femi;
+            else
+                player.Femi += enemies[EnemyIndex].Femi;
             enemies[EnemyIndex].Femi = 0;
             EssenceCheck(enemies[EnemyIndex]);
             if (Settings.EssenceAuto) {
@@ -852,7 +875,10 @@
             document.getElementById("SexText").innerHTML = "You siphon the last essence of femininity from them leaving them with no signs of femininity left. " + DrainChanges(old, player, eold, enemies[EnemyIndex]);
         } else if (player.EssenceDrain < enemies[EnemyIndex].Femi) {
             enemies[EnemyIndex].SessionOrgasm--;
-            player.Femi += player.EssenceDrain;
+            if(player.ForcedMale)
+                player.Masc += player.EssenceDrain;
+            else
+                player.Femi += player.EssenceDrain;
             enemies[EnemyIndex].Femi -= player.EssenceDrain;
             EssenceCheck(enemies[EnemyIndex]);
             if (Settings.EssenceAuto) {
@@ -1318,7 +1344,7 @@
 
         player.MaxHealth = player.End * 10 + player.Perks.ExtraHealth.Count * 20;
         player.MaxWillHealth = player.Will * 10 + player.Perks.ExtraWillHealth.Count * 20;
-        document.getElementById("StatusName").innerHTML = player.Name + " " + player.Lastname;
+        document.getElementById("StatusName").innerHTML = player.Name + " " + player.LastName;
         document.getElementById("StatusHealth").innerHTML = Math.round(player.Health);
         document.getElementById("StatusHealth").style.width = Math.min(100 * (player.Health / player.MaxHealth), 103) + "%";
         document.getElementById("StatusWillHealth").innerHTML = Math.round(player.WillHealth);
@@ -1350,6 +1376,7 @@
             CurrentMap();
             if (Settings.Vore) {
                 VoreEngine();
+                CheckSplit();
             }
             if (enemies.length > 0) {
                 PrintEnemies();

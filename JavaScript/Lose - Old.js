@@ -1,6 +1,6 @@
 function Lose() {
     Winner = false;
-    document.getElementById("LosePName").innerHTML = player.Name + " " + player.Lastname;
+    document.getElementById("LosePName").innerHTML = player.Name + " " + player.LastName;
     document.getElementById("LoseEName").innerHTML = enemies[EnemyIndex].Name + "<br>" + enemies[EnemyIndex].Race + " " + Pronun(CheckGender(enemies[EnemyIndex]));
     document.getElementById("LoseMascu").innerHTML = Math.round(player.Masc);
     document.getElementById("LoseFemin").innerHTML = Math.round(player.Femi);

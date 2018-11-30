@@ -5,7 +5,7 @@ function UpdateStats(FirstRound = false) {
     document.getElementById("EnemyStatusHealth").style.width = 100 * (ee.Health / ee.FullHealth) + "%";
     document.getElementById("EnemyStatusWillHealth").innerHTML = ee.WillHealth;
     document.getElementById("EnemyStatusWillHealth").style.width = 100 * (ee.WillHealth / ee.FullWillHealth) + "%";
-    document.getElementById("StatusName2").innerHTML = player.Name + " " + player.Lastname;
+    document.getElementById("StatusName2").innerHTML = player.Name + " " + player.LastName;
     try {
         document.getElementById("Fireball").value = "Fireball (" + player.Spells.Fireball + " left)";
     } catch {
