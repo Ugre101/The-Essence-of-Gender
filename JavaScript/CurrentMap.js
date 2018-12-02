@@ -64,7 +64,7 @@ function CurrentMap() {
                     Npcs = [];
                     enemies = [];
                     if (Npcs.length < 1) {
-                        Npcs = [Barberer];
+                        Npcs = [];
                     }
                     PrintMap("RoadToHome");
                     backmap = new Image;
@@ -72,9 +72,10 @@ function CurrentMap() {
                     ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                     break;
                 case "RoadToWitch":
+                    Npcs = [];
                     enemies = [];
                     if (Npcs.length < 1) {
-                        Npcs = [Gym, WitchShop];
+                        Npcs = [Gym, WitchShop, Barberer];
                     }
                     PrintMap("RoadToWitch");
                     backmap = new Image;
@@ -92,6 +93,7 @@ function CurrentMap() {
                     ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
                     break;
                 case "Witch":
+                    Npcs = [];
                     enemies = [];
                     if (Npcs.length < 1) {
                         Npcs = [WitchHut];

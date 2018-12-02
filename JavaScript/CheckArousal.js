@@ -24,7 +24,7 @@ function CheckArousal() {
             } else document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
         } else if (LastPressed == "GiveCunnilingus") {
             document.getElementById("SexText").innerHTML += "<br>Reading their body language, you know they are close to cumming. Shoving your tongue as deep as you can into them, your face gets splashed with their nectar."
-        } else document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
+        } else if (false) document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
     }
     if (player.Arousal > 100) {
         player.Orgasm++;
@@ -77,7 +77,7 @@ function CheckArousal() {
         } else if (LastPressed == "Missionary") {
             var cum = Cumming(player);
             ee.Cumin.Pussy += cum;
-            document.getElementById("SexText").innerHTML += "<br>Feeling close you thrust deep inside them";
+            document.getElementById("SexText").innerHTML = "<br>Feeling close you thrust deep inside them";
             if (cum > 0) {
                 document.getElementById("SexText").innerHTML += ", releasing " + LToGal(cum) + " of cum into their pussy."
                 if (ee.Cumin.Pussy > (ee.Height / 100)) {
@@ -91,7 +91,7 @@ function CheckArousal() {
         } else if (LastPressed == "DoggyStyle") {
             var cum = Cumming(player);
             ee.Cumin.Pussy += cum;
-            document.getElementById("SexText").innerHTML += "<br>Feeling close, you firmly grab their hips, and thrust deep into their pussy"
+            document.getElementById("SexText").innerHTML = "<br>Feeling close, you firmly grab their hips, and thrust deep into their pussy"
             if (cum > 0) {
                 document.getElementById("SexText").innerHTML += ", releasing " + LToGal(cum) + " of cum into their pussy."
                 if (ee.Cumin.Pussy > (ee.Height / 100)) {
@@ -104,7 +104,7 @@ function CheckArousal() {
             } else document.getElementById("SexText").innerHTML += ", but nothing comes out."
         } else if (LastPressed == "DoggyStyleAnal") {
             var cum = Cumming(player);
-            document.getElementById("SexText").innerHTML += "<br>Feeling close, you firmly grab their waist, and thrust deep into their bowels"
+            document.getElementById("SexText").innerHTML = "<br>Feeling close, you firmly grab their waist, and thrust deep into their bowels"
             if (cum > 0) {
                 ee.Cumin.Ass += cum;
                 document.getElementById("SexText").innerHTML += ", releasing " + LToGal(cum) + " of cum into their ass."
@@ -116,7 +116,9 @@ function CheckArousal() {
                     document.getElementById("SexText").innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
                 }
             }
-        } else document.getElementById("SexText").innerHTML += ", but nothing comes out."
+        } else if (false) {
+            document.getElementById("SexText").innerHTML += ", but nothing comes out."
+        }
         if (player.cumGround > 20000)
             document.getElementById("SexText").innerHTML += "<br><br>Your opponent is caked white and heavily panting, cum still flowing out of their overfilled holes. Your extreme output has covered them, and all of the ground nearby, in your semen. You're glad that you don't have to clean this up..."
         else if (player.cumGround > 5000)
