@@ -812,15 +812,20 @@
    #InventoryBag {
        display: grid;
        grid-template-columns: 1fr 1fr;
-       grid-gap: 1em;
+       grid-gap: 0.5em;
        overflow: auto;
        max-height: 60vh;
+       box-shadow: 0 0 1px 1px rgb(106, 110, 122);
+       background-color: rgb(206, 206, 206);
+       padding: 0.1em;
    }
 
    #InventoryBag>div {
        border: 1px solid black;
        padding: 0.5em;
        min-height: 30px;
+       background-color: Cornsilk;
+       border-radius: 5px;
    }
 
    #InventoryBag>div>p {

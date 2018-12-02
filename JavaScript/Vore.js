@@ -1090,6 +1090,7 @@
                         player.End += Math.round(player.Vore.Anal[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Anal[e].SexSkill / snowA);
                     }
+                    EventLog("There is nothing left of the " + player.Vore.Anal[e].Name + " " + player.Vore.Anal[e].Race + " " + player.Vore.Anal[e].FirstName + " " + player.Vore.Anal[e].LastName);
                     player.Vore.Anal.splice(e, 1);
                 }
             }

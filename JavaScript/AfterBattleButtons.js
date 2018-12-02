@@ -1,5 +1,4 @@
 function AfterBattleButtons(Sex = true) {
-    console.log(Sex)
     document.getElementById("EnemyVagina").style.display = 'none';
     document.getElementById("EnemyDick").style.display = 'none';
     document.getElementById("PlayerVagina").style.display = 'none';
