@@ -819,18 +819,7 @@
 		<div id="Quest" class="None">
 			<h1>Quests</h1>
 			<div id="QuestStart">
-				<input type="button" id="BanditLord" value="Banditlord" />
-				<input type="button" id="ElfHunt" value="Elf Hunt" />
 			</div>
-			<div id="QuestReward">
-				<input type="button" id="ElfHuntReward" value="Elf hunt reward" />
-				<input type="button" id="BanditLordReward" value="Banditlord reward" />
-			</div>
-			<div id="QuestButtons">
-				<input type="button" id="QuestAccept" value="Accept" />
-				<input type="button" id="QuestDecline" value="Decline" />
-			</div>
-
 			<br><input type="button" id="LeaveQuest" value="Leave" />
 		</div>
 		<div id="Service" class="None">
@@ -1180,14 +1169,23 @@
 		your pregnanys are worth more -->
 	<div id="MounatinShrine" class="None Building">
 		<p id="MounatinShrineText" class="TextBox"></p>
-		<h1>Blessings</h1>
-		<div>
-			<input type="button" id="" value="" title="Makes your pregnancy faster." />
-			<input type="button" id="" value="" title="Makes servants pregnancy faster." />
-			<input type="button" id="" value="" title="Enables player male preg" />
-			<input type="button" id="" value="" title="Chance for twins or more, both for player and others." />
-		</div>
+		<input type="button" id="Blessings" value="Blessings" />
+		<input type="button" id="ShrineQuests" value="Quests" />
 		<input type="button" id="LeaveMounatinShrine" value="Leave" />
+		<div id="ShrineQuestsMenu" class="None">
+
+		</div>
+		<div id="BlessingsMenu" class="None">
+			<h1>Blessings</h1>
+			<p id="BlessingsPoints"></p>
+			<div>
+				<input type="button"  id="Incubator" value="Incubator" title="Makes your pregnancy faster." />
+				<input type="button" onclick="" id="IncubatorSeed" value="Mature seed" title="Makes servants pregnancy faster." />
+				<input type="button" onclick="" id="Broodmother" value="Broodmother" title="Chance for twins or more for player." />
+				<input type="button" onclick="" id="BroodmotherSeed" value="Special seed" title="Chance for twins or more for others." /><!--Need better names-->
+				<input type="button" onclick="" id="MalePreg" value="Male preg" title="Enables player male preg" />
+			</div>
+		</div>
 	</div>
 
 	<script src="JavaScript/AfterBattleButtons.js"></script>
@@ -1223,6 +1221,7 @@
 	<script src="JavaScript/MaxLimbs.js"></script>
 	<script src="JavaScript/MobileSupport.js"></script>
 	<script src="JavaScript/Mountain.js"></script>
+	<script src="JavaScript/MounatinShrine.js"></script>
 	<script src="JavaScript/NewGamePlus.js"></script>
 	<script src="JavaScript/Opponents.js"></script>
 	<script src="JavaScript/Perk.js"></script>

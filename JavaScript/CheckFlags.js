@@ -259,4 +259,22 @@ function CheckFlags() {
         document.getElementById("MobileButtons").style.display = 'none';
     }
 
+    if (!player.hasOwnProperty("Blessings")) {
+        player.Blessings = {};
+    }
+    if (!player.Blessings.hasOwnProperty("Incubator")) {
+        player.Blessings.Incubator = 0;
+    }
+    if (!player.Blessings.hasOwnProperty("IncubatorSeed")) {
+        player.Blessings.IncubatorSeed = 0;
+    }
+    if (!player.Blessings.hasOwnProperty("Broodmother")) {
+        player.Blessings.Broodmother = 0;
+    }
+    if (!player.Blessings.hasOwnProperty("BroodmotherSeed")) {
+        player.Blessings.BroodmotherSeed = 0;
+    }
+    if (!player.Blessings.hasOwnProperty("MalePreg")) {
+        player.Blessings.MalePreg = 0;
+    }
 }

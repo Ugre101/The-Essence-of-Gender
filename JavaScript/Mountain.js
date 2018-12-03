@@ -5,8 +5,8 @@
 // "Pure" Maiden
 function EncounterMaiden() {
     var MountainHalfRaces = ["human", "elf"] //
-    var OP = new enemy("Pure", MountainHalfRaces, RandomInt(1, 10), RandomInt(1, 10), RandomInt(20, 50), RandomInt(0, 5),
-        RandomInt(5, 20), RandomInt(0, 5), 2500, 5000, RandomInt(50, 250), RandomInt(30, 100),
+    var OP = new enemy("Pure maiden", RandomString(MountainHalfRaces), RandomInt(1, 10), RandomInt(1, 10), RandomInt(20, 50), RandomInt(0, 5),
+        RandomInt(5, 20), RandomInt(0, 5), 1500, 2000, RandomInt(50, 250), RandomInt(30, 100),
         "Pink", grid, RandomInt(150, 170));
     EssenceGiver(OP, 1500, "female");
     FatMuscle(OP, 1, 1);

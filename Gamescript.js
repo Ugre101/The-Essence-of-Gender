@@ -150,7 +150,9 @@
         },
         Blessings: {
             Incubator: 0,
-            Broadmother: 0,
+            IncubatorSeed: 0,
+            Broodmother: 0,
+            BroodmotherSeed: 0,
             Malepreg: 0
         }
     };
