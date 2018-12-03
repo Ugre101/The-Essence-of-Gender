@@ -8,6 +8,12 @@ function AfterBattleButtons(Sex = true) {
     document.getElementById("CaptureOpponent").style.display = 'none';
     document.getElementById("DungeonCaptureOpponent").style.display = 'none';
     document.getElementById("DungeonStop").style.display = 'none';
+    document.getElementById("GiveCunnilingus").style.display = 'block';
+    document.getElementById("GiveBlowjob").style.display = 'block';
+    document.getElementById("DualPen").style.display = 'none'
+    document.getElementById("DualPen").style.display = 'none';
+    document.getElementById("Multipen").style.display = 'none';
+
     if(window.innerHeight > 800) {
         document.getElementById("DickAction").style.display = 'none'
         document.getElementById("DickOne").style.display = 'block'

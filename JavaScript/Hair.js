@@ -17,3 +17,10 @@ document.getElementById("CutHair").addEventListener("click", function () {
         document.getElementById("DyeHairMenu").style.display = 'none';
     }
 });
+
+document.getElementById("DyeHairMenu").addEventListener("click", function(e) {
+    player.Face.HairColor = e.target.title;
+});
+document.getElementById("CutHairMenu").addEventListener("click", function(e) {
+    player.Face.HairLength = e.target.title;
+});

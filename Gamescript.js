@@ -1291,7 +1291,7 @@
     }
 
     function PrintNpcs() {
-        var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barberer"]
+        var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barberer", "MounatinShrine"]
         for (var e of Npcs) {
             if (needPrint.indexOf(e.Name) > -1) {
                 ctx.fillStyle = e.Color;
