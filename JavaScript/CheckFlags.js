@@ -52,9 +52,18 @@ function CheckFlags() {
             Herm: "hermaphrodite",
             Male: "male",
             Female: "female",
-            Doll: "doll"
+            Doll: "doll",
+            DickGirl: "dickgirl",
+            CuntBoy: "cuntboy"
         }
         console.log("Added Settings pronun");
+    }
+    if (!Settings.Pronun.hasOwnProperty("CuntBoy")) {
+        Settings.Pronun = {
+            CuntBoy: "cuntboy",
+            DickGirl: "dickgirl"
+        }
+        console.log("Added pronuns")
     }
     // Makes old saves work?
     if (player.Balls.length > 0) {

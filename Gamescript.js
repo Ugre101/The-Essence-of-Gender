@@ -19,17 +19,43 @@
         Race: "human",
         SecondRace: "human",
         isTaur: "false", // Testing
-        raceBonus: [
-            {type: "Height", amount: 1},
-            {type: "Weight", amount: 1},
-            {type: "Size", amount: 1},
-            {type: "Str", amount: 0},
-            {type: "Int", amount: 0},
-            {type: "Charm", amount: 0},
-            {type: "SexSkill", amount: 0},
-            {type: "Will", amount: 0},
-            {type: "WillHealth", amount: 0}
-            ],
+        raceBonus: [{
+                type: "Height",
+                amount: 1
+            },
+            {
+                type: "Weight",
+                amount: 1
+            },
+            {
+                type: "Size",
+                amount: 1
+            },
+            {
+                type: "Str",
+                amount: 0
+            },
+            {
+                type: "Int",
+                amount: 0
+            },
+            {
+                type: "Charm",
+                amount: 0
+            },
+            {
+                type: "SexSkill",
+                amount: 0
+            },
+            {
+                type: "Will",
+                amount: 0
+            },
+            {
+                type: "WillHealth",
+                amount: 0
+            }
+        ],
         ForcedMale: false,
         ForcedFemale: false,
         Dicks: [],
@@ -181,7 +207,9 @@
             Herm: "hermaphrodite",
             Male: "male",
             Female: "female",
-            Doll: "doll"
+            Doll: "doll",
+            DickGirl: "dickgirl",
+            CuntBoy: "cuntboy"
         },
         MaxLimbs: {
             MaxBoobs: 5,
@@ -401,6 +429,8 @@
         Settings.Pronun.Male = document.getElementById("Male").value;
         Settings.Pronun.Female = document.getElementById("Female").value;
         Settings.Pronun.Doll = document.getElementById("Doll").value;
+        Settings.Pronun.DickGirl = document.getElementById("DickGirl").value;
+        Settings.Pronun.CuntBoy = document.getElementById("CuntBoy").value;
         Settings.Pronun.Status = true;
     });
 
@@ -612,7 +642,11 @@
                     return gender;
                 }
             case "cuntboy":
-                return gender;
+                if (Settings.Pronun.Status) {
+                    return Settings.Pronun.CuntBoy;
+                } else {
+                    return gender;
+                }
             case "male":
                 if (Settings.Pronun.Status) {
                     return Settings.Pronun.Male
@@ -626,7 +660,11 @@
                     return gender;
                 }
             case "dickgirl":
-                return gender;
+                if (Settings.Pronun.Status) {
+                    return Settings.Pronun.DickGirl;
+                } else {
+                    return gender;
+                }
             case "doll":
                 if (Settings.Pronun.Status) {
                     return Settings.Pronun.Doll
@@ -829,7 +867,7 @@
         var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
         if (player.EssenceDrain >= enemies[EnemyIndex].Masc && enemies[EnemyIndex].Masc > 0) {
             enemies[EnemyIndex].SessionOrgasm--;
-            if(player.ForcedFemale)
+            if (player.ForcedFemale)
                 player.Femi += enemies[EnemyIndex].Masc;
             else
                 player.Masc += enemies[EnemyIndex].Masc;
@@ -841,7 +879,7 @@
             document.getElementById("SexText").innerHTML = "You siphon the last essence of masculinity from them leaving them with no signs of masculinity left." + DrainChanges(old, player, eold, enemies[EnemyIndex]);
         } else if (player.EssenceDrain < enemies[EnemyIndex].Masc) {
             enemies[EnemyIndex].SessionOrgasm--;
-            if(player.ForcedFemale)
+            if (player.ForcedFemale)
                 player.Femi += player.EssenceDrain;
             else
                 player.Masc += player.EssenceDrain;
@@ -863,7 +901,7 @@
         var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
         if (player.EssenceDrain >= enemies[EnemyIndex].Femi && enemies[EnemyIndex].Femi > 0) {
             enemies[EnemyIndex].SessionOrgasm--;
-            if(player.ForcedMale)
+            if (player.ForcedMale)
                 player.Masc += enemies[EnemyIndex].Femi;
             else
                 player.Femi += enemies[EnemyIndex].Femi;
@@ -875,7 +913,7 @@
             document.getElementById("SexText").innerHTML = "You siphon the last essence of femininity from them leaving them with no signs of femininity left. " + DrainChanges(old, player, eold, enemies[EnemyIndex]);
         } else if (player.EssenceDrain < enemies[EnemyIndex].Femi) {
             enemies[EnemyIndex].SessionOrgasm--;
-            if(player.ForcedMale)
+            if (player.ForcedMale)
                 player.Masc += player.EssenceDrain;
             else
                 player.Femi += player.EssenceDrain;
@@ -1119,7 +1157,7 @@
     // Misc
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
-    var Barberer = new Npc("Barberer", "Hair salon", grid, grid, grid * 5, grid * 4, "RGB(133,94,66)");
+    var Barberer = new Npc("Barberer", "Hair salon", grid * 15, grid, grid * 5, grid * 4, "RGB(133,94,66)");
     var PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)");
     //Outlaw
     var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
@@ -1251,7 +1289,7 @@
     }
 
     function PrintNpcs() {
-        var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop"]
+        var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barberer"]
         for (var e of Npcs) {
             if (needPrint.indexOf(e.Name) > -1) {
                 ctx.fillStyle = e.Color;
