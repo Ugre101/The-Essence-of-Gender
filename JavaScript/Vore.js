@@ -96,7 +96,15 @@
             enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
             player.Vore.Stomach.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
-            document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them down your throat!";
+            document.getElementById("SexText").innerHTML = "You walk up to your foe with a primal hunger in your abdomen. Your foe is still groggy from the beating you gave them leaving them too fulfill your stomachs desire." +
+                " You swiftly grab their head with both your hands and bring their face to yours. They grunt expecting a make out session, only for their eyes to widen as your mouth does the same. You take in their head in one motion and " +
+                "lower your hands to their waist holding them in place. You lick their head enjoying their taste as you push their head and neck into your greedy throat.<br><br> Loud gulping noises emanate from your neck as you stretch your mouth one " +
+                "more and take in their shoulders. Your muscles strain and bulge as you lift your meal of the ground suspending them in the air. This causes the rest of their chest to slide down into your gullet leaving only their legs." +
+                "Your stomach grows as their head enters your gut giving a growl of approval and anticipation for the rest of its meal. Your hands make their way to their calves as you grip tightly and give a hard shove pushing them down to their ankles." +
+                "<br><br> You open wide and let their feet slide past your mouth and close your mouth hard locking your food into its fate. Your stomach fills out and heaves as your prey struggles and pushes in attempts to free its self.";
+            if (StomachCapacity() / MaxStomachCapacity() > 0.5) {
+                document.getElementById("SexText").innerHTML += " You start to walk off lifting your gut and releasing it causing to sag heavily with its weight. Your wince as you attempt to stand and make your way out.";
+            }
             HideVore();
         } else {
             document.getElementById("SexText").innerHTML = "You cannot fit more into your stomach!";
@@ -126,7 +134,22 @@
             enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
             player.Vore.Balls.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
-            document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them down into your cockslit, watching the bulge travel down your shaft.";
+            if (player.SecondRace !== "centaur") {
+                document.getElementById("SexText").innerHTML = "Your confidently stride up to your opponent looking your food up and down as your reach for your waist. They lift their head from the floor and roll their eyes as they are greeted with your erect cock." +
+                    " They open their mouth to start sucking only for your dick to return the sentiment. Their head is quickly enveloped by your dick with their neck following suit. You use your hands to squeeze the bulge in your member as you eagerly thrust into your foe forcing them deeper with each hump." +
+                    " <br><br>Your breathing deepens as their shoulders begin their journey to your sac causing your dick to stretch wide to accommodate its food. Both your hands reach to your dick as you rub over its food is making." +
+                    " Your sac churns audibly with a hunger for its meal, causing precum to move up your cock speeding your foes descent. Your massaging of your food makes squelching sounds as your now massive member greedily sucks in their waist." +
+                    " Their head starts to be deposited in your nuts causing their body to twist and squirm against your member, their struggles cause waves of pleasure as you shiver from their protests. <br><br>You lazily lift your cock with one hand giving it encouraging strokes to finish its meal." +
+                    " You sigh and give soft humps as all that remains of your foe is a massive bulge in your shaft. Loud slurp sounds are made as your recent meal ends its journey and is deposited in your sac. Your nuts heave a drag against the floor as you haul your soon to be load off and away.";
+            } else {
+                document.getElementById("SexText").innerHTML = "Seeing your opponent lying there defeated gives you an idea, your cock stiffens at this idea as you make your way to your soon to be prey. Your foe sits up from being prone and jumps from your large equine form blocking out the sun." +
+                    " Standing over your foe you convey your desires as your cock makes a loud thwap against your stomach. Your opponent gets the idea as they slowly raise themselves to your shafts begrudgingly encompassing it with their hands." +
+                    "<br><br> Sensing their hesitation, you made a deafening stomp with your hooves causing your for to nervously tend to your dick. You pull your hips back away from your foe causing them confusion of what they expected to be a simple blowjob." +
+                    " An excited whip of your tail and a small grunt of dominance is the only signs your prey receives as you make a single thrust into your opponent’s head causing your shaft to hungerly envelop them up to their chest." +
+                    " You instinctively snort as you claim your foe with you cock causing it to suck on their form as almost tasting them. Desperate for more you tense your groin with immense strength and pull your prey in up to their crotch." +
+                    "<br><br> Gasps of nerve-wracking pleasure escape you as your prey begins its fruitless struggles inside your monstrous shaft.Not wanting to risk an orgasm and releasing them you repeatedly stiffen your cock causing it to beat your meal into submission against your stomach." +
+                    " Pleased with your display of power over your meal you pull in their legs with little effort seal your cock head around their feet. You sigh in relief as you feel the rest of your prey get deposited in your sac. Feeling sated you make your way back to the road with your nuts sagging heavily between your legs."
+            }
             HideVore();
         } else {
             document.getElementById("SexText").innerHTML = "You cannot fit more into your balls!";
@@ -159,7 +182,22 @@
             enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
             player.Vore.Anal.push(enemies[EnemyIndex]);
             enemies.splice(EnemyIndex, 1);
-            document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them into your bowels!";
+            if (player.SecondRace !== "centaur") {
+                document.getElementById("SexText").innerHTML = "Seeing your foe fall you eagerly make your waay up to them as you unbutton your pants and undergarments. Your foe sighs as they begrudgingly assume what you’re going to do next. " +
+                    "You turn your body around and lower your cheeks to their face. They take both sides of your ass in each hand and bring their mouth to your hole in force of habit. Your alternative plan starts as you push your ass forcefully into their face." +
+                    " Your foe gasps in surprise as your hole touches their nose and begins to envelop their head.<br><br> Muffled protests come from your waist as they instinctively push against your cheeks to free themselves." +
+                    " You squat down and grunt as you begin to your rectum makes a powerful suck forcing your meal up to their chest. Their arms are pinned against your ass making it easier to pull them up to your waist." +
+                    " Your wince as your food makes its way through your gut stretching it as you pull more in to it.<br><br> You notice their legs are all that is left, you grin as you straighten your back using their limbs as a pseudo chair." +
+                    " You adamantly lower your hips using the force between the ground and their feet to shove them further into your bowels. Your cheeks make contact with the ground as they hungrily shove the last of your foe into your depths." +
+                    " Rough shoves and struggles are all that is left of them as your gut conforms and kneads its meal.";
+            } else {
+                document.getElementById("SexText").innerHTML = "As your foe crumbles from your back hooves delivering a deadly buck, you decide to stay back turned and slowly walk backwards into them."+
+                " Rubbing their head from the recent blow your opponent has only a second to see your large equine rear descend on them putting them into darkness. Rough grunting and the sounds of squeezing accompany this surprise as you lift your foe up to their chest with your twisted strength."+
+                "<br><br> Your tail flicks upward sharply with each contraction of your anal muscles, as your ass continues to feast upon the poor soul trapped inside. The display of control you have over your rear continues as your prey suddenly disappears up to their waste into your bowels."+
+                " Pleasurable struggles are awarded to you from inside your equine half as your conquest twists and pushes your sensitive walls, encouraging you to finish your meal.<br><br> Not wanting to disappoint your gut, you make one last effort to envelop your foe with your rectum."+
+                " With immense force their legs are pulled in leaving their ankles and feet to be squeezed harshly by your ass. With a loud \"schluck\" their ankles are pulled in with their feet following closely."+
+                " A satisfied sigh leaves you as you wiggle your hips in victory over your foe. You start to head back on your journey as your intestines begin their work on the fresh meat you conquered."
+            }
             HideVore();
         } else {
             document.getElementById("SexText").innerHTML = "You cannot fit more into your bowels!";
@@ -200,24 +238,26 @@
                 break;
         }
         return "<button type=\"button\" class=\"" + color + "\" onclick=\"Show" + from + "Prey(" + index + ")\">" + ps.Name + " " + ps.Race +
-            " <br> " + Pronun(CheckGender(ps)) + "<br><br>Height:" + Math.round(ps.Height) + "<br>Weight:" +
-            Math.round(ps.Weight) + "</button>";
+            " <br> " + Pronun(CheckGender(ps)) + "<br><br>Height:" + CmToInch(ps.Height) + "<br>Weight:" +
+            KgToPound(ps.Weight) + "</button>";
     }
+
     function ShowPrey(where) {
-        document.getElementById(where+"Content").style.display = 'none';
-        document.getElementById(where+"Prey").style.display = 'block';
-        document.getElementById(where+"Leave").style.display = 'none';
+        document.getElementById(where + "Content").style.display = 'none';
+        document.getElementById(where + "Prey").style.display = 'block';
+        document.getElementById(where + "Leave").style.display = 'none';
         document.getElementById("LeaveVore").style.display = 'none';
-        document.getElementById("Leave"+where+"Prey").style.display = 'inline-block';
-        document.getElementById("regurgitate"+where).style.display = 'inline-block';
+        document.getElementById("Leave" + where + "Prey").style.display = 'inline-block';
+        document.getElementById("regurgitate" + where).style.display = 'inline-block';
     }
+
     function HidePrey(where) {
-        document.getElementById(where+"Content").style.display = 'grid';
-        document.getElementById(where+"Prey").style.display = 'none';
-        document.getElementById(where+"Leave").style.display = 'inline-block';
+        document.getElementById(where + "Content").style.display = 'grid';
+        document.getElementById(where + "Prey").style.display = 'none';
+        document.getElementById(where + "Leave").style.display = 'inline-block';
         document.getElementById("LeaveVore").style.display = 'none';
-        document.getElementById("Leave"+where+"Prey").style.display = 'none';
-        document.getElementById("regurgitate"+where).style.display = 'none';
+        document.getElementById("Leave" + where + "Prey").style.display = 'none';
+        document.getElementById("regurgitate" + where).style.display = 'none';
     }
 
     function ShowAnalPrey(e) {
@@ -370,17 +410,18 @@
         document.getElementById("VorePerkMenu").style.display = 'none';
         document.getElementById("AbsorbEssenceSetting").value = "Absorb Essence " + Settings.VoreSettings.AbsorbEssence;
     });
+
     function DisplayNoneVore(where) {
         document.getElementById("VoreSettings").style.display = 'none';
         document.getElementById("VoreButtons").style.display = 'none';
-        document.getElementById("Leave"+where+"Prey").style.display = 'none';
-        document.getElementById("regurgitate"+where).style.display = 'none';
+        document.getElementById("Leave" + where + "Prey").style.display = 'none';
+        document.getElementById("regurgitate" + where).style.display = 'none';
         document.getElementById("LeaveVore").style.display = 'none';
-        document.getElementById("Leave"+where+"Prey").style.display = 'none';
-        document.getElementById("regurgitate"+where).style.display = 'none';
+        document.getElementById("Leave" + where + "Prey").style.display = 'none';
+        document.getElementById("regurgitate" + where).style.display = 'none';
     }
     document.getElementById("ShowStomach").addEventListener("click", function () {
-        DisplayNoneVore("Stomach");  
+        DisplayNoneVore("Stomach");
         document.getElementById("VoreStomach").style.display = 'block';
         document.getElementById("StomachDigestion").value = "Stomach digestion " + Settings.VoreSettings.StomachDigestion;
         var food = "";
@@ -478,6 +519,7 @@
         Settings.VoreSettings.AnalDigestion = !Settings.VoreSettings.AnalDigestion;
         document.getElementById("AnalDigestion").value = "Anal Digestion " + Settings.VoreSettings.AnalDigestion;
     });
+
     function LeavePreyMenu() {
         document.getElementById("VoreButtons").style.display = 'grid';
         document.getElementById("LeaveVore").style.display = 'inline-block';
@@ -559,7 +601,7 @@
             if (!player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
                 VorePerkHandler("AbsorbStats");
             } else if (player.Vore.VorePerks.AbsorbStats.Count < 10) {
-                console.log(player.Vore.VorePerks.AbsorbStats.Count);
+                //console.log(player.Vore.VorePerks.AbsorbStats.Count);
                 VorePerkHandler("AbsorbStats");
             }
         } else {
@@ -723,14 +765,14 @@
             }
             if (Settings.VoreSettings.StomachDigestion) {
                 player.Vore.Stomach[e].Weight -= progress * digestionCount;
-				for(var q = 0; q < RaceAbsorb.length; q++) {
-                    if(RaceAbsorb[q].Race === player.Vore.Stomach[e].Race) {
+                for (var q = 0; q < RaceAbsorb.length; q++) {
+                    if (RaceAbsorb[q].Race === player.Vore.Stomach[e].Race) {
                         RaceAbsorb[q].amount += progress * digestionCount;
-                        console.log(RaceAbsorb[q].Race);
+                        //console.log(RaceAbsorb[q].Race);
                         break;
+                    } else if (q + 1 == RaceAbsorb.length) {
+                        //console.log("None??");
                     }
-                    else if (q + 1 == RaceAbsorb.length)
-                        console.log("None??");
                 }
                 player.Fat += progress / 2 * digestionCount;
 
@@ -804,14 +846,14 @@
             }
             if (Settings.VoreSettings.VCumDigestion) {
                 player.Vore.Vagina[e].Weight -= progress * digestionCount;
-				for(var q = 0; q < RaceAbsorb.length; q++) {
-                    if(RaceAbsorb[q].Race === player.Vore.Vagina[e].Race) {
+                for (var q = 0; q < RaceAbsorb.length; q++) {
+                    if (RaceAbsorb[q].Race === player.Vore.Vagina[e].Race) {
                         RaceAbsorb[q].amount += progress * digestionCount;
-                        console.log(RaceAbsorb[q].Race);
+                        //console.log(RaceAbsorb[q].Race);
                         break;
+                    } else if (q + 1 == RaceAbsorb.length) {
+                        //console.log("None??");
                     }
-                    else if (q + 1 == RaceAbsorb.length)
-                        console.log("None??");
                 }
                 if (player.Vore.Vagina[e].Weight < 0) {
                     if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
@@ -900,14 +942,14 @@
             }
             if (Settings.VoreSettings.MilkTF) {
                 player.Vore.Breast[e].Weight -= progress * digestionCount;
-				for(var q = 0; q < RaceAbsorb.length; q++) {
-                    if(RaceAbsorb[q].Race === player.Vore.Breast[e].Race) {
+                for (var q = 0; q < RaceAbsorb.length; q++) {
+                    if (RaceAbsorb[q].Race === player.Vore.Breast[e].Race) {
                         RaceAbsorb[q].amount += progress * digestionCount;
-                        console.log(RaceAbsorb[q].Race);
+                        //console.log(RaceAbsorb[q].Race);
                         break;
+                    } else if (q + 1 == RaceAbsorb.length) {
+                        //console.log("None??");
                     }
-                    else if (q + 1 == RaceAbsorb.length)
-                        console.log("None??");
                 }
                 for (var b = 0; b < player.Boobies.length; b++) {
                     if (player.Boobies[b].Milk < player.Boobies[b].MilkMax) {
@@ -985,14 +1027,14 @@
             }
             if (Settings.VoreSettings.CumTF) {
                 player.Vore.Balls[e].Weight -= progress * digestionCount;
-				for(var q = 0; q < RaceAbsorb.length; q++) {
-                    if(RaceAbsorb[q].Race === player.Vore.Balls[e].Race) {
+                for (var q = 0; q < RaceAbsorb.length; q++) {
+                    if (RaceAbsorb[q].Race === player.Vore.Balls[e].Race) {
                         RaceAbsorb[q].amount += progress * digestionCount;
-                        console.log(RaceAbsorb[q].Race);
+                        //console.log(RaceAbsorb[q].Race);
                         break;
+                    } else if (q + 1 == RaceAbsorb.length) {
+                        //console.log("None??");
                     }
-                    else if (q + 1 == RaceAbsorb.length)
-                        console.log("None??");
                 }
                 for (var b = 0; b < player.Balls.length; b++) {
                     if (player.Balls[b].Cum < player.Balls[b].CumMax) {
@@ -1070,14 +1112,14 @@
             }
             if (Settings.VoreSettings.AnalDigestion) {
                 player.Vore.Anal[e].Weight -= progress * digestionCount;
-				for(var q = 0; q < RaceAbsorb.length; q++) {
-                    if(RaceAbsorb[q].Race === player.Vore.Anal[e].Race) {
+                for (var q = 0; q < RaceAbsorb.length; q++) {
+                    if (RaceAbsorb[q].Race === player.Vore.Anal[e].Race) {
                         RaceAbsorb[q].amount += progress * digestionCount;
-                        console.log(RaceAbsorb[q].Race);
+                        //console.log(RaceAbsorb[q].Race);
                         break;
+                    } else if (q + 1 == RaceAbsorb.length) {
+                        //console.log("None??");
                     }
-                    else if (q + 1 == RaceAbsorb.length)
-                        console.log("None??");
                 }
                 player.Fat += progress / 2 * digestionCount;
                 if (player.Vore.Anal[e].Weight < 0) {
@@ -1108,8 +1150,8 @@
         }
         if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
             capacity += 20;
-			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
-			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+            bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+            //bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus - sub;
     }
@@ -1119,10 +1161,10 @@
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.StomachExp / 100;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
             capacity += 20;
-			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
-			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+            bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+            //bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus;
     }
@@ -1142,10 +1184,10 @@
         for (var e = 0; e < player.Vore.Vagina.length; e++) {
             sub += player.Vore.Vagina[e].Weight;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
             capacity += 20;
-			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
-			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+            bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+            //bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus - sub;
     }
@@ -1161,10 +1203,10 @@
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.VaginaExp / 100;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
             capacity += 20;
-			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
-			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+            bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+            //bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus;
     }
@@ -1181,10 +1223,10 @@
         for (var e = 0; e < player.Vore.Breast.length; e++) {
             sub += player.Vore.Breast[e].Weight;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
             capacity += 20;
-			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
-			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+            bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+            //bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus - sub;
     }
@@ -1197,10 +1239,10 @@
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.BreastExp / 100;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
             capacity += 20;
-			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
-			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+            bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+            //bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus;
     }
@@ -1220,10 +1262,10 @@
         for (var e = 0; e < player.Vore.Balls.length; e++) {
             sub += player.Vore.Balls[e].Weight;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
             capacity += 20;
-			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
-			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+            bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+            //bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus - sub;
     }
@@ -1239,10 +1281,10 @@
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.BallsExp / 100;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
             capacity += 20;
-			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
-			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+            bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+            //bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus;
     }
@@ -1256,10 +1298,10 @@
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.AnalExp / 100;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
             capacity += 20;
-			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
-			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+            bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+            //bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         for (var e = 0; e < player.Vore.Anal.length; e++) {
             sub += player.Vore.Anal[e].Weight;
@@ -1275,10 +1317,10 @@
         if (player.hasOwnProperty("Vore")) {
             var bonus = 1 + player.Vore.AnalExp / 100;
         }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {//Flat bonus
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
             capacity += 20;
-			bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
-			//bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
+            bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
+            //bonus += 0.1 * player.Vore.VorePerks.HigherCapacity.Count;
         }
         return capacity * bonus;
     }

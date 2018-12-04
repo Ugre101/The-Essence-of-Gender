@@ -5,6 +5,9 @@ function CheckArousal() {
         ee.Orgasm++;
         ee.SessionOrgasm++;
         ee.Arousal = 0;
+        if (ee.Name === "Pure maiden") {
+            ee.Name = "Depraved"
+        }
         if (LastPressed == "RideCowgirl" && !player.Pregnant.Status) {
             Impregnate(player, ee, "B", "");
         }
