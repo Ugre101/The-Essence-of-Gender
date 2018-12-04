@@ -66,19 +66,19 @@ document.getElementById("ShrineQuests").addEventListener("click", function () {
     if (document.getElementById("ShrineQuestsMenu").style.display === 'block') {
         document.getElementById("ShrineQuestsMenu").style.display = 'none';
         document.getElementById("Blessings").style.display = 'inline-block';
-        document.getElementById("LeaveMounatinShrine").style.display = 'inline-block';
+        document.getElementById("LeaveMountainShrine").style.display = 'inline-block';
         document.getElementById("ShrineQuests").value = "Quests";
 
     } else {
         document.getElementById("ShrineQuestsMenu").style.display = 'block';
         document.getElementById("Blessings").style.display = 'none';
-        document.getElementById("LeaveMounatinShrine").style.display = 'none';
+        document.getElementById("LeaveMountainShrine").style.display = 'none';
         document.getElementById("ShrineQuests").value = "Leave quests";
         PregQuests();
     }
 });
 document.getElementById("ShrineQuestsMenu").addEventListener("mouseover", function (e) {
-    document.getElementById("MounatinShrineText").innerHTML = e.target.title;
+    document.getElementById("MountainShrineText").innerHTML = e.target.title;
 })
 
 // Test of new way to add quests, in order to avoid public vars.

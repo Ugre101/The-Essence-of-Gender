@@ -75,7 +75,7 @@ function CurrentMap() {
                     Npcs = [];
                     enemies = [];
                     if (Npcs.length < 1) {
-                        Npcs = [Gym, WitchShop, Barberer];
+                        Npcs = [Gym, WitchShop, Barber];
                     }
                     PrintMap("RoadToWitch");
                     backmap = new Image;
@@ -246,7 +246,7 @@ function CurrentMap() {
 
                     }
                     if (Npcs.length < 1) {
-                        Npcs = [MounatinShrine];
+                        Npcs = [MountainShrine];
                     }
                     PrintMap()
                     break;

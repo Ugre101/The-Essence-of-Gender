@@ -52,9 +52,9 @@
         FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
         FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)")
         FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
-        Barberer = new Npc("Barberer", "Hair salon", grid, grid * 15, grid * 5, grid * 4, "RGB(133,94,66)")
+        Barber = new Npc("Barber", "Hair salon", grid, grid * 15, grid * 5, grid * 4, "RGB(133,94,66)")
         PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)");
-        MounatinShrine = new Npc("MounatinShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
+        MountainShrine = new Npc("MountainShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
 
 
         return;

@@ -46,7 +46,7 @@ function Lose(q) {
 	}
 	Winner = false;
 	document.getElementById("LosePName").innerHTML = player.Name + " " + player.LastName;
-	document.getElementById("LoseEName").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronun(CheckGender(ee));
+	document.getElementById("LoseEName").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronoun(CheckGender(ee));
 	document.getElementById("LoseMascu").innerHTML = Math.round(player.Masc);
 	document.getElementById("LoseFemin").innerHTML = Math.round(player.Femi);
 	document.getElementById("LoseEMascu").innerHTML = Math.round(ee.Masc);
@@ -73,10 +73,10 @@ function Lose(q) {
 	document.getElementById("Lose").style.display = 'grid';
 	document.getElementById("LeaveLose").style.display = 'none';
 	document.getElementById("DungeonLose").style.display = 'none';
-	if (q === undefined) {
+	if (typeof q === undefined) {
 		if (document.getElementById("LoseSexText").style.display = 'none')
 			document.getElementById("LoseSexText").style.display = 'block'
-		document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronun(CheckGender(ee)) + " " + ee.Race + " " + ee.Name;
+		document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronoun(CheckGender(ee)) + " " + ee.Race + " " + ee.Name;
 	} else
 		document.getElementById("LoseSexText").style.display = 'none';
 	return;
@@ -101,7 +101,7 @@ document.getElementById("LoseSubmit").addEventListener("click", function () {
 		enemies[EnemyIndex].Masc += takeM;
 		enemies[EnemyIndex].Femi += take;
 	}
-	Lose(a);
+	Lose(1);
 	document.getElementById("LoseStruggle").style.display = 'none';
 	document.getElementById("LoseSubmit").style.display = 'none';
 	if (Dungeon) {
@@ -147,7 +147,7 @@ document.getElementById("LoseStruggle").addEventListener("click", function () {
 		enemies[EnemyIndex].Gold += shift;
 		player.Gold /= 2;
 	}
-	Lose(a);
+	Lose(1);
 	document.getElementById("LoseStruggle").style.display = 'none';
 	document.getElementById("LoseSubmit").style.display = 'none';
 	if (Dungeon) {

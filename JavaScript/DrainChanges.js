@@ -2,7 +2,7 @@ function DrainChangesEnemy(eold, ecurrent) {
     var b = "";
     if (eold.Dicks.length > ecurrent.Dicks.length) {
         if (ecurrent.Dicks.length < 1) {
-            b += "You see their dick shrinking completely into their body, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
+            b += "You see their dick shrinking completely into their body, turning them into a " + Pronoun(CheckGender(ecurrent)) + ".";
         } else {
             b += "They lost a dick"
         }
@@ -52,7 +52,7 @@ function DrainChangesEnemy(eold, ecurrent) {
 
     if (eold.Pussies.length > ecurrent.Pussies.length) {
         if (ecurrent.Pussies.length < 1) {
-            b += "<br>You see their pussy closing completely and disappear, turning them into a " + Pronun(CheckGender(ecurrent)) + ".";
+            b += "<br>You see their pussy closing completely and disappear, turning them into a " + Pronoun(CheckGender(ecurrent)) + ".";
         } else {
             b += "<br>They a lost a pussy"
         }
@@ -136,7 +136,7 @@ function DrainChanges(old, current, eold, ecurrent) {
         }
     }
     if (CheckGender(old) != CheckGender(current)) {
-        a += "<br><br>You have become a " + Pronun(CheckGender(current)) + "!<br>";
+        a += "<br><br>You have become a " + Pronoun(CheckGender(current)) + "!<br>";
     }
     b = DrainChangesEnemy(eold, ecurrent);
     return "<br>" + a + "<br>" + b;

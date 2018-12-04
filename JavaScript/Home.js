@@ -192,11 +192,11 @@
     });
     document.getElementById("ServeMasc").addEventListener("click", function () {
         Settings.Brothel.ServeMasc = !Settings.Brothel.ServeMasc;
-        document.getElementById("ServeMasc").value = "Masculin customers? " + Settings.Brothel.ServeMasc;
+        document.getElementById("ServeMasc").value = "Masculine customers? " + Settings.Brothel.ServeMasc;
     });
     document.getElementById("ServeFemi").addEventListener("click", function () {
         Settings.Brothel.ServeFemi = !Settings.Brothel.ServeFemi;
-        document.getElementById("ServeFemi").value = "Feminin customers? " + Settings.Brothel.ServeFemi;
+        document.getElementById("ServeFemi").value = "Feminine customers? " + Settings.Brothel.ServeFemi;
     });
     document.getElementById("CloseBrothel").addEventListener("click", function () {
         document.getElementById("TheBrothel").style.display = 'none';

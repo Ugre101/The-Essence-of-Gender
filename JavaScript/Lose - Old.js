@@ -1,7 +1,7 @@
 function Lose() {
     Winner = false;
     document.getElementById("LosePName").innerHTML = player.Name + " " + player.LastName;
-    document.getElementById("LoseEName").innerHTML = enemies[EnemyIndex].Name + "<br>" + enemies[EnemyIndex].Race + " " + Pronun(CheckGender(enemies[EnemyIndex]));
+    document.getElementById("LoseEName").innerHTML = enemies[EnemyIndex].Name + "<br>" + enemies[EnemyIndex].Race + " " + Pronoun(CheckGender(enemies[EnemyIndex]));
     document.getElementById("LoseMascu").innerHTML = Math.round(player.Masc);
     document.getElementById("LoseFemin").innerHTML = Math.round(player.Femi);
     document.getElementById("LoseEMascu").innerHTML = enemies[EnemyIndex].Masc;
@@ -27,8 +27,8 @@ function Lose() {
     document.getElementById("Encounter").style.display = 'none';
     document.getElementById("Lose").style.display = 'grid';
     document.getElementById("LeaveLose").style.display = 'none';
-    document.getElementById("DungenoLose").style.display = 'none';
-    document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronun(CheckGender(enemies[EnemyIndex])) + " " + enemies[EnemyIndex].Race + " " + enemies[EnemyIndex].Name;
+    document.getElementById("DungeonLose").style.display = 'none';
+    document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronoun(CheckGender(enemies[EnemyIndex])) + " " + enemies[EnemyIndex].Race + " " + enemies[EnemyIndex].Name;
     return;
 }
 document.getElementById("LoseSubmit").addEventListener("click", function () {
@@ -81,7 +81,7 @@ document.getElementById("LoseSubmit").addEventListener("click", function () {
     document.getElementById("LoseStruggle").style.display = 'none';
     document.getElementById("LoseSubmit").style.display = 'none';
     if (Dungeon) {
-        document.getElementById("DungenoLose").style.display = 'inline-block';
+        document.getElementById("DungeonLose").style.display = 'inline-block';
     } else {
         document.getElementById("LeaveLose").style.display = 'inline-block';
     }
@@ -136,7 +136,7 @@ document.getElementById("LoseStruggle").addEventListener("click", function () {
     document.getElementById("LoseStruggle").style.display = 'none';
     document.getElementById("LoseSubmit").style.display = 'none';
     if (Dungeon) {
-        document.getElementById("DungenoLose").style.display = 'inline-block';
+        document.getElementById("DungeonLose").style.display = 'inline-block';
     } else {
         document.getElementById("LeaveLose").style.display = 'inline-block';
     }

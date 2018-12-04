@@ -1,6 +1,6 @@
 function UpdateStats(FirstRound = false) {
     var ee = enemies[EnemyIndex];
-    document.getElementById("BattleEnemy").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronun(CheckGender(ee));
+    document.getElementById("BattleEnemy").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronoun(CheckGender(ee));
     document.getElementById("EnemyStatusHealth").innerHTML = ee.Health;
     document.getElementById("EnemyStatusHealth").style.width = 100 * (ee.Health / ee.FullHealth) + "%";
     document.getElementById("EnemyStatusWillHealth").innerHTML = ee.WillHealth;

@@ -46,8 +46,8 @@ function CheckFlags() {
         Settings.ImgPack = false;
         console.log("Set imgpack: false");
     }
-    if (!Settings.hasOwnProperty("Pronun")) {
-        Settings.Pronun = {
+    if (!Settings.hasOwnProperty("Pronoun")) {
+        Settings.Pronoun = {
             Status: false,
             Herm: "hermaphrodite",
             Male: "male",
@@ -56,14 +56,14 @@ function CheckFlags() {
             DickGirl: "dickgirl",
             CuntBoy: "cuntboy"
         }
-        console.log("Added Settings pronun");
+        console.log("Added Settings pronoun");
     }
-    if (!Settings.Pronun.hasOwnProperty("CuntBoy")) {
-        Settings.Pronun = {
+    if (!Settings.Pronoun.hasOwnProperty("CuntBoy")) {
+        Settings.Pronoun = {
             CuntBoy: "cuntboy",
             DickGirl: "dickgirl"
         }
-        console.log("Added pronuns")
+        console.log("Added pronouns")
     }
     // Makes old saves work?
     if (player.Balls.length > 0) {
@@ -187,7 +187,7 @@ function CheckFlags() {
     }
     if (!Settings.hasOwnProperty("LogLength")) {
         Settings.LogLength = 100;
-        console.log("Added Settings loglengt");
+        console.log("Added Settings loglength");
     }
     if (!Settings.hasOwnProperty("Inch")) {
         Settings.Inch = false;
