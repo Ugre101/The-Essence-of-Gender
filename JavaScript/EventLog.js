@@ -1,6 +1,5 @@
 	    // Event log
 	    var LogArray = [];
-	    var LogHistory = "";
 
 	    function EventLog(LogText) {
 	    	var newText = LogText + "<br>";
@@ -8,7 +7,7 @@
 	    	while (LogArray.length > Settings.LogLength) {
 	    		LogArray.pop();
 	    	}
-	    	LogHistory = "";
+	    	var LogHistory = "";
 	    	for (var e = 0; e < LogArray.length; e++) {
 	    		LogHistory += LogArray[e] + "<br>";
 	    	}

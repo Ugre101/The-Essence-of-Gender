@@ -18,6 +18,15 @@ function CheckFlags() {
     document.getElementById("textcolor").value = Settings.TextColor;
     document.getElementById("textfont").value = Settings.TextFont;
 
+    if (!Settings.hasOwnProperty("MapPercent")) {
+        Settings.MapPercent = 0.9;
+        console.log("Added MapPercent")
+    }
+    if (!Settings.hasOwnProperty("FontSize")) {
+        Settings.FontSize = 1;
+    }
+    document.body.style.fontSize = Settings.FontSize + "em";
+
     if (Settings.Vore) {
         if (!Settings.hasOwnProperty("VoreSettings")) {
             Settings.VoreSettings = {

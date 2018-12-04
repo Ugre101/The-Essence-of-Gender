@@ -3,7 +3,6 @@ function RaceBonus(who) {
         case "Halfling":
             who.Height = who.Height / 2;
             who.Weight = who.Weight / 2;
-            who.Size = who.Size * 0.8;
             break;
         case "Orc":
             who.Str += 1;
@@ -11,7 +10,6 @@ function RaceBonus(who) {
         case "Fairy":
             who.Height = Math.ceil(who.Height / 9);
             who.Weight = Math.ceil(who.Weight / 9);
-            who.Size = who.Size * 0.4;
             break;
         case "Elf":
             who.Int += 1;

@@ -1,7 +1,7 @@
 function enemy(EnemyName, EnemyRace, Strength, Endurance, Willpower, Charm,
     Intelligence, SexSkill, EnemyHealth, EnemyWillHealth, ExpDrop, GoldDrop,
-    Color, Size, Height, EnemyFullHealth = EnemyHealth,
-    EnemyFullWillHealth = EnemyWillHealth, EnemySecondRace = EnemyRace) {
+    Color, Size, Height, EnemySecondRace = EnemyRace, EnemyFullHealth = EnemyHealth,
+    EnemyFullWillHealth = EnemyWillHealth) {
     this.Name = EnemyName;
     this.Race = EnemyRace;
     this.Str = Strength;
@@ -17,9 +17,9 @@ function enemy(EnemyName, EnemyRace, Strength, Endurance, Willpower, Charm,
     this.Color = Color;
     this.Size = Size;
     this.Height = Height;
+    this.SecondRace = EnemySecondRace;
     this.FullHealth = EnemyFullHealth;
     this.FullWillHealth = EnemyFullWillHealth;
-    this.SecondRace = EnemySecondRace;
 }
 
 // Feral concept list
