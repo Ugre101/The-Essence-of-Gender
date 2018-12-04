@@ -14,11 +14,25 @@ function DoorHandler(NESW) {
     }
 }
 
+function MakeDoor(x, y, width, height, NESW) {
+    this.x = x,
+        this.y = y,
+        this.width = width,
+        this.height = height,
+        this.NESW = NESW
+};
+
 function CheckDoor() {
+    var SizeMod = 0.5 + player.Height/320;
+    DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E");
+    DoorS = new MakeDoor(startarea.width / 2 - 3 * grid, startarea.height - 2 * grid, grid * 5, grid, "S");
+    DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W");
+    DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N");
+    var Doors = [DoorE, DoorS, DoorN, DoorW];
     for (var i = 0; i < Doors.length; i++) {
         var Door = Doors[i].NESW;
-        if (sprite.x >= Doors[i].x && sprite.x <= Doors[i].x + Doors[i].width &&
-            sprite.y >= Doors[i].y && sprite.y <= Doors[i].y + Doors[i].height) {
+        if (sprite.x + grid * SizeMod >= Doors[i].x && sprite.x <= Doors[i].x + Doors[i].width &&
+            sprite.y + grid * SizeMod >= Doors[i].y && sprite.y <= Doors[i].y + Doors[i].height) {
             switch (player.Area) {
                 case "First":
                     switch (player.Map) {

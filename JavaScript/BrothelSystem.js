@@ -1,5 +1,4 @@
 var BrothelLogArray = [];
-var BrothelLogHistory = "";
 
 /* Instead of constant passive gain through brothel, servants will gain gold & essence 
 in burst through customers. */
@@ -11,12 +10,12 @@ function BrothelLog(LogText) {
     while (BrothelLogArray.length > Settings.LogLength) {
         LogArray.pop();
     }
-    LogHistory = "";
+    var BrothelLogHistory = "";
     for (var e of BrothelLogArray) {
-        LogHistory += e + "<br>";
+        BrothelLogHistory += e + "<br>";
     }
     //LogHistory = newText + LogHistory;
-    document.getElementById("").innerHTML = LogHistory;// Make a brothelTextLog
+    document.getElementById("").innerHTML = BrothelLogHistory; // Make a brothelTextLog
 } // This will be inside brothel at home.
 function BrothelEngine() {
     for (var e of House.Dormmates) {

@@ -1,6 +1,45 @@
-var backmap;
+function PrintDoor(NESW) {
+    this.NESW = NESW;
+    if (NESW == "E") {
+        ctx.fillStyle = Settings.MapColor;
+        ctx.fillRect(startarea.width - grid, startarea.height / 2 - 3 * grid, grid, grid * 6);
+    } else if (NESW == "S") {
+        ctx.fillStyle = Settings.MapColor;
+        ctx.fillRect(startarea.width / 2 - 3 * grid, startarea.height - grid, grid * 6, grid);
+    } else if (NESW == "W") {
+        ctx.fillStyle = Settings.MapColor;
+        ctx.fillRect(0, startarea.height / 2 - 3 * grid, grid, grid * 6);
+    } else if (NESW == "N") {
+        ctx.fillStyle = Settings.MapColor;
+        ctx.fillRect(startarea.width / 2 - 3 * grid, 0, grid * 6, grid);
+    }
+}
 
 function CurrentMap() {
+    //First Town
+    var Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
+    var Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
+    var Bar = new Npc("Bar", "Bar", 14 * grid, 14 * grid, grid * 5.5, grid * 5.5, "RGB(133,94,66)")
+    // RtW
+    var Gym = new Npc("Gym", "Gym", grid / 2, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
+    var WitchShop = new Npc("WitchShop", "Witch shop", grid * 15, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
+    // Witch
+    var WitchHut = new Npc("WitchHut", "Witch hut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
+    // Misc
+    var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
+    var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
+    var Barber = new Npc("Barber", "Hair salon", grid * 15, grid, grid * 5, grid * 4, "RGB(133,94,66)");
+    var PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)");
+    //Outlaw
+    var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
+    // Dungeons
+    var FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)");
+    // Farm
+    var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
+    var FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
+    // Shrine
+    var MountainShrine = new Npc("MountainShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
+    var ShrinePriestess = new Npc("ShrinePriestess", "Priestess", grid * 15, grid, grid, grid, "Pink");
     //Animal testing
     /*	var aSpawn = Math.random();
     	if (enemies.length < 1 && Settings.AnimalSpawn)
@@ -8,7 +47,8 @@ function CurrentMap() {
     		console.log("Animal?");
     		enemies = [animalSpawn(player.Height), animalSpawn(player.Height)];
     		return;
-    	}*/
+        }*/
+    var backmap;
     switch (player.Area) {
         case "First":
             switch (player.Map) {

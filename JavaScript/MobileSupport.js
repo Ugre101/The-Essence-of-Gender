@@ -27,8 +27,7 @@ window.onload = function () {
         document.getElementById("MoreButtons").style.display = 'inline-block';
         document.getElementById("LessButtons").style.display = 'inline-block';
         document.getElementById("MobileButtons").style.display = 'inline-block';
-        FontSize = 0.65;
-        document.body.style.fontSize = FontSize + "em";
+        document.body.style.fontSize = Settings.FontSize + "em";
         MapPercent = 0.6;
         HemScale();
     } else if (window.innerHeight < 800) {
@@ -37,8 +36,7 @@ window.onload = function () {
         document.getElementById("MoreButtons").style.display = 'inline-block';
         document.getElementById("LessButtons").style.display = 'inline-block';
         document.getElementById("MobileButtons").style.display = 'none';
-        FontSize = 0.95;
-        document.body.style.fontSize = FontSize + "em";
+        document.body.style.fontSize = Settings.FontSize + "em";
     } else {
         document.getElementById("SecondButtons").style.display = 'block';
         document.getElementById("FirstButtons").style.display = 'block';

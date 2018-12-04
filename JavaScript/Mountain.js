@@ -9,7 +9,7 @@ function EncounterMaiden() {
         RandomInt(5, 20), RandomInt(0, 5), 1500, 2000, RandomInt(50, 250), RandomInt(30, 100),
         "Pink", grid, RandomInt(150, 170));
     EssenceGiver(OP, 1500, "female");
-    FatMuscle(OP, 1, 1);
+    FatMuscle(OP, 15, 55);
     StandardEnemy(OP);
     NameGiver(OP);
     return OP;
@@ -25,7 +25,7 @@ function EncounterDragonKind() {
         RandomInt(10, 50), RandomInt(10, 60), 5000, 5000, RandomInt(50, 500), RandomInt(50, 500),
         "Red", grid, RandomInt(160, 240), RandomString(MountainHalfRaces));
     EssenceGiver(OP, 1500);
-    FatMuscle(OP, 1, 1);
+    FatMuscle(OP, 12, 70);
     StandardEnemy(OP);
     NameGiver(OP);
     return OP;
@@ -36,7 +36,7 @@ function EncounterHarpy() {
         RandomInt(0, 10), RandomInt(20, 80), 6000, 4500, RandomInt(50, 500), RandomInt(50, 500),
         "Yellow", grid, RandomInt(70, 140));
     EssenceGiver(OP, 1500);
-    FatMuscle(OP, 1, 1);
+    FatMuscle(OP, 8, 45);
     StandardEnemy(OP);
     NameGiver(OP);
     return OP;
@@ -45,7 +45,7 @@ function EncounterHarpy() {
 function EncounterAnthroDragon() {
     var OP = new enemy("Young", "Dragon");
     EssenceGiver(OP, 1500);
-    FatMuscle(OP, 1, 1);
+    FatMuscle(OP, 12, 80);
     StandardEnemy(OP);
     NameGiver(OP);
     return OP;

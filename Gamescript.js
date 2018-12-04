@@ -196,6 +196,8 @@
         TextColor: "#000000",
         BorderColor: "#B22222",
         TextFont: "Verdana, Geneva, sans-serif",
+        FontSize: 1,
+        MapPercent: 0.8,
         GiveEssence: "Both",
         Skip: false,
         Vore: false,
@@ -262,12 +264,11 @@
     }
 
     // Start values for canvas
-    var medium = Math.ceil((document.documentElement.clientHeight / 20) * 0.8) * 20;
+    var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.MapPercent) * 20;
     var startarea = document.getElementById("hem");
     var ctx = startarea.getContext("2d");
     startarea.width = medium;
     startarea.height = medium;
-    var MapColor = "Gray";
     var grid = (medium / 20);
     var sprite = {
         x: grid,
@@ -390,24 +391,21 @@
         document.getElementById("optionpage").style.display = 'block';
         document.getElementById("ImgPack").value = "Img pack: " + Settings.ImgPack;
         document.getElementById("LogLength").innerHTML = Settings.LogLength;
-        document.getElementById("FontSize").innerHTML = Math.round(FontSize * 100) / 100 + "em"
+        document.getElementById("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
         document.getElementById("Inch").value = "Inch " + Settings.Inch;
     });
-    var FontSize = 1;
 
     document.getElementById("FontSmaller").addEventListener("click", function () {
-        FontSize -= 0.05;
-        document.body.style.fontSize = FontSize + "em";
-        document.getElementById("FontSize").innerHTML = Math.round(FontSize * 100) / 100 + "em"
+        Settings.FontSize -= 0.05;
+        document.body.style.fontSize = Settings.FontSize + "em";
+        document.getElementById("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
     });
 
     document.getElementById("FontBigger").addEventListener("click", function () {
-        FontSize += 0.05;
-        document.body.style.fontSize = FontSize + "em";
-        document.getElementById("FontSize").innerHTML = Math.round(FontSize * 100) / 100 + "em"
+        Settings.FontSize += 0.05;
+        document.body.style.fontSize = Settings.FontSize + "em";
+        document.getElementById("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
     });
-    var OldMap;
-    var MapPercent = 0.9;
 
     document.getElementById("SetPronoun").addEventListener("click", function () {
         DisplayNone();
@@ -477,8 +475,8 @@
         MapColor = document.getElementById("MapColor").value;
         document.body.style.color = document.getElementById("textcolor").value;
         document.body.style.fontFamily = document.getElementById("textfont").value;
-        MapPercent = document.getElementById("MapScale").value;
 
+        Settings.MapPercent = document.getElementById("MapScale").value;
         Settings.BackColor = document.getElementById("backcolor").value;
         Settings.MapColor = document.getElementById("MapColor").value;
         Settings.TextColor = document.getElementById("textcolor").value;
@@ -703,10 +701,10 @@
         return gender;
     }
     // Level System
-    var MaxExp = 30 * Math.pow(1.05, player.level - 1);
 
     function ExpCheck() {
-        MaxExp = 30 * Math.pow(1.05, player.level - 1);
+        var MaxExp = 30 * Math.pow(1.05, player.level - 1);
+        document.getElementById("StatusLevel").style.width = Math.min(100 * (player.Exp / MaxExp), 100) + "%";
         if (player.SkillPoints > 0 || player.PerkPoints > 0) {
             document.getElementById("LevelButton").style.display = 'inline-block';
         } else {
@@ -1125,17 +1123,6 @@
         player.Fat -= 0.002;
     }
 
-    function MakeDoor(x, y, width, height, NESW) {
-        this.x = x,
-            this.y = y,
-            this.width = width,
-            this.height = height,
-            this.NESW = NESW
-
-    };
-
-    var Doors = [];
-
     function Npc(Name, RealName, X, Y, width, height, Color) {
         this.Name = Name,
             this.RealName = RealName,
@@ -1146,36 +1133,8 @@
             this.Color = Color
     };
 
-
-    //First Town
-    var Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
-    var Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
-    var Bar = new Npc("Bar", "Bar", 14 * grid, 14 * grid, grid * 5.5, grid * 5.5, "RGB(133,94,66)")
-    // RtW
-    var Gym = new Npc("Gym", "Gym", grid / 2, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
-    var WitchShop = new Npc("WitchShop", "Witch shop", grid * 15, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
-    // Witch
-    var WitchHut = new Npc("WitchHut", "Witch hut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
-    // Misc
-    var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
-    var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
-    var Barber = new Npc("Barber", "Hair salon", grid * 15, grid, grid * 5, grid * 4, "RGB(133,94,66)");
-    var PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)");
-    //Outlaw
-    var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
-    // Dungeons
-    var FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)");
-    // Farm
-    var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
-    var FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
-    // Shrine
-    var MountainShrine = new Npc("MountainShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
-
-
-
     var Npcs = [];
 
-    var NpcName;
     var EnemyIndex;
     var mousedowner = false;
     var mFunction;
@@ -1273,23 +1232,6 @@
         });
     }
 
-    function PrintDoor(NESW) {
-        this.NESW = NESW;
-        if (NESW == "E") {
-            ctx.fillStyle = MapColor;
-            ctx.fillRect(startarea.width - grid, startarea.height / 2 - 3 * grid, grid, grid * 6);
-        } else if (NESW == "S") {
-            ctx.fillStyle = MapColor;
-            ctx.fillRect(startarea.width / 2 - 3 * grid, startarea.height - grid, grid * 6, grid);
-        } else if (NESW == "W") {
-            ctx.fillStyle = MapColor;
-            ctx.fillRect(0, startarea.height / 2 - 3 * grid, grid, grid * 6);
-        } else if (NESW == "N") {
-            ctx.fillStyle = MapColor;
-            ctx.fillRect(startarea.width / 2 - 3 * grid, 0, grid * 6, grid);
-        }
-    }
-
     function PrintNpcs() {
         var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine"]
         for (var e of Npcs) {
@@ -1304,7 +1246,7 @@
         }
     }
 
-    function testsa(e) {
+    function testsa(e) { // Does  y
         for (var b = e; b < enemies.length; b++) {
             return enemies[b].XPos;
         }
@@ -1349,8 +1291,8 @@
     function PaintBackground() {
         var WorldMap = document.getElementById("WorldMap");
         var World = WorldMap.getContext("2d");
-        ctx.fillStyle = MapColor;
-        World.fillStyle = MapColor;
+        ctx.fillStyle = Settings.MapColor;
+        World.fillStyle = Settings.MapColor;
         ctx.fillRect(0, 0, startarea.width, startarea.height);
         World.fillRect(0, 0, WorldMap.width, WorldMap.height);
 
@@ -1362,7 +1304,6 @@
         ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
     }
 
-    var WindowChange = document.documentElement.clientHeight;
     var fps = [];
 
     function loop() {
@@ -1375,9 +1316,9 @@
             fps.pop();
             fps.pop();
         }
-        if (WindowChange != document.documentElement.clientHeight) {
+        if (Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20 !== medium) {
+            console.log(true)
             HemScale();
-            WindowChange = document.documentElement.clientHeight
         };
 
         document.getElementById("StatusArea").innerHTML = "Area: " + player.Area + " and Map: " + player.Map;
@@ -1390,7 +1331,6 @@
         document.getElementById("StatusWillHealth").innerHTML = Math.round(player.WillHealth);
         document.getElementById("StatusWillHealth").style.width = Math.min(100 * (player.WillHealth / player.MaxWillHealth), 103) + "%";
         document.getElementById("StatusLevel").innerHTML = player.level;
-        document.getElementById("StatusLevel").style.width = Math.min(100 * (player.Exp / MaxExp), 100) + "%";
         document.getElementById("Gold").innerHTML = "Gold: " + Math.floor(player.Gold);
         if (player.Fat <= player.Height / 100) {
             document.getElementById("Hunger").innerHTML = "You are starving";
@@ -1425,14 +1365,8 @@
                 PrintNpcs();
             }
             ctx.fillStyle = "BlueViolet";
-            ctx.fillRect(sprite.x, sprite.y, grid, grid);
-            if (Doors.length < 1) {
-                DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E");
-                DoorS = new MakeDoor(startarea.width / 2 - 3 * grid, startarea.height - 2 * grid, grid * 5, grid, "S");
-                DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W");
-                DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N");
-                Doors = [DoorE, DoorS, DoorN, DoorW];
-            }
+            var SizeMod = 0.5 + player.Height/320;
+            ctx.fillRect(sprite.x, sprite.y, grid * SizeMod, grid * SizeMod);
             if (TF.Status) {
                 TfEngine();
             }
@@ -1445,7 +1379,7 @@
                 player.Fat = Math.max(0.1, player.Fat);
                 player.Muscle = Math.max(1, player.Muscle);
                 player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);
-                player.Height = Math.max(1, player.Height);
+                player.Height = Math.max(5, player.Height);
                 player.Health = Math.max(1, player.Health);
                 player.WillHealth = Math.max(1, player.WillHealth);
                 document.getElementById("Fps").innerHTML = Math.round(1000 / Thefps) + "fps";
@@ -1456,18 +1390,19 @@
 
     // Movement buttons
     document.addEventListener('keydown', function (e) {
+        var SizeMod = 0.5 + player.Height/320;
         if ((e.which === 37 || e.which === 65) && sprite.x > grid + 1 && battle == false) {
-            sprite.x -= grid;
+            sprite.x -= grid * SizeMod;
             sprite.y += 0;
         } else if ((e.which === 39 || e.which === 68) && sprite.x < (startarea.width - 2 * grid - 1) && battle == false) {
-            sprite.x += grid;
+            sprite.x += grid * SizeMod;
             sprite.y += 0;
         }
         if ((e.which === 38 || e.which === 87) && sprite.y > grid + 1 && battle == false) {
-            sprite.y -= grid;
+            sprite.y -= grid * SizeMod;
             sprite.x += 0;
         } else if ((e.which === 40 || e.which === 83) && sprite.y < (startarea.height - 2 * grid - 1) && battle == false) {
-            sprite.y += grid;
+            sprite.y += grid * SizeMod;
             sprite.x += 0;
         }
         Touching();
@@ -1488,16 +1423,17 @@
 */
 
     function mousedownfunc() {
+        var SizeMod = 0.5 + player.Height/320;
         var MapRect = startarea.getBoundingClientRect();
         if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x < (startarea.width - 2 * grid)) {
-            sprite.x += grid;
+            sprite.x += grid * SizeMod;
         } else if (mouseX - MapRect.left + grid / 2 < sprite.x && sprite.x > grid) {
-            sprite.x -= grid;
+            sprite.x -= grid * SizeMod;
         }
         if (mouseY - MapRect.top > sprite.y + 1.5 * grid && sprite.y < (startarea.height - 2 * grid)) {
-            sprite.y += grid;
+            sprite.y += grid * SizeMod;
         } else if (mouseY - MapRect.top + grid / 2 < sprite.y && sprite.y > grid) {
-            sprite.y -= grid;
+            sprite.y -= grid * SizeMod;
         }
         Touching();
         CheckDoor();
