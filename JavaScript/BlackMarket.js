@@ -51,12 +51,12 @@
             SellVaginas += temp;
         }
         document.getElementById("SellVaginas").innerHTML = SellVaginas;
-        var SellVaignaSize = [];
+        var SellVaginaSize = [];
         for (var e = 0; e < player.Pussies.length; e++) {
-            var temp = "<button onclick=\"SellVaignaSize(" + e + "); LimbSale()\">Pussy: " + (e + 1) + ", " + CmToInch(player.Pussies[e].Size) + "</button>";
-            SellVaignaSize += temp;
+            var temp = "<button onclick=\"SellVaginaSize(" + e + "); LimbSale()\">Pussy: " + (e + 1) + ", " + CmToInch(player.Pussies[e].Size) + "</button>";
+            SellVaginaSize += temp;
         }
-        document.getElementById("SellVaignaSize").innerHTML = SellVaignaSize;
+        document.getElementById("SellVaginaSize").innerHTML = SellVaginaSize;
     }
 
     function SellDicks(e) {
@@ -106,7 +106,7 @@
         player.Pussies.splice(e, 1);
     }
 
-    function SellVaignaSize(e) {
+    function SellVaginaSize(e) {
         if (player.Pussies[e].Size - 1 < 1) {
             player.Pussies[e].Size = 1;
         } else {

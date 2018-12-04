@@ -201,7 +201,7 @@ document.getElementById("DualPen").addEventListener("click", function () {
     LastPressed = "DualPen";
     return;
 });
-document.getElementById("Multipen").addEventListener("click", function () {
+document.getElementById("MultiPen").addEventListener("click", function () {
     if (enemies[EnemyIndex].Pussies.length * SexAttack > 200) {
         enemies[EnemyIndex].Arousal = 100;
         enemies[EnemyIndex].Orgasm += Math.floor(enemies[EnemyIndex].Pussies.length * SexAttack) - 1;
@@ -213,9 +213,9 @@ document.getElementById("Multipen").addEventListener("click", function () {
     } else
         player.Arousal += player.Dicks.length * 2 * ESexAttack;
     if (Settings.ImgPack) { //Going to need to split this, surprise surprise.
-        ImgChose(player, "Multipen", enemies[EnemyIndex]);
+        ImgChose(player, "MultiPen", enemies[EnemyIndex]);
     }
-    if (LastPressed === "Multipen") {
+    if (LastPressed === "MultiPen") {
         document.getElementById("SexText").innerHTML = "Your mind's unable to handle the insane amount of pleasure, and you thrust wildly. Your entire world is focused on the pleasure your dicks are experiencing, fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " holes with your many dicks. Had you more awareness, you would've seen " + enemies[EnemyIndex].FirstName + "'s face in a state of ecstasy, unable to make a sound.";
     } else if (player.Dicks.length > enemies[EnemyIndex].Pussies.length + 1) //1st case: more dicks than all holes 
     {
@@ -224,7 +224,7 @@ document.getElementById("Multipen").addEventListener("click", function () {
         document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you're ecstatic to see enough holes for your arsenal of penises. Resolved to make this an unforgettable experience, you line up your dicks and slowly ease in. Amazed at how much they stretch around your dicks, and how good it feels, your mind barely registers their hips meeting yours. Unable to control your body any longer, your conscious thoughts takes a back seat as your hips thrust at a manic pace, drowning you in pleasure.";
     }
     /*else {//3rd case: They've got enough pussies for your dicks 
-    	if (LastPressed === "Multipen") {
+    	if (LastPressed === "MultiPen") {
     		document.getElementById("SexText").innerHTML = "You continue fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
     	} else {
     		document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you notice a lack of vagina. Not willing to give one dick priority over the other, you spread their legs and line up your " + player.Dicks[0].Type" dicks with their ass, and press in slowly. To your surprise, they stretch around your dicks with only mild (vocalized) discomfort. As they adapt to your dicks, you start picking up speed, thrusting at an irregular pace due to all of the pleasure.";
@@ -328,7 +328,7 @@ document.getElementById("DualPen").addEventListener("click", function () {
     LastPressed = "DoggyStyleAnal";
     return;
 });
-document.getElementById("Multipen").addEventListener("click", function () {
+document.getElementById("MultiPen").addEventListener("click", function () {
 
 })
 

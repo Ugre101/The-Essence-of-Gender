@@ -78,7 +78,7 @@ function MateDiv(e) {
     if (rm.hasOwnProperty("LastName")) {
         DormName += " " + rm.LastName;
     };
-    document.getElementById(e).innerHTML = "<div>" + DormName + "<br>" + rm.Name + " " + rm.Race + "<br>" + Pronun(CheckGender(rm)) +
+    document.getElementById(e).innerHTML = "<div>" + DormName + "<br>" + rm.Name + " " + rm.Race + "<br>" + Pronoun(CheckGender(rm)) +
         "<br><br>Height: " + CmToInch(Math.round(rm.Height)) + "<br>Weight: " + KgToPound(rm.Weight) + "<br>Muscle: " + KgToPound(rm.Muscle) + "<br>Fat: " + KgToPound(rm.Fat) +
         "<br>" + PregnantStatus + "<br><br>" + BoobLook(rm) + DickLook(rm) + BallLook(rm) + PussyLook(rm) + "<div> Strength: " + rm.Str +
         "<br>Charm: " + rm.Charm + "<br>Endurance: " + rm.End + "<br>Int: " + rm.Int + "<br>Sexskill: " + rm.SexSkill +
@@ -141,7 +141,7 @@ function DormSex() {
         EssenceCheck(player);
     }
     document.getElementById("DormPName").innerHTML = player.Name + " " + player.LastName;
-    document.getElementById("DormEName").innerHTML = e.Name + "<br>" + e.Race + " " + Pronun(CheckGender(e));
+    document.getElementById("DormEName").innerHTML = e.Name + "<br>" + e.Race + " " + Pronoun(CheckGender(e));
     document.getElementById("DormMascu").innerHTML = Math.round(player.Masc);
     document.getElementById("DormFemin").innerHTML = Math.round(player.Femi);
     document.getElementById("DormEMascu").innerHTML = Math.round(e.Masc);

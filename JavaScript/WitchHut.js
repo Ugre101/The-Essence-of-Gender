@@ -59,7 +59,7 @@ document.getElementById("HumanTF").addEventListener("click", function () {
     if (player.Gold >= 250) {
         player.Gold -= 250;
         TfEngine("human");
-        document.getElementById("WitchHutText").innerHTML = "You drink the potion and get a familiar feeling running trough your entire body.";
+        document.getElementById("WitchHutText").innerHTML = "You drink the potion and get a familiar feeling running through your entire body.";
     } else {
         document.getElementById("WitchHutText").innerHTML = "You can't afford the potion";
     }

@@ -12,7 +12,7 @@ function AfterBattleButtons(Sex = true) {
     document.getElementById("GiveBlowjob").style.display = 'block';
     document.getElementById("DualPen").style.display = 'none'
     document.getElementById("DualPen").style.display = 'none';
-    document.getElementById("Multipen").style.display = 'none';
+    document.getElementById("MultiPen").style.display = 'none';
 
     if(window.innerHeight > 800) {
         document.getElementById("DickAction").style.display = 'none'
@@ -187,9 +187,9 @@ function AfterBattleButtons(Sex = true) {
             document.getElementById("DualPen").style.display = 'none'
         }
         if (player.Dicks.length > 2 && enemies[EnemyIndex].Pussies.length > 1) {
-            document.getElementById("Multipen").style.display = 'block';
+            document.getElementById("MultiPen").style.display = 'block';
         } else {
-            document.getElementById("Multipen").style.display = 'none';
+            document.getElementById("MultiPen").style.display = 'none';
         }
     }
 }

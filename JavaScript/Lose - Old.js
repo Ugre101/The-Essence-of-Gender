@@ -1,7 +1,7 @@
 function Lose() {
     Winner = false;
     document.getElementById("LosePName").innerHTML = player.Name + " " + player.LastName;
-    document.getElementById("LoseEName").innerHTML = enemies[EnemyIndex].Name + "<br>" + enemies[EnemyIndex].Race + " " + Pronun(CheckGender(enemies[EnemyIndex]));
+    document.getElementById("LoseEName").innerHTML = enemies[EnemyIndex].Name + "<br>" + enemies[EnemyIndex].Race + " " + Pronoun(CheckGender(enemies[EnemyIndex]));
     document.getElementById("LoseMascu").innerHTML = Math.round(player.Masc);
     document.getElementById("LoseFemin").innerHTML = Math.round(player.Femi);
     document.getElementById("LoseEMascu").innerHTML = enemies[EnemyIndex].Masc;
@@ -28,7 +28,7 @@ function Lose() {
     document.getElementById("Lose").style.display = 'grid';
     document.getElementById("LeaveLose").style.display = 'none';
     document.getElementById("DungenoLose").style.display = 'none';
-    document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronun(CheckGender(enemies[EnemyIndex])) + " " + enemies[EnemyIndex].Race + " " + enemies[EnemyIndex].Name;
+    document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronoun(CheckGender(enemies[EnemyIndex])) + " " + enemies[EnemyIndex].Race + " " + enemies[EnemyIndex].Name;
     return;
 }
 document.getElementById("LoseSubmit").addEventListener("click", function () {

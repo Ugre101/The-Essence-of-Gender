@@ -1,6 +1,6 @@
 function CheckArousal() {
     var ee = enemies[EnemyIndex];
-    var ImpregActions = ["DoggyStyle", "DoggyStyleAnal", "Missionary", "DualPen", "Multipen"];
+    var ImpregActions = ["DoggyStyle", "DoggyStyleAnal", "Missionary", "DualPen", "MultiPen"];
     if (ee.Arousal >= 100) {
         ee.Orgasm++;
         ee.SessionOrgasm++;
@@ -163,8 +163,8 @@ function CheckArousal() {
     ESexAttack = Math.max(RandomInt(15, 32), BaseESexAttack * (BaseESexAttack / BaseSexAttack));
 
 
-    document.getElementById("PName").innerHTML = player.Name + " " + player.LastName + "<br>" + player.Race + " " + Pronun(CheckGender(player));
-    document.getElementById("EName").innerHTML = " " + ee.FirstName + " " + ee.LastName + "<br>" + ee.Name + " " + ee.Race + " " + Pronun(CheckGender(ee));
+    document.getElementById("PName").innerHTML = player.Name + " " + player.LastName + "<br>" + player.Race + " " + Pronoun(CheckGender(player));
+    document.getElementById("EName").innerHTML = " " + ee.FirstName + " " + ee.LastName + "<br>" + ee.Name + " " + ee.Race + " " + Pronoun(CheckGender(ee));
     document.getElementById("Mascu").innerHTML = Math.round(player.Masc);
     document.getElementById("Femin").innerHTML = Math.round(player.Femi);
     document.getElementById("PArousal").innerHTML = Math.round(player.Arousal);

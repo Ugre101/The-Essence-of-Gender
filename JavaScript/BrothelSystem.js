@@ -2,9 +2,9 @@ var BrothelLogArray = [];
 var BrothelLogHistory = "";
 
 /* Instead of constant passive gain through brothel, servants will gain gold & essence 
-in burst trough customers. */
+in burst through customers. */
 
-// Recyled eventlog for brothel
+// Recycled eventlog for brothel
 function BrothelLog(LogText) {
     var newText = LogText + "<br>";
     BrothelLogArray.unshift(newText);
@@ -33,7 +33,7 @@ function BrothelEngine() {
             male = a
         }
         if (male > 40 && female > 40) {
-            // serve herm or maybe a mixed gender group? (if your lucky)
+            // serve herm or maybe a mixed gender group? (if you're lucky)
             BrothelLog(e.FirstName + " served a ");
         } else if (male > 40) {
             // serve male
@@ -46,4 +46,4 @@ function BrothelEngine() {
 }
 
 /* ToDo options to whore yourself. maybe give bonus dependent on level/rank? 
-Like custmer find it exciting to fuck a high rank adventurer(need add ranks). */
+Like customer find it exciting to fuck a high rank adventurer(need add ranks). */

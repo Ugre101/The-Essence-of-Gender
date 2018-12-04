@@ -204,7 +204,7 @@
         // For testing animals
         // AnimalSpawn: true,
         LogLength: 100,
-        Pronun: {
+        Pronoun: {
             Status: false,
             Herm: "hermaphrodite",
             Male: "male",
@@ -306,7 +306,7 @@
     // Ge karaktär start värden
     document.getElementById("Begin").addEventListener("click", function () {
         document.getElementById("startgame").style.display = 'inline-block';
-        document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.LastName + ", a " + Math.round(player.Height) + "cm tall " + Pronun(CheckGender(player)) +
+        document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.LastName + ", a " + Math.round(player.Height) + "cm tall " + Pronoun(CheckGender(player)) +
             ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Haircolor + " hair and " + player.Skincolor +
             " skin; hopefully the last time you see your body absent of any other details or personality.<br><br>For today, you will forge your own way in this world.";
 
@@ -358,7 +358,7 @@
         document.getElementById("Levels").style.display = 'none';
         document.getElementById("ShowVore").style.display = 'none';
         document.getElementById("EssenceOptionsMenu").style.display = 'none';
-        document.getElementById("PronunForm").style.display = 'none';
+        document.getElementById("PronounForm").style.display = 'none';
         document.getElementById("Inventory").style.display = 'none';
         document.getElementById("ChildrenMenu").style.display = 'none';
         if (window.innerHeight < 600) {
@@ -409,9 +409,9 @@
     var OldMap;
     var MapPercent = 0.9;
 
-    document.getElementById("SetPronun").addEventListener("click", function () {
+    document.getElementById("SetPronoun").addEventListener("click", function () {
         DisplayNone();
-        document.getElementById("PronunForm").style.display = 'block'
+        document.getElementById("PronounForm").style.display = 'block'
     });
 
     document.getElementById("Log+10").addEventListener("click", function () {
@@ -424,16 +424,16 @@
         document.getElementById("LogLength").innerHTML = Settings.LogLength;
     });
 
-    document.getElementById("AcceptPronun").addEventListener("click", function () {
+    document.getElementById("AcceptPronoun").addEventListener("click", function () {
         DisplayNone();
         document.getElementById("optionpage").style.display = 'block';
-        Settings.Pronun.Herm = document.getElementById("Herm").value;
-        Settings.Pronun.Male = document.getElementById("Male").value;
-        Settings.Pronun.Female = document.getElementById("Female").value;
-        Settings.Pronun.Doll = document.getElementById("Doll").value;
-        Settings.Pronun.DickGirl = document.getElementById("DickGirl").value;
-        Settings.Pronun.CuntBoy = document.getElementById("CuntBoy").value;
-        Settings.Pronun.Status = true;
+        Settings.Pronoun.Herm = document.getElementById("Herm").value;
+        Settings.Pronoun.Male = document.getElementById("Male").value;
+        Settings.Pronoun.Female = document.getElementById("Female").value;
+        Settings.Pronoun.Doll = document.getElementById("Doll").value;
+        Settings.Pronoun.DickGirl = document.getElementById("DickGirl").value;
+        Settings.Pronoun.CuntBoy = document.getElementById("CuntBoy").value;
+        Settings.Pronoun.Status = true;
     });
 
     document.getElementById("Inch").addEventListener("click", function () {
@@ -544,7 +544,7 @@
         // Update for Looksmenu #Moved it here because there is no need to have it update every loop.
         document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
 
-        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.LastName + ", a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronun(CheckGender(player)) +
+        document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.LastName + ", a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronoun(CheckGender(player)) +
             ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and " + player.Skincolor + " skin.";
 
         if (player.Pregnant.Babies.length > 0) {
@@ -635,41 +635,41 @@
 
     var battle = false;
 
-    function Pronun(gender) {
+    function Pronoun(gender) {
         switch (gender) {
             case "hermaphrodite":
-                if (Settings.Pronun.Status) {
-                    return Settings.Pronun.Herm
+                if (Settings.Pronoun.Status) {
+                    return Settings.Pronoun.Herm
                 } else {
                     return gender;
                 }
             case "cuntboy":
-                if (Settings.Pronun.Status) {
-                    return Settings.Pronun.CuntBoy;
+                if (Settings.Pronoun.Status) {
+                    return Settings.Pronoun.CuntBoy;
                 } else {
                     return gender;
                 }
             case "male":
-                if (Settings.Pronun.Status) {
-                    return Settings.Pronun.Male
+                if (Settings.Pronoun.Status) {
+                    return Settings.Pronoun.Male
                 } else {
                     return gender;
                 }
             case "female":
-                if (Settings.Pronun.Status) {
-                    return Settings.Pronun.Female
+                if (Settings.Pronoun.Status) {
+                    return Settings.Pronoun.Female
                 } else {
                     return gender;
                 }
             case "dickgirl":
-                if (Settings.Pronun.Status) {
-                    return Settings.Pronun.DickGirl;
+                if (Settings.Pronoun.Status) {
+                    return Settings.Pronoun.DickGirl;
                 } else {
                     return gender;
                 }
             case "doll":
-                if (Settings.Pronun.Status) {
-                    return Settings.Pronun.Doll
+                if (Settings.Pronoun.Status) {
+                    return Settings.Pronoun.Doll
                 } else {
                     return gender;
                 }
@@ -1159,7 +1159,7 @@
     // Misc
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
-    var Barberer = new Npc("Barberer", "Hair salon", grid * 15, grid, grid * 5, grid * 4, "RGB(133,94,66)");
+    var Barber = new Npc("Barber", "Hair salon", grid * 15, grid, grid * 5, grid * 4, "RGB(133,94,66)");
     var PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)");
     //Outlaw
     var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
@@ -1169,7 +1169,7 @@
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
     var FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
     // Shrine
-    var MounatinShrine = new Npc("MounatinShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
+    var MountainShrine = new Npc("MountainShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
 
 
 
@@ -1291,7 +1291,7 @@
     }
 
     function PrintNpcs() {
-        var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barberer", "MounatinShrine"]
+        var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine"]
         for (var e of Npcs) {
             if (needPrint.indexOf(e.Name) > -1) {
                 ctx.fillStyle = e.Color;
