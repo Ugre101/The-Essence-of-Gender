@@ -286,4 +286,6 @@ function CheckFlags() {
     if (!player.Blessings.hasOwnProperty("MalePreg")) {
         player.Blessings.MalePreg = 0;
     }
+
+    FluidsEngine();
 }

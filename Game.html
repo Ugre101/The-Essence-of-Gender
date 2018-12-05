@@ -73,7 +73,7 @@
 			<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually? (Also: vore?)</label>
 			<input type="button" id="StartAutoEssence" value="Auto TF true" />
 			<input type="button" id="VoreStart" value="Vore false" />
-			<input type="button" id="Balance" value="Balance False" />
+			<!--	<input type="button" id="Balance" value="Balance False" /> -->
 			<br><input type="button" id="startgame" value="Start game" />
 		</div>
 	</div>
@@ -96,8 +96,9 @@
 		</div>
 		<input type="button" id="HideFluids" value="Hide" />
 		<h2>Fluids</h2>
+		<input type="button" id="FluidsMode" value="A" />
 		<div id="FluidPart">
-			<div class="TwoColumn">
+			<div id="FluidContainer" class="AutoColumn">
 				<div id="CumBar">
 					<label for="FluidCum">Cum</label>
 					<div class="FullFluidBar">
@@ -108,6 +109,12 @@
 					<label for="FluidMilk">Milk</label>
 					<div class="FullFluidBar">
 						<div id="FluidMilk"></div>
+					</div>
+				</div>
+				<div id="FemcumBar">
+					<label for="FluidFemcum">Femcum</label>
+					<div class="FullFluidBar">
+						<div id=""></div>
 					</div>
 				</div>
 			</div>
@@ -347,7 +354,7 @@
 				<input type="button" id="SetPronoun" value="Change Pronouns" title="Set your preferred pronouns for different genders." />
 			</div>
 		</div>
-		<div class="ThreeColumn">
+		<div class="BigSmallBig">
 			<div>
 				<input type="button" id="Log+10" value="+10 to Event Log" title="" />
 			</div>

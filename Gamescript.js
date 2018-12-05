@@ -325,12 +325,14 @@
         }
     });
 
-    document.getElementById("Balance").addEventListener("click", function () {
-        if (Settings.EssenceAuto) {
-            Settings.BalanceParts = !Settings.BalanceParts;
-            document.getElementById("Balance").value = "Balance " + Settings.BalanceParts;
-        }
-    });
+    /**
+     *     document.getElementById("Balance").addEventListener("click", function () {
+            if (Settings.EssenceAuto) {
+                Settings.BalanceParts = !Settings.BalanceParts;
+                document.getElementById("Balance").value = "Balance " + Settings.BalanceParts;
+            }
+        });
+     */
 
     document.getElementById("startgame").addEventListener("click", function () {
         document.getElementById("page2").style.display = 'none';
@@ -1178,9 +1180,13 @@
 
 
     function Touching() {
+        if (battle === true) {
+            return;
+        }
+        var SizeMod = 0.5 + player.Height / 320;
         for (var j = 0; j < enemies.length; j++) {
-            if (sprite.x >= enemies[j].XPos && sprite.x < enemies[j].XPos + enemies[j].Size &&
-                sprite.y >= enemies[j].YPos && sprite.y < enemies[j].YPos + enemies[j].Size && battle == false) {
+            if (sprite.x + grid * SizeMod >= enemies[j].XPos && sprite.x < enemies[j].XPos + enemies[j].Size &&
+                sprite.y + grid * SizeMod >= enemies[j].YPos && sprite.y < enemies[j].YPos + enemies[j].Size) {
                 if (mousedowner) {
                     clearInterval(mFunction);
                     mousedowner = false;
@@ -1194,8 +1200,8 @@
             }
         }
         for (var n = 0; n < Npcs.length; n++) {
-            if (sprite.x >= Npcs[n].X && sprite.x < Npcs[n].X + Npcs[n].Width &&
-                sprite.y >= Npcs[n].Y && sprite.y < Npcs[n].Y + Npcs[n].Height) {
+            if (sprite.x + grid * SizeMod >= Npcs[n].X && sprite.x < Npcs[n].X + Npcs[n].Width &&
+                sprite.y + grid * SizeMod >= Npcs[n].Y && sprite.y < Npcs[n].Y + Npcs[n].Height) {
                 if (mousedowner) {
                     clearInterval(mFunction);
                     mousedowner = false;
@@ -1365,7 +1371,7 @@
                 PrintNpcs();
             }
             ctx.fillStyle = "BlueViolet";
-            var SizeMod = 0.5 + player.Height/320;
+            var SizeMod = 0.5 + player.Height / 320;
             ctx.fillRect(sprite.x, sprite.y, grid * SizeMod, grid * SizeMod);
             if (TF.Status) {
                 TfEngine();
@@ -1390,18 +1396,21 @@
 
     // Movement buttons
     document.addEventListener('keydown', function (e) {
-        var SizeMod = 0.5 + player.Height/320;
-        if ((e.which === 37 || e.which === 65) && sprite.x > grid + 1 && battle == false) {
+        if (battle === true) {
+            return;
+        }
+        var SizeMod = 0.5 + player.Height / 320;
+        if ((e.which === 37 || e.which === 65) && sprite.x - grid * SizeMod > 0) {
             sprite.x -= grid * SizeMod;
             sprite.y += 0;
-        } else if ((e.which === 39 || e.which === 68) && sprite.x < (startarea.width - 2 * grid - 1) && battle == false) {
+        } else if ((e.which === 39 || e.which === 68) && sprite.x + 2 * grid * SizeMod < startarea.width) {
             sprite.x += grid * SizeMod;
             sprite.y += 0;
         }
-        if ((e.which === 38 || e.which === 87) && sprite.y > grid + 1 && battle == false) {
+        if ((e.which === 38 || e.which === 87) && sprite.y - grid * SizeMod > 0) {
             sprite.y -= grid * SizeMod;
             sprite.x += 0;
-        } else if ((e.which === 40 || e.which === 83) && sprite.y < (startarea.height - 2 * grid - 1) && battle == false) {
+        } else if ((e.which === 40 || e.which === 83) && sprite.y + 2 * grid * SizeMod < startarea.height) {
             sprite.y += grid * SizeMod;
             sprite.x += 0;
         }
@@ -1423,16 +1432,16 @@
 */
 
     function mousedownfunc() {
-        var SizeMod = 0.5 + player.Height/320;
+        var SizeMod = 0.5 + player.Height / 320;
         var MapRect = startarea.getBoundingClientRect();
-        if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x < (startarea.width - 2 * grid)) {
+        if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x + 2 * grid * SizeMod < startarea.width) {
             sprite.x += grid * SizeMod;
-        } else if (mouseX - MapRect.left + grid / 2 < sprite.x && sprite.x > grid) {
+        } else if (mouseX - MapRect.left + grid / 2 < sprite.x && sprite.x > grid * SizeMod) {
             sprite.x -= grid * SizeMod;
         }
-        if (mouseY - MapRect.top > sprite.y + 1.5 * grid && sprite.y < (startarea.height - 2 * grid)) {
+        if (mouseY - MapRect.top > sprite.y + 1.5 * grid && sprite.y + 2 * grid * SizeMod < startarea.height) {
             sprite.y += grid * SizeMod;
-        } else if (mouseY - MapRect.top + grid / 2 < sprite.y && sprite.y > grid) {
+        } else if (mouseY - MapRect.top + grid / 2 < sprite.y && sprite.y > grid * SizeMod) {
             sprite.y -= grid * SizeMod;
         }
         Touching();
