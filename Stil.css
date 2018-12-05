@@ -79,8 +79,9 @@
    }
 
    #EventLog>input[type=button] {
-       width: 25%;
+       width: auto;
        left: 0;
+       padding: 0.1em;
    }
 
    #FluidPart {
@@ -189,6 +190,20 @@
        width: 100%;
    }
 
+   .AutoColumn {
+       display: grid;
+       grid-template-columns: repeat(auto-fit, minmax(1px, 1fr));
+       grid-gap: 1em;
+       align-items: center;
+   }
+
+   .OneColumn {
+       display: grid;
+       grid-template-columns: 1fr;
+       grid-gap: 1em;
+       align-items: center;
+   }
+
    .TwoColumn {
        display: grid;
        grid-template-columns: 1fr 1fr;
@@ -197,6 +212,13 @@
    }
 
    .ThreeColumn {
+       display: grid;
+       grid-template-columns: 1fr 1fr 1fr;
+       grid-gap: 0.1em;
+       align-items: center;
+   }
+
+   .BigSmallBig {
        display: grid;
        grid-template-columns: 1fr 0.1fr 1fr;
        grid-gap: 0.1em;
@@ -508,7 +530,7 @@
            "b c c d"
            "e e e e";
        grid-template-columns: repeat(4, 1fr);
-       grid-template-rows: 1fr 1fr;
+       grid-template-rows: 60% 40%;
        grid-gap: 1em 0;
        width: 90%;
        height: 80%;

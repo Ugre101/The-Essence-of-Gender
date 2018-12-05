@@ -43,7 +43,9 @@ function EncounterHarpy() {
 }
 
 function EncounterAnthroDragon() {
-    var OP = new enemy("Young", "Dragon");
+    var OP = new enemy("Young", "Dragon", RandomInt(30,50), RandomInt(20, 50), RandomInt(25, 50), RandomInt(10, 30),
+    RandomInt(20, 60), RandomInt(20, 70),8000, 8000, RandomInt(100, 400), RandomInt(100, 300),
+    "Red", grid, RandomInt(160, 220));
     EssenceGiver(OP, 1500);
     FatMuscle(OP, 12, 80);
     StandardEnemy(OP);

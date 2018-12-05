@@ -1,10 +1,11 @@
 document.getElementById("Blessings").addEventListener("click", function () {
-    if (document.getElementById("BlessingsMenu").style.display === 'block') {
-        document.getElementById("BlessingsMenu").style.display = 'none';
+    var BlessingsMenu = document.getElementById("BlessingsMenu");
+    if (BlessingsMenu.style.display === 'block') {
+        BlessingsMenu.style.display = 'none';
     } else {
         var PregPoints = Flags.Impregnations + Flags.Pregnations;
         document.getElementById("BlessingsPoints").innerHTML = PregPoints + " Faith";
-        document.getElementById("BlessingsMenu").style.display = 'block';
+        BlessingsMenu.style.display = 'block';
         var Incubator = document.getElementById("Incubator");
         Incubator.value = "Incubator: " + FertFaithCost("Incubator");
         Incubator.addEventListener("click", function () {
@@ -73,6 +74,7 @@ document.getElementById("ShrineQuests").addEventListener("click", function () {
         document.getElementById("ShrineQuestsMenu").style.display = 'block';
         document.getElementById("Blessings").style.display = 'none';
         document.getElementById("LeaveMountainShrine").style.display = 'none';
+        document.getElementById("BlessingsMenu").style.display = 'none';
         document.getElementById("ShrineQuests").value = "Leave quests";
         PregQuests();
     }

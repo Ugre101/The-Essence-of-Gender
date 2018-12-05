@@ -14,7 +14,7 @@ function PregnanyEngine() {
     if (player.Pregnant.Babies.length > 0) {
         for (var e = 0; e < player.Pregnant.Babies.length; e++) {
             player.Pregnant.Babies[e].BabyAge++;
-            if (player.Pregnant.Babies[e].BabyAge > 274) {
+            if (player.Pregnant.Babies[e].BabyAge > Math.max(2, 274 - player.Blessings.Incubator * 5)) {
                 if (player.hasOwnProperty("Children")) {
                     var Child = {
                         AgeCounter: 0,
@@ -46,7 +46,7 @@ function PregnanyEngine() {
         if (e.hasOwnProperty("Pregnant")) {
             if (e.Pregnant.Status) {
                 e.Pregnant.Baby++;
-                if (e.Pregnant.Baby > 274) {
+                if (e.Pregnant.Baby > Math.max(2, 274 - player.Blessings.IncubatorSeed * 5)) {
                     if (Array.isArray(e.Children)) {
                         var Child = {
                             AgeCounter: 0,

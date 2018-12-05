@@ -1,4 +1,5 @@
 function FluidsEngine() {
+    document.getElementById("FemcumBar").style.display = 'none';
     if (player.Balls.length > 0) {
         for (var b = 0; b < player.Balls.length; b++) {
             player.Balls[b].CumMax = 1 / 3 * Math.PI * Math.pow(player.Balls[b].Size, 3),
