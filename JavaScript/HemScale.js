@@ -1,6 +1,6 @@
     // Makes sure map scales correctly when user change screen size.
     function HemScale() {
-        if (window.innerHeight < 600) {
+        if (window.innerHeight < 500) {
             document.getElementById("FirstButtons").style.display = 'none';
             document.getElementById("SecondButtons").style.display = 'none';
             document.getElementById("MoreButtons").style.display = 'inline-block';
