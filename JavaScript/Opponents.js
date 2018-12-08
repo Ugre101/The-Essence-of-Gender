@@ -64,7 +64,7 @@ function EvilNameGiver(who) {
 }
 
 // Functions made to make it easier to make new enemies.
-function EssenceGiver(who, amount, Genderlock = false) {
+function EssenceGiver(who, amount, GenderPref = 0, Genderlock = false) {
     if (Genderlock) {
         if (Genderlock == "male") {
             who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
@@ -88,6 +88,9 @@ function EssenceGiver(who, amount, Genderlock = false) {
         }
     } else {
         var a = RandomInt(1, 13);
+        a += GenderPref;
+        /** Negative Genderpref gives more males and postive more girls. 
+               e.g. -5 makes it's so only males to herm can spawn */
         if (a < 4) {
             who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
             who.Femi = 0;
@@ -96,14 +99,20 @@ function EssenceGiver(who, amount, Genderlock = false) {
             who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
             who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
             // it's a cuntboy, might add a penalty to allow more cuntboy and dickgirls
+            who.OrganMod = {};
+            who.OrganMod.DickSize = -5;
+            who.OrganMod.BoobSize = -5;
+            who.OrganMod.BallsSize = -5;
         } else if (a < 9) {
-            who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
-            who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
-        } else if (a < 11) {
             who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
             who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
             // it's a dickgirl
-        } else if (a < 14) {
+            who.OrganMod = {};
+            who.OrganMod.PussySize = -5;
+        } else if (a < 11) {
+            who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
+            who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
+        } else {
             who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
             who.Masc = 0;
             // it's a girl
@@ -273,7 +282,7 @@ function EncounterForest() {
     var OP = new enemy("Forest", RandomString(RacesForest), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13),
         RandomInt(6, 13), RandomInt(8, 18), 150, 150, RandomInt(25, 40), RandomInt(25, 45),
         'darkgreen', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 300);
+    EssenceGiver(OP, 300, 5);
     FatMuscle(OP, 11, 50);
     StandardEnemy(OP);
     NameGiver(OP);
@@ -285,7 +294,7 @@ function EncounterForest2() {
     var OP = new enemy("Forest", RandomString(RacesForest2), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13),
         RandomInt(6, 13), RandomInt(8, 18), 150, 150, RandomInt(25, 40), RandomInt(25, 45),
         'darkgreen', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 400);
+    EssenceGiver(OP, 400, 5);
     FatMuscle(OP, 11, 50);
     StandardEnemy(OP);
     NameGiver(OP);

@@ -21,14 +21,13 @@ document.getElementById("MobileButtons").addEventListener("click", function () {
 });
 
 window.onload = function () {
-    if (window.innerHeight < 600) {
+    if (window.innerHeight < 500) {
         document.getElementById("FirstButtons").style.display = 'none';
         document.getElementById("SecondButtons").style.display = 'none';
         document.getElementById("MoreButtons").style.display = 'inline-block';
         document.getElementById("LessButtons").style.display = 'inline-block';
         document.getElementById("MobileButtons").style.display = 'inline-block';
         document.body.style.fontSize = Settings.FontSize + "em";
-        MapPercent = 0.6;
         HemScale();
     } else if (window.innerHeight < 800) {
         document.getElementById("FirstButtons").style.display = 'block';

@@ -15,6 +15,7 @@
         document.getElementById("HomeText").innerHTML = "You sleep well, restoring your health and willpower.";
     });
     document.getElementById("UpgradeHome").addEventListener("click", function () {
+        console.log(House)
         document.getElementById("HomeStart").style.display = 'none';
         document.getElementById("Upgrades").style.display = 'block';
         document.getElementById("HomeText").innerHTML = "";
@@ -66,9 +67,11 @@
             } else {
                 document.getElementById("HomeText").innerHTML = "You expand your dorm to house three more servants.(" + House.Dorm * 3 + ")";
             }
+            var DormCost = Math.round(250 * Math.pow(1.2, House.Dorm));
+            document.getElementById("BuildDorm").value = "Build dorm " + DormCost + "g";
+        } else {
+            document.getElementById("HomeText").innerHTML = "You can't afford it.";
         }
-        var DormCost = Math.round(250 * Math.pow(1.2, House.Dorm));
-        document.getElementById("BuildDorm").value = "Build dorm " + DormCost + "g";
     });
     document.getElementById("BuildGym").addEventListener("click", function () {
         var Gymcost = Math.round(200 * Math.pow(1.2, House.Gym));
@@ -82,6 +85,8 @@
             player.Gold -= Gymcost;
             Gymcost = Math.round(200 * Math.pow(1.2, House.Gym));
             document.getElementById("BuildGym").value = "Build gym " + Gymcost + "g";
+        } else {
+            document.getElementById("HomeText").innerHTML = "You can't afford it.";
         }
     });
     document.getElementById("BuildKitchen").addEventListener("click", function () {
@@ -94,9 +99,11 @@
             }
             House.Kitchen++;
             player.Gold -= Kitchencost;
+            var Kitchencost = Math.round(200 * Math.pow(1.2, House.Kitchen));
+            document.getElementById("BuildKitchen").value = "Build kitchen " + Kitchencost + "g";
+        } else {
+            document.getElementById("HomeText").innerHTML = "You can't afford it.";
         }
-        var Kitchencost = Math.round(200 * Math.pow(1.2, House.Kitchen));
-        document.getElementById("BuildKitchen").value = "Build kitchen " + Kitchencost + "g";
     });
     document.getElementById("BuildPortal").addEventListener("click", function () {
         if (player.Gold >= 1000 && !House.Portal.Owned) {
@@ -120,9 +127,11 @@
             }
             House.Brothel++;
             document.getElementById("Brothel").style.display = 'inline-block';
+            Brothelcost = Math.round(500 * Math.pow(1.2, House.Brothel));
+            document.getElementById("BuildBrothel").value = "Upgrade brothel " + Brothelcost + "g";
+        } else {
+            document.getElementById("HomeText").innerHTML = "You can't afford it.";
         }
-        Brothelcost = Math.round(500 * Math.pow(1.2, House.Brothel));
-        document.getElementById("BuildBrothel").value = "Upgrade brothel " + Brothelcost + "g";
     });
     document.getElementById("BuildNursery").addEventListener("click", function () {
         var Nurserycost = Math.round(200 * Math.pow(1.2, House.Nursery));
@@ -134,10 +143,11 @@
                 document.getElementById("HomeText").innerHTML = "You upgrade your nursery.";
             }
             House.Nursery++;
+            var Nurserycost = Math.round(200 * Math.pow(1.2, House.Nursery));
+            document.getElementById("BuildNursery").value = "Upgrade nursery " + Nurserycost + "g";
+        } else {
+            document.getElementById("HomeText").innerHTML = "You can't afford it.";
         }
-        var Nurserycost = Math.round(200 * Math.pow(1.2, House.Nursery));
-        document.getElementById("BuildNursery").value = "Upgrade nursery " + Nurserycost + "g";
-
     })
     document.getElementById("LeaveUpgradeHome").addEventListener("click", function () {
         document.getElementById("Upgrades").style.display = 'none';
@@ -174,10 +184,9 @@
                     LeaveHome();
                     break
                 case "Lumindera":
-                    return;
-                    player.Area = "Lumindera";
+                    /**                    player.Area = "Lumindera";
                     player.Map = "nice";
-                    LeaveHome();
+                    LeaveHome(); */
                     break;
                 default:
                     break;
