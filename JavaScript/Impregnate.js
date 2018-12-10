@@ -1,76 +1,121 @@
+function Twins(who, by) {
+    // The +1 gives a 1% or less chance for non blessed to birth twins 
+    var Twins = 1 + player.Blessings.Broodmother * 1;
+    console.log(Twins);
+    switch (who.Race) {
+        case "":
+            Twins += 5;
+            break;
+        default:
+            break;
+    }
+    switch (who.SecondRace) {
+        case "":
+            Twins += 5;
+            break;
+        default:
+            break;
+    }
+    switch (by.Race) {
+        case "":
+            Twins += 5;
+            break;
+        default:
+            break;
+    }
+    switch (by.SecondRace) {
+        case "":
+            Twins += 5;
+            break;
+        default:
+            break;
+    }
+    // Some races will have higher chance
+    var NoTwins = RandomInt(0, 100);
+    if (NoTwins < Twins * 2) {
+        return 3;
+    } else if (NoTwins < Twins) {
+        return 2;
+    } else {
+        return 1;
+    }
+}
+
 function BabyMaker(who, by) {
     who.Pregnant.Status = true;
-    var Extras = player.Blessings.BroodmotherSeed * 1;
     Flags.Impregnations++;
-    if (!Array.isArray(who.Pregnant.Children)) {
-        who.Pregnant.Children = [];
+    if (!Array.isArray(who.Pregnant.Babies)) {
+        who.Pregnant.Babies = [];
     }
-    if (player.Quests.some(e => e.Name === "Impregnate maidens") && who.Name === "Pure maiden") {
+    if (player.Quests.some(e => e.Name === "Impregnate maidens") && who.Name == "Maiden") {
         var i = player.Quests.findIndex(e => e.Name == "Impregnate maidens");
         player.Quests[i].Count++;
         player.Quests[i].Completed = true;
-
-        var Baby = {
-            BabyAge: 0,
-            BabyRace: "Maiden",
-            Father: by.Name + " " + by.LastName,
-            Mother: who.FirstName + " " + who.LastName
+        who.Name = "Priestess";
+        var x = Twins(who, by);
+        for (var e = 0; e < x; e++) {
+            var Baby = {
+                BabyAge: 0,
+                BabyRace: player.Race,
+                Father: by.Name + " " + by.LastName,
+                Mother: who.FirstName + " " + who.LastName
+            }
+            who.Pregnant.Babies.push(Baby);
         }
-        console.log(who.Pregnant.Children)
     } else {
-        var Father = RandomInt(1, 4);
-        if (Father > 2) {
-            Father = by;
-        } else {
-            Father = who;
-        }
-        var Baby = {
-            BabyAge: 0,
-            BabyRace: Father.Race,
-            Father: by.Name + " " + by.LastName,
-            Mother: who.FirstName + " " + who.LastName
+        var x = Twins(who, by);
+        for (var e = 0; e < x; e++) {
+            var Father = RandomInt(1, 4);
+            if (Father > 2) {
+                Father = by;
+            } else {
+                Father = who;
+            }
+            var Baby = {
+                BabyAge: 0,
+                BabyRace: Father.Race,
+                Father: by.Name + " " + by.LastName,
+                Mother: who.FirstName + " " + who.LastName
+            }
+            who.Pregnant.Babies.push(Baby);
         }
     }
-    who.Pregnant.Children.push(Baby);
-
 }
 
-function playerBabyMaker(who, by) {
+function playerBabyMaker(by) {
+    Flags.Pregnations++;
+    player.Pregnant.Status = true;
     if (player.Quests.some(e => e.Name === "Get Impregnated")) {
         var i = player.Quests.findIndex(e => e.Name == "Get Impregnated");
-        var Father = RandomInt(1, 4);
-        var Extras = 1 + player.Blessings.Broodmother * 1; // The +1 gives a 1% or less chance for non blessed to birth twins 
-        if (Father > 2) {
-            Father = by;
-        } else {
-            Father = who;
+        player.Quests[i].Completed = true;
+        var x = Twins(player, by);
+        for (var e = 0; e < x; e++) {
+            var Baby = {
+                BabyAge: 0,
+                BabyRace: who.Race,
+                Father: by.FirstName + " " + by.LastName,
+                Mother: player.Name + " " + player.LastName
+            }
+            player.Pregnant.Babies.push(Baby);
+            player.Quests[i].Count++;
         }
-        var Baby = {
-            BabyAge: 0,
-            BabyRace: Father.Race,
-            Father: by.FirstName + " " + by.LastName,
-            Mother: who.Name + " " + who.LastName
-        }
-        who.Pregnant.Status = true;
-        player.Pregnant.Babies.push(Baby);
-        Flags.Pregnations++;
     } else {
-        var Father = RandomInt(1, 4);
-        var Extras = 1 + player.Blessings.Broodmother * 1; // The +1 gives a 1% or less chance for non blessed to birth twins 
-        if (Father > 2) {
-            Father = by;
-        } else {
-            Father = who;
+        var x = Twins(player, by);
+        for (var e = 0; e < x; e++) {
+            var Father = RandomInt(1, 4);
+            if (Father > 2) {
+                Father = by;
+            } else {
+                Father = player;
+            }
+            var Baby = {
+                BabyAge: 0,
+                BabyRace: Father.Race,
+                Father: by.FirstName + " " + by.LastName,
+                Mother: player.Name + " " + player.LastName
+            }
+            player.Pregnant.Babies.push(Baby);
         }
-        var Baby = {
-            BabyAge: 0,
-            BabyRace: Father.Race,
-            Father: by.FirstName + " " + by.LastName,
-            Mother: who.Name + " " + who.LastName
-        }
-        who.Pregnant.Status = true;
-        player.Pregnant.Babies.push(Baby);
-        Flags.Pregnations++;
     }
 }
 
@@ -126,13 +171,13 @@ function Impregnate(who, by, mode = "A", where = "") {
             case "cuntboy":
             case "female":
                 if (who.Fertility >= Impregnation) {
-                    playerBabyMaker(who, by);
+                    playerBabyMaker(by);
                     document.getElementById(where + "SexText").innerHTML = "You have been impregnated!"
                 }
                 break;
             case "hermaphrodite":
                 if (who.Fertility >= Impregnation) {
-                    playerBabyMaker(who, by);
+                    playerBabyMaker(by);
                     document.getElementById(where + "SexText").innerHTML = "You have been impregnated!"
                 }
                 break;
@@ -140,7 +185,7 @@ function Impregnate(who, by, mode = "A", where = "") {
             case "male":
                 if (false) { //Need to make a way to enable make impreg (item/blessing/curse)
                     if (who.Fertility - 50 >= Impregnation) {
-                        playerBabyMaker(who, by);
+                        playerBabyMaker(by);
                         document.getElementById(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
                     }
                 }
@@ -148,7 +193,7 @@ function Impregnate(who, by, mode = "A", where = "") {
             default:
                 if (false) {
                     if (who.Fertility - 50 >= Impregnation) {
-                        playerBabyMaker(who, by);
+                        playerBabyMaker(by);
                         document.getElementById(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
                     }
                 }

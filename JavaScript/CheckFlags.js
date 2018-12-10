@@ -269,22 +269,25 @@ function CheckFlags() {
     }
 
     if (!player.hasOwnProperty("Blessings")) {
+        player.Blessings.MountainShrine = {
+            Points: 0,
+            Incubator: 0,
+            IncubatorSeed: 0,
+            Broodmother: 0,
+            BroodmotherSeed: 0,
+            MalePreg: 0
+        }
+    }
+    if (!player.Blessings.hasOwnProperty("MountainShrine")) {
         player.Blessings = {};
-    }
-    if (!player.Blessings.hasOwnProperty("Incubator")) {
-        player.Blessings.Incubator = 0;
-    }
-    if (!player.Blessings.hasOwnProperty("IncubatorSeed")) {
-        player.Blessings.IncubatorSeed = 0;
-    }
-    if (!player.Blessings.hasOwnProperty("Broodmother")) {
-        player.Blessings.Broodmother = 0;
-    }
-    if (!player.Blessings.hasOwnProperty("BroodmotherSeed")) {
-        player.Blessings.BroodmotherSeed = 0;
-    }
-    if (!player.Blessings.hasOwnProperty("MalePreg")) {
-        player.Blessings.MalePreg = 0;
+        player.Blessings.MountainShrine = {
+            Points: 0,
+            Incubator: 0,
+            IncubatorSeed: 0,
+            Broodmother: 0,
+            BroodmotherSeed: 0,
+            MalePreg: 0
+        }
     }
 
     FluidsEngine();
