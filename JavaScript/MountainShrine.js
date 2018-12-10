@@ -1,33 +1,42 @@
+function ShowBlessings() {
+    var PregPoints = Flags.Impregnations + Flags.Pregnations * 5 + player.Blessings.MountainShrine.Points;
+    document.getElementById("BlessingsPoints").innerHTML = PregPoints + " Faith";
+    BlessingsMenu.style.display = 'block';
+    var Incubator = document.getElementById("Incubator");
+    Incubator.value = "Incubator: " + FertFaithCost("Incubator");
+    var IncubatorSeed = document.getElementById("IncubatorSeed");
+    IncubatorSeed.value = "IncubatorSeed: " + FertFaithCost("IncubatorSeed");
+    var Broodmother = document.getElementById("Broodmother");
+    Broodmother.value = "Broodmother: " + FertFaithCost("Broodmother");
+    var BroodmotherSeed = document.getElementById("BroodmotherSeed");
+    BroodmotherSeed.value = "BroodmotherSeed: " + FertFaithCost("BroodmotherSeed");
+    var MalePreg = document.getElementById("MalePreg");
+    MalePreg.value = "MalePreg: " + FertFaithCost("MalePreg");
+}
+
 document.getElementById("Blessings").addEventListener("click", function () {
     var BlessingsMenu = document.getElementById("BlessingsMenu");
     if (BlessingsMenu.style.display === 'block') {
         BlessingsMenu.style.display = 'none';
     } else {
-        var PregPoints = Flags.Impregnations + Flags.Pregnations;
-        document.getElementById("BlessingsPoints").innerHTML = PregPoints + " Faith";
-        BlessingsMenu.style.display = 'block';
+        ShowBlessings();
         var Incubator = document.getElementById("Incubator");
-        Incubator.value = "Incubator: " + FertFaithCost("Incubator");
         Incubator.addEventListener("click", function () {
             BlessingHandler("Incubator");
         });
         var IncubatorSeed = document.getElementById("IncubatorSeed");
-        IncubatorSeed.value = "IncubatorSeed: " + FertFaithCost("IncubatorSeed");
         IncubatorSeed.addEventListener("click", function () {
             BlessingHandler("IncubatorSeed")
         });
         var Broodmother = document.getElementById("Broodmother");
-        Broodmother.value = "Broodmother: " + FertFaithCost("Broodmother");
         Broodmother.addEventListener("click", function () {
             BlessingHandler("Broodmother");
         });
         var BroodmotherSeed = document.getElementById("BroodmotherSeed");
-        BroodmotherSeed.value = "BroodmotherSeed: " + FertFaithCost("BroodmotherSeed");
         BroodmotherSeed.addEventListener("click", function () {
             BlessingHandler("BroodmotherSeed");
         });
         var MalePreg = document.getElementById("MalePreg");
-        MalePreg.value = "MalePreg: " + FertFaithCost("MalePreg");
         MalePreg.addEventListener("click", function () {
             BlessingHandler("MalePreg");
         });
@@ -37,33 +46,31 @@ document.getElementById("Blessings").addEventListener("click", function () {
 function FertFaithCost(Blessing) {
     switch (Blessing) {
         case "Incubator":
-            return player.Blessings.Incubator + 1;
+            return player.Blessings.MountainShrine.Incubator + 1;
         case "IncubatorSeed":
-            return player.Blessings.IncubatorSeed + 1;
+            return player.Blessings.MountainShrine.IncubatorSeed + 1;
         case "Broodmother":
-            return player.Blessings.Broodmother + 1;
+            return player.Blessings.MountainShrine.Broodmother * 2 + 2;
         case "BroodmotherSeed":
-            return player.Blessings.BroodmotherSeed + 1;
+            return player.Blessings.MountainShrine.BroodmotherSeed * 2 + 2;
         case "MalePreg":
-            return player.Blessings.MalePreg + 1;
-
+            return player.Blessings.MountainShrine.MalePreg * 5;
     }
 }
 
 function BlessingHandler(what) {
-    var PregPoints = Flags.Impregnations + Flags.Pregnations;
+    var PregPoints = Flags.Impregnations + Flags.Pregnations * 5 + player.Blessings.MountainShrine.Points;
     if (PregPoints > FertFaithCost(what)) {
-        player.Blessings[what]++;
+        player.Blessings.MountainShrine[what]++;
+        document.getElementById("MountainShrineText").innerHTML = "May your children be strong.";
+        ShowBlessings();
     } else {
         // not enough
-        console.log(what + " " + player.Blessings[what])
+        document.getElementById("MountainShrineText").innerHTML = "Sorry, you have not served our goddess enough to deserve that."
     }
 }
 
 document.getElementById("ShrineQuests").addEventListener("click", function () {
-    if (!Flags.hasOwnProperty("FertilityPoints")) {
-        Flags.FertilityPoints = 0;
-    }
     if (document.getElementById("ShrineQuestsMenu").style.display === 'block') {
         document.getElementById("ShrineQuestsMenu").style.display = 'none';
         document.getElementById("Blessings").style.display = 'inline-block';
@@ -81,12 +88,14 @@ document.getElementById("ShrineQuests").addEventListener("click", function () {
 });
 document.getElementById("ShrineQuestsMenu").addEventListener("mouseover", function (e) {
     document.getElementById("MountainShrineText").innerHTML = e.target.title;
-})
+});
+document.getElementById("BlessingsMenu").addEventListener("mouseover", function (e) {
+    document.getElementById("MountainShrineText").innerHTML = e.target.title;
+});
 
 // Test of new way to add quests, in order to avoid public vars.
 function PregQuests() {
     var x = document.getElementById("ShrineQuestsMenu");
-    console.log(x.hasChildNodes())
     while (x.hasChildNodes()) {
         x.removeChild(x.firstChild);
     }

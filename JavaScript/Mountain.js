@@ -5,7 +5,7 @@
 // "Pure" Maiden
 function EncounterMaiden() {
     var MountainHalfRaces = ["human", "elf"] //
-    var OP = new enemy("Pure maiden", RandomString(MountainHalfRaces), RandomInt(1, 10), RandomInt(1, 10), RandomInt(20, 50), RandomInt(0, 5),
+    var OP = new enemy("Maiden", RandomString(MountainHalfRaces), RandomInt(1, 10), RandomInt(1, 10), RandomInt(20, 50), RandomInt(0, 5),
         RandomInt(5, 20), RandomInt(0, 5), 1500, 2000, RandomInt(50, 250), RandomInt(30, 100),
         "Pink", grid, RandomInt(150, 170));
     EssenceGiver(OP, 1500, "female");
@@ -15,7 +15,10 @@ function EncounterMaiden() {
     return OP;
     /* Strong virgins, they are not virgin by choice it's their culture to not offer themself to anyone weaker
     which have made them very strong over generation but there is a lot of desire to be dominated.
-    After beating them change their title to depraved or something.*/
+    After beating them change their title to depraved or something.
+    update: I think I prefer to say they are pure after thay have had say, feels odd to say they are 
+    not pure by having sex when their religion is based on sex & breeding.
+    */
 
 }
 
@@ -43,9 +46,9 @@ function EncounterHarpy() {
 }
 
 function EncounterAnthroDragon() {
-    var OP = new enemy("Young", "Dragon", RandomInt(30,50), RandomInt(20, 50), RandomInt(25, 50), RandomInt(10, 30),
-    RandomInt(20, 60), RandomInt(20, 70),8000, 8000, RandomInt(100, 400), RandomInt(100, 300),
-    "Red", grid, RandomInt(160, 220));
+    var OP = new enemy("Young", "Dragon", RandomInt(30, 50), RandomInt(20, 50), RandomInt(25, 50), RandomInt(10, 30),
+        RandomInt(20, 60), RandomInt(20, 70), 8000, 8000, RandomInt(100, 400), RandomInt(100, 300),
+        "Red", grid, RandomInt(160, 220));
     EssenceGiver(OP, 1500);
     FatMuscle(OP, 12, 80);
     StandardEnemy(OP);

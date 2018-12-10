@@ -201,21 +201,18 @@
        display: grid;
        grid-template-columns: 1fr;
        grid-gap: 1em;
-       align-items: center;
    }
 
    .TwoColumn {
        display: grid;
        grid-template-columns: 1fr 1fr;
        grid-gap: 1em;
-       align-items: center;
    }
 
    .ThreeColumn {
        display: grid;
        grid-template-columns: 1fr 1fr 1fr;
        grid-gap: 0.1em;
-       align-items: center;
    }
 
    .BigSmallBig {

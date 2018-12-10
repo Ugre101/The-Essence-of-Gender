@@ -37,7 +37,7 @@
     });
     document.getElementById("UpgradeBed").addEventListener("click", function () {
         var BedCost = Math.round(50 * Math.pow(1.2, House.BedLevel));
-        if (player.Gold > BedCost) {
+        if (player.Gold >= BedCost) {
             House.BedLevel++;
             player.Gold -= BedCost;
             var BedCost = Math.round(50 * Math.pow(1.2, House.BedLevel));
@@ -56,7 +56,7 @@
     });
     document.getElementById("BuildDorm").addEventListener("click", function () {
         var DormCost = Math.round(250 * Math.pow(1.2, House.Dorm));
-        if (player.Gold > DormCost) {
+        if (player.Gold >= DormCost) {
             House.Dorm++;
             player.Gold -= DormCost;
             if (House.Dorm < 2) {
@@ -75,7 +75,7 @@
     });
     document.getElementById("BuildGym").addEventListener("click", function () {
         var Gymcost = Math.round(200 * Math.pow(1.2, House.Gym));
-        if (player.Gold > Gymcost) {
+        if (player.Gold >= Gymcost) {
             if (House.Gym < 1) {
                 document.getElementById("HomeText").innerHTML = "You built a gym for your servants, they can now go there in order to burn fat and build muscle.";
             } else {
@@ -91,7 +91,7 @@
     });
     document.getElementById("BuildKitchen").addEventListener("click", function () {
         var Kitchencost = Math.round(200 * Math.pow(1.2, House.Kitchen));
-        if (player.Gold > Kitchencost) {
+        if (player.Gold >= Kitchencost) {
             if (House.Kitchen < 1) {
                 document.getElementById("HomeText").innerHTML = "You have built a kitchen where your servant can go and eat. Be aware that if you don't build a gym they will get fat, unless that's what you are into to."
             } else {

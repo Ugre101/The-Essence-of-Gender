@@ -6,9 +6,6 @@
         Will: 10,
         End: 10,
         SexSkill: 10,
-        printStats: "",
-        printPerks: "",
-        printVore: "",
         Orgasm: 0,
         Arousal: 0,
         Gold: 0,
@@ -16,6 +13,12 @@
         level: 1,
         SkillPoints: 0,
         PerkPoints: 0,
+        RaceEssence: [
+            Human = {
+                Type: "Human",
+                Count: 100
+            }
+        ],
         Race: "human",
         SecondRace: "human",
         isTaur: "false", // Testing
@@ -149,11 +152,14 @@
             FireballMax: 0
         },
         Blessings: {
-            Incubator: 0,
-            IncubatorSeed: 0,
-            Broodmother: 0,
-            BroodmotherSeed: 0,
-            Malepreg: 0
+            MountainShrine: {
+                Points: 0,
+                Incubator: 0,
+                IncubatorSeed: 0,
+                Broodmother: 0,
+                BroodmotherSeed: 0,
+                Malepreg: 0
+            }
         }
     };
 
@@ -579,13 +585,30 @@
     });
 
     document.getElementById("Perks").addEventListener("click", function () {
-        printS();
+        // Moved everything to the button to clean up the player var.
         DisplayNone();
         document.getElementById("Levels").style.display = 'block';
-        document.getElementById("StatLevels").innerHTML = player.printStats;
-        document.getElementById("PerkLevels").innerHTML = player.printPerks;
+        var printStats = "<h3>Stats:</h3><br> Str: " + player.Str + "<br>End: " + player.End + "<br>Will: " +
+            player.Will + "<br>Charm: " + player.Charm + "<br>Int: " + player.Int + "<br>Skill: " + player.SexSkill + "<br>";
+        document.getElementById("StatLevels").innerHTML = printStats;
+
+        var printPerks = "<h3>Perks:</h3><br>";
+        for (var i = 0; i < Object.keys(player.Perks).length; i++) {
+            if (player.Perks[Object.keys(player.Perks)[i]].Count > 0) {
+                printPerks += Object.keys(player.Perks)[i] + ": " + player.Perks[Object.keys(player.Perks)[i]].Count + "<br>";
+            }
+        }
+        document.getElementById("PerkLevels").innerHTML = printPerks;
+
         if (Settings.Vore) {
-            document.getElementById("VLevels").innerHTML = player.printVore;
+            var printVore = "<h3>Vore:</h3><br>";
+            var v = player.Vore.VorePerks;
+            if (Object.keys(v).length > 0) {
+                for (var i = 0; i < Object.keys(v).length; i++) {
+                    printVore += Object.keys(v)[i] + ": " + v[Object.keys(v)[i]].Count + "<br>";
+                }
+            }
+            document.getElementById("VLevels").innerHTML = printVore;
         } else
             document.getElementById("VLevels").innerHTML = "";
     });
@@ -1497,22 +1520,3 @@
             }
         }
     });
-
-    function printS() {
-        player.printStats = "Str: " + player.Str + "<br>End: " + player.End + "<br>Will: " + player.Will + "<br>Charm: " + player.Charm + "<br>Int: " + player.Int + "<br>Skill: " + player.SexSkill + "<br>";
-        player.printPerks = "";
-        for (var i = 0; i < Object.keys(player.Perks).length; i++) {
-            if (player.Perks[Object.keys(player.Perks)[i]].Count > 0) {
-                player.printPerks += Object.keys(player.Perks)[i] + ": " + player.Perks[Object.keys(player.Perks)[i]].Count + "<br>";
-            }
-        }
-        if (Settings.Vore) {
-            player.printVore = "";
-            var v = player.Vore.VorePerks;
-            if (Object.keys(v).length > 0) {
-                for (var i = 0; i < Object.keys(v).length; i++) {
-                    player.printVore += Object.keys(v)[i] + ": " + v[Object.keys(v)[i]].Count + "<br>";
-                }
-            }
-        }
-    }

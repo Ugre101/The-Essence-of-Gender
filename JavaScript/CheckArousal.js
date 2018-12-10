@@ -1,13 +1,9 @@
 function CheckArousal() {
     var ee = enemies[EnemyIndex];
-    var ImpregActions = ["DoggyStyle", "DoggyStyleAnal", "Missionary", "DualPen", "MultiPen"];
     if (ee.Arousal >= 100) {
         ee.Orgasm++;
         ee.SessionOrgasm++;
         ee.Arousal = 0;
-        if (ee.Name === "Pure maiden") {
-            ee.Name = "Depraved"
-        }
         if (LastPressed == "RideCowgirl" && !player.Pregnant.Status) {
             Impregnate(player, ee, "B", "");
         }
@@ -48,8 +44,21 @@ function CheckArousal() {
                 break;
         }
         EssenceCheck(ee);
-
+        var ImpregActions = ["DoggyStyle", "Missionary", "DualPen", "MultiPen"];
+        var AnalImpregActions = ["DoggyStyleAnal"]
         if (ImpregActions.indexOf(LastPressed) != -1) {
+            if (!ee.hasOwnProperty("Pregnant")) {
+                ee.Pregnant = {}
+                ee.Pregnant.Status = false;
+            } else if (!ee.Pregnant.Status) {
+                for (var b = 0; b < player.Balls.length; b++) {
+                    if (player.Balls[b].Cum > 10) {
+                        Impregnate(ee, player, "A", "");
+                        player.Balls[b].Cum -= 10;
+                    }
+                }
+            }
+        } else if (AnalImpregActions.indexOf(LastPressed) != -1 && player.Blessings.MountainShrine.Malepreg > 0) {
             if (!ee.hasOwnProperty("Pregnant")) {
                 ee.Pregnant = {}
                 ee.Pregnant.Status = false;
@@ -156,7 +165,6 @@ function CheckArousal() {
     }
 
 
-    var PlayerMaxOrgasm = Math.round(player.End / 8);
     BaseSexAttack = Math.round((RandomInt(4, 7) * player.SexSkill) / 2);
     BaseESexAttack = Math.round((RandomInt(4, 7) * enemies[EnemyIndex].SexSkill) / 2);
     SexAttack = Math.min(RandomInt(45, 77), BaseSexAttack * (BaseSexAttack / BaseESexAttack));
@@ -208,6 +216,7 @@ function CheckArousal() {
     }
     SexColor(player, "Player");
     SexColor(ee, "Enemy");
+    var PlayerMaxOrgasm = Math.round(player.End / 8);
     if (PlayerMaxOrgasm <= player.Orgasm) {
         document.getElementById("EnemyVagina").style.display = 'none';
         document.getElementById("EnemyDick").style.display = 'none';
