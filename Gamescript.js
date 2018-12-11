@@ -15,52 +15,30 @@
         PerkPoints: 0,
         RaceEssence: [
             Human = {
-                Type: "Human",
-                Count: 100
+                Race: "Human",
+                amount: 100
             }
         ],
         Race: "human",
         SecondRace: "human",
         isTaur: "false", // Testing
-        raceBonus: [{
-                type: "Height",
-                amount: 1
+        OrganMod: {
+            Dick: {
+                Size: 0
             },
-            {
-                type: "Weight",
-                amount: 1
+            Boobies: {
+                Size: 0
             },
-            {
-                type: "Size",
-                amount: 1
+            Balls: {
+                Size: 0
             },
-            {
-                type: "Str",
-                amount: 0
+            Pussy: {
+                Size: 0
             },
-            {
-                type: "Int",
-                amount: 0
-            },
-            {
-                type: "Charm",
-                amount: 0
-            },
-            {
-                type: "SexSkill",
-                amount: 0
-            },
-            {
-                type: "Will",
-                amount: 0
-            },
-            {
-                type: "WillHealth",
-                amount: 0
+            Anal: {
+                Size: 0
             }
-        ],
-        ForcedMale: false,
-        ForcedFemale: false,
+        },
         Dicks: [],
         Balls: [],
         Pussies: [],
@@ -599,6 +577,15 @@
             }
         }
         document.getElementById("PerkLevels").innerHTML = printPerks;
+        var Races = "<h3>Race:</h3><br>";
+        var RaceTotal = 0;
+        for (var e = 0; e < player.RaceEssence.length; e++) {
+            RaceTotal += player.RaceEssence[e].amount;
+        }
+        for (var e = 0; e < player.RaceEssence.length; e++) {
+            Races += player.RaceEssence[e].Race + ": " + Math.round(player.RaceEssence[e].amount/RaceTotal * 100) + "%  (" + player.RaceEssence[e].amount + ")<br>"
+        }
+        document.getElementById("RaceEssences").innerHTML = Races;
 
         if (Settings.Vore) {
             var printVore = "<h3>Vore:</h3><br>";
@@ -1291,13 +1278,18 @@
 
             ctx.fillStyle = enemies[e].Color;
             ctx.fillRect(enemies[e].XPos, enemies[e].YPos, enemies[e].Size, enemies[e].Size);
+
             var color;
             switch (CheckGender(enemies[e])) {
                 case "cuntboy":
+                    color = "Black";
+                    break;
                 case "female":
-                    color = "Pink";
+                    color = "rgb(231, 84, 128)";
                     break;
                 case "dickgirl":
+                    color = "Black";
+                    break;
                 case "male":
                     color = "Blue";
                     break;
@@ -1310,6 +1302,8 @@
             }
             ctx.fillStyle = color;
             ctx.fillRect(enemies[e].XPos + enemies[e].Size / 3, enemies[e].YPos + enemies[e].Size / 3, enemies[e].Size / 3, enemies[e].Size / 3);
+            ctx.fillStyle = "Black";
+            ctx.strokeRect(enemies[e].XPos + enemies[e].Size / 3, enemies[e].YPos + enemies[e].Size / 3, enemies[e].Size / 3, enemies[e].Size / 3);
             ctx.fillStyle = Settings.TextColor;
             ctx.font = "1vh Arial";
             ctx.textAlign = "center";
@@ -1385,7 +1379,6 @@
             CurrentMap();
             if (Settings.Vore) {
                 VoreEngine();
-                CheckSplit();
             }
             if (enemies.length > 0) {
                 PrintEnemies();
@@ -1397,13 +1390,14 @@
             var SizeMod = 0.5 + player.Height / 320;
             ctx.fillRect(sprite.x, sprite.y, grid * SizeMod, grid * SizeMod);
             if (TF.Status) {
-                TfEngine();
+               // TfEngine();
             }
             Laglimiter++;
             if (Laglimiter % 80 == 0) {
                 if (Settings.EssenceAuto) {
                     EssenceCheck(player);
                 }
+                EssenceBalance();
                 // Moved more stuff inside here to boost performance
                 player.Fat = Math.max(0.1, player.Fat);
                 player.Muscle = Math.max(1, player.Muscle);

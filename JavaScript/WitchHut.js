@@ -9,7 +9,7 @@ document.getElementById("ElfTF").addEventListener("click", function () {
     }
     if (player.Gold >= 200) {
         player.Gold -= 200;
-        TfEngine("elf");
+        PotionDrunk("elf");
         document.getElementById("WitchHutText").innerHTML = "You drink the potion and get a strange feeling running through your entire body.";
     } else {
         document.getElementById("WitchHutText").innerHTML = "You can't afford the potion";
@@ -58,7 +58,7 @@ document.getElementById("HumanTF").addEventListener("click", function () {
     }
     if (player.Gold >= 250) {
         player.Gold -= 250;
-        TfEngine("human");
+        PotionDrunk("human");
         document.getElementById("WitchHutText").innerHTML = "You drink the potion and get a familiar feeling running through your entire body.";
     } else {
         document.getElementById("WitchHutText").innerHTML = "You can't afford the potion";

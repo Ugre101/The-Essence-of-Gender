@@ -765,12 +765,12 @@
             }
             if (Settings.VoreSettings.StomachDigestion) {
                 player.Vore.Stomach[e].Weight -= progress * digestionCount;
-                for (var q = 0; q < RaceAbsorb.length; q++) {
-                    if (RaceAbsorb[q].Race === player.Vore.Stomach[e].Race) {
-                        RaceAbsorb[q].amount += progress * digestionCount;
-                        //console.log(RaceAbsorb[q].Race);
+                for (var q = 0; q < player.RaceEssence.length; q++) {
+                    if (player.RaceEssence[q].Race === player.Vore.Stomach[e].Race) {
+                        player.RaceEssence[q].amount += progress * digestionCount;
+                        //console.log(player.RaceEssence[q].Race);
                         break;
-                    } else if (q + 1 == RaceAbsorb.length) {
+                    } else if (q + 1 == player.RaceEssence.length) {
                         //console.log("None??");
                     }
                 }
@@ -846,12 +846,12 @@
             }
             if (Settings.VoreSettings.VCumDigestion) {
                 player.Vore.Vagina[e].Weight -= progress * digestionCount;
-                for (var q = 0; q < RaceAbsorb.length; q++) {
-                    if (RaceAbsorb[q].Race === player.Vore.Vagina[e].Race) {
-                        RaceAbsorb[q].amount += progress * digestionCount;
-                        //console.log(RaceAbsorb[q].Race);
+                for (var q = 0; q < player.RaceEssence.length; q++) {
+                    if (player.RaceEssence[q].Race === player.Vore.Vagina[e].Race) {
+                        player.RaceEssence[q].amount += progress * digestionCount;
+                        //console.log(player.RaceEssence[q].Race);
                         break;
-                    } else if (q + 1 == RaceAbsorb.length) {
+                    } else if (q + 1 == player.RaceEssence.length) {
                         //console.log("None??");
                     }
                 }
@@ -942,12 +942,12 @@
             }
             if (Settings.VoreSettings.MilkTF) {
                 player.Vore.Breast[e].Weight -= progress * digestionCount;
-                for (var q = 0; q < RaceAbsorb.length; q++) {
-                    if (RaceAbsorb[q].Race === player.Vore.Breast[e].Race) {
-                        RaceAbsorb[q].amount += progress * digestionCount;
-                        //console.log(RaceAbsorb[q].Race);
+                for (var q = 0; q < player.RaceEssence.length; q++) {
+                    if (player.RaceEssence[q].Race === player.Vore.Breast[e].Race) {
+                        player.RaceEssence[q].amount += progress * digestionCount;
+                        //console.log(player.RaceEssence[q].Race);
                         break;
-                    } else if (q + 1 == RaceAbsorb.length) {
+                    } else if (q + 1 == player.RaceEssence.length) {
                         //console.log("None??");
                     }
                 }
@@ -1027,12 +1027,12 @@
             }
             if (Settings.VoreSettings.CumTF) {
                 player.Vore.Balls[e].Weight -= progress * digestionCount;
-                for (var q = 0; q < RaceAbsorb.length; q++) {
-                    if (RaceAbsorb[q].Race === player.Vore.Balls[e].Race) {
-                        RaceAbsorb[q].amount += progress * digestionCount;
-                        //console.log(RaceAbsorb[q].Race);
+                for (var q = 0; q < player.RaceEssence.length; q++) {
+                    if (player.RaceEssence[q].Race === player.Vore.Balls[e].Race) {
+                        player.RaceEssence[q].amount += progress * digestionCount;
+                        //console.log(player.RaceEssence[q].Race);
                         break;
-                    } else if (q + 1 == RaceAbsorb.length) {
+                    } else if (q + 1 == player.RaceEssence.length) {
                         //console.log("None??");
                     }
                 }
@@ -1112,12 +1112,12 @@
             }
             if (Settings.VoreSettings.AnalDigestion) {
                 player.Vore.Anal[e].Weight -= progress * digestionCount;
-                for (var q = 0; q < RaceAbsorb.length; q++) {
-                    if (RaceAbsorb[q].Race === player.Vore.Anal[e].Race) {
-                        RaceAbsorb[q].amount += progress * digestionCount;
-                        //console.log(RaceAbsorb[q].Race);
+                for (var q = 0; q < player.RaceEssence.length; q++) {
+                    if (player.RaceEssence[q].Race === player.Vore.Anal[e].Race) {
+                        player.RaceEssence[q].amount += progress * digestionCount;
+                        //console.log(player.RaceEssence[q].Race);
                         break;
-                    } else if (q + 1 == RaceAbsorb.length) {
+                    } else if (q + 1 == player.RaceEssence.length) {
                         //console.log("None??");
                     }
                 }

@@ -291,4 +291,68 @@ function CheckFlags() {
     }
 
     FluidsEngine();
+    if (!player.hasOwnProperty("RaceEssence")) {
+        player.RaceEssence = [
+            Human = {
+                Race: "Human",
+                amount: 100
+            },
+            Orc = {
+                Race: "Orc",
+                amount: 5
+            },
+            Fairy = {
+                Race: "Fairy",
+                amount: 0
+            }
+        ]
+        console.log("Added race essence");
+    };
+    if (!player.hasOwnProperty("OrganMod")) {
+        player.OrganMod = {
+            Dick: {
+                Size: 0
+            },
+            Boobies: {
+                Size: 0
+            },
+            Balls: {
+                Size: 0
+            },
+            Pussy: {
+                Size: 0
+            },
+            Anal: {
+                Size: 0
+            }
+        }
+    }
+    // Testing of raceEssence
+    player.RaceEssence = [
+        Human = {
+            Race: "human",
+            amount: 100
+        },
+        Orc = {
+            Race: "orc",
+            amount: 5
+        },
+        Fairy = {
+            Race: "fairy",
+            amount: 0
+        },
+        TempRace = {
+            Race: "temp",
+            amount: 9999
+        },
+        Dog = {
+            Race: "canie",
+            amount: 55
+        },
+        Car = {
+            Race: "car",
+            amount: 24
+        }
+    ]
+
 }

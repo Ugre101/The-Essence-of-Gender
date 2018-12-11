@@ -15,7 +15,6 @@ function TfEngine(Tf_to) {
             case "elf":
                 if (player.SecondRace != "elf") {
                     if (TF.Counter > 1000) {
-						PotionDrunk(TF.To);
                         player.SecondRace = "elf";
                         EventLog("Completing the transfomation you are now half elf, half " + player.Race);
                         player.Race = "elf";
@@ -27,7 +26,6 @@ function TfEngine(Tf_to) {
                     }
                 } else {
                     if (TF.Counter > 1000) {
-						PotionDrunk(TF.To);
                         EventLog("You are now an elf!");
                         player.Race = "elf";
                         TF.Status = false;
@@ -41,7 +39,6 @@ function TfEngine(Tf_to) {
             case "human":
                 if (player.SecondRace != "human") {
                     if (TF.Counter > 1000) {
-						PotionDrunk(TF.To);
                         EventLog("You are now a human!");
                         player.SecondRace = "human";
                         TF.Status = false;
@@ -52,7 +49,6 @@ function TfEngine(Tf_to) {
                     }
                 } else {
                     if (TF.Counter > 1000) {
-						PotionDrunk(TF.To);
                         EventLog("You are now a human!");
                         player.Race = "human";
                         TF.Status = false;
@@ -66,7 +62,6 @@ function TfEngine(Tf_to) {
             case "centaur":
                 if (player.SecondRace != "centaur") {
                     if (TF.Counter > 1000) {
-						PotionDrunk(TF.To);
                         EventLog("Completing the transformation, you are now a centaur with a horse's lower body and a " + player.Race + "'s upper body.");
                         player.SecondRace = "centaur";
                         TF.Status = false;
@@ -76,9 +71,9 @@ function TfEngine(Tf_to) {
                         EventLog("The changes to your lower body is so dramatic that you fall to the ground. Trying to get back up, you see your torso split, bending in half, then stretching back.")
                     } else if (TF.Counter == 400) {
                         EventLog("Where your torso split you grow a second set of legs; all four legs transform to those of a horse.");
-					}	else if (TF.Counter == 600) {
+                    } else if (TF.Counter == 600) {
                         EventLog("You feel your lower torso growing wider, soon resembling a horse's torso.");
-                    } 	else if (TF.Counter == 800) {
+                    } else if (TF.Counter == 800) {
                         EventLog("Your genitals shift around as they transform into their equine equivalent.");
                     }
                 }
@@ -86,7 +81,6 @@ function TfEngine(Tf_to) {
             case "equine":
                 if (player.SecondRace != "equine") {
                     if (TF.Counter > 1000) {
-						PotionDrunk(TF.To);
                         EventLog("Completing the transformation, you are now a satyr with an equine lower body and a " + player.Race + " upperbody.");
                         player.SecondRace = "equine";
                         TF.Status = false;
@@ -99,7 +93,6 @@ function TfEngine(Tf_to) {
                     }
                 } else {
                     if (TF.Counter > 1000) {
-						PotionDrunk(TF.To);
                         EventLog("Completing the transformation you are now a anthropomorphic equine.");
                         PlayerDay.Race = "equine";
                         TF.Status = false;
@@ -107,10 +100,10 @@ function TfEngine(Tf_to) {
                         GenitalChange("equine");
                     } else if (TF.Counter == 300) {
                         EventLog("The fur that covered your legs continues to spread upwards, soon covering your entire torso.");
-                    }else if (TF.Counter == 600) {
+                    } else if (TF.Counter == 600) {
                         EventLog("You see your face stretch out, shifting into a horse's muzzle.");
+                    }
                 }
-			}
         }
     }
 }

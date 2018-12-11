@@ -65,6 +65,23 @@ function EvilNameGiver(who) {
 
 // Functions made to make it easier to make new enemies.
 function EssenceGiver(who, amount, GenderPref = 0, Genderlock = false) {
+    who.OrganMod = {
+        Dick: {
+            Size: 0
+        },
+        Boobies: {
+            Size: 0
+        },
+        Balls: {
+            Size: 0
+        },
+        Pussy: {
+            Size: 0
+        },
+        Anal: {
+            Size: 0
+        }
+    };
     if (Genderlock) {
         if (Genderlock == "male") {
             who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
@@ -99,16 +116,15 @@ function EssenceGiver(who, amount, GenderPref = 0, Genderlock = false) {
             who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
             who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
             // it's a cuntboy, might add a penalty to allow more cuntboy and dickgirls
-            who.OrganMod = {};
-            who.OrganMod.DickSize = -5;
-            who.OrganMod.BoobSize = -5;
-            who.OrganMod.BallsSize = -5;
+            who.OrganMod.Balls.Size = -Math.round(amount / 10);
+            who.OrganMod.Boobies.Size = -Math.round(amount / 10);
+            who.OrganMod.Dick.Size = -Math.round(amount / 10);
+
         } else if (a < 9) {
             who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
             who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
             // it's a dickgirl
-            who.OrganMod = {};
-            who.OrganMod.PussySize = -5;
+            who.OrganMod.Pussy.Size = -Math.round(amount / 10);
         } else if (a < 11) {
             who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
             who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));

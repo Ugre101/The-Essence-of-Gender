@@ -38,7 +38,7 @@ const ItemDict = {
     humanity: {
         Name: "Humanity",
         Use: function (who) {
-            TfEngine("human");
+            PotionDrunk("human");
             EventLog("You try to regain your humanity...");
         },
         Equip: "No",
@@ -104,7 +104,7 @@ const ItemDict = {
     elvenHair: {
         Name: "Elven hair",
         Use: function (who) {
-            TfEngine("elf");
+            PotionDrunk("elf");
             EventLog("You try to become an elf...");
         },
         Equip: "No",
