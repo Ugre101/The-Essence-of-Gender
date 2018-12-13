@@ -307,7 +307,7 @@ function CurrentMap() {
                     PrintDoor("N");
                     Npcs = [];
                     if (enemies.length < 1) {
-
+                        enemies = [EncounterHarpy(), EncounterHarpy(), EncounterHarpy(), EncounterHarpy(), EncounterHarpy()]
                     }
                     if (Npcs.length < 1) {}
                     PrintMap()
@@ -317,7 +317,7 @@ function CurrentMap() {
                     PrintDoor("W");
                     Npcs = [];
                     if (enemies.length < 1) {
-
+                        enemies = [];
                     }
                     if (Npcs.length < 1) {}
                     PrintMap()
@@ -327,7 +327,7 @@ function CurrentMap() {
                     PrintDoor("N");
                     Npcs = [];
                     if (enemies.length < 1) {
-
+                        enemies = [EncounterDragonKind(), EncounterDragonKind(), EncounterDragonKind(), EncounterDragonKind()];
                     }
                     if (Npcs.length < 1) {}
                     PrintMap()
@@ -337,7 +337,7 @@ function CurrentMap() {
                     PrintDoor("N");
                     Npcs = [];
                     if (enemies.length < 1) {
-
+                        enemies = [EncounterDragonKind(), EncounterDragonKind(), EncounterDragonKind(), EncounterDragonKind(), EncounterAnthroDragon()];
                     }
                     if (Npcs.length < 1) {}
                     PrintMap()
@@ -347,7 +347,7 @@ function CurrentMap() {
                     PrintDoor("N");
                     Npcs = [];
                     if (enemies.length < 1) {
-
+                        enemies = [EncounterDragonKind(), EncounterAnthroDragon(), EncounterAnthroDragon()]
                     }
                     if (Npcs.length < 1) {}
                     PrintMap()
@@ -357,7 +357,7 @@ function CurrentMap() {
                     PrintDoor("N");
                     Npcs = [];
                     if (enemies.length < 1) {
-
+                        enemies = [EncounterAnthroDragon(), EncounterAnthroDragon(), EncounterAnthroDragon()];
                     }
                     if (Npcs.length < 1) {}
                     PrintMap()

@@ -168,6 +168,11 @@
             Day: 0,
             Hour: 0
         },
+        LastTrain: {
+            Day: 0,
+            Month: 0,
+            Year: 0
+        },
         BeatSuccubus: false,
         FairiesBeaten: 0,
         FirstCityLike: 0
@@ -225,6 +230,15 @@
             StepBoobs: 1000,
             StepPenis: 1000,
             StepBalls: 1500
+        },
+        Cheats: {
+            Enabled: false,
+            Gold: false,
+            Masc: false,
+            Femi: false,
+            Exp: false,
+            VoreExp: false,
+            FastTime: false
         }
     }
 
@@ -583,7 +597,7 @@
             RaceTotal += player.RaceEssence[e].amount;
         }
         for (var e = 0; e < player.RaceEssence.length; e++) {
-            Races += player.RaceEssence[e].Race + ": " + Math.round(player.RaceEssence[e].amount/RaceTotal * 100) + "%  (" + player.RaceEssence[e].amount + ")<br>"
+            Races += player.RaceEssence[e].Race + ": " + Math.round(player.RaceEssence[e].amount / RaceTotal * 100) + "%  (" + player.RaceEssence[e].amount + ")<br>"
         }
         document.getElementById("RaceEssences").innerHTML = Races;
 
@@ -1080,43 +1094,6 @@
         }
     }
 
-    function RaceDesc(who) {
-        switch (who.Race) {
-            case "human":
-                if (who.SecondRace == "human") {
-                    return "human";
-                } else if (who.SecondRace == "elf") {
-                    return "half elf";
-                } else if (who.SecondRace == "centaur") {
-                    return "centaur";
-                } else if (who.SecondRace == "equine") {
-                    return "satyr";
-                }
-            case "elf":
-                if (who.SecondRace == "human") {
-                    return "half elf";
-                } else if (who.SecondRace == "elf") {
-                    return "elf";
-                } else if (who.SecondRace == "centaur") {
-                    return "centaur";
-                } else if (who.SecondRace == "equine") {
-                    return "satyr";
-                }
-            case "equine":
-                if (who.SecondRace == "human") {
-                    return "humanoid equine";
-                } else if (who.SecondRace == "elf") {
-                    return "humanoid equine";
-                } else if (who.SecondRace == "centaur") {
-                    return "anthropomorphic centaur";
-                } else if (who.SecondRace == "equine") {
-                    return "equine";
-                }
-            default:
-                return player.Race;
-        }
-    }
-
     function DateEngine() {
         setInterval(DateTracker, 1000);
     }
@@ -1367,7 +1344,9 @@
         }
         //		if (BonusTF.Status) {TfBoost();}
         ExpCheck();
-
+        if (Settings.Cheats.Enabled) { // Cheats
+            CheatEngine();
+        }
         if (!battle) {
             var needPaint = ["Farm", "TempCity", "MountainStart", "MountainClimb", "MountainClimb2", "MountainClimb3",
                 "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8", "MountainClimb9",
@@ -1390,7 +1369,7 @@
             var SizeMod = 0.5 + player.Height / 320;
             ctx.fillRect(sprite.x, sprite.y, grid * SizeMod, grid * SizeMod);
             if (TF.Status) {
-               // TfEngine();
+                // TfEngine();
             }
             Laglimiter++;
             if (Laglimiter % 80 == 0) {

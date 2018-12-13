@@ -1,7 +1,4 @@
 function PregnanyEngine() {
-    if (!Array.isArray(player.Children)) {
-        player.Children = [];
-    }
     if (player.Children.length > 0) {
         for (var e = 0; e < player.Children.length; e++) {
             player.Children[e].AgeCounter++;
