@@ -36,7 +36,13 @@ function KgToPound(kg) {
     if (Settings.Inch) {
         return Math.round(kg * 2.2046) + "lb"
     } else {
-        return Math.round(kg) + "kg";
+        if (kg < 10) {
+            return Math.round(kg * 10) / 10 + "kg";
+        } else if (kg < 1) {
+            return Math.round(kg * 1000) / 1000 + "g"
+        } else {
+            return Math.round(kg) + "kg";
+        }
     }
 }
 
@@ -47,31 +53,29 @@ function LToGal(L) {
         } else {
             return Math.round(L * 0.264172052) + "gallon"
         }
-	}
-	else if(Settings.Approx) {
-		if(L < 10)
-			return "an almost-unnoticable amount"
-		else if(L < 50)
-			return "a few sprays"
-		else if(L < 100)
-			return "a decent load"
-		else if(L < 250)
-			return "a cupful"
-		else if(L < 750)
-			return "cupfuls"
-		else if(L < 2000)
-			return "a small bucket's worth"
-		else if(L <= 5000)
-			return "a bucket load"
-		else if(L > 5000)
-			return "a torrent of"
-		else
-			return "Snow's overfilled! (Error: " + L + ")";
+    } else if (Settings.Approx) {
+        if (L < 10)
+            return "an almost-unnoticable amount"
+        else if (L < 50)
+            return "a few sprays"
+        else if (L < 100)
+            return "a decent load"
+        else if (L < 250)
+            return "a cupful"
+        else if (L < 750)
+            return "cupfuls"
+        else if (L < 2000)
+            return "a small bucket's worth"
+        else if (L <= 5000)
+            return "a bucket load"
+        else if (L > 5000)
+            return "a torrent of"
+        else
+            return "Snow's overfilled! (Error: " + L + ")";
     } else {
         if (L < 0.1) {
             return Math.round(L * 100) + "cl";
-        }
-        else if (L < 1) {
+        } else if (L < 1) {
             return Math.round(L * 10) + "dl";
         } else {
             return Math.round(L) + "L";

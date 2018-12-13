@@ -24,7 +24,7 @@ function EncounterMaiden() {
 
 function EncounterDragonKind() {
     var MountainHalfRaces = ["human", "elf"] //
-    var OP = new enemy("Lesser", "Dragon", RandomInt(10, 50), RandomInt(10, 50), RandomInt(10, 30), RandomInt(30, 50),
+    var OP = new enemy("Young", "Dragonkind", RandomInt(10, 50), RandomInt(10, 50), RandomInt(10, 30), RandomInt(30, 50),
         RandomInt(10, 50), RandomInt(10, 60), 5000, 5000, RandomInt(50, 500), RandomInt(50, 500),
         "Red", grid, RandomInt(160, 240), RandomString(MountainHalfRaces));
     EssenceGiver(OP, 1500);
@@ -46,10 +46,20 @@ function EncounterHarpy() {
 }
 
 function EncounterAnthroDragon() {
-    var OP = new enemy("Young", "Dragon", RandomInt(30, 50), RandomInt(20, 50), RandomInt(25, 50), RandomInt(10, 30),
+    var OP = new enemy("Young", "Anthro dragon", RandomInt(30, 50), RandomInt(20, 50), RandomInt(25, 50), RandomInt(10, 30),
         RandomInt(20, 60), RandomInt(20, 70), 8000, 8000, RandomInt(100, 400), RandomInt(100, 300),
         "Red", grid, RandomInt(160, 220));
     EssenceGiver(OP, 1500);
+    FatMuscle(OP, 12, 80);
+    StandardEnemy(OP);
+    NameGiver(OP);
+    return OP;
+}
+function EncounterAnthroDragon2() {
+    var OP = new enemy("Mature", "Anthro dragon", RandomInt(40, 60), RandomInt(30, 60), RandomInt(35, 60), RandomInt(15, 35),
+        RandomInt(25, 65), RandomInt(25, 75), 8500, 8500, RandomInt(150, 470), RandomInt(140, 380),
+        "Red", grid, RandomInt(170, 230));
+    EssenceGiver(OP, 2300);
     FatMuscle(OP, 12, 80);
     StandardEnemy(OP);
     NameGiver(OP);

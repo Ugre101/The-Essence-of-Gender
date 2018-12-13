@@ -214,11 +214,13 @@
 		<p id="PerkMenuText" class="MenuText"></p>
 		<p id="PerkPointsLeft"></p>
 		<div>
+			<h3>Passive</h3>
 			<input type="button" id="ExtraHealth" value="Extra Health" title="Increase max health by 20">
 			<input type="button" id="ExtraWillHealth" value="Extra Will Health" title="Increase willpower by 20">
 			<input type="button" id="FasterRest" value="Faster Rest" title="Increases your passive rest with +0.01hp/tick. This will also increase rate burning fat.">
 			<input type="button" id="StealMore" value="More essence" title="Increases the amount of essence you take when your enemy orgasms">
 			<input type="button" id="GiveEssence" value="Give essence" title="Gives your enemy your femininity and/or masculinity when you orgasm">
+			<h3>Active</h3>
 		</div>
 
 		<input type="button" id="LeavePerkMenu" value="Done">
@@ -299,8 +301,38 @@
 		<div class="FullBar">
 			<div id="StatusLevel"></div>
 		</div>
-		<p id="Gold"></p>
+		<p id="Gold" title="0"></p>
 		<p id="Hunger"></p>
+	</div>
+
+	<div id="CheatMenu" class="Options None">
+		<h1>Cheats</h1>
+		<div class="TwoColumn">
+			<div>
+				<input type="button" id="CheatsEnabled" value="Cheats Enabled false" />
+			</div>
+			<div>
+				<input type="button" id="CheatsGold" value="Gold false" />
+			</div>
+			<div>
+				<input type="button" id="CheatsMasc" value="Masc false" />
+			</div>
+			<div>
+				<input type="button" id="CheatsFemi" value="Femi false" />
+			</div>
+			<div>
+				<input type="button" id="CheatsExp" value="Exp false" />
+			</div>
+			<div>
+				<input type="button" id="CheatsVoreExp" value="Vore Exp false" />
+			</div>
+			<div>
+				<input type="button" id="CheatsFastTime" value="FastTime false" />
+			</div>
+			<div>
+				<input type="button" id="CloseCheatMenu" value="Close" />
+			</div>
+		</div>
 	</div>
 
 	<div id="optionpage" class="Options None">
@@ -1021,6 +1053,7 @@
 		<p id="GymText" class="TextBox"></p>
 		<input type="button" id="Train" value="Train muscle" />
 		<input type="button" id="BurnFat" value="Cardio" />
+		<input type="button" id="SacrificeMuscle" value="Sacrifice muscle" title="Sacrifice your gains to the shining swole bro." />
 		<br><br><input type="button" id="LeaveGym" value="Leave" />
 	</div>
 
@@ -1224,6 +1257,7 @@
 	<script src="JavaScript/BalanceParts.js"></script>
 	<script src="JavaScript/Bar.js"></script>
 	<script src="JavaScript/BlackMarket.js"></script>
+	<script src="JavaScript/Cheats.js"></script>
 	<script src="JavaScript/CheckArousal.js"></script>
 	<script src="JavaScript/CheckDoor.js"></script>
 	<script src="JavaScript/CheckFlags.js"></script>

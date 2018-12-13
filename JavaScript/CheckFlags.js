@@ -51,10 +51,6 @@ function CheckFlags() {
         Settings.EssenceAuto = true;
         console.log("Added EssenceAuto");
     }
-    if (!Settings.ImgPack) {
-        Settings.ImgPack = false;
-        console.log("Set imgpack: false");
-    }
     if (!Settings.hasOwnProperty("Pronoun")) {
         Settings.Pronoun = {
             Status: false,
@@ -74,7 +70,7 @@ function CheckFlags() {
         }
         console.log("Added pronouns")
     }
-    // Makes old saves work?
+/**    // Makes old saves work? Think this is not needed anymore.
     if (player.Balls.length > 0) {
         if (!player.Balls[0].hasOwnProperty("Cum")) {
             for (var e = 0; e < player.Balls.length; e++) {
@@ -96,7 +92,7 @@ function CheckFlags() {
         }
         if (player.Boobies[b].MilkMax < 600)
             player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 600);
-    }
+    } */
     if (!player.Pregnant.hasOwnProperty("Babies")) {
         player.Pregnant = {};
         player.Pregnant.Babies = [];
@@ -327,32 +323,32 @@ function CheckFlags() {
             }
         }
     }
-    // Testing of raceEssence
-    player.RaceEssence = [
-        Human = {
-            Race: "human",
-            amount: 100
-        },
-        Orc = {
-            Race: "orc",
-            amount: 5
-        },
-        Fairy = {
-            Race: "fairy",
-            amount: 0
-        },
-        TempRace = {
-            Race: "temp",
-            amount: 9999
-        },
-        Dog = {
-            Race: "canie",
-            amount: 55
-        },
-        Car = {
-            Race: "car",
-            amount: 24
+    if (!Flags.hasOwnProperty("LastTrain")) {
+        Flags.LastTrain = {
+            Day: 0,
+            Month: 0,
+            Year: 0
+        };
+        console.log("Added LastTrain");
+    } else if (!Flags.LastTrain.hasOwnProperty("Day")) {
+        Flags.LastTrain = {
+            Day: 0,
+            Month: 0,
+            Year: 0,
+            Count: 0
+        };
+        console.log("Modded LastTrain")
+    }
+    if (!Settings.hasOwnProperty("Cheats")) {
+        Settings.Cheats = {
+            Enabled: false,
+            Gold: false,
+            Masc: false,
+            Femi: false,
+            Exp: false,
+            VoreExp: false,
+            FastTime: false
         }
-    ]
-
+        console.log("Added cheats");
+    }
 }
