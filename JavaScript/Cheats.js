@@ -22,9 +22,9 @@ function CheatEngine() {
 
 document.getElementById("Gold").addEventListener("click", function () {
     var gold = document.getElementById("Gold");
-    var clicked = gold.title;
+    var clicked = gold.dataset.clicked;
     clicked++;
-    gold.setAttribute("title", clicked);
+    gold.dataset.clicked = clicked;
     if (clicked > 10) {
         DisplayNone();
         document.getElementById("CheatMenu").style.display = 'block';
