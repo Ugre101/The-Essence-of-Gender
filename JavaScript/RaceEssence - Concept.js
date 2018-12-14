@@ -22,14 +22,20 @@
     Essence_R[Race] = 50;
     Essence_R[SecondRace] += 50;
 }*/
-function isTaur() {
+function isTaur(mode = "a") {
     var Taur = ["centaur"]
     var max = Math.min(3, player.RaceEssence.length);
     for (var e = 0; e < max; e++) {
-        if (Taur.indexOf(player.RaceEssence[e].Race) > -1) {
-            return e;
+        if (mode == "a") {
+            if (Taur.indexOf(player.RaceEssence[e].Race) > -1) {
+                return e;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            if (Taur.indexOf(player.RaceEssence[e].Race) > -1) {} else {
+                return e; // return biggest non taur race
+            }
         }
     }
 }
@@ -39,7 +45,6 @@ function EssenceBalance() { // Concept for calculating what species you're treat
     var RaceEss = player.RaceEssence;
     RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
     for (var i = 0; i < RaceEss.length; i++) { // Clearing/Spicing out anything below 1
-        //console.log(RaceEss[i].Race + " " + RaceEss[i].amount)
         if (RaceEss[i].amount < 1) {
             console.log("Spliced " + RaceEss[i].Race);
             RaceEss.splice(i, 1);
@@ -54,6 +59,9 @@ function EssenceBalance() { // Concept for calculating what species you're treat
 Need to make it like earlier so that low essence doesn't give a race, 
 e.g. you are not a dragon because you have 1 dragon essence.
     */
+    var R1 = 0;
+    var R2 = 0;
+    var R3 = 0;
     if (RaceEss.length > 2) {
         var R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
         var R2 = Math.round(100 * RaceEss[1].amount / totalAbsorb);
@@ -61,21 +69,18 @@ e.g. you are not a dragon because you have 1 dragon essence.
     } else if (RaceEss.length > 1) {
         var R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
         var R2 = Math.round(100 * RaceEss[1].amount / totalAbsorb);
-        var R3 = 0;
     } else if (RaceEss.length > 0) {
         var R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
-        var R2 = 0;
-        var R3 = 0;
     } else {
-        player.Race = "race less" //?
+        player.Race = "lesser human" // No race is lowest form of human? or implement doll race?
         player.SecondRace = player.Race;
         GenitalChange("human"); // null dick? bland dick? average?
     }
-    if (isTaur() > -1) { // centaur always second race or maybe search for taur essence?
-        if (isTaur() > 0) {
-            player.Race = RaceEss[0].Race;
+    if (isTaur() !== false) { // centaur always second race?
+        if (player.RaceEssence.length < 2) {
+            player.Race = "human";
         } else {
-            player.Race = RaceEss[1].Race;
+            player.Race = RaceEss[isTaur("B")].Race;
         }
         player.SecondRace = RaceEss[isTaur()].Race;
         GenitalChange(RaceEss[isTaur()].Race);
@@ -88,47 +93,17 @@ e.g. you are not a dragon because you have 1 dragon essence.
             player.Race = RaceEss[0].Race;
             player.SecondRace = RaceEss[1].Race
             GenitalChange(RaceEss[1].Race); // Will add options to chose what race genitals is.
+        } else {
+            player.Race = RaceEss[0].Race;
+            player.SecondRace = player.Race;
+            GenitalChange(RaceEss[0].Race);
         }
     }
-    /** Move this to racedesc
-     * //console.log(R1 + " " + R2 + " " + R3)
-    if (R1 > 99) {
-        player.Race = RaceEss[0].Race;
-        console.log("You're fully " + RaceEss[0].Race + "!");
-    } else if (R1 + R2 + R3 < 50) {
-        console.log("You're an unnatural mix of an assortment of creatures!");
-    } else if (R1 > 90) {
-        player.Race = RaceEss[0].Race;
-        console.log("You're indistinguishable from any other " + RaceEss[0].Race);
-    } else if (R1 > 80) {
-        if (R2 > 10) {
-            console.log("You're mostly " + RaceEss[0].Race + ", but you've got some " + RaceEss[1].Race + " traits.");
-        } else {
-            console.log("You're mostly " + RaceEss[0].Race + ", but you've got other traits mixed in.");
-        }
-    } else if (R1 > 70) {
-        if (R2 > 20) {
-            console.log("You're mostly " + RaceEss[0].Race + ", but could be confused for a half-" + RaceEss[1].Race + ".");
-        } else if (R2 + R3 > 20) {
-            console.log("You're mostly " + RaceEss[0].Race + ", but you've added a few other traits, notably " + RaceEss[1].Race + " and " + RaceEss[2].Race + ".");
-        } else {
-            console.log("You're mostly " + RaceEss[0].Race + ", but you've added a few other traits.");
-        }
-    } else if (R1 < R2 + 10) {
-        console.log("You're half-" + RaceEss[0].Race + ", half " + RaceEss[1].Race + ".");
-    } else if (R1 < R2 + R3) {
-        console.log("You're a curious hybrid, a mix between " + RaceEss[0].Race + ", " + RaceEss[1].Race + ", and " + RaceEss[2].Race + ".");
-    } else {
-        console.log("You're unmistakably a(n) " + RaceEss[0].Race + ", but you're deep in an uncanny valley.");
-    }
-    // pRaceBonus();
-     */
 }
 
 function PotionDrunk(race, Dose = 50) {
     var RaceEss = player.RaceEssence;
     var a = RaceEss.findIndex(e => e.Race == race);
-    console.log(a);
     if (a > -1) {
         RaceEss[a].amount += Dose;
     } else {
@@ -137,11 +112,6 @@ function PotionDrunk(race, Dose = 50) {
             amount: Dose
         }
         RaceEss.push(Race);
-    }
-    if (race === "centaur")
-        isTaur = true;
-    else {
-        isTaur = false;
     }
 }
 
@@ -250,10 +220,12 @@ function RaceDesc(who) {
         default:
             return player.Race;
     }
+}
+
+function DetailedRaceDesc() {
     var RaceEss = player.RaceEssence;
     RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
     for (var i = 0; i < RaceEss.length; i++) { // Clearing/Spicing out anything below 1
-        //console.log(RaceEss[i].Race + " " + RaceEss[i].amount)
         if (RaceEss[i].amount < 1) {
             console.log("Spliced " + RaceEss[i].Race);
             RaceEss.splice(i, 1);
@@ -263,6 +235,9 @@ function RaceDesc(who) {
     for (var i = 0; i < RaceEss.length; i++) {
         totalAbsorb += RaceEss[i].amount;
     }
+    var R1 = 0;
+    var R2 = 0;
+    var R3 = 0;
     if (RaceEss.length > 2) {
         var R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
         var R2 = Math.round(100 * RaceEss[1].amount / totalAbsorb);
@@ -270,43 +245,35 @@ function RaceDesc(who) {
     } else if (RaceEss.length > 1) {
         var R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
         var R2 = Math.round(100 * RaceEss[1].amount / totalAbsorb);
-        var R3 = 0;
     } else if (RaceEss.length > 0) {
         var R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
-        var R2 = 0;
-        var R3 = 0;
-    } else {
-        var R1 = 0;
-        var R2 = 0;
-        var R3 = 0;
     }
+
     if (R1 > 99) {
-        player.Race = RaceEss[0].Race;
-        console.log("You're fully " + RaceEss[0].Race + "!");
+        return "You're fully " + RaceEss[0].Race + "!";
     } else if (R1 + R2 + R3 < 50) {
-        console.log("You're an unnatural mix of an assortment of creatures!");
+        return "You're an unnatural mix of an assortment of creatures!";
     } else if (R1 > 90) {
-        player.Race = RaceEss[0].Race;
-        console.log("You're indistinguishable from any other " + RaceEss[0].Race);
+        return "You're indistinguishable from any other " + RaceEss[0].Race;
     } else if (R1 > 80) {
         if (R2 > 10) {
-            console.log("You're mostly " + RaceEss[0].Race + ", but you've got some " + RaceEss[1].Race + " traits.");
+            return "You're mostly " + RaceEss[0].Race + ", but you've got some " + RaceEss[1].Race + " traits.";
         } else {
-            console.log("You're mostly " + RaceEss[0].Race + ", but you've got other traits mixed in.");
+            return "You're mostly " + RaceEss[0].Race + ", but you've got other traits mixed in.";
         }
     } else if (R1 > 70) {
         if (R2 > 20) {
-            console.log("You're mostly " + RaceEss[0].Race + ", but could be confused for a half-" + RaceEss[1].Race + ".");
+            return "You're mostly " + RaceEss[0].Race + ", but could be confused for a half-" + RaceEss[1].Race + ".";
         } else if (R2 + R3 > 20) {
-            console.log("You're mostly " + RaceEss[0].Race + ", but you've added a few other traits, notably " + RaceEss[1].Race + " and " + RaceEss[2].Race + ".");
+            return "You're mostly " + RaceEss[0].Race + ", but you've added a few other traits, notably " + RaceEss[1].Race + " and " + RaceEss[2].Race + ".";
         } else {
-            console.log("You're mostly " + RaceEss[0].Race + ", but you've added a few other traits.");
+            return "You're mostly " + RaceEss[0].Race + ", but you've added a few other traits.";
         }
     } else if (R1 < R2 + 10) {
-        console.log("You're half-" + RaceEss[0].Race + ", half " + RaceEss[1].Race + ".");
+        return "You're half-" + RaceEss[0].Race + ", half " + RaceEss[1].Race + ".";
     } else if (R1 < R2 + R3) {
-        console.log("You're a curious hybrid, a mix between " + RaceEss[0].Race + ", " + RaceEss[1].Race + ", and " + RaceEss[2].Race + ".");
+        return "You're a curious hybrid, a mix between " + RaceEss[0].Race + ", " + RaceEss[1].Race + ", and " + RaceEss[2].Race + ".";
     } else {
-        console.log("You're unmistakably a(n) " + RaceEss[0].Race + ", but you're deep in an uncanny valley.");
+        return "You're unmistakably an " + RaceEss[0].Race + ", but you're deep in an uncanny valley.";
     }
 }

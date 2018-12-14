@@ -233,6 +233,7 @@
        max-height: 90%;
        text-align: center;
        padding: 1em;
+       overflow: auto;
    }
 
    p.TextBox {

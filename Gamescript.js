@@ -567,10 +567,7 @@
     document.getElementById("ExtraInfo").addEventListener("click", function () {
         DisplayNone();
         document.getElementById("DetailedInfo").style.display = 'block';
-        if (player.Race != player.SecondRace)
-            document.getElementById("FullRace").innerHTML = player.Race + " " + player.SecondRace;
-        else
-            document.getElementById("FullRace").innerHTML = "Fully " + player.SecondRace;
+        document.getElementById("FullRace").innerHTML = player.Race + " " + player.SecondRace + "<br><br>" + DetailedRaceDesc();
         document.getElementById("Pregnancy").innerHTML = "Times you have impregnated: " + Flags.Impregnations + "<br> Times you have been pregnant: " + Flags.Pregnations;
         document.getElementById("ExtraStats").innerHTML = "Virility: " + player.Virility + "<br>Fertility: " + player.Fertility + "<br>Essence drain: " + player.EssenceDrain +
             "<br>Give essence: " + player.GiveEssence + "<br> passive rest rate: " + player.RestRate;
@@ -1148,10 +1145,8 @@
             } else {
                 document.getElementById("Fireball").style.display = 'none';
                 document.getElementById("SpellBook").style.display = 'none';
-                console.log("NO Ball")
             }
         } else {
-            console.log("NO Spell")
             document.getElementById("SpellBook").style.display = 'none';
         }
         if (who.FirstName === "Feral") {
@@ -1226,7 +1221,7 @@
     }
 
     function PrintNpcs() {
-        var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine"]
+        var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"]
         for (var e of Npcs) {
             if (needPrint.indexOf(e.Name) > -1) {
                 ctx.fillStyle = e.Color;
@@ -1317,7 +1312,6 @@
             fps.pop();
         }
         if (Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20 !== medium) {
-            console.log(true)
             HemScale();
         };
 

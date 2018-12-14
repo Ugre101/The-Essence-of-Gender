@@ -25,6 +25,7 @@ function CurrentMap() {
     var WitchShop = new Npc("WitchShop", "Witch shop", grid * 15, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
     // Witch
     var WitchHut = new Npc("WitchHut", "Witch hut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
+    var ChimeraShrine = new Npc("ChimeraShrine", "Chimera shrine", grid * 3, grid, grid * 2, grid * 2, "RGB(133,94,66)");
     // Misc
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
@@ -136,7 +137,7 @@ function CurrentMap() {
                     Npcs = [];
                     enemies = [];
                     if (Npcs.length < 1) {
-                        Npcs = [WitchHut];
+                        Npcs = [WitchHut, ChimeraShrine];
                     }
                     PrintMap("Witch");
                     backmap = new Image;

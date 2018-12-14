@@ -301,7 +301,7 @@
 		<div class="FullBar">
 			<div id="StatusLevel"></div>
 		</div>
-		<p id="Gold" title="0"></p>
+		<p id="Gold" data-clicked="0"></p>
 		<p id="Hunger"></p>
 	</div>
 
@@ -1098,7 +1098,14 @@
 		<input type="button" id="FireSpell" value="Fireball 500g" title="This little ball allows you to cast a single fireball spell per ball you own, per battle! (Don't set yourself on fire, please.)" />
 		<br><input type="button" id="LeaveWitchHut" value="Leave" />
 	</div>
-
+	<div id="ChimeraShrine" class="Building None">
+		<p id="ChimeraShrineText" class="TextBox"></p>
+		<input type="button" id="SacRaceEss" value="Sacrifice race essence" />
+		<div id="SacRaceEssMenu" class="None">
+			<p>You Sould not see this...</p>
+		</div>
+		<br><input type="button" id="LeaveChimeraShrine" value="Leave" />
+	</div>
 
 	<div id="Temp_Tempsson" class="None">
 		<p id="Temp_TempssonText" class="TextBox">Dungeon coming Soon</p>
@@ -1262,6 +1269,7 @@
 	<script src="JavaScript/CheckDoor.js"></script>
 	<script src="JavaScript/CheckFlags.js"></script>
 	<script src="JavaScript/Children.js"></script>
+	<script src="JavaScript/ChimeraShrine.js"></script>
 	<script src="JavaScript/CurrentMap.js"></script>
 	<script src="JavaScript/Combat.js"></script>
 	<script src="JavaScript/DateTracker.js"></script>

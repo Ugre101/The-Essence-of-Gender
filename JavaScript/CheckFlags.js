@@ -70,29 +70,29 @@ function CheckFlags() {
         }
         console.log("Added pronouns")
     }
-/**    // Makes old saves work? Think this is not needed anymore.
-    if (player.Balls.length > 0) {
-        if (!player.Balls[0].hasOwnProperty("Cum")) {
-            for (var e = 0; e < player.Balls.length; e++) {
-                player.Balls[e] = {
-                    CumMax: Math.round(player.Masc / 70) * 400,
-                    Cum: 0,
-                    CumRate: 0.01,
-                    CumBaseRate: 0.1
+    /**    // Makes old saves work? Think this is not needed anymore.
+        if (player.Balls.length > 0) {
+            if (!player.Balls[0].hasOwnProperty("Cum")) {
+                for (var e = 0; e < player.Balls.length; e++) {
+                    player.Balls[e] = {
+                        CumMax: Math.round(player.Masc / 70) * 400,
+                        Cum: 0,
+                        CumRate: 0.01,
+                        CumBaseRate: 0.1
+                    }
                 }
             }
         }
-    }
-    for (var b = 0; b < player.Boobies.length; b++) {
-        if (!player.Boobies[b].hasOwnProperty("Milk")) {
-            player.Boobies[b].Milk = 0;
-            player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 600);
-            player.Boobies[b].MilkRate = 0;
-            player.Boobies[b].MilkBaseRate = 0;
-        }
-        if (player.Boobies[b].MilkMax < 600)
-            player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 600);
-    } */
+        for (var b = 0; b < player.Boobies.length; b++) {
+            if (!player.Boobies[b].hasOwnProperty("Milk")) {
+                player.Boobies[b].Milk = 0;
+                player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 600);
+                player.Boobies[b].MilkRate = 0;
+                player.Boobies[b].MilkBaseRate = 0;
+            }
+            if (player.Boobies[b].MilkMax < 600)
+                player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 600);
+        } */
     if (!player.Pregnant.hasOwnProperty("Babies")) {
         player.Pregnant = {};
         player.Pregnant.Babies = [];
@@ -351,4 +351,18 @@ function CheckFlags() {
         }
         console.log("Added cheats");
     }
+    if (!player.Blessings.hasOwnProperty("ChimeraShrine")) {
+        player.Blessings.ChimeraShrine = {
+            Donated: 0,
+            Points: 0
+        }
+    }
+    /**
+       else if (player.Blessings.ChimeraShrine.hasOwnProperty("placeholder")){
+                   player.Blessings.ChimeraShrine = {
+                    Donated: player.Blessings.ChimeraShrine.Donated,
+                    Points: player.Blessings.ChimeraShrine.Points,
+                    Perk1: 0
+        }
+       } */
 }

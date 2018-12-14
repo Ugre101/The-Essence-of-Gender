@@ -10,7 +10,8 @@ document.getElementById("EquineTaurTF").addEventListener("click", function () {
     }
     if (player.Gold >= 250) {
         player.Gold -= 250;
-        TfEngine("centaur");
+        PotionDrunk("centaur")
+        //TfEngine("centaur");
     } else {
         document.getElementById("FarmOwnerText").innerHTML = "Insufficient gold.";
         return;
