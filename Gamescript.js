@@ -271,6 +271,7 @@
     var sprite = {
         x: grid,
         y: grid,
+        Size: grid
     };
 
     document.getElementById("VoreLooks").style.display = 'none';
@@ -1165,10 +1166,9 @@
         if (battle === true) {
             return;
         }
-        var SizeMod = 0.5 + player.Height / 320;
         for (var j = 0; j < enemies.length; j++) {
-            if (sprite.x + grid * SizeMod >= enemies[j].XPos && sprite.x < enemies[j].XPos + enemies[j].Size &&
-                sprite.y + grid * SizeMod >= enemies[j].YPos && sprite.y < enemies[j].YPos + enemies[j].Size) {
+            if (sprite.x + grid * sprite.Size >= enemies[j].XPos && sprite.x < enemies[j].XPos + enemies[j].Size &&
+                sprite.y + grid * sprite.Size >= enemies[j].YPos && sprite.y < enemies[j].YPos + enemies[j].Size) {
                 if (mousedowner) {
                     clearInterval(mFunction);
                     mousedowner = false;
@@ -1182,8 +1182,8 @@
             }
         }
         for (var n = 0; n < Npcs.length; n++) {
-            if (sprite.x + grid * SizeMod >= Npcs[n].X && sprite.x < Npcs[n].X + Npcs[n].Width &&
-                sprite.y + grid * SizeMod >= Npcs[n].Y && sprite.y < Npcs[n].Y + Npcs[n].Height) {
+            if (sprite.x + grid * sprite.Size >= Npcs[n].X && sprite.x < Npcs[n].X + Npcs[n].Width &&
+                sprite.y + grid * sprite.Size >= Npcs[n].Y && sprite.y < Npcs[n].Y + Npcs[n].Height) {
                 if (mousedowner) {
                     clearInterval(mFunction);
                     mousedowner = false;
@@ -1360,8 +1360,8 @@
                 PrintNpcs();
             }
             ctx.fillStyle = "BlueViolet";
-            var SizeMod = 0.5 + player.Height / 320;
-            ctx.fillRect(sprite.x, sprite.y, grid * SizeMod, grid * SizeMod);
+            sprite.Size = 1 //Math.min(0.8 + player.Height / 320, 1.2);
+            ctx.fillRect(sprite.x, sprite.y, grid * sprite.Size, grid * sprite.Size);
             if (TF.Status) {
                 // TfEngine();
             }
@@ -1375,6 +1375,8 @@
                 player.Fat = Math.max(0.1, player.Fat);
                 player.Muscle = Math.max(1, player.Muscle);
                 player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);
+                player.Height--;
+
                 player.Height = Math.max(5, player.Height);
                 player.Health = Math.max(1, player.Health);
                 player.WillHealth = Math.max(1, player.WillHealth);
@@ -1389,19 +1391,18 @@
         if (battle === true) {
             return;
         }
-        var SizeMod = 0.5 + player.Height / 320;
-        if ((e.which === 37 || e.which === 65) && sprite.x - grid * SizeMod > 0) {
-            sprite.x -= grid * SizeMod;
+        if ((e.which === 37 || e.which === 65) && sprite.x > 0) {
+            sprite.x -= grid * sprite.Size;
             sprite.y += 0;
-        } else if ((e.which === 39 || e.which === 68) && sprite.x + 2 * grid * SizeMod < startarea.width) {
-            sprite.x += grid * SizeMod;
+        } else if ((e.which === 39 || e.which === 68) && sprite.x + grid * sprite.Size < startarea.width) {
+            sprite.x += grid * sprite.Size;
             sprite.y += 0;
         }
-        if ((e.which === 38 || e.which === 87) && sprite.y - grid * SizeMod > 0) {
-            sprite.y -= grid * SizeMod;
+        if ((e.which === 38 || e.which === 87) && sprite.y > 0) {
+            sprite.y -= grid * sprite.Size;
             sprite.x += 0;
-        } else if ((e.which === 40 || e.which === 83) && sprite.y + 2 * grid * SizeMod < startarea.height) {
-            sprite.y += grid * SizeMod;
+        } else if ((e.which === 40 || e.which === 83) && sprite.y + grid * sprite.Size < startarea.height) {
+            sprite.y += grid * sprite.Size;
             sprite.x += 0;
         }
         Touching();
@@ -1422,17 +1423,16 @@
 */
 
     function mousedownfunc() {
-        var SizeMod = 0.5 + player.Height / 320;
         var MapRect = startarea.getBoundingClientRect();
-        if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x + 2 * grid * SizeMod < startarea.width) {
-            sprite.x += grid * SizeMod;
-        } else if (mouseX - MapRect.left + grid / 2 < sprite.x && sprite.x > grid * SizeMod) {
-            sprite.x -= grid * SizeMod;
+        if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x + grid * sprite.Size < startarea.width) {
+            sprite.x += grid * sprite.Size;
+        } else if (mouseX - MapRect.left + grid / 2 < sprite.x && sprite.x > 0) {
+            sprite.x -= grid * sprite.Size;
         }
-        if (mouseY - MapRect.top > sprite.y + 1.5 * grid && sprite.y + 2 * grid * SizeMod < startarea.height) {
-            sprite.y += grid * SizeMod;
-        } else if (mouseY - MapRect.top + grid / 2 < sprite.y && sprite.y > grid * SizeMod) {
-            sprite.y -= grid * SizeMod;
+        if (mouseY - MapRect.top > sprite.y + 1.5 * grid && sprite.y < startarea.height) {
+            sprite.y += grid * sprite.Size;
+        } else if (mouseY - MapRect.top + grid / 2 < sprite.y && sprite.y > 0) {
+            sprite.y -= grid * sprite.Size;
         }
         Touching();
         CheckDoor();
