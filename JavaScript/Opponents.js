@@ -286,6 +286,7 @@ function EncounterBanditLord() {
     EssenceGiver(OP, 1000, "male");
     FatMuscle(OP, 7, 80);
     StandardEnemy(OP);
+    var startarea = document.getElementById("hem");
     OP.XPos = startarea.width / 2 - grid;
     OP.YPos = grid;
     NameGiver(OP);

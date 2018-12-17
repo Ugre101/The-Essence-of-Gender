@@ -103,12 +103,12 @@ e.g. you are not a dragon because you have 1 dragon essence.
 
 function PotionDrunk(race, Dose = 50) {
     var RaceEss = player.RaceEssence;
-    var a = RaceEss.findIndex(e => e.Race == race);
+    var a = RaceEss.findIndex(e => e.Race == race.Capitalize());
     if (a > -1) {
         RaceEss[a].amount += Dose;
     } else {
         var Race = {
-            Race: race,
+            Race: race.Capitalize(),
             amount: Dose
         }
         RaceEss.push(Race);

@@ -24,9 +24,9 @@ function TownHallQuests() {
             document.getElementById("TownhallText").innerHTML = "The bandits up to the north has become braver with their new leader, if you are strong enough please beat them into submission. <br> <br>" +
                 "You will be greatly awarded for your effort and we will grant you the right to buy the old mansion located east from the city."
         }
-
-        BanditLord.style.display = 'none';
-        ElfHunt.style.display = 'none';
+        while (x.hasChildNodes()) {
+            x.removeChild(x.firstChild);
+        }
         var Accept = document.createElement("INPUT");
         Accept.setAttribute("type", "button");
         Accept.setAttribute("value", "Accept");
@@ -53,8 +53,9 @@ function TownHallQuests() {
     ElfHunt.setAttribute("value", "ElfHunt");
     ElfHunt.addEventListener("click", function () {
         document.getElementById("TownhallText").innerHTML = "The elves to the south is becoming a problem, defeat atleast three of them and you will be awarded."
-        BanditLord.style.display = 'none';
-        ElfHunt.style.display = 'none';
+        while (x.hasChildNodes()) {
+            x.removeChild(x.firstChild);
+        }
         var Accept = document.createElement("INPUT");
         Accept.setAttribute("type", "button");
         Accept.setAttribute("value", "Accept");

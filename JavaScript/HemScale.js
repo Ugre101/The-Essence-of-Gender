@@ -19,9 +19,11 @@
             document.getElementById("LessButtons").style.display = 'none';
             document.getElementById("MobileButtons").style.display = 'none';
         }
+        var startarea = document.getElementById("hem");
         var OldMap = medium;
         medium = Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20;
         startarea.width = medium;
+        3
         startarea.height = medium;
         var NewMap = medium;
         grid = (startarea.height / 20);

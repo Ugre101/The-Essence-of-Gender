@@ -1,4 +1,6 @@
 function PrintDoor(NESW) {
+    var startarea = document.getElementById("hem");
+    var ctx = startarea.getContext("2d");
     this.NESW = NESW;
     if (NESW == "E") {
         ctx.fillStyle = Settings.MapColor;
@@ -50,6 +52,8 @@ function CurrentMap() {
     		return;
         }*/
     var backmap;
+    var startarea = document.getElementById("hem");
+    var ctx = startarea.getContext("2d");
     switch (player.Area) {
         case "First":
             switch (player.Map) {

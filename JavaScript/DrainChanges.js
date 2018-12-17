@@ -1,3 +1,173 @@
+function RaceDrain(whose) {
+    var RaceEss = player.RaceEssence;
+    var a = RaceEss.findIndex(e => e.Race == whose.Race);
+    if (a > -1) {
+        RaceEss[a].amount += RandomInt(2,10);
+    } else {
+        var Race = {
+            Race: whose.Race,
+            amount: RandomInt(2,10)
+        }
+        RaceEss.push(Race);
+    }
+    var b = RaceEss.findIndex(e => e.Race == whose.SecondRace);
+    if (b > -1) {
+        RaceEss[a].amount += RandomInt(1,5);
+    } else {
+        var Race = {
+            Race: whose.SecondRace,
+            amount: RandomInt(1,5)
+        }
+        RaceEss.push(Race);
+    }
+};
+
+document.getElementById("DrainM").addEventListener("click", function () {
+    var old = JSON.parse(JSON.stringify(player));
+    var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
+    var enemy = enemies[EnemyIndex];
+    if (player.EssenceDrain >= enemies[EnemyIndex].Masc && enemies[EnemyIndex].Masc > 0) {
+        enemies[EnemyIndex].SessionOrgasm--;
+        if (player.ForcedFemale)
+            player.Femi += enemies[EnemyIndex].Masc;
+        else
+            player.Masc += enemies[EnemyIndex].Masc;
+        enemies[EnemyIndex].Masc = 0;
+        EssenceCheck(enemies[EnemyIndex]);
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
+        document.getElementById("SexText").innerHTML = "You siphon the last essence of masculinity from them leaving them with no signs of masculinity left." + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+    } else if (player.EssenceDrain < enemies[EnemyIndex].Masc) {
+        enemies[EnemyIndex].SessionOrgasm--;
+        if (player.ForcedFemale)
+            player.Femi += player.EssenceDrain;
+        else
+            player.Masc += player.EssenceDrain;
+        enemies[EnemyIndex].Masc -= player.EssenceDrain;
+        EssenceCheck(enemies[EnemyIndex]);
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
+        document.getElementById("SexText").innerHTML = "You siphon essence of masculinity from them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+    }
+    RaceDrain(enemy);
+    AfterBattleButtons();
+    CheckArousal();
+    return;
+});
+
+document.getElementById("DrainF").addEventListener("click", function () {
+    var old = JSON.parse(JSON.stringify(player));
+    var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
+    var enemy = enemies[EnemyIndex];
+    if (player.EssenceDrain >= enemies[EnemyIndex].Femi && enemies[EnemyIndex].Femi > 0) {
+        enemies[EnemyIndex].SessionOrgasm--;
+        if (player.ForcedMale)
+            player.Masc += enemies[EnemyIndex].Femi;
+        else
+            player.Femi += enemies[EnemyIndex].Femi;
+        enemies[EnemyIndex].Femi = 0;
+        EssenceCheck(enemies[EnemyIndex]);
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
+        document.getElementById("SexText").innerHTML = "You siphon the last essence of femininity from them leaving them with no signs of femininity left. " + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+    } else if (player.EssenceDrain < enemies[EnemyIndex].Femi) {
+        enemies[EnemyIndex].SessionOrgasm--;
+        if (player.ForcedMale)
+            player.Masc += player.EssenceDrain;
+        else
+            player.Femi += player.EssenceDrain;
+        enemies[EnemyIndex].Femi -= player.EssenceDrain;
+        EssenceCheck(enemies[EnemyIndex]);
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
+        document.getElementById("SexText").innerHTML = "You siphon essence of femininity from them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+    }
+    RaceDrain(enemy);
+    AfterBattleButtons();
+    CheckArousal();
+    return;
+})
+
+document.getElementById("InjectM").addEventListener("click", function () {
+    var q = Math.min(player.GiveEssence, player.Masc);
+    var old = JSON.parse(JSON.stringify(player));
+    var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
+    if (player.GiveEssence >= player.Masc && player.Masc > 0) {
+        player.SessionOrgasm--;
+        player.Masc -= q;
+        enemies[EnemyIndex].Masc += q;
+        EssenceCheck(enemies[EnemyIndex]);
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
+        document.getElementById("SexText").innerHTML = "You inject them with your last essence of masculinity, leaving yourself male-free." + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+    } else if (player.GiveEssence < player.Masc) {
+        player.SessionOrgasm--;
+        player.Masc -= q;
+        enemies[EnemyIndex].Masc += q;
+        EssenceCheck(enemies[EnemyIndex]);
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
+        document.getElementById("SexText").innerHTML = "You inject essence of masculinity into them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+    }
+
+    AfterBattleButtons();
+    CheckArousal();
+    return;
+});
+
+document.getElementById("InjectF").addEventListener("click", function () {
+    var q = Math.min(player.GiveEssence, player.Femi);
+    var old = JSON.parse(JSON.stringify(player));
+    var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
+    if (player.GiveEssence >= player.Femi && player.Femi > 0) {
+        player.SessionOrgasm--;
+        player.Femi -= q;
+        enemies[EnemyIndex].Femi += q;
+        EssenceCheck(enemies[EnemyIndex]);
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
+        document.getElementById("SexText").innerHTML = "You give them the last of your femininity, leaving yourself female-free. " + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+    } else if (player.GiveEssence < player.Femi) {
+        player.SessionOrgasm--;
+        player.Femi -= q;
+        enemies[EnemyIndex].Femi += q;
+        EssenceCheck(enemies[EnemyIndex]);
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
+        document.getElementById("SexText").innerHTML = "You inject essence of femininity into them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+    }
+    AfterBattleButtons();
+    CheckArousal();
+    return;
+})
+
+function IntToAge(int) {
+    switch (int) {
+        case 1:
+            return "one year";
+        case 2:
+            return "two years";
+        case 3:
+            return "three years";
+        case 4:
+            return "four years";
+        case 5:
+            return "five years";
+        case 6:
+            return "six years";
+        default:
+            return int + "years";
+    }
+}
+
 function DrainChangesEnemy(eold, ecurrent) {
     var b = "";
     if (eold.Dicks.length > ecurrent.Dicks.length) {
