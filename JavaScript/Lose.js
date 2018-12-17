@@ -622,7 +622,9 @@ function SnowScenes() {
 
 
 function RaceConq(enemy) {
-	switch (enemy.Race) {
+	var race = enemy.Race.toLowerCase();
+	console.log(race);
+	switch (race) {
 		case "human":
 			player.Gold -= RandomInt(25, player.Gold / 2); // Robbed, why not.
 			break;
@@ -635,9 +637,9 @@ function RaceConq(enemy) {
 				player.Height -= RandomInt(10, player.Height / 10);
 			}
 			break;
-		case "witch":
-			// Could be funny with a frogman tf?
-			// Isn't this considered a name?
+		case "elf":
+			break;
+		case "dark elf":
 			break;
 		case "goblin":
 			Impregnate(player, enemy, "B"); // Breeding stereotype
@@ -658,6 +660,18 @@ function RaceConq(enemy) {
 				enemy.Femi += take;
 			}
 			Impregnate(enemy, player);
+			break;
+		case "dragon":
+			break;
+	}
+}
+
+function NameConq(enemy) { // Name/title/type e.g. witch, maiden
+	var Name = enemy.Name.toLowerCase();
+	switch (Name) {
+		case "witch":
+			break;
+		case "maiden":
 			break;
 	}
 }

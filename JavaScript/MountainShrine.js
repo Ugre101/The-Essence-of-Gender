@@ -105,8 +105,9 @@ function PregQuests() {
     Impreg.setAttribute("value", "Impreg");
     Impreg.setAttribute("title", "Impregnate our maidens.");
     Impreg.addEventListener("click", function () {
-        Impreg.style.display = 'none';
-        GetImpreg.style.display = 'none';
+        while (x.hasChildNodes()) {
+            x.removeChild(x.firstChild);
+        }
         var Accept = document.createElement("INPUT");
         Accept.setAttribute("type", "button");
         Accept.setAttribute("value", "Accept");
@@ -128,13 +129,27 @@ function PregQuests() {
         document.getElementById("ShrineQuestsMenu").appendChild(Accept);
         document.getElementById("ShrineQuestsMenu").appendChild(Decline);
     });
+
+    var ImpregReward = document.createElement("INPUT");
+    ImpregReward.setAttribute("type", "button");
+    ImpregReward.setAttribute("value", "Impreg reward");
+    ImpregReward.setAttribute("title", "Impregnate our maidens.");
+    ImpregReward.addEventListener("click", function () {
+        var index = player.Quests.findIndex(e => e.Name == "Impregnate maidens");
+        console.log(player.Quests[index])
+        player.Blessings.MountainShrine.Points += player.Quests[index].Count;
+        player.Quests.splice(index, 1);
+        PregQuests();
+    });
+
     var GetImpreg = document.createElement("INPUT");
     GetImpreg.setAttribute("type", "button");
     GetImpreg.setAttribute("value", "Get Impreg");
     GetImpreg.setAttribute("title", "Get impregnated.");
     GetImpreg.addEventListener("click", function () {
-        Impreg.style.display = 'none';
-        GetImpreg.style.display = 'none';
+        while (x.hasChildNodes()) {
+            x.removeChild(x.firstChild);
+        }
         var Accept = document.createElement("INPUT");
         Accept.setAttribute("type", "button");
         Accept.setAttribute("value", "Accept");
@@ -156,10 +171,26 @@ function PregQuests() {
         document.getElementById("ShrineQuestsMenu").appendChild(Accept);
         document.getElementById("ShrineQuestsMenu").appendChild(Decline);
     });
+
+    var GetImpregReward = document.createElement("INPUT");
+    GetImpregReward.setAttribute("type", "button");
+    GetImpregReward.setAttribute("value", "Get Impreg");
+    GetImpregReward.setAttribute("title", "Get impregnated.");
+    GetImpregReward.addEventListener("click", function () {
+        var index = player.Quests.findIndex(e => e.Name == "Get Impregnated");
+        console.log(player.Quests[index])
+        player.Blessings.MountainShrine.Points += player.Quests[index].Count * 7;// Getting yourself pregnant is harder to repeat therefore higher reward.
+        player.Quests.splice(index, 1);
+        PregQuests();
+    });
     if (!player.Quests.some(e => e.Name === "Get Impregnated")) {
         document.getElementById("ShrineQuestsMenu").appendChild(GetImpreg);
-    } else if (player.Quests.some(e => e.Name === "Get Impregnated" && e.Completed)) {}
+    } else if (player.Quests.some(e => e.Name === "Get Impregnated" && e.Completed)) {
+        document.getElementById("ShrineQuestsMenu").appendChild(GetImpregReward);
+    }
     if (!player.Quests.some(e => e.Name === "Impregnate maidens")) {
         document.getElementById("ShrineQuestsMenu").appendChild(Impreg);
-    } else if (player.Quests.some(e => e.Name === "Impregnate maidens" && e.Completed)) {}
+    } else if (player.Quests.some(e => e.Name === "Impregnate maidens" && e.Completed)) {
+        document.getElementById("ShrineQuestsMenu").appendChild(ImpregReward);
+    }
 }

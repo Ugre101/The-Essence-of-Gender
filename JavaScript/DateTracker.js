@@ -6,7 +6,6 @@ function DateTracker() {
         if (Flags.Date.Hour > 24) {
             Flags.Date.Day++;
             Flags.Date.Hour = 0;
-            PlayerDay++;
             if (Flags.Date.Day > 30) {
                 Flags.Date.Day = 1;
                 Flags.Date.Month++;

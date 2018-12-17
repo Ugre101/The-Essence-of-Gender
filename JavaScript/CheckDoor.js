@@ -1,4 +1,5 @@
 function DoorHandler(NESW) {
+    var startarea = document.getElementById("hem");
     if (NESW === "N") {
         sprite.y = startarea.height - 3 * grid;
         enemies = [];
@@ -23,6 +24,7 @@ function MakeDoor(x, y, width, height, NESW) {
 };
 
 function CheckDoor() {
+    var startarea = document.getElementById("hem");
     DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E");
     DoorS = new MakeDoor(startarea.width / 2 - 3 * grid, startarea.height - 2 * grid, grid * 5, grid, "S");
     DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W");

@@ -137,6 +137,10 @@
                 Broodmother: 0,
                 BroodmotherSeed: 0,
                 Malepreg: 0
+            },
+            ChimeraShrine: {
+                Donated: 0,
+                Points: 0
             }
         }
     };
@@ -263,18 +267,12 @@
 
     // Start values for canvas
     var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.MapPercent) * 20;
-    var startarea = document.getElementById("hem");
-    var ctx = startarea.getContext("2d");
-    startarea.width = medium;
-    startarea.height = medium;
     var grid = (medium / 20);
     var sprite = {
         x: grid,
         y: grid,
         Size: grid
     };
-
-    document.getElementById("VoreLooks").style.display = 'none';
 
     // Start page
     document.getElementById("GoToCharCreator").addEventListener("click", function () {
@@ -886,149 +884,6 @@
         }
     }
 
-    document.getElementById("DrainM").addEventListener("click", function () {
-        var old = JSON.parse(JSON.stringify(player));
-        var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
-        if (player.EssenceDrain >= enemies[EnemyIndex].Masc && enemies[EnemyIndex].Masc > 0) {
-            enemies[EnemyIndex].SessionOrgasm--;
-            if (player.ForcedFemale)
-                player.Femi += enemies[EnemyIndex].Masc;
-            else
-                player.Masc += enemies[EnemyIndex].Masc;
-            enemies[EnemyIndex].Masc = 0;
-            EssenceCheck(enemies[EnemyIndex]);
-            if (Settings.EssenceAuto) {
-                EssenceCheck(player);
-            }
-            document.getElementById("SexText").innerHTML = "You siphon the last essence of masculinity from them leaving them with no signs of masculinity left." + DrainChanges(old, player, eold, enemies[EnemyIndex]);
-        } else if (player.EssenceDrain < enemies[EnemyIndex].Masc) {
-            enemies[EnemyIndex].SessionOrgasm--;
-            if (player.ForcedFemale)
-                player.Femi += player.EssenceDrain;
-            else
-                player.Masc += player.EssenceDrain;
-            enemies[EnemyIndex].Masc -= player.EssenceDrain;
-            EssenceCheck(enemies[EnemyIndex]);
-            if (Settings.EssenceAuto) {
-                EssenceCheck(player);
-            }
-            document.getElementById("SexText").innerHTML = "You siphon essence of masculinity from them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
-        }
-
-        AfterBattleButtons();
-        CheckArousal();
-        return;
-    });
-
-    document.getElementById("DrainF").addEventListener("click", function () {
-        var old = JSON.parse(JSON.stringify(player));
-        var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
-        if (player.EssenceDrain >= enemies[EnemyIndex].Femi && enemies[EnemyIndex].Femi > 0) {
-            enemies[EnemyIndex].SessionOrgasm--;
-            if (player.ForcedMale)
-                player.Masc += enemies[EnemyIndex].Femi;
-            else
-                player.Femi += enemies[EnemyIndex].Femi;
-            enemies[EnemyIndex].Femi = 0;
-            EssenceCheck(enemies[EnemyIndex]);
-            if (Settings.EssenceAuto) {
-                EssenceCheck(player);
-            }
-            document.getElementById("SexText").innerHTML = "You siphon the last essence of femininity from them leaving them with no signs of femininity left. " + DrainChanges(old, player, eold, enemies[EnemyIndex]);
-        } else if (player.EssenceDrain < enemies[EnemyIndex].Femi) {
-            enemies[EnemyIndex].SessionOrgasm--;
-            if (player.ForcedMale)
-                player.Masc += player.EssenceDrain;
-            else
-                player.Femi += player.EssenceDrain;
-            enemies[EnemyIndex].Femi -= player.EssenceDrain;
-            EssenceCheck(enemies[EnemyIndex]);
-            if (Settings.EssenceAuto) {
-                EssenceCheck(player);
-            }
-            document.getElementById("SexText").innerHTML = "You siphon essence of femininity from them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
-        }
-        AfterBattleButtons();
-        CheckArousal();
-        return;
-    })
-
-    document.getElementById("InjectM").addEventListener("click", function () {
-        var q = Math.min(player.GiveEssence, player.Masc);
-        var old = JSON.parse(JSON.stringify(player));
-        var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
-        if (player.GiveEssence >= player.Masc && player.Masc > 0) {
-            player.SessionOrgasm--;
-            player.Masc -= q;
-            enemies[EnemyIndex].Masc += q;
-            EssenceCheck(enemies[EnemyIndex]);
-            if (Settings.EssenceAuto) {
-                EssenceCheck(player);
-            }
-            document.getElementById("SexText").innerHTML = "You inject them with your last essence of masculinity, leaving yourself male-free." + DrainChanges(old, player, eold, enemies[EnemyIndex]);
-        } else if (player.GiveEssence < player.Masc) {
-            player.SessionOrgasm--;
-            player.Masc -= q;
-            enemies[EnemyIndex].Masc += q;
-            EssenceCheck(enemies[EnemyIndex]);
-            if (Settings.EssenceAuto) {
-                EssenceCheck(player);
-            }
-            document.getElementById("SexText").innerHTML = "You inject essence of masculinity into them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
-        }
-
-        AfterBattleButtons();
-        CheckArousal();
-        return;
-    });
-
-    document.getElementById("InjectF").addEventListener("click", function () {
-        var q = Math.min(player.GiveEssence, player.Femi);
-        var old = JSON.parse(JSON.stringify(player));
-        var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
-        if (player.GiveEssence >= player.Femi && player.Femi > 0) {
-            player.SessionOrgasm--;
-            player.Femi -= q;
-            enemies[EnemyIndex].Femi += q;
-            EssenceCheck(enemies[EnemyIndex]);
-            if (Settings.EssenceAuto) {
-                EssenceCheck(player);
-            }
-            document.getElementById("SexText").innerHTML = "You give them the last of your femininity, leaving yourself female-free. " + DrainChanges(old, player, eold, enemies[EnemyIndex]);
-        } else if (player.GiveEssence < player.Femi) {
-            player.SessionOrgasm--;
-            player.Femi -= q;
-            enemies[EnemyIndex].Femi += q;
-            EssenceCheck(enemies[EnemyIndex]);
-            if (Settings.EssenceAuto) {
-                EssenceCheck(player);
-            }
-            document.getElementById("SexText").innerHTML = "You inject essence of femininity into them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
-        }
-        AfterBattleButtons();
-        CheckArousal();
-        return;
-    })
-
-    function IntToAge(int) {
-        switch (int) {
-            case 1:
-                return "one year";
-            case 2:
-                return "two years";
-            case 3:
-                return "three years";
-            case 4:
-                return "four years";
-            case 5:
-                return "five years";
-            case 6:
-                return "six years";
-            default:
-                return int + "years";
-        }
-    }
-
     function HouseEngine() {
         if (House.Gym > 0) {
             var maxMuscle;
@@ -1096,8 +951,6 @@
         setInterval(DateTracker, 1000);
     }
 
-    var PlayerDay = 0;
-
     function FoodEngine() {
         // health/will && fat burn
         /*  for (var e = 0; e < player.FoodStomach.length; e++) {
@@ -1123,10 +976,6 @@
     var Npcs = [];
 
     var EnemyIndex;
-    var mousedowner = false;
-    var mFunction;
-    var mouseX;
-    var mouseY;
 
     function BattleSetup(who) {
         document.getElementById("map").style.display = 'none';
@@ -1173,7 +1022,7 @@
                     clearInterval(mFunction);
                     mousedowner = false;
                 }
-                EnemyIndex = enemies.indexOf(enemies[j]);
+                EnemyIndex = j;
                 EssenceCheck(enemies[j]);
                 enemies[j].XPos = RandomInt(2, 18) * grid;
                 enemies[j].YPos = RandomInt(2, 18) * grid;
@@ -1189,8 +1038,10 @@
                     mousedowner = false;
                 }
                 battle = true;
-                if (player.hasOwnProperty("Spells"))
+                if (player.hasOwnProperty("Spells")) {
                     player.Spells.Fireball = player.Spells.FireballMax;
+                }
+                var startarea = document.getElementById("hem");
                 sprite.x = startarea.width / 2 - grid;
                 sprite.y = startarea.height / 2;
                 UpdateNpc(Npcs[n].Name);
@@ -1221,6 +1072,8 @@
     }
 
     function PrintNpcs() {
+        var startarea = document.getElementById("hem");
+        var ctx = startarea.getContext("2d");
         var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"]
         for (var e of Npcs) {
             if (needPrint.indexOf(e.Name) > -1) {
@@ -1241,6 +1094,8 @@
     }
 
     function PrintEnemies() {
+        var startarea = document.getElementById("hem");
+        var ctx = startarea.getContext("2d");
         for (var e = 0; e < enemies.length; e++) {
             for (var i = e + 1; i < enemies.length; i++) {
                 if (enemies[e].XPos == enemies[i].XPos) {
@@ -1254,13 +1109,13 @@
             var color;
             switch (CheckGender(enemies[e])) {
                 case "cuntboy":
-                    color = "Black";
+                    color = "blue";
                     break;
                 case "female":
                     color = "rgb(231, 84, 128)";
                     break;
                 case "dickgirl":
-                    color = "Black";
+                    color = "rgb(231, 84, 128)";
                     break;
                 case "male":
                     color = "Blue";
@@ -1286,6 +1141,8 @@
     function PaintBackground() {
         var WorldMap = document.getElementById("WorldMap");
         var World = WorldMap.getContext("2d");
+        var startarea = document.getElementById("hem");
+        var ctx = startarea.getContext("2d");
         ctx.fillStyle = Settings.MapColor;
         World.fillStyle = Settings.MapColor;
         ctx.fillRect(0, 0, startarea.width, startarea.height);
@@ -1311,6 +1168,12 @@
             fps.pop();
             fps.pop();
         }
+        var startarea = document.getElementById("hem");
+        var ctx = startarea.getContext("2d");
+        startarea.width = medium;
+        startarea.height = medium;
+
+
         if (Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20 !== medium) {
             HemScale();
         };
@@ -1385,105 +1248,3 @@
         };
     };
     var Laglimiter = 0;
-
-    // Movement buttons
-    document.addEventListener('keydown', function (e) {
-        if (battle === true) {
-            return;
-        }
-        if ((e.which === 37 || e.which === 65) && sprite.x > 0) {
-            sprite.x -= grid * sprite.Size;
-            sprite.y += 0;
-        } else if ((e.which === 39 || e.which === 68) && sprite.x + grid * sprite.Size < startarea.width) {
-            sprite.x += grid * sprite.Size;
-            sprite.y += 0;
-        }
-        if ((e.which === 38 || e.which === 87) && sprite.y > 0) {
-            sprite.y -= grid * sprite.Size;
-            sprite.x += 0;
-        } else if ((e.which === 40 || e.which === 83) && sprite.y + grid * sprite.Size < startarea.height) {
-            sprite.y += grid * sprite.Size;
-            sprite.x += 0;
-        }
-        Touching();
-        CheckDoor();
-    });
-
-    /*
-    startarea.addEventListener("click", function (e) {
-        var MapFarm = startarea.getBoundingClientRect();
-        var Xtile = Math.round((e.pageX - MapFarm.left) / 20) * 20;
-        var Ytile = Math.round((e.pageY - MapFarm.top) / 20) * 20;
-        if (player.Map == "RoadToHome") {
-            if (Xtile > 2 * grid && Xtile < 7 * grid && Ytile < 19 * grid && Ytile > 14 * grid) {
-                console.log(Xtile + " " + Ytile);
-            }
-        }
-    });
-*/
-
-    function mousedownfunc() {
-        var MapRect = startarea.getBoundingClientRect();
-        if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x + grid * sprite.Size < startarea.width) {
-            sprite.x += grid * sprite.Size;
-        } else if (mouseX - MapRect.left + grid / 2 < sprite.x && sprite.x > 0) {
-            sprite.x -= grid * sprite.Size;
-        }
-        if (mouseY - MapRect.top > sprite.y + 1.5 * grid && sprite.y < startarea.height) {
-            sprite.y += grid * sprite.Size;
-        } else if (mouseY - MapRect.top + grid / 2 < sprite.y && sprite.y > 0) {
-            sprite.y -= grid * sprite.Size;
-        }
-        Touching();
-        CheckDoor();
-    }
-
-    startarea.addEventListener('mousedown', function (e) {
-        if (!mousedowner) {
-            mousedowner = true;
-            mouseX = e.pageX;
-            mouseY = e.pageY;
-            mFunction = setInterval(mousedownfunc, 100);
-        }
-    });
-
-    startarea.addEventListener('touchstart', function (e) {
-        if (!mousedowner) {
-            mousedowner = true;
-            mouseX = e.touches[e.touches.length - 1].clientX;
-            mouseY = e.touches[e.touches.length - 1].clientY;
-            mFunction = setInterval(mousedownfunc, 100);
-        }
-    });
-
-    document.addEventListener('mouseup', function () {
-        if (mousedowner) {
-            clearInterval(mFunction);
-            mousedowner = false;
-        }
-    });
-
-    document.addEventListener('touchend', function () {
-        if (mousedowner) {
-            clearInterval(mFunction);
-            mousedowner = false;
-        }
-    });
-
-    startarea.addEventListener('mousemove', function (e) {
-        if (mousedowner) {
-            if (mouseX != e.pageX || mouseY != e.pageY) {
-                mouseX = e.pageX;
-                mouseY = e.pageY;
-            }
-        }
-    });
-
-    startarea.addEventListener('touchmove', function (e) {
-        if (mousedowner) {
-            if (mouseX != e.touches[e.touches.length - 1].clientX || e.touches[e.touches.length - 1].clientY) {
-                mouseX = e.touches[e.touches.length - 1].clientX;
-                mouseY = e.touches[e.touches.length - 1].clientY;
-            }
-        }
-    });
