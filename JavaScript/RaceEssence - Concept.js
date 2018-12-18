@@ -43,13 +43,29 @@ function isTaur(mode = "a") {
 
 function EssenceBalance() { // Concept for calculating what species you're treated as
     var RaceEss = player.RaceEssence;
-    RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
+    if (RaceEss.some(e => e.Race !== e.Race.Capitalize())) { // Make sure all races have firt letter cap + rest lowercase
+        console.log("Non cap race");
+        for (var e of RaceEss) {
+            e.Race = e.Race.Capitalize();
+        }
+    }
     for (var i = 0; i < RaceEss.length; i++) { // Clearing/Spicing out anything below 1
         if (RaceEss[i].amount < 1) {
             console.log("Spliced " + RaceEss[i].Race);
             RaceEss.splice(i, 1);
         }
     }
+    for (var e = 0; e < RaceEss.length; e++) { // Clearing/splicing duplicates
+        for (var i = 0; i < RaceEss.length; i++) {
+            if (RaceEss[e].Race == RaceEss[i].Race && e != i) {
+                console.log("Duplicate race");
+                RaceEss[e].amount += RaceEss[i].amount;
+                RaceEss.splice(i, 1);
+            }
+        }
+    }
+    RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
+
     var totalAbsorb = 0;
     for (var i = 0; i < RaceEss.length; i++) {
         totalAbsorb += RaceEss[i].amount;
@@ -99,6 +115,8 @@ e.g. you are not a dragon because you have 1 dragon essence.
             GenitalChange(RaceEss[0].Race);
         }
     }
+    player.Race = player.Race.toLowerCase();
+    player.SecondRace = player.Race.toLowerCase();
 }
 
 function PotionDrunk(race, Dose = 50) {
@@ -186,39 +204,41 @@ function pRaceBonus() {
 }
 
 function RaceDesc(who) {
-    switch (who.Race) {
+    var Race = who.Race.toLowerCase();
+    var SecondRace = who.SecondRace.toLowerCase();
+    switch (Race) {
         case "human":
-            if (who.SecondRace == "human") {
+            if (SecondRace == "human") {
                 return "human";
-            } else if (who.SecondRace == "elf") {
+            } else if (SecondRace == "elf") {
                 return "half elf";
-            } else if (who.SecondRace == "centaur") {
+            } else if (SecondRace == "centaur") {
                 return "centaur";
-            } else if (who.SecondRace == "equine") {
+            } else if (SecondRace == "equine") {
                 return "satyr";
             }
         case "elf":
-            if (who.SecondRace == "human") {
+            if (SecondRace == "human") {
                 return "half elf";
-            } else if (who.SecondRace == "elf") {
+            } else if (SecondRace == "elf") {
                 return "elf";
-            } else if (who.SecondRace == "centaur") {
+            } else if (SecondRace == "centaur") {
                 return "centaur";
-            } else if (who.SecondRace == "equine") {
+            } else if (SecondRace == "equine") {
                 return "satyr";
             }
         case "equine":
-            if (who.SecondRace == "human") {
+            if (SecondRace == "human") {
                 return "humanoid equine";
-            } else if (who.SecondRace == "elf") {
+            } else if (SecondRace == "elf") {
                 return "humanoid equine";
-            } else if (who.SecondRace == "centaur") {
+            } else if (SecondRace == "centaur") {
                 return "anthropomorphic centaur";
-            } else if (who.SecondRace == "equine") {
+            } else if (SecondRace == "equine") {
                 return "equine";
             }
         default:
-            return player.Race;
+            return Race;
     }
 }
 

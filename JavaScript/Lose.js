@@ -26,8 +26,8 @@ document.getElementById("PlayerLoseSex").addEventListener("click", function () {
 	}
 });
 
-function Lose(q) {
-	var ee = enemies[EnemyIndex]
+function Lose(sex = true) {
+	var ee = enemies[EnemyIndex];
 	document.getElementById("LosePlayerLooks").innerHTML = "" // BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
 	if (player.Pregnant.Babies.length > 0) {
 		var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
@@ -73,10 +73,12 @@ function Lose(q) {
 	document.getElementById("Lose").style.display = 'grid';
 	document.getElementById("LeaveLose").style.display = 'none';
 	document.getElementById("DungeonLose").style.display = 'none';
-	if (typeof q === undefined) {
+	if (sex) {
 		if (document.getElementById("LoseSexText").style.display = 'none')
 			document.getElementById("LoseSexText").style.display = 'block'
 		document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronoun(CheckGender(ee)) + " " + ee.Race + " " + ee.Name;
+		RaceConq(ee);
+		NameConq(ee);
 	} else {
 		document.getElementById("LoseSexText").style.display = 'none';
 		document.getElementById("LoseStruggle").style.display = 'none';
@@ -109,7 +111,7 @@ document.getElementById("LoseSubmit").addEventListener("click", function () {
 		enemies[EnemyIndex].Masc += takeM;
 		enemies[EnemyIndex].Femi += take;
 	}
-	Lose(1);
+	Lose(false);
 });
 document.getElementById("LoseStruggle").addEventListener("click", function () {
 	var take = Math.round(enemies[EnemyIndex].SexSkill * RandomInt(1, 7));
@@ -148,7 +150,7 @@ document.getElementById("LoseStruggle").addEventListener("click", function () {
 		enemies[EnemyIndex].Gold += shift;
 		player.Gold /= 2;
 	}
-	Lose(1);
+	Lose(false);
 });
 document.getElementById("LeaveLose").addEventListener("click", function () {
 	battle = false;
@@ -623,27 +625,47 @@ function SnowScenes() {
 
 function RaceConq(enemy) {
 	var race = enemy.Race.toLowerCase();
+	var LoseText = document.getElementById("LoseSexText");
 	console.log(race);
 	switch (race) {
 		case "human":
-			player.Gold -= RandomInt(25, player.Gold / 2); // Robbed, why not.
+			var steal = Math.min(RandomInt(25, 200), player.Gold)
+			player.Gold -= steal; // Robbed, why not. #Nerfed
+			// = "They steal " + steal + " gold from you.";
 			break;
 		case "orc":
 			player.Femi += 30;
-			Impregnate(player, enemy, "B");
+			player.Masc -= Math.min(30, player.Masc);
+			var i = 0;
+			while (i < 3 && !player.Pregnant.Status) { // try more than once
+				Impregnate(player, enemy, "B");
+			}
+			// "Being a orc they waste no time trying to breed you, while also feminate you."
 			break;
 		case "fairy":
 			if (player.Height > 30) {
-				player.Height -= RandomInt(10, player.Height / 10);
+				player.Height -= Math.min(RandomInt(7, player.Height / 10), 50);
 			}
+			PotionDrunk("Fairy", RandomInt(10, 20));
+			// "Atempting to turn you into a fairy they shrunk you?!"
 			break;
 		case "elf":
 			break;
 		case "dark elf":
 			break;
 		case "goblin":
-			Impregnate(player, enemy, "B"); // Breeding stereotype
-			Impregnate(enemy, player);
+			if (player.Balls.length > 0) {
+				Impregnate(player, enemy, "B"); // Breeding stereotype
+				// = "Stradling you they ride you, drain your balls trying to impregnate themself."
+				if (enemy.Balls.length > 0) {
+					Impregnate(enemy, player);
+					// = " Once satisfied they move on to fucking with "
+				}
+			} else if (enemy.Balls.length > 0) {
+				Impregnate(enemy, player);
+				// = "They "
+			}
+
 			break;
 		case "incubus":
 			if (player.Masc > 0) {
@@ -652,6 +674,7 @@ function RaceConq(enemy) {
 				enemy.Masc += take;
 			}
 			Impregnate(player, enemy, "B");
+			// "drainging your masculinity "
 			break;
 		case "succubus":
 			if (player.Femi > 0) {
@@ -660,18 +683,32 @@ function RaceConq(enemy) {
 				enemy.Femi += take;
 			}
 			Impregnate(enemy, player);
+			// "draining your feminity"
 			break;
 		case "dragon":
+			if (player.RaceEssence.some(e => e.Race == "Dragon")) { // Dragon doesn't like weaklings being dragons. 
+				var b = player.RaceEssence.findIndex(e => e.Race == "Dragon");
+				player.RaceEssence[b].amount -= Math.min(RandomInt(1, 25), player.RaceEssence[b].amount)
+			}
+			break;
+		default:
 			break;
 	}
 }
 
 function NameConq(enemy) { // Name/title/type e.g. witch, maiden
 	var Name = enemy.Name.toLowerCase();
+	var LoseText = document.getElementById("LoseSexStats");
+	console.log(Name);
 	switch (Name) {
 		case "witch":
 			break;
 		case "maiden":
+			Lose(false); // "No sex"
+			LoseText.innerHTML = "Your defeat proves you unworthy to father her children, "+
+			"she walks away avoiding wasting more time on you."
+			break;
+		default:
 			break;
 	}
 }
