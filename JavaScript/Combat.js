@@ -5,12 +5,19 @@ function UpdateStats(FirstRound = false) {
     document.getElementById("EnemyStatusHealth").style.width = 100 * (ee.Health / ee.FullHealth) + "%";
     document.getElementById("EnemyStatusWillHealth").innerHTML = ee.WillHealth;
     document.getElementById("EnemyStatusWillHealth").style.width = 100 * (ee.WillHealth / ee.FullWillHealth) + "%";
-    document.getElementById("StatusName2").innerHTML = player.Name + " " + player.LastName;
-    try {
-        document.getElementById("Fireball").value = "Fireball (" + player.Spells.Fireball + " left)";
-    } catch {
-        document.getElementById("Fireball").value = "Fireball";
+    if (player.hasOwnProperty("Spells")) {
+        document.getElementById("SpellBook").style.display = 'block';
+        if (player.Spells.FireballMax > 0) {
+            document.getElementById("Fireball").style.display = 'inline-block';
+            document.getElementById("Fireball").value = "Fireball (" + player.Spells.Fireball + " left)";
+
+            player.Spells.Fireball = player.Spells.FireballMax;
+        } else {
+            document.getElementById("Fireball").style.display = 'none';
+            document.getElementById("SpellBook").style.display = 'none';
+        }
     }
+    document.getElementById("StatusName2").innerHTML = player.Name + " " + player.LastName;
     document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
     if (player.Health <= player.MaxHealth) {
         document.getElementById("StatusHealth2").style.width = 100 * (player.Health / player.MaxHealth) + "%";
@@ -33,10 +40,10 @@ function UpdateStats(FirstRound = false) {
     } else*/
     if (ee.Health <= 0) {
         WinBattle();
-        Teased = false;
+        //     Teased = false;
         return;
     } else if (ee.WillHealth <= 0) {
-        Teased = true;
+        //   Teased = true;
         WinBattle();
         return;
     } else if (player.Health <= 0) {
@@ -55,7 +62,7 @@ function UpdateStats(FirstRound = false) {
         return;
     }
 }
-var Teased = false;
+// var Teased = false;
 
 function EnemyAttack() {
     var ee = enemies[EnemyIndex];
