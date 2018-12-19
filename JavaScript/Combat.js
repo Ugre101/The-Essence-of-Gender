@@ -10,8 +10,6 @@ function UpdateStats(FirstRound = false) {
         if (player.Spells.FireballMax > 0) {
             document.getElementById("Fireball").style.display = 'inline-block';
             document.getElementById("Fireball").value = "Fireball (" + player.Spells.Fireball + " left)";
-
-            player.Spells.Fireball = player.Spells.FireballMax;
         } else {
             document.getElementById("Fireball").style.display = 'none';
             document.getElementById("SpellBook").style.display = 'none';
