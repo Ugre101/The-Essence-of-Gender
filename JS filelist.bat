@@ -1,1 +1,0 @@
-dir JavaScript /b > jsList.txt
