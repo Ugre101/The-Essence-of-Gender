@@ -240,7 +240,7 @@ function BoobSizeConvertor(Size) {
     }
 }
 
-function PussySizeConvetor(Size) {
+function PussySizeConvetor(Size) { // Could be fun to reuse with a strecht factor
     if (Size <= 1) {
         return "extremely tight";
     } else if (Size >= 2 && Size < 4) {
@@ -267,11 +267,11 @@ function Fitness(who) {
     } else if ((who.Fat / who.Weight) * 100 <= 26) {
         a = "You have a healthy body ";
     } else if ((who.Fat / who.Weight) * 100 <= 31) {
-        a = "You have an overweight body ";
+        a = "You have an pudgy body "; // Probably should change to more positive words, plus size? fat?
     } else if ((who.Fat / who.Weight) * 100 <= 36) {
-        a = "You have a obese body ";
+        a = "You have a plump body "; // Obese
     } else {
-        a = "You have a morbidly obese body ";
+        a = "You have a plus size body "; // morbidly obese
     }
 
     if (who.Muscle < who.Height * 0.18) {
@@ -280,8 +280,14 @@ function Fitness(who) {
         b = "with some defined muscle";
     } else if (who.Muscle < who.Height * 0.22) {
         b = "with well-defined muscle";
+    } else if (who.Muscle < who.Height * 0.26) {
+        b = "with bulky muscle";
+    } else if (who.Muscle < who.Height * 0.30) {
+        b = "with hulking muscle";
+    } else if (who.Muscle < who.Height * 0.34) {
+        b = "with enormous muscle";
     } else {
-        b = "with massive muscle";
+        b = "with colossal muscle"; // This is relative does a fairy ever have colossal muscle?
     }
 
 

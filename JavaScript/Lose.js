@@ -77,7 +77,6 @@ function Lose(sex = true) {
 		if (document.getElementById("LoseSexText").style.display = 'none')
 			document.getElementById("LoseSexText").style.display = 'block'
 		document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronoun(CheckGender(ee)) + " " + ee.Race + " " + ee.Name;
-		RaceConq(ee);
 		NameConq(ee);
 	} else {
 		document.getElementById("LoseSexText").style.display = 'none';
@@ -631,27 +630,35 @@ function RaceConq(enemy) {
 		case "human":
 			var steal = Math.min(RandomInt(25, 200), player.Gold)
 			player.Gold -= steal; // Robbed, why not. #Nerfed
-			// = "They steal " + steal + " gold from you.";
+			LoseText.innerHTML = "They steal " + steal + " gold from you.";
 			break;
 		case "orc":
+			var Steal = Math.min(30, player.Masc);
 			player.Femi += 30;
-			player.Masc -= Math.min(30, player.Masc);
-			var i = 0;
-			while (i < 3 && !player.Pregnant.Status) { // try more than once
-				Impregnate(player, enemy, "B");
+			player.Masc -= Steal;
+			enemy.Masc += Steal;
+			// player.Mind.Sub++
+			if (enemy.Balls.length > 0) {
+				var i = 0;
+				while (i < 3 && !player.Pregnant.Status) { // try more than once
+					Impregnate(player, enemy, "B");
+				}
 			}
-			// "Being a orc they waste no time trying to breed you, while also feminate you."
+			// LoseText.innerHTML = "Following their natrual instincts the orc try to breed you, " +
+			// "while also transforminng you to better suit their preference."
 			break;
 		case "fairy":
 			if (player.Height > 30) {
 				player.Height -= Math.min(RandomInt(7, player.Height / 10), 50);
 			}
 			PotionDrunk("Fairy", RandomInt(10, 20));
-			// "Atempting to turn you into a fairy they shrunk you?!"
+			LoseText.innerHTML = "Attempting to transform you into a fairy they shrunk you"
 			break;
 		case "elf":
 			break;
 		case "dark elf":
+			break;
+		case "amazon":
 			break;
 		case "goblin":
 			if (player.Balls.length > 0) {
@@ -691,6 +698,8 @@ function RaceConq(enemy) {
 				player.RaceEssence[b].amount -= Math.min(RandomInt(1, 25), player.RaceEssence[b].amount)
 			}
 			break;
+		case "Demon":
+			// player.Mind.Corruption++;
 		default:
 			break;
 	}
@@ -701,14 +710,38 @@ function NameConq(enemy) { // Name/title/type e.g. witch, maiden
 	var LoseText = document.getElementById("LoseSexStats");
 	console.log(Name);
 	switch (Name) {
+		case "wizard":
+			// Curse? Maybe add a organ mod on auto and shrink on manual; might make organmod effect manual
+			if (Settings.EssenceAuto) {
+				var Organs = ["Dicks", "Balls", "Boobies", "Pussies"];
+				var a = RandomString(Organs);
+				if (player[a].length > 0) {
+					for (var e of player[a]) {
+						if (e.Size > 0) {
+							e.Size--;
+						}
+					}
+					LoseText.innerHTML = "Something doesn't feel right..."; // 
+				} else {
+					LoseText.innerHTML = ""; // He failed
+				}
+			} else {
+				var Organs = ["Dick", "Balls", "Boobies", "Pussy"];
+				var a = RandomString(Organs);
+				player.OrganMod[a].Size--; // Need to make a way to get rid of the penalty.
+				LoseText.innerHTML = "Something doesn't feel right..."; // 
+			}
 		case "witch":
+			PotionDrunk("Amphibian", RandomInt(1, 5));
+			RaceConq(ee);
 			break;
 		case "maiden":
 			Lose(false); // "No sex"
-			LoseText.innerHTML = "Your defeat proves you unworthy to father her children, "+
-			"she walks away avoiding wasting more time on you."
+			LoseText.innerHTML = "Your defeat proves you unworthy to father her children, " +
+				"she walks away avoiding wasting more time on you."
 			break;
 		default:
+			RaceConq(ee); // Some enemies don't trigger race conq like e.g. maiden.
 			break;
 	}
 }
