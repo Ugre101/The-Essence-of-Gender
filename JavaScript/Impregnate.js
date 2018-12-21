@@ -58,7 +58,9 @@ function BabyMaker(who, by) {
                 BabyAge: 0,
                 BabyRace: player.Race,
                 Father: by.Name + " " + by.LastName,
-                Mother: who.FirstName + " " + who.LastName
+                Mother: who.FirstName + " " + who.LastName,
+                Blessed: "Fertility" // Not in use for the moment, but I want it so children made during quest is different. 
+                //Maybe they leave house to join the shrine
             }
             who.Pregnant.Babies.push(Baby);
         }
@@ -94,7 +96,8 @@ function playerBabyMaker(by) {
                 BabyAge: 0,
                 BabyRace: who.Race,
                 Father: by.FirstName + " " + by.LastName,
-                Mother: player.Name + " " + player.LastName
+                Mother: player.Name + " " + player.LastName,
+                Blessed: "Fertility"
             }
             player.Pregnant.Babies.push(Baby);
             player.Quests[i].Count++;

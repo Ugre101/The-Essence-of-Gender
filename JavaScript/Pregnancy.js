@@ -12,12 +12,22 @@ function PregnanyEngine() {
         for (var e = 0; e < player.Pregnant.Babies.length; e++) {
             player.Pregnant.Babies[e].BabyAge++;
             if (player.Pregnant.Babies[e].BabyAge > Math.max(2, 274 - player.Blessings.MountainShrine.Incubator * 5)) {
-                var Child = {
-                    AgeCounter: 0,
-                    Race: player.Pregnant.Babies[e].BabyRace,
-                    Mother: player.Pregnant.Babies[e].Mother,
-                    Father: player.Pregnant.Babies[e].Father
-                };
+                if (player.Pregnant.Babies[e].hasOwnProperty("Blessed")) {
+                    var Child = {
+                        AgeCounter: 0,
+                        Race: player.Pregnant.Babies[e].BabyRace,
+                        Mother: player.Pregnant.Babies[e].Mother,
+                        Father: player.Pregnant.Babies[e].Father,
+                        Blessed: player.Pregnant.Babies[e].Blessed
+                    };
+                } else {
+                    var Child = {
+                        AgeCounter: 0,
+                        Race: player.Pregnant.Babies[e].BabyRace,
+                        Mother: player.Pregnant.Babies[e].Mother,
+                        Father: player.Pregnant.Babies[e].Father
+                    };
+                }
                 player.Children.push(Child);
                 EventLog("You have given birth!")
                 player.Pregnant.Babies.splice(e, 1);
