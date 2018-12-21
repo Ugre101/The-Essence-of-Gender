@@ -1222,6 +1222,8 @@
             if (Npcs.length > 0) {
                 PrintNpcs();
             }
+            var startarea = document.getElementById("hem");
+            var ctx = startarea.getContext("2d");
             ctx.fillStyle = "BlueViolet";
             sprite.Size = 1 //Math.min(0.8 + player.Height / 320, 1.2);
             ctx.fillRect(sprite.x, sprite.y, grid * sprite.Size, grid * sprite.Size);

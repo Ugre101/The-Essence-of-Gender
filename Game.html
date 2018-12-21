@@ -14,6 +14,7 @@
 	<div id="Fps" title="Main loop counter; it counts loops divided by sec"></div>
 
 	<div id="StartPage">
+		<p id="StartProgressBar"></p>
 		<h1>The Essence of Gender</h1>
 		<br>
 		<input type="button" id="GoToCharCreator" value="Start game" />
@@ -1269,66 +1270,38 @@
 
 	</div>
 
-	<script src="JavaScript/AfterBattleButtons.js"></script>
-	<script src="JavaScript/BalanceParts.js"></script>
-	<script src="JavaScript/Bar.js"></script>
-	<script src="JavaScript/BlackMarket.js"></script>
-	<script src="JavaScript/Cheats.js"></script>
-	<script src="JavaScript/CheckArousal.js"></script>
-	<script src="JavaScript/CheckDoor.js"></script>
-	<script src="JavaScript/CheckFlags.js"></script>
-	<script src="JavaScript/Children.js"></script>
-	<script src="JavaScript/ChimeraShrine.js"></script>
-	<script src="JavaScript/CurrentMap.js"></script>
-	<script src="JavaScript/Combat.js"></script>
-	<script src="JavaScript/DateTracker.js"></script>
-	<script src="JavaScript/Dorm.js"></script>
-	<script src="JavaScript/DrainChanges.js"></script>
-	<script src="JavaScript/DropSystem.js"></script>
-	<script src="JavaScript/EssenceCheck.js"></script>
-	<script src="JavaScript/EventLog.js"></script>
-	<script src="JavaScript/FluidsEngine.js"></script>
-	<script src="JavaScript/Gym.js"></script>
-	<script src="JavaScript/Hair.js"></script>
-	<script src="JavaScript/HemScale.js"></script>
-	<script src="JavaScript/Home.js"></script>
-	<script src="JavaScript/Impregnate.js"></script>
-	<script src="JavaScript/InferiorUnit.js"></script>
-	<script src="JavaScript/Items.js"></script>
-	<script src="JavaScript/Inventory.js"></script>
-	<script src="JavaScript/LevelMenu.js"></script>
-	<script src="JavaScript/Loader.js"></script>
-	<script src="JavaScript/Looks.js"></script>
-	<script src="JavaScript/Lose.js"></script>
-	<script src="JavaScript/ManualEssence.js"></script>
-	<script src="JavaScript/MaxLimbs.js"></script>
-	<script src="JavaScript/MobileSupport.js"></script>
-	<script src="JavaScript/Mountain.js"></script>
-	<script src="JavaScript/MountainShrine.js"></script>
-	<script src="JavaScript/Movement.js"></script>
-	<!--	<script src="JavaScript/NewGamePlus.js"></script>-->
-	<script src="JavaScript/Opponents.js"></script>
-	<script src="JavaScript/Perk.js"></script>
-	<script src="JavaScript/PotionShop.js"></script>
-	<script src="JavaScript/PortalShop.js"></script>
-	<script src="JavaScript/Pregnancy.js"></script>
-	<script src="JavaScript/PrintMap.js"></script>
-	<script src="JavaScript/Prototype.js"></script>
-	<script src="JavaScript/RaceEssence - Concept.js"></script>
-	<script src="JavaScript/Racebonus.js"></script>
-	<script src="JavaScript/Save.js"></script>
-	<script src="JavaScript/SexAfterBattle.js"></script>
-	<script src="JavaScript/SuccubusDungeon.js"></script>
-	<!--	<script src="JavaScript/TfBonus.js"></script> -->
-	<script src="JavaScript/TfEngine.js"></script>
-	<script src="JavaScript/TheFarm.js"></script>
-	<script src="JavaScript/Townhall.js"></script>
-	<script src="JavaScript/Vore.js"></script>
-	<script src="JavaScript/VoreActions.js"></script>
-	<script src="JavaScript/VorePreyInterAction.js"></script>
-	<script src="JavaScript/WitchShop.js"></script>
-	<script src="JavaScript/WitchHut.js"></script>
+	<script>
+		// Trial to have them loading in a function so if they fail player are alerted.
+		window.onload = function () {
+			var Scripts = ["AfterBattleButtons", "BalanceParts", "Bar", "BlackMarket", "CaveEncounters", "Cheats",
+				"CheckArousal", "CheckDoor", "CheckFlags", "Children", "ChimeraShrine", "CurrentMap", "Combat", "DateTracker",
+				"Dorm", "DrainChanges", "DropSystem", "EssenceCheck", "EventLog", "FluidsEngine", "Gym", "Hair", "HemScale",
+				"Home", "Impregnate", "InferiorUnit", "Items", "Inventory", "LevelMenu", "Loader", "Looks", "Lose",
+				"ManualEssence", "MaxLimbs", "MobileSupport", "Mountain", "MountainShrine", "Movement", "Opponents", "Perk",
+				"PotionShop", "PortalShop", "Pregnancy", "PrintMap", "Prototype", "RaceEssence - Concept", "Racebonus", "Save",
+				"SexAfterBattle", "SuccubusDungeon", "TfEngine", "TheFarm", "Townhall", "Vore", "VoreActions",
+				"VorePreyInterAction", "WitchShop", "WitchHut"
+			]
+			// Code to sort and output to console, because I find it easier when sorted. #Remember to delete last ","
+			/** 
+			Scripts.sort();
+			Scripts.forEach(e => console.log("\"" + e + "\","));
+			**/
+			// Function to load script and output error when failing to load script.
+			Scripts.forEach(function (src) {
+				var newScript = document.createElement("script");
+				newScript.src = "JavaScript/" + src + ".js";
+				document.head.appendChild(newScript);
+				newScript.onerror = function () {
+					alert("Error loading " + src);
+					document.getElementById("StartProgressBar").innerHTML += "Error loading " + src // For those who use script blockers
+				};
+			});
+		}
+	</script>
 	<script src="Gamescript.js"></script>
+	<!--	<script src="JavaScript/NewGamePlus.js"></script>-->
+	<!--	<script src="JavaScript/TfBonus.js"></script> -->
 </body>
 
 </html>

@@ -17,6 +17,14 @@ function PrintDoor(NESW) {
     }
 }
 
+function PrintImage(ImageSrc) {
+    var startarea = document.getElementById("hem");
+    var ctx = startarea.getContext("2d");
+    var backmap = new Image;
+    backmap.src = "Tiles/" + ImageSrc + ".png"
+    ctx.drawImage(backmap, 0, 0, startarea.width, startarea.height);
+}
+
 function CurrentMap() {
     //First Town
     var Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
@@ -51,9 +59,10 @@ function CurrentMap() {
     		enemies = [animalSpawn(player.Height), animalSpawn(player.Height)];
     		return;
         }*/
-    var backmap;
     var startarea = document.getElementById("hem");
     var ctx = startarea.getContext("2d");
+    var backmap;
+    backmap = new Image;
     switch (player.Area) {
         case "First":
             switch (player.Map) {
@@ -62,27 +71,21 @@ function CurrentMap() {
                         enemies = [EncounterStart(), EncounterStart(), EncounterStart()];
                     }
                     PrintMap("Start");
-                    backmap = new Image;
-                    backmap.src = "Tiles/Start.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("Start");
                     break;
                 case "RoadToCity1":
                     if (enemies.length < 1) {
                         enemies = [EncounterPath1(), EncounterPath1(), EncounterPath1()];
                     }
                     PrintMap("RoadToCity1");
-                    backmap = new Image;
-                    backmap.src = "Tiles/RoadToCity.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("RoadToCity")
                     break;
                 case "Bandit":
                     if (enemies.length < 1) {
                         enemies = [EncounterBandit(), EncounterBandit(), EncounterBandit(), EncounterBanditLord()];
                     }
                     PrintMap("Bandit");
-                    backmap = new Image;
-                    backmap.src = "Tiles/Bandit.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("Bandit");
                     break;
                 case "RoadToCity2":
                     if (enemies.length < 1) {
@@ -90,9 +93,7 @@ function CurrentMap() {
                     }
                     Npcs = [];
                     PrintMap("RoadToCity2");
-                    backmap = new Image;
-                    backmap.src = "Tiles/RoadToCity2.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("RoadToCity2");
                     break;
                 case "City":
                     Npcs = [];
@@ -101,9 +102,7 @@ function CurrentMap() {
                         Npcs = [Townhall, Bar, Shop];
                     }
                     PrintMap("City");
-                    var backmap = new Image;
-                    backmap.src = "Tiles/City.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("City");
                     break;
                 case "RoadToHome":
                     Npcs = [];
@@ -112,9 +111,7 @@ function CurrentMap() {
                         Npcs = [];
                     }
                     PrintMap("RoadToHome");
-                    backmap = new Image;
-                    backmap.src = "Tiles/RoadToHome.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("RoadToHome");
                     break;
                 case "RoadToWitch":
                     Npcs = [];
@@ -123,9 +120,7 @@ function CurrentMap() {
                         Npcs = [Gym, WitchShop, Barber];
                     }
                     PrintMap("RoadToWitch");
-                    backmap = new Image;
-                    backmap.src = "Tiles/RoadToWitch.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("RoadToWitch");
                     break;
                 case "RoadToWitch2":
                     Npcs = [];
@@ -133,9 +128,7 @@ function CurrentMap() {
                         enemies = [EncounterPathToWitch2(), EncounterPathToWitch2(), EncounterPathToWitch2(), EncounterPathToWitch2()];
                     }
                     PrintMap("RoadToWitch2");
-                    backmap = new Image;
-                    backmap.src = "Tiles/RoadToWitch2.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("RoadToWitch2");
                     break;
                 case "Witch":
                     Npcs = [];
@@ -144,9 +137,7 @@ function CurrentMap() {
                         Npcs = [WitchHut, ChimeraShrine];
                     }
                     PrintMap("Witch");
-                    backmap = new Image;
-                    backmap.src = "Tiles/Witchhut.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("Witchhut");
                     break;
                 case "Forest":
                     if (enemies.length < 1) {
@@ -154,9 +145,7 @@ function CurrentMap() {
                     }
                     Npcs = [];
                     PrintMap("Forest");
-                    backmap = new Image;
-                    backmap.src = "Tiles/Forest.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("Forest");
                     break
                 case "Forest2":
                     if (enemies.length < 1) {
@@ -164,9 +153,7 @@ function CurrentMap() {
                     }
                     Npcs = []
                     PrintMap("Forest2");
-                    backmap = new Image;
-                    backmap.src = "Tiles/Forest2.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("Forest2");
                     break;
             }
             break;
@@ -178,9 +165,7 @@ function CurrentMap() {
                     }
                     Npcs = []
                     PrintMap("PathToOutlaws");
-                    backmap = new Image;
-                    backmap.src = "Tiles/PathToOutlaws.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("PathToOutlaws");
                     break;
                 case "PathToOutlaws2":
                     if (enemies.length < 1) {
@@ -188,9 +173,7 @@ function CurrentMap() {
                     }
                     Npcs = []
                     PrintMap("PathToOutlaws2");
-                    backmap = new Image;
-                    backmap.src = "Tiles/PathToOutlaws2.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("PathToOutlaws2");
                     break;
                 case "Farm":
                     PrintDoor("W");
@@ -208,9 +191,7 @@ function CurrentMap() {
                         Npcs = [BlackMarket, PortalShop]
                     }
                     PrintMap("Outlaws");
-                    backmap = new Image;
-                    backmap.src = "Tiles/Outlaws.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("Outlaws");
                     break;
                 case "Cave1":
                     if (enemies.length < 1) {
@@ -218,9 +199,7 @@ function CurrentMap() {
                     }
                     Npcs = []
                     PrintMap("Cave1");
-                    backmap = new Image;
-                    backmap.src = "Tiles/Cave1.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("Cave1");
                     break;
                 case "Cave2":
                     if (enemies.length < 1) {
@@ -228,9 +207,7 @@ function CurrentMap() {
                     }
                     Npcs = []
                     PrintMap("Cave2");
-                    backmap = new Image;
-                    backmap.src = "Tiles/Cave2.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("Cave2");
                     break;
                 case "Cave3":
                     if (enemies.length < 1) {
@@ -238,9 +215,7 @@ function CurrentMap() {
                     }
                     Npcs.length = [];
                     PrintMap("Cave3");
-                    backmap = new Image;
-                    backmap.src = "Tiles/Cave3.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
+                    PrintImage("Cave3");
                     break;
                 case "Cave4":
                     if (enemies.length < 1) {
@@ -249,10 +224,8 @@ function CurrentMap() {
                     if (Npcs.length < 1) {
                         Npcs = [FirstDungeon];
                     }
-                    backmap = new Image;
-                    backmap.src = "Tiles/Cave3.png";
-                    ctx.drawImage(backmap, 0, 0, 20 * grid, 20 * grid);
-                    PrintMap("Cave4")
+                    PrintMap("Cave4");
+                    PrintImage("Cave4");
                     break;
             }
             break;
@@ -274,7 +247,7 @@ function CurrentMap() {
                     PrintDoor("W");
                     Npcs = [];
                     if (enemies.length < 1) {
-                        var a = RandomInt(1, 3);
+                        var a = RandomInt(2, 4);
                         enemies = [];
                         for (var e = 0; e < a; e++) {
                             enemies.push(EncounterMaiden());

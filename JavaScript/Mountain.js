@@ -2,7 +2,6 @@
 //var MountainRaces = ["dragon", "giant", "human", "harpy", ""]
 
 // Mountain opponents
-// "Pure" Maiden
 function EncounterMaiden() {
     var MountainHalfRaces = ["human", "elf"] //
     var OP = new enemy("Maiden", RandomString(MountainHalfRaces), RandomInt(1, 10), RandomInt(1, 10), RandomInt(20, 50), RandomInt(0, 5),

@@ -608,7 +608,7 @@ function SnowScenes() {
 	}
 
 	var scenePoss = [];
-	console.log("Length " + Object.keys(sceneList).length);
+//	console.log("Length " + Object.keys(sceneList).length);
 	for (var i = 0; i < Object.keys(sceneList).length; i++) {
 		if (sceneList[Object.keys(sceneList)[i]]) {
 			scenePoss[scenePoss.length] = Object.keys(sceneList)[i];
@@ -617,7 +617,7 @@ function SnowScenes() {
 		}
 	}
 	var selectScene = scenePoss[Math.floor(Math.random() * scenePoss.length)];
-	console.log("Selected: " + selectScene);
+//	console.log("Selected: " + selectScene);
 	return selectScene;
 }
 
@@ -625,12 +625,11 @@ function SnowScenes() {
 function RaceConq(enemy) {
 	var race = enemy.Race.toLowerCase();
 	var LoseText = document.getElementById("LoseSexText");
-	console.log(race);
 	switch (race) {
 		case "human":
 			var steal = Math.min(RandomInt(25, 200), player.Gold)
 			player.Gold -= steal; // Robbed, why not. #Nerfed
-			LoseText.innerHTML = "They steal " + steal + " gold from you.";
+			LoseText.innerHTML += "They steal " + steal + " gold from you.";
 			break;
 		case "orc":
 			var Steal = Math.min(30, player.Masc);
@@ -652,7 +651,7 @@ function RaceConq(enemy) {
 				player.Height -= Math.min(RandomInt(7, player.Height / 10), 50);
 			}
 			PotionDrunk("Fairy", RandomInt(10, 20));
-			LoseText.innerHTML = "Attempting to transform you into a fairy they shrunk you"
+			LoseText.innerHTML += "Attempting to transform you into a fairy they shrunk you"
 			break;
 		case "elf":
 			break;
@@ -708,7 +707,6 @@ function RaceConq(enemy) {
 function NameConq(enemy) { // Name/title/type e.g. witch, maiden
 	var Name = enemy.Name.toLowerCase();
 	var LoseText = document.getElementById("LoseSexStats");
-	console.log(Name);
 	switch (Name) {
 		case "wizard":
 			// Curse? Maybe add a organ mod on auto and shrink on manual; might make organmod effect manual
