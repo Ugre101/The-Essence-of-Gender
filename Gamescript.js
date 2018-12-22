@@ -1240,7 +1240,6 @@
                 player.Fat = Math.max(0.1, player.Fat);
                 player.Muscle = Math.max(1, player.Muscle);
                 player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);
-                player.Height--;
 
                 player.Height = Math.max(5, player.Height);
                 player.Health = Math.max(1, player.Health);
