@@ -2,6 +2,26 @@
 //var MountainRaces = ["dragon", "giant", "human", "harpy", ""]
 
 // Mountain opponents
+function DragonNameGiver(who) {
+    var FemaleFirstNames = ["Adhonth","Rindyth","Hendro","Frarlei","Fukyss","Fover","Chaghess","Indarrass","Aeghentanth","Dodhisser","Nisses","Rephes","Eny","Qierleo","Qirass","Zevno","Persoan","Frairmossolth","Bayzassath","Pullontinth"];
+    var MaleFirstNames = ["Kalzreot", "Pendryss", "Xierdiss", "Frayvrag", "Cyddrunth", "Zergyr", "Cennir", "Akosdiat", "Jygoda", "Qothasdyr", "Bryrgusdirth", "Frorvedeg", "Kytidum", "Jialdrum", "Pegis", "Ymrirth", "Dayddrog", "Byrvog", "Brenneg", "Kairranth"];
+    var LastNames = [""];
+    switch (CheckGender(who)) {
+        case "cuntboy":
+        case "male":
+            who.FirstName = RandomString(MaleFirstNames);
+            break;
+        case "hermaphrodite":
+        case "female":
+        case "dickgirl":
+        case "doll":
+            who.FirstName = RandomString(FemaleFirstNames);
+            break;
+    }
+    who.LastName = RandomString(LastNames);
+}
+
+
 function EncounterMaiden() {
     var MountainHalfRaces = ["human", "elf"] //
     var OP = new enemy("Maiden", RandomString(MountainHalfRaces), RandomInt(1, 10), RandomInt(1, 10), RandomInt(20, 50), RandomInt(0, 5),
@@ -51,11 +71,12 @@ function EncounterAnthroDragon() {
     EssenceGiver(OP, 1500);
     FatMuscle(OP, 12, 80);
     StandardEnemy(OP);
-    NameGiver(OP);
+    DragonNameGiver(OP);
     return OP;
 }
+
 function EncounterAnthroDragon2() {
-    var OP = new enemy("Mature", "Anthro dragon", RandomInt(40, 60), RandomInt(30, 60), RandomInt(35, 60), RandomInt(15, 35),
+    var OP = new enemy("", "Anthro dragon", RandomInt(40, 60), RandomInt(30, 60), RandomInt(35, 60), RandomInt(15, 35),
         RandomInt(25, 65), RandomInt(25, 75), 8500, 8500, RandomInt(150, 470), RandomInt(140, 380),
         "Red", grid, RandomInt(170, 230));
     EssenceGiver(OP, 2300);
@@ -63,4 +84,15 @@ function EncounterAnthroDragon2() {
     StandardEnemy(OP);
     NameGiver(OP);
     return OP;
+}
+
+function EncounterShapeDragon() {
+    var OP = new enemy("", "Dragon", RandomInt(60, 100), RandomInt(40, 80), RandomInt(40, 70), RandomInt(30, 50), RandomInt(20, 80),
+        RandomInt(20, 70), 12000, 12000, RandomInt(200, 500), RandomInt(160, 450),
+        "Red", grid * 1.1, RandomInt(300, 600));
+    // Feral dragon when fighting Shapeshift to anthro when having sex.
+    EssenceGiver(OP, 3500);
+    FatMuscle(OP, 10, 220);
+    StandardEnemy(OP);
+    NameGiver(OP);
 }
