@@ -6,7 +6,7 @@ function enemy(EnemyName, EnemyRace, Strength, Endurance, Willpower, Charm,
     this.Race = EnemyRace;
     this.Str = Strength;
     this.End = Endurance;
-    this.Willpower = Willpower;
+    this.Will = Willpower;
     this.Charm = Charm;
     this.Int = Intelligence;
     this.SexSkill = SexSkill;
@@ -34,7 +34,7 @@ function NameGiver(who) {
     var LastNames = ["Paine", "Ward", "Bostock", "Devine", "Heath", "Bone", "Dupont", "Patterson", "Garza", "Stein", "Madden", "Francis", "Villanueva", "Perry", "Lyssa", "Beach", "Crouch", "Sharp", "Clifford", "Wade", "Vargas", "Hatfield", "Mata", "Lozano", "Everett",
         "Krueger", "Jimenez", "Fitzpatrick", "Nelson", "Scott", "Vaughn", "Lee", "Hodge", "Blackburn", "Wall", "Hernandez", "Valdez", "Summers", "Mercado", "Villarreal", "Mitchell", "Duran", "David", "Black", "Hopkins", "Hughes", "Rangel"
     ];
-    //LastNames.RemoveDup();
+    LastNames.RemoveDup();
     switch (CheckGender(who)) {
         case "cuntboy":
         case "male":
@@ -43,8 +43,15 @@ function NameGiver(who) {
         case "hermaphrodite":
         case "female":
         case "dickgirl":
-        case "doll":
             who.FirstName = RandomString(FemaleFirstNames);
+            break;
+        case "doll":
+            var i = RandomInt(0, 10);
+            if (i < 5) {
+                who.FirstName = RandomString(FemaleFirstNames);
+            } else {
+                who.FirstName = RandomString(MaleFirstNames);
+            }
             break;
     }
     who.LastName = RandomString(LastNames);
@@ -63,8 +70,15 @@ function EvilNameGiver(who) {
         case "hermaphrodite":
         case "dickgirl":
         case "female":
-        case "doll":
             who.FirstName = RandomString(EvilFemaleFirstNames);
+            break;
+        case "doll":
+            var i = RandomInt(0, 10);
+            if (i < 5) {
+                who.FirstName = RandomString(EvilFemaleFirstNames);
+            } else {
+                who.FirstName = RandomString(EvilMaleFirstNames);
+            }
             break;
     }
     who.LastName = RandomString(EvilLastNames);
@@ -171,6 +185,7 @@ function StandardEnemy(who) {
         Anal: 0
     }
     EssenceCheck(who);
+    EssenceCheck(who);// Double so it gets a chance to loop for second organs
     if (who.Pussies.length > 0) {
         var a = RandomInt(1, 5);
         if (a < 5) {

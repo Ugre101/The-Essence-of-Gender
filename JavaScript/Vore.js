@@ -326,7 +326,7 @@
                         player.Str += Math.round(player.Vore.Stomach[e].Str / snowA);
                         player.Int += Math.round(player.Vore.Stomach[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Stomach[e].Charm / snowA);
-                        player.Will += Math.round(player.Vore.Stomach[e].Willpower / snowA);
+                        player.Will += Math.round(player.Vore.Stomach[e].Will / snowA);
                         player.End += Math.round(player.Vore.Stomach[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Stomach[e].SexSkill / snowA);
                     }
@@ -405,7 +405,7 @@
                         player.Str += Math.round(player.Vore.Vagina[e].Str / snowA);
                         player.Int += Math.round(player.Vore.Vagina[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Vagina[e].Charm / snowA);
-                        player.Will += Math.round(player.Vore.Vagina[e].Willpower / snowA);
+                        player.Will += Math.round(player.Vore.Vagina[e].Will / snowA);
                         player.End += Math.round(player.Vore.Vagina[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Vagina[e].SexSkill / snowA);
                     }
@@ -506,7 +506,7 @@
                         player.Str += Math.round(player.Vore.Breast[e].Str / snowA);
                         player.Int += Math.round(player.Vore.Breast[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Breast[e].Charm / snowA);
-                        player.Will += Math.round(player.Vore.Breast[e].Willpower / snowA);
+                        player.Will += Math.round(player.Vore.Breast[e].Will / snowA);
                         player.End += Math.round(player.Vore.Breast[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Breast[e].SexSkill / snowA);
                     }
@@ -591,7 +591,7 @@
                         player.Str += Math.round(player.Vore.Balls[e].Str / snowA);
                         player.Int += Math.round(player.Vore.Balls[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Balls[e].Charm / snowA);
-                        player.Will += Math.round(player.Vore.Balls[e].Willpower / snowA);
+                        player.Will += Math.round(player.Vore.Balls[e].Will / snowA);
                         player.End += Math.round(player.Vore.Balls[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Balls[e].SexSkill / snowA);
                     }
@@ -672,7 +672,7 @@
                         player.Str += Math.round(player.Vore.Anal[e].Str / snowA);
                         player.Int += Math.round(player.Vore.Anal[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Anal[e].Charm / snowA);
-                        player.Will += Math.round(player.Vore.Anal[e].Willpower / snowA);
+                        player.Will += Math.round(player.Vore.Anal[e].Will / snowA);
                         player.End += Math.round(player.Vore.Anal[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Anal[e].SexSkill / snowA);
                     }

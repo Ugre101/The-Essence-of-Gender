@@ -7,11 +7,16 @@ String.prototype.Capitalize = function () {
  to console so I can paste new array into code */
 Array.prototype.RemoveDup = function () {
     this.sort();
+    var removed = [];
     for (var e = 0; e < this.length; e++) {
         if (this[e] == this[e + 1]) {
-            console.log(true);
+            console.log("Array contains duplicates");
+            removed.push(this.splice(e, 1));
             this.splice(e, 1);
-            console.log(this)
         }
+    }
+    if (removed.length > 0) {
+        console.log(this)
+        console.log("Duplicates: " + removed);
     }
 }

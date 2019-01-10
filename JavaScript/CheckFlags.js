@@ -365,4 +365,28 @@ function CheckFlags() {
                     Perk1: 0
         }
        } */
+    // Convert old willpower to new will, so it's the same as player.
+    for (var e of House.Dormmates) {
+        if (e.hasOwnProperty("Willpower")) {
+            e.Will = e.Willpower
+        }
+    }
+    if (Settings.Vore) {
+        for (var e of player.Vore.Stomach) {
+            e.Will = e.Willpower;
+        }
+        for (var e of player.Vore.Vagina) {
+            e.Will = e.Willpower;
+        }
+        for (var e of player.Vore.Balls) {
+            e.Will = e.Willpower;
+            console.log(e)
+        }
+        for (var e of player.Vore.Anal) {
+            e.Will = e.Willpower;
+        }
+        for (var e of player.Vore.Breast) {
+            e.Will = e.Willpower;
+        }
+    }
 }
