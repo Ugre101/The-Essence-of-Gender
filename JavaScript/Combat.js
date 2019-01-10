@@ -1,9 +1,9 @@
 function UpdateStats(FirstRound = false) {
     var ee = enemies[EnemyIndex];
     document.getElementById("BattleEnemy").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronoun(CheckGender(ee));
-    document.getElementById("EnemyStatusHealth").innerHTML = ee.Health;
+    document.getElementById("EnemyStatusHealth").innerHTML = Math.round(ee.Health);
     document.getElementById("EnemyStatusHealth").style.width = 100 * (ee.Health / ee.FullHealth) + "%";
-    document.getElementById("EnemyStatusWillHealth").innerHTML = ee.WillHealth;
+    document.getElementById("EnemyStatusWillHealth").innerHTML = Math.round(ee.WillHealth);
     document.getElementById("EnemyStatusWillHealth").style.width = 100 * (ee.WillHealth / ee.FullWillHealth) + "%";
     if (player.hasOwnProperty("Spells")) {
         document.getElementById("SpellBook").style.display = 'block';
@@ -62,12 +62,21 @@ function UpdateStats(FirstRound = false) {
 }
 // var Teased = false;
 
+/**
+ * Need to make enemy attack more flavour full
+ * Make it so enemies tease with different movement & hit with stuff like kick, sweeps, slashing, etc..
+ * Race specific is extra needed, succubus can tex tease by fucking themselfs with their tail maybe?
+ */
+
 function EnemyAttack() {
+    var PhysicalAttacks = [
+        "kicks", "hits", "grapple with"
+    ]
     var ee = enemies[EnemyIndex];
     if (ee.Str >= ee.Charm) {
         var EAttack = (RandomInt(1, 5) * ee.Str) / 2;
         player.Health -= EAttack;
-        document.getElementById("BattleText2").innerHTML = "Your opponent hits you for " + EAttack + " dmg.";
+        document.getElementById("BattleText2").innerHTML = "Your opponent " + RandomString(PhysicalAttacks) + " you, causing " + EAttack + " dmg.";
         document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
         document.getElementById("StatusHealth2").style.width = Math.min(103, 100 * (player.Health / player.MaxHealth)) + "%";
         document.getElementById("StatusWillHealth2").innerHTML = Math.round(player.WillHealth);
@@ -78,9 +87,18 @@ function EnemyAttack() {
         }
         return;
     } else if (ee.Str < ee.Charm) {
+        var LustAttacks = ["tease you"]
+        if (ee.Boobies[0].Size > 5) {
+            var boob = "fondle their breast in a seductive manner";
+            LustAttacks.push(boob);
+        }
+        if (ee.Balls.length > 0) {
+            var ball = "fondle their balls in a teasing manner";
+            LustAttacks.push(ball);
+        }
         var EAttack = (RandomInt(1, 5) * ee.Charm) / 2;
         player.WillHealth -= EAttack;
-        document.getElementById("BattleText2").innerHTML = "Your opponent teased you for " + EAttack + " will dmg.";
+        document.getElementById("BattleText2").innerHTML = "Your opponent " + RandomString(LustAttacks) + " causing your will to suffer by " + EAttack + ".";
         document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
         document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
         document.getElementById("StatusHealth2").style.width = Math.min(103, 100 * (player.Health / player.MaxHealth)) + "%";
@@ -95,8 +113,9 @@ function EnemyAttack() {
 }
 // Battle attack buttons
 document.getElementById("Hit").addEventListener("click", function () {
-    var PAttack = Math.floor(RandomInt(1, 5) * player.Str / 2);
-    enemies[EnemyIndex].Health -= PAttack;
+    var ee = enemies[EnemyIndex];
+    var PAttack = Math.floor(RandomInt(3, 8) * player.Str / 2) * PhyRes(ee);
+    ee.Health -= PAttack;
     document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " dmg.";
     UpdateStats();
     return;
@@ -104,13 +123,24 @@ document.getElementById("Hit").addEventListener("click", function () {
 
 document.getElementById("Tease").addEventListener("click", function () {
     // Ferals shouldn't get aroused by you #Tease is now disabled if enemy is feral -Ugre
-    var PAttack = Math.floor(RandomInt(1, 5) * player.Charm / 2);
-    enemies[EnemyIndex].WillHealth -= PAttack;
+    var ee = enemies[EnemyIndex];
+    var PAttack = Math.floor(RandomInt(3, 8) * player.Charm / 2) * LusRes(ee);
+    ee.WillHealth -= PAttack;
     document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " will dmg."
     UpdateStats();
     return;
 });
+/** To Do:
+ *  Add a sort of mana insted of max fireballs
+ *  I think I like having magical essence as "mana", magical essence can be a elelemt found in everything and like our air
+ *  it always want to achive equalilty/even presure so having a alot of mana is hard. Because it will slowly seep out of your body.
+ *  
+ *  Might add a cooldown
+ * 
+ *  More speels and skills overall
+ */
 document.getElementById("Fireball").addEventListener("click", function () {
+    var ee = enemies[EnemyIndex];
     if (!player.hasOwnProperty("Spells")) {
         document.getElementById("BattleText").innerHTML = "You wave your arms, but nothing happens. Maybe you should learn magic first...";
         UpdateStats();
@@ -124,9 +154,9 @@ document.getElementById("Fireball").addEventListener("click", function () {
         UpdateStats();
         return;
     }
-    var PAttack = (RandomInt(1, 5) * player.Int);
-    enemies[EnemyIndex].WillHealth -= PAttack;
-    enemies[EnemyIndex].Health -= PAttack;
+    var PAttack = (RandomInt(3, 7) * player.Int);
+    ee.WillHealth -= PAttack * MagRes(ee);
+    ee.Health -= PAttack * MagRes(ee);
     player.Spells.Fireball--;
     document.getElementById("BattleText").innerHTML = "You threw a ball covered in fire, dealing " + PAttack + " damage to their HP and will!";
     UpdateStats();
@@ -151,89 +181,21 @@ document.getElementById("FleeBattle").addEventListener("click", function () {
     document.getElementById("BattleText").innerHTML = "You failed to get away."
 });
 
-// Function to call when battle is won
-var SexAttack;
-var ESexAttack;
+// Ideas for new combat system I want to add resistence and other things for more depth
+/** Ideas to add
+ *  Ways to ignore resistance like pierce?
+ *  Ways to do extra dmg like they have 5% res but you have 12% something so they get -7% res
+ *  Pets & allies attack
+ */
 
-function WinBattle() {
-    var ee = enemies[EnemyIndex];
-    Winner = true;
-    player.Exp += ee.Exp;
-    player.Gold += ee.Gold;
-    ee.SessionOrgasm = 0;
-    player.SessionOrgasm = 0;
-    document.getElementById("Encounter").style.display = 'none';
-    for (var i = 0; i < player.Quests.length; i++) {
-        if (player.Quests[i].Name === "ElfHunt") {
-            if (ee.Race == "Elf") {
-                player.Quests[i].Count++;
-                if (player.Quests[i].Count >= 3) {
-                    player.Quests[i].Completed = true;
-                    if (player.Quests[i].Count % 3 == 0) {
-                        if (!player.Quests[i].hasOwnProperty("Tier")) {
-                            player.Quests[i].Tier = 1
-                        } else if (player.Quests[i].Tier < 5) {
-                            player.Quests[i].Tier++;
-                        }
-                    }
-                }
-            }
-        }
-        if (player.Quests[i].Name === "BanditLord" && !player.Quests[i].Completed) {
-            if (ee.Name === "Banditlord") {
-                player.Quests[i].Completed = true;
-            }
-        }
-    }
-    DropSystem(ee);
-    if (Settings.Skip) {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("status").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-    } else if (Dungeon) {
-        if (Wave == 4 && false) {
-            document.getElementById("DungeonSystem").style.display = 'block';
-            document.getElementById("DungeonText").innerHTML = "What should you do with her?";
-            document.getElementById("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" +
-                "<input type=\"button\" id=\"MakeSubmit\" value=\"Make her understand her place.\" >";
-        } else {
-            document.getElementById("SexText").innerHTML = HeightSystem(player, ee);
-            document.getElementById("AfterBattle").style.display = 'grid';
-            document.getElementById("SexButtons").style.display = 'grid';
-            if (Settings.ImgPack) {
-                document.getElementById("AfterBattle").classList.remove("AfterBattle");
-                document.getElementById("AfterBattle").classList.add("AfterBattleImg");
-                document.getElementById("MyImg").style.display = 'block';
+function LusRes(who) {
+    return Math.min(1, Math.max(0.2, 1 - (0.02 * who.Will + 0.01 * who.Charm)));
+}
 
-            } else {
-                document.getElementById("AfterBattle").classList.add("AfterBattle");
-                document.getElementById("AfterBattle").classList.remove("AfterBattleImg");
-                document.getElementById("MyImg").style.display = 'none';
-            }
-            CheckArousal();
-            AfterBattleButtons();
-        }
-    } else {
-        document.getElementById("SexText").innerHTML = HeightSystem(player, ee);
-        document.getElementById("AfterBattle").style.display = 'grid';
-        document.getElementById("SexButtons").style.display = 'grid';
-        if (Settings.ImgPack) {
-            document.getElementById("AfterBattle").classList.remove("AfterBattle");
-            document.getElementById("AfterBattle").classList.add("AfterBattleImg");
-            document.getElementById("MyImg").style.display = 'block';
+function PhyRes(who) {
+    return Math.min(1, Math.max(0.2, 1 - (0.02 * who.End + 0.01 * who.Str)));
+}
 
-        } else {
-            document.getElementById("AfterBattle").classList.add("AfterBattle");
-            document.getElementById("AfterBattle").classList.remove("AfterBattleImg");
-            document.getElementById("MyImg").style.display = 'none';
-        }
-        CheckArousal();
-        // No sex with animals (yet??) #Moved it to afterbattlebutton so it can be easier expanded -Ugre
-        if (enemies[EnemyIndex].Name === "Feral") {
-            AfterBattleButtons(false);
-        } else {
-            AfterBattleButtons();
-        }
-    }
+function MagRes(who) {
+    return Math.min(1, Math.max(0.2, 1 - (0.02 * who.Will + 0.01 * who.Int)));
 }

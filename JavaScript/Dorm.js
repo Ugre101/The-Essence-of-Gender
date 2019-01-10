@@ -82,7 +82,7 @@ function MateDiv(e) {
         "<br><br>Height: " + CmToInch(Math.round(rm.Height)) + "<br>Weight: " + KgToPound(rm.Weight) + "<br>Muscle: " + KgToPound(rm.Muscle) + "<br>Fat: " + KgToPound(rm.Fat) +
         "<br>" + PregnantStatus + "<br><br>" + BoobLook(rm) + DickLook(rm) + BallLook(rm) + PussyLook(rm) + "<div> Strength: " + rm.Str +
         "<br>Charm: " + rm.Charm + "<br>Endurance: " + rm.End + "<br>Int: " + rm.Int + "<br>Sexskill: " + rm.SexSkill +
-        "<br> Willpower: " + rm.Willpower + "</div></div>   "
+        "<br> Willpower: " + rm.Will + "</div></div>   "
     document.getElementById(e).style.display = 'block'
     document.getElementById("LeaveRoom").style.display = 'block';
     document.getElementById("LeaveDorm").style.display = 'none';
