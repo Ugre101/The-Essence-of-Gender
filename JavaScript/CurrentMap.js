@@ -51,6 +51,11 @@ function CurrentMap() {
     // Shrine
     var MountainShrine = new Npc("MountainShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
     var ShrinePriestess = new Npc("ShrinePriestess", "Priestess", grid * 15, grid, grid, grid, "Pink");
+    // Dragons
+    var TribeChief = new Npc("TribeChief", "", grid, grid, grid, grid, "red");
+    var TribeChiefWife = new Npc("TriveChiefWife", "", grid, grid, grid, grid, "red");
+    var TribeShop = new Npc("TribeShop", "", grid, grid, grid, grid, "RGB(133,94,66)");
+
     //Animal testing
     /*	var aSpawn = Math.random();
     	if (enemies.length < 1 && Settings.AnimalSpawn)
