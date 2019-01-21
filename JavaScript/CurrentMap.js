@@ -66,8 +66,7 @@ function CurrentMap() {
         }*/
     var startarea = document.getElementById("hem");
     var ctx = startarea.getContext("2d");
-    var backmap;
-    backmap = new Image;
+    var backmap = new Image;
     switch (player.Area) {
         case "First":
             switch (player.Map) {
