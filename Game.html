@@ -911,26 +911,6 @@
 		<input type="button" id="EatBarLarge" value="Buffet 50g" title="+8kg fat" /> <br><br><input type="button" id="LeaveBar"
 		 value="Leave" />
 	</div>
-	<div id="Shop" class="Building None">
-		<h1>Shop</h1>
-		<p id="ShopText" class="TextBox"></p>
-		<div id="ItemsShop">
-			<div>
-				<input type="button" id="StrPotion" value="Potion of Strength 100g" />
-				<input type="button" id="ChaPotion" value="Potion of Charm 100g" />
-			</div>
-			<div>
-				<input type="button" id="EndPotion" value="Potion of Endurance 100g" />
-				<input type="button" id="IntPotion" value="Potion of Intelligence 100g" />
-			</div>
-			<div>
-				<input type="button" id="WillPotion" value="Potion of Willpower 100g" />
-				<input type="button" id="SexPotion" value="Potion of Sexskill 100g" />
-			</div>
-			<br><input type="button" id="LeaveShop" value="Leave" />
-		</div>
-	</div>
-
 	<!-- Home-->
 	<div id="Home" class="None">
 		<p id="HomeText" class="TextBox"></p>
@@ -1267,6 +1247,19 @@
 		</div>
 	</div>
 	<div id="ShrinePriestess" class="Building None">
+
+	</div>
+	<!--
+		A single div which I change in js instead of html so that I can have them more modular and 
+		stop have so many active addeventlistners 
+	-->
+	<div id="Buildings" class="Building None">
+
+	</div>
+	<!--
+		Seperate buildings and npcs as I want to add stuff like affection etc in future
+	-->
+	<div id="Npcs" class="Buildings None">
 
 	</div>
 

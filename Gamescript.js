@@ -1055,20 +1055,29 @@
     };
 
     function UpdateNpc(name) {
-        document.getElementById(name).style.display = 'block';
-        document.getElementById("map").style.display = 'none';
-        document.getElementById("buttons").style.display = 'none';
-        document.getElementById("EmptyButtons").style.display = 'block';
-        document.getElementById("Leave" + name).addEventListener("click", function () {
-            battle = false;
-            document.getElementById(name).style.display = 'none';
-            document.getElementById("map").style.display = 'block';
-            document.getElementById("buttons").style.display = 'block';
-            document.getElementById("EmptyButtons").style.display = 'none';
-            document.getElementById("status").style.display = 'block';
-            document.getElementById(name + "Text").innerHTML = null;
-            return;
-        });
+        var isfunction = window[name + "Func"];
+        if (typeof isfunction === "function") { // Start replacing html building/npcs with javascript functions
+            document.getElementById("Buildings").style.display = 'block';
+            document.getElementById("map").style.display = 'none';
+            document.getElementById("buttons").style.display = 'none';
+            document.getElementById("EmptyButtons").style.display = 'block';
+            isfunction();
+        } else {
+            document.getElementById(name).style.display = 'block';
+            document.getElementById("map").style.display = 'none';
+            document.getElementById("buttons").style.display = 'none';
+            document.getElementById("EmptyButtons").style.display = 'block';
+            document.getElementById("Leave" + name).addEventListener("click", function () {
+                battle = false;
+                document.getElementById(name).style.display = 'none';
+                document.getElementById("map").style.display = 'block';
+                document.getElementById("buttons").style.display = 'block';
+                document.getElementById("EmptyButtons").style.display = 'none';
+                document.getElementById("status").style.display = 'block';
+                document.getElementById(name + "Text").innerHTML = null;
+                return;
+            });
+        }
     }
 
     function PrintNpcs() {
