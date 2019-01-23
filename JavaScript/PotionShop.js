@@ -118,4 +118,5 @@ function ShopFunc() {
     });
     div.appendChild(Leave);
     Buildings.appendChild(div);
+    document.getElementById("Buildings").style.display = 'block';
 }

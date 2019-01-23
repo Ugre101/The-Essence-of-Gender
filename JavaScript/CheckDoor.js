@@ -321,8 +321,20 @@ function CheckDoor() {
                             } else if (Door == "S") {
                                 player.Map = "MountainClimb6";
                                 DoorHandler("S");
+                            } else if (Door == "W") {
+                                player.Map = "MountainTribe";
+                                DoorHandler("W");
                             }
                             break;
+                        case "MountainTribe":
+                            if (Door == "E") {
+                                player.Map = "MountainClimb7";
+                                DoorHandler("E");
+                            } else if (Door == "N") {
+                                player.Map = "MountainClimb9";
+                                DoorHandler("N");
+                            }
+                            break
                         case "MountainClimb8":
                             if (Door == "W") {
                                 player.Map = "MountainClimb9";
@@ -339,6 +351,9 @@ function CheckDoor() {
                             } else if (Door == "E") {
                                 player.Map = "MountainClimb8";
                                 DoorHandler("E");
+                            } else if (Door == "S") {
+                                player.Map = "MountainTribe";
+                                DoorHandler("S");
                             }
                             break;
                         case "MountainClimb10":
