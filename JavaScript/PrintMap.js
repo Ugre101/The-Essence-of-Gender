@@ -197,6 +197,9 @@ function PrintMap(karta = null) {
                 case "MountainClimb7":
                     CurrentTile(4, 1);
                     break;
+                case "MountainTribe":
+                    CurrentTile(3, 1);
+                    break;
                 case "MountainClimb8":
                     CurrentTile(4, 0);
                     break;

@@ -1057,7 +1057,6 @@
     function UpdateNpc(name) {
         var isfunction = window[name + "Func"];
         if (typeof isfunction === "function") { // Start replacing html building/npcs with javascript functions
-            document.getElementById("Buildings").style.display = 'block';
             document.getElementById("map").style.display = 'none';
             document.getElementById("buttons").style.display = 'none';
             document.getElementById("EmptyButtons").style.display = 'block';
@@ -1083,9 +1082,11 @@
     function PrintNpcs() {
         var startarea = document.getElementById("hem");
         var ctx = startarea.getContext("2d");
-        var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"]
+        var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
+        // Switched it so new npcs always print
+        var DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"];
         for (var e of Npcs) {
-            if (needPrint.indexOf(e.Name) > -1) {
+            if (DontneedPrint.indexOf(e.Name) == -1) {
                 ctx.fillStyle = e.Color;
                 ctx.fillRect(e.X, e.Y, e.Width, e.Height);
             }

@@ -52,9 +52,9 @@ function CurrentMap() {
     var MountainShrine = new Npc("MountainShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
     var ShrinePriestess = new Npc("ShrinePriestess", "Priestess", grid * 15, grid, grid, grid, "Pink");
     // Dragons
-    var TribeChief = new Npc("TribeChief", "", grid, grid, grid, grid, "red");
-    var TribeChiefWife = new Npc("TriveChiefWife", "", grid, grid, grid, grid, "red");
-    var TribeShop = new Npc("TribeShop", "", grid, grid, grid, grid, "RGB(133,94,66)");
+    var TribeChief = new Npc("TribeChief", "", grid *2, grid * 8, grid, grid, "#841A31");
+    var TribeChiefWife = new Npc("TribeChiefWife", "", grid * 2, grid * 10, grid, grid, "#841A31");
+    var TribeShop = new Npc("TribeShop", "", grid * 12, grid * 15, grid * 4, grid * 5, "RGB(133,94,66)");
 
     //Animal testing
     /*	var aSpawn = Math.random();
@@ -343,6 +343,15 @@ function CurrentMap() {
                     }
                     if (Npcs.length < 1) {}
                     PrintMap()
+                    break;
+                case "MountainTribe":
+                    PrintDoor("E");
+                    PrintDoor("N");
+                    if (Npcs.length < 1) {
+                        Npcs = [TribeChief, TribeChiefWife, TribeShop];
+                    }
+                    enemies = [];
+                    PrintMap("MountainTribe")
                     break;
                 case "MountainClimb8":
                     PrintDoor("S");
