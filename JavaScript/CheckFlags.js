@@ -216,13 +216,6 @@ function CheckFlags() {
     if (!Settings.hasOwnProperty("BalanceParts")) {
         Settings.BalanceParts = false;
     }
-    if (!player.hasOwnProperty("Spells")) {
-        player.Spells = {
-            Fireball: 0,
-            FireballMax: 0
-        }
-        console.log("Added Spells & Fireballs");
-    }
     if (!House.hasOwnProperty("Portal")) {
         House.Portal = {
             Owned: false,
@@ -388,5 +381,23 @@ function CheckFlags() {
         for (var e of player.Vore.Breast) {
             e.Will = e.Willpower;
         }
+    }
+    if (!player.hasOwnProperty("Mana")) {
+        player.Mana = 100;
+    }
+    if (Array.isArray(player.Spells) !== true) {
+        player.MagicAffinity = {
+            Elemental: 0, // Fire, ice, water, stone, etc
+            Restoration: 0 // Healing, returning to orginal shape/age.
+        }
+        player.Spells = [ // Array so that I can add more without problems
+            Fireball = {
+                Name: "Fireball",
+                Type: "Elemental",
+                ManaCost: 40,
+                BaseDamage: 20,
+                Exp: 0 // I think I want magic to be a thing which gets better with use
+            }
+        ]
     }
 }
