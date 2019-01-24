@@ -1,20 +1,11 @@
 function UpdateStats(FirstRound = false) {
     var ee = enemies[EnemyIndex];
+    CombatButtons();
     document.getElementById("BattleEnemy").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronoun(CheckGender(ee));
     document.getElementById("EnemyStatusHealth").innerHTML = Math.round(ee.Health);
     document.getElementById("EnemyStatusHealth").style.width = 100 * (ee.Health / ee.FullHealth) + "%";
     document.getElementById("EnemyStatusWillHealth").innerHTML = Math.round(ee.WillHealth);
     document.getElementById("EnemyStatusWillHealth").style.width = 100 * (ee.WillHealth / ee.FullWillHealth) + "%";
-    if (player.hasOwnProperty("Spells")) {
-        document.getElementById("SpellBook").style.display = 'block';
-        if (player.Spells.FireballMax > 0) {
-            document.getElementById("Fireball").style.display = 'inline-block';
-            document.getElementById("Fireball").value = "Fireball (" + player.Spells.Fireball + " left)";
-        } else {
-            document.getElementById("Fireball").style.display = 'none';
-            document.getElementById("SpellBook").style.display = 'none';
-        }
-    }
     document.getElementById("StatusName2").innerHTML = player.Name + " " + player.LastName;
     document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
     if (player.Health <= player.MaxHealth) {
@@ -28,6 +19,8 @@ function UpdateStats(FirstRound = false) {
     } else {
         document.getElementById("StatusWillHealth2").style.width = 103 + "%";
     }
+
+    player.Mana++; // Slow in combat mana rec
 
     // Concept: Squishing your enemy if you're 10X bigger and heavier
     /*if (player.Weight > ee.Weight * 10 && player.Height > ee.Height * 10)
@@ -112,24 +105,6 @@ function EnemyAttack() {
     }
 }
 // Battle attack buttons
-document.getElementById("Hit").addEventListener("click", function () {
-    var ee = enemies[EnemyIndex];
-    var PAttack = Math.floor(RandomInt(3, 8) * player.Str / 2) * PhyRes(ee);
-    ee.Health -= PAttack;
-    document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " dmg.";
-    UpdateStats();
-    return;
-});
-
-document.getElementById("Tease").addEventListener("click", function () {
-    // Ferals shouldn't get aroused by you #Tease is now disabled if enemy is feral -Ugre
-    var ee = enemies[EnemyIndex];
-    var PAttack = Math.floor(RandomInt(3, 8) * player.Charm / 2) * LusRes(ee);
-    ee.WillHealth -= PAttack;
-    document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " will dmg."
-    UpdateStats();
-    return;
-});
 /** To Do:
  *  Add a sort of mana insted of max fireballs
  *  I think I like having magical essence as "mana", magical essence can be a elelemt found in everything and like our air
@@ -139,48 +114,6 @@ document.getElementById("Tease").addEventListener("click", function () {
  * 
  *  More speels and skills overall
  */
-document.getElementById("Fireball").addEventListener("click", function () {
-    var ee = enemies[EnemyIndex];
-    if (!player.hasOwnProperty("Spells")) {
-        document.getElementById("BattleText").innerHTML = "You wave your arms, but nothing happens. Maybe you should learn magic first...";
-        UpdateStats();
-        return;
-    } else if (player.Spells.FireballMax <= 0) {
-        document.getElementById("BattleText").innerHTML = "You wave your arms, but nothing happens. Maybe you should learn magic first...";
-        UpdateStats();
-        return;
-    } else if (player.Spells.Fireball <= 0) {
-        document.getElementById("BattleText").innerHTML = "You're exhausted, and can't cast another fireball...";
-        UpdateStats();
-        return;
-    }
-    var PAttack = (RandomInt(3, 7) * player.Int);
-    ee.WillHealth -= PAttack * MagRes(ee);
-    ee.Health -= PAttack * MagRes(ee);
-    player.Spells.Fireball--;
-    document.getElementById("BattleText").innerHTML = "You threw a ball covered in fire, dealing " + PAttack + " damage to their HP and will!";
-    UpdateStats();
-    return;
-});
-document.getElementById("Surrender").addEventListener("click", function () {
-    Lose();
-});
-document.getElementById("FleeBattle").addEventListener("click", function () {
-    var a = RandomInt(1, 10);
-    if (a > 7) {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("status").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("EventLog").style.display = 'block';
-        document.getElementById("Encounter").style.display = 'none';
-        document.getElementById("BattleText").innerHTML = "Success!"
-    }
-    UpdateStats();
-    document.getElementById("BattleText").innerHTML = "You failed to get away."
-});
-
 // Ideas for new combat system I want to add resistence and other things for more depth
 /** Ideas to add
  *  Ways to ignore resistance like pierce?
@@ -198,4 +131,126 @@ function PhyRes(who) {
 
 function MagRes(who) {
     return Math.min(1, Math.max(0.2, 1 - (0.02 * who.Will + 0.01 * who.Int)));
+}
+
+function CombatFunc() { // Whole combat div
+    var Combat = document.getElementById("Encounter");
+    var div = document.createElement("div");
+
+    var h1 = document.createElement("h1");
+    var h1text = document.createTextNode("Battle");
+    h1.appendChild(h1text);
+    div.appendChild(h1);
+
+    // Enemy
+    var TheEnemy = document.createElement("div");
+    TheEnemy.setAttribute("id", "TheEnemy");
+    TheEnemy.classList.add("d");
+
+    var BattleEnemy = document.createElement("p");
+    BattleEnemy.setAttribute("id", "BattleEnemy");
+
+    var EH = document.createElement("div");
+    EH.setAttribute("id", "EnemyStatusHealth");
+    EH.classList.add("StatusHealth");
+
+    var EHOD = document.createElement("div");
+    EHOD.classList.add("FullBar");
+    EHOD.appendChild(EH);
+
+    var EHL = document.createElement("label");
+    EHL.setAttribute("for", "EnemyStatusHealth");
+    EHL.innerHTML("Health");
+};
+
+function CombatButtons() { // Just combat buttons
+    var ee = enemies[EnemyIndex];
+    var Combat = document.getElementById("CombatButtons");
+    // Purge old children
+    while (Combat.hasChildNodes()) {
+        Combat.removeChild(Combat.firstChild);
+    }
+
+    var row1 = document.createElement("div");
+    var row2 = document.createElement("div");
+    var row3 = document.createElement("div");
+    var row4 = document.createElement("div");
+
+    var Hit = document.createElement("input");
+    Hit.setAttribute("type", "button");
+    Hit.setAttribute("value", "Hit");
+    Hit.addEventListener("click", function () {
+        var PAttack = Math.floor(RandomInt(3, 8) * player.Str / 2) // * PhyRes(ee);
+        ee.Health -= PAttack;
+        document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " dmg.";
+        UpdateStats();
+    });
+    row1.appendChild(Hit);
+    Combat.appendChild(row1);
+
+    if (ee.FirstName === "Feral") {
+        // Nothing for now will later make it so tease doesn't get created.
+    }
+    var Tease = document.createElement("input");
+    Tease.setAttribute("type", "button");
+    Tease.setAttribute("value", "Tease");
+    Tease.addEventListener("click", function () {
+        var PAttack = Math.floor(RandomInt(3, 8) * player.Charm / 2) // * LusRes(ee);
+        ee.WillHealth -= PAttack;
+        document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " will dmg."
+        UpdateStats();
+    });
+    row2.appendChild(Tease);
+    Combat.appendChild(row2);
+
+    for (var e = 0; e < player.Spells.length; e++) {
+        var Spell = document.createElement("input");
+        var it = player.Spells[e];
+        var ManaCost = it.ManaCost // Affinity will lower cost
+        Spell.setAttribute("type", "button");
+        Spell.setAttribute("value", it.Name) + " Mana-cost: " + ManaCost;
+        Spell.addEventListener("click", function () {
+            if (player.Mana < ManaCost) {
+                document.getElementById("BattleText").innerHTML = "You're exhausted, and can't cast another fireball...";
+                return;
+            }
+            var PAttack = it.BaseDamage // mod by it.exp and player.int plus some randomint
+            ee.WillHealth -= PAttack // * MagRes(ee);
+            ee.Health -= PAttack // * MagRes(ee);
+            document.getElementById("BattleText").innerHTML = "You threw a ball covered in fire, dealing " + PAttack + " damage to their HP and will!";
+            player.Mana -= ManaCost;
+            UpdateStats();
+        });
+        row3.appendChild(Spell);
+    }
+    Combat.appendChild(row3)
+
+    var FleeBattle = document.createElement("input");
+    FleeBattle.setAttribute("type", "button");
+    FleeBattle.setAttribute("value", "Flee");
+    FleeBattle.addEventListener("click", function () {
+        var a = RandomInt(1, 10);
+        if (a > 7) {
+            battle = false;
+            document.getElementById("map").style.display = 'block';
+            document.getElementById("status").style.display = 'block';
+            document.getElementById("buttons").style.display = 'block';
+            document.getElementById("EmptyButtons").style.display = 'none';
+            document.getElementById("EventLog").style.display = 'block';
+            document.getElementById("Encounter").style.display = 'none';
+            document.getElementById("BattleText").innerHTML = "Success!"
+        }
+        UpdateStats();
+        document.getElementById("BattleText").innerHTML = "You failed to get away."
+    });
+    row4.appendChild(FleeBattle);
+
+    var Surrender = document.createElement("input");
+    Surrender.setAttribute("type", "button");
+    Surrender.setAttribute("value", "Surrender");
+    Surrender.addEventListener("click", function () {
+        Lose();
+    });
+    row4.appendChild(Surrender);
+    Combat.appendChild(row4);
 }

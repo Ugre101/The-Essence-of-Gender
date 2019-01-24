@@ -125,10 +125,19 @@
             BreastExp: 0
         },
         cumGround: 0,
-        Spells: {
-            Fireball: 0,
-            FireballMax: 0
+        MagicAffinity: {
+            Elemental: 0, // Fire, ice, water, stone, etc
+            Restoration: 0 // Healing, returning to orginal shape/age.
         },
+        Spells: [ // Array so that I can add more without problems
+            Fireball = {
+                Name: "Fireball",
+                Type: "Elemental",
+                ManaCost: 40,
+                BaseDamage: 20,
+                Exp: 0 // I think I want magic to be a thing which gets better with use
+            }
+        ],
         Blessings: {
             MountainShrine: {
                 Points: 0,
@@ -262,6 +271,22 @@
             Yours: false,
             Like: 0,
             Submit: 0
+        },
+        TribeChief: {
+            FirstName: "",
+            LastName: "",
+            Equal: false,
+            Yours: false,
+            Like: 0,
+            Submit: 0
+        },
+        TribeChiefWife: {
+            FirstName: "",
+            LastName: "",
+            Equal: false,
+            Yours: false,
+            Like: 0,
+            Submit: 0
         }
     }
 
@@ -293,6 +318,7 @@
         player.MaxWillHealth = 100;
         player.Health = player.MaxHealth;
         player.WillHealth = player.MaxWillHealth;
+        player.Mana = 100;
         document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
     });
 
@@ -987,25 +1013,9 @@
         document.getElementById("BattleText").innerHTML = null;
         document.getElementById("BattleText2").innerHTML = null;
         battle = true;
-        if (player.hasOwnProperty("Spells")) {
-            document.getElementById("SpellBook").style.display = 'block';
-            if (player.Spells.FireballMax > 0) {
-                document.getElementById("Fireball").style.display = 'inline-block';
-                player.Spells.Fireball = player.Spells.FireballMax;
-            } else {
-                document.getElementById("Fireball").style.display = 'none';
-                document.getElementById("SpellBook").style.display = 'none';
-            }
-        } else {
-            document.getElementById("SpellBook").style.display = 'none';
-        }
-        if (who.FirstName === "Feral") {
-            document.getElementById("Tease").style.display = 'none'
-        } else {
-            document.getElementById("Tease").style.display = 'inline-block'
-        }
         who.Health = who.FullHealth;
         who.WillHealth = who.FullWillHealth;
+        player.Mana = 100; // Remember to Change
         UpdateStats(true);
     }
 
