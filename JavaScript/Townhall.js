@@ -170,3 +170,95 @@ document.getElementById("ServicesLeave").addEventListener("click", function () {
 document.getElementById("TownHallRep").addEventListener("click", function () {
     document.getElementById("TownhallText").innerHTML = Flags.FirstCityLike + "<br> They temp temp you.";
 });
+
+function WIpTownHallFunc() {
+    var Buildings = document.getElementById("Buildings")
+    while (Buildings.hasChildNodes()) {
+        Buildings.removeChild(Buildings.firstChild);
+    }
+    var div = document.createElement("div");
+    var h1 = document.createElement("h1");
+    var h1text = document.createTextNode("Tribe shop");
+    h1.appendChild(h1text);
+    div.appendChild(h1);
+
+    var p = document.createElement("p");
+    p.classList.add("TextBox");
+    p.innerHTML = "Inside the local town hall there isn’t much to see, for being a town hall it’s honestly not" +
+        " that impressive at all. But this is just a small outpost after all, hopefully they do at least have work for you."
+    div.appendChild(p);
+
+    var ShopMenu = document.createElement("div");
+    var row1 = document.createElement("div");
+    var input1 = document.createElement("input");
+    input1.setAttribute("type", "button");
+    input1.setAttribute("value", "Quest");
+    input1.addEventListener("click", function () {
+        // Call to Function to spawn quest menu
+    });
+    input1.addEventListener("mouseover", function () {
+
+    });
+    row1.appendChild(input1);
+
+    if (House.Owned === false && Flags.BanditLord) {
+        var input2 = document.createElement("input");
+        input2.setAttribute("type", "button");
+        input2.setAttribute("value", "Buy house 100g");
+        input2.addEventListener("click", function () {
+            if (player.Gold >= 100) {
+                document.getElementById("BuyHouse").style.display = 'none';
+                House.Owned = true;
+                return;
+            } else {
+                return;
+            }
+        });
+        input2.addEventListener("mouseover", function () {
+
+        });
+        row1.appendChild(input2);
+    }
+
+    var input3 = document.createElement("input");
+    input3.setAttribute("type", "button");
+    input3.setAttribute("value", "Services");
+    input3.addEventListener("click", function () {
+
+    });
+    input3.addEventListener("mouseover", function () {
+
+    });
+    row1.appendChild(input3);
+
+    var input4 = document.createElement("input");
+    input4.setAttribute("type", "button");
+    input4.setAttribute("value", "(placeholder)Reputation");
+    input4.addEventListener("click", function () {
+
+    });
+    input4.addEventListener("mouseover", function () {
+
+    });
+    row1.appendChild(input4);
+
+    ShopMenu.appendChild(row1);
+    var Leave = document.createElement("input");
+    Leave.setAttribute("type", "button");
+    Leave.setAttribute("value", "Leave");
+    Leave.addEventListener("click", function () {
+        battle = false;
+        document.getElementById("map").style.display = 'block';
+        document.getElementById("buttons").style.display = 'block';
+        document.getElementById("EmptyButtons").style.display = 'none';
+        document.getElementById("status").style.display = 'block';
+        Buildings.style.display = 'none';
+        while (Buildings.hasChildNodes()) {
+            Buildings.removeChild(Buildings.firstChild);
+        }
+        return;
+    });
+    div.appendChild(Leave);
+    Buildings.appendChild(div);
+    document.getElementById("Buildings").style.display = 'block';
+}

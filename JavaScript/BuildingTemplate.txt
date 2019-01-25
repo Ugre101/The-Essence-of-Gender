@@ -9,6 +9,11 @@ function TribeShopFunc() {
     h1.appendChild(h1text);
     div.appendChild(h1);
 
+    var p = document.createElement("p");
+    p.classList.add("TextBox");
+
+    div.appendChild(p);
+
     var ShopMenu = document.createElement("div");
     var row1 = document.createElement("div");
     var input1 = document.createElement("input");
@@ -50,4 +55,5 @@ function TribeShopFunc() {
     });
     div.appendChild(Leave);
     Buildings.appendChild(div);
+    document.getElementById("Buildings").style.display = 'block';
 }
