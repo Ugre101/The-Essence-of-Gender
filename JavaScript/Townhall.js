@@ -1,31 +1,33 @@
-var ChosenQuest
-document.getElementById("QuestMenu").addEventListener("click", function () {
-    document.getElementById("TownhallStart").style.display = 'none';
-    document.getElementById("Quest").style.display = 'block';
-    document.getElementById("QuestStart").style.display = 'block';
-    TownHallQuests();
-});
 // Test of new way to add quests, in order to avoid public vars.
 function TownHallQuests() {
-    var x = document.getElementById("QuestStart");
-    document.getElementById("LeaveQuest").style.display = 'inline-block';
-    while (x.hasChildNodes()) {
-        x.removeChild(x.firstChild);
+    var div = document.getElementById("Buildings");
+    while (div.hasChildNodes()) {
+        div.removeChild(div.firstChild);
     }
+
+    var h1 = document.createElement("h1");
+    var h1text = document.createTextNode("Quests");
+    h1.appendChild(h1text);
+    div.appendChild(h1);
+
+    var p = document.createElement("p");
+    p.classList.add("TextBox");
+    div.appendChild(p);
+
+    var buttons = document.createElement("div");
 
     var BanditLord = document.createElement("INPUT");
     BanditLord.setAttribute("type", "button");
     BanditLord.setAttribute("value", "BanditLord");
     BanditLord.addEventListener("click", function () {
-        document.getElementById("LeaveQuest").style.display = 'none';
         if (Flags.BanditLord) {
-            document.getElementById("TownhallText").innerHTML = "The bandit are still humiliated from the defeat of their lord, but if you are willing please defeat them again to make sure they don't regain their confidence."
+            p.innerHTML = "The bandit are still humiliated from the defeat of their lord, but if you are willing please defeat them again to make sure they don't regain their confidence."
         } else {
-            document.getElementById("TownhallText").innerHTML = "The bandits up to the north has become braver with their new leader, if you are strong enough please beat them into submission. <br> <br>" +
+            p.innerHTML = "The bandits up to the north has become braver with their new leader, if you are strong enough please beat them into submission. <br> <br>" +
                 "You will be greatly awarded for your effort and we will grant you the right to buy the old mansion located east from the city."
         }
-        while (x.hasChildNodes()) {
-            x.removeChild(x.firstChild);
+        while (buttons.hasChildNodes()) {
+            buttons.removeChild(buttons.firstChild);
         }
         var Accept = document.createElement("INPUT");
         Accept.setAttribute("type", "button");
@@ -45,16 +47,16 @@ function TownHallQuests() {
         Decline.addEventListener("click", function () {
             TownHallQuests();
         });
-        document.getElementById("QuestStart").appendChild(Accept);
-        document.getElementById("QuestStart").appendChild(Decline);
+        buttons.appendChild(Accept);
+        buttons.appendChild(Decline);
     });
     var ElfHunt = document.createElement("INPUT");
     ElfHunt.setAttribute("type", "button");
     ElfHunt.setAttribute("value", "ElfHunt");
     ElfHunt.addEventListener("click", function () {
-        document.getElementById("TownhallText").innerHTML = "The elves to the south is becoming a problem, defeat atleast three of them and you will be awarded."
-        while (x.hasChildNodes()) {
-            x.removeChild(x.firstChild);
+        p.innerHTML = "The elves to the south is becoming a problem, defeat atleast three of them and you will be awarded."
+        while (buttons.hasChildNodes()) {
+            buttons.removeChild(buttons.firstChild);
         }
         var Accept = document.createElement("INPUT");
         Accept.setAttribute("type", "button");
@@ -74,11 +76,11 @@ function TownHallQuests() {
         Decline.addEventListener("click", function () {
             TownHallQuests();
         });
-        document.getElementById("QuestStart").appendChild(Accept);
-        document.getElementById("QuestStart").appendChild(Decline);
+        buttons.appendChild(Accept);
+        buttons.appendChild(Decline);
     });
     if (!player.Quests.some(e => e.Name === "ElfHunt")) {
-        document.getElementById("QuestStart").appendChild(ElfHunt);
+        buttons.appendChild(ElfHunt);
     } else if (player.Quests.some(e => e.Name === "ElfHunt" && e.Completed)) {
         var ElfHuntReward = document.createElement("INPUT");
         ElfHuntReward.setAttribute("type", "button");
@@ -93,30 +95,29 @@ function TownHallQuests() {
                     player.Quests.splice(i, 1);
                 }
             }
-            document.getElementById("TownhallText").innerHTML = "You are rewarded: " + 50 * Tier + "Exp and " + 100 * Tier + "gold";
+            p.innerHTML = "You are rewarded: " + 50 * Tier + "Exp and " + 100 * Tier + "gold";
             player.Exp += 50 * Tier;
             player.Gold += 100 * Tier;
             Flags.FirstCityLike += 1 * Tier;
             TownHallQuests();
         });
-        document.getElementById("QuestStart").appendChild(ElfHuntReward);
+        buttons.appendChild(ElfHuntReward);
 
     }
     if (!player.Quests.some(e => e.Name === "BanditLord")) {
-        document.getElementById("QuestStart").appendChild(BanditLord);
+        buttons.appendChild(BanditLord);
     } else if (player.Quests.some(e => e.Name === "BanditLord" && e.Completed)) {
         var BanditLordReward = document.createElement("INPUT");
         BanditLordReward.setAttribute("type", "button");
         BanditLordReward.setAttribute("value", "BanditLordReward");
         BanditLordReward.addEventListener("click", function () {
             if (Flags.BanditLord) {
-                document.getElementById("TownhallText").innerHTML = "You are rewared: 300Exp and 500gold";
+                p.innerHTML = "You are rewared: 300Exp and 500gold";
             } else {
                 if (!Flags.BanditLord) {
                     Flags.BanditLord = true
+                    p.innerHTML = "You are now allowed to buy a house. <br> You are rewared: 300Exp and 500gold";
                 };
-                document.getElementById("TownhallText").innerHTML = "You are now allowed to buy a house. <br> You are rewared: 300Exp and 500gold";
-                document.getElementById("BuyHouse").style.display = 'inline-block';
             }
             player.Exp += 300;
             player.Gold += 500;
@@ -127,58 +128,30 @@ function TownHallQuests() {
             }
             TownHallQuests();
         });
-        document.getElementById("QuestStart").appendChild(BanditLordReward);
+        buttons.appendChild(BanditLordReward);
     };
+
+    var back = document.createElement("input");
+    back.setAttribute("type", "button");
+    back.setAttribute("value", "Back");
+    back.addEventListener("click", function () {
+        TownhallFunc();
+    });
+
+    div.appendChild(buttons);
+    div.appendChild(back);
 }
 
-document.getElementById("LeaveQuest").addEventListener("click", function () {
-    document.getElementById("Quest").style.display = 'none';
-    document.getElementById("TownhallStart").style.display = 'block';
-    document.getElementById("LeaveQuest").style.display = 'inline-block';
-    document.getElementById("TownhallText").innerHTML = "";
-});
-// Slut på questsystem
-
-document.getElementById("BuyHouse").addEventListener("click", function () {
-    if (player.Gold >= 100) {
-        document.getElementById("BuyHouse").style.display = 'none';
-        House.Owned = true;
-        return;
-    } else {
-        return;
-    }
-});
-document.getElementById("Services").addEventListener("click", function () {
-    document.getElementById("TownhallStart").style.display = 'none';
-    document.getElementById("Service").style.display = 'block';
-});
-document.getElementById("NameChange").addEventListener("click", function () {
-    document.getElementById("NameChangeForm").style.display = 'block';
-    document.getElementById("firstname2").value = player.Name;
-    document.getElementById("lastname2").value = player.LastName;
-});
-document.getElementById("AcceptName").addEventListener("click", function () {
-    player.Name = document.getElementById("firstname2").value;
-    player.LastName = document.getElementById("lastname2").value;
-    document.getElementById("NameChangeForm").style.display = 'none';
-});
-document.getElementById("ServicesLeave").addEventListener("click", function () {
-    document.getElementById("TownhallStart").style.display = 'block';
-    document.getElementById("Service").style.display = 'none';
-    document.getElementById("NameChangeForm").style.display = 'none';
-});
-document.getElementById("TownHallRep").addEventListener("click", function () {
-    document.getElementById("TownhallText").innerHTML = Flags.FirstCityLike + "<br> They temp temp you.";
-});
-
-function WIpTownHallFunc() {
+function TownhallFunc() {
     var Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
+
     var div = document.createElement("div");
+
     var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Tribe shop");
+    var h1text = document.createTextNode("Townhall");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
@@ -188,13 +161,12 @@ function WIpTownHallFunc() {
         " that impressive at all. But this is just a small outpost after all, hopefully they do at least have work for you."
     div.appendChild(p);
 
-    var ShopMenu = document.createElement("div");
     var row1 = document.createElement("div");
     var input1 = document.createElement("input");
     input1.setAttribute("type", "button");
     input1.setAttribute("value", "Quest");
     input1.addEventListener("click", function () {
-        // Call to Function to spawn quest menu
+        TownHallQuests();
     });
     input1.addEventListener("mouseover", function () {
 
@@ -207,8 +179,8 @@ function WIpTownHallFunc() {
         input2.setAttribute("value", "Buy house 100g");
         input2.addEventListener("click", function () {
             if (player.Gold >= 100) {
-                document.getElementById("BuyHouse").style.display = 'none';
                 House.Owned = true;
+                TownhallFunc();
                 return;
             } else {
                 return;
@@ -224,7 +196,7 @@ function WIpTownHallFunc() {
     input3.setAttribute("type", "button");
     input3.setAttribute("value", "Services");
     input3.addEventListener("click", function () {
-
+        TownHallService();
     });
     input3.addEventListener("mouseover", function () {
 
@@ -235,14 +207,14 @@ function WIpTownHallFunc() {
     input4.setAttribute("type", "button");
     input4.setAttribute("value", "(placeholder)Reputation");
     input4.addEventListener("click", function () {
-
+        p.innerHTML = Flags.FirstCityLike + "<br> They temp temp you.";
     });
     input4.addEventListener("mouseover", function () {
 
     });
     row1.appendChild(input4);
+    div.appendChild(row1);
 
-    ShopMenu.appendChild(row1);
     var Leave = document.createElement("input");
     Leave.setAttribute("type", "button");
     Leave.setAttribute("value", "Leave");
@@ -259,6 +231,82 @@ function WIpTownHallFunc() {
         return;
     });
     div.appendChild(Leave);
+
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
+}
+
+function TownHallService() {
+    var div = document.getElementById("Buildings");
+    while (div.hasChildNodes()) {
+        div.removeChild(div.firstChild);
+    }
+
+    // Container for services, atm there is only name change
+    var inputs = document.createElement("div");
+
+    // Container for accept and back [Yes/No]
+    var YN = document.createElement("div");
+
+    var h1 = document.createElement("h1");
+    var h1text = document.createTextNode("Service");
+    h1.appendChild(h1text);
+    div.appendChild(h1);
+
+    var p = document.createElement("p");
+    p.classList.add("TextBox");
+    div.appendChild(p);
+
+    var CN = document.createElement("input");
+    CN.setAttribute("type", "button");
+    CN.setAttribute("value", "Change name");
+    CN.addEventListener("click", function () {
+        while (inputs.hasChildNodes()) {
+            inputs.removeChild(inputs.firstChild);
+        }
+        var FName = document.createElement("input");
+        FName.setAttribute("type", "text");
+        FName.setAttribute("value", player.Name);
+        FName.setAttribute("id", "ServiceFName724");
+
+        var FNameLabel = document.createElement("label");
+        FNameLabel.setAttribute("for", "ServiceFName724");
+        FNameLabel.innerHTML = ("First name:")
+        inputs.appendChild(FNameLabel);
+        inputs.appendChild(FName);
+
+        var LName = document.createElement("input");
+        LName.setAttribute("type", "text");
+        LName.setAttribute("value", player.LastName);
+        LName.setAttribute("id", "ServiceLName244");
+
+        var LNameLabel = document.createElement("label");
+        LNameLabel.setAttribute("for", "ServiceLName244")
+        LNameLabel.innerHTML = "Last name:";
+        inputs.appendChild(LNameLabel);
+        inputs.appendChild(LName);
+
+        var Accept = document.createElement("input");
+        Accept.setAttribute("type", "button");
+        Accept.setAttribute("value", "Accept");
+        Accept.addEventListener("click", function () {
+            player.Name = FName.value;
+            player.LastName = LName.value;
+            TownHallService();
+        });
+        YN.appendChild(Accept);
+    });
+    inputs.appendChild(CN);
+
+    var back = document.createElement("input");
+    back.setAttribute("type", "button");
+    back.setAttribute("value", "Back");
+    back.addEventListener("click", function () {
+        TownhallFunc();
+    });
+
+    YN.appendChild(back);
+
+    div.appendChild(inputs);
+    div.appendChild(YN);
 }

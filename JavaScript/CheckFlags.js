@@ -1,13 +1,10 @@
 // Checks flags, settings, etc at load
 function CheckFlags() {
     // Flags
-    if (Flags.BanditLord && !House.Owned) {
-        document.getElementById("BuyHouse").style.display = 'inline-block'
-    } else {
-        document.getElementById("BuyHouse").style.display = 'none'
-    };
 
     // load Settings
+    document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+
     document.body.style.backgroundColor = Settings.BackColor;
     MapColor = Settings.MapColor
     document.body.style.color = Settings.TextColor
@@ -44,9 +41,10 @@ function CheckFlags() {
         if (!Settings.VoreSettings.hasOwnProperty("AbsorbEssence")) {
             Settings.VoreSettings.AbsorbEssence = "Both";
         }
+        if (!Settings.VoreSettings.hasOwnProperty("AnalDigestion")) {
+            Settings.VoreSettings.AnalDigestion = false;
+        }
     }
-    if (!Settings.VoreSettings.hasOwnProperty("AnalDigestion"))
-        Settings.VoreSettings.AnalDigestion = false;
     if (!Settings.hasOwnProperty("EssenceAuto")) {
         Settings.EssenceAuto = true;
         console.log("Added EssenceAuto");
@@ -64,35 +62,10 @@ function CheckFlags() {
         console.log("Added Settings pronoun");
     }
     if (!Settings.Pronoun.hasOwnProperty("CuntBoy")) {
-        Settings.Pronoun = {
-            CuntBoy: "cuntboy",
-            DickGirl: "dickgirl"
-        }
-        console.log("Added pronouns")
+        Settings.Pronoun.CuntBoy = "cuntboy"
+        Settings.Pronoun.DickGirl = "dickgirl"
+        console.log("Added more pronouns")
     }
-    /**    // Makes old saves work? Think this is not needed anymore.
-        if (player.Balls.length > 0) {
-            if (!player.Balls[0].hasOwnProperty("Cum")) {
-                for (var e = 0; e < player.Balls.length; e++) {
-                    player.Balls[e] = {
-                        CumMax: Math.round(player.Masc / 70) * 400,
-                        Cum: 0,
-                        CumRate: 0.01,
-                        CumBaseRate: 0.1
-                    }
-                }
-            }
-        }
-        for (var b = 0; b < player.Boobies.length; b++) {
-            if (!player.Boobies[b].hasOwnProperty("Milk")) {
-                player.Boobies[b].Milk = 0;
-                player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 600);
-                player.Boobies[b].MilkRate = 0;
-                player.Boobies[b].MilkBaseRate = 0;
-            }
-            if (player.Boobies[b].MilkMax < 600)
-                player.Boobies[b].MilkMax = Math.round(player.Boobies[b].Size * 600);
-        } */
     if (!player.Pregnant.hasOwnProperty("Babies")) {
         player.Pregnant = {};
         player.Pregnant.Babies = [];
@@ -141,15 +114,6 @@ function CheckFlags() {
         document.getElementById("MoreButtons").style.display = 'none';
         document.getElementById("LessButtons").style.display = 'none';
     }
-
-    if (Array.isArray(player.Inventory)) {
-        if (player.Inventory.length < 1) {
-            player.Inventory.push(ItemDict.blade);
-        }
-    } else {
-        player.Inventory = [];
-    }
-
     if (!Settings.hasOwnProperty("MaxLimbs")) {
         Settings.MaxLimbs = {
             MaxBoobs: 5,
@@ -170,11 +134,7 @@ function CheckFlags() {
         Flags.Date.Hour = 0;
         console.log("Added hour")
     }
-    if (!player.hasOwnProperty("FoodStomach")) {
-        player.FoodStomach = [];
-        console.log("Added food stomach")
-    }
-    document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+    
     if (!player.hasOwnProperty("Face")) {
         player.Face = {
             Eyes: "brown",
@@ -285,14 +245,6 @@ function CheckFlags() {
             Human = {
                 Race: "Human",
                 amount: 100
-            },
-            Orc = {
-                Race: "Orc",
-                amount: 5
-            },
-            Fairy = {
-                Race: "Fairy",
-                amount: 0
             }
         ]
         console.log("Added race essence");
@@ -320,10 +272,11 @@ function CheckFlags() {
         Flags.LastTrain = {
             Day: 0,
             Month: 0,
-            Year: 0
+            Year: 0,
+            Count: 0
         };
         console.log("Added LastTrain");
-    } else if (!Flags.LastTrain.hasOwnProperty("Day")) {
+    } else if (!Flags.LastTrain.hasOwnProperty("Count")) {
         Flags.LastTrain = {
             Day: 0,
             Month: 0,
