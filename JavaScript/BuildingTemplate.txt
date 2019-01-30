@@ -1,11 +1,11 @@
-function TribeShopFunc() {
+function Func() {
     var Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
     var div = document.createElement("div");
     var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Tribe shop");
+    var h1text = document.createTextNode("");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
@@ -14,7 +14,6 @@ function TribeShopFunc() {
 
     div.appendChild(p);
 
-    var ShopMenu = document.createElement("div");
     var row1 = document.createElement("div");
     var input1 = document.createElement("input");
     input1.setAttribute("type", "button");
@@ -37,7 +36,6 @@ function TribeShopFunc() {
     });
     row1.appendChild(input2);
 
-    ShopMenu.appendChild(row1);
     var Leave = document.createElement("input");
     Leave.setAttribute("type", "button");
     Leave.setAttribute("value", "Leave");
@@ -53,6 +51,7 @@ function TribeShopFunc() {
         }
         return;
     });
+    div.appendChild(row1);
     div.appendChild(Leave);
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
