@@ -20,10 +20,8 @@ function BarFunc() {
         p.innerHTML = e.target.title;
     })
     var row1 = document.createElement("div");
-    var input1 = document.createElement("input");
-    input1.setAttribute("type", "button");
-    input1.setAttribute("value", "Rest 5g");
-    input1.setAttribute("title", "Spend the night to recover health and will");
+
+    var input1 = new InputButton("Rest 5g", "Spend the night to recover health and will")
     input1.addEventListener("click", function () {
         if (player.Gold >= 5 && (player.Health < player.MaxHealth || player.WillHealth < player.MaxWillHealth)) {
             player.Gold -= 5;
@@ -38,10 +36,7 @@ function BarFunc() {
     });
     row1.appendChild(input1);
 
-    var input2 = document.createElement("input");
-    input2.setAttribute("type", "button");
-    input2.setAttribute("value", "Medium meal 10g");
-    input2.setAttribute("title", "+2kg fat");
+    var input2 = new InputButton("Medium meal 10g","+2kg fat")
     input2.addEventListener("click", function () {
         if (player.Gold > 10) {
             player.Fat += 2;
@@ -61,10 +56,7 @@ function BarFunc() {
     });
     row1.appendChild(input2);
 
-    var input3 = document.createElement("input");
-    input3.setAttribute("type", "button");
-    input3.setAttribute("value", "Large meal 30g");
-    input3.setAttribute("title", "+4kg fat");
+    var input3 = new InputButton("Large meal 30g","+4kg fat");
     input3.addEventListener("click", function () {
         if (player.Gold > 30) {
             player.Fat += 4;
@@ -84,10 +76,7 @@ function BarFunc() {
     });
     row1.appendChild(input3);
 
-    var input4 = document.createElement("input");
-    input4.setAttribute("type", "button");
-    input4.setAttribute("value", "Buffet 50g");
-    input4.setAttribute("title", "+8kg fat");
+    var input4 = new InputButton("Buffet 50g","+8kg fat");
     input4.addEventListener("click", function () {
         if (player.Gold > 10) {
             player.Fat += 8;

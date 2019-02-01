@@ -180,9 +180,7 @@ function CombatButtons() { // Just combat buttons
     var row3 = document.createElement("div");
     var row4 = document.createElement("div");
 
-    var Hit = document.createElement("input");
-    Hit.setAttribute("type", "button");
-    Hit.setAttribute("value", "Hit");
+    var Hit = InputButton("Hit");
     Hit.addEventListener("click", function () {
         var PAttack = Math.floor(RandomInt(3, 8) * player.Str / 2) // * PhyRes(ee);
         ee.Health -= PAttack;
@@ -192,49 +190,33 @@ function CombatButtons() { // Just combat buttons
     row1.appendChild(Hit);
     Combat.appendChild(row1);
 
-    if (ee.FirstName === "Feral") {
+    var NonTease = [ // Insert enemies who can't be beaten by tease
+        "Feral"
+    ];
+    if (NonTease.some(e => e === ee.Name)) {
         // Nothing for now will later make it so tease doesn't get created.
+        console.log("Non tease")
+    } else {
+        var Tease = InputButton("Tease");
+        Tease.addEventListener("click", function () {
+            var PAttack = Math.floor(RandomInt(3, 8) * player.Charm / 2) // * LusRes(ee);
+            ee.WillHealth -= PAttack;
+            document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " will dmg."
+            UpdateStats();
+        });
+        row2.appendChild(Tease);
+        Combat.appendChild(row2);
     }
-    var Tease = document.createElement("input");
-    Tease.setAttribute("type", "button");
-    Tease.setAttribute("value", "Tease");
-    Tease.addEventListener("click", function () {
-        var PAttack = Math.floor(RandomInt(3, 8) * player.Charm / 2) // * LusRes(ee);
-        ee.WillHealth -= PAttack;
-        document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " will dmg."
-        UpdateStats();
-    });
-    row2.appendChild(Tease);
-    Combat.appendChild(row2);
-
     if (player.Spells.length > 0) {
         for (var e = 0; e < Math.min(player.Spells.length, 3); e++) {
-            var Spell = document.createElement("input");
-            var it = player.Spells[e];
-            var ManaCost = it.ManaCost // Affinity will lower cost
-            Spell.setAttribute("type", "button");
-            Spell.setAttribute("value", it.Name) + " Mana-cost: " + ManaCost;
-            Spell.addEventListener("click", function () {
-                if (player.Mana < ManaCost) {
-                    document.getElementById("BattleText").innerHTML = "You're exhausted, and can't cast another fireball...";
-                    return;
-                }
-                var PAttack = it.BaseDamage // mod by it.exp and player.int plus some randomint
-                ee.WillHealth -= PAttack // * MagRes(ee);
-                ee.Health -= PAttack // * MagRes(ee);
-                document.getElementById("BattleText").innerHTML = "You threw a ball covered in fire, dealing " + PAttack + " damage to their HP and will!";
-                player.Mana -= ManaCost;
-                UpdateStats();
-            });
+            var Spell = new SpellButton(e);
             row3.appendChild(Spell);
         }
-            // if more than 3 spells spawn a spell book
-            // Todo make it so that instead of spell with index 0,1,2 spawn at outside book make it so
-            // that last casted spells is at the "quick cast" menu 
+        // if more than 3 spells spawn a spell book
+        // Todo make it so that instead of spell with index 0,1,2 spawn at outside book make it so
+        // that last casted spells is at the "quick cast" menu 
         if (player.Spells.length >= 2) {
-            var book = document.createElement("input");
-            book.setAttribute("type", "button");
-            book.setAttribute("value", "Spellbook");
+            var book = InputButton("Spellbook");
             book.addEventListener("click", function () {
                 Spellbook();
             });
@@ -243,9 +225,7 @@ function CombatButtons() { // Just combat buttons
         Combat.appendChild(row3)
     }
 
-    var FleeBattle = document.createElement("input");
-    FleeBattle.setAttribute("type", "button");
-    FleeBattle.setAttribute("value", "Flee");
+    var FleeBattle = InputButton("Flee");
     FleeBattle.addEventListener("click", function () {
         var a = RandomInt(1, 10);
         if (a > 7) {
@@ -263,9 +243,7 @@ function CombatButtons() { // Just combat buttons
     });
     row4.appendChild(FleeBattle);
 
-    var Surrender = document.createElement("input");
-    Surrender.setAttribute("type", "button");
-    Surrender.setAttribute("value", "Surrender");
+    var Surrender = InputButton("Surrender");
     Surrender.addEventListener("click", function () {
         Lose();
     });
@@ -275,7 +253,6 @@ function CombatButtons() { // Just combat buttons
 
 function Spellbook() {
     // Replace all buttons with spells
-    var ee = enemies[EnemyIndex];
     var Combat = document.getElementById("CombatButtons");
     // Purge old children
     while (Combat.hasChildNodes()) {
@@ -287,75 +264,25 @@ function Spellbook() {
     var row3 = document.createElement("div");
     var row4 = document.createElement("div");
 
-    var CloseBook = document.createElement("input");
-    CloseBook.setAttribute("type", "button");
-    CloseBook.setAttribute("value", "Close book");
+    var CloseBook = InputButton("Close book");
     CloseBook.addEventListener("click", function () {
         CombatButtons();
     });
     row4.appendChild(CloseBook);
 
     for (var e = 0; e < Math.min(player.Spells.length, 3); e++) {
-        var Spell = document.createElement("input");
-        var it = player.Spells[e];
-        var ManaCost = it.ManaCost // Affinity will lower cost
-        Spell.setAttribute("type", "button");
-        Spell.setAttribute("value", it.Name) // + " Mana-cost: " + ManaCost;
-        Spell.addEventListener("click", function () {
-            if (player.Mana < ManaCost) {
-                document.getElementById("BattleText").innerHTML = "You're exhausted, and can't cast another fireball...";
-                return;
-            }
-            var PAttack = it.BaseDamage // mod by it.exp and player.int plus some randomint
-            ee.WillHealth -= PAttack // * MagRes(ee);
-            ee.Health -= PAttack // * MagRes(ee);
-            document.getElementById("BattleText").innerHTML = "You threw a ball covered in fire, dealing " + PAttack + " damage to their HP and will!";
-            player.Mana -= ManaCost;
-            UpdateStats();
-        });
+        var Spell = new SpellButton(e);
         row1.appendChild(Spell);
     }
     if (player.Spells.length > 2) {
         for (var e = 3; e < Math.min(player.Spells.length, 7); e++) {
-            var Spell = document.createElement("input");
-            var it = player.Spells[e];
-            var ManaCost = it.ManaCost // Affinity will lower cost
-            Spell.setAttribute("type", "button");
-            Spell.setAttribute("value", it.Name + e); // + "(" + ManaCost + "M)");
-            Spell.addEventListener("click", function () {
-                if (player.Mana < ManaCost) {
-                    document.getElementById("BattleText").innerHTML = "You're exhausted, and can't cast another fireball...";
-                    return;
-                }
-                var PAttack = it.BaseDamage // mod by it.exp and player.int plus some randomint
-                ee.WillHealth -= PAttack // * MagRes(ee);
-                ee.Health -= PAttack // * MagRes(ee);
-                document.getElementById("BattleText").innerHTML = "You threw a ball covered in fire, dealing " + PAttack + " damage to their HP and will!";
-                player.Mana -= ManaCost;
-                UpdateStats();
-            });
+            var Spell = new SpellButton(e);
             row2.appendChild(Spell);
         }
     }
     if (player.Spells.length > 6) {
         for (var e = 7; e < Math.min(player.Spells.length, 10); e++) {
-            var Spell = document.createElement("input");
-            var it = player.Spells[e];
-            var ManaCost = it.ManaCost // Affinity will lower cost
-            Spell.setAttribute("type", "button");
-            Spell.setAttribute("value", it.Name + e); // + "(" + ManaCost + "M)");
-            Spell.addEventListener("click", function () {
-                if (player.Mana < ManaCost) {
-                    document.getElementById("BattleText").innerHTML = "You're exhausted, and can't cast another fireball...";
-                    return;
-                }
-                var PAttack = it.BaseDamage // mod by it.exp and player.int plus some randomint
-                ee.WillHealth -= PAttack // * MagRes(ee);
-                ee.Health -= PAttack // * MagRes(ee);
-                document.getElementById("BattleText").innerHTML = "You threw a ball covered in fire, dealing " + PAttack + " damage to their HP and will!";
-                player.Mana -= ManaCost;
-                UpdateStats();
-            });
+            var Spell = new SpellButton(e);
             row3.appendChild(Spell);
         }
     }
@@ -364,4 +291,31 @@ function Spellbook() {
     Combat.appendChild(row3);
     Combat.appendChild(row4);
 
+}
+
+function SpellButton(index) { // Instead of repeating, Can only add fireball now need a const dic for spells
+    var it = player.Spells[index];
+    var Spell = InputButton(it.Name) // + " Mana-cost: " + ManaCost;
+    Spell.setAttribute("data-index", index);
+    Spell.addEventListener("click", function (i) {
+        var ee = enemies[EnemyIndex];
+        var that = player.Spells[i.target.dataset.index];
+        var ManaCost = that.ManaCost // Affinity will lower cost
+        if (player.Mana < ManaCost) {
+            document.getElementById("BattleText").innerHTML = SpellCastDict[that.Name].Fail;
+            document.getElementById("BattleText2").innerHTML = "";
+            return;
+        } else {
+            var PAttack = Math.floor(RandomInt(3, 9) * (that.BaseDamage * (player.Int / 10) + (that.Exp / 100)) / 3);
+            // mod by it.exp and player.int plus some randomint, Need rebalance.
+            ee.WillHealth -= PAttack // * MagRes(ee);
+            ee.Health -= PAttack // * MagRes(ee);
+            document.getElementById("BattleText").innerHTML = SpellCastDict[that.Name].Succes(PAttack);
+            player.Mana -= ManaCost;
+            that.Exp++;
+            player.MagicAffinity[that.Type]++;
+            UpdateStats();
+        }
+    });
+    return Spell;
 }

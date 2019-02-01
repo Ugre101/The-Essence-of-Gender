@@ -6,8 +6,8 @@
         Will: 10,
         End: 10,
         SexSkill: 10,
-        Orgasm: 0,
-        Arousal: 0,
+        Orgasm: 0, // Need to get rid of
+        Arousal: 0, // This to shouldn't be saved between game sessions.
         Gold: 0,
         Exp: 0,
         level: 1,
@@ -21,7 +21,7 @@
         ],
         Race: "human",
         SecondRace: "human",
-        isTaur: "false", // Testing
+        isTaur: "false", // Testing, Not sure if useless or not
         OrganMod: {
             Dick: {
                 Size: 0
@@ -105,7 +105,6 @@
             HairColor: "brown",
             HairLength: "shoulder-length"
         },
-        FoodStomach: [],
         Vore: {
             Level: 0,
             Exp: 0,
@@ -124,7 +123,7 @@
             Breast: [],
             BreastExp: 0
         },
-        cumGround: 0,
+        cumGround: 0, // Need to get rid of
         MagicAffinity: {
             Elemental: 0, // Fire, ice, water, stone, etc
             Restoration: 0 // Healing, returning to orginal shape/age.
@@ -186,7 +185,6 @@
             Month: 0,
             Year: 0
         },
-        BeatSuccubus: false,
         FairiesBeaten: 0,
         FirstCityLike: 0
     };
@@ -262,7 +260,8 @@
             Equal: false,
             Yours: false,
             Like: 0,
-            Submit: 0
+            Submit: 0,
+            Beaten: false
         },
         FarmOwner: {
             FirstName: "Teoviz",
@@ -363,7 +362,6 @@
         document.getElementById("buttons").style.display = 'block';
         document.getElementById("status").style.display = 'block';
         document.getElementById("EventLog").style.display = 'block';
-        document.getElementById("BuyHouse").style.display = 'none'
     });
 
     // Sets display to none used for menu buttons
