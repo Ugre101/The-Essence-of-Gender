@@ -17,9 +17,7 @@ function ShopFunc() {
     var innerdiv = document.createElement("div");
 
     var row1 = document.createElement("div");
-    var StrPotion = document.createElement("input");
-    StrPotion.setAttribute("value", "Potion of Strength 100g");
-    StrPotion.setAttribute("type", "button");
+    var StrPotion = InputButton("Potion of Strength 100g");
     StrPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Str++
@@ -28,9 +26,8 @@ function ShopFunc() {
             p.innerHTML += "<br>" + player.Str;
         }
     });
-    var ChaPotion = document.createElement("input");
-    ChaPotion.setAttribute("value", "Potion of Charm 100g");
-    ChaPotion.setAttribute("type", "button");
+
+    var ChaPotion = InputButton("Potion of Charm 100g");
     ChaPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Charm++
@@ -44,9 +41,7 @@ function ShopFunc() {
     innerdiv.appendChild(row1);
 
     var row2 = document.createElement("div");
-    var EndPotion = document.createElement("input");
-    EndPotion.setAttribute("value", "Potion of Endurance 100g");
-    EndPotion.setAttribute("type", "button");
+    var EndPotion = InputButton("Potion of Endurance 100g")
     EndPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.End++
@@ -56,9 +51,7 @@ function ShopFunc() {
             p.innerHTML += "<br>" + player.End;
         }
     });
-    var IntPotion = document.createElement("input");
-    IntPotion.setAttribute("value", "Potion of Intelligence 100g");
-    IntPotion.setAttribute("type", "button");
+    var IntPotion = InputButton("Potion of Intelligence 100g")
     IntPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Int++
@@ -72,9 +65,7 @@ function ShopFunc() {
     innerdiv.appendChild(row2);
 
     var row3 = document.createElement("div");
-    var WillPotion = document.createElement("input");
-    WillPotion.setAttribute("value", "Potion of Willpower 100g");
-    WillPotion.setAttribute("type", "button");
+    var WillPotion = InputButton("Potion of Willpower 100g")
     WillPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Will++
@@ -84,9 +75,7 @@ function ShopFunc() {
             p.innerHTML += "<br>" + player.Will;
         }
     });
-    var SexPotion = document.createElement("input");
-    SexPotion.setAttribute("value", "Potion of Sexskill 100g") // Needs to be renamed, sounds stupid.
-    SexPotion.setAttribute("type", "button");
+    var SexPotion = InputButton("Potion of Sexskill 100g"); // Needs to be renamed, sounds stupid.
     SexPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.SexSkill++
@@ -101,9 +90,7 @@ function ShopFunc() {
 
     div.appendChild(innerdiv);
 
-    var Leave = document.createElement("input");
-    Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
+    var Leave = InputButton("Leave");
     Leave.addEventListener("click", function () {
         battle = false;
         document.getElementById("map").style.display = 'block';
@@ -119,4 +106,4 @@ function ShopFunc() {
     div.appendChild(Leave);
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
-}
+} // Saved 13 lines with inputbutton, wow... but looks better to me atleast!    

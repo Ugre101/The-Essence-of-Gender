@@ -5,7 +5,7 @@ function GymFunc() {
     }
     var div = document.createElement("div");
     var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Tribe shop");
+    var h1text = document.createTextNode("Gym");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
@@ -14,11 +14,12 @@ function GymFunc() {
 
     div.appendChild(p);
 
-    var ShopMenu = document.createElement("div");
     var row1 = document.createElement("div");
-    var input1 = document.createElement("input");
-    input1.setAttribute("type", "button");
-    input1.setAttribute("value", "Train muscle");
+    row1.addEventListener("mouseover", function(e) {
+        p.innerHTML = e.target.title;
+    });
+
+    var input1 = new InputButton("Train muscle", "Gain muscle.");
     input1.addEventListener("click", function () {
         if (Flags.LastTrain.Day == Flags.Date.Day && Flags.LastTrain.Month == Flags.Date.Month && Flags.LastTrain.Year == Flags.Date.Year) {
             p.innerHTML = "You have already trained today.";
@@ -44,14 +45,9 @@ function GymFunc() {
             }
         }
     });
-    input1.addEventListener("mouseover", function () {
-
-    });
     row1.appendChild(input1);
 
-    var input2 = document.createElement("input");
-    input2.setAttribute("type", "button");
-    input2.setAttribute("value", "Cardio");
+    var input2 = new InputButton("Cardio", "Lose some fat.");
     input2.addEventListener("click", function () {
         if (player.Fat > player.Weight * 0.1) {
             var burn = Math.round(player.Fat * 0.09);
@@ -62,14 +58,9 @@ function GymFunc() {
             p.innerHTML = "Buring more fat would be dangerous!";
         }
     });
-    input2.addEventListener("mouseover", function () {
-
-    });
     row1.appendChild(input2);
 
-    var input3 = document.createElement("input");
-    input3.setAttribute("type", "button");
-    input3.setAttribute("value", "Lose muscle");
+    var input3 = new InputButton("Lose muscle", "Sacrifice your gains to the shining swole bro.")
     input3.addEventListener("click", function () {
         var Sacrifice = Math.round(player.Muscle / 10 * 10) / 10;
         console.log(Sacrifice)
@@ -79,15 +70,10 @@ function GymFunc() {
             "the audience.<br><br> Looking at him walking away he seems to have gained muscle," +
             " looking at yourself in the mirror you seems to have lost muscle?(" + KgToPound(Sacrifice) + ")";
     });
-    input3.addEventListener("mouseover", function () {
-        p.innerHTML = "Sacrifice your gains to the shining swole bro."
-    });
     row1.appendChild(input3);
 
     div.appendChild(row1);
-    var Leave = document.createElement("input");
-    Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
+    var Leave = InputButton("Leave", "")
     Leave.addEventListener("click", function () {
         battle = false;
         document.getElementById("map").style.display = 'block';

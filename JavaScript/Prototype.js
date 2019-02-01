@@ -20,3 +20,11 @@ Array.prototype.RemoveDup = function () {
         console.log("Duplicates: " + removed);
     }
 }
+
+function InputButton(Value, Title = "") { // Save space and stop repeating same lines
+    var button = document.createElement("input");
+    button.setAttribute("type", "button");
+    button.setAttribute("value", Value);
+    button.setAttribute("title", Title);
+    return button;
+}

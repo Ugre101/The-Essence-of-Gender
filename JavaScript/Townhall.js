@@ -1,5 +1,5 @@
 // Test of new way to add quests, in order to avoid public vars.
-function TownHallQuests() {
+function TownHallQuests(text = "") {
     var div = document.getElementById("Buildings");
     while (div.hasChildNodes()) {
         div.removeChild(div.firstChild);
@@ -13,12 +13,11 @@ function TownHallQuests() {
     var p = document.createElement("p");
     p.classList.add("TextBox");
     div.appendChild(p);
+    p.innerHTML = text;
 
     var buttons = document.createElement("div");
 
-    var BanditLord = document.createElement("INPUT");
-    BanditLord.setAttribute("type", "button");
-    BanditLord.setAttribute("value", "BanditLord");
+    var BanditLord = InputButton("BanditLord");
     BanditLord.addEventListener("click", function () {
         if (Flags.BanditLord) {
             p.innerHTML = "The bandit are still humiliated from the defeat of their lord, but if you are willing please defeat them again to make sure they don't regain their confidence."
@@ -29,9 +28,7 @@ function TownHallQuests() {
         while (buttons.hasChildNodes()) {
             buttons.removeChild(buttons.firstChild);
         }
-        var Accept = document.createElement("INPUT");
-        Accept.setAttribute("type", "button");
-        Accept.setAttribute("value", "Accept");
+        var Accept = InputButton("Accept");
         Accept.addEventListener("click", function () {
             var Quest = {
                 Name: "BanditLord",
@@ -41,26 +38,20 @@ function TownHallQuests() {
             player.Quests.push(Quest);
             TownHallQuests();
         });
-        var Decline = document.createElement("INPUT");
-        Decline.setAttribute("type", "button");
-        Decline.setAttribute("value", "Decline");
+        var Decline = InputButton("Decline");
         Decline.addEventListener("click", function () {
             TownHallQuests();
         });
         buttons.appendChild(Accept);
         buttons.appendChild(Decline);
     });
-    var ElfHunt = document.createElement("INPUT");
-    ElfHunt.setAttribute("type", "button");
-    ElfHunt.setAttribute("value", "ElfHunt");
+    var ElfHunt = InputButton("Elf hunt")
     ElfHunt.addEventListener("click", function () {
         p.innerHTML = "The elves to the south is becoming a problem, defeat atleast three of them and you will be awarded."
         while (buttons.hasChildNodes()) {
             buttons.removeChild(buttons.firstChild);
         }
-        var Accept = document.createElement("INPUT");
-        Accept.setAttribute("type", "button");
-        Accept.setAttribute("value", "Accept");
+        var Accept = InputButton("Accept");
         Accept.addEventListener("click", function () {
             var Quest = {
                 Name: "ElfHunt",
@@ -70,9 +61,7 @@ function TownHallQuests() {
             player.Quests.push(Quest);
             TownHallQuests();
         });
-        var Decline = document.createElement("INPUT");
-        Decline.setAttribute("type", "button");
-        Decline.setAttribute("value", "Decline");
+        var Decline = InputButton("Decline")
         Decline.addEventListener("click", function () {
             TownHallQuests();
         });
@@ -82,9 +71,7 @@ function TownHallQuests() {
     if (!player.Quests.some(e => e.Name === "ElfHunt")) {
         buttons.appendChild(ElfHunt);
     } else if (player.Quests.some(e => e.Name === "ElfHunt" && e.Completed)) {
-        var ElfHuntReward = document.createElement("INPUT");
-        ElfHuntReward.setAttribute("type", "button");
-        ElfHuntReward.setAttribute("value", "ElfHuntReward");
+        var ElfHuntReward = InputButton("Elf hunt reward")
         ElfHuntReward.addEventListener("click", function () {
             var Tier = 1;
             for (var i = 0; i < player.Quests.length; i++) {
@@ -95,11 +82,10 @@ function TownHallQuests() {
                     player.Quests.splice(i, 1);
                 }
             }
-            p.innerHTML = "You are rewarded: " + 50 * Tier + "Exp and " + 100 * Tier + "gold";
             player.Exp += 50 * Tier;
             player.Gold += 100 * Tier;
             Flags.FirstCityLike += 1 * Tier;
-            TownHallQuests();
+            TownHallQuests("You are rewarded: " + 50 * Tier + "Exp and " + 100 * Tier + "gold");
         });
         buttons.appendChild(ElfHuntReward);
 
@@ -107,18 +93,8 @@ function TownHallQuests() {
     if (!player.Quests.some(e => e.Name === "BanditLord")) {
         buttons.appendChild(BanditLord);
     } else if (player.Quests.some(e => e.Name === "BanditLord" && e.Completed)) {
-        var BanditLordReward = document.createElement("INPUT");
-        BanditLordReward.setAttribute("type", "button");
-        BanditLordReward.setAttribute("value", "BanditLordReward");
+        var BanditLordReward = InputButton("Banditlord reward")
         BanditLordReward.addEventListener("click", function () {
-            if (Flags.BanditLord) {
-                p.innerHTML = "You are rewared: 300Exp and 500gold";
-            } else {
-                if (!Flags.BanditLord) {
-                    Flags.BanditLord = true
-                    p.innerHTML = "You are now allowed to buy a house. <br> You are rewared: 300Exp and 500gold";
-                };
-            }
             player.Exp += 300;
             player.Gold += 500;
             for (var i = 0; i < player.Quests.length; i++) {
@@ -126,14 +102,19 @@ function TownHallQuests() {
                     player.Quests.splice(i, 1);
                 }
             }
-            TownHallQuests();
+            if (Flags.BanditLord) {
+                TownHallQuests("You are rewared: 300Exp and 500gold");
+            } else {
+                if (!Flags.BanditLord) {
+                    Flags.BanditLord = true
+                    TownHallQuests("You are now allowed to buy a house. <br> You are rewared: 300Exp and 500gold");
+                };
+            }
         });
         buttons.appendChild(BanditLordReward);
     };
 
-    var back = document.createElement("input");
-    back.setAttribute("type", "button");
-    back.setAttribute("value", "Back");
+    var back = InputButton("Back");
     back.addEventListener("click", function () {
         TownhallFunc();
     });
@@ -162,21 +143,14 @@ function TownhallFunc() {
     div.appendChild(p);
 
     var row1 = document.createElement("div");
-    var input1 = document.createElement("input");
-    input1.setAttribute("type", "button");
-    input1.setAttribute("value", "Quest");
+    var input1 = InputButton("Quests")
     input1.addEventListener("click", function () {
         TownHallQuests();
-    });
-    input1.addEventListener("mouseover", function () {
-
     });
     row1.appendChild(input1);
 
     if (House.Owned === false && Flags.BanditLord) {
-        var input2 = document.createElement("input");
-        input2.setAttribute("type", "button");
-        input2.setAttribute("value", "Buy house 100g");
+        var input2 = InputButton("Buy house 100g")
         input2.addEventListener("click", function () {
             if (player.Gold >= 100) {
                 House.Owned = true;
@@ -186,38 +160,23 @@ function TownhallFunc() {
                 return;
             }
         });
-        input2.addEventListener("mouseover", function () {
-
-        });
         row1.appendChild(input2);
     }
 
-    var input3 = document.createElement("input");
-    input3.setAttribute("type", "button");
-    input3.setAttribute("value", "Services");
+    var input3 = InputButton("Services")
     input3.addEventListener("click", function () {
         TownHallService();
     });
-    input3.addEventListener("mouseover", function () {
-
-    });
     row1.appendChild(input3);
 
-    var input4 = document.createElement("input");
-    input4.setAttribute("type", "button");
-    input4.setAttribute("value", "(placeholder)Reputation");
+    var input4 = InputButton("(placeholder)Reputation");
     input4.addEventListener("click", function () {
         p.innerHTML = Flags.FirstCityLike + "<br> They temp temp you.";
-    });
-    input4.addEventListener("mouseover", function () {
-
     });
     row1.appendChild(input4);
     div.appendChild(row1);
 
-    var Leave = document.createElement("input");
-    Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
+    var Leave = InputButton("Leave");
     Leave.addEventListener("click", function () {
         battle = false;
         document.getElementById("map").style.display = 'block';
@@ -257,9 +216,7 @@ function TownHallService() {
     p.classList.add("TextBox");
     div.appendChild(p);
 
-    var CN = document.createElement("input");
-    CN.setAttribute("type", "button");
-    CN.setAttribute("value", "Change name");
+    var CN = InputButton("Change name");
     CN.addEventListener("click", function () {
         while (inputs.hasChildNodes()) {
             inputs.removeChild(inputs.firstChild);
@@ -286,9 +243,7 @@ function TownHallService() {
         inputs.appendChild(LNameLabel);
         inputs.appendChild(LName);
 
-        var Accept = document.createElement("input");
-        Accept.setAttribute("type", "button");
-        Accept.setAttribute("value", "Accept");
+        var Accept = InputButton("Accept");
         Accept.addEventListener("click", function () {
             player.Name = FName.value;
             player.LastName = LName.value;
@@ -298,9 +253,7 @@ function TownHallService() {
     });
     inputs.appendChild(CN);
 
-    var back = document.createElement("input");
-    back.setAttribute("type", "button");
-    back.setAttribute("value", "Back");
+    var back = InputButton("Back");
     back.addEventListener("click", function () {
         TownhallFunc();
     });

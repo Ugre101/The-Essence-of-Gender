@@ -21,9 +21,10 @@ function PrintImage(ImageSrc) {
     var startarea = document.getElementById("hem");
     var ctx = startarea.getContext("2d");
     var backmap = new Image;
-    backmap.src = "Tiles/" + ImageSrc + ".png"
+    backmap.src = "Tiles/" + ImageSrc + ".png";
+    ctx.clearRect(0,0, startarea.width, startarea.height);
     ctx.drawImage(backmap, 0, 0, startarea.width, startarea.height);
-}
+};
 
 function CurrentMap() {
     //First Town
@@ -35,7 +36,7 @@ function CurrentMap() {
     var WitchShop = new Npc("WitchShop", "Witch shop", grid * 15, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
     // Witch
     var WitchHut = new Npc("WitchHut", "Witch hut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
-    var ChimeraShrine = new Npc("ChimeraShrine", "Chimera shrine", grid * 3, grid, grid * 2, grid * 2, "RGB(133,94,66)");
+    var ChimeraShrine = new Npc("ChimeraShrine", "Chimera shrine", grid * 3, grid * 17, grid * 2, grid * 2, "RGB(133,94,66)");
     // Misc
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
     var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
@@ -112,7 +113,7 @@ function CurrentMap() {
                     Npcs = [];
                     enemies = [];
                     if (Npcs.length < 1) {
-                        Npcs = [];
+                        Npcs = [ChimeraShrine];
                     }
                     PrintMap("RoadToHome");
                     PrintImage("RoadToHome");
@@ -138,7 +139,7 @@ function CurrentMap() {
                     Npcs = [];
                     enemies = [];
                     if (Npcs.length < 1) {
-                        Npcs = [WitchHut, ChimeraShrine];
+                        Npcs = [WitchHut];
                     }
                     PrintMap("Witch");
                     PrintImage("Witchhut");

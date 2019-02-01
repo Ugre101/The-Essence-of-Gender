@@ -349,8 +349,9 @@ function CheckFlags() {
                 Type: "Elemental",
                 ManaCost: 40,
                 BaseDamage: 20,
-                Exp: 0 // I think I want magic to be a thing which gets better with use
+                Exp: 0 
             }
         ]
+        console.log("Changed player.spells to an array");
     }
 }
