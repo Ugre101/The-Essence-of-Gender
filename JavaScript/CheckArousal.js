@@ -204,28 +204,8 @@ function CheckArousal() {
     document.getElementById("PlayerOrgasm").style.display = 'block';
     document.getElementById("PlayerOrgasm").innerHTML = player.Orgasm;
 
-    if (player.SessionOrgasm > 0 && player.Perks.GiveEssence.Count > 0) {
-        document.getElementById("InjectMenu").style.display = 'block';
-    } else {
-        document.getElementById("InjectMenu").style.display = 'none';
-    }
-    if (enemies[EnemyIndex].SessionOrgasm > 0) {
-        document.getElementById("DrainMenu").style.display = 'block';
-    } else {
-        document.getElementById("DrainMenu").style.display = 'none';
-    }
     SexColor(player, "Player");
     SexColor(ee, "Enemy");
-    var PlayerMaxOrgasm = Math.round(player.End / 8);
-    if (PlayerMaxOrgasm <= player.Orgasm) {
-        document.getElementById("EnemyVagina").style.display = 'none';
-        document.getElementById("EnemyDick").style.display = 'none';
-        document.getElementById("PlayerVagina").style.display = 'none';
-        document.getElementById("PlayerDick").style.display = 'none';
-        document.getElementById("Anal").style.display = 'none';
-        document.getElementById("Breast").style.display = 'none';
-        return;
-    }
 }
 
 function Cumming(who) {

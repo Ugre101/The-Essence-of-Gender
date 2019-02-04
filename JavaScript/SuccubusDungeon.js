@@ -87,15 +87,16 @@ document.getElementById("EnterDungeon").addEventListener("click", function () {
         enemies = [FirstWave(), SecondWave(), ThirdWave(), FourthWave(), SuccubusBoss()];
     }
 
+    EnemyIndex = Wave;
     BattleSetup(enemies[Wave]);
 
     document.getElementById("FirstDungeon").style.display = 'none';
     document.getElementById("FirstDungeonText").innerHTML = "Wave " + (Wave + 2);
-    EnemyIndex = enemies.indexOf(enemies[Wave]);
     EssenceCheck(enemies[Wave]);
     Dungeon = true;
 });
-document.getElementById("DungeonStopButton").addEventListener("click", function () {
+
+function DungeonStopButton() {
     document.getElementById("status").style.display = 'block';
     document.getElementById("buttons").style.display = 'none';
     document.getElementById("EmptyButtons").style.display = 'block';
@@ -103,16 +104,6 @@ document.getElementById("DungeonStopButton").addEventListener("click", function 
 
     player.Orgasm = 0;
     document.getElementById("AfterBattle").style.display = 'none';
-    document.getElementById("PlayerMouth").style.display = 'block';
-    document.getElementById("PlayerVagina").style.display = 'block';
-    document.getElementById("PlayerDick").style.display = 'block';
-    document.getElementById("Anal").style.display = 'block';
-    document.getElementById("EnemyVagina").style.display = 'block';
-    document.getElementById("EnemyDick").style.display = 'block';
-
-    document.getElementById("DrainMenu").style.display = 'block';
-    document.getElementById("InjectMenu").style.display = 'block';
-
     document.getElementById("FirstDungeon").style.display = 'block';
     Wave++;
     if (Wave == 4 && !Flags.BeatSuccubus && false) {
@@ -130,8 +121,9 @@ document.getElementById("DungeonStopButton").addEventListener("click", function 
     }
     LastPressed = " ";
     return;
-});
-document.getElementById("DungeonCapture").addEventListener("click", function () {
+};
+
+function DungeonCapture() {
     document.getElementById("status").style.display = 'block';
     document.getElementById("buttons").style.display = 'none';
     document.getElementById("EmptyButtons").style.display = 'block';
@@ -140,15 +132,6 @@ document.getElementById("DungeonCapture").addEventListener("click", function () 
     House.Dormmates.push(enemies[EnemyIndex]);
     player.Orgasm = 0;
     document.getElementById("AfterBattle").style.display = 'none';
-    document.getElementById("PlayerMouth").style.display = 'block';
-    document.getElementById("PlayerVagina").style.display = 'block';
-    document.getElementById("PlayerDick").style.display = 'block';
-    document.getElementById("Anal").style.display = 'block';
-    document.getElementById("Breast").style.display = 'block';
-    document.getElementById("EnemyVagina").style.display = 'block';
-    document.getElementById("EnemyDick").style.display = 'block';
-    document.getElementById("DrainMenu").style.display = 'block';
-    document.getElementById("InjectMenu").style.display = 'block';
     document.getElementById("FirstDungeon").style.display = 'block';
     Wave++;
     LastPressed = " ";
@@ -158,7 +141,7 @@ document.getElementById("DungeonCapture").addEventListener("click", function () 
     }
     LastPressed = " ";
     return;
-});
+};
 document.getElementById("DungeonLose").addEventListener("click", function () {
     battle = false;
     document.getElementById("Lose").style.display = 'none';
@@ -178,17 +161,9 @@ document.getElementById("LeaveFirstDungeon").addEventListener("click", function 
     battle = false;
     player.Orgasm = 0;
     document.getElementById("AfterBattle").style.display = 'none';
-    document.getElementById("PlayerMouth").style.display = 'block';
-    document.getElementById("PlayerVagina").style.display = 'block';
-    document.getElementById("PlayerDick").style.display = 'block';
-    document.getElementById("Anal").style.display = 'block';
-    document.getElementById("EnemyVagina").style.display = 'block';
-    document.getElementById("EnemyDick").style.display = 'block';
     document.getElementById("map").style.display = 'block';
     document.getElementById("status").style.display = 'block';
     document.getElementById("buttons").style.display = 'block';
-    document.getElementById("DrainMenu").style.display = 'block';
-    document.getElementById("InjectMenu").style.display = 'block';
     document.getElementById("EventLog").style.display = 'block';
     LastPressed = " ";
     Dungeon = false;

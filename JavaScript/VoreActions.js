@@ -1,4 +1,4 @@
-document.getElementById("OralVore").addEventListener("click", function () {
+ function VoreActionsOralVore () {
     if (enemies[EnemyIndex].Weight < StomachCapacity()) {
         if (Settings.ImgPack) {
             ImgChose(player, "OralVore", enemies[EnemyIndex]);
@@ -20,8 +20,8 @@ document.getElementById("OralVore").addEventListener("click", function () {
         document.getElementById("SexText").innerHTML = "You cannot fit more into your stomach!";
     }
     return;
-});
-document.getElementById("Unbirth").addEventListener("click", function () {
+};
+function VoreActionsUnbirth () {
     if (enemies[EnemyIndex].Weight < VaginaCapacity()) {
         if (Settings.ImgPack) {
             ImgChose(player, "Unbirth", enemies[EnemyIndex]);
@@ -35,8 +35,8 @@ document.getElementById("Unbirth").addEventListener("click", function () {
         document.getElementById("SexText").innerHTML = "You cannot fit more into your vagina!";
     }
     return;
-});
-document.getElementById("CockVore").addEventListener("click", function () {
+};
+function VoreActionsCockVore () {
     if (enemies[EnemyIndex].Weight < BallsCapacity()) {
         if (Settings.ImgPack) {
             ImgChose(player, "CockVore", enemies[EnemyIndex]);
@@ -65,8 +65,8 @@ document.getElementById("CockVore").addEventListener("click", function () {
         document.getElementById("SexText").innerHTML = "You can't fit any more into your balls!";
     }
     return;
-});
-document.getElementById("BreastVore").addEventListener("click", function () {
+};
+ function VoreActionsBreastVore () {
     if (enemies[EnemyIndex].Weight < BreastCapacity()) {
         if (Settings.ImgPack) {
             ImgChose(player, "BreastVore", enemies[EnemyIndex]);
@@ -83,8 +83,8 @@ document.getElementById("BreastVore").addEventListener("click", function () {
         document.getElementById("SexText").innerHTML = "You cannot fit them into your breasts!";
     }
     return;
-});
-document.getElementById("AnalVore").addEventListener("click", function () {
+};
+function VoreActionsAnalVore () {
     if (enemies[EnemyIndex].Weight < AnalCapacity() + 100) {
         if (Settings.ImgPack) {
             ImgChose(player, "AnalVore", enemies[EnemyIndex]);
@@ -113,20 +113,8 @@ document.getElementById("AnalVore").addEventListener("click", function () {
         document.getElementById("SexText").innerHTML = "You cannot fit any more into your bowels!";
     }
     return;
-});
+};
 
 function HideVore() {
-    document.getElementById("OralVore").style.display = 'none';
-    document.getElementById("Unbirth").style.display = 'none';
-    document.getElementById("CockVore").style.display = 'none';
-    document.getElementById("AnalVore").style.display = 'none';
-    document.getElementById("BreastVore").style.display = 'none';
-    document.getElementById("DrainMenu").style.display = 'none';
-    document.getElementById("InjectMenu").style.display = 'none';
-    document.getElementById("PlayerMouth").style.display = 'none';
-    document.getElementById("PlayerVagina").style.display = 'none';
-    document.getElementById("PlayerDick").style.display = 'none';
-    document.getElementById("Breast").style.display = 'none';
-    document.getElementById("Anal").style.display = 'none';
-    document.getElementById("CaptureOpponent").style.display = 'none';
+    AfterBattleButtons(false)
 }
