@@ -2,7 +2,7 @@ var PRL;
 var RL;
 var LastPressed;
 // Mouth
-document.getElementById("GiveBlowjob").addEventListener("click", function () {
+function SexActGiveBlowjob() {
     if (Settings.ImgPack) {
         ImgChose(player, "GiveBlowjob", enemies[EnemyIndex]);
     }
@@ -22,8 +22,9 @@ document.getElementById("GiveBlowjob").addEventListener("click", function () {
     CheckArousal();
     LastPressed = "GiveBlowjob";
     return;
-});
-document.getElementById("GiveCunnilingus").addEventListener("click", function () {
+}
+
+function SexActGiveCunnilingus() {
     if (Settings.ImgPack) {
         ImgChose(player, "GiveCunnilingus", enemies[EnemyIndex]);
     }
@@ -39,8 +40,9 @@ document.getElementById("GiveCunnilingus").addEventListener("click", function ()
     CheckArousal();
     LastPressed = "GiveCunnilingus";
     return;
-});
-document.getElementById("GiveRimjob").addEventListener("click", function () {
+};
+
+function SexActGiveRimjob() {
     if (Settings.ImgPack) {
         ImgChose(player, "GiveRimjob", enemies[EnemyIndex]);
     }
@@ -54,9 +56,9 @@ document.getElementById("GiveRimjob").addEventListener("click", function () {
     CheckArousal();
     LastPressed = "GiveRimjob";
     return;
-});
+};
 // Vagina
-document.getElementById("Scissoring").addEventListener("click", function () {
+function SexActScissoring() {
     if (Settings.ImgPack) {
         ImgChose(player, "Scissoring", enemies[EnemyIndex]);
     }
@@ -70,8 +72,9 @@ document.getElementById("Scissoring").addEventListener("click", function () {
     CheckArousal();
     LastPressed = "Scissoring";
     return;
-});
-document.getElementById("GetCunnilingus").addEventListener("click", function () {
+};
+
+function SexActGetCunnilingus() {
     if (Settings.ImgPack) {
         ImgChose(player, "GetCunnilingus", enemies[EnemyIndex]);
     }
@@ -87,8 +90,9 @@ document.getElementById("GetCunnilingus").addEventListener("click", function () 
     CheckArousal();
     LastPressed = "GetCunnilingus";
     return;
-});
-document.getElementById("RideCowgirl").addEventListener("click", function () {
+};
+
+function SexActRideCowgirl() {
     if (Settings.ImgPack) {
         ImgChose(player, "RideCowgirl", enemies[EnemyIndex]);
     }
@@ -111,8 +115,9 @@ document.getElementById("RideCowgirl").addEventListener("click", function () {
     CheckArousal();
     LastPressed = "RideCowgirl";
     return;
-});
-document.getElementById("Insertion").addEventListener("click", function () {
+};
+
+function SexActInsertion() {
     if (Settings.ImgPack) {
         ImgChose(player, "Insertion", enemies[EnemyIndex]);
     }
@@ -134,23 +139,9 @@ document.getElementById("Insertion").addEventListener("click", function () {
     CheckArousal();
     LastPressed = "Insertion";
     return;
-});
+};
 // Dick
-document.getElementById("DickAction").addEventListener("click", function () {
-    switch (document.getElementById("DickOne").style.display) {
-        case "none":
-            document.getElementById("DickOne").style.display = 'block';
-            document.getElementById("DickTwo").style.display = 'none';
-            document.getElementById("DickAction").value = "DickActions One";
-            break;
-        default:
-            document.getElementById("DickOne").style.display = 'none';
-            document.getElementById("DickTwo").style.display = 'block';
-            document.getElementById("DickAction").value = "DickActions Two";
-            break;
-    }
-});
-document.getElementById("Missionary").addEventListener("click", function () {
+function SexActMissionary() {
     if (Settings.ImgPack) {
         ImgChose(player, "Missionary", enemies[EnemyIndex]);
     }
@@ -170,8 +161,9 @@ document.getElementById("Missionary").addEventListener("click", function () {
     CheckArousal();
     LastPressed = "Missionary";
     return;
-});
-document.getElementById("DualPen").addEventListener("click", function () {
+};
+
+function SexActDualPen() {
     enemies[EnemyIndex].Arousal += 2 * SexAttack;
     player.Arousal += 3 * ESexAttack;
     if (Settings.ImgPack) { //Going to need to split this, unless it's only for multiple orifices
@@ -200,8 +192,9 @@ document.getElementById("DualPen").addEventListener("click", function () {
     CheckArousal();
     LastPressed = "DualPen";
     return;
-});
-document.getElementById("MultiPen").addEventListener("click", function () {
+};
+
+function SexActMultiPen() {
     if (enemies[EnemyIndex].Pussies.length * SexAttack > 200) {
         enemies[EnemyIndex].Arousal = 100;
         enemies[EnemyIndex].Orgasm += Math.floor(enemies[EnemyIndex].Pussies.length * SexAttack) - 1;
@@ -240,8 +233,9 @@ document.getElementById("MultiPen").addEventListener("click", function () {
     CheckArousal();
     LastPressed = "DualPen";
     return;
-});
-document.getElementById("DoggyStyle").addEventListener("click", function () {
+};
+
+function SexActDoggyStyle() {
     if (Settings.ImgPack) {
         ImgChose(player, "DoggyStyle", enemies[EnemyIndex]);
     }
@@ -261,8 +255,9 @@ document.getElementById("DoggyStyle").addEventListener("click", function () {
     CheckArousal();
     LastPressed = "DoggyStyle";
     return;
-});
-document.getElementById("GetBlowjob").addEventListener("click", function () {
+};
+
+function SexActGetBlowjob() {
     if (Settings.ImgPack) {
         ImgChose(player, "GetBlowjob", enemies[EnemyIndex]);
     }
@@ -284,9 +279,9 @@ document.getElementById("GetBlowjob").addEventListener("click", function () {
     CheckArousal();
     LastPressed = "GetBlowjob";
     return;
-});
+};
 // Anal
-document.getElementById("DoggyStyleAnal").addEventListener("click", function () {
+function SexActDoggyStyleAnal() {
     if (Settings.ImgPack) {
         ImgChose(player, "DoggyStyleAnal", enemies[EnemyIndex]);
     }
@@ -306,8 +301,9 @@ document.getElementById("DoggyStyleAnal").addEventListener("click", function () 
     CheckArousal();
     LastPressed = "DoggyStyleAnal";
     return;
-});
-document.getElementById("DualPen").addEventListener("click", function () {
+};
+
+function SexActDualPen() {
     enemies[EnemyIndex].Arousal += SexAttack * 2;
     player.Arousal += ESexAttack * 2;
     if (LastPressed === "DualPen") {
@@ -327,12 +323,13 @@ document.getElementById("DualPen").addEventListener("click", function () {
     CheckArousal();
     LastPressed = "DoggyStyleAnal";
     return;
-});
-document.getElementById("MultiPen").addEventListener("click", function () {
+};
 
-})
+function SexActMultiPen() {
 
-document.getElementById("GetRimjob").addEventListener("click", function () {
+};
+
+function SexActGetRimjob() {
     if (Settings.ImgPack) {
         ImgChose(player, "GetRimjob", enemies[EnemyIndex]);
     }
@@ -346,8 +343,9 @@ document.getElementById("GetRimjob").addEventListener("click", function () {
     CheckArousal();
     LastPressed = "GetRimjob";
     return;
-});
-document.getElementById("BreastFeed").addEventListener("click", function () {
+};
+
+function SexActBreastFeed() {
     if (Settings.ImgPack) {
         ImgChose(player, "BreastFeed", enemies[EnemyIndex]);
     }
@@ -365,26 +363,17 @@ document.getElementById("BreastFeed").addEventListener("click", function () {
     CheckArousal();
     LastPressed = "BreastFeed";
     return;
-});
+};
 
-document.getElementById("StopSexButton").addEventListener("click", function () {
+function StopSexButton() {
     battle = false;
     player.Orgasm = 0;
     player.cumGround = 0;
-    document.getElementById("AfterBattle").style.display = 'none';
-    document.getElementById("PlayerMouth").style.display = 'block';
-    document.getElementById("PlayerVagina").style.display = 'block';
-    document.getElementById("PlayerDick").style.display = 'block';
-    document.getElementById("Breast").style.display = 'block';
-    document.getElementById("Anal").style.display = 'block';
-    document.getElementById("EnemyVagina").style.display = 'block';
-    document.getElementById("EnemyDick").style.display = 'block';
     document.getElementById("map").style.display = 'block';
     document.getElementById("status").style.display = 'block';
     document.getElementById("buttons").style.display = 'block';
-    document.getElementById("DrainMenu").style.display = 'block';
-    document.getElementById("InjectMenu").style.display = 'block';
     document.getElementById("EventLog").style.display = 'block';
+    document.getElementById("AfterBattle").style.display = 'none';
     LastPressed = " ";
     // Trying to have ferals disappear after combat	
     /*	console.log(enemies[EnemyIndex].FirstName);
@@ -394,30 +383,22 @@ document.getElementById("StopSexButton").addEventListener("click", function () {
     		enemies.splice(EnemyIndex, 1);
     	}*/
     return;
-});
-document.getElementById("Capture").addEventListener("click", function () {
+};
+
+function SexActCapture() {
     House.Dormmates.push(enemies[EnemyIndex]);
     enemies.splice(EnemyIndex, 1);
     battle = false;
     player.Orgasm = 0;
     player.cumGround = 0;
     document.getElementById("AfterBattle").style.display = 'none';
-    document.getElementById("PlayerMouth").style.display = 'block';
-    document.getElementById("PlayerVagina").style.display = 'block';
-    document.getElementById("PlayerDick").style.display = 'block';
-    document.getElementById("Anal").style.display = 'block';
-    document.getElementById("Breast").style.display = 'block';
-    document.getElementById("EnemyVagina").style.display = 'block';
-    document.getElementById("EnemyDick").style.display = 'block';
     document.getElementById("map").style.display = 'block';
     document.getElementById("status").style.display = 'block';
     document.getElementById("buttons").style.display = 'block';
-    document.getElementById("DrainMenu").style.display = 'block';
-    document.getElementById("InjectMenu").style.display = 'block';
     document.getElementById("EventLog").style.display = 'block';
     LastPressed = " ";
     return;
-});
+}
 
 function Tightness(pipe, hole, mode) {
     if (mode == "A") {

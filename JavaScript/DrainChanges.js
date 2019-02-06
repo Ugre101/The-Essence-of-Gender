@@ -2,27 +2,27 @@ function RaceDrain(whose) {
     var RaceEss = player.RaceEssence;
     var a = RaceEss.findIndex(e => e.Race == whose.Race);
     if (a > -1) {
-        RaceEss[a].amount += RandomInt(2,10);
+        RaceEss[a].amount += RandomInt(2, 10);
     } else {
         var Race = {
             Race: whose.Race,
-            amount: RandomInt(2,10)
+            amount: RandomInt(2, 10)
         }
         RaceEss.push(Race);
     }
     var b = RaceEss.findIndex(e => e.Race == whose.SecondRace);
     if (b > -1) {
-        RaceEss[a].amount += RandomInt(1,5);
+        RaceEss[a].amount += RandomInt(1, 5);
     } else {
         var Race = {
             Race: whose.SecondRace,
-            amount: RandomInt(1,5)
+            amount: RandomInt(1, 5)
         }
         RaceEss.push(Race);
     }
 };
 
-document.getElementById("DrainM").addEventListener("click", function () {
+function DrainDrainM() {
     var old = JSON.parse(JSON.stringify(player));
     var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
     var enemy = enemies[EnemyIndex];
@@ -55,9 +55,9 @@ document.getElementById("DrainM").addEventListener("click", function () {
     AfterBattleButtons();
     CheckArousal();
     return;
-});
+};
 
-document.getElementById("DrainF").addEventListener("click", function () {
+function DrainDrainF() {
     var old = JSON.parse(JSON.stringify(player));
     var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
     var enemy = enemies[EnemyIndex];
@@ -90,9 +90,9 @@ document.getElementById("DrainF").addEventListener("click", function () {
     AfterBattleButtons();
     CheckArousal();
     return;
-})
+};
 
-document.getElementById("InjectM").addEventListener("click", function () {
+function DrainInjectM() {
     var q = Math.min(player.GiveEssence, player.Masc);
     var old = JSON.parse(JSON.stringify(player));
     var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
@@ -119,9 +119,9 @@ document.getElementById("InjectM").addEventListener("click", function () {
     AfterBattleButtons();
     CheckArousal();
     return;
-});
+};
 
-document.getElementById("InjectF").addEventListener("click", function () {
+function DrainInjectF() {
     var q = Math.min(player.GiveEssence, player.Femi);
     var old = JSON.parse(JSON.stringify(player));
     var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
@@ -147,7 +147,7 @@ document.getElementById("InjectF").addEventListener("click", function () {
     AfterBattleButtons();
     CheckArousal();
     return;
-})
+};
 
 function IntToAge(int) {
     switch (int) {
