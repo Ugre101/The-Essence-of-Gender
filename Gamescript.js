@@ -1194,6 +1194,7 @@
 
         if (Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20 !== medium) {
             HemScale();
+            Npcs = [];
         };
 
         document.getElementById("StatusArea").innerHTML = "Area: " + player.Area + " and Map: " + player.Map;
