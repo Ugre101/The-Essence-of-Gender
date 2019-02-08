@@ -23,22 +23,6 @@ function AfterBattleButtons(Sex = true) {
     console.log(player.Orgasm + ">=" + PlayerMaxOrgasm)
     if (Sex) {
         if (PlayerMaxOrgasm >= player.Orgasm) {
-            if (window.innerHeight < 800) {
-                DickTwo.style.display = "none";
-
-                var DickAction = InputButton("DickAction");
-                DickAction.addEventListener("click", function () {
-                    if (DickTwo.style.display === "none") {
-                        DickOne.style.display = "none";
-                        DickTwo.style.display = "block";
-                    } else {
-                        DickOne.style.display = "block";
-                        DickTwo.style.display = "none";
-                    }
-                });
-                Dick.appendChild(DickAction);
-            }
-
             var GetRimjob = InputButton("Receive rimjob");
             GetRimjob.addEventListener("click", function () {
                 SexActGetRimjob();
@@ -93,6 +77,8 @@ function AfterBattleButtons(Sex = true) {
 
                 if (ee.Dicks.length > 1) {
                     // Dual pen old value Get dual penetrated
+                    var DualFuckt = InputButton("");
+                    Pussy.appendChild(DualFuckt);
                 }
 
                 if (enemies[EnemyIndex].Height * 9 < player.Height) {
@@ -114,10 +100,20 @@ function AfterBattleButtons(Sex = true) {
                 DickOne.appendChild(GetBlowjob);
 
                 if (player.Dicks.length > 1 && ee.Pussies.length > 0) {
+                    var DualPen = InputButton("");
+                    DualPen.addEventListener("click", function () {
+                        SexActDualPen();
+                    })
+                    DickTwo.appendChild(DualPen);
                     // Dual pen
                 }
                 if (player.Dicks.length > 2 && ee.Pussies.length > 1) {
                     // Multi pen
+                    var MultiPen = InputButton("");
+                    MultiPen.addEventListener("click", function () {
+                        SexActMultiPen();
+                    })
+                    DickTwo.appendChild(MultiPen);
                 }
 
                 if (ee.Pussies.length > 0) {
@@ -222,6 +218,22 @@ function AfterBattleButtons(Sex = true) {
                     });
                     Anal.appendChild(AnalVore);
                 }
+            }
+            var dickCount = DickOne.childElementCount + DickTwo.childElementCount
+            if (window.innerHeight < 800 && dickCount > 3) {
+                DickTwo.style.display = "none";
+
+                var DickAction = InputButton("More");
+                DickAction.addEventListener("click", function () {
+                    if (DickTwo.style.display === "none") {
+                        DickOne.style.display = "none";
+                        DickTwo.style.display = "block";
+                    } else {
+                        DickOne.style.display = "block";
+                        DickTwo.style.display = "none";
+                    }
+                });
+                Dick.appendChild(DickAction);
             }
         }
         if (enemies[EnemyIndex].Orgasm > 4 && House.Dormmates.length < (House.Dorm * 3)) {

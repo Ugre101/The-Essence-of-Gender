@@ -86,18 +86,19 @@
 				<canvas id="WorldMap"></canvas>
 			</div>
 			<p id="StatusArea">Start</p>
+			<input type="button" id="HideWorldMap" value="Hide" class="SmolButton" />
 		</div>
 	</div>
 
 	<div id="EventLog" class="None">
-		<input type="button" id="HideEventLog" value="Hide" />
-		<h2>Event Log</h2>
+		<input type="button" id="HideEventLog" value="Hide" class="SmolButton" />
+		<h2 class="EventH2" id="EventLogH2">Event Log</h2>
 		<div id="EventLogPart" title="Click to enlarge">
 			<p id="EventText"></p>
 		</div>
-		<input type="button" id="HideFluids" value="Hide" />
-		<h2>Fluids</h2>
-		<input type="button" id="FluidsMode" value="A" />
+		<input type="button" id="HideFluids" value="Hide" class="SmolButton" />
+		<h2 class="EventH2" id="EventFluidsH2">Fluids</h2>
+		<input type="button" id="FluidsMode" value="A" class="SmolButton" />
 		<div id="FluidPart">
 			<div id="FluidContainer" class="AutoColumn">
 				<div id="CumBar">
@@ -506,6 +507,10 @@
 		<p id="InventoryText" class="MenuText"></p>
 		<div id="InventoryBag"></div>
 		<input type="button" id="InventoryLeave" value="Close" />
+	</div>
+
+	<div id="SpellBook" class="None Options">
+
 	</div>
 
 	<div id="ShowVore" class="None Vore">

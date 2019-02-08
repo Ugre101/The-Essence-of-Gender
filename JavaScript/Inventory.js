@@ -23,25 +23,36 @@ document.getElementById("InventoryBag").addEventListener("click", function (e) {
 });
 
 function Items(Things) {
-    for (var e = 0; e < Things.length; e++) {
-        if (Things[e].Name === "Pocket portal") {
-            var temp = Things[e];
-            Things.splice(e, 1);
-            Things.unshift(temp); // Put pocket portal first in inventory.
+    var KeyItems = ["Pocket portal", "SpellBook"]; // Make sure important items are first in iventory
+    var Exists = 0;
+    for (var k of KeyItems) {
+        var index = Things.findIndex(f => f.Name === k)
+        if (Things.some(f => f.Name === k) && index !== Exists) {
+            Exists++;
+            var temp = Things[index]
+            Things.splice(index, 1);
+            Things.unshift(temp);
         }
     }
     var Bag = "";
     Things.sort();
     for (var e = 0; e < Things.length; e++) {
         var Thing = Things[e];
-        var item = "<div title=\"" + Thing.Title + "\"><p>" + Thing.Name + " (" + Thing.Quantity + "\)</p>"
-        if (Thing.hasOwnProperty("Use")) {
+        var item = "<div title=\"" + Thing.Title + "\"><p>" + Thing.Name;
+        if (typeof Thing.Quantity === "number") { // Don't show for non number values
+            item += " (" + Thing.Quantity + "\)"
+        }
+        item += "</p>"
+        if (typeof Thing.Use === "function") {
             item += "<input type=\"button\" onclick=\"Use(" + e + ")\" value=\"Use\">"
         }
-        if (Thing.Equip === "Yes") {
+        if (typeof Thing.Read === "function") {
+            item += "<input type=\"button\" onclick=\"Read(" + e + ")\" value=\"Read\">"
+        }
+        if (typeof Thing.Equip === "function") {
             item += "<input type=\"button\" onclick=\"Equip(" + e + ")\" value=\"Equip\">"
         }
-        if (Thing.Drop != "No") {
+        if (Thing.Drop === true) {
             item += "<input type=\"button\" onclick=\"Drop(" + e + ")\" value=\"Drop\">"
         }
         item += "</div>";
@@ -58,103 +69,28 @@ function Use(item) {
     } else {
         console.log("this item has not been refactored: " + item.Name);
         switch (thing.Name) {
-            case "Orc cum":
-                player.Masc += 50;
-                EventLog("After drinking the orc cum, you body absorbs the manly essence of it.");
-                break;
-            case "Fairy dust":
-                player.Height -= 5;
-                EventLog("Inhaling the fairy dust you see the world grow before you, or maybe it's you who became shorter?");
-                break;
-            case "Humanity":
-                TfEngine("human");
-                EventLog("You try to regain your humanity...");
-                break;
-            case "Pouch":
-                var z = Math.round(Math.random() * 40) + 10;
-                z = parseInt(z);
-                player.Gold += z;
-                EventLog("What's in the bag? It's " + z + " coins!");
-                break;
-            case "HalfPouch":
-                var z = Math.round(Math.random() * 40) + 10;
-                z = parseInt(z);
-                player.Gold += z;
-                EventLog("What's in the bag? It's " + z + " coins!");
-                break;
-            case "Orc brew":
-                var z = Math.min(Math.round(player.MaxHealth / 10), player.MaxHealth - player.Health);
-                player.Health += z;
-                EventLog("Bottoms up!");
-                if (z > 0)
-                    EventLog("You gained " + z + " health back!");
-                else if (z < 0)
-                    EventLog("Bleh. That ruined your night's sleep.");
-                break;
-            case "Troll Milk":
-                var z = Math.min(Math.round(player.MaxWillHealth / 10), player.MaxWillHealth - player.WillHealth);
-                player.WillHealth += z;
-                EventLog("Bottoms up!");
-                if (z > 0)
-                    EventLog("You gained " + z + " willpower back!");
-                else if (z < 0)
-                    EventLog("Bleh. That ruined your night's sleep.");
-                break;
-            case "Elven hair":
-                TfEngine("elf");
-                EventLog("You try to become an elf...");
-                break;
-            case "Amazon's Girdle":
-                if (player.Masc > player.Femi + 100) {
-                    player.Masc -= 50;
-                    player.Femi += 50;
-                } else if (player.Masc + 100 < player.Femi) {
-                    player.Masc += 50;
-                    player.Femi -= 50;
-                } else {
-                    var z = Math.round((player.Masc + player.Femi) / 2);
-                    player.Masc = z;
-                    player.Femi = z;
-                }
-                EventLog("Tightening the girdle, you feel your essences balancing...");
-                break;
-            case "Milk Jug":
-                for (var i = 0; i < player.Boobies.length; i++) {
-                    player.Boobies[i].MilkBaseRate += 0.1;
-                }
-                EventLog("Chugging the jug, you feel a shudder run through your chest...");
-                break;
-            case "Fertility idol":
-                player.Femi += 100;
-                EventLog("You absorb the statue's latent energies.");
-                break;
-            case "Cocky rock":
-                player.Masc += 100;
-                EventLog("You absorb the rock's male essence.");
-                break;
-            case "Infernal semen":
-                player.Masc += player.Femi;
-                player.Femi = 0;
-                EventLog("The infernally-hot semen burns your feminine essence, leaving you 100% male.")
-                break;
-            case "Infernal milk":
-                player.Femi += player.Masc;
-                player.Masc = 0;
-                EventLog("The infernally-hot milk burns your masculine essence, leaving you 100% female.");
-                break;
             default:
                 EventLog("Uh... Something went wrong...");
                 break;
         }
     }
-    player.Inventory[item].Quantity--;
-    if (player.Inventory[item].Quantity <= 0)
-        player.Inventory.splice(item, 1);
+    console.log((typeof player.Inventory[item].Quantity == "number"))
+    if (typeof player.Inventory[item].Quantity === "number") {
+        player.Inventory[item].Quantity--;
+        if (player.Inventory[item].Quantity <= 0) {
+            player.Inventory.splice(item, 1);
+        }
+    }
     document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
-    return console.log(player.Inventory[item]);
 }
 
 function Equip(item) {
+    ItemDict[player.Inventory[item].Name].Equip();
+    return console.log(player.Inventory[item]);
+}
+
+function Read(item) {
+    ItemDict[player.Inventory[item].Name].Read();
     return console.log(player.Inventory[item]);
 }
 

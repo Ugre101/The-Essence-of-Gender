@@ -28,3 +28,10 @@ function InputButton(Value, Title = "") { // Save space and stop repeating same 
     button.setAttribute("title", Title);
     return button;
 }
+
+function ButtonButton(Title = "") { // Same as above but for <button>
+    var button = document.createElement("button");
+    button.setAttribute("type", "button");
+    button.setAttribute("title", Title);
+    return button;
+}
