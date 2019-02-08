@@ -125,17 +125,11 @@
         },
         cumGround: 0, // Need to get rid of
         MagicAffinity: {
+            Fire: 0,
             Elemental: 0, // Fire, ice, water, stone, etc
             Restoration: 0 // Healing, returning to orginal shape/age.
         },
         Spells: [ // Array so that I can add more without problems
-            Fireball = {
-                Name: "Fireball",
-                Type: "Elemental",
-                ManaCost: 40,
-                BaseDamage: 20,
-                Exp: 0 // I think I want magic to be a thing which gets better with use
-            }
         ],
         Blessings: {
             MountainShrine: {
@@ -318,6 +312,7 @@
         player.Health = player.MaxHealth;
         player.WillHealth = player.MaxWillHealth;
         player.Mana = 100;
+        player.Spells.push(SpellDictLite.MinorHealing);
         document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
     });
 
@@ -385,6 +380,7 @@
         document.getElementById("PronounForm").style.display = 'none';
         document.getElementById("Inventory").style.display = 'none';
         document.getElementById("ChildrenMenu").style.display = 'none';
+        document.getElementById("SpellBook").style.display = 'none';
         if (window.innerHeight < 600) {
             document.getElementById("map").style.display = 'none';
             document.getElementById("buttons").style.display = 'none';
@@ -1226,7 +1222,7 @@
         if (!battle) {
             var needPaint = ["Farm", "TempCity", "MountainStart", "MountainClimb", "MountainClimb2", "MountainClimb3",
                 "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8", "MountainClimb9",
-                "MountainClimb10", "MountainShrinePath", "MountainShrine"
+                "MountainClimb10", "MountainShrinePath", "MountainShrine", "MountainTribe"
             ];
             if (needPaint.indexOf(player.Map) > -1) {
                 PaintBackground();
@@ -1246,9 +1242,6 @@
             ctx.fillStyle = "BlueViolet";
             sprite.Size = 1 //Math.min(0.8 + player.Height / 320, 1.2);
             ctx.fillRect(sprite.x, sprite.y, grid * sprite.Size, grid * sprite.Size);
-            if (TF.Status) {
-                // TfEngine();
-            }
             Laglimiter++;
             if (Laglimiter % 80 == 0) {
                 if (Settings.EssenceAuto) {

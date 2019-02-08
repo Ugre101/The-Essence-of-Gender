@@ -81,15 +81,7 @@ function WitchHutFunc() {
             return;
         } else if (player.Gold >= 500) {
             player.Gold -= 500;
-            player.Spells.push(Fireball);
-            var Fireball = {
-                Name: "Fireball",
-                Type: "Elemental",
-                ManaCost: 40,
-                BaseDamage: 20,
-                Exp: 0 // I think I want magic to be a thing which gets better with use
-            }
-            player.Spells.push(Fireball);
+            player.Spells.push(SpellDictLite.Fireball);
 
             p.innerHTML = "Putting the ball in your pocket, you hope it works as advertised.";
         } else {

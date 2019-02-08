@@ -1,4 +1,4 @@
-document.getElementById("WorldMapContainer").addEventListener("click", function () {
+document.getElementById("HideWorldMap").addEventListener("click", function () {
     if (document.getElementById("WorldMapPart").style.display == 'none') {
         document.getElementById("WorldMapPart").style.display = 'block';
         PrintMap();

@@ -3,7 +3,7 @@ const ItemDict = {
     itemTemplate: {
         Name: "Name of the item",
         Equip: "No", // this will be refactored to contain two attributes, Equip(who) and Unequip(who)
-        Drop: "Yes",
+        Drop: true, // or false
         Does: "Short desc.",
         Quantity: 1,
         Title: "Long description of the item",
@@ -19,7 +19,7 @@ const ItemDict = {
             EventLog("After drinking the orc cum, " + who.Name + " absorbs the manly essence of it.");
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Heals 10% of HP.",
         Title: "Low-quality beer. It'll heal a bit."
     },
@@ -31,7 +31,7 @@ const ItemDict = {
         },
         Use: "Yes",
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Shrinks you 5 cm",
         Title: "Sparkly, commonly used as prank item to shrink people."
     },
@@ -42,7 +42,7 @@ const ItemDict = {
             EventLog("You try to regain your humanity...");
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Makes you human",
         Title: "One way to get your humanity back."
     },
@@ -55,7 +55,7 @@ const ItemDict = {
             EventLog("What's in the bag? It's " + z + " coins!");
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Gives gold.",
         Title: "Jingles faintly; probably has money in it."
     },
@@ -68,7 +68,7 @@ const ItemDict = {
             EventLog("What's in the bag? It's " + z + " coins!");
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Gives gold.",
         Title: "Jingles faintly; probably has money in it."
     },
@@ -83,7 +83,8 @@ const ItemDict = {
             else if (z < 0)
                 EventLog("Bleh. That ruined your night's sleep.");
         },
-        Title: "Heals?"
+        Title: "Heals?",
+        Drop: true
     },
     trollMilk: {
         Name: "Troll Milk",
@@ -97,7 +98,7 @@ const ItemDict = {
                 EventLog("Bleh. That ruined your night's sleep.");
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Restores 10% of willpower.",
         Title: "Smells like it's already gone sour. Increases focus."
     },
@@ -108,7 +109,7 @@ const ItemDict = {
             EventLog("You try to become an elf...");
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Elf TF",
         Title: "This is all you need to become an elf, no potions needed."
     },
@@ -129,7 +130,7 @@ const ItemDict = {
             EventLog("Tightening the girdle, you feel your essences balancing...");
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Balances gender",
         Title: "Brings your essences closer together in strength."
     },
@@ -142,7 +143,7 @@ const ItemDict = {
             EventLog("Chugging the jug, you feel a shudder run through your chest...");
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Increases lactation",
         Title: "It'll go straight to your chest!"
     },
@@ -153,7 +154,7 @@ const ItemDict = {
             EventLog("You absorb the statue's latent energies.");
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Increases femininity",
         Title: "Brings out your feminine side."
     },
@@ -164,7 +165,7 @@ const ItemDict = {
             EventLog("You absorb the rock's male essence.");
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Increases masculinity",
         Title: "Brings out your masculine side."
     },
@@ -176,7 +177,7 @@ const ItemDict = {
             EventLog("The infernally-hot semen burns your feminine essence, leaving you 100% male.");
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Turns femininity into masculinity",
         Title: "Turns your feminine side into another masculine one."
     },
@@ -188,7 +189,7 @@ const ItemDict = {
             EventLog("The infernally-hot milk burns your masculine essence, leaving you 100% female.");
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Turns masculinity into femininity",
         Title: "Turns your masculine side into another feminine one."
     },
@@ -230,7 +231,7 @@ const ItemDict = {
             FluidsEngine();
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Makes you filled with milk!",
         Title: "Guarantees milkiness."
     },
@@ -273,7 +274,7 @@ const ItemDict = {
             EventLog("Feeling a flush of heat in your groin, you glance down just in time to see " + a + b);
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Makes you filled with cum!",
         Title: "Guarantees cum-filling."
     },
@@ -285,7 +286,7 @@ const ItemDict = {
             EventLog("A dirty magazine, that's made you extremely aroused...");
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Int +1",
         Title: "Magically connects to another dimension's internet, but only shows porn."
     },
@@ -294,7 +295,7 @@ const ItemDict = {
         Name: "Blade",
         //Use: "Yes",
         Equip: "Yes",
-        Drop: "Yes",
+        Drop: true,
         Does: "Temp+5",
         Quantity: 1,
         Title: "Temp_Tempsson legendary temp sword gives +999 to testing."
@@ -325,7 +326,7 @@ const ItemDict = {
             FluidsEngine();
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "Milk you",
         Title: "Milk yourself"
     },
@@ -345,7 +346,7 @@ const ItemDict = {
             //Drink milk
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "...",
         Title: "A half liter bottle filled milk."
     },
@@ -365,7 +366,7 @@ const ItemDict = {
             //Drink milk
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "...",
         Title: "A one liter bottle filled milk."
     },
@@ -385,7 +386,7 @@ const ItemDict = {
             //Drink milk
         },
         Equip: "No",
-        Drop: "Yes",
+        Drop: true,
         Does: "...",
         Title: "A two liter bottle filled milk."
     },
@@ -408,7 +409,57 @@ const ItemDict = {
         },
         Equip: "No",
         Does: "Teleport home",
-        Drop: "No", //I think?
+        Drop: false, //I think?
         Title: "Never walk home again!"
+    },
+    SpellBook: {
+        Name: "SpellBook",
+        Equip: "", // this will be refactored to contain two attributes, Equip(who) and Unequip(who)
+        Drop: false,
+        Does: "Short desc.",
+        Quantity: "bob", // Infinity
+        Title: "Long description of the item",
+        Use: function (who) {
+            document.getElementById("Inventory").style.display = "none";
+
+            var Div = document.getElementById("SpellBook");
+            Div.style.display = "block";
+            while (Div.hasChildNodes()) {
+                Div.removeChild(Div.firstChild);
+            }
+
+            var h1 = document.createElement("h1");
+            h1.innerHTML = "Spell book"
+            Div.appendChild(h1);
+
+            var p = document.createElement("p");
+            p.classList.add("TextBox");
+            Div.appendChild(p);
+
+            for (var e = 0; e < player.Spells.length; e++) {
+                var it = player.Spells[e];
+                var DictIt = SpellDict[it.Name];
+                var Spell = InputButton(DictIt.Name);
+                Spell.setAttribute("data-index", e);
+                Spell.addEventListener("click", function (i) {
+                    var index = i.target.dataset.index;
+                    var it = player.Spells[index];
+                    var DictIt = SpellDict[it.Name];
+                    h1.innerHTML = DictIt.Name
+                    p.innerHTML = SpellDictLite[it.Name].Title + "<br><br>Manacost: " + DictIt.ManaCost(it.Exp) + "<br>Type: " + DictIt.Type +
+                        "<br>Exp: " + it.Exp
+                });
+                Div.appendChild(Spell);
+            }
+            var CloseBook = InputButton("Close book");
+            CloseBook.addEventListener("click", function () {
+                while (Div.hasChildNodes()) {
+                    Div.removeChild(Div.firstChild);
+                }
+                Div.style.display = "none";
+                document.getElementById("Inventory").style.display = "block";
+            });
+            Div.appendChild(CloseBook);
+        }
     }
 }

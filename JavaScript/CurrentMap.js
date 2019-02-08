@@ -65,9 +65,6 @@ function CurrentMap() {
     		enemies = [animalSpawn(player.Height), animalSpawn(player.Height)];
     		return;
         }*/
-    var startarea = document.getElementById("hem");
-    var ctx = startarea.getContext("2d");
-    var backmap = new Image;
     switch (player.Area) {
         case "First":
             switch (player.Map) {

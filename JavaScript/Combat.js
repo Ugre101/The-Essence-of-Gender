@@ -180,9 +180,10 @@ function CombatButtons() { // Just combat buttons
     var row3 = document.createElement("div");
     var row4 = document.createElement("div");
 
-    var Hit = InputButton("Hit");
+    var Hit = ButtonButton();
+    Hit.innerHTML = "Hit<br>" + Math.floor(4 * player.Str / 2) + "-" + Math.floor(8 * player.Str / 2) + "dmg"
     Hit.addEventListener("click", function () {
-        var PAttack = Math.floor(RandomInt(3, 8) * player.Str / 2) // * PhyRes(ee);
+        var PAttack = Math.floor(RandomInt(4, 8) * player.Str / 2) // * PhyRes(ee);
         ee.Health -= PAttack;
         document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " dmg.";
         UpdateStats();
@@ -197,9 +198,10 @@ function CombatButtons() { // Just combat buttons
         // Nothing for now will later make it so tease doesn't get created.
         console.log("Non tease")
     } else {
-        var Tease = InputButton("Tease");
+        var Tease = ButtonButton();
+        Tease.innerHTML = "Tease<br>" + Math.floor(4 * player.Charm / 2) + "-" + Math.floor(8 * player.Charm / 2) + "Will"
         Tease.addEventListener("click", function () {
-            var PAttack = Math.floor(RandomInt(3, 8) * player.Charm / 2) // * LusRes(ee);
+            var PAttack = Math.floor(RandomInt(4, 8) * player.Charm / 2) // * LusRes(ee);
             ee.WillHealth -= PAttack;
             document.getElementById("BattleText").innerHTML = "You dealt " + PAttack + " will dmg."
             UpdateStats();
@@ -295,27 +297,17 @@ function Spellbook() {
 
 function SpellButton(index) { // Instead of repeating, Can only add fireball now need a const dic for spells
     var it = player.Spells[index];
-    var Spell = InputButton(it.Name) // + " Mana-cost: " + ManaCost;
+    var DictIt = SpellDict[it.Name];
+    var Spell = document.createElement("button") // + " Mana-cost: " + ManaCost;
+    Spell.setAttribute("type", "button");
+    Spell.setAttribute("title", SpellDictLite[it.Name].Title);
+    Spell.innerHTML = DictIt.Name + " " + DictIt.ManaCost() + "M<br>" + DictIt.Does(it.Exp);
     Spell.setAttribute("data-index", index);
     Spell.addEventListener("click", function (i) {
         var ee = enemies[EnemyIndex];
-        var that = player.Spells[i.target.dataset.index];
-        var ManaCost = that.ManaCost // Affinity will lower cost
-        if (player.Mana < ManaCost) {
-            document.getElementById("BattleText").innerHTML = SpellCastDict[that.Name].Fail;
-            document.getElementById("BattleText2").innerHTML = "";
-            return;
-        } else {
-            var PAttack = Math.floor(RandomInt(3, 9) * (that.BaseDamage * (player.Int / 10) + (that.Exp / 100)) / 3);
-            // mod by it.exp and player.int plus some randomint, Need rebalance.
-            ee.WillHealth -= PAttack // * MagRes(ee);
-            ee.Health -= PAttack // * MagRes(ee);
-            document.getElementById("BattleText").innerHTML = SpellCastDict[that.Name].Succes(PAttack);
-            player.Mana -= ManaCost;
-            that.Exp++;
-            player.MagicAffinity[that.Type]++;
-            UpdateStats();
-        }
+        var index = i.target.dataset.index;
+        var it = player.Spells[index];
+        SpellDict[it.Name].Cast(index, ee);
     });
     return Spell;
 }

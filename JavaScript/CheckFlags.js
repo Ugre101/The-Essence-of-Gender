@@ -134,7 +134,7 @@ function CheckFlags() {
         Flags.Date.Hour = 0;
         console.log("Added hour")
     }
-    
+
     if (!player.hasOwnProperty("Face")) {
         player.Face = {
             Eyes: "brown",
@@ -340,18 +340,20 @@ function CheckFlags() {
     }
     if (Array.isArray(player.Spells) !== true) {
         player.MagicAffinity = {
+            Fire: 0,
             Elemental: 0, // Fire, ice, water, stone, etc
             Restoration: 0 // Healing, returning to orginal shape/age.
         }
         player.Spells = [ // Array so that I can add more without problems
             Fireball = {
                 Name: "Fireball",
-                Type: "Elemental",
-                ManaCost: 40,
-                BaseDamage: 20,
-                Exp: 0 
+                Exp: 0
             }
         ]
         console.log("Changed player.spells to an array");
+    }
+    if (player.Inventory.findIndex(e => e.Name === "SpellBook") === -1) {
+        console.log(player.Inventory.findIndex(e => e.Name === "SpellBook"))
+        player.Inventory.push(ItemDict.SpellBook);
     }
 }

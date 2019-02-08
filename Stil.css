@@ -60,7 +60,7 @@
        border-radius: 10px 0 0 0;
    }
 
-   #EventLog>h2 {
+   h2.EventH2 {
        display: inline-block;
        margin: 0;
    }
@@ -78,11 +78,7 @@
        overflow: auto;
    }
 
-   #EventLog>input[type=button] {
-       width: auto;
-       left: 0;
-       padding: 0.1em;
-   }
+
 
    #FluidPart {
        padding: 0 1em 1em 1em;
@@ -239,7 +235,7 @@
    p.TextBox {
        min-height: 7em;
        height: auto;
-       box-shadow: 0 0 1px 1px black;
+       border: 1px solid black;
        border-radius: 10px;
        background-color: rgb(255, 255, 255);
        width: 550px;
@@ -308,6 +304,12 @@
        z-index: -1;
    }
 
+   input[type="button"].SmolButton {
+       width: auto;
+       left: 0;
+       padding: 0.1em;
+   }
+
    #WorldMapContainer {
        position: absolute;
        right: 2vh;
@@ -318,6 +320,11 @@
    #HideWorldMap {
        height: 20px;
        width: 60px;
+   }
+
+   #WorldMapContainer > p {
+       display: inline-block;
+       margin-right: 1em;
    }
 
    @media (max-width: 700px) {
@@ -702,6 +709,20 @@
        border: 1px solid rgb(207, 133, 49);
    }
 
+   button {
+       font-family: inherit;
+       font-size: inherit;
+       width: 96%;
+       max-width: 220px;
+       height: auto;
+       margin: 0.3em 0.1em;
+       border-radius: 9px;
+       box-shadow: 0 0 4px 1px gray;
+       text-align: center;
+       background-color: rgb(238, 238, 238);
+       color: black;
+   }
+
    input[type=button] {
        font-family: inherit;
        font-size: inherit;
@@ -763,10 +784,6 @@
        border-radius: 10px;
    }
 
-   button {
-       font-family: inherit;
-       font-size: inherit;
-   }
 
    .Pink {
        background-color: pink;
