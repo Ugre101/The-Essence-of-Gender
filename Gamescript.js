@@ -362,25 +362,14 @@
     // Sets display to none used for menu buttons
     function DisplayNone() {
         battle = true;
-        if (player.hasOwnProperty("Spells"))
-            player.Spells.Fireball = player.Spells.FireballMax;
-        document.getElementById("map").style.display = 'none'
-        document.getElementById("optionpage").style.display = 'none';
-        document.getElementById("ShowLooks").style.display = 'none';
-        document.getElementById("LevelMenu").style.display = 'none';
-        document.getElementById("LoadMenu").style.display = 'none';
-        document.getElementById("SaveMenu").style.display = 'none';
-        document.getElementById("PerksMenu").style.display = 'none';
-        document.getElementById("PerkOptionsMenu").style.display = 'none';
-        document.getElementById("ShowQuests").style.display = 'none';
-        document.getElementById("DetailedInfo").style.display = 'none';
-        document.getElementById("Levels").style.display = 'none';
-        document.getElementById("ShowVore").style.display = 'none';
-        document.getElementById("EssenceOptionsMenu").style.display = 'none';
-        document.getElementById("PronounForm").style.display = 'none';
-        document.getElementById("Inventory").style.display = 'none';
-        document.getElementById("ChildrenMenu").style.display = 'none';
-        document.getElementById("SpellBook").style.display = 'none';
+        var DisplayNone =  [
+            "map","optionpage","ShowLooks","LevelMenu","LoadMenu","SaveMenu","PerksMenu",
+            "PerkOptionsMenu","ShowQuests","DetailedInfo","Levels","ShowVore","EssenceOptionsMenu",
+            "PronounForm","Inventory","ChildrenMenu","SpellBook"
+        ]
+        DisplayNone.forEach(function(src){
+            document.getElementById(src).style.display = 'none';
+        });
         if (window.innerHeight < 600) {
             document.getElementById("map").style.display = 'none';
             document.getElementById("buttons").style.display = 'none';
