@@ -764,8 +764,10 @@
 
 	<!-- Home-->
 	<div id="Home" class="None">
+		<h1>Mansion</h1>
 		<p id="HomeText" class="TextBox"></p>
 		<div id="HomeStart">
+			<h2>Entrance</h2>
 			<div>
 				<input type="button" id="Sleep" value="Sleep" />
 				<input type="button" id="Dorm" value="Dorm" />
@@ -781,18 +783,10 @@
 			</div>
 		</div>
 		<div id="Upgrades" class="None">
-			<h1>Upgrades</h1>
-			<input type="button" id="UpgradeBed" value="Upgrade bedroom 50g" title="An upgraded bedroom makes you wake up bonus health & willpower." />
-			<input type="button" id="BuildDorm" value="Build dorm 250g" title="A dorm to house defeated opponents." />
-			<input type="button" id="BuildGym" value="Build gym 200g" title="A gym will make your servant can gain muscle over time." />
-			<input type="button" id="BuildKitchen" value="Build kitchen 200g" title="A kitchen will make your servants gain fat over time." />
-			<input type="button" id="BuildPortal" value="Portal 1000g(Concept)" title="Why would you walk in a magic world, that's for peasants!" />
-			<input type="button" id="BuildBrothel" value="Brothel" title="More to come but for now grants you extra passive income and increases essence gain for servants." />
-			<input type="button" id="BuildNursery" value="Nursery" title="Speeds up aging of non-adult children, hopefully without consequences..." />
-			<input type="button" id="" value="(Placeholder)Barn" title="Allows you to milk your lactating servants. The milk can be brought with you as a travel snack or you can sell it for gold." />
-			<input type="button" id="LeaveUpgradeHome" value="Back">
+
 		</div>
 		<div id="TheDorm" class="None">
+			<h2>Dorms</h2>
 			<div id="ButtonMates">
 			</div>
 			<div id="flex">
@@ -826,6 +820,7 @@
 			</div>
 		</div>
 		<div id="PortalMenu" class="None">
+			<h2>Portal</h2>
 			<input type="button" id="LeavePortal" value="Back" /><br>
 			<div id="Portals">
 				<input type="button" id="TempLand" value="TempLand" />
@@ -833,6 +828,7 @@
 			</div>
 		</div>
 		<div id="TheBrothel" class="None">
+			<h2>Brothel</h2>
 			<input type="button" id="ServeMasc" value="Masculine customers? true" title="Allows dorm servants to gain masculinity though whoring themselves out." />
 			<input type="button" id="ServeFemi" value="Feminine customers? true" title="Allows dorm servants to  gain femininity through whoring themselves out." />
 			<input type="button" id="CloseBrothel" value="Back" />
@@ -1065,15 +1061,24 @@
 	<script>
 		// Trial to have them loading in a function so if they fail player are alerted.
 		window.onload = function () {
-			var Scripts = ["AfterBattleButtons", "BalanceParts", "Bar", "BlackMarket", "CaveEncounters", "Cheats",
-				"CheckArousal", "CheckDoor", "CheckFlags", "Children", "ChimeraShrine", "CurrentMap", "Combat", "DateTracker",
-				"Dorm", "DrainChanges", "DropSystem", "EssenceCheck", "EventLog", "FluidsEngine", "Gym", "Hair", "HemScale",
-				"Home", "Impregnate", "InferiorUnit", "Items", "Inventory", "LevelMenu", "Loader", "Looks", "Lose",
-				"ManualEssence", "MaxLimbs", "MobileSupport", "Mountain", "MountainShrine", "MountainTribe", "Movement",
-				"Opponents", "Perk",
-				"PotionShop", "PortalShop", "Pregnancy", "PrintMap", "Prototype", "RaceEssence - Concept", "Racebonus", "Save",
-				"SexAfterBattle", "SuccubusDungeon", "TfEngine", "TheFarm", "Townhall", "Vore", "VoreActions",
-				"VorePreyInterAction", "Winbattle", "WitchShop", "WitchHut", "Spells"
+			var Scripts = ["AfterBattleButtons", "BalanceParts", "CaveEncounters", "Cheats", "CheckArousal",
+				"CheckDoor", "CheckFlags", "Children", "CurrentMap", "Combat", "DateTracker",
+				"DrainChanges", "DropSystem", "EssenceCheck", "EventLog", "FluidsEngine", "Hair", "HemScale",
+				"Impregnate", "InferiorUnit", "Items", "Inventory", "LevelMenu", "Loader", "Looks",
+				"Lose", "ManualEssence", "MaxLimbs", "MobileSupport", "Mountain", "MountainTribe", "Movement",
+				"Opponents", "Perk", "Pregnancy", "PrintMap", "Prototype", "RaceEssence - Concept", "Racebonus",
+				"Save", "SexAfterBattle", "SuccubusDungeon", "TfEngine", "TheFarm", "Winbattle", "Spells"
+			]
+			var Buildings = [
+				"Bar", "BlackMarket", "ChimeraShrine", "Gym", "MountainShrine", "PotionShop",
+				"PortalShop", "WitchShop", "WitchHut", "Townhall"
+			]
+			var Vore = [
+				"Vore", "VoreActions", "VorePreyInterAction"
+			]
+			var Home = [
+				"Dorm", "Home", "HomeUpgrades"
+				// ,"BrothelSystem"
 			]
 			// Code to sort and output to console, because I find it easier when sorted. #Remember to delete last ","
 			/** 
@@ -1084,6 +1089,33 @@
 			Scripts.forEach(function (src) {
 				var newScript = document.createElement("script");
 				newScript.src = "JavaScript/" + src + ".js";
+				document.head.appendChild(newScript);
+				newScript.onerror = function () {
+					alert("Error loading " + src);
+					document.getElementById("StartProgressBar").innerHTML += "Error loading " + src // For those who use script blockers
+				};
+			});
+			Buildings.forEach(function (src) {
+				var newScript = document.createElement("script");
+				newScript.src = "JavaScript/Buildings/" + src + ".js";
+				document.head.appendChild(newScript);
+				newScript.onerror = function () {
+					alert("Error loading " + src);
+					document.getElementById("StartProgressBar").innerHTML += "Error loading " + src // For those who use script blockers
+				};
+			});
+			Vore.forEach(function (src) {
+				var newScript = document.createElement("script");
+				newScript.src = "JavaScript/Vore/" + src + ".js";
+				document.head.appendChild(newScript);
+				newScript.onerror = function () {
+					alert("Error loading " + src);
+					document.getElementById("StartProgressBar").innerHTML += "Error loading " + src // For those who use script blockers
+				};
+			});
+			Home.forEach(function (src) {
+				var newScript = document.createElement("script");
+				newScript.src = "JavaScript/Home/" + src + ".js";
 				document.head.appendChild(newScript);
 				newScript.onerror = function () {
 					alert("Error loading " + src);

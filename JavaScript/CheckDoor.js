@@ -93,6 +93,7 @@ function CheckDoor() {
                                 document.getElementById("buttons").style.display = 'none';
                                 document.getElementById("EmptyButtons").style.display = 'block';
                                 document.getElementById("Home").style.display = 'block';
+                                document.getElementById("HomeText").style.display = 'block';
                                 if (House.Dorm > 0) {
                                     document.getElementById("Dorm").style.display = "inline-block";
                                 } else {
