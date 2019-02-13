@@ -302,12 +302,10 @@ function SpellButton(index) { // Instead of repeating, Can only add fireball now
     Spell.setAttribute("type", "button");
     Spell.setAttribute("title", SpellDictLite[it.Name].Title);
     Spell.innerHTML = DictIt.Name + " " + DictIt.ManaCost() + "M<br>" + DictIt.Does(it.Exp);
-    Spell.setAttribute("data-index", index);
-    Spell.addEventListener("click", function (i) {
+    Spell.addEventListener("click", function () {
         var ee = enemies[EnemyIndex];
-        var index = i.target.dataset.index;
-        var it = player.Spells[index];
-        SpellDict[it.Name].Cast(index, ee);
+        DictIt.Cast(index, ee);
+        console.log(it);
     });
     return Spell;
 }

@@ -1,6 +1,9 @@
 // default items. You can still create others if they respect the template
 const ItemDict = {
     itemTemplate: {
+        Lite: { // What should be saved between games, quantity is added to this
+            Name: "Name of the item",
+        },
         Name: "Name of the item",
         Equip: "No", // this will be refactored to contain two attributes, Equip(who) and Unequip(who)
         Drop: true, // or false
@@ -8,15 +11,19 @@ const ItemDict = {
         Quantity: 1,
         Title: "Long description of the item",
         Use: function (who) {
-            EventLog(who.Name + " used the item")
+            //EventLog(who.Name + " used the item") Lets stop spamming the eventlog!
+            return who.Name + " used the item"
         }
     },
     orcCum: {
+        Lite: {
+            Name: "Orc cum"
+        },
         Name: "Orc cum",
         Use: function (who) {
             who.Masc += 50;
             //if (who == who.
-            EventLog("After drinking the orc cum, " + who.Name + " absorbs the manly essence of it.");
+            return "After drinking the orc cum, " + who.Name + " absorbs the manly essence of it."
         },
         Equip: "No",
         Drop: true,
@@ -24,10 +31,13 @@ const ItemDict = {
         Title: "Low-quality beer. It'll heal a bit."
     },
     fairyDust: {
+        Lite: {
+            Name: "Fairy dust"
+        },
         Name: "Fairy dust",
         Use: function (who) {
             who.Height -= 5;
-            EventLog("Inhaling the fairy dust you see the world grow before you, or maybe it's you who became shorter?");
+            return "Inhaling the fairy dust you see the world grow before you, or maybe it's you who became shorter?"
         },
         Use: "Yes",
         Equip: "No",
@@ -36,10 +46,14 @@ const ItemDict = {
         Title: "Sparkly, commonly used as prank item to shrink people."
     },
     humanity: {
+        Lite: {
+            Name: "Humanity"
+        },
         Name: "Humanity",
         Use: function (who) {
             PotionDrunk("human");
-            EventLog("You try to regain your humanity...");
+            return "You try to gain some humanity."
+            // if player already have alot of human race ess maybe say strengtn?
         },
         Equip: "No",
         Drop: true,
@@ -47,12 +61,15 @@ const ItemDict = {
         Title: "One way to get your humanity back."
     },
     pouch: {
+        Lite: {
+            Name: "Pouch"
+        },
         Name: "Pouch",
         Use: function (who) {
             var z = Math.round(Math.random() * 40) + 10;
             z = parseInt(z);
             who.Gold += z;
-            EventLog("What's in the bag? It's " + z + " coins!");
+            return "What's in the bag? It's " + z + " coins!"
         },
         Equip: "No",
         Drop: true,
@@ -60,12 +77,15 @@ const ItemDict = {
         Title: "Jingles faintly; probably has money in it."
     },
     halfPouch: {
+        Lite: {
+            Name: "Small Pouch",
+        },
         Name: "Small Pouch",
         Use: function (who) {
             var z = Math.round(Math.random() * 40) + 10;
             z = parseInt(z);
             who.Gold += z;
-            EventLog("What's in the bag? It's " + z + " coins!");
+            return "What's in the bag? It's " + z + " coins!";
         },
         Equip: "No",
         Drop: true,
@@ -73,29 +93,35 @@ const ItemDict = {
         Title: "Jingles faintly; probably has money in it."
     },
     orcBrew: {
+        Lite: {
+            Name: "Orc brew"
+        },
         Name: "Orc brew",
         Use: function (who) {
             var z = Math.min(Math.round(who.MaxHealth / 10), who.MaxHealth - who.Health);
             who.Health += z;
-            EventLog("Bottoms up!");
-            if (z > 0)
-                EventLog("You gained " + z + " health back!");
-            else if (z < 0)
-                EventLog("Bleh. That ruined your night's sleep.");
+            if (z > 0) {
+                return "Bottoms up!<br><br>" + "You gained " + z + " health back!";
+            } else if (z < 0) {
+                return "Bottoms up!<br><br>" + "Bleh. That ruined your night's sleep.";
+            }
         },
         Title: "Heals?",
         Drop: true
     },
     trollMilk: {
+        Lite: {
+            Name: "Troll Milk"
+        },
         Name: "Troll Milk",
         Use: function (who) {
             var z = Math.min(Math.round(who.MaxWillHealth / 10), who.MaxWillHealth - who.WillHealth);
             who.WillHealth += z;
-            EventLog("Bottoms up!");
-            if (z > 0)
-                EventLog("You gained " + z + " willpower back!");
-            else if (z < 0)
-                EventLog("Bleh. That ruined your night's sleep.");
+            if (z > 0) {
+                return "Bottoms up!<br><br>" + "You gained " + z + " willpower back!"
+            } else if (z < 0) {
+                return "Bottoms up!<br><br>" + "Bleh. That ruined your night's sleep."
+            }
         },
         Equip: "No",
         Drop: true,
@@ -103,10 +129,13 @@ const ItemDict = {
         Title: "Smells like it's already gone sour. Increases focus."
     },
     elvenHair: {
+        Lite: {
+            Name: "Elven hair"
+        },
         Name: "Elven hair",
         Use: function (who) {
             PotionDrunk("elf");
-            EventLog("You try to become an elf...");
+            return "You try to become an elf..."
         },
         Equip: "No",
         Drop: true,
@@ -114,6 +143,9 @@ const ItemDict = {
         Title: "This is all you need to become an elf, no potions needed."
     },
     amazonGirdle: {
+        Lite: {
+            Name: "Amazon's Girdle"
+        },
         Name: "Amazon's Girdle",
         Use: function (who) {
             if (who.Masc > who.Femi + 100) {
@@ -127,7 +159,7 @@ const ItemDict = {
                 who.Masc = z;
                 who.Femi = z;
             }
-            EventLog("Tightening the girdle, you feel your essences balancing...");
+            return "Tightening the girdle, you feel your essences balancing..."
         },
         Equip: "No",
         Drop: true,
@@ -135,12 +167,15 @@ const ItemDict = {
         Title: "Brings your essences closer together in strength."
     },
     milkJug: {
+        Lite: {
+            Name: "Milk Jug"
+        },
         Name: "Milk Jug",
         Use: function (who) {
             for (var i = 0; i < who.Boobies.length; i++) {
                 who.Boobies[i].MilkRate += 0.1;
             }
-            EventLog("Chugging the jug, you feel a shudder run through your chest...");
+            return "Chugging the jug, you feel a shudder run through your chest..."
         },
         Equip: "No",
         Drop: true,
@@ -148,10 +183,13 @@ const ItemDict = {
         Title: "It'll go straight to your chest!"
     },
     fertilityIdol: {
+        Lite: {
+            Name: "Fertility idol"
+        },
         Name: "Fertility idol",
         Use: function (who) {
             who.Femi += 100;
-            EventLog("You absorb the statue's latent energies.");
+            return "You absorb the statue's latent energies."
         },
         Equip: "No",
         Drop: true,
@@ -159,10 +197,13 @@ const ItemDict = {
         Title: "Brings out your feminine side."
     },
     cockyRock: {
+        Lite: {
+            Name: "Cocky rock"
+        },
         Name: "Cocky rock",
         Use: function (who) {
             who.Masc += 100;
-            EventLog("You absorb the rock's male essence.");
+            return "You absorb the rock's male essence."
         },
         Equip: "No",
         Drop: true,
@@ -170,11 +211,14 @@ const ItemDict = {
         Title: "Brings out your masculine side."
     },
     infernalSemen: {
+        Lite: {
+            Name: "Infernal semen"
+        },
         Name: "Infernal semen",
         Use: function (who) {
             who.Masc += who.Femi;
             who.Femi = 0;
-            EventLog("The infernally-hot semen burns your feminine essence, leaving you 100% male.");
+            return "The infernally-hot semen burns your feminine essence, leaving you 100% male."
         },
         Equip: "No",
         Drop: true,
@@ -182,11 +226,14 @@ const ItemDict = {
         Title: "Turns your feminine side into another masculine one."
     },
     infernalMilk: {
+        Lite: {
+            Name: "Infernal milk"
+        },
         Name: "Infernal milk",
         Use: function (who) {
             who.Femi += who.Masc;
             who.Masc = 0;
-            EventLog("The infernally-hot milk burns your masculine essence, leaving you 100% female.");
+            return "The infernally-hot milk burns your masculine essence, leaving you 100% female."
         },
         Equip: "No",
         Drop: true,
@@ -194,6 +241,9 @@ const ItemDict = {
         Title: "Turns your masculine side into another feminine one."
     },
     SuccMilk: {
+        Lite: {
+            Name: "Milk+"
+        },
         Name: "Milk+",
         Use: function (who) {
             var a = "",
@@ -227,8 +277,8 @@ const ItemDict = {
                 }
             }
 
-            EventLog("Feeling a flush of heat in your chest, you glance down just in time to see " + a + b);
             FluidsEngine();
+            return "Feeling a flush of heat in your chest, you glance down just in time to see " + a + b
         },
         Equip: "No",
         Drop: true,
@@ -236,6 +286,9 @@ const ItemDict = {
         Title: "Guarantees milkiness."
     },
     IncSemen: {
+        Lite: {
+            Name: "Semen+"
+        },
         Name: "Semen+",
         Use: function (who) {
             var a = "",
@@ -271,7 +324,7 @@ const ItemDict = {
                 FluidsEngine();
             }
 
-            EventLog("Feeling a flush of heat in your groin, you glance down just in time to see " + a + b);
+            return "Feeling a flush of heat in your groin, you glance down just in time to see " + a + b
         },
         Equip: "No",
         Drop: true,
@@ -279,28 +332,24 @@ const ItemDict = {
         Title: "Guarantees cum-filling."
     },
     book: {
+        Lite: {
+            Name: "Book"
+        },
         Name: "Book",
         Use: function (who) {
             who.Int++;
             who.Arousal = 99;
-            EventLog("A dirty magazine, that's made you extremely aroused...");
+            return "A dirty magazine, that's made you extremely aroused..."
         },
         Equip: "No",
         Drop: true,
         Does: "Int +1",
         Title: "Magically connects to another dimension's internet, but only shows porn."
     },
-    blade: {
-        // currently used in TestFlags.js
-        Name: "Blade",
-        //Use: "Yes",
-        Equip: "Yes",
-        Drop: true,
-        Does: "Temp+5",
-        Quantity: 1,
-        Title: "Temp_Tempsson legendary temp sword gives +999 to testing."
-    },
     Milker: {
+        Lite: {
+            Name: "Milker500"
+        },
         Name: "Milker500",
         Use: function (who, item) {
             var Milktotal = 0;
@@ -331,13 +380,16 @@ const ItemDict = {
         Title: "Milk yourself"
     },
     SmallMilkBottle: {
+        Lite: {
+            Name: "Small milk bottle"
+        },
         Name: "Small milk bottle",
         Use: function (who) {
             var a = RandomInt(1, 20);
             if (a > 18) {
                 for (var e of who.Boobies) {
                     e.MilkRate++;
-                    EventLog("After drinking the milk you get a funny feeling in your chest.")
+                    return "After drinking the milk you get a funny feeling in your chest."
                 }
             }
             player.Health += 5;
@@ -351,13 +403,16 @@ const ItemDict = {
         Title: "A half liter bottle filled milk."
     },
     MilkBottle: {
+        Lite: {
+            Name: "Milk bottle"
+        },
         Name: "Milk bottle",
         Use: function (who) {
             var a = RandomInt(1, 20);
             if (a > 17) {
                 for (var e of who.Boobies) {
                     e.MilkRate++;
-                    EventLog("After drinking the milk you get a funny feeling in your chest.")
+                    return "After drinking the milk you get a funny feeling in your chest."
                 }
             }
             player.Health += 12;
@@ -371,13 +426,16 @@ const ItemDict = {
         Title: "A one liter bottle filled milk."
     },
     LargeMilkBottle: {
+        Lite: {
+            Name: "Large milk bottle"
+        },
         Name: "Large milk bottle",
         Use: function (who) {
             var a = RandomInt(1, 20);
             if (a > 16) {
                 for (var e of who.Boobies) {
                     e.MilkRate++;
-                    EventLog("After drinking the milk you get a funny feeling in your chest.")
+                    return "After drinking the milk you get a funny feeling in your chest."
                 }
             }
             player.Health += 30;
@@ -391,6 +449,9 @@ const ItemDict = {
         Title: "A two liter bottle filled milk."
     },
     PocketPortal: {
+        Lite: {
+            Name: "Pocket portal"
+        },
         Name: "Pocket portal",
         Use: function (who, item) {
             console.log(House.Portal)
@@ -412,54 +473,62 @@ const ItemDict = {
         Drop: false, //I think?
         Title: "Never walk home again!"
     },
-    SpellBook: {
-        Name: "SpellBook",
-        Equip: "", // this will be refactored to contain two attributes, Equip(who) and Unequip(who)
-        Drop: false,
-        Does: "Short desc.",
-        Quantity: "bob", // Infinity
-        Title: "Long description of the item",
-        Use: function (who) {
-            document.getElementById("Inventory").style.display = "none";
+}
 
-            var Div = document.getElementById("SpellBook");
-            Div.style.display = "block";
+// Splited from main dict to keep it readable
+ItemDict.SpellBook = {
+    Lite: {
+        Name: "SpellBook"
+    },
+    Name: "SpellBook",
+    Equip: "", // this will be refactored to contain two attributes, Equip(who) and Unequip(who)
+    Drop: false,
+    Does: "Short desc.",
+    Quantity: "bob", // Infinity
+    Title: "Long description of the item",
+    Use: function (who) {
+        document.getElementById("Inventory").style.display = "none";
+
+        var Div = document.getElementById("SpellBook");
+        Div.style.display = "block";
+        while (Div.hasChildNodes()) {
+            Div.removeChild(Div.firstChild);
+        }
+
+        var h1 = document.createElement("h1");
+        h1.innerHTML = "Spell book"
+        Div.appendChild(h1);
+
+        var p = document.createElement("p");
+        p.classList.add("TextBox");
+        Div.appendChild(p);
+
+        for (var e = 0; e < player.Spells.length; e++) {
+            var Spell = DictSpell(e);
+            Div.appendChild(Spell);
+        }
+
+        function DictSpell(e) {
+            var it = player.Spells[e];
+            var DictIt = SpellDict[it.Name];
+            var DictSpell = InputButton(DictIt.Name);
+            DictSpell.addEventListener("click", function () {
+                h1.innerHTML = DictIt.Name
+                p.innerHTML = SpellDictLite[it.Name].Title + "<br><br>Manacost: " + DictIt.ManaCost(it.Exp) + "<br>Type: " + DictIt.Type +
+                    "<br>Exp: " + it.Exp;
+                console.log(e);
+            });
+            Div.appendChild(DictSpell);
+            return DictSpell
+        }
+        var CloseBook = InputButton("Close book");
+        CloseBook.addEventListener("click", function () {
             while (Div.hasChildNodes()) {
                 Div.removeChild(Div.firstChild);
             }
-
-            var h1 = document.createElement("h1");
-            h1.innerHTML = "Spell book"
-            Div.appendChild(h1);
-
-            var p = document.createElement("p");
-            p.classList.add("TextBox");
-            Div.appendChild(p);
-
-            for (var e = 0; e < player.Spells.length; e++) {
-                var it = player.Spells[e];
-                var DictIt = SpellDict[it.Name];
-                var Spell = InputButton(DictIt.Name);
-                Spell.setAttribute("data-index", e);
-                Spell.addEventListener("click", function (i) {
-                    var index = i.target.dataset.index;
-                    var it = player.Spells[index];
-                    var DictIt = SpellDict[it.Name];
-                    h1.innerHTML = DictIt.Name
-                    p.innerHTML = SpellDictLite[it.Name].Title + "<br><br>Manacost: " + DictIt.ManaCost(it.Exp) + "<br>Type: " + DictIt.Type +
-                        "<br>Exp: " + it.Exp
-                });
-                Div.appendChild(Spell);
-            }
-            var CloseBook = InputButton("Close book");
-            CloseBook.addEventListener("click", function () {
-                while (Div.hasChildNodes()) {
-                    Div.removeChild(Div.firstChild);
-                }
-                Div.style.display = "none";
-                document.getElementById("Inventory").style.display = "block";
-            });
-            Div.appendChild(CloseBook);
-        }
+            Div.style.display = "none";
+            document.getElementById("Inventory").style.display = "block";
+        });
+        Div.appendChild(CloseBook);
     }
 }

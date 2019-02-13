@@ -40,19 +40,19 @@ function DropSystem(who) {
     if (r <= dropRate[e.Name]) {
         switch (e.Name) {
             case "Banditlord":
-                SnowInventoryAdd(ItemDict.orcCum);
+                SnowInventoryAdd(ItemDict.orcCum.Lite);
                 break;
             case "Commoner":
-                SnowInventoryAdd(ItemDict.halfPouch);
+                SnowInventoryAdd(ItemDict.halfPouch.Lite);
                 break;
             case "Farmer":
-                SnowInventoryAdd(ItemDict.milkJug);
+                SnowInventoryAdd(ItemDict.milkJug.Lite);
                 break;
             case "Thug":
-                SnowInventoryAdd(ItemDict.halfPouch);
+                SnowInventoryAdd(ItemDict.halfPouch.Lite);
                 break;
             case "Witch":
-                SnowInventoryAdd(ItemDict.book);
+                SnowInventoryAdd(ItemDict.book.Lite);
                 break;
             default:
                 break;
@@ -62,46 +62,46 @@ function DropSystem(who) {
     if (r <= dropRate[e.Race]) {
         switch (e.Race) {
             case "Fairy":
-                SnowInventoryAdd(ItemDict.fairyDust);
+                SnowInventoryAdd(ItemDict.fairyDust.Lite);
                 break;
             case "Human":
-                SnowInventoryAdd(ItemDict.humanity);
+                SnowInventoryAdd(ItemDict.humanity.Lite);
                 break;
             case "Halfling":
-                SnowInventoryAdd(ItemDict.pouch);
+                SnowInventoryAdd(ItemDict.pouch.Lite);
                 break;
             case "Orc":
-                SnowInventoryAdd(ItemDict.orcBrew);
+                SnowInventoryAdd(ItemDict.orcBrew.Lite);
                 break;
             case "Troll":
-                SnowInventoryAdd(ItemDict.trollMilk);
+                SnowInventoryAdd(ItemDict.trollMilk.Lite);
                 break;
             case "Elf":
-                SnowInventoryAdd(ItemDict.elvenHair);
+                SnowInventoryAdd(ItemDict.elvenHair.Lite);
                 break;
             case "Amazon":
-                SnowInventoryAdd(ItemDict.amazonGirdle);
+                SnowInventoryAdd(ItemDict.amazonGirdle.Lite);
                 break;
             case "Dark Elf":
-                SnowInventoryAdd(ItemDict.elvenHair);
+                SnowInventoryAdd(ItemDict.elvenHair.Lite);
                 break;
             case "Goblin":
-                SnowInventoryAdd(ItemDict.fertilityIdol);
+                SnowInventoryAdd(ItemDict.fertilityIdol.Lite);
                 break;
             case "Imp":
-                SnowInventoryAdd(ItemDict.cockyRock);
+                SnowInventoryAdd(ItemDict.cockyRock.Lite);
                 break;
             case "Demon":
-                SnowInventoryAdd(ItemDict.infernalSemen);
+                SnowInventoryAdd(ItemDict.infernalSemen.Lite);
                 break;
             case "Dhampir":
-                SnowInventoryAdd(ItemDict.infernalMilk);
+                SnowInventoryAdd(ItemDict.infernalMilk.Lite);
                 break;
             case "Succubus":
-                SnowInventoryAdd(ItemDict.SuccMilk);
+                SnowInventoryAdd(ItemDict.SuccMilk.Lite);
                 break;
             case "Incubus":
-                SnowInventoryAdd(ItemDict.IncSemen);
+                SnowInventoryAdd(ItemDict.IncSemen.Lite);
                 break;
             default:
                 break;

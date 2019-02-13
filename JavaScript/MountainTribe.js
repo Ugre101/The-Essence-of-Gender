@@ -105,10 +105,10 @@ function TribeShopFunc() {
 }
 
 function TribeChiefFunc() {
-    var Npcs = document.getElementById("Npcs")
-    Npcs.style.display = 'none';
-    while (Npcs.hasChildNodes()) {
-        Npcs.removeChild(Npcs.firstChild);
+    var Npc = document.getElementById("Npc")
+    Npc.style.display = 'none';
+    while (Npc.hasChildNodes()) {
+        Npc.removeChild(Npc.firstChild);
     }
 
     var div = document.createElement("div");
@@ -155,23 +155,23 @@ function TribeChiefFunc() {
         document.getElementById("buttons").style.display = 'block';
         document.getElementById("EmptyButtons").style.display = 'none';
         document.getElementById("status").style.display = 'block';
-        Npcs.style.display = 'none';
-        while (Npcs.hasChildNodes()) {
-            Npcs.removeChild(Npcs.firstChild);
+        Npc.style.display = 'none';
+        while (Npc.hasChildNodes()) {
+            Npc.removeChild(Npc.firstChild);
         }
         return;
     });
     div.appendChild(Leave);
 
-    Npcs.appendChild(div);
-    document.getElementById("Npcs").style.display = 'block';
+    Npc.appendChild(div);
+    document.getElementById("Npc").style.display = 'block';
 }
 
 function TribeChiefWifeFunc() {
-    var Npcs = document.getElementById("Npcs")
-    Npcs.style.display = 'none';
-    while (Npcs.hasChildNodes()) {
-        Npcs.removeChild(Npcs.firstChild);
+    var Npc = document.getElementById("Npc")
+    Npc.style.display = 'none';
+    while (Npc.hasChildNodes()) {
+        Npc.removeChild(Npc.firstChild);
     }
 
     var div = document.createElement("div");
@@ -218,21 +218,21 @@ function TribeChiefWifeFunc() {
         document.getElementById("buttons").style.display = 'block';
         document.getElementById("EmptyButtons").style.display = 'none';
         document.getElementById("status").style.display = 'block';
-        Npcs.style.display = 'none';
-        while (Npcs.hasChildNodes()) {
-            Npcs.removeChild(Npcs.firstChild);
+        Npc.style.display = 'none';
+        while (Npc.hasChildNodes()) {
+            Npc.removeChild(Npc.firstChild);
         }
         return;
     });
     div.appendChild(Leave);
 
-    Npcs.appendChild(div);
-    document.getElementById("Npcs").style.display = 'block';
+    Npc.appendChild(div);
+    document.getElementById("Npc").style.display = 'block';
 
 }
 
 function TestDialog() {
-    var Npc = document.getElementById("Npcs");
+    var Npc = document.getElementById("Npc");
     while (Npc.hasChildNodes()) {
         Npc.removeChild(Npc.lastChild)
     };

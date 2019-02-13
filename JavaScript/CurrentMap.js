@@ -22,11 +22,14 @@ function PrintImage(ImageSrc) {
     var ctx = startarea.getContext("2d");
     var backmap = new Image;
     backmap.src = "Tiles/" + ImageSrc + ".png";
-    ctx.clearRect(0,0, startarea.width, startarea.height);
+    ctx.clearRect(0, 0, startarea.width, startarea.height);
     ctx.drawImage(backmap, 0, 0, startarea.width, startarea.height);
 };
 
 function CurrentMap() {
+    var Npcs = []; // Moved here to avoid public handling of npcs, need to double check so I haven't
+    // forgoten avoid any refernce to Npcs somewhere
+     
     //First Town
     var Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
     var Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
@@ -53,7 +56,7 @@ function CurrentMap() {
     var MountainShrine = new Npc("MountainShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
     var ShrinePriestess = new Npc("ShrinePriestess", "Priestess", grid * 15, grid, grid, grid, "Pink");
     // Dragons
-    var TribeChief = new Npc("TribeChief", "", grid *2, grid * 8, grid, grid, "#841A31");
+    var TribeChief = new Npc("TribeChief", "", grid * 2, grid * 8, grid, grid, "#841A31");
     var TribeChiefWife = new Npc("TribeChiefWife", "", grid * 2, grid * 10, grid, grid, "#841A31");
     var TribeShop = new Npc("TribeShop", "", grid * 12, grid * 15, grid * 4, grid * 5, "RGB(133,94,66)");
 
@@ -93,12 +96,10 @@ function CurrentMap() {
                     if (enemies.length < 1) {
                         enemies = [EncounterPath2(), EncounterPath2(), EncounterPath2()];
                     }
-                    Npcs = [];
                     PrintMap("RoadToCity2");
                     PrintImage("RoadToCity2");
                     break;
                 case "City":
-                    Npcs = [];
                     enemies = [];
                     if (Npcs.length < 1) {
                         Npcs = [Townhall, Bar, Shop];
@@ -107,7 +108,6 @@ function CurrentMap() {
                     PrintImage("City");
                     break;
                 case "RoadToHome":
-                    Npcs = [];
                     enemies = [];
                     if (Npcs.length < 1) {
                         Npcs = [ChimeraShrine];
@@ -116,7 +116,6 @@ function CurrentMap() {
                     PrintImage("RoadToHome");
                     break;
                 case "RoadToWitch":
-                    Npcs = [];
                     enemies = [];
                     if (Npcs.length < 1) {
                         Npcs = [Gym, WitchShop, Barber];
@@ -125,7 +124,6 @@ function CurrentMap() {
                     PrintImage("RoadToWitch");
                     break;
                 case "RoadToWitch2":
-                    Npcs = [];
                     if (enemies.length < 1) {
                         enemies = [EncounterPathToWitch2(), EncounterPathToWitch2(), EncounterPathToWitch2(), EncounterPathToWitch2()];
                     }
@@ -133,7 +131,6 @@ function CurrentMap() {
                     PrintImage("RoadToWitch2");
                     break;
                 case "Witch":
-                    Npcs = [];
                     enemies = [];
                     if (Npcs.length < 1) {
                         Npcs = [WitchHut];
@@ -145,7 +142,6 @@ function CurrentMap() {
                     if (enemies.length < 1) {
                         enemies = [EncounterForest(), EncounterForest(), EncounterForest(), RespawnBlocker()];
                     }
-                    Npcs = [];
                     PrintMap("Forest");
                     PrintImage("Forest");
                     break
@@ -153,7 +149,6 @@ function CurrentMap() {
                     if (enemies.length < 1) {
                         enemies = [EncounterForest2(), EncounterForest2(), EncounterForest2(), EncounterForest2(), RespawnBlocker()];
                     }
-                    Npcs = []
                     PrintMap("Forest2");
                     PrintImage("Forest2");
                     break;
@@ -165,7 +160,6 @@ function CurrentMap() {
                     if (enemies.length < 1) {
 
                     }
-                    Npcs = []
                     PrintMap("PathToOutlaws");
                     PrintImage("PathToOutlaws");
                     break;
@@ -173,7 +167,6 @@ function CurrentMap() {
                     if (enemies.length < 1) {
 
                     }
-                    Npcs = []
                     PrintMap("PathToOutlaws2");
                     PrintImage("PathToOutlaws2");
                     break;
@@ -207,7 +200,6 @@ function CurrentMap() {
                     if (enemies.length < 1) {
                         enemies = [EncounterCave2(), EncounterCave2(), EncounterCave2(), EncounterCave2(), EncounterCave2()]
                     }
-                    Npcs = []
                     PrintMap("Cave2");
                     PrintImage("Cave2");
                     break;
@@ -215,7 +207,6 @@ function CurrentMap() {
                     if (enemies.length < 1) {
                         enemies = [EncounterCave3(), EncounterCave3(), EncounterCave3()]
                     }
-                    Npcs.length = [];
                     PrintMap("Cave3");
                     PrintImage("Cave3");
                     break;
@@ -247,7 +238,6 @@ function CurrentMap() {
                 case "MountainShrinePath":
                     PrintDoor("E");
                     PrintDoor("W");
-                    Npcs = [];
                     if (enemies.length < 1) {
                         var a = RandomInt(2, 4);
                         enemies = [];
@@ -261,7 +251,6 @@ function CurrentMap() {
                 case "MountainShrine":
                     PrintDoor("E");
                     PrintDoor("W");
-                    Npcs = [];
                     if (enemies.length < 1) {
 
                     }
@@ -273,7 +262,6 @@ function CurrentMap() {
                 case "MountainClimb":
                     PrintDoor("S");
                     PrintDoor("N");
-                    Npcs = [];
                     if (enemies.length < 1) {
 
                     }
@@ -285,7 +273,6 @@ function CurrentMap() {
                 case "MountainClimb2":
                     PrintDoor("E");
                     PrintDoor("N");
-                    Npcs = [];
                     if (enemies.length < 1) {
                         enemies = [EncounterHarpy(), EncounterHarpy(), EncounterHarpy(), EncounterHarpy(), EncounterHarpy()]
                     }
@@ -295,7 +282,6 @@ function CurrentMap() {
                 case "MountainClimb3":
                     PrintDoor("E");
                     PrintDoor("W");
-                    Npcs = [];
                     if (enemies.length < 1) {
                         enemies = [];
                     }
@@ -305,7 +291,6 @@ function CurrentMap() {
                 case "MountainClimb4":
                     PrintDoor("W");
                     PrintDoor("N");
-                    Npcs = [];
                     if (enemies.length < 1) {
                         enemies = [EncounterDragonKind(), EncounterDragonKind(), EncounterDragonKind(), EncounterDragonKind()];
                     }
@@ -315,7 +300,6 @@ function CurrentMap() {
                 case "MountainClimb5":
                     PrintDoor("S");
                     PrintDoor("N");
-                    Npcs = [];
                     if (enemies.length < 1) {
                         enemies = [EncounterDragonKind(), EncounterDragonKind(), EncounterDragonKind(), EncounterDragonKind(), EncounterAnthroDragon()];
                     }
@@ -325,7 +309,6 @@ function CurrentMap() {
                 case "MountainClimb6":
                     PrintDoor("S");
                     PrintDoor("N");
-                    Npcs = [];
                     if (enemies.length < 1) {
                         enemies = [EncounterDragonKind(), EncounterAnthroDragon(), EncounterAnthroDragon()]
                     }
@@ -335,7 +318,6 @@ function CurrentMap() {
                 case "MountainClimb7":
                     PrintDoor("S");
                     PrintDoor("N");
-                    Npcs = [];
                     if (enemies.length < 1) {
                         enemies = [EncounterAnthroDragon(), EncounterAnthroDragon(), EncounterAnthroDragon()];
                     }
@@ -354,7 +336,6 @@ function CurrentMap() {
                 case "MountainClimb8":
                     PrintDoor("S");
                     PrintDoor("W");
-                    Npcs = [];
                     if (enemies.length < 1) {
 
                     }
@@ -364,7 +345,6 @@ function CurrentMap() {
                 case "MountainClimb9":
                     PrintDoor("W");
                     PrintDoor("E");
-                    Npcs = [];
                     if (enemies.length < 1) {
 
                     }
@@ -374,7 +354,6 @@ function CurrentMap() {
                 case "MountainClimb10":
                     PrintDoor("N");
                     PrintDoor("E");
-                    Npcs = []
                     if (enemies.length < 1) {
 
                     }
@@ -396,5 +375,67 @@ function CurrentMap() {
                     }
                     break;
             }
+    }
+    (Npcs.length > 0) ? (PrintNpcs(Npcs), TouchNpc(Npcs)) : (false);
+}
+
+function PrintNpcs(Npcs) {
+    var startarea = document.getElementById("hem");
+    var ctx = startarea.getContext("2d");
+    var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
+    // Switched it so new npcs always print
+    var DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"];
+    for (var e of Npcs) {
+        if (DontneedPrint.indexOf(e.Name) == -1) {
+            ctx.fillStyle = e.Color;
+            ctx.fillRect(e.X, e.Y, e.Width, e.Height);
+        }
+        ctx.fillStyle = Settings.TextColor;
+        ctx.font = "4vh Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(e.RealName, e.X + e.Width / 2, e.Y + e.Height / 1.8);
+    }
+};
+
+function TouchNpc(Npcs) {
+    for (var n of Npcs) {
+        if (sprite.x + grid * sprite.Size >= n.X && sprite.x < n.X + n.Width &&
+            sprite.y + grid * sprite.Size >= n.Y && sprite.y < n.Y + n.Height) {
+            if (mousedowner) {
+                clearInterval(mFunction);
+                mousedowner = false;
+            }
+            battle = true;
+            var startarea = document.getElementById("hem");
+            sprite.x = startarea.width / 2 - grid;
+            sprite.y = startarea.height / 2;
+            UpdateNpc(n.Name);
+            document.getElementById("SellLimbs").style.display = Settings.EssenceAuto ? 'none' : 'inline-block';
+        }
+    }
+}
+
+function UpdateNpc(name) {
+    var isfunction = window[name + "Func"];
+    if (typeof isfunction === "function") { // Start replacing html building/npcs with javascript functions
+        document.getElementById("map").style.display = 'none';
+        document.getElementById("buttons").style.display = 'none';
+        document.getElementById("EmptyButtons").style.display = 'block';
+        isfunction();
+    } else {
+        document.getElementById(name).style.display = 'block';
+        document.getElementById("map").style.display = 'none';
+        document.getElementById("buttons").style.display = 'none';
+        document.getElementById("EmptyButtons").style.display = 'block';
+        document.getElementById("Leave" + name).addEventListener("click", function () {
+            battle = false;
+            document.getElementById(name).style.display = 'none';
+            document.getElementById("map").style.display = 'block';
+            document.getElementById("buttons").style.display = 'block';
+            document.getElementById("EmptyButtons").style.display = 'none';
+            document.getElementById("status").style.display = 'block';
+            document.getElementById(name + "Text").innerHTML = null;
+            return;
+        });
     }
 }

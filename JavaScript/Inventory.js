@@ -1,66 +1,9 @@
 document.getElementById("ShowInventory").addEventListener("click", function () {
     DisplayNone();
     document.getElementById("Inventory").style.display = 'block';
-    document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
+    //document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
+    Items2();
 });
-document.getElementById("InventoryBag").addEventListener("mouseover", function (e) {
-    if (e.target.type !== "button") {
-        if (e.target.nodeName === "P") { // So that text still show if you hover over <p></p>
-            document.getElementById("InventoryText").innerHTML = e.target.parentElement.title;
-        } else {
-            document.getElementById("InventoryText").innerHTML = e.target.title;
-        }
-    }
-});
-document.getElementById("InventoryBag").addEventListener("click", function (e) { // For mobile users
-    if (e.target.type !== "button") {
-        if (e.target.nodeName === "P") {
-            document.getElementById("InventoryText").innerHTML = e.target.parentElement.title;
-        } else {
-            document.getElementById("InventoryText").innerHTML = e.target.title;
-        }
-    }
-});
-
-function Items(Things) {
-    var KeyItems = ["Pocket portal", "SpellBook"]; // Make sure important items are first in iventory
-    var Exists = 0;
-    for (var k of KeyItems) {
-        var index = Things.findIndex(f => f.Name === k)
-        if (Things.some(f => f.Name === k) && index !== Exists) {
-            Exists++;
-            var temp = Things[index]
-            Things.splice(index, 1);
-            Things.unshift(temp);
-        }
-    }
-    var Bag = "";
-    Things.sort();
-    for (var e = 0; e < Things.length; e++) {
-        var Thing = Things[e];
-        var item = "<div title=\"" + Thing.Title + "\"><p>" + Thing.Name;
-        if (typeof Thing.Quantity === "number") { // Don't show for non number values
-            item += " (" + Thing.Quantity + "\)"
-        }
-        item += "</p>"
-        if (typeof Thing.Use === "function") {
-            item += "<input type=\"button\" onclick=\"Use(" + e + ")\" value=\"Use\">"
-        }
-        if (typeof Thing.Read === "function") {
-            item += "<input type=\"button\" onclick=\"Read(" + e + ")\" value=\"Read\">"
-        }
-        if (typeof Thing.Equip === "function") {
-            item += "<input type=\"button\" onclick=\"Equip(" + e + ")\" value=\"Equip\">"
-        }
-        if (Thing.Drop === true) {
-            item += "<input type=\"button\" onclick=\"Drop(" + e + ")\" value=\"Drop\">"
-        }
-        item += "</div>";
-        Bag += item;
-    }
-    return Bag;
-
-}
 
 function Use(item) {
     var thing = player.Inventory[item];
@@ -74,7 +17,6 @@ function Use(item) {
                 break;
         }
     }
-    console.log((typeof player.Inventory[item].Quantity == "number"))
     if (typeof player.Inventory[item].Quantity === "number") {
         player.Inventory[item].Quantity--;
         if (player.Inventory[item].Quantity <= 0) {
@@ -103,3 +45,99 @@ document.getElementById("InventoryLeave").addEventListener("click", function () 
     document.getElementById("Inventory").style.display = 'none';
     DisplayGame();
 });
+
+// Trial of new inventory system so I can stop saving unnecessary data
+function Items2() {
+    var div = document.getElementById("InventoryBag");
+    while (div.hasChildNodes()) {
+        div.removeChild(div.firstChild);
+    }
+    var KeyItems = ["Pocket portal", "SpellBook"]; // Make sure important items are first in iventory
+    var Exists = 0;
+    for (var k of KeyItems) {
+        Exists++;
+        var index = player.Inventory.findIndex(f => f.Name === k)
+        if (player.Inventory.some(f => f.Name === k) && index !== Exists) {
+            var temp = player.Inventory[index]
+            player.Inventory.splice(index, 1);
+            player.Inventory.unshift(temp);
+        }
+    }
+    for (var e of player.Inventory) {
+        var itemarray = Object.values(ItemDict);
+        for (var b of itemarray) {
+            if (e.Name === b.Name) {
+                var item = new InventoryThing(e, b)
+                div.appendChild(item);
+            }
+        }
+    }
+}
+
+function InventoryThing(e, b) {
+    var item = document.createElement("div");
+    item.setAttribute("title", b.Title)
+
+    var p = document.createElement("p");
+    p.innerHTML = b.Name
+    if (typeof e.Quantity === "number") {
+        p.innerHTML += " (" + e.Quantity + ")"
+    }
+    item.appendChild(p);
+
+    if (typeof b.Use === "function") {
+        var use = InputButton("Use");
+        use.addEventListener("click", function () {
+            document.getElementById("InventoryText").innerHTML = b.Use(player, e);
+            if (typeof e.Quantity === "number") {
+                e.Quantity--;
+                if (e.Quantity <= 0) {
+                    var index = player.Inventory.findIndex(a => a.Name === e.Name);
+                    player.Inventory.splice(index, 1);
+                }
+            }
+            Items2();
+
+        });
+        item.appendChild(use)
+    }
+    if (typeof b.Equip === "function") {
+        var Equip = InputButton("Equip");
+        Equip.addEventListener("click", function () {
+            b.Equip();
+            if (typeof e.Quantity === "number") {
+                e.Quantity--;
+                if (e.Quantity <= 0) {
+                    var index = player.Inventory.findIndex(a => a.Name === e.Name);
+                    player.Inventory.splice(index, 1);
+                }
+            }
+            Items2();
+
+        });
+        item.appendChild(Equip)
+    }
+    if (b.Drop === true) {
+        var drop = InputButton("Drop");
+        drop.addEventListener("click", function () {
+            if (typeof e.Quantity === "number") {
+                e.Quantity--;
+                if (e.Quantity <= 0) {
+                    var index = player.Inventory.findIndex(a => a.Name === e.Name);
+                    player.Inventory.splice(index, 1);
+                }
+            }
+            Items2();
+        });
+        item.appendChild(drop);
+    }
+    var what = InputButton("?");
+    what.addEventListener("mouseover", function () {
+        document.getElementById("InventoryText").innerHTML = b.Title
+    });
+    what.addEventListener("click", function () {
+        document.getElementById("InventoryText").innerHTML = b.Title
+    });
+    item.appendChild(what);
+    return item;
+}
