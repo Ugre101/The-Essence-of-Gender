@@ -289,7 +289,7 @@
     var sprite = {
         x: grid,
         y: grid,
-        Size: grid
+        Size: 1
     };
 
     // Start page
@@ -330,7 +330,6 @@
 
         requestAnimationFrame(loop);
         DateEngine();
-
     });
 
     document.getElementById("StartAutoEssence").addEventListener("click", function () {
@@ -353,21 +352,18 @@
 
     document.getElementById("startgame").addEventListener("click", function () {
         document.getElementById("page2").style.display = 'none';
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("status").style.display = 'block';
-        document.getElementById("EventLog").style.display = 'block';
+        DisplayGame();
     });
 
     // Sets display to none used for menu buttons
     function DisplayNone() {
         battle = true;
-        var DisplayNone =  [
-            "map","optionpage","ShowLooks","LevelMenu","LoadMenu","SaveMenu","PerksMenu",
-            "PerkOptionsMenu","ShowQuests","DetailedInfo","Levels","ShowVore","EssenceOptionsMenu",
-            "PronounForm","Inventory","ChildrenMenu","SpellBook"
+        var DisplayNone = [
+            "map", "optionpage", "ShowLooks", "LevelMenu", "LoadMenu", "SaveMenu", "PerksMenu",
+            "PerkOptionsMenu", "ShowQuests", "DetailedInfo", "Levels", "ShowVore", "EssenceOptionsMenu",
+            "PronounForm", "Inventory", "ChildrenMenu", "SpellBook"
         ]
-        DisplayNone.forEach(function(src){
+        DisplayNone.forEach(function (src) {
             document.getElementById(src).style.display = 'none';
         });
         if (window.innerHeight < 600) {
@@ -441,16 +437,14 @@
         Settings.Pronoun.CuntBoy = document.getElementById("CuntBoy").value;
         Settings.Pronoun.Status = true;
     });
+    document.getElementById("DisablePronoun").addEventListener("click", function () {
+        DisplayNone();
+        document.getElementById("optionpage").style.display = 'block';
+        Settings.Pronoun.Status = false;
+    });
 
     document.getElementById("Inch").addEventListener("click", function () {
-        switch (Settings.Inch) {
-            case true:
-                Settings.Inch = false;
-                break;
-            default:
-                Settings.Inch = true;
-                break;
-        }
+        Settings.Inch = Settings.Inch ? false : true;
         document.getElementById("Inch").value = "Inch " + Settings.Inch;
     });
 
@@ -498,17 +492,16 @@
         DisplayNone();
         document.getElementById("PerkOptionsMenu").style.display = 'block';
         document.getElementById("Skip").value = "Skip " + Settings.Skip;
-        document.getElementById("OptionGiveEssence").value = Settings.GiveEssence;
         document.getElementById("Vore").value = "Vore " + Settings.Vore;
-        document.getElementById("MBalance").value = "Balance " + Settings.BalanceParts;
     });
 
     document.getElementById("Skip").addEventListener("click", function () {
-        Settings.Skip = !Settings.Skip;
+        Settings.Skip = Settings.Skip ? false : true;
         document.getElementById("Skip").value = "Skip " + Settings.Skip;
     });
 
-    document.getElementById("MBalance").addEventListener("click", function () {
+    /**
+     * document.getElementById("MBalance").addEventListener("click", function () {
         if (Settings.EssenceAuto) {
             Settings.BalanceParts = !Settings.BalanceParts;
             document.getElementById("MBalance").value = "Balance " + Settings.BalanceParts;
@@ -517,6 +510,7 @@
         for (var q = 0; q < enemies.length; q++)
             EssenceCheck(enemies[q]);
     });
+     */
 
     document.getElementById("OptionGiveEssence").addEventListener("click", function () {
         switch (Settings.GiveEssence) {
@@ -543,9 +537,7 @@
 
     document.getElementById("Looks").addEventListener("click", function () {
         DisplayNone();
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
+        Settings.EssenceAuto ? EssenceCheck(player) : false;
         document.getElementById("ShowLooks").style.display = 'block';
         // Update for Looksmenu #Moved it here because there is no need to have it update every loop.
         document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
@@ -554,17 +546,12 @@
             ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and " + player.Skincolor + " skin.";
 
         if (player.Pregnant.Babies.length > 0) {
-            if (player.Pregnant.Babies[0].BabyAge < 30) {
-                document.getElementById("looks2").innerHTML += "<br><br> You are pregnant"
-
-            } else {
-                document.getElementById("looks2").innerHTML += "<br><br> You are " + Math.round(player.Pregnant.Babies[0].BabyAge / 30) + " months pregnant."
-            }
+            document.getElementById("looks2").innerHTML += (player.Pregnant.Babies[0].BabyAge < 30) ? "<br><br> You are pregnant" :
+                "<br><br> You are " + Math.round(player.Pregnant.Babies[0].BabyAge / 30) + " months pregnant.";
         }
         document.getElementById("StatusFitness").innerHTML = "Age: " + player.Age + "years old<br>Weight: " + KgToPound(player.Weight) + "<br>" + "Fat: " + KgToPound(player.Fat) + "<br>Muscle: " + KgToPound(player.Muscle) + "<br>" + Fitness(player);
         document.getElementById("genitals2").innerHTML = BoobLook(player) + DickLook(player) + BallLook(player) + PussyLook(player);
         // End update Looksmenu
-
     });
 
     document.getElementById("CloseLooks").addEventListener("click", function () {
@@ -667,41 +654,18 @@
     function Pronoun(gender) {
         switch (gender) {
             case "hermaphrodite":
-                if (Settings.Pronoun.Status) {
-                    return Settings.Pronoun.Herm
-                } else {
-                    return gender;
-                }
+                return Settings.Pronoun.Status ? Settings.Pronoun.Herm : gender;
             case "cuntboy":
-                if (Settings.Pronoun.Status) {
-                    return Settings.Pronoun.CuntBoy;
-                } else {
-                    return gender;
-                }
+                return Settings.Pronoun.Status ? Settings.Pronoun.CuntBoy : gender;
             case "male":
-                if (Settings.Pronoun.Status) {
-                    return Settings.Pronoun.Male
-                } else {
-                    return gender;
-                }
+                return Settings.Pronoun.Status ? Settings.Pronoun.Male : gender;
             case "female":
-                if (Settings.Pronoun.Status) {
-                    return Settings.Pronoun.Female
-                } else {
-                    return gender;
-                }
+                return Settings.Pronoun.Status ? Settings.Pronoun.Female : gender;
             case "dickgirl":
-                if (Settings.Pronoun.Status) {
-                    return Settings.Pronoun.DickGirl;
-                } else {
-                    return gender;
-                }
+                return Settings.Pronoun.Status ? Settings.Pronoun.DickGirl : gender;
             case "doll":
-                if (Settings.Pronoun.Status) {
-                    return Settings.Pronoun.Doll
-                } else {
-                    return gender;
-                }
+                return Settings.Pronoun.Status ? Settings.Pronoun.Doll : gender;
+
         }
     }
 
@@ -718,11 +682,11 @@
         var gender;
         if (who.Dicks.length > 0 && who.Pussies.length > 0) {
             gender = "hermaphrodite";
-        } else if (who.Dicks.length > 0 && Math.floor(who.Boobies[0].Size) > 0) {
+        } else if (who.Dicks.length > 0 && Math.floor(who.Boobies.some(e => e.Size > 1))) {
             gender = "dickgirl";
         } else if (who.Dicks.length > 0) {
             gender = "male";
-        } else if (who.Pussies.length > 0 && who.Boobies[0].Size < 1) {
+        } else if (who.Pussies.length > 0 && who.Boobies.some(e => e.Size < 1)) { // Check all rows of boobs
             gender = "cuntboy";
         } else if (who.Pussies.length > 0) {
             gender = "female";
@@ -932,8 +896,8 @@
     };
 
     function GenitalChange(what) {
-        for (var e = 0; e < player.Dicks.length; e++) {
-            player.Dicks[e].Type = what;
+        for (var e of player.Dicks) {
+            e.Type = what;
         }
         for (var e = 0; e < player.Balls.length; e++) {
             player.Balls[e].Type = what;
@@ -982,8 +946,6 @@
             this.Color = Color
     };
 
-    var Npcs = [];
-
     var EnemyIndex;
 
     function BattleSetup(who) {
@@ -1019,76 +981,10 @@
                 EssenceCheck(enemies[j]);
                 enemies[j].XPos = RandomInt(2, 18) * grid;
                 enemies[j].YPos = RandomInt(2, 18) * grid;
-
                 BattleSetup(enemies[j]);
             }
         }
-        for (var n = 0; n < Npcs.length; n++) {
-            if (sprite.x + grid * sprite.Size >= Npcs[n].X && sprite.x < Npcs[n].X + Npcs[n].Width &&
-                sprite.y + grid * sprite.Size >= Npcs[n].Y && sprite.y < Npcs[n].Y + Npcs[n].Height) {
-                if (mousedowner) {
-                    clearInterval(mFunction);
-                    mousedowner = false;
-                }
-                battle = true;
-                if (player.hasOwnProperty("Spells")) {
-                    player.Spells.Fireball = player.Spells.FireballMax;
-                }
-                var startarea = document.getElementById("hem");
-                sprite.x = startarea.width / 2 - grid;
-                sprite.y = startarea.height / 2;
-                UpdateNpc(Npcs[n].Name);
-                if (Settings.EssenceAuto) {
-                    document.getElementById("SellLimbs").style.display = 'none';
-                } else {
-                    document.getElementById("SellLimbs").style.display = 'inline-block';
-                }
-            }
-        }
     };
-
-    function UpdateNpc(name) {
-        var isfunction = window[name + "Func"];
-        if (typeof isfunction === "function") { // Start replacing html building/npcs with javascript functions
-            document.getElementById("map").style.display = 'none';
-            document.getElementById("buttons").style.display = 'none';
-            document.getElementById("EmptyButtons").style.display = 'block';
-            isfunction();
-        } else {
-            document.getElementById(name).style.display = 'block';
-            document.getElementById("map").style.display = 'none';
-            document.getElementById("buttons").style.display = 'none';
-            document.getElementById("EmptyButtons").style.display = 'block';
-            document.getElementById("Leave" + name).addEventListener("click", function () {
-                battle = false;
-                document.getElementById(name).style.display = 'none';
-                document.getElementById("map").style.display = 'block';
-                document.getElementById("buttons").style.display = 'block';
-                document.getElementById("EmptyButtons").style.display = 'none';
-                document.getElementById("status").style.display = 'block';
-                document.getElementById(name + "Text").innerHTML = null;
-                return;
-            });
-        }
-    }
-
-    function PrintNpcs() {
-        var startarea = document.getElementById("hem");
-        var ctx = startarea.getContext("2d");
-        var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
-        // Switched it so new npcs always print
-        var DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"];
-        for (var e of Npcs) {
-            if (DontneedPrint.indexOf(e.Name) == -1) {
-                ctx.fillStyle = e.Color;
-                ctx.fillRect(e.X, e.Y, e.Width, e.Height);
-            }
-            ctx.fillStyle = Settings.TextColor;
-            ctx.font = "4vh Arial";
-            ctx.textAlign = "center";
-            ctx.fillText(e.RealName, e.X + e.Width / 2, e.Y + e.Height / 1.8);
-        }
-    }
 
     function testsa(e) { // Does  y
         for (var b = e; b < enemies.length; b++) {
@@ -1176,14 +1072,11 @@
         startarea.width = medium;
         startarea.height = medium;
 
-
         if (Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20 !== medium) {
             HemScale();
-            Npcs = [];
         };
 
         document.getElementById("StatusArea").innerHTML = "Area: " + player.Area + " and Map: " + player.Map;
-
         player.MaxHealth = player.End * 10 + player.Perks.ExtraHealth.Count * 20;
         player.MaxWillHealth = player.Will * 10 + player.Perks.ExtraWillHealth.Count * 20;
         document.getElementById("StatusName").innerHTML = player.Name + " " + player.LastName;
@@ -1193,39 +1086,22 @@
         document.getElementById("StatusWillHealth").style.width = Math.min(100 * (player.WillHealth / player.MaxWillHealth), 103) + "%";
         document.getElementById("StatusLevel").innerHTML = player.level;
         document.getElementById("Gold").innerHTML = "Gold: " + Math.floor(player.Gold);
-        if (player.Fat <= player.Height / 100) {
-            document.getElementById("Hunger").innerHTML = "You are starving";
-        } else {
-            document.getElementById("Hunger").innerHTML = null;
-        }
+        document.getElementById("Hunger").innerHTML = (player.Fat <= player.Height / 100) ? "You are starving" : null
         document.getElementById("EssenceTracker").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
         document.getElementById("BlackMarketEssence").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
-        if (Settings.Vore) {
-            document.getElementById("VoreLooks").style.display = 'inline-block';
-        }
-        //		if (BonusTF.Status) {TfBoost();}
+        document.getElementById("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none'
         ExpCheck();
-        if (Settings.Cheats.Enabled) { // Cheats
-            CheatEngine();
-        }
+        Settings.Cheats.Enabled ? CheatEngine() : false;
+
         if (!battle) {
+            CurrentMap();
             var needPaint = ["Farm", "TempCity", "MountainStart", "MountainClimb", "MountainClimb2", "MountainClimb3",
                 "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8", "MountainClimb9",
                 "MountainClimb10", "MountainShrinePath", "MountainShrine", "MountainTribe"
             ];
-            if (needPaint.indexOf(player.Map) > -1) {
-                PaintBackground();
-            }
-            CurrentMap();
-            if (Settings.Vore) {
-                VoreEngine();
-            }
-            if (enemies.length > 0) {
-                PrintEnemies();
-            };
-            if (Npcs.length > 0) {
-                PrintNpcs();
-            }
+            needPaint.indexOf(player.Map) > -1 ? PaintBackground() : false; // Maybe this method is bad for readability?
+            Settings.Vore ? VoreEngine() : false; // However it does shrink the size of code quite a lot... idk
+            (enemies.length > 0) ? PrintEnemies(): false;
             var startarea = document.getElementById("hem");
             var ctx = startarea.getContext("2d");
             ctx.fillStyle = "BlueViolet";
@@ -1233,11 +1109,8 @@
             ctx.fillRect(sprite.x, sprite.y, grid * sprite.Size, grid * sprite.Size);
             Laglimiter++;
             if (Laglimiter % 80 == 0) {
-                if (Settings.EssenceAuto) {
-                    EssenceCheck(player);
-                }
+                Settings.EssenceAuto ? EssenceCheck(player) : false;
                 EssenceBalance();
-                // Moved more stuff inside here to boost performance
                 player.Fat = Math.max(0.1, player.Fat);
                 player.Muscle = Math.max(1, player.Muscle);
                 player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);
@@ -1245,8 +1118,16 @@
                 player.Height = Math.max(5, player.Height);
                 player.Health = Math.max(1, player.Health);
                 player.WillHealth = Math.max(1, player.WillHealth);
-                document.getElementById("Fps").innerHTML = Math.round(1000 / Thefps) + "fps";
+                if (typeof Thefps === "number") { // Stop typing NaN but I still need to figure out why NaN in first place
+                    document.getElementById("Fps").innerHTML = Math.round(1000 / Thefps) + "fps";
+                }
             }
         };
     };
     var Laglimiter = 0;
+
+    (function () {
+        var a = (Math.random() > 0.5) ? "Yes" : "No"; // Cool
+        Math.random() > 0.5 ? console.log(true) : console.log(false);
+        console.log(a);
+    })()

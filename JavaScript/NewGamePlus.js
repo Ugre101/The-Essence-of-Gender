@@ -155,7 +155,6 @@ document.getElementById("NewGamePlus").addEventListener("click", function () {
 });
 document.getElementById("NGPLoadPlayer1").addEventListener("click", function () {
     enemies = [];
-    Npcs = [];
     if (localStorage.getItem('SavedPlayer1') === null) {
         return;
     } else {
@@ -165,7 +164,6 @@ document.getElementById("NGPLoadPlayer1").addEventListener("click", function () 
 });
 document.getElementById("NGPLoadPlayer2").addEventListener("click", function () {
     enemies = [];
-    Npcs = [];
     if (localStorage.getItem('SavedPlayer2') === null) {
         return;
     } else {
@@ -175,7 +173,6 @@ document.getElementById("NGPLoadPlayer2").addEventListener("click", function () 
 });
 document.getElementById("NGPLoadPlayer3").addEventListener("click", function () {
     enemies = [];
-    Npcs = [];
     if (localStorage.getItem('SavedPlayer3') === null) {
         return;
     } else {
@@ -185,7 +182,6 @@ document.getElementById("NGPLoadPlayer3").addEventListener("click", function () 
 });
 document.getElementById("NGPLoadPlayer4").addEventListener("click", function () {
     enemies = [];
-    Npcs = [];
     if (localStorage.getItem('SavedPlayer4') === null) {
         return;
     } else {
@@ -195,7 +191,6 @@ document.getElementById("NGPLoadPlayer4").addEventListener("click", function () 
 });
 document.getElementById("NGPLoadPlayer5").addEventListener("click", function () {
     enemies = [];
-    Npcs = [];
     if (localStorage.getItem('SavedPlayer5') === null) {
         return;
     } else {

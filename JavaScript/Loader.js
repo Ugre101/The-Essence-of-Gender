@@ -46,7 +46,6 @@ document.getElementById("StartLoad").addEventListener("click", function () {
 // Load handler
 document.getElementById("LoadPlayer1").addEventListener("click", function () {
     enemies = [];
-    Npcs = [];
     if (localStorage.getItem('SavedPlayer1') === null) {
         return;
     } else {
@@ -56,7 +55,6 @@ document.getElementById("LoadPlayer1").addEventListener("click", function () {
 });
 document.getElementById("LoadPlayer2").addEventListener("click", function () {
     enemies = [];
-    Npcs = [];
     if (localStorage.getItem('SavedPlayer2') === null) {
         return;
     } else {
@@ -66,7 +64,6 @@ document.getElementById("LoadPlayer2").addEventListener("click", function () {
 });
 document.getElementById("LoadPlayer3").addEventListener("click", function () {
     enemies = [];
-    Npcs = [];
     if (localStorage.getItem('SavedPlayer3') === null) {
         return;
     } else {
@@ -76,7 +73,6 @@ document.getElementById("LoadPlayer3").addEventListener("click", function () {
 });
 document.getElementById("LoadPlayer4").addEventListener("click", function () {
     enemies = [];
-    Npcs = [];
     if (localStorage.getItem('SavedPlayer4') === null) {
         return;
     } else {
@@ -86,7 +82,6 @@ document.getElementById("LoadPlayer4").addEventListener("click", function () {
 });
 document.getElementById("LoadPlayer5").addEventListener("click", function () {
     enemies = [];
-    Npcs = [];
     if (localStorage.getItem('SavedPlayer5') === null) {
         return;
     } else {

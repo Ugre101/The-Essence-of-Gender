@@ -432,7 +432,9 @@
 		<input type="text" id="DickGirl" placeholder="dickgirl" value="dickgirl" />
 		<label for="CuntBoy">Cuntboy</label>
 		<input type="text" id="CuntBoy" placeholder="CuntBoy" value="cuntboy" />
-		<br><br><input type="button" id="AcceptPronoun" value="Accept" />
+		<br><br>
+		<input type="button" id="DisablePronoun" value="Disable" />
+		<input type="button" id="AcceptPronoun" value="Accept" />
 	</div>
 
 	<div id="EssenceOptionsMenu" class="None">
@@ -455,7 +457,7 @@
 
 			<label for="EssenceAuto">Are essence body changes Automatic or Manual?</label>
 			<br><input type="button" id="EssenceAuto" value="Essence Auto" /><br>
-			<input type="button" id="MBalance" value="Balance false" />
+			<!--	<input type="button" id="MBalance" value="Balance false" />-->
 			<p>Warning: if you play on manual, switching to Auto will change you according to your current Femininity
 				and Masculinity, so if you have spent a lot of Essence it will be lost.</p>
 			<div id="ManualGrowth" class="TwoColumn None">
@@ -1061,66 +1063,48 @@
 	<script>
 		// Trial to have them loading in a function so if they fail player are alerted.
 		window.onload = function () {
-			var Scripts = ["AfterBattleButtons", "BalanceParts", "CaveEncounters", "Cheats", "CheckArousal",
-				"CheckDoor", "CheckFlags", "Children", "CurrentMap", "Combat", "DateTracker",
-				"DrainChanges", "DropSystem", "EssenceCheck", "EventLog", "FluidsEngine", "Hair", "HemScale",
+			var Scripts = [
+				"AfterBattleButtons", "BalanceParts", "Cheats", "CheckArousal", "CheckDoor",
+				"CheckFlags", "Children", "CurrentMap", "Combat", "DateTracker", "DrainChanges",
+				"DropSystem", "EssenceCheck", "EventLog", "FluidsEngine", "Hair", "HemScale",
 				"Impregnate", "InferiorUnit", "Items", "Inventory", "LevelMenu", "Loader", "Looks",
-				"Lose", "ManualEssence", "MaxLimbs", "MobileSupport", "Mountain", "MountainTribe", "Movement",
-				"Opponents", "Perk", "Pregnancy", "PrintMap", "Prototype", "RaceEssence - Concept", "Racebonus",
-				"Save", "SexAfterBattle", "SuccubusDungeon", "TfEngine", "TheFarm", "Winbattle", "Spells"
+				"Lose", "ManualEssence", "MaxLimbs", "MobileSupport", "MountainTribe", "Movement",
+				"Perk", "Pregnancy", "PrintMap", "Prototype", "RaceEssence - Concept", "Racebonus",
+				"Save", "SexAfterBattle", "TfEngine", "TheFarm", "Winbattle", "Spells"
 			]
 			var Buildings = [
-				"Bar", "BlackMarket", "ChimeraShrine", "Gym", "MountainShrine", "PotionShop",
-				"PortalShop", "WitchShop", "WitchHut", "Townhall"
+				"Buildings/Bar", "Buildings/BlackMarket", "Buildings/ChimeraShrine", "Buildings/Gym",
+				"Buildings/MountainShrine", "Buildings/PotionShop", "Buildings/PortalShop",
+				"Buildings/WitchShop", "Buildings/WitchHut", "Buildings/Townhall"
 			]
 			var Vore = [
-				"Vore", "VoreActions", "VorePreyInterAction"
+				"Vore/Vore", "Vore/VoreActions", "Vore/VorePreyInterAction"
 			]
 			var Home = [
-				"Dorm", "Home", "HomeUpgrades"
+				"Home/Dorm", "Home/Home", "Home/HomeUpgrades"
 				// ,"BrothelSystem"
 			]
+			var Opponents = [
+				"Opponents/CaveEncounters", "Opponents/SuccubusDungeon", "Opponents/Mountain",
+				"Opponents/Opponents"
+			]
+			var Arrays = [Scripts, Buildings, Vore, Home, Opponents]
 			// Code to sort and output to console, because I find it easier when sorted. #Remember to delete last ","
 			/** 
 			Scripts.sort();
 			Scripts.forEach(e => console.log("\"" + e + "\","));
 			**/
 			// Function to load script and output error when failing to load script.
-			Scripts.forEach(function (src) {
-				var newScript = document.createElement("script");
-				newScript.src = "JavaScript/" + src + ".js";
-				document.head.appendChild(newScript);
-				newScript.onerror = function () {
-					alert("Error loading " + src);
-					document.getElementById("StartProgressBar").innerHTML += "Error loading " + src // For those who use script blockers
-				};
-			});
-			Buildings.forEach(function (src) {
-				var newScript = document.createElement("script");
-				newScript.src = "JavaScript/Buildings/" + src + ".js";
-				document.head.appendChild(newScript);
-				newScript.onerror = function () {
-					alert("Error loading " + src);
-					document.getElementById("StartProgressBar").innerHTML += "Error loading " + src // For those who use script blockers
-				};
-			});
-			Vore.forEach(function (src) {
-				var newScript = document.createElement("script");
-				newScript.src = "JavaScript/Vore/" + src + ".js";
-				document.head.appendChild(newScript);
-				newScript.onerror = function () {
-					alert("Error loading " + src);
-					document.getElementById("StartProgressBar").innerHTML += "Error loading " + src // For those who use script blockers
-				};
-			});
-			Home.forEach(function (src) {
-				var newScript = document.createElement("script");
-				newScript.src = "JavaScript/Home/" + src + ".js";
-				document.head.appendChild(newScript);
-				newScript.onerror = function () {
-					alert("Error loading " + src);
-					document.getElementById("StartProgressBar").innerHTML += "Error loading " + src // For those who use script blockers
-				};
+			Arrays.forEach(function (den) {
+				den.forEach(function (src) {
+					var newScript = document.createElement("script");
+					newScript.src = "JavaScript/" + src + ".js";
+					document.head.appendChild(newScript);
+					newScript.onerror = function () {
+						alert("Error loading " + src);
+						document.getElementById("StartProgressBar").innerHTML += "Error loading " + src // For those who use script blockers
+					};
+				})
 			});
 		}
 	</script>

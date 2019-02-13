@@ -165,14 +165,6 @@ function CheckFlags() {
     if (!Flags.hasOwnProperty("FirstCityLike")) {
         Flags.FirstCityLike = 0;
     }
-    for (var e of player.Inventory) {
-        var itemarray = Object.values(ItemDict);
-        for (var b of itemarray) {
-            if (e.Name === b.Name) {
-                e.Use = b.Use
-            }
-        }
-    }
     if (!Settings.hasOwnProperty("BalanceParts")) {
         Settings.BalanceParts = false;
     }
@@ -357,3 +349,14 @@ function CheckFlags() {
         player.Inventory.push(ItemDict.SpellBook);
     }
 }
+// Hopefully obselite
+/**
+ *     for (var e of player.Inventory) {
+        var itemarray = Object.values(ItemDict);
+        for (var b of itemarray) {
+            if (e.Name === b.Name) {
+                e.Use = b.Use
+            }
+        }
+    }
+ */

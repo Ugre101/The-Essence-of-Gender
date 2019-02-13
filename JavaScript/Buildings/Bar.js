@@ -19,7 +19,6 @@ function BarFunc() {
     ShopMenu.addEventListener("mouseover", function(e) {
         p.innerHTML = e.target.title;
     })
-    var row1 = document.createElement("div");
 
     var input1 = new InputButton("Rest 5g", "Spend the night to recover health and will")
     input1.addEventListener("click", function () {
@@ -34,7 +33,7 @@ function BarFunc() {
             return;
         }
     });
-    row1.appendChild(input1);
+    ShopMenu.appendChild(input1);
 
     var input2 = new InputButton("Medium meal 10g","+2kg fat")
     input2.addEventListener("click", function () {
@@ -54,7 +53,9 @@ function BarFunc() {
             return;
         }
     });
-    row1.appendChild(input2);
+    ShopMenu.appendChild(input2);
+    var br = document.createElement("br");
+    ShopMenu.appendChild(br);
 
     var input3 = new InputButton("Large meal 30g","+4kg fat");
     input3.addEventListener("click", function () {
@@ -74,7 +75,7 @@ function BarFunc() {
             return;
         }
     });
-    row1.appendChild(input3);
+    ShopMenu.appendChild(input3);
 
     var input4 = new InputButton("Buffet 50g","+8kg fat");
     input4.addEventListener("click", function () {
@@ -92,10 +93,9 @@ function BarFunc() {
             return;
         }
     });
-    row1.appendChild(input4);
-    div.appendChild(row1);
+    ShopMenu.appendChild(input4);
+    div.appendChild(ShopMenu);
 
-    ShopMenu.appendChild(row1);
     var Leave = document.createElement("input");
     Leave.setAttribute("type", "button");
     Leave.setAttribute("value", "Leave");

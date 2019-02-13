@@ -16,7 +16,6 @@ function ShopFunc() {
 
     var innerdiv = document.createElement("div");
 
-    var row1 = document.createElement("div");
     var StrPotion = InputButton("Potion of Strength 100g");
     StrPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
@@ -36,11 +35,11 @@ function ShopFunc() {
             p.innerHTML += "<br>" + player.Charm;
         }
     });
-    row1.appendChild(StrPotion);
-    row1.appendChild(ChaPotion);
-    innerdiv.appendChild(row1);
+    innerdiv.appendChild(StrPotion);
+    innerdiv.appendChild(ChaPotion);
+    var br = document.createElement("br")
+    innerdiv.appendChild(br);
 
-    var row2 = document.createElement("div");
     var EndPotion = InputButton("Potion of Endurance 100g")
     EndPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
@@ -60,11 +59,12 @@ function ShopFunc() {
             p.innerHTML += "<br>" + player.Int;
         }
     });
-    row2.appendChild(EndPotion);
-    row2.appendChild(IntPotion);
-    innerdiv.appendChild(row2);
+    innerdiv.appendChild(EndPotion);
+    innerdiv.appendChild(IntPotion);
+    var br2 = document.createElement("br")
+    innerdiv.appendChild(br2);
 
-    var row3 = document.createElement("div");
+
     var WillPotion = InputButton("Potion of Willpower 100g")
     WillPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
@@ -84,9 +84,8 @@ function ShopFunc() {
             p.innerHTML += "<br>" + player.SexSkill;
         }
     });
-    row3.appendChild(WillPotion);
-    row3.appendChild(SexPotion);
-    innerdiv.appendChild(row3);
+    innerdiv.appendChild(WillPotion);
+    innerdiv.appendChild(SexPotion);
 
     div.appendChild(innerdiv);
 
