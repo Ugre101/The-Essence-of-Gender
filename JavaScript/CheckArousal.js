@@ -13,14 +13,18 @@ function CheckArousal() {
                 " You push your head deep into their crotch as they make one last desperate thrust"
             if (cum > 0) {
                 document.getElementById("SexText").innerHTML += ", depositing " + LToGal(cum) + " deep into your gullet."
-            } else document.getElementById("SexText").innerHTML += "."
+            } else {
+                document.getElementById("SexText").innerHTML += "."
+            }
             document.getElementById("SexText").innerHTML += "Your opponent takes deep breathes as they lie completely spent. You rise from between their legs admiring your work and begin to plan your next move."
         } else if (LastPressed == "RideCowgirl") {
             var cum = Cumming(ee);
             document.getElementById("SexText").innerHTML += "<br>Reading their body language, you know they are close to cumming."
             if (cum > 0) {
                 document.getElementById("SexText").innerHTML += " Pulling them deep inside you, they release " + LToGal(cum) + " of cum into your pussy."
-            } else document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
+            } else {
+                document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
+            }
         } else if (LastPressed == "GiveCunnilingus") {
             document.getElementById("SexText").innerHTML += "<br>Reading their body language, you know they are close to cumming. Shoving your tongue as deep as you can into them, your face gets splashed with their nectar."
         } else if (false) document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
@@ -59,14 +63,14 @@ function CheckArousal() {
                 }
             }
         } else if (AnalImpregActions.indexOf(LastPressed) != -1 && player.Blessings.MountainShrine.Malepreg > 0) {
-            if (!ee.hasOwnProperty("Pregnant")) {
+            if (ee.hasOwnProperty("Pregnant" === false)) {
                 ee.Pregnant = {}
                 ee.Pregnant.Status = false;
-            } else if (!ee.Pregnant.Status) {
-                for (var b = 0; b < player.Balls.length; b++) {
-                    if (player.Balls[b].Cum > 10) {
+            } else if (ee.Pregnant.Status === false) {
+                for (var b of player.Balls) {
+                    if (b.Cum > 10) {
                         Impregnate(ee, player, "A", "");
-                        player.Balls[b].Cum -= 10;
+                        b.Cum -= 10;
                     }
                 }
             }
@@ -99,7 +103,9 @@ function CheckArousal() {
                 } else if (ee.Cumin.Stomach > ee.Height / 200) {
                     document.getElementById("SexText").innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
                 }
-            } else document.getElementById("SexText").innerHTML += ", but nothing comes out of your dick."
+            } else {
+                document.getElementById("SexText").innerHTML += ", but nothing comes out of your dick."
+            }
         } else if (LastPressed == "DoggyStyle") {
             var cum = Cumming(player);
             ee.Cumin.Pussy += cum;
@@ -131,31 +137,26 @@ function CheckArousal() {
         } else if (false) {
             document.getElementById("SexText").innerHTML += ", but nothing comes out."
         }
-        if (player.cumGround > 20000)
+        if (player.cumGround > 20000) {
             document.getElementById("SexText").innerHTML += "<br><br>Your opponent is caked white and heavily panting, cum still flowing out of their overfilled holes. Your extreme output has covered them, and all of the ground nearby, in your semen. You're glad that you don't have to clean this up..."
-        else if (player.cumGround > 5000)
+        } else if (player.cumGround > 5000) {
             document.getElementById("SexText").innerHTML += "<br><br>You've covered your (ex-)opponent in your cum, and left a sizable puddle underneath them. They're still dripping..."
-        else if (player.cumGround > 500)
+        } else if (player.cumGround > 500) {
             document.getElementById("SexText").innerHTML += "<br><br>You've made quite a mess; they weren't able to handle your output, and have been covered in what their body couldn't handle."
-        else if (player.cumGround > 0)
+        } else if (player.cumGround > 0) {
             document.getElementById("SexText").innerHTML += "<br><br>Their body bulges with your load, but it's not enough - what they couldn't keep inside, they're now wearing outside."
+        }
         AfterBattleButtons();
         CheckArousal();
     }
-    if (window.innerHeight > 800) {
-        document.getElementById("PlayerLooks").innerHTML = BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
-        document.getElementById("EnemyLooks").innerHTML = BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
-    } else {
-        document.getElementById("PlayerLooks").innerHTML = "";
-        document.getElementById("EnemyLooks").innerHTML = "";
-    }
+    document.getElementById("PlayerLooks").innerHTML = window.innerHeight > 800 ?
+        BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player) : "";
+    document.getElementById("EnemyLooks").innerHTML = window.innerHeight > 800 ?
+        BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee) : "";
+
     if (player.Pregnant.Babies.length > 0) {
         var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
-        if (age < 1) {
-            age = "Impregnated";
-        } else {
-            age = age + " months pregnant";
-        }
+        age < 0 ? age = "Impregnated" : age = age + " months pregnant";
         document.getElementById("PlayerLooks").innerHTML += "<br>" + age;
     }
     if (ee.hasOwnProperty("Pregnant")) {
@@ -221,8 +222,6 @@ function Cumming(who) {
 }
 
 document.getElementById("EnemySex").addEventListener("click", function () {
-    console.log(document.getElementById("EnemyKinda").style.display)
-    console.log(document.getElementById("EnemyKinda").style.display == 'none')
     if (document.getElementById("EnemyKinda").style.display == 'none') {
         document.getElementById("SexStats").innerHTML = " ";
         document.getElementById("EnemyKinda").style.display = 'block';

@@ -71,6 +71,9 @@ function EssenceBalance() { // Concept for calculating what species you're treat
         totalAbsorb += RaceEss[i].amount;
     }
 
+    if (totalAbsorb < 100) {
+        totalAbsorb = 100 // Stop making low amount of race essence can become a full race 
+    }
     /* Will convert to use this insted to I can make changed dependant on amount of essence.
 Need to make it like earlier so that low essence doesn't give a race, 
 e.g. you are not a dragon because you have 1 dragon essence.
@@ -93,11 +96,7 @@ e.g. you are not a dragon because you have 1 dragon essence.
         GenitalChange("human"); // null dick? bland dick? average?
     }
     if (isTaur() !== false) { // centaur always second race?
-        if (player.RaceEssence.length < 2) {
-            player.Race = "human";
-        } else {
-            player.Race = RaceEss[isTaur("B")].Race;
-        }
+        player.Race = player.RaceEssence.length < 2 ? "human" : RaceEss[isTaur("B")].Race;
         player.SecondRace = RaceEss[isTaur()].Race;
         GenitalChange(RaceEss[isTaur()].Race);
     } else if (R1 + R2 + R3 < 50) {
@@ -121,7 +120,7 @@ e.g. you are not a dragon because you have 1 dragon essence.
 
 function PotionDrunk(race, Dose = 50) {
     var RaceEss = player.RaceEssence;
-    var a = RaceEss.findIndex(e => e.Race == race.Capitalize());
+    var a = RaceEss.findIndex(e => e.Race === race.Capitalize());
     if (a > -1) {
         RaceEss[a].amount += Dose;
     } else {

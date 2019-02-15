@@ -20,7 +20,6 @@ function AfterBattleButtons(Sex = true) {
     var DickTwo = document.createElement("div");
     Dick.appendChild(DickTwo);
     var PlayerMaxOrgasm = Math.round(player.End / 8);
-    console.log(player.Orgasm + ">=" + PlayerMaxOrgasm)
     if (Sex) {
         if (PlayerMaxOrgasm >= player.Orgasm) {
             var GetRimjob = InputButton("Receive rimjob");
