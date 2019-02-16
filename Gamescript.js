@@ -227,7 +227,8 @@
             ChildTF: false,
             VCumDigestion: true,
             MilkTF: true,
-            AnalDigestion: true
+            AnalDigestion: true,
+            AbsorbEssence: true
         },
         BalanceParts: false,
         BalanceSettings: {
@@ -353,6 +354,7 @@
     document.getElementById("startgame").addEventListener("click", function () {
         document.getElementById("page2").style.display = 'none';
         DisplayGame();
+        HemScale();
     });
 
     // Sets display to none used for menu buttons
