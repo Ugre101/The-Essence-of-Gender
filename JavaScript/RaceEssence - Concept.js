@@ -1,27 +1,3 @@
-// Function for initializing stats, placeholder
-/*function SnowCheck () {
-    if (!hasOwnAttribute ("Essence_R")) {
-        if (FeralEnemy ! = 'undefined') {
-            for (var i = 0; i < FeralEnemy.length; i++) {
-                Essence_R.FeralEnemy[i] = 0;
-            }
-        }
-        Essence_R.human = 0;
-        Essence_R.Halfling = 0;
-        Essence_R.Orc = 0;
-        Essence_R.Fairy = 0;
-        Essence_R.Elf = 0;
-        Essence_R.DarkElf = 0;
-        Essence_R.Amazon = 0;
-        Essence_R.Imp = 0;
-        Essence_R.Demon = 0;
-        Essence_R.Dhampir = 0;
-        Essence_R.Succubus = 0;
-        Essence_R.Incubus = 0;
-    }
-    Essence_R[Race] = 50;
-    Essence_R[SecondRace] += 50;
-}*/
 function isTaur(mode = "a") {
     var Taur = ["centaur"]
     var max = Math.min(3, player.RaceEssence.length);
@@ -254,6 +230,9 @@ function DetailedRaceDesc() {
     for (var i = 0; i < RaceEss.length; i++) {
         totalAbsorb += RaceEss[i].amount;
     }
+    if (totalAbsorb < 100) {
+        totalAbsorb = 100;
+    }// having only 1 race ess shouldn't make you that race, need more changes in rest of code to reflect that.
     var R1 = 0;
     var R2 = 0;
     var R3 = 0;

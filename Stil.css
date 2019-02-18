@@ -322,7 +322,7 @@
        width: 60px;
    }
 
-   #WorldMapContainer > p {
+   #WorldMapContainer>p {
        display: inline-block;
        margin-right: 1em;
    }
@@ -633,8 +633,8 @@
 
    #Home {
        background-color: rgb(192, 189, 192);
-      width: 50%;
-        height: 80%;
+       width: 50%;
+       height: 80%;
        box-shadow: 0 0 2px 1px black;
        border-radius: 5px;
        overflow: auto;
@@ -716,9 +716,10 @@
        height: auto;
        margin: 0.3em 0.1em;
        border-radius: 9px;
-       box-shadow: 0 0 4px 1px gray;
+       border: 1px solid black;
+       box-shadow: 0 1px 3px 1px rgb(61, 51, 60);
        text-align: center;
-       background-color: rgb(238, 238, 238);
+       background-color: rgb(243, 241, 204);
        color: black;
    }
 
