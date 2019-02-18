@@ -590,6 +590,9 @@
         for (var e = 0; e < player.RaceEssence.length; e++) {
             RaceTotal += player.RaceEssence[e].amount;
         }
+        if (RaceTotal < 100) {
+            RaceTotal = 100;
+        }
         for (var e = 0; e < player.RaceEssence.length; e++) {
             Races += player.RaceEssence[e].Race + ": " + Math.round(player.RaceEssence[e].amount / RaceTotal * 100) + "%  (" + player.RaceEssence[e].amount + ")<br>"
         }
