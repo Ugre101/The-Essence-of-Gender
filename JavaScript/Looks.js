@@ -81,21 +81,23 @@ function ExactBallLook(who) {
 
 function Filled(what) {
     return "filled with " + LToGal(what.Cum / 1000)
-    var Percent = what.Cum / what.CumMax;
-    console.log(Percent);
-    if (Percent > 0.9) {
-        return "swollen with"
-    } else if (Percent > 0.5) {
-        return "filled with"
-    } else if (Percent > 0.3) {
-        return ""
-    } else if (Percent > 0.1) {
-        return "shrunken due their emptiness"
-    } else if (Percent > 0.01) {
-        return ""
-    } else {
-        return "completely emptied"
-    }
+    /**
+     *     var Percent = what.Cum / what.CumMax;
+        console.log(Percent);
+        if (Percent > 0.9) {
+            return "swollen with"
+        } else if (Percent > 0.5) {
+            return "filled with"
+        } else if (Percent > 0.3) {
+            return ""
+        } else if (Percent > 0.1) {
+            return "shrunken due their emptiness"
+        } else if (Percent > 0.01) {
+            return ""
+        } else {
+            return "completely emptied"
+        }
+     */
 }
 
 function PussyLook(who) {
