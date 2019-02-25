@@ -395,7 +395,7 @@
    }
 
    div.Options {
-       background-image: url(/Res/bg_01_02.png);
+       background-image: url(Res/bg_01_02.png);
        background-repeat: no-repeat;
        background-size: contain;
        background-position: center;
@@ -421,7 +421,7 @@
    }
 
    div.LPMenu {
-       background-image: url(/Res/bg_01_02.png);
+       background-image: url(Res/bg_01_02.png);
        background-repeat: no-repeat;
        background-size: contain;
        background-position: center;
@@ -452,7 +452,7 @@
    }
 
    div.SLMenu {
-       background-image: url(/Res/bg_01_02.png);
+       background-image: url(Res/bg_01_02.png);
        background-repeat: no-repeat;
        background-size: contain;
        background-position: center;
@@ -976,7 +976,7 @@
    }
 
    div.Book {
-       background-image: url(/Res/book.png);
+       background-image: url(Res/book.png);
        background-repeat: no-repeat;
        background-size: contain;
        background-position: center;
