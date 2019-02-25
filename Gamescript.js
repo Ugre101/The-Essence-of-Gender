@@ -319,7 +319,7 @@
 
     document.getElementById("BackHome").addEventListener("click", function () {
         document.getElementById("CharCreator").style.display = 'none';
-        document.getElementById("StartPage").style.display = 'block';
+        document.getElementById("StartPage").style.display = 'grid';
     });
 
     // Ge karaktär start värden
@@ -479,6 +479,9 @@
         MapColor = document.getElementById("MapColor").value;
         document.body.style.color = document.getElementById("textcolor").value;
         document.body.style.fontFamily = document.getElementById("textfont").value;
+
+        document.getElementById("status").style.backgroundColor = document.getElementById("SideBarColor").value;
+        document.getElementById("buttons").style.backgroundColor = document.getElementById("SideBarColor").value
 
         Settings.MapPercent = document.getElementById("MapScale").value;
         Settings.BackColor = document.getElementById("backcolor").value;
@@ -1012,7 +1015,6 @@
         document.getElementById("BlackMarketEssence").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
         document.getElementById("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none'
         ExpCheck();
-        Settings.Cheats.Enabled ? CheatEngine() : false;
 
         if (!battle) {
             CurrentMap();
@@ -1022,23 +1024,24 @@
             ];
             needPaint.indexOf(player.Map) > -1 ? PaintBackground() : false; // Maybe this method is bad for readability?
             Settings.Vore ? VoreEngine() : false; // However it does shrink the size of code quite a lot... idk
+            Settings.Cheats.Enabled ? CheatEngine() : false;
             (enemies.length > 0) ? PrintEnemies(): false;
             var startarea = document.getElementById("hem");
             var ctx = startarea.getContext("2d");
             ctx.fillStyle = "BlueViolet";
-            sprite.Size = 1 //Math.min(0.8 + player.Height / 320, 1.2);
             ctx.fillRect(sprite.x, sprite.y, grid * sprite.Size, grid * sprite.Size);
             Laglimiter++;
             if (Laglimiter % 80 == 0) {
                 Settings.EssenceAuto ? EssenceCheck(player) : false;
-                EssenceBalance();
+                //EssenceBalance();
                 player.Fat = Math.max(0.1, player.Fat);
                 player.Muscle = Math.max(1, player.Muscle);
                 player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);
-
                 player.Height = Math.max(5, player.Height);
                 player.Health = Math.max(1, player.Health);
                 player.WillHealth = Math.max(1, player.WillHealth);
+
+                sprite.Size = 1 //Math.min(0.8 + player.Height / 320, 1.2);
                 if (typeof Thefps === "number") { // Stop typing NaN but I still need to figure out why NaN in first place
                     document.getElementById("Fps").innerHTML = Math.round(1000 / Thefps) + "fps";
                 }

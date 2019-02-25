@@ -10,7 +10,7 @@
    }
 
    body {
-       background-color: rgb(114, 153, 167);
+       background-color: #643a6d;
        display: flex;
        align-items: center;
        justify-content: center;
@@ -238,53 +238,71 @@
        border: 1px solid black;
        border-radius: 10px;
        background-color: rgb(255, 255, 255);
-       width: 550px;
+       width: 80%;
        margin: 1em auto 1em auto;
        padding: 1em;
        text-align: center;
        overflow: auto;
    }
 
-   div.SLMenu {
-       width: 300px;
-       height: auto;
-       padding: 1em;
-       border: 1px solid black;
-       border-radius: 5px;
-       background-color: rgb(235, 235, 228);
+   #StartPage {
+       background-image: linear-gradient(to bottom right, blue, purple, pink);
+       width: 100%;
+       height: 100%;
        text-align: center;
+       font-weight: bolder;
+       color: #9b3a89;
+       letter-spacing: 0.1em;
+
+       display: grid;
+       justify-content: center;
+       align-content: center;
    }
 
-   #StartPage {
-       width: 500px;
-       height: auto;
-       text-align: center;
-       font-weight: lighter;
-       color: #9e3c8f;
-       letter-spacing: 0.1em;
+   #StartPage>input[type="button"] {
+       align-self: center;
+       justify-self: center;
+       margin: 0.5em;
    }
 
    #StartPage>h1 {
-       text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+       align-self: center;
+       justify-self: center;
+       text-shadow:
+           -1px -1px 5px black,
+           1px -1px 5px black,
+           -1px 1px 5px black,
+           1px 1px 5px black;
    }
 
    #CharCreator {
-       width: 500px;
+       width: 650px;
        height: auto;
-       padding: 1em;
+       max-width: 70%;
+       min-height: 45%;
+       max-height: 90%;
+       padding: 20px;
+       border: 6px solid rgb(110, 81, 65);
+       border-radius: 10px;
+       box-shadow: 0 0 3pt 2pt black;
+       background-color: rgb(206, 172, 127);
+       overflow: auto;
        text-align: center;
-       border-radius: 5px;
-       background-color: rgb(235, 235, 228);
-       border: 1px solid black;
    }
 
    #page2 {
-       width: 500px;
+       width: 650px;
        height: auto;
-       padding: 0.5em 1.5em;
-       border: 1px solid black;
-       border-radius: 5px;
-       background-color: rgb(235, 235, 228);
+       max-width: 70%;
+       min-height: 45%;
+       max-height: 90%;
+       padding: 20px;
+       border: 6px solid rgb(110, 81, 65);
+       border-radius: 10px;
+       box-shadow: 0 0 3pt 2pt black;
+       background-color: rgb(206, 172, 127);
+       overflow: auto;
+       text-align: center;
    }
 
    @media screen and (max-height:600px) {
@@ -348,21 +366,13 @@
        min-height: 45%;
        max-height: 90%;
        padding: 20px;
-       border: 1px solid black;
-       border-radius: 5px;
-       background-color: rgb(235, 235, 228);
+       border: 6px solid rgb(110, 81, 65);
+       border-radius: 10px;
+       box-shadow: 0 0 3pt 2pt black;
+       background-color: rgb(206, 172, 127);
        overflow: auto;
    }
 
-   #ShowQuests {
-       width: 600px;
-       height: auto;
-       padding: 20px;
-       border: 1px solid black;
-       border-radius: 5px;
-       background-color: rgb(235, 235, 228);
-       text-align: center;
-   }
 
    #QuestTexts {
        display: grid;
@@ -385,40 +395,76 @@
    }
 
    div.Options {
-       width: 600px;
-       max-width: 50%;
-       height: auto;
-       padding: 1em;
-       border: 1px solid black;
-       border-radius: 5px;
-       background-color: rgb(235, 235, 228);
+       background-image: url(/Res/bg_01_02.png);
+       background-repeat: no-repeat;
+       background-size: contain;
+       background-position: center;
+
+       width: 25%;
+       padding: 3em;
+       height: 80%;
        text-align: center;
        overflow: auto;
    }
 
-   @media screen and (max-height:800px) {
+   @media screen and (max-height: 500px) {
        div.Options {
-           max-width: 95%;
-           padding: 0;
-           height: 95%;
+           background: none;
+           width: 70%;
+           height: 70%;
+           border: 6px solid rgb(110, 81, 65);
+           border-radius: 10px;
+           box-shadow: 0 0 3pt 2pt black;
+           background-color: rgb(206, 172, 127);
            overflow: auto;
        }
+   }
+
+   div.LPMenu {
+       background-image: url(/Res/bg_01_02.png);
+       background-repeat: no-repeat;
+       background-size: contain;
+       background-position: center;
+
+       height: 90%;
+       width: 30%;
+       padding: 2em;
+
+       overflow: auto;
+       text-align: center;
+   }
+
+   @media screen and (max-height: 500px) {
+       div.LPMenu {
+           background: none;
+           width: 45%;
+           height: 80%;
+           border: 6px solid rgb(110, 81, 65);
+           border-radius: 10px;
+           box-shadow: 0 0 3pt 2pt black;
+           background-color: rgb(206, 172, 127);
+           overflow: auto;
+       }
+
+       div.LPMenu>h1 {
+           display: none;
+       }
+   }
+
+   div.SLMenu {
+       background-image: url(/Res/bg_01_02.png);
+       background-repeat: no-repeat;
+       background-size: contain;
+       background-position: center;
+
+       width: 285px;
+       text-align: center;
+       padding: 2em 4em;
    }
 
    #LogLength {
        display: inline-block;
        border: 1px solid black;
-   }
-
-   #EssenceOptionsMenu {
-       width: 550px;
-       max-width: 50%;
-       height: auto;
-       padding: 10px;
-       border: 1px solid black;
-       border-radius: 5px;
-       background-color: rgb(235, 235, 228);
-       text-align: center;
    }
 
    #Sizes>input[type=button] {
@@ -430,17 +476,6 @@
        border: 1px solid black;
    }
 
-   div.LPMenu {
-       width: 500px;
-       max-width: 50%;
-       height: auto;
-       background-color: rgb(235, 235, 228);
-       border: 1px solid black;
-       border-radius: 5px;
-       text-align: center;
-       position: relative;
-       padding-bottom: 1em;
-   }
 
    p.MenuText {
        min-height: 5em;
@@ -459,7 +494,7 @@
        max-width: 260px;
        height: 50vh;
        bottom: 0;
-       background-color: rgb(137, 129, 168);
+       background-color: rgb(156, 135, 214);
        border-right: 2px solid black;
        text-align: center;
    }
@@ -477,7 +512,7 @@
        max-width: 260px;
        height: 50%;
        top: 0;
-       background-color: rgb(137, 129, 168);
+       background-color: rgb(156, 135, 214);
        border-right: 2px solid black;
        text-align: center;
    }
@@ -715,32 +750,39 @@
        max-width: 220px;
        height: auto;
        margin: 0.3em 0.1em;
-       border-radius: 9px;
-       border: 1px solid black;
-       box-shadow: 0 1px 3px 1px rgb(61, 51, 60);
        text-align: center;
-       background-color: rgb(243, 241, 204);
        color: black;
+
+       border: 1px solid rgb(83, 57, 43);
+       border-radius: 10px;
+       box-shadow: 0 0 2pt 1pt black;
+       background-color: rgb(221, 195, 160);
+   }
+
+   button:hover {
+       background-color: rgb(187, 160, 124);
+
    }
 
    input[type=button] {
+       text-align: center;
        font-family: inherit;
        font-size: inherit;
+       color: black;
        width: 96%;
        max-width: 220px;
        height: 5vh;
        max-height: 40px;
        margin: 0.3em 0.1em;
-       border-radius: 9px;
-       border: 1px solid black;
-       box-shadow: 0 1px 3px 1px rgb(61, 51, 60);
-       text-align: center;
-       background-color: rgb(243, 241, 204);
-       color: black;
+
+       border: 1px solid rgb(83, 57, 43);
+       border-radius: 10px;
+       box-shadow: 0 0 2pt 1pt black;
+       background-color: rgb(221, 195, 160);
    }
 
    input[type=button]:hover {
-       background-color: rgb(189, 189, 189);
+       background-color: rgb(187, 160, 124);
    }
 
    /* Delar på form-inputs fält så att alla blir samma storlek */
@@ -931,4 +973,15 @@
        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
        grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
        overflow: auto;
+   }
+
+   div.Book {
+       background-image: url(/Res/book.png);
+       background-repeat: no-repeat;
+       background-size: contain;
+       background-position: center;
+       width: 60%;
+       height: 90%;
+       text-align: center;
+       padding: 1em;
    }
