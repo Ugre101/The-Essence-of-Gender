@@ -7,34 +7,17 @@ function UpdateStats(FirstRound = false) {
     document.getElementById("EnemyStatusWillHealth").innerHTML = Math.round(ee.WillHealth);
     document.getElementById("EnemyStatusWillHealth").style.width = 100 * (ee.WillHealth / ee.FullWillHealth) + "%";
     document.getElementById("StatusName2").innerHTML = player.Name + " " + player.LastName;
-    document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
-    if (player.Health <= player.MaxHealth) {
-        document.getElementById("StatusHealth2").style.width = 100 * (player.Health / player.MaxHealth) + "%";
-    } else {
-        document.getElementById("StatusHealth2").style.width = 103 + "%";
-    }
-    document.getElementById("StatusWillHealth2").innerHTML = Math.round(player.WillHealth);
-    if (player.WillHealth <= player.MaxWillHealth) {
-        document.getElementById("StatusWillHealth2").style.width = 100 * (player.WillHealth / player.MaxWillHealth) + "%";
-    } else {
-        document.getElementById("StatusWillHealth2").style.width = 103 + "%";
-    }
 
+    document.getElementById("StatusHealth2").innerHTML = Math.round(player.Health);
+    document.getElementById("StatusHealth2").style.width = Math.min(103, 100 * (player.Health / player.MaxHealth)) + "%";
+    document.getElementById("StatusWillHealth2").innerHTML = Math.round(player.WillHealth);
+    document.getElementById("StatusWillHealth2").style.width = Math.min(103, 100 * (player.WillHealth / player.MaxWillHealth)) + "%";
     player.Mana++; // Slow in combat mana rec
 
-    // Concept: Squishing your enemy if you're 10X bigger and heavier
-    /*if (player.Weight > ee.Weight * 10 && player.Height > ee.Height * 10)
-    {
-        Teased = false;
-        WinBattle();
-        return;
-    } else*/
     if (ee.Health <= 0) {
         WinBattle();
-        //     Teased = false;
         return;
     } else if (ee.WillHealth <= 0) {
-        //   Teased = true;
         WinBattle();
         return;
     } else if (player.Health <= 0) {
@@ -53,8 +36,6 @@ function UpdateStats(FirstRound = false) {
         return;
     }
 }
-// var Teased = false;
-
 /**
  * Need to make enemy attack more flavour full
  * Make it so enemies tease with different movement & hit with stuff like kick, sweeps, slashing, etc..
@@ -105,15 +86,6 @@ function EnemyAttack() {
     }
 }
 // Battle attack buttons
-/** To Do:
- *  Add a sort of mana insted of max fireballs
- *  I think I like having magical essence as "mana", magical essence can be a elelemt found in everything and like our air
- *  it always want to achive equalilty/even presure so having a alot of mana is hard. Because it will slowly seep out of your body.
- *  
- *  Might add a cooldown
- * 
- *  More speels and skills overall
- */
 // Ideas for new combat system I want to add resistence and other things for more depth
 /** Ideas to add
  *  Ways to ignore resistance like pierce?

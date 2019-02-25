@@ -40,7 +40,7 @@ document.getElementById("LoadButton").addEventListener("click", function () {
 // Start page load button
 document.getElementById("StartLoad").addEventListener("click", function () {
     document.getElementById("LoadMenu").style.display = 'none';
-    document.getElementById("StartPage").style.display = 'block';
+    document.getElementById("StartPage").style.display = 'grid';
 })
 
 // Load handler

@@ -16,12 +16,9 @@
 	<div id="StartPage">
 		<p id="StartProgressBar"></p>
 		<h1>The Essence of Gender</h1>
-		<br>
 		<input type="button" id="GoToCharCreator" value="Start game" />
-		<br>
 		<input type="button" id="LoadButton" value="Load game" />
-		<!--		<br><br><br>
-		<input type="button" id="NewGamePlus" value="(placeholder)Old release load" />-->
+		<!--<input type="button" id="NewGamePlus" value="(placeholder)Old release load" />-->
 	</div>
 
 	<div id="CharCreator" class="None">
@@ -148,10 +145,10 @@
 	<div id="EmptyButtons" class="left buttons None"></div>
 	<div id="SaveMenu" class="SLMenu None">
 		<h1>Save menu</h1>
-		<input type="button" id="SavePlayer1" value="Save 1" />
-		<input type="button" id="SavePlayer2" value="Save 2" />
-		<input type="button" id="SavePlayer3" value="Save 3" />
-		<input type="button" id="SavePlayer4" value="Save 4" />
+		<input type="button" id="SavePlayer1" value="Save 1" /><br>
+		<input type="button" id="SavePlayer2" value="Save 2" /><br>
+		<input type="button" id="SavePlayer3" value="Save 3" /><br>
+		<input type="button" id="SavePlayer4" value="Save 4" /><br>
 		<input type="button" id="SavePlayer5" value="Save 5" />
 		<div>
 			<input type="button" id="SaveLeave" value="Leave" />
@@ -161,10 +158,10 @@
 	</div>
 	<div id="LoadMenu" class="SLMenu None">
 		<h1>Load menu</h1>
-		<input type="button" id="LoadPlayer1" value="Load 1 " />
-		<input type="button" id="LoadPlayer2" value="Load 2" />
-		<input type="button" id="LoadPlayer3" value="Load 3" />
-		<input type="button" id="LoadPlayer4" value="Load 4" />
+		<input type="button" id="LoadPlayer1" value="Load 1 " /><br>
+		<input type="button" id="LoadPlayer2" value="Load 2" /><br>
+		<input type="button" id="LoadPlayer3" value="Load 3" /><br>
+		<input type="button" id="LoadPlayer4" value="Load 4" /><br>
 		<input type="button" id="LoadPlayer5" value="Load 5" />
 		<div id="MapLoad" class="None">
 			<input type="button" id="LoadLeave" value="Leave">
@@ -191,25 +188,17 @@
 		<h1>Level Menu</h1>
 		<p id="LevelMenuText" class="MenuText"></p>
 		<p id="SkillPointsLeft"></p>
-		<div>
-			<input type="button" id="GainStr" value="Strength" title="Makes hit stronger">
-			<input type="button" id="GainCha" value="Charm" title="Makes tease stronger">
-		</div>
-
-		<div>
-			<input type="button" id="GainEnd" value="Endurance" title="Gives you more health and every 8 point increase max orgasm">
-			<input type="button" id="GainInt" value="Intelligence" title="Useless">
-		</div>
-
-		<div>
-			<input type="button" id="GainWill" value="Willpower" title="Gives you more WillPower">
-			<input type="button" id="GainSex" value="Sex skill" title="When having sex your enemy gains more arousal">
-		</div>
+		<input type="button" id="GainStr" value="Strength" title="Makes hit stronger">
+		<input type="button" id="GainCha" value="Charm" title="Makes tease stronger">
 		<br>
-		<div>
-			<input type="button" id="LeaveLevelMenu" value="Done">
-			<input type="button" id="PerkMenu" value="Perk Menu">
-		</div>
+		<input type="button" id="GainEnd" value="Endurance" title="Gives you more health and every 8 point increase max orgasm">
+		<input type="button" id="GainInt" value="Intelligence" title="Increases spell effects">
+		<br>
+		<input type="button" id="GainWill" value="Willpower" title="Gives you more WillPower">
+		<input type="button" id="GainSex" value="Sex skill" title="When having sex your enemy gains more arousal">
+		<br>
+		<input type="button" id="LeaveLevelMenu" value="Done">
+		<input type="button" id="PerkMenu" value="Perk Menu">
 	</div>
 
 	<div id="PerksMenu" class="LPMenu None"></div>
@@ -262,7 +251,7 @@
 		<input type="button" id="LeaveChildrenMenu" value="close" />
 	</div>
 
-	<div id="ShowQuests" class="None">
+	<div id="ShowQuests" class="None Options">
 		<h1>Quests</h1>
 		<div id="QuestTexts">
 		</div>
@@ -340,6 +329,10 @@
 				<input type="color" id="textcolor" value="#000000" />
 			</div>
 			<div>
+				<label for="SideBarColor">Side bar color</label>
+				<input type="color" id="SideBarColor" value="#9999CC" />
+			</div>
+			<div>
 				<label for="textfont">Textfont</label>
 				<select id="textfont">
 					<option value="Times New Roman', Times, serif">Times New Roman</option>
@@ -403,7 +396,7 @@
 		</div>
 	</div>
 
-	<div id="PronounForm" class="None Options">
+	<div id="PronounForm" class="None">
 		<label for="Herm">Herm</label>
 		<input type="text" id="Herm" placeholder="hermaphrodite" value="hermaphrodite" />
 		<label for="Male">Male</label>
@@ -421,7 +414,7 @@
 		<input type="button" id="AcceptPronoun" value="Accept" />
 	</div>
 
-	<div id="EssenceOptionsMenu" class="None">
+	<div id="EssenceOptionsMenu" class="None Options">
 		<p id="EssenceTracker"></p>
 		<div id="EssenceStart">
 			<label for="OptionGiveEssence">Give Essence</label>
@@ -495,7 +488,7 @@
 		<input type="button" id="InventoryLeave" value="Close" />
 	</div>
 
-	<div id="SpellBook" class="None Options">
+	<div id="SpellBook" class="None Book">
 
 	</div>
 

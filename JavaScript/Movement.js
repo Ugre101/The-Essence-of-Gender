@@ -4,23 +4,46 @@ var mFunction;
 var mouseX;
 var mouseY;
 
+var Movement = {
+    XSpeed: 0,
+    YSpeed: 0,
+    Drag: 1
+}
+
+/**
+ * function MovementEngine(x, y) {
+    var M = Movement;
+    M.XSpeed = Math.min(10, Math.max(-10, M.XSpeed));
+    M.YSpeed = Math.min(10, Math.max(-10, M.YSpeed));
+    if ((x > 0 && M.XSpeed < 0) || (x < 0 && M.XSpeed > 0)) {
+        M.XSpeed = 0;
+    } else if ((y > 0 && M.YSpeed < 0) || (y < 0 && M.YSpeed > 0)) {
+        M.YSpeed = 0;
+    }
+    Movement.XSpeed += x > 0 ? 2 : x < 0 ? -2 : 0;
+    Movement.YSpeed += y > 0 ? 2 : y < 0 ? -2 : 0;
+    sprite.x += Movement.XSpeed
+    sprite.y += Movement.YSpeed
+}
+ */
+
 document.addEventListener('keydown', function (e) {
     var startarea = document.getElementById("hem");
     if (battle === true) {
         return;
     }
     if ((e.which === 37 || e.which === 65) && sprite.x > 0) {
-        sprite.x -= grid * sprite.Size;
+        sprite.x -= grid;
         sprite.y += 0;
     } else if ((e.which === 39 || e.which === 68) && sprite.x + grid * sprite.Size < startarea.width) {
-        sprite.x += grid * sprite.Size;
+        sprite.x += grid;
         sprite.y += 0;
     }
     if ((e.which === 38 || e.which === 87) && sprite.y > 0) {
-        sprite.y -= grid * sprite.Size;
+        sprite.y -= grid;// * sprite.Size;
         sprite.x += 0;
     } else if ((e.which === 40 || e.which === 83) && sprite.y + grid * sprite.Size < startarea.height) {
-        sprite.y += grid * sprite.Size;
+        sprite.y += grid;// * sprite.Size;
         sprite.x += 0;
     }
     Touching();
