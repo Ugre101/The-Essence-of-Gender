@@ -400,7 +400,7 @@
        background-size: contain;
        background-position: center;
 
-       width: 25%;
+       width: 35%;
        padding: 3em;
        height: 80%;
        text-align: center;
@@ -426,8 +426,8 @@
        background-size: contain;
        background-position: center;
 
-       height: 90%;
-       width: 30%;
+       height: 80%;
+       width: 35%;
        padding: 2em;
 
        overflow: auto;
