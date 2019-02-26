@@ -1,6 +1,6 @@
 document.getElementById("ShowInventory").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("Inventory").style.display = 'block';
+    document.getElementById("Inventory").style.display = 'grid';
     //document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
     Items2();
 });

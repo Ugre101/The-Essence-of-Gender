@@ -25,14 +25,8 @@
        }
    }
 
-   #Fps {
-       position: absolute;
-       top: 0;
-   }
-
    canvas {
-       border: 2px solid rgb(0, 0, 0);
-       box-shadow: 0 0 2px 3px rgb(27, 26, 26);
+       box-shadow: 0 0 3px 4px rgb(58, 0, 58);
        -webkit-touch-callout: none;
        /* iOS Safari */
        -webkit-user-select: none;
@@ -44,8 +38,7 @@
        -ms-user-select: none;
        /* Internet Explorer/Edge */
        user-select: none;
-       /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+       /* Non-prefixed version, currently supported by Chrome and Opera */
    }
 
    #EventLog {
@@ -56,39 +49,40 @@
        height: auto;
        max-height: 50vh;
        width: 20vw;
-       border: 2px solid black;
-       border-radius: 10px 0 0 0;
+       border-top: 4px ridge purple;
+       border-left: 4px ridge purple;
+       border-top-left-radius: 15px;
    }
 
-   h2.EventH2 {
+   #EventLog>h2 {
        display: inline-block;
        margin: 0;
-   }
-
-   #EventLog>div>p {
-       min-height: 10vh;
-       max-height: 20vh;
-       box-shadow: 0 0 1px 1px black;
-       border-radius: 10px 0 0 10px;
-       background-color: rgb(255, 255, 255);
-       width: 95%;
-       margin: 0 0 0 0.5em;
-       padding: 0.5em 0.3em;
-       text-align: center;
-       overflow: auto;
-   }
-
-
-
-   #FluidPart {
-       padding: 0 1em 1em 1em;
-       text-align: center;
    }
 
    @media (max-height: 600px) {
        #EventLog>h2 {
            display: none;
        }
+   }
+
+   #EventLog>div>p {
+       min-height: 10vh;
+       max-height: 20vh;
+       width: 94%;
+       margin: 0 0 0 0.5em;
+       padding: 0.5em 0.3em;
+       border: 1px solid black;
+       border-top-left-radius: 10px;
+       border-bottom-left-radius: 10px;
+       background-color: white;
+       float: right;
+       text-align: center;
+       overflow: auto;
+   }
+
+   #FluidPart {
+       padding: 0 1em 1em 1em;
+       text-align: center;
    }
 
    @media (max-width: 400px) {
@@ -116,6 +110,11 @@
    div.right {
        position: absolute;
        right: 0;
+   }
+
+   div.top {
+       position: absolute;
+       top: 0;
    }
 
    div.FullBar {
@@ -158,6 +157,7 @@
        border-right: 1px solid rgb(129, 194, 33);
    }
 
+   /* Could combine these but think I might wanna change color for vore*/
    #VoreLevel {
        background-color: greenyellow;
        height: 4vh;
@@ -235,8 +235,9 @@
    p.TextBox {
        min-height: 7em;
        height: auto;
-       border: 1px solid black;
        border-radius: 10px;
+       box-shadow: 0 0 3pt 2pt black;
+
        background-color: rgb(255, 255, 255);
        width: 80%;
        margin: 1em auto 1em auto;
@@ -251,7 +252,7 @@
        height: 100%;
        text-align: center;
        font-weight: bolder;
-       color: #9b3a89;
+       color: #db65c6;
        letter-spacing: 0.1em;
 
        display: grid;
@@ -273,36 +274,7 @@
            1px -1px 5px black,
            -1px 1px 5px black,
            1px 1px 5px black;
-   }
-
-   #CharCreator {
-       width: 650px;
-       height: auto;
-       max-width: 70%;
-       min-height: 45%;
-       max-height: 90%;
-       padding: 20px;
-       border: 6px solid rgb(110, 81, 65);
-       border-radius: 10px;
-       box-shadow: 0 0 3pt 2pt black;
-       background-color: rgb(206, 172, 127);
-       overflow: auto;
-       text-align: center;
-   }
-
-   #page2 {
-       width: 650px;
-       height: auto;
-       max-width: 70%;
-       min-height: 45%;
-       max-height: 90%;
-       padding: 20px;
-       border: 6px solid rgb(110, 81, 65);
-       border-radius: 10px;
-       box-shadow: 0 0 3pt 2pt black;
-       background-color: rgb(206, 172, 127);
-       overflow: auto;
-       text-align: center;
+       font-size: 4vw;
    }
 
    @media screen and (max-height:600px) {
@@ -320,6 +292,7 @@
        height: 40vh;
        width: 40vh;
        z-index: -1;
+       float: right;
    }
 
    input[type="button"].SmolButton {
@@ -342,7 +315,6 @@
 
    #WorldMapContainer>p {
        display: inline-block;
-       margin-right: 1em;
    }
 
    @media (max-width: 700px) {
@@ -376,18 +348,19 @@
 
    #QuestTexts {
        display: grid;
-       grid-template-columns: 50% 50%;
+       grid-template-columns: 40% 40%;
        justify-content: center;
        grid-column-gap: 1em;
        margin: 1em 0;
+       overflow: auto;
    }
 
    #QuestTexts>div {
-       border: 1px solid gray;
+       background-color: rgba(245, 222, 179, 0.24);
        border-radius: 5px;
-       box-shadow: 0 0 2px 2px gray;
+       border: 5px ridge rgb(148, 111, 91);
        text-align: left;
-       padding: 0 1em;
+       padding-left: 1em;
    }
 
    #QuestTexts>div>h4 {
@@ -418,6 +391,13 @@
            background-color: rgb(206, 172, 127);
            overflow: auto;
        }
+   }
+
+   div.OptionsInnerDiv {
+       width: 90%;
+       height: 100%;
+       margin: auto;
+       overflow: auto;
    }
 
    div.LPMenu {
@@ -480,7 +460,7 @@
    p.MenuText {
        min-height: 5em;
        height: auto;
-       box-shadow: 0 0 1px 1px black;
+       box-shadow: 0 0 10px 1px rgb(77, 53, 40);
        border-radius: 10px;
        background-color: rgb(255, 255, 255);
        width: 75%;
@@ -493,9 +473,11 @@
        width: 17%;
        max-width: 260px;
        height: 50vh;
+       padding-top: 1px;
+       /*To get rid of small gap that sometimes appear*/
        bottom: 0;
        background-color: rgb(156, 135, 214);
-       border-right: 2px solid black;
+       border-right: 4px ridge purple;
        text-align: center;
    }
 
@@ -513,7 +495,7 @@
        height: 50%;
        top: 0;
        background-color: rgb(156, 135, 214);
-       border-right: 2px solid black;
+       border-right: 4px ridge purple;
        text-align: center;
    }
 
@@ -773,7 +755,7 @@
        max-width: 220px;
        height: 5vh;
        max-height: 40px;
-       margin: 0.3em 0.1em;
+       margin: 0.3em 0.3em;
 
        border: 1px solid rgb(83, 57, 43);
        border-radius: 10px;
@@ -815,7 +797,7 @@
 
    label {
        display: block;
-       margin: 0.5em 0 0 0;
+       margin: 0.1em 0 0 0;
    }
 
    input[type=color] {
@@ -878,27 +860,35 @@
    }
 
    #Inventory {
-       background-color: rgb(235, 235, 228);
-       border: 2px solid black;
-       border-radius: 5px;
-       width: 800px;
-       max-width: 90%;
-       min-height: 300px;
-       height: auto;
-       max-height: 92%;
+       background-color: rgb(206, 172, 127);
+       border: 20px solid transparent;
+       border-image: url(Res/frame_s_05.png) 20;
+       border-radius: 20px;
+       width: 55%;
+       height: 80%;
        text-align: center;
        padding: 1em;
+       overflow: auto;
+   }
+
+   @media screen and (max-height: 600px) {
+       #Inventory {
+           width: 93%;
+           height: 91%;
+           padding: 0;
+       }
    }
 
    #InventoryBag {
        display: grid;
-       grid-template-columns: 1fr 1fr;
+       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
        grid-gap: 0.5em;
        overflow: auto;
-       max-height: 60vh;
-       box-shadow: 0 0 1px 1px rgb(106, 110, 122);
-       background-color: rgb(206, 206, 206);
-       padding: 0.1em;
+       height: 89%;
+       border: 4px ridge rgb(122, 102, 75);
+       border-radius: 10px;
+       background-color: rgb(165, 138, 102);
+       padding: 0.5em;
    }
 
    #InventoryBag>div {
@@ -915,9 +905,9 @@
 
    #InventoryBag>div>input[type=button] {
        width: 15%;
-       height: 100%;
+       height: 70%;
        float: right;
-       margin: 0 0.1em;
+       margin: 0 2px;
    }
 
    @media screen and (max-height: 500px) {
@@ -925,16 +915,18 @@
            border: 1px solid black;
            padding: 0;
            height: auto;
+           text-align: left;
+           width: 85%;
        }
 
        #InventoryBag>div>p {
-           display: block;
+           display: inline-block;
            padding: 0;
            margin: 0;
        }
 
        #InventoryBag>div>input[type=button] {
-           width: 33%;
+           width: 20%;
            height: auto;
            margin: 0;
            padding: 0;
