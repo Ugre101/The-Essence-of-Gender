@@ -6,7 +6,7 @@
             document.getElementById("MoreButtons").style.display = 'inline-block';
             document.getElementById("LessButtons").style.display = 'inline-block';
             document.getElementById("MobileButtons").style.display = 'inline-block';
-        } else if (window.innerHeight < 800) {
+        } else if (window.innerHeight < 850) {
             document.getElementById("FirstButtons").style.display = 'block';
             document.getElementById("SecondButtons").style.display = 'none';
             document.getElementById("MoreButtons").style.display = 'inline-block';

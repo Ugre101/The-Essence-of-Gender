@@ -11,7 +11,7 @@
 <body>
 	<!-- CharCreator: Form for user data-->
 
-	<div id="Fps" title="Main loop counter; it counts loops divided by sec"></div>
+	<div id="Fps" class="top" title="Main loop counter; it counts loops divided by sec"></div>
 
 	<div id="StartPage">
 		<p id="StartProgressBar"></p>
@@ -21,58 +21,63 @@
 		<!--<input type="button" id="NewGamePlus" value="(placeholder)Old release load" />-->
 	</div>
 
-	<div id="CharCreator" class="None">
-		<h2>Create character</h2>
-		<form>
-			<label for="firstname">First name</label>
+	<div id="CharCreator" class="None Options">
+		<div class="OptionsInnerDiv">
+			<h2>Create character</h2>
+			<form>
+				<label for="firstname">First name</label>
+				<div>
+					<input type="text" id="firstname" placeholder="Your first name" value="Alex" />
+				</div>
+				<label for="lastname">Last name</label>
+				<div>
+					<input type="text" id="lastname" placeholder="Your last name" value="Smith" />
+				</div>
+				<label for="haircolor">Hair color</label>
+				<div>
+					<select id="haircolor">
+						<option value="blonde">Blonde</option>
+						<option value="brown">Brown</option>
+						<option value="dark brown">Dark Brown</option>
+						<option value="black">Black</option>
+						<option value="red">Red</option>
+					</select>
+				</div>
+				<label for="skincolor">Skin color</label>
+				<div>
+					<select id="skincolor">
+						<option value="fair">Pale</option>
+						<option value="tan">Tan</option>
+						<option value="brown">Brown</option>
+						<option value="black">Black</option>
+					</select>
+				</div>
+			</form>
+			<br>
 			<div>
-				<input type="text" id="firstname" placeholder="Your first name" value="Alex" />
+				<input type="button" id="BackHome" value=" Return " />
+				<input type="button" id="Begin" value="Continue" />
 			</div>
-			<label for="lastname">Last name</label>
-			<div>
-				<input type="text" id="lastname" placeholder="Your last name" value="Smith" />
-			</div>
-			<label for="haircolor">Hair color</label>
-			<div>
-				<select id="haircolor">
-					<option value="blonde">Blonde</option>
-					<option value="brown">Brown</option>
-					<option value="dark brown">Dark Brown</option>
-					<option value="black">Black</option>
-					<option value="red">Red</option>
-				</select>
-			</div>
-			<label for="skincolor">Skin color</label>
-			<div>
-				<select id="skincolor">
-					<option value="fair">Pale</option>
-					<option value="tan">Tan</option>
-					<option value="brown">Brown</option>
-					<option value="black">Black</option>
-				</select>
-			</div>
-		</form>
-		<br>
-		<div>
-			<input type="button" id="BackHome" value=" Return " />
-			<input type="button" id="Begin" value="Continue" />
 		</div>
 	</div>
 
 	<!-- page2: Start page set tone, necessary start info and start settings -->
-	<div id="page2" class="None">
-		<p>After celebrating your coming of age, it is time for you to leave your family's home and make a
-			life on your own. How will you fare in this world where the weak submit and the strong dominate?</p>
-		<p id="looks"></p>
-		<p>Your first stop on this adventure is the local outpost marked with a C on your map. You can rest for the night and
-			recover here.</p>
-		<div>
-			<p>Notes: You can move with mouse, wasd or arrow keys.</p>
-			<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually? (Also: vore?)</label>
-			<input type="button" id="StartAutoEssence" value="Auto TF true" />
-			<input type="button" id="VoreStart" value="Vore false" />
-			<!--	<input type="button" id="Balance" value="Balance False" /> -->
-			<br><input type="button" id="startgame" value="Start game" />
+	<div id="page2" class="None Options">
+		<div class="OptionsInnerDiv">
+			<p>After celebrating your coming of age, it is time for you to leave your family's home and make a
+				life on your own. How will you fare in this world where the weak submit and the strong dominate?</p>
+			<p id="looks"></p>
+			<p>Your first stop on this adventure is the local outpost marked with a C on your map. You can rest for the night
+				and
+				recover here.</p>
+			<div>
+				<p>Notes: You can move with mouse, wasd or arrow keys.</p>
+				<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually? (Also: vore?)</label>
+				<input type="button" id="StartAutoEssence" value="Auto TF true" />
+				<input type="button" id="VoreStart" value="Vore false" />
+				<!--	<input type="button" id="Balance" value="Balance False" /> -->
+				<br><input type="button" id="startgame" value="Start game" />
+			</div>
 		</div>
 	</div>
 
@@ -89,12 +94,12 @@
 
 	<div id="EventLog" class="None">
 		<input type="button" id="HideEventLog" value="Hide" class="SmolButton" />
-		<h2 class="EventH2" id="EventLogH2">Event Log</h2>
+		<h2 id="EventLogH2">Event Log</h2>
 		<div id="EventLogPart" title="Click to enlarge">
 			<p id="EventText"></p>
 		</div>
 		<input type="button" id="HideFluids" value="Hide" class="SmolButton" />
-		<h2 class="EventH2" id="EventFluidsH2">Fluids</h2>
+		<h2 id="EventFluidsH2">Fluids</h2>
 		<input type="button" id="FluidsMode" value="A" class="SmolButton" />
 		<div id="FluidPart">
 			<div id="FluidContainer" class="AutoColumn">
@@ -311,87 +316,88 @@
 	</div>
 
 	<div id="optionpage" class="Options None">
-		<div class="TwoColumn">
-			<div>
-				<label for="backcolor">Backcolor</label>
-				<input type="color" id="backcolor" value="#9099a7" />
-			</div>
-			<div>
-				<label for="MapColor">Map color</label>
-				<input type="color" id="MapColor" value="#808080" />
-			</div>
-			<div>
-				<label for="BorderColor">Border & Map color</label>
-				<input type="color" id="BorderColor" value="#B22222" />
-			</div>
-			<div>
-				<label for="textcolor">Textcolor</label>
-				<input type="color" id="textcolor" value="#000000" />
-			</div>
-			<div>
-				<label for="SideBarColor">Side bar color</label>
-				<input type="color" id="SideBarColor" value="#9999CC" />
-			</div>
-			<div>
-				<label for="textfont">Textfont</label>
-				<select id="textfont">
-					<option value="Times New Roman', Times, serif">Times New Roman</option>
-					<option value="Verdana, Geneva, sans-serif" selected>Verdana</option>
-					<option value="Arial, Helvetica, sans-serif">Ariel</option>
-					<option value="Tahoma, Geneva, sans-serif">Tahoma</option>
-					<option value="Impact,Charcoal,sans-serif">Impact</option>
-					<option value="Trebuchet MS, Helvetica, sans-serif">Trebuchet MS</option>
-				</select>
-			</div>
-			<div>
-				<label for="MapScale">Map size</label>
-				<select id="MapScale">
-					<option value="0.5">Small(50%)</option>
-					<option value="0.6">Small+(60%)</option>
-					<option value="0.7">Medium(70%)</option>
-					<option value="0.8" selected>Medium+(80%)</option>
-					<option value="0.9">Large(90%)</option>
-					<option value="0.98">Max(98%)</option>
-				</select>
-			</div>
-			<div>
-				<label for="Sizes">Font size</label>
-				<div id="Sizes">
-					<input type="button" id="FontSmaller" value="-" />
-					<p id="FontSize"></p>
-					<input type="button" id="FontBigger" value="+" />
+		<div class="OptionsInnerDiv">
+			<div class="TwoColumn">
+				<div>
+					<label for="backcolor">Backcolor</label>
+					<input type="color" id="backcolor" value="#9099a7" />
+				</div>
+				<div>
+					<label for="MapColor">Map color</label>
+					<input type="color" id="MapColor" value="#808080" />
+				</div>
+				<div>
+					<label for="BorderColor">Border & Map color</label>
+					<input type="color" id="BorderColor" value="#B22222" />
+				</div>
+				<div>
+					<label for="textcolor">Textcolor</label>
+					<input type="color" id="textcolor" value="#000000" />
+				</div>
+				<div>
+					<label for="SideBarColor">Side bar color</label>
+					<input type="color" id="SideBarColor" value="#9999CC" />
+				</div>
+				<div>
+					<label for="textfont">Textfont</label>
+					<select id="textfont">
+						<option value="Times New Roman', Times, serif">Times New Roman</option>
+						<option value="Verdana, Geneva, sans-serif" selected>Verdana</option>
+						<option value="Arial, Helvetica, sans-serif">Ariel</option>
+						<option value="Tahoma, Geneva, sans-serif">Tahoma</option>
+						<option value="Impact,Charcoal,sans-serif">Impact</option>
+						<option value="Trebuchet MS, Helvetica, sans-serif">Trebuchet MS</option>
+					</select>
+				</div>
+				<div>
+					<label for="MapScale">Map size</label>
+					<select id="MapScale">
+						<option value="0.5">Small(50%)</option>
+						<option value="0.6">Small+(60%)</option>
+						<option value="0.7">Medium(70%)</option>
+						<option value="0.8" selected>Medium+(80%)</option>
+						<option value="0.9">Large(90%)</option>
+						<option value="0.98">Max(98%)</option>
+					</select>
+				</div>
+				<div>
+					<label for="Sizes">Font size</label>
+					<div id="Sizes">
+						<input type="button" id="FontSmaller" value="-" />
+						<p id="FontSize"></p>
+						<input type="button" id="FontBigger" value="+" />
+					</div>
+				</div>
+				<div>
+					<label for="Inch">Imperial units</label>
+					<input type="button" id="Inch" value="Inch false" title="Switches to imperial units, pound, inch..." />
+				</div>
+				<div>
+					<label for="ImgPack">Image pack</label>
+					<input type="button" id="ImgPack" value="ImgPack(No included)" />
 				</div>
 			</div>
-			<div>
-				<label for="Inch">Imperial units</label>
-				<input type="button" id="Inch" value="Inch false" title="Switches to imperial units, pound, inch..." />
+			<div class="BigSmallBig">
+				<div>
+					<input type="button" id="Log+10" value="+10 to Event Log" title="" />
+				</div>
+				<div>
+					<p id="LogLength"></p>
+				</div>
+				<div>
+					<input type="button" id="Log-10" value="-10 to Event Log" title="" />
+				</div>
 			</div>
-		</div>
-		<div class="TwoColumn">
-			<div>
-				<input type="button" id="ImgPack" value="ImgPack(No included)" />
-			</div>
-			<div>
-				<input type="button" id="SetPronoun" value="Change Pronouns" title="Set your preferred pronouns for different genders." />
-			</div>
-		</div>
-		<div class="BigSmallBig">
-			<div>
-				<input type="button" id="Log+10" value="+10 to Event Log" title="" />
-			</div>
-			<div>
-				<p id="LogLength"></p>
-			</div>
-			<div>
-				<input type="button" id="Log-10" value="-10 to Event Log" title="" />
-			</div>
-		</div>
-		<div class="TwoColumn">
-			<div>
-				<input type="button" id="PerkOptions" value="Fetish options" />
-			</div>
-			<div>
-				<input type="button" id="saveoptions" value="Save options" />
+			<div class="TwoColumn">
+				<div>
+					<input type="button" id="PerkOptions" value="Fetish options" />
+				</div>
+				<div>
+					<input type="button" id="SetPronoun" value="Change Pronouns" title="Set your preferred pronouns for different genders." />
+				</div>
+				<div>
+					<input type="button" id="saveoptions" value="Save options" />
+				</div>
 			</div>
 		</div>
 	</div>
@@ -415,62 +421,61 @@
 	</div>
 
 	<div id="EssenceOptionsMenu" class="None Options">
-		<p id="EssenceTracker"></p>
-		<div id="EssenceStart">
-			<label for="OptionGiveEssence">Give Essence</label>
-			<input type="button" id="OptionGiveEssence" value="Both" title="If you have the give essence perk this set what essence you give to your opponents when you orgasm." />
-			<label for="NoExtra">Set max dicks/boobs/pussies/balls for you and opponents.</label>
-			<input type="button" id="NoExtra" value="Set max boobs/dicks etc" title="On auto you can't grow more than the set amount of dick, pussy, balls and breast. This settings always effect opponents. Setting t.ex. dick to zero will make all opponents female or doll likewise setting pussies to zero makes all opponents male or doll." />
-			<div id="MaxMenu" class="None">
-				<input type="button" id="BoobsLess" value="Boobs--" />
-				<input type="button" id="BoobsMore" value="Boobs++" />
-				<input type="button" id="VaginasLess" value="Pussies--" />
-				<input type="button" id="VaginasMore" value="Pussies++" />
-				<input type="button" id="DicksLess" value="Dick--" />
-				<input type="button" id="DicksMore" value="Dick++" />
-				<input type="button" id="BallsLess" value="Balls--" />
-				<input type="button" id="BallsMore" value="Balls++" />
+		<div class="OptionsInnerDiv">
+			<p id="EssenceTracker"></p>
+			<div id="EssenceStart">
+				<label for="OptionGiveEssence">Give Essence</label>
+				<input type="button" id="OptionGiveEssence" value="Both" title="If you have the give essence perk this set what essence you give to your opponents when you orgasm." />
+				<label for="NoExtra">Set max dicks/boobs/pussies/balls for you and opponents.</label>
+				<input type="button" id="NoExtra" value="Set max boobs/dicks etc" title="On auto you can't grow more than the set amount of dick, pussy, balls and breast. This settings always effect opponents. Setting t.ex. dick to zero will make all opponents female or doll likewise setting pussies to zero makes all opponents male or doll." />
+				<div id="MaxMenu" class="None">
+					<input type="button" id="BoobsLess" value="Boobs--" />
+					<input type="button" id="BoobsMore" value="Boobs++" />
+					<input type="button" id="VaginasLess" value="Pussies--" />
+					<input type="button" id="VaginasMore" value="Pussies++" />
+					<input type="button" id="DicksLess" value="Dick--" />
+					<input type="button" id="DicksMore" value="Dick++" />
+					<input type="button" id="BallsLess" value="Balls--" />
+					<input type="button" id="BallsMore" value="Balls++" />
+				</div>
+
+				<label for="EssenceAuto">Are essence body changes Automatic or Manual?</label>
+				<input type="button" id="EssenceAuto" value="Essence Auto" /><br>
+				<!--	<input type="button" id="MBalance" value="Balance false" />-->
+				<p>Warning: if you play on manual, switching to Auto will change you according to your current Femininity
+					and Masculinity, so if you have spent a lot of Essence it will be lost.</p>
+				<div id="ManualGrowth" class="TwoColumn None">
+					<input type="button" id="GrowBreast" value="Breast menu" />
+					<input type="button" id="GrowPussy" value="Pussy menu" />
+					<input type="button" id="GrowDick" value="Dick menu" />
+					<input type="button" id="GrowBalls" value="Balls menu" />
+				</div>
 			</div>
-
-			<label for="EssenceAuto">Are essence body changes Automatic or Manual?</label>
-			<br><input type="button" id="EssenceAuto" value="Essence Auto" /><br>
-			<!--	<input type="button" id="MBalance" value="Balance false" />-->
-			<p>Warning: if you play on manual, switching to Auto will change you according to your current Femininity
-				and Masculinity, so if you have spent a lot of Essence it will be lost.</p>
-			<div id="ManualGrowth" class="TwoColumn None">
-				<input type="button" id="GrowBreast" value="Breast menu" />
-				<input type="button" id="GrowPussy" value="Pussy menu" />
-				<input type="button" id="GrowDick" value="Dick menu" />
-				<input type="button" id="GrowBalls" value="Balls menu" />
+			<div id="BreastMenu" class="None">
+				<input type="button" id="GrowExtraBreasts" value="Extra breast" />
+				<input type="button" id="GrowBreastBack" value="Back" />
+				<div id="BreastButtons"></div>
 			</div>
-		</div>
-		<div id="BreastMenu" class="None">
-			<input type="button" id="GrowExtraBreasts" value="Extra breast" />
-			<input type="button" id="GrowBreastBack" value="Back" />
-			<div id="BreastButtons"></div>
-		</div>
-		<div id="PussyMenu" class="None">
-			<input type="button" id="GrowExtraPussy" value="Extra pussy" />
-			<input type="button" id="GrowPussyBack" value="Back" />
-			<div id="PussyButtons"></div>
+			<div id="PussyMenu" class="None">
+				<input type="button" id="GrowExtraPussy" value="Extra pussy" />
+				<input type="button" id="GrowPussyBack" value="Back" />
+				<div id="PussyButtons"></div>
 
-		</div>
-		<div id="DickMenu" class="None">
-			<input type="button" id="GrowExtraDick" value="Extra dick" />
-			<input type="button" id="GrowDickBack" value="Back" />
-			<div id="DickButtons"></div>
+			</div>
+			<div id="DickMenu" class="None">
+				<input type="button" id="GrowExtraDick" value="Extra dick" />
+				<input type="button" id="GrowDickBack" value="Back" />
+				<div id="DickButtons"></div>
 
+			</div>
+			<div id="BallsMenu" class="None">
+				<input type="button" id="GrowExtraBalls" value="Extra balls" />
+				<input type="button" id="GrowBallsBack" value="Back" />
+				<div id="BallsButtons"></div>
+			</div>
+			<br><input type="button" id="EssenceOptionsLeave" value="Close" />
 		</div>
-		<div id="BallsMenu" class="None">
-			<input type="button" id="GrowExtraBalls" value="Extra balls" />
-			<input type="button" id="GrowBallsBack" value="Back" />
-			<div id="BallsButtons"></div>
-		</div>
-
-
-		<br><input type="button" id="EssenceOptionsLeave" value="Close" />
 	</div>
-	<div></div>
 
 	<div id="PerkOptionsMenu" class="Options None">
 		<br>
@@ -485,7 +490,9 @@
 	<div id="Inventory" class="None">
 		<p id="InventoryText" class="MenuText"></p>
 		<div id="InventoryBag"></div>
-		<input type="button" id="InventoryLeave" value="Close" />
+		<div>
+			<input type="button" id="InventoryLeave" value="Close" />
+		</div>
 	</div>
 
 	<div id="SpellBook" class="None Book">
@@ -990,37 +997,6 @@
 		<input type="button" id="LeavePortalShop" value="Leave" />
 	</div>
 
-	<div id="Barber" class="None Building">
-		<p id="BarberText" class="TextBox"></p>
-		<input type="button" id="DyeHair" value="(concept)Dye hair" />
-		<div id="DyeHairMenu" class="None">
-			<input type="button" id="DyeRed" value="Red" title="red" />
-			<input type="button" id="DyeBlonde" value="Blonde" title="blonde" />
-			<input type="button" id="DyeDarkBrown" value="Dark brown" title="dark brown" />
-			<input type="button" id="DyeBlack" value="Black" title="black" />
-			<input type="button" id="DyePink" value="Pink" title="pink" />
-			<input type="button" id="DyePurple" value="Purple" title="purple" />
-			<input type="button" id="" value="" title="" />
-		</div>
-		<input type="button" id="CutHair" value="(concept)Cut hair" />
-		<div id="CutHairMenu" class="None">
-			<!-- Might do it so you only can shorten hair not grow?-->
-			<input type="button" id="" value="(don't work)Shaved" title="bald" />
-			<input type="button" id="" value="(don't work)Buzz cut" title="" />
-			<input type="button" id="" value="Short" title="short" />
-			<input type="button" id="" value="(don't)Medium" title="" />
-			<input type="button" id="" value="Ear length" title="ear length" />
-			<input type="button" id="" value="Chin length" title="chin length" />
-			<input type="button" id="" value="Shoulder length" title="shoulder length" />
-			<input type="button" id="" value="Armpit length" title="armpit length" />
-			<input type="button" id="" value="Mid-back length" title="mid-back length" />
-			<input type="button" id="" value="Hip length" title="hip length" />
-			<input type="button" id="" value="Knee length" title="knee length" />
-			<input type="button" id="" value="Floor length" title="floor length" />
-		</div>
-		<input type="button" id="LeaveBarber" value="Leave" />
-	</div>
-
 	<!-- Fertility shrine, pay with times you been pregnant and times you impregnated, 
 		your pregnancies are worth more -->
 	<!--
@@ -1053,7 +1029,7 @@
 			var Buildings = [
 				"Buildings/Bar", "Buildings/BlackMarket", "Buildings/ChimeraShrine", "Buildings/Gym",
 				"Buildings/MountainShrine", "Buildings/PotionShop", "Buildings/PortalShop",
-				"Buildings/WitchShop", "Buildings/WitchHut", "Buildings/Townhall"
+				"Buildings/WitchShop", "Buildings/WitchHut", "Buildings/Townhall", "Buildings/Barber"
 			]
 			var Vore = [
 				"Vore/Vore", "Vore/VoreActions", "Vore/VorePreyInterAction"

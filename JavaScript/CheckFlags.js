@@ -348,6 +348,7 @@ function CheckFlags() {
         console.log(player.Inventory.findIndex(e => e.Name === "SpellBook"))
         player.Inventory.push(ItemDict.SpellBook);
     }
+    HemScale();
 }
 // Hopefully obselite
 /**
