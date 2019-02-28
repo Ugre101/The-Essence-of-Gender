@@ -16,205 +16,231 @@ document.getElementById("EssenceAuto").addEventListener("click", function () {
     if (Settings.EssenceAuto) {
         document.getElementById("EssenceAuto").value = "Essence Auto";
         document.getElementById("ManualGrowth").style.display = 'none';
-        document.getElementById("MBalance").style.visibility = 'visible';
-        
+
     } else {
         document.getElementById("EssenceAuto").value = "Essence Manual";
         document.getElementById("ManualGrowth").style.display = 'block';
-        document.getElementById("GrowExtraBreasts").value = "Extra breasts " + EssenceExtraCost(player.Boobies)
-        document.getElementById("GrowExtraPussy").value = "Extra pussy " + EssenceExtraCost(player.Pussies) + "F";
-        document.getElementById("GrowExtraDick").value = "Extra dick " + EssenceExtraCost(player.Dicks) + "M";
-        document.getElementById("GrowExtraBalls").value = "Extra balls " + EssenceExtraCost(player.Balls) + "M";
         Settings.BalanceParts = false;
-        document.getElementById("MBalance").style.visibility = 'hidden';
-        document.getElementById("MBalance").value = "Balance "+Settings.BalanceParts;
     }
 });
-
-document.getElementById("GrowBreast").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'none';
-    document.getElementById("BreastMenu").style.display = 'block';
-    BreastButtons();
-});
-
-document.getElementById("GrowBreastBack").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'block';
-    document.getElementById("BreastMenu").style.display = 'none';
-});
-
-document.getElementById("GrowExtraBreasts").addEventListener("click", function () {
-    var cost = EssenceExtraCost(player.Boobies);
-    if (player.Femi >= cost) {
-        player.Femi -= cost;
-        var Boob = {
-            Size: 0,
-            Type: player.Race,
-            Milk: 0,
-            MilkBaseRate: 0,
-            MilkRate: 0,
-            MilkMax: 0
-
-        }
-        player.Boobies.push(Boob);
-    }
-    document.getElementById("GrowExtraBreasts").value = "Extra breasts " + EssenceExtraCost(player.Boobies) + "F";
-    BreastButtons();
-});
-
-function BreastButtons() {
-    var Inputs = [];
-    for (var e = 0; e < player.Boobies.length; e++) {
-        var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerChest(" + e + "); BreastButtons();\">" +
-            BoobSizeConvertor(player.Boobies[e].Size) + " " + EssenceCost(player.Boobies[e]) + "Feminity</button  >"
-        Inputs += Input;
-    }
-    document.getElementById("BreastButtons").innerHTML = Inputs;
-}
-
-function BiggerChest(index) {
-    var cost = EssenceCost(player.Boobies[index]);
-    if (player.Femi >= cost) {
-        player.Femi -= cost;
-        player.Boobies[index].Size += 1 * ManualGrowthScale();
-        player.Boobies[index].MilkMax = Math.round(player.Boobies[index].Size * 400);
-    }
-}
-document.getElementById("GrowPussy").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'none';
-    document.getElementById("PussyMenu").style.display = 'block';
-    PussyButtons();
-});
-
-document.getElementById("GrowPussyBack").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'block';
-    document.getElementById("PussyMenu").style.display = 'none';
-});
-
-document.getElementById("GrowExtraPussy").addEventListener("click", function () {
-    var cost = EssenceExtraCost(player.Pussies);
-    if (player.Femi >= cost) {
-        player.Femi -= cost;
-        var Pussy = {
-            Size: 5,
-            Type: player.Race,
-            Virgin: true
-        }
-        player.Pussies.push(Pussy);
-        document.getElementById("GrowExtraPussy").value = "Extra pussy " + EssenceExtraCost(player.Pussies) + "F";
-        PussyButtons();
-    }
-});
-
-function PussyButtons() {
-    var Inputs = [];
-    for (var e = 0; e < player.Pussies.length; e++) {
-        var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerPussy(" + e + "); PussyButtons();\">" +
-            CmToInch(player.Pussies[e].Size) + " " + EssenceCost(player.Pussies[e]) + "Feminity</button  >"
-        Inputs += Input;
-    }
-    document.getElementById("PussyButtons").innerHTML = Inputs;
-}
-
-function BiggerPussy(index) {
-    var cost = EssenceCost(player.Pussies[index]);
-    if (player.Femi >= cost) {
-        player.Femi -= cost;
-        player.Pussies[index].Size += 1 * ManualGrowthScale();
-    }
-}
-
-document.getElementById("GrowDick").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'none';
-    document.getElementById("DickMenu").style.display = 'block';
-    DickButtons();
-});
-
-document.getElementById("GrowDickBack").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'block';
-    document.getElementById("DickMenu").style.display = 'none';
-});
-
-document.getElementById("GrowExtraDick").addEventListener("click", function () {
-    var cost = EssenceExtraCost(player.Dicks);
-    if (player.Masc >= cost) {
-        player.Masc -= cost;
-        var Dick = {
-            Size: 5,
-            Type: player.Race,
-            Virgin: true
-        }
-        player.Dicks.push(Dick);
-        document.getElementById("GrowExtraDick").value = "Extra dick " + EssenceExtraCost(player.Dicks) + "M";
-        DickButtons();
-    }
-});
-
-function BiggerDick(index) {
-    var cost = EssenceCost(player.Dicks[index]);
-    if (player.Masc >= cost) {
-        player.Masc -= cost;
-        player.Dicks[index].Size += 1 * ManualGrowthScale();
-    }
-}
-
-function DickButtons() {
-    var Inputs = [];
-    for (var e = 0; e < player.Dicks.length; e++) {
-        var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerDick(" + e + "); DickButtons();\">" +
-            CmToInch(player.Dicks[e].Size) + " " + EssenceCost(player.Dicks[e]) + "Masculinity</button  >"
-        Inputs += Input;
-    }
-    document.getElementById("DickButtons").innerHTML = Inputs;
-}
 
 document.getElementById("GrowBalls").addEventListener("click", function () {
     document.getElementById("EssenceStart").style.display = 'none';
-    document.getElementById("BallsMenu").style.display = 'block';
+    document.getElementById("ManualOrgans").style.display = 'block';
     BallsButtons();
 });
-
-document.getElementById("GrowBallsBack").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'block';
-    document.getElementById("BallsMenu").style.display = 'none';
+document.getElementById("GrowPussy").addEventListener("click", function () {
+    document.getElementById("EssenceStart").style.display = 'none';
+    document.getElementById("ManualOrgans").style.display = 'block';
+    PussyButtons();
+});
+document.getElementById("GrowBreast").addEventListener("click", function () {
+    document.getElementById("EssenceStart").style.display = 'none';
+    document.getElementById("ManualOrgans").style.display = 'block';
+    BreastButtons();
+});
+document.getElementById("GrowDick").addEventListener("click", function () {
+    document.getElementById("EssenceStart").style.display = 'none';
+    document.getElementById("ManualOrgans").style.display = 'block';
+    DickButtons();
 });
 
-document.getElementById("GrowExtraBalls").addEventListener("click", function () {
-    var cost = EssenceExtraCost(player.Balls);
-    if (player.Masc >= cost) {
-        player.Masc -= cost;
-        var Ball = {
-            Size: 2,
-            Type: player.Race,
-            CumMax: 2,
-            Cum: 0,
-            CumRate: 0,
-            CumBaseRate: 0.5
+function BreastButtons() {
+    var ManualOrgans = document.getElementById("ManualOrgans");
+    while (ManualOrgans.hasChildNodes()) {
+        ManualOrgans.removeChild(ManualOrgans.firstChild);
+    }
+
+    var Extraboobs = InputButton("Extra breasts " + EssenceExtraCost(player.Boobies) + "F");
+    Extraboobs.addEventListener("click", function () {
+        var cost = EssenceExtraCost(player.Boobies);
+        if (player.Femi >= cost) {
+            player.Femi -= cost;
+            var Boob = {
+                Size: 0,
+                Type: player.Race,
+                Milk: 0,
+                MilkBaseRate: 0,
+                MilkRate: 0,
+                MilkMax: 0
+
+            }
+            player.Boobies.push(Boob);
         }
-        player.Balls.push(Ball);
-        document.getElementById("GrowExtraBalls").value = "Extra balls " + EssenceExtraCost(player.Balls) + "M";
-        BallsButtons();
+        BreastButtons();
+    });
+    ManualOrgans.appendChild(Extraboobs);
+    ManualOrgans.appendChild(ManualOrgansClose());
+    for (var e of player.Boobies) {
+        ManualOrgans.appendChild(BreastButton(e));
     }
-});
+}
 
-function BiggerBalls(index) {
-    var cost = EssenceCost(player.Balls[index]);
-    if (player.Masc >= cost) {
-        player.Masc -= cost;
-        player.Balls[index].Size += 1 * ManualGrowthScale();
+function BreastButton(e) {
+    var boob = document.createElement("button");
+    boob.setAttribute("type", "button");
+    boob.innerHTML = BoobSizeConvertor(e.Size) + " " + EssenceCost(e) + "Feminity";
+    boob.addEventListener("click", function () {
+        var cost = EssenceCost(e);
+        if (player.Femi >= cost) {
+            player.Femi -= cost;
+            e.Size += 1 * ManualGrowthScale();
+            e.MilkMax = Math.round(e.Size * 400);
+        }
+        BreastButtons();
+    });
+    return boob;
+}
+
+function PussyButtons() {
+    var ManualOrgans = document.getElementById("ManualOrgans");
+    while (ManualOrgans.hasChildNodes()) {
+        ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
-};
+
+    var ExtraPussy = InputButton("Extra pussy " + EssenceExtraCost(player.Pussies) + "F");
+    ExtraPussy.addEventListener("click", function () {
+        var cost = EssenceExtraCost(player.Pussies);
+        if (player.Femi >= cost) {
+            player.Femi -= cost;
+            var Pussy = {
+                Size: 5,
+                Type: player.Race,
+                Virgin: true
+            }
+            player.Pussies.push(Pussy);
+            PussyButtons();
+        }
+    });
+    ManualOrgans.appendChild(ExtraPussy);
+    ManualOrgans.appendChild(ManualOrgansClose());
+    for (var e of player.Pussies) {
+        ManualOrgans.appendChild(PussyButton(e))
+    };
+}
+
+function PussyButton(e) {
+    var pussy = document.createElement("button");
+    pussy.setAttribute("type", "button");
+    pussy.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Feminity";
+    pussy.addEventListener("click", function () {
+        var cost = EssenceCost(e);
+        if (player.Femi >= cost) {
+            player.Femi -= cost;
+            e.Size += 1 * ManualGrowthScale();
+            PussyButtons();
+        }
+    });
+    return pussy;
+}
+
+function DickButtons() {
+    var ManualOrgans = document.getElementById("ManualOrgans");
+    while (ManualOrgans.hasChildNodes()) {
+        ManualOrgans.removeChild(ManualOrgans.firstChild);
+    }
+
+    var ExtraDick = InputButton("Extra dick " + EssenceExtraCost(player.Dicks) + "M");
+    ExtraDick.addEventListener("click", function () {
+        var cost = EssenceExtraCost(player.Dicks);
+        if (player.Masc >= cost) {
+            player.Masc -= cost;
+            var Dick = {
+                Size: 5,
+                Type: player.Race,
+                Virgin: true
+            }
+            player.Dicks.push(Dick);
+            DickButtons();
+        }
+    });
+    ManualOrgans.appendChild(ExtraDick);
+    ManualOrgans.appendChild(ManualOrgansClose());
+    for (var e of player.Dicks) {
+        ManualOrgans.appendChild(DickButton(e));
+    }
+}
+
+function DickButton(e) {
+    var Dick = document.createElement("button");
+    Dick.setAttribute("type", "button");
+    Dick.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Masculinity";
+    Dick.addEventListener("click", function () {
+        var cost = EssenceCost(e);
+        if (player.Masc >= cost) {
+            player.Masc -= cost;
+            e.Size += 1 * ManualGrowthScale();
+            DickButtons();
+        }
+    });
+    return Dick;
+}
 
 function BallsButtons() {
-    var Inputs = [];
-    for (var e = 0; e < player.Balls.length; e++) {
-        var Input = "<button type=\"button\" class=\"\" onclick=\"BiggerBalls(" + e + "); BallsButtons();\">" +
-            CmToInch(player.Balls[e].Size) + " " + EssenceCost(player.Balls[e]) + "Masculinity</button  >"
-        Inputs += Input;
+    var ManualOrgans = document.getElementById("ManualOrgans");
+    while (ManualOrgans.hasChildNodes()) {
+        ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
-    document.getElementById("BallsButtons").innerHTML = Inputs;
+    var ExtraBall = InputButton("Extra Balls " + EssenceExtraCost(player.Balls) + "M");
+    ExtraBall.addEventListener("click", function () {
+        var cost = EssenceExtraCost(player.Balls);
+        if (player.Masc >= cost) {
+            player.Masc -= cost;
+            var Ball = {
+                Size: 2,
+                Type: player.Race,
+                CumMax: 2,
+                Cum: 0,
+                CumRate: 0,
+                CumBaseRate: 0.5
+            }
+            player.Balls.push(Ball);
+            BallsButtons();
+        }
+    });
+    ManualOrgans.appendChild(ExtraBall);
+    ManualOrgans.appendChild(ManualOrgansClose())
+    var br = document.createElement("br");
+    ManualOrgans.appendChild(br);
+    for (var e of player.Balls) {
+        ManualOrgans.appendChild(BallsButton(e));
+    }
+}
+
+function BallsButton(e) {
+    var Ball = document.createElement("button");
+    Ball.setAttribute("type", "button");
+    Ball.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Masculinity";
+    Ball.addEventListener("click", function () {
+        var cost = EssenceCost(e);
+        if (player.Masc >= cost) {
+            player.Masc -= cost;
+            e.Size += 1 * ManualGrowthScale();
+            BallsButtons();
+        }
+    });
+    return Ball;
+}
+
+function ManualOrgansClose() {
+    var Close = InputButton("Back");
+    Close.addEventListener("click", function () {
+        document.getElementById("EssenceStart").style.display = 'block';
+        ManualOrgans.style.display = 'none';
+        while (ManualOrgans.hasChildNodes()) {
+            ManualOrgans.removeChild(ManualOrgans.firstChild);
+        }
+    });
+    return Close;
 }
 
 document.getElementById("EssenceOptionsLeave").addEventListener("click", function () {
+    var ManualOrgans = document.getElementById("ManualOrgans");
+    while (ManualOrgans.hasChildNodes()) {
+        ManualOrgans.removeChild(ManualOrgans.firstChild);
+    }
+    document.getElementById("EssenceStart").style.display = 'block';
+    document.getElementById("ManualGrowth").style.display = 'none';
     DisplayNone();
     DisplayGame();
 });
