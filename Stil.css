@@ -88,8 +88,8 @@
    @media (max-width: 400px) {
        #map {
            position: absolute;
-           right: 0;
-           top: 0;
+           right: 3vw;
+           top: 2vh;
        }
 
        #WorldMapContainer {
@@ -373,9 +373,9 @@
        background-size: contain;
        background-position: center;
 
-       width: 35%;
+       width: 30%;
        padding: 3em;
-       height: 80%;
+       height: 85%;
        text-align: center;
        overflow: auto;
    }
@@ -383,8 +383,9 @@
    @media screen and (max-height: 500px) {
        div.Options {
            background: none;
-           width: 70%;
-           height: 70%;
+           width: 92%;
+           height: 95%;
+           padding: 0;
            border: 6px solid rgb(110, 81, 65);
            border-radius: 10px;
            box-shadow: 0 0 3pt 2pt black;
@@ -398,6 +399,14 @@
        height: 100%;
        margin: auto;
        overflow: auto;
+   }
+
+   @media screen and (max-height: 500px) {
+       div.OptionsInnerDiv {
+           width: 95%;
+           height: 95%;
+           overflow: auto;
+       }
    }
 
    div.LPMenu {
@@ -852,11 +861,6 @@
        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
        grid-template-rows: repeat(auto-fit, 140px);
        overflow: auto;
-   }
-
-   #ManualGrowth {
-       box-shadow: 0 0 1px 1px black;
-       border-radius: 10px;
    }
 
    #Inventory {

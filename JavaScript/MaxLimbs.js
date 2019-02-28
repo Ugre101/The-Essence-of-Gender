@@ -8,10 +8,6 @@ document.getElementById("EssenceOptions").addEventListener("click", function () 
     } else {
         document.getElementById("EssenceAuto").value = "Essence Manual";
         document.getElementById("ManualGrowth").style.display = 'block';
-        document.getElementById("GrowExtraBreasts").value = "Extra breasts " + EssenceExtraCost(player.Boobies)
-        document.getElementById("GrowExtraPussy").value = "Extra pussy " + EssenceExtraCost(player.Pussies) + "F";
-        document.getElementById("GrowExtraDick").value = "Extra dick " + EssenceExtraCost(player.Dicks) + "M";
-        document.getElementById("GrowExtraBalls").value = "Extra balls " + EssenceExtraCost(player.Balls) + "M";
     }
     document.getElementById("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
     document.getElementById("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
