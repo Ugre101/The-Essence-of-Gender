@@ -2,9 +2,11 @@ document.getElementById("Perks").addEventListener("click", function () {
     // Moved everything to the button to clean up the player var.
     DisplayNone();
     var div = document.getElementById("StatLevels");
-
+    while (div.hasChildNodes()){
+        div.removeChild(div.lastChild);
+    }
     var h3 = document.createElement("h3");
-    var h3Text = document.createTextNode("Stats");
+    var h3Text = document.createTextNode("Stats:");
     h3.appendChild(h3Text);
     div.appendChild(h3);
 
@@ -15,37 +17,38 @@ document.getElementById("Perks").addEventListener("click", function () {
     Stats.style.display = 'inline-block';
 
     var RawH4 = document.createElement("h4");
-    var RawH4Text = document.createTextNode("Raw");
+    var RawH4Text = document.createTextNode("Raw:");
     RawH4.appendChild(RawH4Text);
     RawStats.appendChild(RawH4);
 
-    var RawP = document.createElement("p");
-    RawP.innerHTML = "Str: " + player.Str + "<br>End: " + player.End + "<br>Will: " +
-        player.Will + "<br>Charm: " + player.Charm + "<br>Int: " + player.Int + "<br>Sex skill: " + player.SexSkill;
+    var RawP = document.createElement("ol");
+    RawP.innerHTML = "<li>Str: " + player.Str + "</li><li>End: " + player.End + "</li><li>Will: " + player.Will + 
+    "</li><li>Charm: " + player.Charm + "</li><li>Int: " + player.Int + "</li><li>Sex skill: " + player.SexSkill +"</li>";
     RawStats.appendChild(RawP);
 
     var H4 = document.createElement("h4");
-    var H4Text = document.createTextNode("Total");
+    var H4Text = document.createTextNode("Total:");
     H4.appendChild(H4Text);
     Stats.appendChild(H4);
 
-    var P = document.createElement("p");
-    P.innerHTML = "Str: " + TotalStr() + "<br>End: " + TotalEnd() + "<br>Will: " +
-        TotalWill() + "<br>Charm: " + TotalCharm() + "<br>Int: " + TotalInt() + "<br>Sex skill: " + TotalSexSkill();
+    var P = document.createElement("ol");
+    P.innerHTML = "<li>Str: " + TotalStr() + "</li><li>End: " + TotalEnd() + "</li><li>Will: " + TotalWill() + 
+        "</li><li>Charm: " + TotalCharm() + "</li><li>Int: " + TotalInt() + "</li><li>Sex skill: " + TotalSexSkill() + "</li>";
     Stats.appendChild(P);
 
     div.appendChild(RawStats);
     div.appendChild(Stats);
     document.getElementById("Levels").style.display = 'block';
 
-    var printPerks = "<h3>Perks:</h3><br>";
+    var printPerks = "<h3>Perks:</h3><ol>";
     for (var i = 0; i < Object.keys(player.Perks).length; i++) {
         if (player.Perks[Object.keys(player.Perks)[i]].Count > 0) {
-            printPerks += Object.keys(player.Perks)[i] + ": " + player.Perks[Object.keys(player.Perks)[i]].Count + "<br>";
+            printPerks += "<li>" + Object.keys(player.Perks)[i] + ": " + player.Perks[Object.keys(player.Perks)[i]].Count + "</li>";
         }
     }
-    document.getElementById("PerkLevels").innerHTML = printPerks;
-    var Races = "<h3>Race:</h3><br>";
+    document.getElementById("PerkLevels").innerHTML = printPerks + "</ol>";
+
+    var Races = "<h3>Race:</h3><ol>";
     var RaceTotal = 0;
     for (var e = 0; e < player.RaceEssence.length; e++) {
         RaceTotal += player.RaceEssence[e].amount;
@@ -54,19 +57,19 @@ document.getElementById("Perks").addEventListener("click", function () {
         RaceTotal = 100;
     }
     for (var e = 0; e < player.RaceEssence.length; e++) {
-        Races += player.RaceEssence[e].Race + ": " + Math.round(player.RaceEssence[e].amount / RaceTotal * 100) + "%  (" + player.RaceEssence[e].amount + ")<br>"
+        Races += "<li>" + player.RaceEssence[e].Race + ": " + Math.round(player.RaceEssence[e].amount / RaceTotal * 100) + "%  (" + player.RaceEssence[e].amount + ")</li>"
     }
-    document.getElementById("RaceEssences").innerHTML = Races;
+    document.getElementById("RaceEssences").innerHTML = Races + "</ol>";
 
     if (Settings.Vore) {
-        var printVore = "<h3>Vore:</h3><br>";
+        var printVore = "<h3>Vore:</h3><ol>";
         var v = player.Vore.VorePerks;
         if (Object.keys(v).length > 0) {
             for (var i = 0; i < Object.keys(v).length; i++) {
-                printVore += Object.keys(v)[i] + ": " + v[Object.keys(v)[i]].Count + "<br>";
+                printVore += "<li>"+ Object.keys(v)[i] + ": " + v[Object.keys(v)[i]].Count + "</li>";
             }
         }
-        document.getElementById("VLevels").innerHTML = printVore;
+        document.getElementById("VLevels").innerHTML = printVore + "</ol>";
     } else
         document.getElementById("VLevels").innerHTML = "";
 });

@@ -1,18 +1,10 @@
-document.getElementById("PerkMenu").addEventListener("click", function () {
-    document.getElementById("LevelMenu").style.display = 'none';
-    document.getElementById("PerksMenu").style.display = 'block';
-    PerkMenuFunc();
-});
-
 function PerkHandler(perket) {
     player.PerkPoints--;
     player.Perks[perket].Count++
 }
-
-
 // Changeing perk menu to a func so I can make a more advanced perk menu e.g. unlocked perk etc..
 function PerkMenuFunc() {
-    var div = document.getElementById("PerksMenu");
+    var div = document.getElementById("LevelMenu");
     while (div.hasChildNodes()) {
         div.removeChild(div.firstChild);
     }
@@ -36,19 +28,19 @@ function PerkMenuFunc() {
     active.addEventListener("mouseover", function (e) {
         p.innerHTML = e.target.title;
     });
+    active.classList.add("TwoColumn");
     var activeh3 = document.createElement("h3");
     var activeh3Text = document.createTextNode("Active");
     activeh3.appendChild(activeh3Text);
-    active.appendChild(activeh3);
 
     var passive = document.createElement("div");
     passive.addEventListener("mouseover", function (e) {
         p.innerHTML = e.target.title;
     })
+    passive.classList.add("TwoColumn");
     var passiveh3 = document.createElement("h3");
     var passiveh3Text = document.createTextNode("Passive");
     passiveh3.appendChild(passiveh3Text);
-    passive.appendChild(passiveh3);
 
     var ExtraHealth = document.createElement("input");
     ExtraHealth.setAttribute("type", "button");
@@ -115,13 +107,24 @@ function PerkMenuFunc() {
     });
     active.appendChild(GiveEssence);
 
+    div.appendChild(passiveh3);
     div.appendChild(passive);
+    div.appendChild(activeh3);
     div.appendChild(active)
 
-    var close = new InputButton("Close");
+    var back = InputButton("Back")
+    back.addEventListener("click", function() {
+        LevelMenuFunc();
+    });
+
+    var close = InputButton("Close");
     close.addEventListener("click", function () {
         DisplayNone();
         DisplayGame();
-    })
+    });
+
+    var br = document.createElement("br");
+    div.appendChild(br);
+    div.appendChild(back);
     div.appendChild(close);
 }

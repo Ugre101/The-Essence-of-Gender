@@ -83,12 +83,12 @@
 
 	<div id="map" class="None">
 		<canvas id="hem"></canvas>
-		<div id="WorldMapContainer" title="Click to hide or show">
+		<div id="WorldMapContainer">
 			<div id="WorldMapPart">
 				<canvas id="WorldMap"></canvas>
 			</div>
 			<p id="StatusArea">Start</p>
-			<input type="button" id="HideWorldMap" value="Hide" class="SmolButton" />
+			<input type="button" id="HideWorldMap" value="Hide" class="SmolButton"  title="Click to hide or show"/>
 		</div>
 	</div>
 
@@ -188,25 +188,7 @@
 		<br><br><input type="file" id="NGPLoadFile" value="Load from computer" />
 	</div>
 
-
-	<div id="LevelMenu" class="LPMenu None">
-		<h1>Level Menu</h1>
-		<p id="LevelMenuText" class="MenuText"></p>
-		<p id="SkillPointsLeft"></p>
-		<input type="button" id="GainStr" value="Strength" title="Makes hit stronger">
-		<input type="button" id="GainCha" value="Charm" title="Makes tease stronger">
-		<br>
-		<input type="button" id="GainEnd" value="Endurance" title="Gives you more health and every 8 point increase max orgasm">
-		<input type="button" id="GainInt" value="Intelligence" title="Increases spell effects">
-		<br>
-		<input type="button" id="GainWill" value="Willpower" title="Gives you more WillPower">
-		<input type="button" id="GainSex" value="Sex skill" title="When having sex your enemy gains more arousal">
-		<br>
-		<input type="button" id="LeaveLevelMenu" value="Done">
-		<input type="button" id="PerkMenu" value="Perk Menu">
-	</div>
-
-	<div id="PerksMenu" class="LPMenu None"></div>
+	<div id="LevelMenu" class="LPMenu None"></div>
 
 	<div id="ShowLooks" class="None Looks">
 		<p id="looks2"></p>
@@ -264,7 +246,8 @@
 	</div>
 
 
-	<div id="status" class="left None">
+	<div id="status" class="left None status">
+		<input type="button" id="FullScreen" value="F" class="SmolButton" title="Change to fullscreen/windowed" />
 		<div id="Date">
 			<p>Date: <time id="CurrentDate"></time></p>
 		</div>
@@ -376,8 +359,14 @@
 					<label for="ImgPack">Image pack</label>
 					<input type="button" id="ImgPack" value="ImgPack(No included)" />
 				</div>
+
+				<div>
+					<label for="SetPronoun">Set pronouns</label>
+					<input type="button" id="SetPronoun" value="Change Pronouns" title="Set your preferred pronouns for different genders." />
+				</div>
 			</div>
-			<div class="BigSmallBig">
+			<label for="EventLogCon">Eventlog max inputs</label>
+			<div class="BigSmallBig" id="EventLogCon">
 				<div>
 					<input type="button" id="Log+10" value="+10 to Event Log" title="" />
 				</div>
@@ -391,9 +380,6 @@
 			<div class="TwoColumn">
 				<div>
 					<input type="button" id="PerkOptions" value="Fetish options" />
-				</div>
-				<div>
-					<input type="button" id="SetPronoun" value="Change Pronouns" title="Set your preferred pronouns for different genders." />
 				</div>
 				<div>
 					<input type="button" id="saveoptions" value="Save options" />
@@ -1021,7 +1007,8 @@
 				"Opponents/CaveEncounters", "Opponents/SuccubusDungeon", "Opponents/Mountain",
 				"Opponents/Opponents"
 			]
-			var Arrays = [Scripts, Buildings, Vore, Home, Opponents]
+			var Settings = ["Settings/Options"];
+			var Arrays = [Scripts, Buildings, Vore, Home, Opponents, Settings];
 			// Code to sort and output to console, because I find it easier when sorted. #Remember to delete last ","
 			/** 
 			Scripts.sort();
