@@ -83,7 +83,7 @@ function SexActGetCunnilingus() {
     if (LastPressed === "GetCunnilingus") {
         document.getElementById("SexText").innerHTML = "Keeping them in place, you force them to continue eating you out, electing soft moans from your throat. Barely able to move, all " + enemies[EnemyIndex].FirstName + "can do is continue eating you out. You reach one hand to their head and gently pet it, telling them they're doing a good job.";
     } else {
-        RL = RandomInt(0, enemies[EnemyIndex].Pussies.length - 1);
+        RL = RandomInt(0, player.Pussies.length - 1);
         document.getElementById("SexText").innerHTML = "Your foe lays on their back, chest heaving with exhaustion from the recent fight. You make your way up " + enemies[EnemyIndex].FirstName + "'s body, licking your lips in anticipation. Squatting above their head, you line your crotch up with their mouth. Grabbing their head, you grind their face against your " + player.Pussies[RL].Type + " pussy, until they " +
             "start eating you out with " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Race + " tounge.";
     }

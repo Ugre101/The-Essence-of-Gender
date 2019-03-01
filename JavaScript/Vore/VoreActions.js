@@ -116,5 +116,5 @@ function VoreActionsAnalVore () {
 };
 
 function HideVore() {
-    AfterBattleButtons(false)
+    AfterBattleButtons(false, true)
 }

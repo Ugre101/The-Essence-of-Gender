@@ -117,55 +117,39 @@
        top: 0;
    }
 
+   div.FullFluidBar,
+   div.FullBar {
+       max-width: 92%;
+       height: 4vh;
+       max-height: 20px;
+       border: 2px solid black;
+       margin: auto;
+       background-color: rgb(228, 188, 188);
+   }
+
    div.FullBar {
        width: 200px;
-       max-width: 92%;
-       height: 4vh;
-       max-height: 20px;
-       border: 2px solid black;
-       margin: auto;
-       background-color: rgb(228, 188, 188);
    }
 
-   div.FullFluidBar {
-       max-width: 92%;
+   div.StatusHealth,
+   div.StatusWillHealth {
        height: 4vh;
        max-height: 20px;
-       border: 2px solid black;
-       margin: auto;
-       background-color: rgb(228, 188, 188);
-   }
-
-   div.StatusHealth {
        background-color: red;
-       height: 4vh;
-       max-height: 20px;
        border-right: 1px solid rgb(179, 14, 14);
    }
 
    div.StatusWillHealth {
        background-color: rgb(112, 112, 231);
-       height: 4vh;
-       max-height: 20px;
        border-right: 1px solid rgb(57, 57, 155);
    }
 
+
+
+   #FluidCum,
+   #FluidMilk,
+   #VoreLevel,
    #StatusLevel {
-       background-color: greenyellow;
-       height: 4vh;
-       max-height: 20px;
-       border-right: 1px solid rgb(129, 194, 33);
-   }
-
-   /* Could combine these but think I might wanna change color for vore*/
-   #VoreLevel {
-       background-color: greenyellow;
-       height: 4vh;
-       max-height: 20px;
-       border-right: 1px solid rgb(129, 194, 33);
-   }
-
-   #FluidCum {
        background-color: cornsilk;
        height: 4vh;
        max-height: 20px;
@@ -174,9 +158,13 @@
 
    #FluidMilk {
        background-color: white;
-       height: 4vh;
-       max-height: 20px;
        border-right: 1px solid rgb(228, 226, 219);
+   }
+
+   #StatusLevel,
+   #VoreLevel {
+       background-color: greenyellow;
+       border-right: 1px solid rgb(129, 194, 33);
    }
 
    .Grid {
@@ -264,6 +252,17 @@
        align-self: center;
        justify-self: center;
        margin: 0.5em;
+       background-image: linear-gradient(to bottom, white, hotpink, pink);
+       color: silver;
+       text-shadow:
+           -1px -1px 5px black,
+           1px -1px 5px black,
+           -1px 1px 5px black,
+           1px 1px 5px black;
+       height: 50px;
+       max-height: 100px;
+       font-size: 25px;
+       font-weight: bold;
    }
 
    #StartPage>h1 {
@@ -274,18 +273,7 @@
            1px -1px 5px black,
            -1px 1px 5px black,
            1px 1px 5px black;
-       font-size: 4vw;
-   }
-
-   @media screen and (max-height:600px) {
-       #page2 {
-           height: 95%;
-           overflow: auto;
-       }
-   }
-
-   #page2>div {
-       text-align: center;
+       font-size: 6vw;
    }
 
    #WorldMap {
@@ -306,11 +294,6 @@
        right: 2vh;
        top: 2vh;
        text-align: center;
-   }
-
-   #HideWorldMap {
-       height: 20px;
-       width: 60px;
    }
 
    #WorldMapContainer>p {
@@ -394,17 +377,22 @@
        }
    }
 
-   div.OptionsInnerDiv {
+   div.OptionsInnerDiv,
+   div.LPMenuInner {
        width: 90%;
-       height: 100%;
+       height: 97%;
        margin: auto;
+       padding: 1em;
        overflow: auto;
    }
 
    @media screen and (max-height: 500px) {
-       div.OptionsInnerDiv {
-           width: 95%;
+
+       div.OptionsInnerDiv,
+       div.LPMenuInner {
+           width: 90%;
            height: 95%;
+           padding: 0;
            overflow: auto;
        }
    }
@@ -415,9 +403,9 @@
        background-size: contain;
        background-position: center;
 
-       height: 80%;
-       width: 35%;
-       padding: 2em;
+       height: 85%;
+       width: 30%;
+       padding: 3em;
 
        overflow: auto;
        text-align: center;
@@ -426,8 +414,9 @@
    @media screen and (max-height: 500px) {
        div.LPMenu {
            background: none;
-           width: 45%;
-           height: 80%;
+           width: 83%;
+           height: 88%;
+           padding: 1em;
            border: 6px solid rgb(110, 81, 65);
            border-radius: 10px;
            box-shadow: 0 0 3pt 2pt black;
@@ -451,7 +440,8 @@
        padding: 2em 4em;
    }
 
-   #LogLength {
+   #LogLength,
+   #FontSize {
        display: inline-block;
        border: 1px solid black;
    }
@@ -459,12 +449,6 @@
    #Sizes>input[type=button] {
        max-width: 25%;
    }
-
-   #FontSize {
-       display: inline-block;
-       border: 1px solid black;
-   }
-
 
    p.MenuText {
        min-height: 5em;
@@ -478,16 +462,19 @@
        text-align: center;
    }
 
+   div.status,
    div.buttons {
        width: 17%;
        max-width: 260px;
-       height: 50vh;
-       padding-top: 1px;
-       /*To get rid of small gap that sometimes appear*/
-       bottom: 0;
+       height: 50%;
+       top: 0;
        background-color: rgb(156, 135, 214);
        border-right: 4px ridge purple;
        text-align: center;
+   }
+
+   div.buttons {
+       top: 50%;
    }
 
 
@@ -498,14 +485,14 @@
        }
    }
 
-   #status {
-       width: 17%;
-       max-width: 260px;
-       height: 50%;
-       top: 0;
-       background-color: rgb(156, 135, 214);
-       border-right: 4px ridge purple;
-       text-align: center;
+   #status>input[type=button] {
+       float: left;
+   }
+
+   @media screen and (max-height: 400px) {
+       #FullScreen {
+           display: none;
+       }
    }
 
    #Encounter {
@@ -599,7 +586,8 @@
        justify-items: center;
    }
 
-   div.PlayerSex {
+   div.PlayerSex,
+   div.EnemySex {
        border-radius: 60px;
        grid-area: b;
        width: 100%;
@@ -609,12 +597,7 @@
    }
 
    div.EnemySex {
-       border-radius: 60px;
        grid-area: d;
-       width: 100%;
-       height: 100%;
-       padding: 0 0.5em;
-       overflow: auto;
    }
 
    @media screen and (max-height: 1000px) {
@@ -645,16 +628,6 @@
        background-color: rgb(230, 230, 230);
        grid-area: c;
        overflow: auto;
-   }
-
-   #DrainMenu {
-       border: 1px solid black;
-       border-radius: 5px;
-   }
-
-   #InjectMenu {
-       border: 1px solid black;
-       border-radius: 5px;
    }
 
    #Home {
@@ -734,33 +707,13 @@
        border: 1px solid rgb(207, 133, 49);
    }
 
+   input[type=button],
    button {
-       font-family: inherit;
-       font-size: inherit;
-       width: 96%;
-       max-width: 220px;
-       height: auto;
-       margin: 0.3em 0.1em;
-       text-align: center;
-       color: black;
-
-       border: 1px solid rgb(83, 57, 43);
-       border-radius: 10px;
-       box-shadow: 0 0 2pt 1pt black;
-       background-color: rgb(221, 195, 160);
-   }
-
-   button:hover {
-       background-color: rgb(187, 160, 124);
-
-   }
-
-   input[type=button] {
        text-align: center;
        font-family: inherit;
        font-size: inherit;
-       color: black;
-       width: 96%;
+       color: inherit;
+       width: 90%;
        max-width: 220px;
        height: 5vh;
        max-height: 40px;
@@ -768,12 +721,25 @@
 
        border: 1px solid rgb(83, 57, 43);
        border-radius: 10px;
-       box-shadow: 0 0 2pt 1pt black;
+       box-shadow: 0 0 2px 1px black;
        background-color: rgb(221, 195, 160);
+       transition: background 0.2s ease-in-out;
    }
 
-   input[type=button]:hover {
+   button {
+       height: auto;
+       max-height: 200px;
+   }
+
+   input[type=button]:hover,
+   button:hover {
        background-color: rgb(187, 160, 124);
+   }
+
+   input[type=button]:active,
+   button:active {
+       background-color: rgb(187, 160, 124);
+       box-shadow: 0 0 2px 2px black;
    }
 
    /* Delar på form-inputs fält så att alla blir samma storlek */
@@ -792,7 +758,6 @@
    }
 
    @media (max-height: 600px) {
-
        input[type=text],
        select {
            padding: 0.2em;
@@ -980,4 +945,8 @@
        height: 90%;
        text-align: center;
        padding: 1em;
+   }
+
+   li {
+       list-style-type: disc;
    }
