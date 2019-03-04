@@ -32,7 +32,7 @@ function CurrentTile(x, y) {
     World.fillRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
 }
 
-function PrintMap(karta = null) {
+function PrintMap() {
     var WorldMap = document.getElementById("WorldMap");
     var World = WorldMap.getContext("2d");
     World.fillStyle = "#404040";

@@ -31,8 +31,7 @@ function BarberFunc() {
             };
             var Dyes = ["Red", "Blonde", "Dark brown", "Black", "Pink", "Purple"];
             for (var e of Dyes) {
-                var Dye = DyeButton(e);
-                DyeCon.appendChild(Dye);
+                DyeCon.appendChild(DyeButton(e, p));
             };
         }
     });
@@ -57,8 +56,7 @@ function BarberFunc() {
                 "Armpit length", "Mid-back length", "Hip length", "Knee length", "Floor length"
             ];
             for (var e of Cuts) {
-                var Cut = CutButton(e);
-                CutCon.appendChild(Cut);
+                CutCon.appendChild(CutButton(e, p));
             };
         }
     });
@@ -92,15 +90,16 @@ function BarberFunc() {
     document.getElementById("Buildings").style.display = 'block';
 }
 
-function DyeButton(e) {
+function DyeButton(e, p) {
     var dye = document.createElement("input");
     dye.setAttribute("type", "button");
     dye.setAttribute("value", e);
     dye.addEventListener("click", function () {
-        console.log(e);
+        player.Face.HairColor = e.toLowerCase()
+        p.innerHTML = "Looking into the barbers mirror you see your hair dying is complete and your hair is now " + player.Face.HairColor;
     });
     dye.addEventListener("mouseover", function () {
-        console.log("Dye " + e)
+        p.innerHTML = e + " dye";
     })
     return dye;
 }
