@@ -723,7 +723,7 @@
        border-radius: 10px;
        box-shadow: 0 0 2px 1px black;
        background-color: rgb(221, 195, 160);
-       transition: background 0.2s ease-in-out;
+       transition: background 0.3s ease-in-out;
    }
 
    button {
@@ -840,7 +840,7 @@
        overflow: auto;
    }
 
-   @media screen and (max-height: 600px) {
+   @media screen and (max-height: 500px) {
        #Inventory {
            width: 93%;
            height: 91%;

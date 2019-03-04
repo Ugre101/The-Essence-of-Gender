@@ -833,24 +833,6 @@
         }
     };
 
-    function PaintBackground() {
-        var WorldMap = document.getElementById("WorldMap");
-        var World = WorldMap.getContext("2d");
-        var startarea = document.getElementById("hem");
-        var ctx = startarea.getContext("2d");
-        ctx.fillStyle = Settings.MapColor;
-        World.fillStyle = Settings.MapColor;
-        ctx.fillRect(0, 0, startarea.width, startarea.height);
-        World.fillRect(0, 0, WorldMap.width, WorldMap.height);
-
-        // Wall around map
-        ctx.fillStyle = Settings.BorderColor;
-        ctx.fillRect(0, 0, grid / 2, startarea.height);
-        ctx.fillRect(0, 0, startarea.width, grid / 2);
-        ctx.fillRect(startarea.width - (grid / 2), 0, grid / 2, startarea.height);
-        ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
-    }
-
     var fps = [];
 
     function loop() {
@@ -890,11 +872,6 @@
 
         if (!battle) {
             CurrentMap();
-            var needPaint = ["Farm", "TempCity", "MountainStart", "MountainClimb", "MountainClimb2", "MountainClimb3",
-                "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8", "MountainClimb9",
-                "MountainClimb10", "MountainShrinePath", "MountainShrine", "MountainTribe"
-            ];
-            needPaint.indexOf(player.Map) > -1 ? PaintBackground() : false; // Maybe this method is bad for readability?
             Settings.Vore ? VoreEngine() : false; // However it does shrink the size of code quite a lot... idk
             Settings.Cheats.Enabled ? CheatEngine() : false;
             (enemies.length > 0) ? PrintEnemies(): false;

@@ -35,3 +35,22 @@ function ButtonButton(Title = "") { // Same as above but for <button>
     button.setAttribute("title", Title);
     return button;
 }
+
+function LeaveBuilding() {
+    var Leave = document.createElement("input");
+    Leave.setAttribute("type", "button");
+    Leave.setAttribute("value", "Leave");
+    Leave.addEventListener("click", function () {
+        battle = false;
+        document.getElementById("map").style.display = 'block';
+        document.getElementById("buttons").style.display = 'block';
+        document.getElementById("EmptyButtons").style.display = 'none';
+        document.getElementById("status").style.display = 'block';
+        Buildings.style.display = 'none';
+        while (Buildings.hasChildNodes()) {
+            Buildings.removeChild(Buildings.firstChild);
+        }
+        return;
+    });
+    return Leave
+}
