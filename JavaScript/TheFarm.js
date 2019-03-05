@@ -78,13 +78,13 @@ function FarmBarnFunc() {
         if (player.Gold >= 499) {
             player.Gold -= 499;
             SnowInventoryAdd(ItemDict.Milker, 500);
-            p.innerHTML = ""
+            p.innerHTML = "Added to inventory"
         } else {
-            p.innerHTML = ""
+            p.innerHTML = "Not enough gold"
         }
     });
     input1.addEventListener("mouseover", function () {
-
+        p.innerHTML = "Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away?<br><br> Buy today; a portable milker!"
     });
     div.appendChild(input1);
 
@@ -104,22 +104,24 @@ function FarmBarnFunc() {
         }
     });
     input2.addEventListener("mouseover", function () {
-
+        p.innerHTML = "Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?!<br><br> Well, this is for your humble (or crazy) needs!"
     });
     div.appendChild(input2);
 
     var input3 = InputButton("Milk stopper 50g", "Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.' #Note this does not affect lacation rate from pregnancy.")
     input3.addEventListener("click", function () {
         // Lower milkrate
+        // if no breast have milkrate stop
         if (player.Gold >= 50) {
             player.Gold -= 50;
+            p.innerHTML = ""
             for (var e of player.Boobies) {
                 if (e.MilkRate - 1 < 0) {
                     e.MilkRate = 0;
-                    p.innerHTML = "Your " //Milk stops
+                    p.innerHTML += "Your breasts stops lactating.<br>" //Milk stops
                 } else {
                     e.MilkRate--;
-                    p.innerHTML = ""
+                    p.innerHTML = "Your milk production slows.<br>"
                 }
                 if (false) {
                     // if milkrate is over certain value say stuff like wow gogly amounts etc...
@@ -131,7 +133,7 @@ function FarmBarnFunc() {
         }
     })
     input3.addEventListener("mouseover", function () {
-
+        p.innerHTML = "Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.'<br><br> #Note this does not affect lacation rate from pregnancy."
     })
     div.appendChild(input3);
 

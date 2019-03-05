@@ -18,13 +18,74 @@ document.getElementById("Sleep").addEventListener("click", function () {
 
 // Portal
 document.getElementById("Portal").addEventListener("click", function () {
-    document.getElementById("HomeStart").style.display = 'none';
-    document.getElementById("PortalMenu").style.display = 'block';
-    if (House.Portal.Mountain) {
-        document.getElementById("Mountain").style.display = 'inline-block';
-    } else {
-        document.getElementById("Mountain").style.display = 'none';
+    document.getElementById("LeaveHome").style.display = 'none';
+    var Buildings = document.getElementById("PortalMenu")
+    document.getElementById("HomeStart").style.display = "none";
+    while (Buildings.hasChildNodes()) {
+        Buildings.removeChild(Buildings.firstChild);
     }
+    var div = document.createElement("div");
+
+    if (window.innerHeight > 600) { // No title on small screen
+        var h1 = document.createElement("h1");
+        var h1text = document.createTextNode("Portal");
+        h1.appendChild(h1text);
+        div.appendChild(h1);
+    }
+
+    var p = document.getElementById("HomeText");
+
+    // TODO in future when there is more portals make main buttons for each region
+    if (House.Portal.Mountain) {
+        var Mountain = InputButton("Mountain")
+        Mountain.addEventListener("click", function () {
+            player.Area = "Mountain";
+            player.Map = "MountainStart";
+            document.getElementById("HomeStart").style.display = 'block';
+            LeaveHome();
+            Buildings.style.display = 'none';
+            while (Buildings.hasChildNodes()) {
+                Buildings.removeChild(Buildings.firstChild);
+            }
+            return;
+        });
+        Mountain.addEventListener("mouseover", function () {
+
+        });
+        div.appendChild(Mountain);
+    }
+
+    if (House.Portal.BlackMarket) {
+        var BlackMarket = InputButton("BlackMarket")
+        BlackMarket.addEventListener("click", function () {
+            player.Area = "Second";
+            player.Map = "Outlaws";
+            document.getElementById("HomeStart").style.display = 'block';
+            LeaveHome();
+            Buildings.style.display = 'none';
+            while (Buildings.hasChildNodes()) {
+                Buildings.removeChild(Buildings.firstChild);
+            }
+            return;
+        });
+        BlackMarket.addEventListener("mouseover", function () {
+
+        });
+        div.appendChild(BlackMarket);
+    }
+
+    var LeavePortal = InputButton("Back");
+    LeavePortal.addEventListener("click", function () {
+        while (Buildings.hasChildNodes()) {
+            Buildings.removeChild(Buildings.firstChild);
+        }
+        document.getElementById("HomeStart").style.display = 'block';
+        document.getElementById("PortalMenu").style.display = 'none';
+        document.getElementById("LeaveHome").style.display = 'inline-block';
+    })
+    div.appendChild(LeavePortal);
+    Buildings.appendChild(div);
+    Buildings.style.display = 'block';
 });
 document.getElementById("LeavePortal").addEventListener("click", function () {
     document.getElementById("HomeStart").style.display = 'block';
@@ -83,6 +144,7 @@ document.getElementById("LeaveHome").addEventListener("click", function () {
 function LeaveHome() {
     document.getElementById("Home").style.display = 'none';
     document.getElementById("EmptyButtons").style.display = 'none';
+    battle = false;
     DisplayGame();
 }
 // End home

@@ -39,11 +39,11 @@ function CheckDoor() {
                     switch (player.Map) {
                         case "Start":
                             if (Door == "E") {
-                                player.Map = "RoadToCity1";
+                                player.Map = "RoadToCity";
                                 DoorHandler("E");
                             }
                             break;
-                        case "RoadToCity1":
+                        case "RoadToCity":
                             if (Door == "S") {
                                 player.Map = "RoadToCity2";
                                 DoorHandler("S");
@@ -57,13 +57,13 @@ function CheckDoor() {
                             break;
                         case "Bandit":
                             if (Door == "S") {
-                                player.Map = "RoadToCity1";
+                                player.Map = "RoadToCity";
                                 DoorHandler("S");
                             }
                             break;
                         case "RoadToCity2":
                             if (Door == "N") {
-                                player.Map = "RoadToCity1";
+                                player.Map = "RoadToCity";
                                 DoorHandler("N");
                             } else if (Door == "E") {
                                 player.Map = "City";

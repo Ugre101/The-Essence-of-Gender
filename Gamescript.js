@@ -158,7 +158,8 @@
         Dormmates: [],
         Portal: {
             Owned: false,
-            Mountain: false
+            Mountain: false,
+            BlackMarket: false
         },
         Nursery: 0
     };
@@ -391,16 +392,6 @@
             MobileButtons = false;
         }
     }
-
-    // LocalPortal
-    document.getElementById("TeleportHome").addEventListener("click", function () {
-        player.Area = "First";
-        player.Map = "RoadToHome";
-        document.getElementById("LocalPortal").style.display = 'none';
-        DisplayGame();
-    });
-
-
     // More buttons for small screen height
     document.getElementById("MoreButtons").addEventListener("click", function () {
         document.getElementById("FirstButtons").style.display = 'none';

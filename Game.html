@@ -16,6 +16,7 @@
 	<div id="StartPage">
 		<p id="StartProgressBar"></p>
 		<h1>The Essence of Gender</h1>
+		<h2 id="LoadingImagesProgress">Loading tiles</h2>
 		<input type="button" id="GoToCharCreator" value="Start game" />
 		<input type="button" id="LoadButton" value="Load game" />
 		<!--<input type="button" id="NewGamePlus" value="(placeholder)Old release load" />-->
@@ -88,7 +89,7 @@
 				<canvas id="WorldMap"></canvas>
 			</div>
 			<p id="StatusArea">Start</p>
-			<input type="button" id="HideWorldMap" value="Hide" class="SmolButton"  title="Click to hide or show"/>
+			<input type="button" id="HideWorldMap" value="Hide" class="SmolButton" title="Click to hide or show" />
 		</div>
 	</div>
 
@@ -771,7 +772,6 @@
 			</div>
 		</div>
 		<div id="PortalMenu" class="None">
-			<h2>Portal</h2>
 			<input type="button" id="LeavePortal" value="Back" /><br>
 			<div id="Portals">
 				<input type="button" id="TempLand" value="TempLand" />
@@ -925,15 +925,6 @@
 		<input type="button" id="FarmOwnerLooks" value="Looks" />
 		<input type="button" id="LeaveFarmOwner" value="Bye" />
 	</div>
-	<div id="FarmBarn" class="None Building">
-		<p id="FarmBarnText" class="TextBox"></p>
-		<input type="button" id="LeaveFarmBarn" value="Leave" />
-		<div id="MilkEvent" class="None">
-			<input type="button" id="BarnAccept" value="Accept" /> <!-- Get fucked -->
-			<input type="button" id="BarnDom" value="Turn situation around" /> <!-- Needs strength -->
-			<input type="button" id="BarnTease" value="Tease" /> <!-- Get away by making him cum without fucking you -->
-		</div>
-	</div>
 
 	<div id="FirstDungeon" class="None Building">
 		<p id="FirstDungeonText" class="TextBox"></p>
@@ -979,7 +970,8 @@
 			var Buildings = [
 				"Buildings/Bar", "Buildings/BlackMarket", "Buildings/ChimeraShrine", "Buildings/Gym",
 				"Buildings/MountainShrine", "Buildings/PotionShop", "Buildings/PortalShop",
-				"Buildings/WitchShop", "Buildings/WitchHut", "Buildings/Townhall", "Buildings/Barber"
+				"Buildings/WitchShop", "Buildings/WitchHut", "Buildings/Townhall", "Buildings/Barber",
+				"Buildings/LocalPortal"
 			]
 			var Vore = [
 				"Vore/Vore", "Vore/VoreActions", "Vore/VorePreyInterAction"
