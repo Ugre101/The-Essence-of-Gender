@@ -139,5 +139,6 @@ function InventoryThing(e, b) {
         document.getElementById("InventoryText").innerHTML = b.Title
     });
     item.appendChild(what);
+
     return item;
 }

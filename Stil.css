@@ -249,6 +249,7 @@
    }
 
    #StartPage>input[type="button"] {
+       visibility: hidden;
        align-self: center;
        justify-self: center;
        margin: 0.5em;
@@ -758,6 +759,7 @@
    }
 
    @media (max-height: 600px) {
+
        input[type=text],
        select {
            padding: 0.2em;

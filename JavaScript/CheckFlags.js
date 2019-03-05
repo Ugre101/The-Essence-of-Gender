@@ -344,6 +344,10 @@ function CheckFlags() {
         ]
         console.log("Changed player.spells to an array");
     }
+    if (House.Portal.hasOwnProperty("BlackMarket") === false) {
+        House.Portal.BlackMarket = false;
+    }
+
     if (player.Inventory.findIndex(e => e.Name === "SpellBook") === -1) {
         console.log(player.Inventory.findIndex(e => e.Name === "SpellBook"))
         player.Inventory.push(ItemDict.SpellBook);

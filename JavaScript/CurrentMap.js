@@ -17,24 +17,55 @@ function PrintDoor(NESW) {
     }
 }
 
-function PrintImage(ImageSrc) {
+function ImageLoad(arr, callback) { // Preload images to stop flickering
+    this.images = {};
+    var loaded = 0;
+
+    if (Array.isArray(arr)) {
+        for (var e of arr) {
+            var img = new Image();
+            img.onload = ImageLoaded;
+            img.src = "Tiles/" + e + ".png";
+            images[e] = img;
+        }
+    } else {
+        return
+    }
+
+    function ImageLoaded() {
+        loaded++;
+        if (loaded >= arr.length) {
+            callback();
+        }
+    }
+}
+var _images = {};
+var loader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "City", "Forest", "Forest2", "Outlaws",
+    "PathToOutlaws", "PathToOutlaws2", "RoadToCity", "RoadToCity2", "RoadToHome", "RoadToWitch", "RoadToWitch2",
+    "rtb2", "Start", "Witch"
+], function () {
+    _images = this.images;
+    // Stop player from starting before tiles are loaded
+    document.getElementById("LoadingImagesProgress").style.visibility = "hidden";
+    document.getElementById("GoToCharCreator").style.visibility = "visible"
+    document.getElementById("LoadButton").style.visibility = "visible"
+});
+
+function PrintImage() { // New and improved
     var startarea = document.getElementById("hem");
     var ctx = startarea.getContext("2d");
-    var backmap = new Image;
-    backmap.src = "Tiles/" + ImageSrc + ".png";
-    ctx.clearRect(0, 0, startarea.width, startarea.height);
-    ctx.drawImage(backmap, 0, 0, startarea.width, startarea.height);
+    if (typeof _images[player.Map] !== "undefined") {
+        ctx.clearRect(0, 0, startarea.width, startarea.height);
+        ctx.drawImage(_images[player.Map], 0, 0, startarea.width, startarea.height);
+    } else {
+        PaintBackground()
+    }
 };
 
 function CurrentMap() {
     var Npcs = []; // Moved here to avoid public handling of npcs, need to double check so I haven't
     // forgoten avoid any refernce to Npcs somewhere
-    var needPaint = ["Farm", "TempCity", "MountainStart", "MountainClimb", "MountainClimb2", "MountainClimb3",
-        "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8", "MountainClimb9",
-        "MountainClimb10", "MountainShrinePath", "MountainShrine", "MountainTribe"
-    ];
-    needPaint.indexOf(player.Map) > -1 ? PaintBackground() : false; // Maybe this method is bad for readability?
-
+    PrintImage()
     //First Town
     var Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
     var Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
@@ -47,7 +78,10 @@ function CurrentMap() {
     var ChimeraShrine = new Npc("ChimeraShrine", "Chimera shrine", grid * 3, grid * 17, grid * 2, grid * 2, "RGB(133,94,66)");
     // Misc
     var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
-    var Portal = new Npc("LocalPortal", "Portal", grid * 12, grid * 8, grid * 4, grid * 4, "RGB(96, 47, 107)");
+
+    function Portal(Xpos, Ypos) { // Portal is function so I can change X-position & Y-position
+        return new Npc("LocalPortal", "Portal", grid * Xpos, grid * Ypos, grid * 4, grid * 4, "RGB(96, 47, 107)")
+    }
     var Barber = new Npc("Barber", "Hair salon", grid * 15, grid, grid * 5, grid * 4, "RGB(133,94,66)");
     var PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)");
     //Outlaw
@@ -69,7 +103,6 @@ function CurrentMap() {
     /*	var aSpawn = Math.random();
     	if (enemies.length < 1 && Settings.AnimalSpawn)
     	{
-    		console.log("Animal?");
     		enemies = [animalSpawn(player.Height), animalSpawn(player.Height)];
     		return;
         }*/
@@ -83,7 +116,7 @@ function CurrentMap() {
                     }
                     PrintImage("Start");
                     break;
-                case "RoadToCity1":
+                case "RoadToCity":
                     if (enemies.length < 1) {
                         enemies = [EncounterPath1(), EncounterPath1(), EncounterPath1()];
                     }
@@ -164,7 +197,7 @@ function CurrentMap() {
                     if (enemies.length < 1) {
 
                     }
-                    Npcs = [BlackMarket, PortalShop]
+                    Npcs = [BlackMarket, PortalShop, Portal(15,15)]
                     PrintImage("Outlaws");
                     break;
                 case "Cave1":
@@ -202,7 +235,7 @@ function CurrentMap() {
                     if (enemies.length < 1) {
 
                     }
-                    Npcs = [Portal];
+                    Npcs = [Portal(2, 2)];
                     break;
                 case "MountainShrinePath":
                     PrintDoor("E");
@@ -298,7 +331,7 @@ function CurrentMap() {
                     if (enemies.length < 1) {
 
                     }
-                    Npcs = [Portal];
+                    Npcs = [Portal(2, 2)];
                     break;
             }
             break;
@@ -308,7 +341,7 @@ function CurrentMap() {
                     if (enemies.length < 1) {
 
                     }
-                    Npcs = [Portal];
+                    Npcs = [Portal(18, 18)];
                     break;
             }
     }

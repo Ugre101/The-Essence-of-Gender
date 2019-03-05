@@ -35,7 +35,7 @@ function PortalShopFunc() {
     div.appendChild(input1);
 
     if (House.Portal.Mountain === false) {
-        var input2 = InputButton("Portal to mountain region", "A beautiful land with wonderful views, but be vary as it’s the home for plenty dangerous races and tribes.");
+        var input2 = InputButton("Portal to mountain region 500g", "A beautiful land with wonderful views, but be vary as it’s the home for plenty dangerous races and tribes.");
         input2.addEventListener("click", function () {
             if (player.Gold >= 500) {
                 if (House.Portal.Mountain) {
