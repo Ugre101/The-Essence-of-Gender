@@ -720,7 +720,7 @@
                   player.FoodStomach.splice(e, 1)
               }
           }*/
-        player.Fat -= 0.002;
+        player.Fat -= 0.0002;
     }
 
     function Npc(Name, RealName, X, Y, width, height, Color) {
