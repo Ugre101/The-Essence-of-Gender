@@ -315,20 +315,6 @@
        }
    }
 
-   div.Looks {
-       width: 650px;
-       height: auto;
-       max-width: 70%;
-       min-height: 45%;
-       max-height: 90%;
-       padding: 20px;
-       border: 6px solid rgb(110, 81, 65);
-       border-radius: 10px;
-       box-shadow: 0 0 3pt 2pt black;
-       background-color: rgb(206, 172, 127);
-       overflow: auto;
-   }
-
 
    #QuestTexts {
        display: grid;
@@ -351,84 +337,84 @@
        margin: 0.5em 0;
    }
 
-   div.Options {
+   div.Options,
+   div.LPMenu,
+   div.Looks {
+       /*Still needs more work but I like it with border better than without, as it works better for more screens.*/
        background-image: url(Res/bg_01_02.png);
+       background-color: rgb(136, 89, 45);
        background-repeat: no-repeat;
        background-size: contain;
        background-position: center;
+       border: 20px solid transparent;
+       border-image: url(Res/frame_s_05.png) 20;
+       border-radius: 20px;
 
-       width: 30%;
-       padding: 3em;
-       height: 85%;
-       text-align: center;
+       width: 38%;
+       height: 90%;
        overflow: auto;
+
+       justify-content: center;
+       align-items: center;
+       text-align: center;
+   }
+
+   div.Looks {
+       width: 45%;
+       height: 95%;
    }
 
    @media screen and (max-height: 500px) {
-       div.Options {
+
+       div.Options,
+       div.LPMenu,
+       div.Looks {
            background: none;
            width: 92%;
            height: 95%;
            padding: 0;
-           border: 6px solid rgb(110, 81, 65);
-           border-radius: 10px;
-           box-shadow: 0 0 3pt 2pt black;
            background-color: rgb(206, 172, 127);
            overflow: auto;
        }
    }
 
+   @media screen and (max-height: 500px) {
+       div.LPMenu>h1 {
+           display: none;
+       }
+   }
+
    div.OptionsInnerDiv,
    div.LPMenuInner {
-       width: 90%;
-       height: 97%;
-       margin: auto;
+       display: inline-block;
        padding: 1em;
+       margin-top: 3vh;
+       width: 80%;
+       overflow: auto;
+       min-height: 70%;
+   }
+
+   div.LooksInner {
+       display: inline-block;
+       padding: 1em;
+       margin-top: 3vh;
+       width: 80%;
        overflow: auto;
    }
 
    @media screen and (max-height: 500px) {
 
        div.OptionsInnerDiv,
-       div.LPMenuInner {
-           width: 90%;
+       div.LPMenuInner,
+       div.LooksInner {
+           width: 95%;
            height: 95%;
            padding: 0;
            overflow: auto;
        }
    }
 
-   div.LPMenu {
-       background-image: url(Res/bg_01_02.png);
-       background-repeat: no-repeat;
-       background-size: contain;
-       background-position: center;
 
-       height: 85%;
-       width: 30%;
-       padding: 3em;
-
-       overflow: auto;
-       text-align: center;
-   }
-
-   @media screen and (max-height: 500px) {
-       div.LPMenu {
-           background: none;
-           width: 83%;
-           height: 88%;
-           padding: 1em;
-           border: 6px solid rgb(110, 81, 65);
-           border-radius: 10px;
-           box-shadow: 0 0 3pt 2pt black;
-           background-color: rgb(206, 172, 127);
-           overflow: auto;
-       }
-
-       div.LPMenu>h1 {
-           display: none;
-       }
-   }
 
    div.SLMenu {
        background-image: url(Res/bg_01_02.png);
@@ -718,7 +704,7 @@
        max-width: 220px;
        height: 5vh;
        max-height: 40px;
-       margin: 0.3em 0.3em;
+       margin: 0.5em 0.6em;
 
        border: 1px solid rgb(83, 57, 43);
        border-radius: 10px;
@@ -833,7 +819,7 @@
    #Inventory {
        background-color: rgb(206, 172, 127);
        border: 20px solid transparent;
-       border-image: url(Res/frame_s_05.png) 20;
+       border-image: url(Res/frame_s_02.png) 20;
        border-radius: 20px;
        width: 55%;
        height: 80%;
@@ -856,8 +842,12 @@
        grid-gap: 0.5em;
        overflow: auto;
        height: 89%;
-       border: 4px ridge rgb(122, 102, 75);
-       border-radius: 10px;
+       background-color: rgb(206, 172, 127);
+       border: 20px solid transparent;
+       border-image: url(Res/frame_s_01.png) 20;
+       border-radius: 20px;
+
+
        background-color: rgb(165, 138, 102);
        padding: 0.5em;
    }
