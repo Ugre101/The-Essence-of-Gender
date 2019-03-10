@@ -296,14 +296,14 @@
 
     // Start page
     document.getElementById("GoToCharCreator").addEventListener("click", function () {
-        document.getElementById("CharCreator").style.display = 'Block';
+        document.getElementById("CharCreator").style.display = 'flex';
         document.getElementById("StartPage").style.display = 'none';
     });
 
     // Start på char creator
     document.getElementById("Begin").addEventListener("click", function () {
         document.getElementById("CharCreator").style.display = 'none';
-        document.getElementById("page2").style.display = 'block';
+        document.getElementById("page2").style.display = 'flex';
         document.getElementById("startgame").style.display = 'none';
         player.Name = document.getElementById("firstname").value;
         player.LastName = document.getElementById("lastname").value;

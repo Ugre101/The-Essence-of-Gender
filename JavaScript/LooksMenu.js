@@ -1,14 +1,17 @@
 document.getElementById("Perks").addEventListener("click", function () {
     // Moved everything to the button to clean up the player var.
     DisplayNone();
-    var div = document.getElementById("StatLevels");
-    while (div.hasChildNodes()){
+    var div = document.getElementById("Levels");
+    while (div.hasChildNodes()) {
         div.removeChild(div.lastChild);
     }
+
+    var StatsLevel = document.createElement("div");
+
     var h3 = document.createElement("h3");
     var h3Text = document.createTextNode("Stats:");
     h3.appendChild(h3Text);
-    div.appendChild(h3);
+    StatsLevel.appendChild(h3);
 
     var RawStats = document.createElement("div");
     RawStats.style.display = 'inline-block';
@@ -22,8 +25,8 @@ document.getElementById("Perks").addEventListener("click", function () {
     RawStats.appendChild(RawH4);
 
     var RawP = document.createElement("ol");
-    RawP.innerHTML = "<li>Str: " + player.Str + "</li><li>End: " + player.End + "</li><li>Will: " + player.Will + 
-    "</li><li>Charm: " + player.Charm + "</li><li>Int: " + player.Int + "</li><li>Sex skill: " + player.SexSkill +"</li>";
+    RawP.innerHTML = "<li>Str: " + player.Str + "</li><li>End: " + player.End + "</li><li>Will: " + player.Will +
+        "</li><li>Charm: " + player.Charm + "</li><li>Int: " + player.Int + "</li><li>Sex skill: " + player.SexSkill + "</li>";
     RawStats.appendChild(RawP);
 
     var H4 = document.createElement("h4");
@@ -32,23 +35,43 @@ document.getElementById("Perks").addEventListener("click", function () {
     Stats.appendChild(H4);
 
     var P = document.createElement("ol");
-    P.innerHTML = "<li>Str: " + TotalStr() + "</li><li>End: " + TotalEnd() + "</li><li>Will: " + TotalWill() + 
+    P.innerHTML = "<li>Str: " + TotalStr() + "</li><li>End: " + TotalEnd() + "</li><li>Will: " + TotalWill() +
         "</li><li>Charm: " + TotalCharm() + "</li><li>Int: " + TotalInt() + "</li><li>Sex skill: " + TotalSexSkill() + "</li>";
     Stats.appendChild(P);
 
-    div.appendChild(RawStats);
-    div.appendChild(Stats);
+    StatsLevel.appendChild(RawStats);
+    StatsLevel.appendChild(Stats);
+    div.appendChild(StatsLevel);
     document.getElementById("Levels").style.display = 'block';
 
-    var printPerks = "<h3>Perks:</h3><ol>";
+    var Perks = document.createElement("div");
+    Perks.style.display = "inline-block"
+    var PerksH4 = document.createElement("h4");
+    var PerksH4text = document.createTextNode("Perks:");
+    PerksH4.appendChild(PerksH4text);
+    Perks.appendChild(PerksH4);
+
+    var PerksP = document.createElement("ol");
+
     for (var i = 0; i < Object.keys(player.Perks).length; i++) {
         if (player.Perks[Object.keys(player.Perks)[i]].Count > 0) {
-            printPerks += "<li>" + Object.keys(player.Perks)[i] + ": " + player.Perks[Object.keys(player.Perks)[i]].Count + "</li>";
+            var perkLi = document.createElement("li");
+            perkLi.innerHTML = Object.keys(player.Perks)[i] + ": " + player.Perks[Object.keys(player.Perks)[i]].Count;
+            PerksP.appendChild(perkLi);
         }
     }
-    document.getElementById("PerkLevels").innerHTML = printPerks + "</ol>";
+    Perks.appendChild(PerksP);
+    div.appendChild(Perks);
 
-    var Races = "<h3>Race:</h3><ol>";
+    var Races = document.createElement("div");
+    Races.style.display = "inline-block";
+
+    var RacesH4 = document.createElement("h4");
+    var RacesH4Text = document.createTextNode("Race essence:");
+    RacesH4.appendChild(RacesH4Text);
+    Races.appendChild(RacesH4);
+
+    var RacesP = document.createElement("ol");
     var RaceTotal = 0;
     for (var e = 0; e < player.RaceEssence.length; e++) {
         RaceTotal += player.RaceEssence[e].amount;
@@ -57,26 +80,45 @@ document.getElementById("Perks").addEventListener("click", function () {
         RaceTotal = 100;
     }
     for (var e = 0; e < player.RaceEssence.length; e++) {
-        Races += "<li>" + player.RaceEssence[e].Race + ": " + Math.round(player.RaceEssence[e].amount / RaceTotal * 100) + "%  (" + player.RaceEssence[e].amount + ")</li>"
+        var RacesLi = document.createElement("li");
+        RacesLi.innerHTML = player.RaceEssence[e].Race + ": " + Math.round(player.RaceEssence[e].amount / RaceTotal * 100) + "%  (" + player.RaceEssence[e].amount + ")";
+        RacesP.appendChild(RacesLi);
     }
-    document.getElementById("RaceEssences").innerHTML = Races + "</ol>";
+    Races.appendChild(RacesP);
+    div.appendChild(Races);
+
 
     if (Settings.Vore) {
-        var printVore = "<h3>Vore:</h3><ol>";
+        var Vore = document.createElement("div");
+        Vore.style.display = "inline-block";
+
+        var VoreH4 = document.createElement("h4");
+        var VoreH4Text = document.createTextNode("Vore perks:");
+        VoreH4.appendChild(VoreH4Text);
+        Vore.appendChild(VoreH4);
+
+        var VoreP = document.createElement("ol");
         var v = player.Vore.VorePerks;
         if (Object.keys(v).length > 0) {
             for (var i = 0; i < Object.keys(v).length; i++) {
-                printVore += "<li>"+ Object.keys(v)[i] + ": " + v[Object.keys(v)[i]].Count + "</li>";
+                var VoreLi = document.createElement("li");
+                VoreLi.innerHTML = Object.keys(v)[i] + ": " + v[Object.keys(v)[i]].Count;
+                VoreP.appendChild(VoreLi);
             }
         }
-        document.getElementById("VLevels").innerHTML = printVore + "</ol>";
-    } else
-        document.getElementById("VLevels").innerHTML = "";
-});
+        Vore.appendChild(VoreP);
+        div.appendChild(Vore);
+    }
 
-document.getElementById("CloseLevel").addEventListener("click", function () {
-    document.getElementById("Levels").style.display = 'none';
-    DisplayGame();
+    var br = document.createElement("br");
+    div.appendChild(br);
+
+    var CloseLevel = InputButton("Close");
+    CloseLevel.addEventListener("click", function () {
+        document.getElementById("Levels").style.display = 'none';
+        DisplayGame();
+    });
+    div.appendChild(CloseLevel);
 });
 
 document.getElementById("ExtraInfo").addEventListener("click", function () {
