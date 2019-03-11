@@ -17,6 +17,32 @@ function BarberFunc() {
     var DyeCon = document.createElement("div");
     var CutCon = document.createElement("div");
 
+    function DyeButton(e, p) {
+        var dye = document.createElement("input");
+        dye.setAttribute("type", "button");
+        dye.setAttribute("value", e);
+        dye.addEventListener("click", function () {
+            player.Face.HairColor = e.toLowerCase()
+            p.innerHTML = "Looking into the barbers mirror you see your hair dying is complete and your hair is now " + player.Face.HairColor;
+        });
+        dye.addEventListener("mouseover", function () {
+            p.innerHTML = e + " dye";
+        })
+        return dye;
+    }
+
+    function CutButton(e) {
+        var cut = document.createElement("input");
+        cut.setAttribute("type", "button");
+        cut.setAttribute("value", e);
+        cut.addEventListener("click", function () {
+            console.log(e);
+        });
+        cut.addEventListener("mouseover", function () {
+            console.log("Cut " + e);
+        })
+        return cut;
+    }
     var input1 = document.createElement("input");
     input1.setAttribute("type", "button");
     input1.setAttribute("value", "Dye");
@@ -88,31 +114,4 @@ function BarberFunc() {
     div.appendChild(Leave);
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
-}
-
-function DyeButton(e, p) {
-    var dye = document.createElement("input");
-    dye.setAttribute("type", "button");
-    dye.setAttribute("value", e);
-    dye.addEventListener("click", function () {
-        player.Face.HairColor = e.toLowerCase()
-        p.innerHTML = "Looking into the barbers mirror you see your hair dying is complete and your hair is now " + player.Face.HairColor;
-    });
-    dye.addEventListener("mouseover", function () {
-        p.innerHTML = e + " dye";
-    })
-    return dye;
-}
-
-function CutButton(e) {
-    var cut = document.createElement("input");
-    cut.setAttribute("type", "button");
-    cut.setAttribute("value", e);
-    cut.addEventListener("click", function () {
-        console.log(e);
-    });
-    cut.addEventListener("mouseover", function () {
-        console.log("Cut " + e);
-    })
-    return cut;
 }

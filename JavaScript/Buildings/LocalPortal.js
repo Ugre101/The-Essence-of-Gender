@@ -28,6 +28,18 @@ function LocalPortalFunc() {
         });
         div.appendChild(Activate);
     }
+    if (player.Map === "MountainPlateau" && House.Portal.MountainPlateau != true) {
+        var Activate = InputButton("Activate", "Sync this local portal with your home portal");
+        Activate.addEventListener("click", function () {
+            House.Portal.MountainPlateau = true;
+            p.innerHTML = "Sync"
+            LocalPortalFunc();
+        });
+        Activate.addEventListener("mouseover", function () {
+            p.innerHTML = "Sync this local portal with your home portal";
+        });
+        div.appendChild(Activate);
+    }
 
     var input1 = InputButton("Home")
     input1.addEventListener("click", function () {
@@ -90,7 +102,27 @@ function LocalPortalFunc() {
         });
         div.appendChild(BlackMarket);
     }
+    if (House.Portal.MountainPlateau) {
+        var MountainPlateau = InputButton("Mountain plateau")
+        MountainPlateau.addEventListener("click", function () {
+            player.Area = "Mountain";
+            player.Map = "MountainPlateau";
+            battle = false;
+            document.getElementById("map").style.display = 'block';
+            document.getElementById("buttons").style.display = 'block';
+            document.getElementById("EmptyButtons").style.display = 'none';
+            document.getElementById("status").style.display = 'block';
+            Buildings.style.display = 'none';
+            while (Buildings.hasChildNodes()) {
+                Buildings.removeChild(Buildings.firstChild);
+            }
+            return;
+        });
+        MountainPlateau.addEventListener("mouseover", function () {
 
+        });
+        div.appendChild(MountainPlateau);
+    }
     div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
     Buildings.style.display = "block";

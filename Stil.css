@@ -122,7 +122,9 @@
        max-width: 92%;
        height: 4vh;
        max-height: 20px;
-       border: 2px solid black;
+       border: 2px solid rgb(54, 40, 40);
+       border-radius: 6px;
+       /*Border-radius need to have a higher value than it's content*/
        margin: auto;
        background-color: rgb(228, 188, 188);
    }
@@ -133,15 +135,15 @@
 
    div.StatusHealth,
    div.StatusWillHealth {
-       height: 4vh;
-       max-height: 20px;
-       background-color: red;
-       border-right: 1px solid rgb(179, 14, 14);
-   }
+       display: block;
+       height: 100%;
+       max-height: inherit;
+       background-color: rgb(255, 0, 0);
+       border-radius: 4px;
+        }
 
    div.StatusWillHealth {
-       background-color: rgb(112, 112, 231);
-       border-right: 1px solid rgb(57, 57, 155);
+       background-color: rgb(0, 0, 255);
    }
 
 
@@ -154,6 +156,7 @@
        height: 4vh;
        max-height: 20px;
        border-right: 1px solid rgb(201, 196, 176);
+       border-radius: 4px;
    }
 
    #FluidMilk {
@@ -347,7 +350,7 @@
        background-size: contain;
        background-position: center;
        border: 20px solid transparent;
-       border-image: url(Res/frame_s_05.png) 20;
+       border-image: url(Res/frame_s_01.png) 20;
        border-radius: 20px;
 
        width: 38%;
@@ -360,8 +363,22 @@
    }
 
    div.Looks {
+       background-image: url(Res/page.png);
+       background-color: rgb(123, 94, 56);
+
        width: 45%;
        height: 95%;
+   }
+
+   @media screen and (max-height: 700px) {
+
+       div.Options,
+       div.LPMenu,
+       div.Looks {
+           background-size: cover;
+           height: 93%;
+           width: 50%;
+       }
    }
 
    @media screen and (max-height: 500px) {
@@ -385,15 +402,7 @@
    }
 
    div.OptionsInnerDiv,
-   div.LPMenuInner {
-       display: inline-block;
-       padding: 1em;
-       margin-top: 3vh;
-       width: 80%;
-       overflow: auto;
-       min-height: 70%;
-   }
-
+   div.LPMenuInner,
    div.LooksInner {
        display: inline-block;
        padding: 1em;
@@ -402,7 +411,7 @@
        overflow: auto;
    }
 
-   @media screen and (max-height: 500px) {
+   @media screen and (max-height: 600px) {
 
        div.OptionsInnerDiv,
        div.LPMenuInner,

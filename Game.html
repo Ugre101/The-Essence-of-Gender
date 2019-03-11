@@ -197,9 +197,7 @@
 			<p id="looks2"></p>
 			<br>
 			<p id="genitals2"></p>
-			<br>
 			<p id="StatusMascFemi"></p>
-			<br>
 			<p id="StatusFitness"></p>
 			<input type="button" id="CloseLooks" value="Close" />
 			<input type="button" id="ExtraInfo" value="Detailed info" />
@@ -353,6 +351,10 @@
 				<div>
 					<label for="SetPronoun">Set pronouns</label>
 					<input type="button" id="SetPronoun" value="Change Pronouns" title="Set your preferred pronouns for different genders." />
+				</div>
+				<div>
+					<label for="HighLightDoors">Highlight doors</label>
+					<input type="button" id="HighLightDoors" value="Highlight Doors" title="Highlight doors" />
 				</div>
 			</div>
 			<label for="EventLogCon">Eventlog max inputs</label>
@@ -947,12 +949,12 @@
 		// Trial to have them loading in a function so if they fail player are alerted.
 		window.onload = function () {
 			var Scripts = [
-				"AfterBattleButtons", "BalanceParts", "Cheats", "CheckArousal", "CheckDoor",
-				"CheckFlags", "Children", "CurrentMap", "Combat", "DateTracker", "DrainChanges",
+				"AfterBattleButtons", "BalanceParts", "Cheats", "CheckArousal",
+				"CheckFlags", "Children", "Combat", "DateTracker", "DrainChanges",
 				"DropSystem", "EssenceCheck", "EventLog", "FluidsEngine", "Hair", "HemScale",
 				"Impregnate", "InferiorUnit", "Items", "Inventory", "LevelMenu", "Loader", "Looks",
 				"Lose", "ManualEssence", "MaxLimbs", "MobileSupport", "MountainTribe", "Movement",
-				"Perk", "Pregnancy", "PrintMap", "Prototype", "RaceEssence", "Racebonus",
+				"Perk", "Pregnancy", "Prototype", "RaceEssence", "Racebonus",
 				"Save", "SexAfterBattle", "TfEngine", "TheFarm", "Winbattle", "Spells", "StatsHandler",
 				"LooksMenu"
 			]
@@ -973,8 +975,9 @@
 				"Opponents/CaveEncounters", "Opponents/SuccubusDungeon", "Opponents/Mountain",
 				"Opponents/Opponents"
 			]
+			let Maps = ["Map/Printdoor", "Map/CurrentMap", "Map/CheckDoor", "Map/PrintMap"]
 			var Settings = ["Settings/Options"];
-			var Arrays = [Scripts, Buildings, Vore, Home, Opponents, Settings];
+			var Arrays = [Scripts, Buildings, Vore, Home, Opponents, Settings, Maps];
 			// Code to sort and output to console, because I find it easier when sorted. #Remember to delete last ","
 			/** 
 			Scripts.sort();
