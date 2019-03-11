@@ -246,7 +246,8 @@
             Exp: false,
             VoreExp: false,
             FastTime: false
-        }
+        },
+        HighLightDoors: false
     }
 
     var Partners = {
@@ -644,6 +645,20 @@
         }
     }
 
+    function HealthWillBars() {
+        var health = document.getElementById("StatusHealth"),
+            will = document.getElementById("StatusWillHealth");
+        health.innerHTML = Math.round(player.Health);
+        health.style.width = Math.min(100 * (player.Health / player.MaxHealth), 103) + "%";
+        will.innerHTML = Math.round(player.WillHealth);
+        will.style.width = Math.min(100 * (player.WillHealth / player.MaxWillHealth), 103) + "%";
+        // Trial of making the bars darker the lower as health goes down.
+        let red = 150 + 105 * (player.Health / player.MaxHealth),
+            blue = 150 + 105 * (player.WillHealth / player.MaxWillHealth);
+        health.style.backgroundColor = "rgb(" + red + ",0,0)";
+        will.style.backgroundColor = "rgb(0,0," + blue + ")";
+    }
+
     function HouseEngine() {
         if (House.Gym > 0) {
             var maxMuscle;
@@ -849,10 +864,7 @@
         player.MaxHealth = player.End * 10 + player.Perks.ExtraHealth.Count * 20;
         player.MaxWillHealth = player.Will * 10 + player.Perks.ExtraWillHealth.Count * 20;
         document.getElementById("StatusName").innerHTML = player.Name + " " + player.LastName;
-        document.getElementById("StatusHealth").innerHTML = Math.round(player.Health);
-        document.getElementById("StatusHealth").style.width = Math.min(100 * (player.Health / player.MaxHealth), 103) + "%";
-        document.getElementById("StatusWillHealth").innerHTML = Math.round(player.WillHealth);
-        document.getElementById("StatusWillHealth").style.width = Math.min(100 * (player.WillHealth / player.MaxWillHealth), 103) + "%";
+        HealthWillBars();
         document.getElementById("StatusLevel").innerHTML = player.level;
         document.getElementById("Gold").innerHTML = "Gold: " + Math.floor(player.Gold);
         document.getElementById("Hunger").innerHTML = (player.Fat <= player.Height / 100) ? "You are starving" : null

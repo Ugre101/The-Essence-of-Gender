@@ -5,6 +5,7 @@ document.getElementById("Options").addEventListener("click", function () {
     document.getElementById("LogLength").innerHTML = Settings.LogLength;
     document.getElementById("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
     document.getElementById("Inch").value = "Inch " + Settings.Inch;
+    document.getElementById("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
 });
 
 document.getElementById("FontSmaller").addEventListener("click", function () {
@@ -158,4 +159,9 @@ document.getElementById("OptionGiveEssence").addEventListener("click", function 
 document.getElementById("PerkOptionsLeave").addEventListener("click", function () {
     document.getElementById("PerkOptionsMenu").style.display = 'none';
     DisplayGame();
+});
+
+document.getElementById("HighLightDoors").addEventListener("click", function () {
+    Settings.HighLightDoors = Settings.HighLightDoors ? false : true;
+    document.getElementById("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
 });
