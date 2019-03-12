@@ -29,9 +29,10 @@ var loader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "City", "F
 ], function () {
     _images = this.images;
     // Stop player from starting before tiles are loaded
-    document.getElementById("LoadingImagesProgress").style.visibility = "hidden";
-    document.getElementById("GoToCharCreator").style.visibility = "visible"
-    document.getElementById("LoadButton").style.visibility = "visible"
+    document.getElementById("LoadingImagesProgress").innerHTML = "Tiles loaded";
+    document.getElementById("LoadingImagesProgress").classList.remove("visible");
+    document.getElementById("LoadingImagesProgress").classList.add("hidden");
+
 });
 
 function PrintImage() { // New and improved
@@ -80,7 +81,7 @@ function CurrentMap() {
     var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
     var FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
     // Shrine
-    var MountainShrine = new Npc("MountainShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
+    var MountainShrine = new Npc("MountainShrine", "Shrine", grid * 5.5, grid * 2.5, grid * 2.4, grid * 2.4, "Pink");
     var ShrinePriestess = new Npc("ShrinePriestess", "Priestess", grid * 15, grid, grid, grid, "Pink");
     // Dragons
     var TribeChief = new Npc("TribeChief", "", grid * 2, grid * 8, grid, grid, "#841A31");
