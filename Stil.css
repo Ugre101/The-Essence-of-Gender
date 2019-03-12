@@ -140,7 +140,7 @@
        max-height: inherit;
        background-color: rgb(255, 0, 0);
        border-radius: 4px;
-        }
+   }
 
    div.StatusWillHealth {
        background-color: rgb(0, 0, 255);
@@ -252,7 +252,6 @@
    }
 
    #StartPage>input[type="button"] {
-       visibility: hidden;
        align-self: center;
        justify-self: center;
        margin: 0.5em;
@@ -278,6 +277,18 @@
            -1px 1px 5px black,
            1px 1px 5px black;
        font-size: 6vw;
+   }
+
+   h2.visible {
+       visibility: visible;
+       opacity: 1;
+       transition: opacity 2s linear;
+   }
+
+   h2.hidden {
+       visibility: hidden;
+       opacity: 0;
+       transition: visibility 0s 2s, opacity 2s linear;
    }
 
    #WorldMap {
