@@ -84,8 +84,30 @@ function EvilNameGiver(who) {
     who.LastName = RandomString(EvilLastNames);
 }
 
-// Functions made to make it easier to make new enemies.
-function EssenceGiver(who, amount, GenderPref = 0, Genderlock = false) {
+function GenderLock(who, amount, Genderlock) { // gives exact gender
+    if (Genderlock == "male") {
+        who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
+        who.Femi = 0;
+    } else if (Genderlock == "cuntboy") {
+        who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
+        who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
+        who.OrganMod.Balls.Size = -Math.round(amount / 10);
+        who.OrganMod.Boobies.Size = -Math.round(amount / 10);
+        who.OrganMod.Dick.Size = -Math.round(amount / 10);
+    } else if (Genderlock == "herm") {
+        who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
+        who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
+    } else if (Genderlock == "dickgirl") {
+        who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
+        who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
+        who.OrganMod.Pussy.Size = -Math.round(amount / 10);
+    } else if (Genderlock == "female") {
+        who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
+        who.Masc = 0;
+    }
+}
+
+function EssenceGiver(who, amount, GenderPref = 0) { // Gives random gender
     who.OrganMod = {
         Dick: {
             Size: 0
@@ -103,58 +125,31 @@ function EssenceGiver(who, amount, GenderPref = 0, Genderlock = false) {
             Size: 0
         }
     };
-    if (Genderlock) {
-        if (Genderlock == "male") {
-            who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
-            who.Femi = 0;
-            // it's a boy
-        } else if (Genderlock == "cuntboy") {
-            who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
-            who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
-            // it's a cuntboy, might add a penalty to allow more cuntboy and dickgirls
-        } else if (Genderlock == "herm") {
-            who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
-            who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
-        } else if (Genderlock == "dickgirl") {
-            who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
-            who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
-            // it's a dickgirl
-        } else if (Genderlock == "female") {
-            who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
-            who.Masc = 0;
-            // it's a girl
-        }
-    } else {
-        var a = RandomInt(1, 13);
-        a += GenderPref;
-        /** Negative Genderpref gives more males and postive more girls. 
-               e.g. -5 makes it's so only males to herm can spawn */
-        if (a < 4) {
-            who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
-            who.Femi = 0;
-            // it's a boy
-        } else if (a < 6) {
-            who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
-            who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
-            // it's a cuntboy, might add a penalty to allow more cuntboy and dickgirls
-            who.OrganMod.Balls.Size = -Math.round(amount / 10);
-            who.OrganMod.Boobies.Size = -Math.round(amount / 10);
-            who.OrganMod.Dick.Size = -Math.round(amount / 10);
-
-        } else if (a < 9) {
-            who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
-            who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
-            // it's a dickgirl
-            who.OrganMod.Pussy.Size = -Math.round(amount / 10);
-        } else if (a < 11) {
-            who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
-            who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
-        } else {
-            who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
-            who.Masc = 0;
-            // it's a girl
-        }
+    var a = RandomInt(1, 13);
+    a += GenderPref;
+    /** Negative Genderpref gives more males and postive more girls. 
+           e.g. -5 makes it's so only males to herm can spawn */
+    if (a < 4) { // Boy
+        who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
+        who.Femi = 0;
+    } else if (a < 6) { // Dickgirl
+        who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
+        who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
+        who.OrganMod.Pussy.Size = -Math.round(amount / 10);
+    } else if (a < 9) { // Herm
+        who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
+        who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
+    } else if (a < 11) { // Cuntboy
+        who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
+        who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
+        who.OrganMod.Balls.Size = -Math.round(amount / 10);
+        who.OrganMod.Boobies.Size = -Math.round(amount / 10);
+        who.OrganMod.Dick.Size = -Math.round(amount / 10);
+    } else { // Girl
+        who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
+        who.Masc = 0;
     }
+
 }
 
 function FatMuscle(who, minfatprocent, minweight) {
@@ -185,7 +180,8 @@ function StandardEnemy(who) {
         Anal: 0
     }
     EssenceCheck(who);
-    EssenceCheck(who);// Double so it gets a chance to loop for second organs
+    EssenceCheck(who);
+    EssenceCheck(who); // tripple so it gets a chance to loop for second organs
     if (who.Pussies.length > 0) {
         var a = RandomInt(1, 5);
         if (a < 5) {
@@ -293,7 +289,7 @@ function EncounterBandit() {
     var OP = new enemy("Bandit", RandomString(RacesBandit), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15),
         RandomInt(8, 15), RandomInt(10, 15), 170, 170, RandomInt(30, 45), RandomInt(30, 55),
         'tomato ', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 500, "male");
+    GenderLock(OP, 500, "male");
     FatMuscle(OP, 7, 70);
     StandardEnemy(OP);
     NameGiver(OP);
@@ -305,7 +301,7 @@ function EncounterBanditLord() {
     var OP = new enemy("Banditlord", RandomString(RacesBandit), RandomInt(20, 35), RandomInt(10, 15), RandomInt(20, 35), RandomInt(20, 35),
         RandomInt(20, 35), RandomInt(40, 60), 350, 300, RandomInt(55, 85), RandomInt(75, 150),
         'tomato', 1.5 * grid, RandomInt(160, 200));
-    EssenceGiver(OP, 1000, "male");
+    GenderLock(OP, 1000, "male");
     FatMuscle(OP, 7, 80);
     StandardEnemy(OP);
     var startarea = document.getElementById("hem");

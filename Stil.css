@@ -48,7 +48,7 @@
        background-color: rgb(137, 129, 168);
        height: auto;
        max-height: 50vh;
-       width: 20vw;
+       width: 18%;
        border-top: 4px ridge purple;
        border-left: 4px ridge purple;
        border-top-left-radius: 15px;
@@ -376,19 +376,18 @@
    div.Looks {
        background-image: url(Res/page.png);
        background-color: rgb(123, 94, 56);
-
-       width: 45%;
-       height: 95%;
+       background-size: cover;
+       width: 58%;
+       height: 94%;
    }
 
    @media screen and (max-height: 700px) {
 
        div.Options,
-       div.LPMenu,
-       div.Looks {
-           background-size: cover;
-           height: 93%;
+       div.LPMenu {
+           height: 94%;
            width: 50%;
+           background-size: cover;
        }
    }
 
@@ -471,7 +470,7 @@
 
    div.status,
    div.buttons {
-       width: 17%;
+       width: 18%;
        max-width: 260px;
        height: 50%;
        top: 0;
@@ -502,28 +501,70 @@
        }
    }
 
-   #Encounter {
-       grid-template: "a a a a"
-           "b c c d"
-           "e e e e";
-       grid-gap: 1em;
+   div.CombatStatus {
+       border-top-right-radius: 45%;
+       border-top-left-radius: 45%;
+       background-color: rgb(187, 161, 113);
+       border: 15px ridge rgb(104, 91, 67);
+   }
 
-       height: auto;
+   div.CombatButtonGrid {
+       display: grid;
+       grid-template-columns: repeat(auto-fill, minmax(20px, 25%));
+       grid-column-gap: 0;
+       overflow: auto;
+       justify-content: center;
+   }
+
+   #Encounter {
+       grid-template:
+           "a a a"
+           "b c d"
+           "e e e";
+       grid-gap: 1em;
+       grid-template-columns: 25% 40% 25%;
+       grid-template-rows: 15% 40% 45%;
+
+       background-color: rgb(209, 171, 99);
+       border: 20px solid transparent;
+       border-image: url(Res/frame_s_05.png) 20;
+       border-radius: 20px;
+
+       height: 94%;
+       width: 97%;
+
+       justify-content: center;
        text-align: center;
-       border-radius: 5px;
-       border: 2px solid black;
-       background-color: rgb(235, 235, 228);
        -webkit-user-select: none;
        -moz-user-select: none;
        -ms-user-select: none;
        user-select: none;
    }
 
+   @media (max-height: 500px) {
+       #Encounter {
+           grid-template:
+               "b d"
+               "c c"
+               "e e";
+           grid-template-columns: 50vw 50vw;
+           grid-template-rows: 20vh, 40vh, 40vh;
+           border: none;
+           border-radius: 0;
+           height: 100vh;
+           width: 100vw;
+           grid-gap: 0;
+       }
+
+       #Encounter>h1 {
+           display: none;
+       }
+   }
+
    #BattleLog {
-       box-shadow: 0 0 1px 1px black;
+       border: rgb(44, 13, 13) ridge 4px;
        border-radius: 9px;
        background-color: rgb(255, 255, 255);
-       width: 400px;
    }
 
    .a {
@@ -562,8 +603,8 @@
        padding: 2em;
        text-align: center;
        border-radius: 5px;
-       border: 2px solid black;
-       background-color: rgb(192, 189, 192);
+       border: 5px ridge purple;
+       background-color: rgb(255, 211, 255);
        justify-items: center;
        overflow: auto;
 
@@ -595,7 +636,9 @@
 
    div.PlayerSex,
    div.EnemySex {
-       border-radius: 60px;
+       border-radius: 5%;
+       border-top-right-radius: 20%;
+       border-top-left-radius: 20%;
        grid-area: b;
        width: 100%;
        height: 100%;
@@ -616,7 +659,7 @@
 
    @media screen and (max-height: 800px) {
        div.AfterBattle {
-           width: 100%;
+           width: 95.5%;
            height: 90%;
        }
    }
@@ -627,12 +670,12 @@
    }
 
    div.SexLog {
+       border: 20px solid indianred;
+       border-image: url(Res/frame_s_06.png) 40;
+       border-image-outset: 9px;
        min-height: 100px;
        width: 80%;
-       box-shadow: 0 0 1px 1px black;
-       border-radius: 15px;
-       padding: 0.1em;
-       background-color: rgb(230, 230, 230);
+       background-color: rgb(255, 255, 255);
        grid-area: c;
        overflow: auto;
    }

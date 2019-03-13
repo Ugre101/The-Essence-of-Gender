@@ -627,20 +627,20 @@
             case "cuntboy":
             case "female":
                 document.getElementById(where + "Sex").style.backgroundColor = "rgba(255, 192, 203, 0.7)";
-                document.getElementById(where + "Sex").style.border = "1px solid rgba(255, 192, 203)";
+                document.getElementById(where + "Sex").style.border = "5px ridge rgba(255, 192, 203)";
                 break;
             case "dickgirl":
             case "male":
                 document.getElementById(where + "Sex").style.backgroundColor = "rgba(0, 0, 255, 0.3)";
-                document.getElementById(where + "Sex").style.border = "1px solid rgba(0, 0, 255)";
+                document.getElementById(where + "Sex").style.border = "5px ridge rgba(0, 0, 255)";
                 break;
             case "hermaphrodite":
                 document.getElementById(where + "Sex").style.backgroundColor = "rgba(128, 0, 128, 0.3)";
-                document.getElementById(where + "Sex").style.border = "1px solid rgba(128, 0, 128)";
+                document.getElementById(where + "Sex").style.border = "5px ridge rgba(128, 0, 128)";
                 break;
             case "doll":
                 document.getElementById(where + "Sex").style.backgroundColor = "rgba(245, 245, 220)";
-                document.getElementById(where + "Sex").style.border = "1px solid rgb(201, 201, 182)";
+                document.getElementById(where + "Sex").style.border = "5px ridge rgb(201, 201, 182)";
                 break;
         }
     }
@@ -793,51 +793,6 @@
             return enemies[b].XPos;
         }
     }
-
-    function PrintEnemies() {
-        var startarea = document.getElementById("hem");
-        var ctx = startarea.getContext("2d");
-        for (var e = 0; e < enemies.length; e++) {
-            for (var i = e + 1; i < enemies.length; i++) {
-                if (enemies[e].XPos == enemies[i].XPos) {
-                    enemies[e].XPos = RandomInt(2, 18) * grid;
-                }
-            }
-
-            ctx.fillStyle = enemies[e].Color;
-            ctx.fillRect(enemies[e].XPos, enemies[e].YPos, enemies[e].Size, enemies[e].Size);
-
-            var color;
-            switch (CheckGender(enemies[e])) {
-                case "cuntboy":
-                    color = "blue";
-                    break;
-                case "female":
-                    color = "rgb(231, 84, 128)";
-                    break;
-                case "dickgirl":
-                    color = "rgb(231, 84, 128)";
-                    break;
-                case "male":
-                    color = "Blue";
-                    break;
-                case "hermaphrodite":
-                    color = "Purple";
-                    break;
-                case "doll":
-                    color = "Beige";
-                    break;
-            }
-            ctx.fillStyle = color;
-            ctx.fillRect(enemies[e].XPos + enemies[e].Size / 3, enemies[e].YPos + enemies[e].Size / 3, enemies[e].Size / 3, enemies[e].Size / 3);
-            ctx.fillStyle = "Black";
-            ctx.strokeRect(enemies[e].XPos + enemies[e].Size / 3, enemies[e].YPos + enemies[e].Size / 3, enemies[e].Size / 3, enemies[e].Size / 3);
-            ctx.fillStyle = Settings.TextColor;
-            ctx.font = "1vh Arial";
-            ctx.textAlign = "center";
-            ctx.fillText(enemies[e].Name + " " + enemies[e].Race, enemies[e].XPos + enemies[e].Size / 2, enemies[e].YPos);
-        }
-    };
 
     var fps = [];
 

@@ -9,20 +9,23 @@ function PerkMenuFunc() {
         div.removeChild(div.firstChild);
     }
 
-    if (window.innerHeight > 800) { // Testing spawning titles only when screen is big to help mobile users.
+    let innerdiv = document.createElement("div");
+    innerdiv.classList.add("LPMenuInner");
+
+    if (window.innerHeight > 600) { // Testing spawning titles only when screen is big to help mobile users.
         let h1 = document.createElement("h1");
         let h1text = document.createTextNode("Perk menu");
         h1.appendChild(h1text);
-        div.appendChild(h1);
+        innerdiv.appendChild(h1);
     }
 
     let p = document.createElement("p");
     p.classList.add("MenuText");
-    div.appendChild(p);
+    innerdiv.appendChild(p);
 
     let pp = document.createElement("p");
     pp.innerHTML = "You have " + player.PerkPoints + " perk points left.";
-    div.appendChild(pp);
+    innerdiv.appendChild(pp);
 
     let active = document.createElement("div");
     active.addEventListener("mouseover", function (e) {
@@ -105,10 +108,10 @@ function PerkMenuFunc() {
     });
     active.appendChild(GiveEssence);
 
-    div.appendChild(passiveh3);
-    div.appendChild(passive);
-    div.appendChild(activeh3);
-    div.appendChild(active)
+    innerdiv.appendChild(passiveh3);
+    innerdiv.appendChild(passive);
+    innerdiv.appendChild(activeh3);
+    innerdiv.appendChild(active)
 
     let back = InputButton("Back")
     back.addEventListener("click", function () {
@@ -122,7 +125,8 @@ function PerkMenuFunc() {
     });
 
     let br = document.createElement("br");
-    div.appendChild(br);
-    div.appendChild(back);
-    div.appendChild(close);
+    innerdiv.appendChild(br);
+    innerdiv.appendChild(back);
+    innerdiv.appendChild(close);
+    div.appendChild(innerdiv);
 }
