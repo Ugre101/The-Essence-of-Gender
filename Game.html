@@ -102,7 +102,7 @@
 		</div>
 		<input type="button" id="HideFluids" value="Hide" class="SmolButton" />
 		<h2 id="EventFluidsH2">Fluids</h2>
-		<input type="button" id="FluidsMode" value="A" class="SmolButton" />
+		<input type="button" id="FluidsMode" value="A" class="SmolButton" title="Change the amount of rows." />
 		<div id="FluidPart">
 			<div id="FluidContainer" class="AutoColumn">
 				<div id="CumBar">
@@ -536,7 +536,7 @@
 
 	<div id="Encounter" class="None">
 		<h1 class="a">Battle</h1>
-		<div id="TheEnemy" class="d">
+		<div id="TheEnemy" class="d CombatStatus">
 			<p id="BattleEnemy"></p>
 			<label for="EnemyStatusHealth">Health</label>
 			<div class="FullBar">
@@ -547,8 +547,9 @@
 				<div id="EnemyStatusWillHealth" class="StatusWillHealth"></div>
 			</div>
 		</div>
-		<div id="ThePlayer" class="b">
+		<div id="ThePlayer" class="b CombatStatus">
 			<p id="StatusName2"></p>
+			<br>
 			<label for="StatusHealth2">Health</label>
 			<div class="FullBar">
 				<div id="StatusHealth2" class="StatusHealth"></div>
@@ -563,10 +564,8 @@
 			<p id="BattleText"></p>
 			<p id="BattleText2"></p>
 		</div>
-		<div class="e Grid" id="CombatButtons">
+		<div class="e CombatButtonGrid" id="CombatButtons">
 		</div>
-
-
 	</div>
 
 	<div id="AfterBattle" class="AfterBattle None">
@@ -948,36 +947,55 @@
 	<script>
 		// Trial to have them loading in a function so if they fail player are alerted.
 		window.onload = function () {
-			var Scripts = [
-				"AfterBattleButtons", "BalanceParts", "Cheats", "CheckArousal",
-				"CheckFlags", "Children", "Combat", "DateTracker", "DrainChanges",
-				"DropSystem", "EssenceCheck", "EventLog", "FluidsEngine", "Hair", "HemScale",
-				"Impregnate", "InferiorUnit", "Items", "Inventory", "LevelMenu", "Loader", "Looks",
-				"Lose", "ManualEssence", "MaxLimbs", "MobileSupport", "MountainTribe", "Movement",
-				"Perk", "Pregnancy", "Prototype", "RaceEssence", "Racebonus",
-				"Save", "SexAfterBattle", "TfEngine", "TheFarm", "Winbattle", "Spells", "StatsHandler",
-				"LooksMenu"
-			]
-			var Buildings = [
-				"Buildings/Bar", "Buildings/BlackMarket", "Buildings/ChimeraShrine", "Buildings/Gym",
-				"Buildings/MountainShrine", "Buildings/PotionShop", "Buildings/PortalShop",
-				"Buildings/WitchShop", "Buildings/WitchHut", "Buildings/Townhall", "Buildings/Barber",
-				"Buildings/LocalPortal"
-			]
-			var Vore = [
-				"Vore/Vore", "Vore/VoreActions", "Vore/VorePreyInterAction"
-			]
-			var Home = [
-				"Home/Dorm", "Home/Home", "Home/HomeUpgrades"
-				// ,"BrothelSystem"
-			]
-			var Opponents = [
-				"Opponents/CaveEncounters", "Opponents/SuccubusDungeon", "Opponents/Mountain",
-				"Opponents/Opponents"
-			]
-			let Maps = ["Map/Printdoor", "Map/CurrentMap", "Map/CheckDoor", "Map/PrintMap"]
-			var Settings = ["Settings/Options"];
-			var Arrays = [Scripts, Buildings, Vore, Home, Opponents, Settings, Maps];
+			let Scripts = {
+				name: "JavaScript",
+				array: [
+					"AfterBattleButtons", "BalanceParts", "Cheats", "CheckArousal",
+					"CheckFlags", "Children", "Combat", "DateTracker", "DrainChanges",
+					"DropSystem", "EssenceCheck", "EventLog", "FluidsEngine", "Hair", "HemScale",
+					"Impregnate", "InferiorUnit", "Items", "Inventory", "LevelMenu", "Loader", "Looks",
+					"Lose", "ManualEssence", "MaxLimbs", "MobileSupport", "MountainTribe", "Movement",
+					"Perk", "Pregnancy", "Prototype", "RaceEssence", "Racebonus",
+					"Save", "SexAfterBattle", "TfEngine", "TheFarm", "Winbattle", "Spells", "StatsHandler",
+					"LooksMenu"
+				]
+			}
+			let Buildings = {
+				name: "JavaScript/Buildings",
+				array: [
+					"Bar", "BlackMarket", "ChimeraShrine", "Gym", "MountainShrine", "PotionShop",
+					"PortalShop", "WitchShop", "WitchHut", "Townhall", "Barber", "LocalPortal"
+				]
+			}
+			let Vore = {
+				name: "JavaScript/Vore",
+				array: [
+					"Vore", "VoreActions", "VorePreyInterAction"
+				]
+			}
+			let Home = {
+				name: "JavaScript/Home",
+				array: [
+					"Dorm", "Home", "HomeUpgrades"
+					// ,"BrothelSystem"
+				]
+			}
+			let Opponents = {
+				name: "JavaScript/Opponents",
+				array: [
+					"CaveEncounters", "SuccubusDungeon", "Mountain",
+					"Opponents", "PrintEnemies"
+				]
+			}
+			let Maps = {
+				name: "JavaScript/Map",
+				array: ["Printdoor", "CurrentMap", "CheckDoor", "PrintMap"]
+			}
+			let Settings = {
+				name: "JavaScript/Settings",
+				array: ["Options"]
+			};
+			let Arrays = [Scripts, Buildings, Vore, Home, Opponents, Settings, Maps];
 			// Code to sort and output to console, because I find it easier when sorted. #Remember to delete last ","
 			/** 
 			Scripts.sort();
@@ -985,9 +1003,9 @@
 			**/
 			// Function to load script and output error when failing to load script.
 			Arrays.forEach(function (den) {
-				den.forEach(function (src) {
-					var newScript = document.createElement("script");
-					newScript.src = "JavaScript/" + src + ".js";
+				den.array.forEach(function (src) {
+					let newScript = document.createElement("script");
+					newScript.src = den.name + "/" + src + ".js";
 					document.head.appendChild(newScript);
 					newScript.onerror = function () {
 						alert("Error loading " + src);

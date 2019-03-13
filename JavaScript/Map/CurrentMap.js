@@ -1,5 +1,5 @@
 function ImageLoad(arr, callback) { // Preload images to stop flickering
-    this.images = {};
+    let images = {};
     var loaded = 0;
 
     if (Array.isArray(arr)) {
@@ -16,7 +16,7 @@ function ImageLoad(arr, callback) { // Preload images to stop flickering
     function ImageLoaded() {
         loaded++;
         if (loaded >= arr.length) {
-            callback();
+            callback(images);
         }
     }
 }
@@ -26,8 +26,8 @@ var loader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "City", "F
     "rtb2", "Start", "Witch", "MountainStart", "MountainShrinePath", "MountainShrine", "MountainClimb", "MountainClimb2",
     "MountainClimb3", "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8",
     "MountainClimb9", "MountainPlateau"
-], function () {
-    _images = this.images;
+], function (images) {
+    _images = images;
     // Stop player from starting before tiles are loaded
     document.getElementById("LoadingImagesProgress").innerHTML = "Tiles loaded";
     document.getElementById("LoadingImagesProgress").classList.remove("visible");
