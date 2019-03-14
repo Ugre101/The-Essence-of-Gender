@@ -58,7 +58,7 @@ function EssenceCheck(who) {
 
         if (who.Masc < 30 && who.Dicks.length > 0) {
             who.Dicks.pop();
-        } else if (who.Masc >= 30 && who.Dicks.length == 0) {
+        } else if (OrganSize(who, "Masc", 3, "Dick") >= 3 && who.Dicks.length == 0) {
             var Dick = {
                 Size: OrganSize(who, "Masc", 3, "Dick"),
                 Type: who.Race,
@@ -89,7 +89,7 @@ function EssenceCheck(who) {
 
         if (who.Masc < 50 && who.Balls.length > 0) {
             who.Balls.pop();
-        } else if (who.Masc >= 50 && who.Balls.length == 0) {
+        } else if (OrganSize(who, "Masc", 4, "Balls", 0, 2) >= 2 && who.Balls.length == 0) {
             var Ball = {
                 Size: OrganSize(who, "Masc", 4, "Balls", 0, 2),
                 Type: who.Race,
@@ -127,7 +127,7 @@ function EssenceCheck(who) {
         if (who.Femi < 30 && who.Pussies.length > 0) {
             who.Pussies.pop();
             who.Boobies[0].Size = 0;
-        } else if (who.Femi >= 30 && who.Pussies.length == 0) {
+        } else if (OrganSize(who, "Femi", 3, "Pussy") >= 3 && who.Pussies.length == 0) {
             var Pussy = {
                 Size: OrganSize(who, "Femi", 3, "Pussy"),
                 Type: who.Race,

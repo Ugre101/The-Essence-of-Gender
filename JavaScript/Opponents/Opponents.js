@@ -25,16 +25,16 @@ function enemy(EnemyName, EnemyRace, Strength, Endurance, Willpower, Charm,
 // Feral concept list
 //var FeralEnemy = ["Squirrel", "Rabbit", "Cat", "Wolf", "Boar", "Deer", "Horse", "Lion", "Bear", "Rhino", "Elephant", "Dragon"];
 function NameGiver(who) {
-    var FemaleFirstNames = ["Jaiden", "Judy", "Nia", "Kelis", "Chelsea", "Amani", "Veronica", "Kyra", "Lauryn", "Alicja", "Tate", "Colleen", "Melody", "Pippa", "Keziah", "Melissa", "Lana", "Marie", "Molly", "Sandra", "Dannielle", "Yusra", "Laiba", "Gabrielle", "Syeda", "Amirah",
-        "Lindsay", "Karly", "Itzel", "Clarissa", "Ansley", "Leanna", "Briley", "Cara", "Katelynn", "Susan", "Alexis", "Kaia", "Marlee", "Emmy", "Genevieve", "Melany", "Jaylynn", "Amari", "Sharon", "Miah", "Karen", "Kylie"
-    ];
-    var MaleFirstNames = ["Jerome", "Napoleon", "Duncan", "Brant", "Chance", "Dewitt", "Brendan", "Asim", "Faith", "Macy", "Landon", "Sulaiman", "Iestyn", "Gordon", "Hector", "Haris", "Lee", "Simran", "Ronnie", "Rishi", "Bartosz", "Shelley", "Virgil", "Howard", "Rio", "Prince",
-        "Glenn", "Daniel", "Felipe", "Willie", "Aden", "Brennen", "Cale", "Arnav", "Quentin", "River", "Clarence", "Jamal", "Luca", "Brent", "Tyrone", "Ryan", "Damien", "Carmelo", "Reese", "Braiden", "Beckham"
-    ];
-    var LastNames = ["Paine", "Ward", "Bostock", "Devine", "Heath", "Bone", "Dupont", "Patterson", "Garza", "Stein", "Madden", "Francis", "Villanueva", "Perry", "Lyssa", "Beach", "Crouch", "Sharp", "Clifford", "Wade", "Vargas", "Hatfield", "Mata", "Lozano", "Everett",
-        "Krueger", "Jimenez", "Fitzpatrick", "Nelson", "Scott", "Vaughn", "Lee", "Hodge", "Blackburn", "Wall", "Hernandez", "Valdez", "Summers", "Mercado", "Villarreal", "Mitchell", "Duran", "David", "Black", "Hopkins", "Hughes", "Rangel"
-    ];
-    LastNames.RemoveDup();
+    const FemaleFirstNames = ["Jaiden", "Judy", "Nia", "Kelis", "Chelsea", "Amani", "Veronica", "Kyra", "Lauryn", "Alicja", "Tate", "Colleen", "Melody", "Pippa", "Keziah", "Melissa", "Lana", "Marie", "Molly", "Sandra", "Dannielle", "Yusra", "Laiba", "Gabrielle", "Syeda", "Amirah",
+            "Lindsay", "Karly", "Itzel", "Clarissa", "Ansley", "Leanna", "Briley", "Cara", "Katelynn", "Susan", "Alexis", "Kaia", "Marlee", "Emmy", "Genevieve", "Melany", "Jaylynn", "Amari", "Sharon", "Miah", "Karen", "Kylie"
+        ],
+        MaleFirstNames = ["Jerome", "Napoleon", "Duncan", "Brant", "Chance", "Dewitt", "Brendan", "Asim", "Faith", "Macy", "Landon", "Sulaiman", "Iestyn", "Gordon", "Hector", "Haris", "Lee", "Simran", "Ronnie", "Rishi", "Bartosz", "Shelley", "Virgil", "Howard", "Rio", "Prince",
+            "Glenn", "Daniel", "Felipe", "Willie", "Aden", "Brennen", "Cale", "Arnav", "Quentin", "River", "Clarence", "Jamal", "Luca", "Brent", "Tyrone", "Ryan", "Damien", "Carmelo", "Reese", "Braiden", "Beckham"
+        ],
+        LastNames = ["Paine", "Ward", "Bostock", "Devine", "Heath", "Bone", "Dupont", "Patterson", "Garza", "Stein", "Madden", "Francis", "Villanueva", "Perry", "Lyssa", "Beach", "Crouch", "Sharp", "Clifford", "Wade", "Vargas", "Hatfield", "Mata", "Lozano", "Everett",
+            "Krueger", "Jimenez", "Fitzpatrick", "Nelson", "Scott", "Vaughn", "Lee", "Hodge", "Blackburn", "Wall", "Hernandez", "Valdez", "Summers", "Mercado", "Villarreal", "Mitchell", "Duran", "David", "Black", "Hopkins", "Hughes", "Rangel"
+        ];
+    //LastNames.RemoveDup();
     switch (CheckGender(who)) {
         case "cuntboy":
         case "male":
@@ -46,21 +46,16 @@ function NameGiver(who) {
             who.FirstName = RandomString(FemaleFirstNames);
             break;
         case "doll":
-            var i = RandomInt(0, 10);
-            if (i < 5) {
-                who.FirstName = RandomString(FemaleFirstNames);
-            } else {
-                who.FirstName = RandomString(MaleFirstNames);
-            }
+            who.FirstName = RandomInt(0, 10) < 5 ? RandomString(FemaleFirstNames) : RandomString(MaleFirstNames);
             break;
     }
     who.LastName = RandomString(LastNames);
 }
 
 function EvilNameGiver(who) {
-    var EvilMaleFirstNames = ["Neclord", "Virion", "Dario", "Grumio", "Auron", "Jaymes", "Fark", "Cidolfus", "Bartholomew", "Arthur"];
-    var EvilFemaleFirstNames = ["Autumn", "Imeena", "Margorie", "Draven", "Lauden", "Ethel", "Cat", "Raven", "Senka", "Jinx"];
-    var EvilLastNames = ["Crimson", "Kane", "Duke", "Interfector", "Geulimja", "Ebonywood", "Grove", "Helion", "Church", "Geulimja", "Moonfall", "Winter", "Hart", "Calarook", "Crypt", "Wolf", "Rex", "Fadington", "Maganti", "Hook"];
+    const EvilMaleFirstNames = ["Neclord", "Virion", "Dario", "Grumio", "Auron", "Jaymes", "Fark", "Cidolfus", "Bartholomew", "Arthur"],
+        EvilFemaleFirstNames = ["Autumn", "Imeena", "Margorie", "Draven", "Lauden", "Ethel", "Cat", "Raven", "Senka", "Jinx"],
+        EvilLastNames = ["Crimson", "Kane", "Duke", "Interfector", "Geulimja", "Ebonywood", "Grove", "Helion", "Church", "Geulimja", "Moonfall", "Winter", "Hart", "Calarook", "Crypt", "Wolf", "Rex", "Fadington", "Maganti", "Hook"];
     //EvilMaleFirstNames.RemoveDup();
     switch (CheckGender(who)) {
         case "cuntboy":
@@ -73,12 +68,7 @@ function EvilNameGiver(who) {
             who.FirstName = RandomString(EvilFemaleFirstNames);
             break;
         case "doll":
-            var i = RandomInt(0, 10);
-            if (i < 5) {
-                who.FirstName = RandomString(EvilFemaleFirstNames);
-            } else {
-                who.FirstName = RandomString(EvilMaleFirstNames);
-            }
+            who.FirstName = RandomInt(0, 10) < 5 ? RandomString(EvilFemaleFirstNames) : RandomString(EvilMaleFirstNames);
             break;
     }
     who.LastName = RandomString(EvilLastNames);
@@ -179,18 +169,17 @@ function StandardEnemy(who) {
         Pussy: 0,
         Anal: 0
     }
-    EssenceCheck(who);
-    EssenceCheck(who);
-    EssenceCheck(who); // tripple so it gets a chance to loop for second organs
+    for (let a = 0; a < 10; a++) { // Loop for mor exact organs.
+        EssenceCheck(who);
+    }
+
     if (who.Pussies.length > 0) {
-        var a = RandomInt(1, 5);
-        if (a < 5) {
+        if (RandomInt(1, 5) < 5) {
             who.Pussies[0].Virgin = false;
         }
     }
     if (who.Dicks.length > 0) {
-        var b = RandomInt(1, 5);
-        if (b < 5) {
+        if (RandomInt(1, 5) < 5) {
             who.Dicks[0].Virgin = false;
         }
     }
@@ -198,9 +187,9 @@ function StandardEnemy(who) {
 
 // Encounter function
 function EncounterStart() {
-    var Races = ["Human", "Halfling"];
-    var Names = ["Commoner", "Farmer", "Thug"];
-    var OP = new enemy(RandomString(Names), RandomString(Races), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5),
+    const Races = ["Human", "Halfling"],
+        Names = ["Commoner", "Farmer", "Thug"]
+    let OP = new enemy(RandomString(Names), RandomString(Races), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5),
         RandomInt(2, 5), RandomInt(6, 9), 70, 70, RandomInt(15, 20), RandomInt(5, 15),
         'Chocolate', grid, RandomInt(140, 180));
     EssenceGiver(OP, 50);

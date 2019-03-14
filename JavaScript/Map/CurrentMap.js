@@ -1,12 +1,12 @@
 function ImageLoad(arr, callback) { // Preload images to stop flickering
     let images = {};
-    var loaded = 0;
+    let loaded = 0;
 
     if (Array.isArray(arr)) {
         for (var e of arr) {
-            var img = new Image();
+            let img = new Image();
             img.onload = ImageLoaded;
-            img.src = "Tiles/" + e + ".png";
+            img.src = `Tiles/${e}.png`;
             images[e] = img;
         }
     } else {
@@ -21,7 +21,7 @@ function ImageLoad(arr, callback) { // Preload images to stop flickering
     }
 }
 var _images = {};
-var loader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "City", "Forest", "Forest2", "Outlaws",
+const loader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "City", "Forest", "Forest2", "Outlaws",
     "PathToOutlaws", "PathToOutlaws2", "RoadToCity", "RoadToCity2", "RoadToHome", "RoadToWitch", "RoadToWitch2",
     "rtb2", "Start", "Witch", "MountainStart", "MountainShrinePath", "MountainShrine", "MountainClimb", "MountainClimb2",
     "MountainClimb3", "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8",
@@ -36,11 +36,10 @@ var loader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "City", "F
 });
 
 function PrintImage() { // New and improved
-    var startarea = document.getElementById("hem");
-    var ctx = startarea.getContext("2d");
+    const startarea = document.getElementById("hem"),
+        ctx = startarea.getContext("2d");
     if (typeof _images[player.Map] !== "undefined") {
         ctx.clearRect(0, 0, startarea.width, startarea.height);
-        ctx.fillRect(0, 0, 20 * grid, 20 * grid)
         ctx.drawImage(_images[player.Map], 0, 0, startarea.width, startarea.height);
         if (Settings.HighLightDoors) {
             PrintDoors();
@@ -49,45 +48,60 @@ function PrintImage() { // New and improved
         PaintBackground();
         PrintDoors();
     }
+
+    function PaintBackground() {
+        ctx.fillStyle = Settings.MapColor;
+        ctx.fillRect(0, 0, startarea.width, startarea.height);
+
+        // Wall around map
+        ctx.fillStyle = Settings.BorderColor;
+        ctx.fillRect(0, 0, grid / 2, startarea.height);
+        ctx.fillRect(0, 0, startarea.width, grid / 2);
+        ctx.fillRect(startarea.width - (grid / 2), 0, grid / 2, startarea.height);
+        ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
+    }
 };
 
 function CurrentMap() {
-    var Npcs = []; // Moved here to avoid public handling of npcs, need to double check so I haven't
-    // forgoten avoid any refernce to Npcs somewhere
     PrintImage()
+    let Npcs = []; // Moved here to avoid public handling of npcs, need to double check so I haven't
+    // forgoten avoid any refernce to Npcs somewhere
     //First Town
-    var Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
-    var Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
-    var Bar = new Npc("Bar", "Bar", 14 * grid, 14 * grid, grid * 5.5, grid * 5.5, "RGB(133,94,66)")
-    // RtW
-    var Gym = new Npc("Gym", "Gym", grid / 2, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
-    var WitchShop = new Npc("WitchShop", "Witch shop", grid * 15, grid * 6, grid * 4.5, grid * 10, "RGB(133,94,66)");
-    // Witch
-    var WitchHut = new Npc("WitchHut", "Witch hut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
-    var ChimeraShrine = new Npc("ChimeraShrine", "Chimera shrine", grid * 3, grid * 17, grid * 2, grid * 2, "RGB(133,94,66)");
-    // Misc
-    var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
+    const startarea = document.getElementById("hem"),
+        ctx = startarea.getContext("2d"),
+        Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)"),
+        Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)"),
+        Bar = new Npc("Bar", "Bar", 14 * grid, 14 * grid, grid * 5.5, grid * 5.5, "RGB(133,94,66)"),
+        // RtW
+        Gym = new Npc("Gym", "Gym", grid / 2, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)"),
+        WitchShop = new Npc("WitchShop", "Witch shop", grid * 15, grid * 6, grid * 4.5, grid * 10, "RGB(133,94,66)"),
+        // Witch
+        WitchHut = new Npc("WitchHut", "Witch hut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)"),
+        ChimeraShrine = new Npc("ChimeraShrine", "Chimera shrine", grid * 3, grid * 17, grid * 2, grid * 2, "RGB(133,94,66)"),
+        // Misc
+        Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)"),
+
+
+        Barber = new Npc("Barber", "Hair salon", grid * 15, grid, grid * 5, grid * 4, "RGB(133,94,66)"),
+        PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)"),
+        //Outlaw
+        BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)"),
+        // Dungeons
+        FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)"),
+        // Farm
+        FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)"),
+        FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)"),
+        // Shrine
+        MountainShrine = new Npc("MountainShrine", "Shrine", grid * 5.5, grid * 2.5, grid * 2.4, grid * 2.4, "Pink"),
+        ShrinePriestess = new Npc("ShrinePriestess", "Priestess", grid * 15, grid, grid, grid, "Pink"),
+        // Dragons
+        TribeChief = new Npc("TribeChief", "", grid * 2, grid * 8, grid, grid, "#841A31"),
+        TribeChiefWife = new Npc("TribeChiefWife", "", grid * 2, grid * 10, grid, grid, "#841A31"),
+        TribeShop = new Npc("TribeShop", "", grid * 12, grid * 15, grid * 4, grid * 5, "RGB(133,94,66)");
 
     function Portal(Xpos, Ypos) { // Portal is function so I can change X-position & Y-position
         return new Npc("LocalPortal", "Portal", grid * Xpos, grid * Ypos, grid * 4, grid * 4, "RGB(96, 47, 107)")
     }
-    var Barber = new Npc("Barber", "Hair salon", grid * 15, grid, grid * 5, grid * 4, "RGB(133,94,66)");
-    var PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)");
-    //Outlaw
-    var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
-    // Dungeons
-    var FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)");
-    // Farm
-    var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
-    var FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
-    // Shrine
-    var MountainShrine = new Npc("MountainShrine", "Shrine", grid * 5.5, grid * 2.5, grid * 2.4, grid * 2.4, "Pink");
-    var ShrinePriestess = new Npc("ShrinePriestess", "Priestess", grid * 15, grid, grid, grid, "Pink");
-    // Dragons
-    var TribeChief = new Npc("TribeChief", "", grid * 2, grid * 8, grid, grid, "#841A31");
-    var TribeChiefWife = new Npc("TribeChiefWife", "", grid * 2, grid * 10, grid, grid, "#841A31");
-    var TribeShop = new Npc("TribeShop", "", grid * 12, grid * 15, grid * 4, grid * 5, "RGB(133,94,66)");
-
     //Animal testing
     /*	var aSpawn = Math.random();
     	if (enemies.length < 1 && Settings.AnimalSpawn)
@@ -103,82 +117,58 @@ function CurrentMap() {
                     if (enemies.length < 1) {
                         enemies = [EncounterStart(), EncounterStart(), EncounterStart()];
                     }
-                    PrintImage("Start");
                     break;
                 case "RoadToCity":
                     if (enemies.length < 1) {
                         enemies = [EncounterPath1(), EncounterPath1(), EncounterPath1()];
                     }
-                    PrintImage("RoadToCity")
                     break;
                 case "Bandit":
                     if (enemies.length < 1) {
                         enemies = [EncounterBandit(), EncounterBandit(), EncounterBandit(), EncounterBanditLord()];
                     }
-                    PrintImage("Bandit");
                     break;
                 case "RoadToCity2":
                     if (enemies.length < 1) {
                         enemies = [EncounterPath2(), EncounterPath2(), EncounterPath2()];
                     }
-                    PrintImage("RoadToCity2");
                     break;
                 case "City":
-                    enemies = [];
                     Npcs = [Townhall, Bar, Shop];
-                    PrintImage("City");
                     break;
                 case "RoadToHome":
-                    enemies = [];
                     Npcs = [ChimeraShrine];
-                    PrintImage("RoadToHome");
                     break;
                 case "RoadToWitch":
-                    enemies = [];
                     Npcs = [Gym, WitchShop, Barber];
-                    PrintImage("RoadToWitch");
                     break;
                 case "RoadToWitch2":
                     if (enemies.length < 1) {
                         enemies = [EncounterPathToWitch2(), EncounterPathToWitch2(), EncounterPathToWitch2(), EncounterPathToWitch2()];
                     }
-                    PrintImage("RoadToWitch2");
                     break;
                 case "Witch":
-                    enemies = [];
                     Npcs = [WitchHut];
-                    PrintImage("Witchhut");
                     break;
                 case "Forest":
                     if (enemies.length < 1) {
                         enemies = [EncounterForest(), EncounterForest(), EncounterForest(), RespawnBlocker()];
                     }
-                    PrintImage("Forest");
                     break
                 case "Forest2":
                     if (enemies.length < 1) {
                         enemies = [EncounterForest2(), EncounterForest2(), EncounterForest2(), EncounterForest2(), RespawnBlocker()];
                     }
-                    PrintImage("Forest2");
                     break;
             }
             break;
         case "Second":
             switch (player.Map) {
                 case "PathToOutlaws":
-                    if (enemies.length < 1) {
-
-                    }
-                    PrintImage("PathToOutlaws");
                     break;
                 case "PathToOutlaws2":
-                    if (enemies.length < 1) {
-
-                    }
-                    PrintImage("PathToOutlaws2");
                     break;
                 case "Farm":
-                    PrintDoor("W");
                     if (enemies.length < 1) {}
                     Npcs = [FarmOwner, FarmBarn]
                     break;
@@ -187,32 +177,27 @@ function CurrentMap() {
 
                     }
                     Npcs = [BlackMarket, PortalShop, Portal(15, 15)]
-                    PrintImage("Outlaws");
                     break;
                 case "Cave1":
                     if (enemies.length < 1) {
                         enemies = [EncounterCave1(), EncounterCave1(), EncounterCave1(), EncounterCave1(), EncounterCave1()]
                     }
-                    PrintImage("Cave1");
                     break;
                 case "Cave2":
                     if (enemies.length < 1) {
                         enemies = [EncounterCave2(), EncounterCave2(), EncounterCave2(), EncounterCave2(), EncounterCave2()]
                     }
-                    PrintImage("Cave2");
                     break;
                 case "Cave3":
                     if (enemies.length < 1) {
                         enemies = [EncounterCave3(), EncounterCave3(), EncounterCave3()]
                     }
-                    PrintImage("Cave3");
                     break;
                 case "Cave4":
                     if (enemies.length < 1) {
                         enemies = [EncounterCave4(), EncounterCave4(), EncounterCave4(), EncounterCave4()]
                     }
                     Npcs = [FirstDungeon];
-                    PrintImage("Cave4");
                     break;
             }
             break;
@@ -300,80 +285,63 @@ function CurrentMap() {
                     break;
             }
     }
-    Npcs.length > 0 ? (PrintNpcs(Npcs), TouchNpc(Npcs)) : false;
-}
+    Npcs.length > 0 ? (PrintNpcs(), TouchNpc()) : false;
 
-function PrintNpcs(Npcs) {
-    var startarea = document.getElementById("hem");
-    var ctx = startarea.getContext("2d");
-    var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
-    // Switched it so new npcs always print
-    var DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"];
-    for (var e of Npcs) {
-        if (DontneedPrint.indexOf(e.Name) === -1) {
-            ctx.fillStyle = e.Color;
-            ctx.fillRect(e.X, e.Y, e.Width, e.Height);
-        }
-        ctx.fillStyle = Settings.TextColor;
-        ctx.font = "4vh Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(e.RealName, e.X + e.Width / 2, e.Y + e.Height / 1.8);
-    }
-};
-
-function TouchNpc(Npcs) {
-    for (var n of Npcs) {
-        if (sprite.x + grid * sprite.Size >= n.X && sprite.x < n.X + n.Width &&
-            sprite.y + grid * sprite.Size >= n.Y && sprite.y < n.Y + n.Height) {
-            if (mousedowner) {
-                clearInterval(mFunction);
-                mousedowner = false;
+    function PrintNpcs() {
+        const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"];
+        // var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
+        // Switched it so new npcs always print
+        for (var e of Npcs) {
+            if (DontneedPrint.indexOf(e.Name) === -1) {
+                ctx.fillStyle = e.Color;
+                ctx.fillRect(e.X, e.Y, e.Width, e.Height);
             }
-            battle = true;
-            var startarea = document.getElementById("hem");
-            sprite.x = startarea.width / 2 - grid;
-            sprite.y = startarea.height / 2;
-            UpdateNpc(n.Name);
-            document.getElementById("SellLimbs").style.display = Settings.EssenceAuto ? 'none' : 'inline-block';
+            ctx.fillStyle = Settings.TextColor;
+            ctx.font = "4vh Arial";
+            ctx.textAlign = "center";
+            ctx.fillText(e.RealName, e.X + e.Width / 2, e.Y + e.Height / 1.8);
+        }
+    };
+
+    function TouchNpc() {
+        for (var n of Npcs) {
+            if (sprite.x + grid * sprite.Size >= n.X && sprite.x < n.X + n.Width &&
+                sprite.y + grid * sprite.Size >= n.Y && sprite.y < n.Y + n.Height) {
+                if (mousedowner) {
+                    clearInterval(mFunction);
+                    mousedowner = false;
+                }
+                battle = true;
+                sprite.x = startarea.width / 2 - grid;
+                sprite.y = startarea.height / 2;
+                UpdateNpc(n.Name);
+                document.getElementById("SellLimbs").style.display = Settings.EssenceAuto ? 'none' : 'inline-block';
+            }
+        }
+
+        function UpdateNpc(name) {
+            var isfunction = window[name + "Func"];
+            if (typeof isfunction === "function") { // Start replacing html building/npcs with javascript functions
+                document.getElementById("map").style.display = 'none';
+                document.getElementById("buttons").style.display = 'none';
+                document.getElementById("EmptyButtons").style.display = 'block';
+                isfunction();
+            } else {
+                document.getElementById(name).style.display = 'block';
+                document.getElementById("map").style.display = 'none';
+                document.getElementById("buttons").style.display = 'none';
+                document.getElementById("EmptyButtons").style.display = 'block';
+                document.getElementById("Leave" + name).addEventListener("click", function () {
+                    battle = false;
+                    document.getElementById(name).style.display = 'none';
+                    document.getElementById("map").style.display = 'block';
+                    document.getElementById("buttons").style.display = 'block';
+                    document.getElementById("EmptyButtons").style.display = 'none';
+                    document.getElementById("status").style.display = 'block';
+                    document.getElementById(name + "Text").innerHTML = null;
+                    return;
+                });
+            }
         }
     }
-}
-
-function UpdateNpc(name) {
-    var isfunction = window[name + "Func"];
-    if (typeof isfunction === "function") { // Start replacing html building/npcs with javascript functions
-        document.getElementById("map").style.display = 'none';
-        document.getElementById("buttons").style.display = 'none';
-        document.getElementById("EmptyButtons").style.display = 'block';
-        isfunction();
-    } else {
-        document.getElementById(name).style.display = 'block';
-        document.getElementById("map").style.display = 'none';
-        document.getElementById("buttons").style.display = 'none';
-        document.getElementById("EmptyButtons").style.display = 'block';
-        document.getElementById("Leave" + name).addEventListener("click", function () {
-            battle = false;
-            document.getElementById(name).style.display = 'none';
-            document.getElementById("map").style.display = 'block';
-            document.getElementById("buttons").style.display = 'block';
-            document.getElementById("EmptyButtons").style.display = 'none';
-            document.getElementById("status").style.display = 'block';
-            document.getElementById(name + "Text").innerHTML = null;
-            return;
-        });
-    }
-}
-
-function PaintBackground() {
-    var startarea = document.getElementById("hem");
-    var ctx = startarea.getContext("2d");
-    ctx.fillStyle = Settings.MapColor;
-    ctx.fillRect(0, 0, startarea.width, startarea.height);
-
-    // Wall around map
-    ctx.fillStyle = Settings.BorderColor;
-    ctx.fillRect(0, 0, grid / 2, startarea.height);
-    ctx.fillRect(0, 0, startarea.width, grid / 2);
-    ctx.fillRect(startarea.width - (grid / 2), 0, grid / 2, startarea.height);
-    ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
 }

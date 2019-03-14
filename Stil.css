@@ -758,6 +758,7 @@
    }
 
    input[type=button],
+   input[type=submit],
    button {
        text-align: center;
        font-family: inherit;
@@ -782,11 +783,13 @@
    }
 
    input[type=button]:hover,
+   input[type=submit]:hover,
    button:hover {
        background-color: rgb(187, 160, 124);
    }
 
    input[type=button]:active,
+   input[type=submit]:active,
    button:active {
        background-color: rgb(187, 160, 124);
        box-shadow: 0 0 2px 2px black;

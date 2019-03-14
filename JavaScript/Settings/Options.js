@@ -38,13 +38,15 @@ document.getElementById("Log-10").addEventListener("click", function () {
 document.getElementById("AcceptPronoun").addEventListener("click", function () {
     DisplayNone();
     document.getElementById("optionpage").style.display = 'block';
-    Settings.Pronoun.Herm = document.getElementById("Herm").value;
-    Settings.Pronoun.Male = document.getElementById("Male").value;
-    Settings.Pronoun.Female = document.getElementById("Female").value;
-    Settings.Pronoun.Doll = document.getElementById("Doll").value;
-    Settings.Pronoun.DickGirl = document.getElementById("DickGirl").value;
-    Settings.Pronoun.CuntBoy = document.getElementById("CuntBoy").value;
-    Settings.Pronoun.Status = true;
+    Settings.Pronoun = {
+        Herm: document.getElementById("Herm").value,
+        Male: document.getElementById("Male").value,
+        Female: document.getElementById("Female").value,
+        Doll: document.getElementById("Doll").value,
+        DickGirl: document.getElementById("DickGirl").value,
+        CuntBoy: document.getElementById("CuntBoy").value,
+        Status: true
+    };
 });
 document.getElementById("DisablePronoun").addEventListener("click", function () {
     DisplayNone();
@@ -58,8 +60,8 @@ document.getElementById("Inch").addEventListener("click", function () {
 });
 
 document.getElementById("FullScreen").addEventListener("click", function () {
-    var elem = document.body;
-    var button = document.getElementById("FullScreen");
+    const elem = document.body,
+        button = document.getElementById("FullScreen");
     if (document.fullscreenElement === null) {
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
@@ -125,18 +127,6 @@ document.getElementById("Skip").addEventListener("click", function () {
     Settings.Skip = Settings.Skip ? false : true;
     document.getElementById("Skip").value = "Skip " + Settings.Skip;
 });
-
-/**
- * document.getElementById("MBalance").addEventListener("click", function () {
-    if (Settings.EssenceAuto) {
-        Settings.BalanceParts = !Settings.BalanceParts;
-        document.getElementById("MBalance").value = "Balance " + Settings.BalanceParts;
-    }
-    EssenceCheck(player);
-    for (var q = 0; q < enemies.length; q++)
-        EssenceCheck(enemies[q]);
-});
- */
 
 document.getElementById("OptionGiveEssence").addEventListener("click", function () {
     switch (Settings.GiveEssence) {

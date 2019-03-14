@@ -20,7 +20,7 @@ function EnemyImageLoad(arr, callback) { // Preload images to stop flickering
     }
 }
 var Enemy_images = {};
-var Enemyloader = EnemyImageLoad(["orc"], function (images) {
+const Enemyloader = EnemyImageLoad(["orc"], function (images) {
     Enemy_images = images;
 });
 

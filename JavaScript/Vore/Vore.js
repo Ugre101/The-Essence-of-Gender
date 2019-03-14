@@ -4,7 +4,7 @@
         Settings.Vore = Settings.Vore ? false : true;
         document.getElementById("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none';
         document.getElementById("Vore").value = "Vore " + Settings.Vore;
-        if (!player.hasOwnProperty("Vore")) {
+        if (!player.hasOwnProperty("Vore")) { 
             player.Vore = {
                 Level: 0,
                 Exp: 0,
@@ -35,11 +35,6 @@
                 AbsorbEssence: true
             }
         }
-    });
-
-    document.getElementById("VoreStart").addEventListener("click", function () {
-        Settings.Vore = Settings.Vore ? false : true;
-        document.getElementById("VoreStart").value = "Vore " + Settings.Vore;
     });
 
     document.getElementById("VorePerks").addEventListener("click", function () {
