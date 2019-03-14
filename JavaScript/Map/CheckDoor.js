@@ -1,39 +1,40 @@
-function DoorHandler(NESW) {
-    var startarea = document.getElementById("hem");
-    if (NESW === "N") {
-        sprite.y = startarea.height - 3 * grid;
-        enemies = [];
-    } else if (NESW === "E") {
-        sprite.x = 2 * grid;
-        enemies = [];
-    } else if (NESW === "S") {
-        sprite.y = 2 * grid;
-        enemies = [];
-    } else if (NESW === "W") {
-        sprite.x = startarea.width - 3 * grid;
-        enemies = [];
-    }
-}
-
-function MakeDoor(x, y, width, height, NESW) {
-    this.x = x,
-        this.y = y,
-        this.width = width,
-        this.height = height,
-        this.NESW = NESW
-};
-
 function CheckDoor() {
-    var startarea = document.getElementById("hem");
-    DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E");
-    DoorS = new MakeDoor(startarea.width / 2 - 3 * grid, startarea.height - 2 * grid, grid * 5, grid, "S");
-    DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W");
-    DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N");
-    var Doors = [DoorE, DoorS, DoorN, DoorW];
-    for (var i = 0; i < Doors.length; i++) {
-        var Door = Doors[i].NESW;
-        if (sprite.x + grid * sprite.Size >= Doors[i].x && sprite.x <= Doors[i].x + Doors[i].width &&
-            sprite.y + grid * sprite.Size >= Doors[i].y && sprite.y <= Doors[i].y + Doors[i].height) {
+    function DoorHandler(NESW) {
+        const startarea = document.getElementById("hem");
+        enemies = [];
+        switch (NESW) {
+            case "N":
+                sprite.y = startarea.height - 3 * grid;
+                break;
+            case "E":
+                sprite.x = 2 * grid;
+                break;
+            case "S":
+                sprite.y = 2 * grid;
+                break;
+            case "W":
+                sprite.x = startarea.width - 3 * grid;
+                break;
+        }
+    }
+
+    function MakeDoor(x, y, width, height, NESW) {
+        this.x = x,
+            this.y = y,
+            this.width = width,
+            this.height = height,
+            this.NESW = NESW
+    };
+    const startarea = document.getElementById("hem"),
+        DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E"),
+        DoorS = new MakeDoor(startarea.width / 2 - 3 * grid, startarea.height - 2 * grid, grid * 5, grid, "S"),
+        DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W"),
+        DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N"),
+        Doors = [DoorE, DoorS, DoorN, DoorW];
+    for (let i of Doors) {
+        let Door = i.NESW;
+        if (sprite.x + grid * sprite.Size >= i.x && sprite.x <= i.x + i.width &&
+            sprite.y + grid * sprite.Size >= i.y && sprite.y <= i.y + i.height) {
             switch (player.Area) {
                 case "First":
                     switch (player.Map) {
@@ -94,21 +95,10 @@ function CheckDoor() {
                                 document.getElementById("EmptyButtons").style.display = 'block';
                                 document.getElementById("Home").style.display = 'block';
                                 document.getElementById("HomeText").style.display = 'block';
-                                if (House.Dorm > 0) {
-                                    document.getElementById("Dorm").style.display = "inline-block";
-                                } else {
-                                    document.getElementById("Dorm").style.display = "none"
-                                }
-                                if (House.Portal.Owned) {
-                                    document.getElementById("Portal").style.display = 'inline-block'
-                                } else {
-                                    document.getElementById("Portal").style.display = 'none'
-                                }
-                                if (House.Brothel > 0) {
-                                    document.getElementById("Brothel").style.display = 'inline-block';
-                                } else {
-                                    document.getElementById("Brothel").style.display = 'none';
-                                }
+
+                                document.getElementById("Dorm").style.display = House.Dorm > 0 ? "inline-block" : 'none';
+                                document.getElementById("Portal").style.display = House.Portal.Owned ? 'inline-block' : 'none';
+                                document.getElementById("Brothel").style.display = House.Brothel ? 'inline-block' : 'none';
                             } else if (Door == "N") {
                                 player.Map = "RoadToWitch";
                                 DoorHandler("N");
@@ -142,7 +132,7 @@ function CheckDoor() {
                             if (Door == "N") {
                                 player.Map = "City";
                                 DoorHandler("N");
-                            } else if (Doors[i].NESW == "S") {
+                            } else if (Door == "S") {
                                 player.Map = "Forest2";
                                 DoorHandler("S");
                             }

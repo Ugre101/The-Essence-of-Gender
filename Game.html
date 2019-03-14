@@ -27,38 +27,28 @@
 			<h2>Create character</h2>
 			<form>
 				<label for="firstname">First name</label>
-				<div>
-					<input type="text" id="firstname" placeholder="Your first name" value="Alex" />
-				</div>
+				<input type="text" id="firstname" placeholder="Your first name" value="Alex" />
 				<label for="lastname">Last name</label>
-				<div>
-					<input type="text" id="lastname" placeholder="Your last name" value="Smith" />
-				</div>
+				<input type="text" id="lastname" placeholder="Your last name" value="Smith" />
 				<label for="haircolor">Hair color</label>
-				<div>
-					<select id="haircolor">
-						<option value="blonde">Blonde</option>
-						<option value="brown">Brown</option>
-						<option value="dark brown">Dark Brown</option>
-						<option value="black">Black</option>
-						<option value="red">Red</option>
-					</select>
-				</div>
+				<select id="haircolor">
+					<option value="blonde">Blonde</option>
+					<option value="brown">Brown</option>
+					<option value="dark brown">Dark Brown</option>
+					<option value="black">Black</option>
+					<option value="red">Red</option>
+				</select>
 				<label for="skincolor">Skin color</label>
-				<div>
-					<select id="skincolor">
-						<option value="fair">Pale</option>
-						<option value="tan">Tan</option>
-						<option value="brown">Brown</option>
-						<option value="black">Black</option>
-					</select>
-				</div>
+				<select id="skincolor">
+					<option value="fair">Pale</option>
+					<option value="tan">Tan</option>
+					<option value="brown">Brown</option>
+					<option value="black">Black</option>
+				</select>
 			</form>
 			<br>
-			<div>
-				<input type="button" id="BackHome" value=" Return " />
-				<input type="button" id="Begin" value="Continue" />
-			</div>
+			<input type="button" id="BackHome" value=" Return " />
+			<input type="button" id="Begin" value="Continue">
 		</div>
 	</div>
 
@@ -947,7 +937,7 @@
 	<script>
 		// Trial to have them loading in a function so if they fail player are alerted.
 		window.onload = function () {
-			let Scripts = {
+			const Scripts = {
 				name: "JavaScript",
 				array: [
 					"AfterBattleButtons", "BalanceParts", "Cheats", "CheckArousal",
@@ -960,42 +950,42 @@
 					"LooksMenu"
 				]
 			}
-			let Buildings = {
+			const Buildings = {
 				name: "JavaScript/Buildings",
 				array: [
 					"Bar", "BlackMarket", "ChimeraShrine", "Gym", "MountainShrine", "PotionShop",
 					"PortalShop", "WitchShop", "WitchHut", "Townhall", "Barber", "LocalPortal"
 				]
 			}
-			let Vore = {
+			const Vore = {
 				name: "JavaScript/Vore",
 				array: [
 					"Vore", "VoreActions", "VorePreyInterAction"
 				]
 			}
-			let Home = {
+			const Home = {
 				name: "JavaScript/Home",
 				array: [
 					"Dorm", "Home", "HomeUpgrades"
 					// ,"BrothelSystem"
 				]
 			}
-			let Opponents = {
+			const Opponents = {
 				name: "JavaScript/Opponents",
 				array: [
 					"CaveEncounters", "SuccubusDungeon", "Mountain",
 					"Opponents", "PrintEnemies"
 				]
 			}
-			let Maps = {
+			const Maps = {
 				name: "JavaScript/Map",
 				array: ["Printdoor", "CurrentMap", "CheckDoor", "PrintMap"]
 			}
-			let Settings = {
+			const Settings = {
 				name: "JavaScript/Settings",
 				array: ["Options"]
 			};
-			let Arrays = [Scripts, Buildings, Vore, Home, Opponents, Settings, Maps];
+			const Arrays = [Scripts, Buildings, Vore, Home, Opponents, Settings, Maps];
 			// Code to sort and output to console, because I find it easier when sorted. #Remember to delete last ","
 			/** 
 			Scripts.sort();

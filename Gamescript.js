@@ -297,94 +297,110 @@
 
     // Start page
     document.getElementById("GoToCharCreator").addEventListener("click", function () {
+        CharCreator();
         document.getElementById("CharCreator").style.display = 'flex';
         document.getElementById("StartPage").style.display = 'none';
     });
 
-    // Start på char creator
-    document.getElementById("Begin").addEventListener("click", function () {
-        document.getElementById("CharCreator").style.display = 'none';
-        document.getElementById("page2").style.display = 'flex';
-        document.getElementById("startgame").style.display = 'none';
-        player.Name = document.getElementById("firstname").value;
-        player.LastName = document.getElementById("lastname").value;
-        player.Face.HairColor = document.getElementById("haircolor").value;
-        player.Skincolor = document.getElementById("skincolor").value;
-        player.MaxHealth = 100;
-        player.MaxWillHealth = 100;
-        player.Health = player.MaxHealth;
-        player.WillHealth = player.MaxWillHealth;
-        player.Mana = 100;
-        player.Spells.push(SpellDictLite.MinorHealing);
-        document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
-    });
+    function CharCreator() { // No need have these active for players who use load.
+        // Maybe a bit overkill but did it to train.
+        const BeginButton = document.getElementById("Begin"),
+            BackHomeButton = document.getElementById("BackHome"),
+            StartAutoEssenceButton = document.getElementById("StartAutoEssence"),
+            startgameButton = document.getElementById("startgame"),
+            VoreStartButton = document.getElementById("VoreStart"),
+            CharCreator = document.getElementById("CharCreator"),
+            page2 = document.getElementById("page2")
 
-    document.getElementById("BackHome").addEventListener("click", function () {
-        document.getElementById("CharCreator").style.display = 'none';
-        document.getElementById("StartPage").style.display = 'grid';
-    });
+        BeginButton.addEventListener("click", begin)
+        BackHomeButton.addEventListener("click", BackHome)
+        StartAutoEssenceButton.addEventListener("click", StartAutoEssence)
+        startgameButton.addEventListener("click", startgame)
+        VoreStartButton.addEventListener("click", VoreStart)
 
-    // Ge karaktär start värden
-    document.getElementById("Begin").addEventListener("click", function () {
-        document.getElementById("startgame").style.display = 'inline-block';
-        document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.LastName + ", a " + Math.round(player.Height) + "cm tall " + Pronoun(CheckGender(player)) +
-            ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Face.HairColor + " hair and " + player.Skincolor +
-            " skin; hopefully the last time you see your body absent of any other details or personality.<br><br>For today, you will forge your own way in this world.";
+        function begin() {
+            CharCreator.style.display = 'none';
+            page2.style.display = 'flex';
+            player.Name = document.getElementById("firstname").value;
+            player.LastName = document.getElementById("lastname").value;
+            player.Face.HairColor = document.getElementById("haircolor").value;
+            player.Skincolor = document.getElementById("skincolor").value;
+            player.MaxHealth = 100;
+            player.MaxWillHealth = 100;
+            player.Health = player.MaxHealth;
+            player.WillHealth = player.MaxWillHealth;
+            player.Mana = 100;
+            player.Spells.push(SpellDictLite.MinorHealing);
+            document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+            document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.LastName + ", a " + Math.round(player.Height) + "cm tall " + Pronoun(CheckGender(player)) +
+                ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Face.HairColor + " hair and " + player.Skincolor +
+                " skin; hopefully the last time you see your body absent of any other details or personality.<br><br>For today, you will forge your own way in this world.";
 
-        requestAnimationFrame(loop);
-        DateEngine();
-    });
+            requestAnimationFrame(loop);
+            DateEngine();
+        };
 
-    document.getElementById("StartAutoEssence").addEventListener("click", function () {
-        Settings.EssenceAuto = !Settings.EssenceAuto;
-        document.getElementById("StartAutoEssence").value = "Auto TF " + Settings.EssenceAuto;
-        if (Settings.BalanceParts) {
-            Settings.BalanceParts = false;
-            document.getElementById("Balance").value = "Balance " + Settings.BalanceParts;
-        }
-    });
+        function BackHome() {
+            CharCreator.style.display = 'none';
+            document.getElementById("StartPage").style.display = 'grid';
+            RemoveListerners();
+        };
 
-    /**
-     *     document.getElementById("Balance").addEventListener("click", function () {
-            if (Settings.EssenceAuto) {
-                Settings.BalanceParts = !Settings.BalanceParts;
-                document.getElementById("Balance").value = "Balance " + Settings.BalanceParts;
+        function StartAutoEssence() {
+            Settings.EssenceAuto = !Settings.EssenceAuto;
+            StartAutoEssenceButton.value = "Auto TF " + Settings.EssenceAuto;
+            if (Settings.BalanceParts) {
+                Settings.BalanceParts = false;
             }
-        });
-     */
+        };
 
-    document.getElementById("startgame").addEventListener("click", function () {
-        document.getElementById("page2").style.display = 'none';
-        DisplayGame();
-        HemScale();
-    });
+        function startgame() {
+            page2.style.display = 'none';
+            DisplayGame();
+            HemScale();
+            RemoveListerners();
+        };
+
+        function VoreStart() {
+            Settings.Vore = Settings.Vore ? false : true;
+            VoreStartButton.value = "Vore " + Settings.Vore;
+        };
+
+        function RemoveListerners() {
+            BeginButton.removeEventListener("click", begin);
+            BackHomeButton.removeEventListener("click", BackHome)
+            StartAutoEssenceButton.removeEventListener("click", StartAutoEssence)
+            startgameButton.removeEventListener("click", startgame)
+            VoreStartButton.removeEventListener("click", VoreStart)
+        }
+    }
+
+
 
     // Sets display to none used for menu buttons
     function DisplayNone() {
         battle = true;
-        var DisplayNone = [
+        const DisplayNoneArray = [
             "map", "optionpage", "ShowLooks", "LevelMenu", "LoadMenu", "SaveMenu", "PerkOptionsMenu",
             "ShowQuests", "DetailedInfo", "Levels", "ShowVore", "EssenceOptionsMenu",
             "PronounForm", "Inventory", "ChildrenMenu", "SpellBook"
-        ]
-        DisplayNone.forEach(function (src) {
+        ].forEach(function (src) {
             document.getElementById(src).style.display = 'none';
         });
         if (window.innerHeight < 600) {
-            document.getElementById("map").style.display = 'none';
-            document.getElementById("buttons").style.display = 'none';
-            document.getElementById("status").style.display = 'none';
-            document.getElementById("EventLog").style.display = 'none';
+            const MobileNone = ["map", "buttons", "status", "EventLog"].forEach(function (src) {
+                document.getElementById(src).style.display = 'none';
+            })
+
         }
     }
 
     function DisplayGame() {
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("status").style.display = 'block';
-        document.getElementById("EventLog").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
         battle = false;
+        const DisplayGameArray = ["map", "buttons", "status", "EventLog"].forEach(function (src) {
+            document.getElementById(src).style.display = 'block';
+        });
+        document.getElementById("EmptyButtons").style.display = 'none';
         if (MobileButtons) {
             document.getElementById("buttons").style.width = 17 + "%";
             document.getElementById("buttons").style.maxWidth = 260 + "px";
@@ -408,17 +424,16 @@
         DisplayNone();
         document.getElementById("ShowQuests").style.display = 'block';
 
-        var questText = " ";
-        for (var e = 0; e < player.Quests.length; e++) {
-            var Tier = "";
-            if (player.Quests[e].hasOwnProperty("Tier")) {
-                Tier = "<br>Tier: " + player.Quests[e].Tier;
-                if (player.Quests[e].Tier > 4) {
+        let questText = " ";
+        for (var e of player.Quests) {
+            let Tier = "";
+            if (e.hasOwnProperty("Tier")) {
+                Tier = "<br>Tier: " + e.Tier;
+                if (e.Tier > 4) {
                     Tier += " max";
                 }
             }
-            questText += "<div><h4>" + player.Quests[e].Name + "</h4>" + "Completed: " + player.Quests[e].Completed + " <br>Count: " +
-                player.Quests[e].Count + Tier + "<br><br></div>";
+            questText += `<div><h4>${e.Name}</h4>Completed: ${e.Completed} <br>Count:  ${e.Count} ${Tier} <br><br></div>`;
         }
         document.getElementById("QuestTexts").innerHTML = questText;
     });
@@ -467,7 +482,7 @@
     }
 
     function CheckGender(who) {
-        var gender;
+        let gender;
         if (who.Dicks.length > 0 && who.Pussies.length > 0) {
             gender = "hermaphrodite";
         } else if (who.Dicks.length > 0 && Math.floor(who.Boobies.some(e => e.Size > 1))) {
@@ -486,13 +501,10 @@
     // Level System
 
     function ExpCheck() {
-        var MaxExp = 30 * Math.pow(1.05, player.level - 1);
+        const MaxExp = 30 * Math.pow(1.05, player.level - 1);
         document.getElementById("StatusLevel").style.width = Math.min(100 * (player.Exp / MaxExp), 100) + "%";
-        if (player.SkillPoints > 0 || player.PerkPoints > 0) {
-            document.getElementById("LevelButton").style.display = 'inline-block';
-        } else {
-            document.getElementById("LevelButton").style.display = 'none';
-        }
+        document.getElementById("LevelButton").style.display = (player.SkillPoints > 0 || player.PerkPoints > 0) ? 'inline-block' : 'none';
+
         if (player.Exp >= MaxExp) {
             player.Exp = player.Exp - MaxExp;
             player.level++;
@@ -527,13 +539,11 @@
             case "Mode2":
                 Settings.ImgPack = "Mode3";
                 break;
-            case "Mode3":
-            case true:
+            default:
                 Settings.ImgPack = false;
                 break;
         }
-
-        document.getElementById("ImgPack").value = "Img pack: " + Settings.ImgPack;
+        document.getElementById("ImgPack").value = `Img pack: ${Settings.ImgPack}`;
     });
 
     function ImgChose(who, what, who2) {
@@ -583,7 +593,7 @@
     //    document.getElementById("EnemyLooks").innerHTML = BoobLook(enemies[EnemyIndex]) + "<br>" + PussyLook(enemies[EnemyIndex]) + "<br>" + DickLook(enemies[EnemyIndex]);
 
     function HeightSystem(me, they) {
-        var a;
+        let a;
         if (me.Height > they.Height) {
             if (me.Height * 0.95 < they.Height) {
                 a = "Your opponent is almost as tall as you.";
@@ -623,30 +633,31 @@
     };
 
     function SexColor(who, where) {
+        const WS = document.getElementById(where + "Sex").style;
         switch (CheckGender(who)) {
             case "cuntboy":
             case "female":
-                document.getElementById(where + "Sex").style.backgroundColor = "rgba(255, 192, 203, 0.7)";
-                document.getElementById(where + "Sex").style.border = "5px ridge rgba(255, 192, 203)";
+                WS.backgroundColor = "rgba(255, 192, 203, 0.7)";
+                WS.border = "5px ridge rgba(255, 192, 203)";
                 break;
             case "dickgirl":
             case "male":
-                document.getElementById(where + "Sex").style.backgroundColor = "rgba(0, 0, 255, 0.3)";
-                document.getElementById(where + "Sex").style.border = "5px ridge rgba(0, 0, 255)";
+                WS.backgroundColor = "rgba(0, 0, 255, 0.3)";
+                WS.border = "5px ridge rgba(0, 0, 255)";
                 break;
             case "hermaphrodite":
-                document.getElementById(where + "Sex").style.backgroundColor = "rgba(128, 0, 128, 0.3)";
-                document.getElementById(where + "Sex").style.border = "5px ridge rgba(128, 0, 128)";
+                WS.backgroundColor = "rgba(128, 0, 128, 0.3)";
+                WS.border = "5px ridge rgba(128, 0, 128)";
                 break;
             case "doll":
-                document.getElementById(where + "Sex").style.backgroundColor = "rgba(245, 245, 220)";
-                document.getElementById(where + "Sex").style.border = "5px ridge rgb(201, 201, 182)";
+                WS.backgroundColor = "rgba(245, 245, 220)";
+                WS.border = "5px ridge rgb(201, 201, 182)";
                 break;
         }
     }
 
     function HealthWillBars() {
-        var health = document.getElementById("StatusHealth"),
+        const health = document.getElementById("StatusHealth"),
             will = document.getElementById("StatusWillHealth");
         health.innerHTML = Math.round(player.Health);
         health.style.width = Math.min(100 * (player.Health / player.MaxHealth), 103) + "%";
@@ -772,7 +783,8 @@
         if (battle === true) {
             return;
         }
-        for (var j = 0; j < enemies.length; j++) {
+
+        for (let j in enemies) {
             if (sprite.x + grid * sprite.Size >= enemies[j].XPos && sprite.x < enemies[j].XPos + enemies[j].Size &&
                 sprite.y + grid * sprite.Size >= enemies[j].YPos && sprite.y < enemies[j].YPos + enemies[j].Size) {
                 if (mousedowner) {
@@ -788,12 +800,6 @@
         }
     };
 
-    function testsa(e) { // Does  y
-        for (var b = e; b < enemies.length; b++) {
-            return enemies[b].XPos;
-        }
-    }
-
     var fps = [];
 
     function loop() {
@@ -806,14 +812,6 @@
             fps.pop();
             fps.pop();
         }
-        var startarea = document.getElementById("hem");
-        var ctx = startarea.getContext("2d");
-        startarea.width = medium;
-        startarea.height = medium;
-
-        if (Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20 !== medium) {
-            HemScale();
-        };
 
         document.getElementById("StatusArea").innerHTML = "Area: " + player.Area + " and Map: " + player.Map;
         player.MaxHealth = player.End * 10 + player.Perks.ExtraHealth.Count * 20;
@@ -829,16 +827,23 @@
         ExpCheck();
 
         if (!battle) {
+            var startarea = document.getElementById("hem");
+            var ctx = startarea.getContext("2d");
+            startarea.width = medium;
+            startarea.height = medium;
+
+            if (Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20 !== medium) {
+                HemScale();
+            };
             CurrentMap();
             Settings.Vore ? VoreEngine() : false; // However it does shrink the size of code quite a lot... idk
             Settings.Cheats.Enabled ? CheatEngine() : false;
             (enemies.length > 0) ? PrintEnemies(): false;
-            var startarea = document.getElementById("hem");
-            var ctx = startarea.getContext("2d");
             ctx.fillStyle = "BlueViolet";
             ctx.fillRect(sprite.x, sprite.y, grid * sprite.Size, grid * sprite.Size);
             Laglimiter++;
             if (Laglimiter % 80 == 0) {
+                Laglimiter = 0;
                 Settings.EssenceAuto ? EssenceCheck(player) : false;
                 //EssenceBalance();
                 player.Fat = Math.max(0.1, player.Fat);
