@@ -1,6 +1,6 @@
-var PRL;
-var RL;
-var LastPressed;
+var PRL,
+    RL,
+    LastPressed;
 // Mouth
 function SexActGiveBlowjob() {
     if (Settings.ImgPack) {

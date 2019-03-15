@@ -176,20 +176,7 @@ function TownhallFunc() {
     row1.appendChild(input4);
     div.appendChild(row1);
 
-    var Leave = InputButton("Leave");
-    Leave.addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
-        Buildings.style.display = 'none';
-        while (Buildings.hasChildNodes()) {
-            Buildings.removeChild(Buildings.firstChild);
-        }
-        return;
-    });
-    div.appendChild(Leave);
+    div.appendChild(LeaveBuilding());
 
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';

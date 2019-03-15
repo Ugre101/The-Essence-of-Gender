@@ -505,7 +505,7 @@
        border-top-right-radius: 45%;
        border-top-left-radius: 45%;
        background-color: rgb(187, 161, 113);
-       border: 15px ridge rgb(104, 91, 67);
+       border: 14px ridge rgb(104, 91, 67);
    }
 
    div.CombatButtonGrid {
