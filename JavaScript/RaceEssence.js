@@ -1,13 +1,9 @@
 function isTaur(mode = 1) {
-    var Taur = ["centaur"]
-    var max = Math.min(3, player.RaceEssence.length);
-    for (var e = 0; e < max; e++) {
+    const Taur = ["centaur"],
+        max = Math.min(3, player.RaceEssence.length);
+    for (let e in max) {
         if (mode === 1) {
-            if (Taur.indexOf(player.RaceEssence[e].Race) > -1) {
-                return e;
-            } else {
-                return false;
-            }
+            Taur.indexOf(player.RaceEssence[e].Race) > -1 ? e : false
         } else {
             if (Taur.indexOf(player.RaceEssence[e].Race) > -1) {} else {
                 return e; // return biggest non taur race
@@ -18,21 +14,23 @@ function isTaur(mode = 1) {
 
 
 function EssenceBalance() { // Concept for calculating what species you're treated as
-    var RaceEss = player.RaceEssence;
+    const RaceEss = player.RaceEssence;
     if (RaceEss.some(e => e.Race !== e.Race.Capitalize())) { // Make sure all races have firt letter cap + rest lowercase
         console.log("Non cap race");
-        for (var e of RaceEss) {
+        for (let e of RaceEss) {
             e.Race = e.Race.Capitalize();
         }
     }
-    for (var i = 0; i < RaceEss.length; i++) { // Clearing/Spicing out anything below 1
-        if (RaceEss[i].amount < 1) {
-            console.log("Spliced " + RaceEss[i].Race);
-            RaceEss.splice(i, 1);
+    if (RaceEss.some(e => e.amount < 1)) {
+        for (let i in RaceEss) { // Clearing/Spicing out anything below 1
+            if (RaceEss[i].amount < 1) {
+                console.log("Spliced " + RaceEss[i].Race);
+                RaceEss.splice(i, 1);
+            }
         }
     }
-    for (var e = 0; e < RaceEss.length; e++) { // Clearing/splicing duplicates
-        for (var i = 0; i < RaceEss.length; i++) {
+    for (let e in RaceEss) { // Clearing/splicing duplicates
+        for (let i in RaceEss) {
             if (RaceEss[e].Race == RaceEss[i].Race && e != i) {
                 console.log("Duplicate race");
                 RaceEss[e].amount += RaceEss[i].amount;
@@ -42,9 +40,9 @@ function EssenceBalance() { // Concept for calculating what species you're treat
     }
     RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
 
-    var totalAbsorb = 0;
-    for (var i = 0; i < RaceEss.length; i++) {
-        totalAbsorb += RaceEss[i].amount;
+    let totalAbsorb = 0;
+    for (let i of RaceEss) {
+        totalAbsorb += i.amount;
     }
 
     /* Will convert to use this insted to I can make changed dependant on amount of essence.
@@ -53,7 +51,7 @@ e.g. you are not a dragon because you have 1 dragon essence.
 
 Don't like that no race = human, maybe should add a special race?
     */
-    var oldRace = player.Race,
+    const oldRace = player.Race,
         oldSecondRace = player.SecondRace;
     if (totalAbsorb < 100) {
         player.Race = "humanoid" // No race is lowest form of human? or implement doll race?
@@ -65,7 +63,7 @@ Don't like that no race = human, maybe should add a special race?
             GenitalChange(player.SecondRace)
         }
     } else {
-        var R1 = 0,
+        let R1 = 0,
             R2 = 0,
             R3 = 0;
         if (RaceEss.length > 2) {
@@ -109,12 +107,12 @@ Don't like that no race = human, maybe should add a special race?
 }
 
 function PotionDrunk(race, Dose = 50) {
-    var RaceEss = player.RaceEssence;
-    var a = RaceEss.findIndex(e => e.Race === race.Capitalize());
+    const RaceEss = player.RaceEssence,
+        a = RaceEss.findIndex(e => e.Race === race.Capitalize());
     if (a > -1) {
         RaceEss[a].amount += Dose;
     } else {
-        var Race = {
+        const Race = {
             Race: race.Capitalize(),
             amount: Dose
         }
@@ -123,8 +121,8 @@ function PotionDrunk(race, Dose = 50) {
 }
 
 function RaceDesc(who) {
-    var Race = who.Race.toLowerCase();
-    var SecondRace = who.SecondRace.toLowerCase();
+    const Race = who.Race.toLowerCase(),
+        SecondRace = who.SecondRace.toLowerCase();
     switch (Race) {
         case "human":
             if (SecondRace == "human") {
@@ -162,19 +160,13 @@ function RaceDesc(who) {
 }
 
 function DetailedRaceDesc() {
-    var RaceEss = player.RaceEssence;
+    const RaceEss = player.RaceEssence;
     RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
-    for (var i = 0; i < RaceEss.length; i++) { // Clearing/Spicing out anything below 1
-        if (RaceEss[i].amount < 1) {
-            console.log("Spliced " + RaceEss[i].Race);
-            RaceEss.splice(i, 1);
-        }
+    let totalAbsorb = 0;
+    for (let i of RaceEss) {
+        totalAbsorb += i.amount;
     }
-    var totalAbsorb = 0;
-    for (var i = 0; i < RaceEss.length; i++) {
-        totalAbsorb += RaceEss[i].amount;
-    }
-    var R1 = 0,
+    let R1 = 0,
         R2 = 0,
         R3 = 0;
     if (RaceEss.length > 2) {
@@ -188,7 +180,7 @@ function DetailedRaceDesc() {
         R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
     }
 
-    var text
+    let text
     if (totalAbsorb < 100) {
         text = "Yor're an "
         if (RaceEss[0].amount > 20) {

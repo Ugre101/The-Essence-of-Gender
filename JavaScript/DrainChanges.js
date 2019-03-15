@@ -1,20 +1,20 @@
 function RaceDrain(whose) {
-    var RaceEss = player.RaceEssence;
-    var a = RaceEss.findIndex(e => e.Race == whose.Race);
+    const RaceEss = player.RaceEssence,
+        a = RaceEss.findIndex(e => e.Race == whose.Race);
     if (a > -1) {
         RaceEss[a].amount += RandomInt(2, 10);
     } else {
-        var Race = {
+        const Race = {
             Race: whose.Race,
             amount: RandomInt(2, 10)
         }
         RaceEss.push(Race);
     }
-    var b = RaceEss.findIndex(e => e.Race == whose.SecondRace);
+    const b = RaceEss.findIndex(e => e.Race == whose.SecondRace);
     if (b > -1) {
-        RaceEss[a].amount += RandomInt(1, 5);
+        RaceEss[b].amount += RandomInt(1, 5);
     } else {
-        var Race = {
+        const Race = {
             Race: whose.SecondRace,
             amount: RandomInt(1, 5)
         }

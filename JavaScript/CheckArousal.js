@@ -1,5 +1,6 @@
 function CheckArousal() {
-    var ee = enemies[EnemyIndex];
+    const ee = enemies[EnemyIndex],
+        SexText = document.getElementById("SexText");
     if (ee.Arousal >= 100) {
         ee.Orgasm++;
         ee.SessionOrgasm++;
@@ -8,28 +9,22 @@ function CheckArousal() {
             Impregnate(player, ee, "B", "");
         }
         if (LastPressed == "GiveBlowjob") {
-            var cum = Cumming(ee);
-            document.getElementById("SexText").innerHTML = "Your opponent’s grip on your head tightens as they start humping you mouth in earnest. You gladly oblige their request starting to deepthroat them to the base of their cock. Their rhythm starts to falter as you push their cock to the back of your throat." +
+            const cum = Cumming(ee);
+            SexText.innerHTML = "Your opponent’s grip on your head tightens as they start humping you mouth in earnest. You gladly oblige their request starting to deepthroat them to the base of their cock. Their rhythm starts to falter as you push their cock to the back of your throat." +
                 " You push your head deep into their crotch as they make one last desperate thrust"
-            if (cum > 0) {
-                document.getElementById("SexText").innerHTML += ", depositing " + LToGal(cum) + " deep into your gullet."
-            } else {
-                document.getElementById("SexText").innerHTML += "."
-            }
-            document.getElementById("SexText").innerHTML += "Your opponent takes deep breathes as they lie completely spent. You rise from between their legs admiring your work and begin to plan your next move."
+            SexText.innerHTML += cum > 0 ? ", depositing " + LToGal(cum) + " deep into your gullet." : "."
+            SexText.innerHTML += "Your opponent takes deep breathes as they lie completely spent. You rise from between their legs admiring your work and begin to plan your next move."
         } else if (LastPressed == "RideCowgirl") {
-            var cum = Cumming(ee);
-            document.getElementById("SexText").innerHTML += "<br>Reading their body language, you know they are close to cumming."
-            if (cum > 0) {
-                document.getElementById("SexText").innerHTML += " Pulling them deep inside you, they release " + LToGal(cum) + " of cum into your pussy."
-            } else {
-                document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
-            }
+            const cum = Cumming(ee);
+            SexText.innerHTML += "<br>Reading their body language, you know they are close to cumming."
+            SexText.innerHTML += cum > 0 ?
+                " Pulling them deep inside you, they release " + LToGal(cum) + " of cum into your pussy." :
+                " Nothing comes out, as they're already drained."
         } else if (LastPressed == "GiveCunnilingus") {
-            document.getElementById("SexText").innerHTML += "<br>Reading their body language, you know they are close to cumming. Shoving your tongue as deep as you can into them, your face gets splashed with their nectar."
-        } else if (false) document.getElementById("SexText").innerHTML += " Nothing comes out, as they're already drained."
+            SexText.innerHTML += "<br>Reading their body language, you know they are close to cumming. Shoving your tongue as deep as you can into them, your face gets splashed with their nectar."
+        } else if (false) SexText.innerHTML += " Nothing comes out, as they're already drained."
     }
-    if (player.Arousal > 100) {
+    if (player.Arousal >= 100) {
         player.Orgasm++;
         player.Arousal = 0;
         player.SessionOrgasm++;
@@ -48,25 +43,25 @@ function CheckArousal() {
                 break;
         }
         EssenceCheck(ee);
-        var ImpregActions = ["DoggyStyle", "Missionary", "DualPen", "MultiPen"];
-        var AnalImpregActions = ["DoggyStyleAnal"]
+        const ImpregActions = ["DoggyStyle", "Missionary", "DualPen", "MultiPen"];
+        const AnalImpregActions = ["DoggyStyleAnal"]
         if (ImpregActions.indexOf(LastPressed) != -1) {
             if (!ee.hasOwnProperty("Pregnant")) {
                 ee.Pregnant = {}
                 ee.Pregnant.Status = false;
             } else if (!ee.Pregnant.Status) {
-                for (var b = 0; b < player.Balls.length; b++) {
-                    if (player.Balls[b].Cum > 10) {
+                for (let b of player.Balls) {
+                    if (b.Cum > 10) {
                         Impregnate(ee, player, "A", "");
-                        player.Balls[b].Cum -= 10;
+                        b.Cum -= 10;
                     }
                 }
             }
         } else if (AnalImpregActions.indexOf(LastPressed) != -1 && player.Blessings.MountainShrine.Malepreg > 0) {
-            if (ee.hasOwnProperty("Pregnant" === false)) {
+            if (!ee.hasOwnProperty("Pregnant")) {
                 ee.Pregnant = {}
                 ee.Pregnant.Status = false;
-            } else if (ee.Pregnant.Status === false) {
+            } else if (!ee.Pregnant.Status) {
                 for (var b of player.Balls) {
                     if (b.Cum > 10) {
                         Impregnate(ee, player, "A", "");
@@ -76,134 +71,133 @@ function CheckArousal() {
             }
         }
         if (LastPressed == "GetBlowjob") {
-            var cum = Cumming(player);
-            document.getElementById("SexText").innerHTML = "You reach down and grab your opponent’s head, giving a bestial grunt as you approach your climax. You ram your cock as far as you can into " + enemies[EnemyIndex].FirstName + "'s throat."
+            const cum = Cumming(player);
+            SexText.innerHTML = "You reach down and grab your opponent’s head, giving a bestial grunt as you approach your climax. You ram your cock as far as you can into " + enemies[EnemyIndex].FirstName + "'s throat."
             if (player.Balls.length > 0) {
-                document.getElementById("SexText").innerHTML += "Your balls tense up as you pump your " + LToGal(cum) + " load down their gullet, thrusting erratically, holding your opponent tight as you empty your sac into them. You bend over their head, making small jabs into their mouth as each wave of cum is sent to their stomach."
+                SexText.innerHTML += "Your balls tense up as you pump your " + LToGal(cum) + " load down their gullet, thrusting erratically, holding your opponent tight as you empty your sac into them. You bend over their head, making small jabs into their mouth as each wave of cum is sent to their stomach."
             }
-            document.getElementById("SexText").innerHTML += "You stand there for a while, enjoying your afterglow, before you pull out, causing your opponent to fall over, gasping for air. You smile deviously as you ponder how you should use them next.";
+            SexText.innerHTML += "You stand there for a while, enjoying your afterglow, before you pull out, causing your opponent to fall over, gasping for air. You smile deviously as you ponder how you should use them next.";
             ee.Cumin.Stomach += cum;
             if (ee.Cumin.Stomach > (ee.Height / 100) * 2) {
-                document.getElementById("SexText").innerHTML += "<br><br> Their stomach is overflowing with your cum; as you pull out, your excess cum follows.";
+                SexText.innerHTML += "<br><br> Their stomach is overflowing with your cum; as you pull out, your excess cum follows.";
                 player.cumGround += ee.Cumin.Stomach - (ee.Height / 100) * 2;
                 ee.Cumin.Stomach = (ee.Height / 100) * 2;
             } else if (ee.Cumin.Stomach > ee.Height / 100) {
-                document.getElementById("SexText").innerHTML += "<br><br> Their stomach bulges visibly, filled with your cum."
+                SexText.innerHTML += "<br><br> Their stomach bulges visibly, filled with your cum."
             }
         } else if (LastPressed == "Missionary") {
-            var cum = Cumming(player);
+            const cum = Cumming(player);
             ee.Cumin.Pussy += cum;
-            document.getElementById("SexText").innerHTML = "<br>Feeling close you thrust deep inside them";
+            SexText.innerHTML = "<br>Feeling close you thrust deep inside them";
             if (cum > 0) {
-                document.getElementById("SexText").innerHTML += ", releasing " + LToGal(cum) + " of cum into their pussy."
+                SexText.innerHTML += ", releasing " + LToGal(cum) + " of cum into their pussy."
                 if (ee.Cumin.Pussy > (ee.Height / 100)) {
-                    document.getElementById("SexText").innerHTML += "<br><br> Their quim is overflowing with your cum; as you pull out, your excess seed follows.";
+                    SexText.innerHTML += "<br><br> Their quim is overflowing with your cum; as you pull out, your excess seed follows.";
                     player.cumGround += ee.Cumin.Pussy - ee.Height / 100;
                     ee.Cumin.Pussy = ee.Height / 100;
                 } else if (ee.Cumin.Stomach > ee.Height / 200) {
-                    document.getElementById("SexText").innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
+                    SexText.innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
                 }
             } else {
-                document.getElementById("SexText").innerHTML += ", but nothing comes out of your dick."
+                SexText.innerHTML += ", but nothing comes out of your dick."
             }
         } else if (LastPressed == "DoggyStyle") {
-            var cum = Cumming(player);
+            const cum = Cumming(player);
             ee.Cumin.Pussy += cum;
-            document.getElementById("SexText").innerHTML = "<br>Feeling close, you firmly grab their hips, and thrust deep into their pussy"
+            SexText.innerHTML = "<br>Feeling close, you firmly grab their hips, and thrust deep into their pussy"
             if (cum > 0) {
-                document.getElementById("SexText").innerHTML += ", releasing " + LToGal(cum) + " of cum into their pussy."
+                SexText.innerHTML += ", releasing " + LToGal(cum) + " of cum into their pussy."
                 if (ee.Cumin.Pussy > (ee.Height / 100)) {
-                    document.getElementById("SexText").innerHTML += "<br><br> Their quim is overflowing with your cum; as you pull out, your excess seed follows.";
+                    SexText.innerHTML += "<br><br> Their quim is overflowing with your cum; as you pull out, your excess seed follows.";
                     player.cumGround += ee.Cumin.Pussy - ee.Height / 100;
                     ee.Cumin.Pussy = ee.Height / 100;
                 } else if (ee.Cumin.Stomach > ee.Height / 200) {
-                    document.getElementById("SexText").innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
+                    SexText.innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
                 }
             } else document.getElementById("SexText").innerHTML += ", but nothing comes out."
         } else if (LastPressed == "DoggyStyleAnal") {
-            var cum = Cumming(player);
-            document.getElementById("SexText").innerHTML = "<br>Feeling close, you firmly grab their waist, and thrust deep into their bowels"
+            const cum = Cumming(player);
+            SexText.innerHTML = "<br>Feeling close, you firmly grab their waist, and thrust deep into their bowels"
             if (cum > 0) {
                 ee.Cumin.Ass += cum;
-                document.getElementById("SexText").innerHTML += ", releasing " + LToGal(cum) + " of cum into their ass."
+                SexText.innerHTML += ", releasing " + LToGal(cum) + " of cum into their ass."
                 if (ee.Cumin.Ass > (ee.Height / 50)) {
-                    document.getElementById("SexText").innerHTML += "<br><br> Their ass is overflowing with your cum; as you pull out, your excess seed leaks out."
+                    SexText.innerHTML += "<br><br> Their ass is overflowing with your cum; as you pull out, your excess seed leaks out."
                     player.cumGround += ee.Cumin.Ass - ee.Height / 50;
                     ee.Cumin.Ass = ee.Height / 50;
                 } else if (ee.Cumin.Stomach > ee.Height / 100) {
-                    document.getElementById("SexText").innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
+                    SexText.innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
                 }
             }
         } else if (false) {
-            document.getElementById("SexText").innerHTML += ", but nothing comes out."
+            SexText.innerHTML += ", but nothing comes out."
         }
-        if (player.cumGround > 20000) {
-            document.getElementById("SexText").innerHTML += "<br><br>Your opponent is caked white and heavily panting, cum still flowing out of their overfilled holes. Your extreme output has covered them, and all of the ground nearby, in your semen. You're glad that you don't have to clean this up..."
-        } else if (player.cumGround > 5000) {
-            document.getElementById("SexText").innerHTML += "<br><br>You've covered your (ex-)opponent in your cum, and left a sizable puddle underneath them. They're still dripping..."
-        } else if (player.cumGround > 500) {
-            document.getElementById("SexText").innerHTML += "<br><br>You've made quite a mess; they weren't able to handle your output, and have been covered in what their body couldn't handle."
-        } else if (player.cumGround > 0) {
-            document.getElementById("SexText").innerHTML += "<br><br>Their body bulges with your load, but it's not enough - what they couldn't keep inside, they're now wearing outside."
-        }
+        SexText.innerHTML += (player.cumGround > 20000 ? // If 
+            "<br><br>Your opponent is caked white and heavily panting, cum still flowing out of their overfilled holes. Your extreme output has covered them, and all of the ground nearby, in your semen. You're glad that you don't have to clean this up..." :
+            player.cumGround > 5000 ? // if else
+            "<br><br>You've covered your (ex-)opponent in your cum, and left a sizable puddle underneath them. They're still dripping..." :
+            player.cumGround > 500 ?
+            "<br><br>You've made quite a mess; they weren't able to handle your output, and have been covered in what their body couldn't handle." :
+            player.cumGround > 0 ?
+            "<br><br>Their body bulges with your load, but it's not enough - what they couldn't keep inside, they're now wearing outside." :
+            "" // else
+        )
         AfterBattleButtons();
         CheckArousal();
     }
-    document.getElementById("PlayerLooks").innerHTML = window.innerHeight > 800 ?
+    const PlayerLooks = document.getElementById("PlayerLooks"),
+        EnemyLooks = document.getElementById("EnemyLooks");
+
+    PlayerLooks.innerHTML = window.innerHeight > 800 ?
         BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player) : "";
-    document.getElementById("EnemyLooks").innerHTML = window.innerHeight > 800 ?
+    EnemyLooks.innerHTML = window.innerHeight > 800 ?
         BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee) : "";
 
     if (player.Pregnant.Babies.length > 0) {
-        var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
+        const age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
         age < 0 ? age = "Impregnated" : age = age + " months pregnant";
-        document.getElementById("PlayerLooks").innerHTML += "<br>" + age;
+        PlayerLooks.innerHTML += "<br>" + age;
     }
     if (ee.hasOwnProperty("Pregnant")) {
         if (ee.Pregnant.Status) {
-            document.getElementById("EnemyLooks").innerHTML += "<br>Pregnant";
+            EnemyLooks.innerHTML += "<br>Pregnant";
         }
     }
 
 
-    BaseSexAttack = Math.round((RandomInt(4, 7) * player.SexSkill) / 2);
-    BaseESexAttack = Math.round((RandomInt(4, 7) * enemies[EnemyIndex].SexSkill) / 2);
+    const BaseSexAttack = Math.round((RandomInt(4, 7) * player.SexSkill) / 2),
+        BaseESexAttack = Math.round((RandomInt(4, 7) * enemies[EnemyIndex].SexSkill) / 2);
+    // SexAttack is a global should probably change that, but how?
     SexAttack = Math.min(RandomInt(45, 77), BaseSexAttack * (BaseSexAttack / BaseESexAttack));
     ESexAttack = Math.max(RandomInt(15, 32), BaseESexAttack * (BaseESexAttack / BaseSexAttack));
 
 
-    document.getElementById("PName").innerHTML = player.Name + " " + player.LastName + "<br>" + player.Race + " " + Pronoun(CheckGender(player));
-    document.getElementById("EName").innerHTML = " " + ee.FirstName + " " + ee.LastName + "<br>" + ee.Name + " " + ee.Race + " " + Pronoun(CheckGender(ee));
-    document.getElementById("Mascu").innerHTML = Math.round(player.Masc);
-    document.getElementById("Femin").innerHTML = Math.round(player.Femi);
-    document.getElementById("PArousal").innerHTML = Math.round(player.Arousal);
-    document.getElementById("EMascu").innerHTML = ee.Masc;
-    document.getElementById("EFemin").innerHTML = ee.Femi;
-    document.getElementById("EArousal").innerHTML = Math.round(ee.Arousal);
-    var DelatMed = 2;
-    if (player.Masc >= ee.Masc && player.Masc >= ee.Femi && player.Masc >= player.Femi) {
-        DelatMed = 100 / player.Masc;
-    } else if (player.Femi >= ee.Masc && player.Femi >= ee.Femi && player.Femi >= player.Masc) {
-        DelatMed = 100 / player.Femi;
-    } else if (ee.Masc >= player.Masc && ee.Masc >= ee.Femi && ee.Masc >= player.Femi) {
-        DelatMed = 100 / ee.Masc;
-    } else {
-        DelatMed = 100 / ee.Femi;
-    }
+    DocId("PName").innerHTML = `${player.Name} ${player.LastName}<br>${player.Race} ${Pronoun(CheckGender(player))}`;
+    DocId("EName").innerHTML = `${ee.FirstName} ${ee.LastName}<br>${ee.Name} ${ee.Race} ${Pronoun(CheckGender(ee))}`;
+    DocId("Mascu").innerHTML = Math.round(player.Masc);
+    DocId("Femin").innerHTML = Math.round(player.Femi);
+    DocId("PArousal").innerHTML = Math.round(player.Arousal);
+    DocId("EMascu").innerHTML = ee.Masc;
+    DocId("EFemin").innerHTML = ee.Femi;
+    DocId("EArousal").innerHTML = Math.round(ee.Arousal);
+    // Divide by bigest value amoung both player and enemy
+    let DelatMed = (player.Masc >= ee.Masc && player.Masc >= ee.Femi && player.Masc >= player.Femi) ?
+        (100 / player.Masc) : (player.Femi >= ee.Masc && player.Femi >= ee.Femi && player.Femi >= player.Masc) ?
+        (100 / player.Femi) : (ee.Masc >= player.Masc && ee.Masc >= ee.Femi && ee.Masc >= player.Femi) ?
+        (100 / ee.Masc) : (100 / ee.Femi);
 
-    document.getElementById("Mascu").style.width = player.Masc * DelatMed + "%";
-    document.getElementById("Femin").style.width = player.Femi * DelatMed + "%";
-    document.getElementById("PArousal").style.width = Math.max(1, player.Arousal) + "%";
-    document.getElementById("EMascu").style.width = ee.Masc * DelatMed + "%";
-    document.getElementById("EFemin").style.width = ee.Femi * DelatMed + "%";
-    document.getElementById("EArousal").style.width = Math.max(1, ee.Arousal) + "%";
+    DocId("Mascu").style.width = player.Masc * DelatMed + "%";
+    DocId("Femin").style.width = player.Femi * DelatMed + "%";
+    DocId("PArousal").style.width = Math.max(1, player.Arousal) + "%";
+    DocId("EMascu").style.width = ee.Masc * DelatMed + "%";
+    DocId("EFemin").style.width = ee.Femi * DelatMed + "%";
+    DocId("EArousal").style.width = Math.max(1, ee.Arousal) + "%";
 
-
-    document.getElementById("SexStats").innerHTML = " ";
-    document.getElementById("EnemyOrgasm").style.display = 'block';
-    document.getElementById("EnemyOrgasm").innerHTML = ee.Orgasm;
-    document.getElementById("PlayerOrgasm").style.display = 'block';
-    document.getElementById("PlayerOrgasm").innerHTML = player.Orgasm;
+    DocId("SexStats").innerHTML = " ";
+    DocId("EnemyOrgasm").style.display = 'block';
+    DocId("EnemyOrgasm").innerHTML = ee.Orgasm;
+    DocId("PlayerOrgasm").style.display = 'block';
+    DocId("PlayerOrgasm").innerHTML = player.Orgasm;
 
     SexColor(player, "Player");
     SexColor(ee, "Enemy");
@@ -211,65 +205,74 @@ function CheckArousal() {
 
 function Cumming(who) {
     if (who.Balls.length > 0) {
-        var Cum = 0;
-        for (var b = 0; b < who.Balls.length; b++) {
-            Cum += Math.min(who.Balls[b].Cum, Math.max(10, who.Balls[b].Cum / 8));
-            who.Balls[b].Cum -= Math.min(who.Balls[b].Cum, Math.max(100, who.Balls[b].Cum / 8));
+        let Cum = 0;
+        for (let b of who.Balls) {
+            Cum += Math.min(b.Cum, Math.max(10, b.Cum / 8));
+            b.Cum -= Math.min(b.Cum, Math.max(100, b.Cum / 8));
         }
         Cum = Math.round((Cum / 1000) * 100) / 100;
         return Cum;
     }
 }
 
-document.getElementById("EnemySex").addEventListener("click", function () {
-    if (document.getElementById("EnemyKinda").style.display == 'none') {
-        document.getElementById("SexStats").innerHTML = " ";
-        document.getElementById("EnemyKinda").style.display = 'block';
-        document.getElementById("EnemyExact").style.display = 'none';
-        document.getElementById("EnemyExact").innerHTML = "";
-    } else {
-        var ee = enemies[EnemyIndex];
-        document.getElementById("SexStats").innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
-        document.getElementById("EnemyKinda").style.display = 'none';
-        document.getElementById("EnemyExact").style.display = 'block';
-        document.getElementById("EnemyExact").innerHTML = "<p>" + ExactBoobLook(ee) + ExactPussyLook(ee) + ExactDickLook(ee) + ExactBallLook(ee) +
-            "</p>";
-    }
-});
-document.getElementById("EnemySex").addEventListener("mouseenter", function () {
-    var ee = enemies[EnemyIndex];
-    document.getElementById("SexStats").innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
-    document.getElementById("EnemyKinda").style.display = 'none';
-    document.getElementById("EnemyExact").style.display = 'block';
-    document.getElementById("EnemyExact").innerHTML = "<p>" + ExactBoobLook(ee) + ExactPussyLook(ee) + ExactDickLook(ee) + ExactBallLook(ee) +
-        "</p>";
-});
-document.getElementById("EnemySex").addEventListener("mouseleave", function () {
-    document.getElementById("SexStats").innerHTML = " ";
-    document.getElementById("EnemyKinda").style.display = 'block';
-    document.getElementById("EnemyExact").style.display = 'none';
-    document.getElementById("EnemyExact").innerHTML = "";
-});
-document.getElementById("PlayerSex").addEventListener("click", function () {
-    if (document.getElementById("playerKinda").style.display == 'none') {
-        document.getElementById("playerKinda").style.display = 'block';
-        document.getElementById("playerExact").style.display = 'none';
-        document.getElementById("playerExact").innerHTML = "";
-    } else {
-        document.getElementById("playerKinda").style.display = 'none';
-        document.getElementById("playerExact").style.display = 'block';
-        document.getElementById("playerExact").innerHTML = "<p>" + ExactBoobLook(player) + ExactPussyLook(player) + ExactDickLook(player) + ExactBallLook(player) +
-            "</p>";
-    }
-});
-document.getElementById("PlayerSex").addEventListener("mouseenter", function () {
-    document.getElementById("playerKinda").style.display = 'none';
-    document.getElementById("playerExact").style.display = 'block';
-    document.getElementById("playerExact").innerHTML = "<p>" + ExactBoobLook(player) + ExactPussyLook(player) + ExactDickLook(player) + ExactBallLook(player) +
-        "</p>";
-});
-document.getElementById("PlayerSex").addEventListener("mouseleave", function () {
-    document.getElementById("playerKinda").style.display = 'block';
-    document.getElementById("playerExact").style.display = 'none';
-    document.getElementById("playerExact").innerHTML = "";
-});
+function SexLooksExactAndKinda() { // A function to be able to enter a bunch of "local global consts"
+    const EnemyKinda = DocId("EnemyKinda"),
+        EnemyExact = DocId("EnemyExact"),
+        SexStats = DocId("SexStats"),
+        playerKinda = DocId("playerKinda"),
+        playerExact = DocId("playerExact"),
+        EnemySex = DocId("EnemySex"),
+        PlayerSex = DocId("PlayerSex");
+    EnemySex.addEventListener("click", function () {
+        if (EnemyKinda.style.display == 'none') {
+            SexStats.innerHTML = " ";
+            EnemyKinda.style.display = 'block';
+            EnemyExact.style.display = 'none';
+            EnemyExact.innerHTML = "";
+        } else {
+            const ee = enemies[EnemyIndex];
+            SexStats.innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
+            EnemyKinda.style.display = 'none';
+            EnemyExact.style.display = 'block';
+            EnemyExact.innerHTML = `<p>${ExactBoobLook(ee)+ExactPussyLook(ee)+ExactDickLook(ee)+ExactBallLook(ee)}</p>`;
+        }
+    });
+    EnemySex.addEventListener("mouseenter", function () {
+        const ee = enemies[EnemyIndex];
+        SexStats.innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
+        EnemyKinda.style.display = 'none';
+        EnemyExact.style.display = 'block';
+        EnemyExact.innerHTML = `<p>${ExactBoobLook(ee) + ExactPussyLook(ee) + 
+            ExactDickLook(ee) + ExactBallLook(ee)}</p>`;
+    });
+    EnemySex.addEventListener("mouseleave", function () {
+        SexStats.innerHTML = " ";
+        EnemyKinda.style.display = 'block';
+        EnemyExact.style.display = 'none';
+        EnemyExact.innerHTML = "";
+    });
+    PlayerSex.addEventListener("click", function () {
+        if (playerKinda.style.display == 'none') {
+            playerKinda.style.display = 'block';
+            playerExact.style.display = 'none';
+            playerExact.innerHTML = "";
+        } else {
+            playerKinda.style.display = 'none';
+            playerExact.style.display = 'block';
+            playerExact.innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + 
+                ExactDickLook(player) + ExactBallLook(player)}</p>`
+        }
+    });
+    PlayerSex.addEventListener("mouseenter", function () {
+        playerKinda.style.display = 'none';
+        playerExact.style.display = 'block';
+        playerExact.innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + 
+            ExactDickLook(player) + ExactBallLook(player)}</p>`
+    });
+    PlayerSex.addEventListener("mouseleave", function () {
+        playerKinda.style.display = 'block';
+        playerExact.style.display = 'none';
+        playerExact.innerHTML = "";
+    });
+}
+SexLooksExactAndKinda();

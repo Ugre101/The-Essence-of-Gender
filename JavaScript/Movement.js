@@ -1,17 +1,15 @@
 // Movement buttons
-var mousedowner = false;
-var mFunction;
-var mouseX;
-var mouseY;
+var mousedowner = false,
+    mFunction,
+    mouseX, mouseY;
 
-var Movement = {
+/**
+ var Movement = {
     XSpeed: 0,
     YSpeed: 0,
     Drag: 1
 }
-
-/**
- * function MovementEngine(x, y) {
+function MovementEngine(x, y) {
     var M = Movement;
     M.XSpeed = Math.min(10, Math.max(-10, M.XSpeed));
     M.YSpeed = Math.min(10, Math.max(-10, M.YSpeed));
@@ -25,34 +23,30 @@ var Movement = {
     sprite.x += Movement.XSpeed
     sprite.y += Movement.YSpeed
 }
- */
+**/
 
 document.addEventListener('keydown', function (e) {
-    var startarea = document.getElementById("hem");
-    if (battle === true) {
+    const startarea = document.getElementById("hem");
+    if (battle) {
         return;
     }
     if ((e.which === 37 || e.which === 65) && sprite.x > 0) {
         sprite.x -= grid;
-        sprite.y += 0;
     } else if ((e.which === 39 || e.which === 68) && sprite.x + grid * sprite.Size < startarea.width) {
         sprite.x += grid;
-        sprite.y += 0;
     }
     if ((e.which === 38 || e.which === 87) && sprite.y > 0) {
-        sprite.y -= grid;// * sprite.Size;
-        sprite.x += 0;
+        sprite.y -= grid; // * sprite.Size;
     } else if ((e.which === 40 || e.which === 83) && sprite.y + grid * sprite.Size < startarea.height) {
-        sprite.y += grid;// * sprite.Size;
-        sprite.x += 0;
+        sprite.y += grid; // * sprite.Size;
     }
     Touching();
     CheckDoor();
 });
 
 function mousedownfunc() {
-    var startarea = document.getElementById("hem");
-    var MapRect = startarea.getBoundingClientRect();
+    const startarea = document.getElementById("hem"),
+        MapRect = startarea.getBoundingClientRect();
     if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x + grid * sprite.Size < startarea.width) {
         sprite.x += grid * sprite.Size;
     } else if (mouseX - MapRect.left + grid / 2 < sprite.x && sprite.x > 0) {

@@ -10,7 +10,7 @@ document.getElementById("LeaveChildrenMenu").addEventListener("click", function 
 
 function Childs() {
     var Children = [];
-    Children += "<div>You<br>"
+    Children += "<div>By you<br>"
     for (var e = 0; e < player.Children.length; e++) {
         var age = Math.round(player.Children[e].AgeCounter / 365);
         if (age < 1) {
@@ -19,7 +19,7 @@ function Childs() {
             age += " years"
         }
         var Child = "<button type=\"button\">Child " + (e + 1) + "<br>Father: " + player.Children[e].Father +
-        "<br>" + age + " old</button>"
+            "<br>" + age + " old</button>"
         Children += Child;
     }
     Children += "</div>"
@@ -34,7 +34,7 @@ function Childs() {
                     } else {
                         age += " years"
                     }
-                    Child = "<button type=\"button\">Child " + (i + 1) + "<br>"+age+" old </button>"
+                    Child = "<button type=\"button\">Child " + (i + 1) + "<br>" + age + " old </button>"
                     Children += Child;
                 }
                 Children += "</div>"

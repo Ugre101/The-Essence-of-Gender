@@ -37,7 +37,7 @@ function ButtonButton(Title = "") { // Same as above but for <button>
 }
 
 function LeaveBuilding() {
-    var Leave = document.createElement("input");
+    const Leave = document.createElement("input");
     Leave.setAttribute("type", "button");
     Leave.setAttribute("value", "Leave");
     Leave.addEventListener("click", function () {
@@ -54,6 +54,11 @@ function LeaveBuilding() {
     });
     return Leave
 }
+
+const DocId = function (id) { // Important Prototype.js must be loaded before where you want to use this!
+    return document.getElementById(id);
+}
+
 window.mobilecheck = function () { // Check if mobile device from detectmobile
     var check = false;
     (function (a) {

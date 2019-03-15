@@ -1,5 +1,12 @@
     // player variable
     var player = {
+        Name: "",
+        LastName: "",
+        Skincolor: "",
+        MaxHealth: 100,
+        Health: 100,
+        MaxWillHealth: 100,
+        WillHealth: 100,
         Str: 10,
         Int: 10,
         Charm: 10,
@@ -129,6 +136,7 @@
             Elemental: 0, // Fire, ice, water, stone, etc
             Restoration: 0 // Healing, returning to orginal shape/age.
         },
+        Mana: 100,
         Spells: [ // Array so that I can add more without problems
         ],
         Blessings: {
@@ -310,7 +318,7 @@
             startgameButton = document.getElementById("startgame"),
             VoreStartButton = document.getElementById("VoreStart"),
             CharCreator = document.getElementById("CharCreator"),
-            page2 = document.getElementById("page2")
+            page2 = document.getElementById("page2");
 
         BeginButton.addEventListener("click", begin)
         BackHomeButton.addEventListener("click", BackHome)
@@ -319,17 +327,16 @@
         VoreStartButton.addEventListener("click", VoreStart)
 
         function begin() {
+            const form = document.forms.CreatePlayer.elements;
+
+            console.log(form[0].value);
             CharCreator.style.display = 'none';
             page2.style.display = 'flex';
-            player.Name = document.getElementById("firstname").value;
-            player.LastName = document.getElementById("lastname").value;
-            player.Face.HairColor = document.getElementById("haircolor").value;
-            player.Skincolor = document.getElementById("skincolor").value;
-            player.MaxHealth = 100;
-            player.MaxWillHealth = 100;
-            player.Health = player.MaxHealth;
-            player.WillHealth = player.MaxWillHealth;
-            player.Mana = 100;
+            player.Name = form[0].value;
+            player.LastName = form[1].value;
+            // Will remove hair and skincolor later, as I want customize player to be a part of the game.
+            player.Face.HairColor = form[2].value;
+            player.Skincolor = form[3].value;
             player.Spells.push(SpellDictLite.MinorHealing);
             document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
             document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.LastName + ", a " + Math.round(player.Height) + "cm tall " + Pronoun(CheckGender(player)) +
@@ -402,7 +409,7 @@
         });
         document.getElementById("EmptyButtons").style.display = 'none';
         if (MobileButtons) {
-            document.getElementById("buttons").style.width = 17 + "%";
+            document.getElementById("buttons").style.width = 18 + "%";
             document.getElementById("buttons").style.maxWidth = 260 + "px";
             document.getElementById("FirstButtons").style.display = 'none';
             document.getElementById("SecondButtons").style.display = 'none';
@@ -845,7 +852,7 @@
             if (Laglimiter % 80 == 0) {
                 Laglimiter = 0;
                 Settings.EssenceAuto ? EssenceCheck(player) : false;
-                //EssenceBalance();
+                EssenceBalance();
                 player.Fat = Math.max(0.1, player.Fat);
                 player.Muscle = Math.max(1, player.Muscle);
                 player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);

@@ -25,7 +25,7 @@
 	<div id="CharCreator" class="None Options">
 		<div class="OptionsInnerDiv">
 			<h2>Create character</h2>
-			<form>
+			<form name="CreatePlayer">
 				<label for="firstname">First name</label>
 				<input type="text" id="firstname" placeholder="Your first name" value="Alex" />
 				<label for="lastname">Last name</label>
@@ -938,71 +938,64 @@
 		// Trial to have them loading in a function so if they fail player are alerted.
 		window.onload = function () {
 			const Scripts = {
-				name: "JavaScript",
-				array: [
-					"AfterBattleButtons", "BalanceParts", "Cheats", "CheckArousal",
-					"CheckFlags", "Children", "Combat", "DateTracker", "DrainChanges",
-					"DropSystem", "EssenceCheck", "EventLog", "FluidsEngine", "Hair", "HemScale",
-					"Impregnate", "InferiorUnit", "Items", "Inventory", "LevelMenu", "Loader", "Looks",
-					"Lose", "ManualEssence", "MaxLimbs", "MobileSupport", "MountainTribe", "Movement",
-					"Perk", "Pregnancy", "Prototype", "RaceEssence", "Racebonus",
-					"Save", "SexAfterBattle", "TfEngine", "TheFarm", "Winbattle", "Spells", "StatsHandler",
-					"LooksMenu"
-				]
-			}
-			const Buildings = {
-				name: "JavaScript/Buildings",
-				array: [
-					"Bar", "BlackMarket", "ChimeraShrine", "Gym", "MountainShrine", "PotionShop",
-					"PortalShop", "WitchShop", "WitchHut", "Townhall", "Barber", "LocalPortal"
-				]
-			}
-			const Vore = {
-				name: "JavaScript/Vore",
-				array: [
-					"Vore", "VoreActions", "VorePreyInterAction"
-				]
-			}
-			const Home = {
-				name: "JavaScript/Home",
-				array: [
-					"Dorm", "Home", "HomeUpgrades"
-					// ,"BrothelSystem"
-				]
-			}
-			const Opponents = {
-				name: "JavaScript/Opponents",
-				array: [
-					"CaveEncounters", "SuccubusDungeon", "Mountain",
-					"Opponents", "PrintEnemies"
-				]
-			}
-			const Maps = {
-				name: "JavaScript/Map",
-				array: ["Printdoor", "CurrentMap", "CheckDoor", "PrintMap"]
-			}
-			const Settings = {
-				name: "JavaScript/Settings",
-				array: ["Options"]
-			};
-			const Arrays = [Scripts, Buildings, Vore, Home, Opponents, Settings, Maps];
-			// Code to sort and output to console, because I find it easier when sorted. #Remember to delete last ","
-			/** 
-			Scripts.sort();
-			Scripts.forEach(e => console.log("\"" + e + "\","));
-			**/
-			// Function to load script and output error when failing to load script.
-			Arrays.forEach(function (den) {
-				den.array.forEach(function (src) {
-					let newScript = document.createElement("script");
-					newScript.src = den.name + "/" + src + ".js";
-					document.head.appendChild(newScript);
-					newScript.onerror = function () {
-						alert("Error loading " + src);
-						document.getElementById("StartProgressBar").innerHTML += "Error loading " + src // For those who use script blockers
-					};
-				})
-			});
+					name: "JavaScript",
+					array: [
+						"Prototype", "AfterBattleButtons", "BalanceParts", "Cheats", "CheckArousal",
+						"CheckFlags", "Children", "Combat", "DateTracker", "DrainChanges",
+						"DropSystem", "EssenceCheck", "EventLog", "FluidsEngine", "Hair", "HemScale",
+						"Impregnate", "InferiorUnit", "Items", "Inventory", "LevelMenu", "Loader", "Looks",
+						"Lose", "ManualEssence", "MaxLimbs", "MobileSupport", "MountainTribe", "Movement",
+						"Perk", "Pregnancy", "RaceEssence", "Racebonus",
+						"Save", "SexAfterBattle", "TfEngine", "TheFarm", "Winbattle", "Spells", "StatsHandler",
+						"LooksMenu"
+					]
+				},
+				Buildings = {
+					name: "JavaScript/Buildings",
+					array: [
+						"Bar", "BlackMarket", "ChimeraShrine", "Gym", "MountainShrine", "PotionShop",
+						"PortalShop", "WitchShop", "WitchHut", "Townhall", "Barber", "LocalPortal"
+					]
+				},
+				Vore = {
+					name: "JavaScript/Vore",
+					array: [
+						"Vore", "VoreActions", "VorePreyInterAction"
+					]
+				},
+				Home = {
+					name: "JavaScript/Home",
+					array: [
+						"Dorm", "Home", "HomeUpgrades"
+						// ,"BrothelSystem"
+					]
+				},
+				Opponents = {
+					name: "JavaScript/Opponents",
+					array: [
+						"CaveEncounters", "SuccubusDungeon", "Mountain",
+						"Opponents", "PrintEnemies"
+					]
+				},
+				Maps = {
+					name: "JavaScript/Map",
+					array: ["Printdoor", "CurrentMap", "CheckDoor", "PrintMap"]
+				},
+				Settings = {
+					name: "JavaScript/Settings",
+					array: ["Options"]
+				},
+				Arrays = [Scripts, Buildings, Vore, Home, Opponents, Settings, Maps].forEach(function (den) {
+					den.array.forEach(function (src) {
+						const newScript = document.createElement("script");
+						newScript.src = den.name + "/" + src + ".js";
+						newScript.onload = document.head.appendChild(newScript);
+						newScript.onerror = function () {
+							alert("Error loading " + src); // Function to load script and output error when failing to load script.
+							document.getElementById("StartProgressBar").innerHTML += "Error loading " + src // For those who use script blockers
+						};
+					})
+				});
 		}
 	</script>
 	<script src="Gamescript.js"></script>
