@@ -1,7 +1,7 @@
 function isTaur(mode = 1) {
     const Taur = ["centaur"],
         max = Math.min(3, player.RaceEssence.length);
-    for (let e in max) {
+    for (let e in player.RaceEssence) {
         if (mode === 1) {
             Taur.indexOf(player.RaceEssence[e].Race) > -1 ? e : false
         } else {
@@ -76,7 +76,7 @@ Don't like that no race = human, maybe should add a special race?
         } else if (RaceEss.length > 0) {
             R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
         }
-        if (isTaur() !== false) { // centaur always second race?
+        if (isTaur()) { // centaur always second race?
             player.Race = player.RaceEssence.length < 2 ? "human" : RaceEss[isTaur("B")].Race;
             player.SecondRace = RaceEss[isTaur()].Race;
             GenitalChange(RaceEss[isTaur()].Race);
