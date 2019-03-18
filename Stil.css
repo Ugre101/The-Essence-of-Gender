@@ -786,6 +786,7 @@
    input[type=submit]:hover,
    button:hover {
        background-color: rgb(187, 160, 124);
+       cursor: pointer;
    }
 
    input[type=button]:active,
