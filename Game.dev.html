@@ -933,7 +933,72 @@
 	<div id="Npcs" class="Building None">
 
 	</div>
-	<script src="Combined.js"></script>
+
+	<script>
+		// Trial to have them loading in a function so if they fail player are alerted.
+		window.onload = function () {
+			const Scripts = {
+					name: "JavaScript",
+					array: [
+						"Prototype", "AfterBattleButtons", "Cheats", "CheckArousal",
+						"CheckFlags", "Children", "Combat", "DateTracker", "DrainChanges",
+						"DropSystem", "EssenceCheck", "EventLog", "FluidsEngine", "Hair", "HemScale",
+						"Impregnate", "InferiorUnit", "Items", "Inventory", "LevelMenu", "Loader", "Looks",
+						"Lose", "ManualEssence", "MaxLimbs", "MobileSupport", "MountainTribe", "Movement",
+						"Perk", "Pregnancy", "RaceEssence", "Racebonus",
+						"Save", "SexAfterBattle", "TfEngine", "TheFarm", "Winbattle", "Spells", "StatsHandler",
+						"LooksMenu"
+					]
+				},
+				Buildings = {
+					name: "JavaScript/Buildings",
+					array: [
+						"Bar", "BlackMarket", "ChimeraShrine", "Gym", "MountainShrine", "PotionShop",
+						"PortalShop", "WitchShop", "WitchHut", "Townhall", "Barber", "LocalPortal"
+					]
+				},
+				Vore = {
+					name: "JavaScript/Vore",
+					array: [
+						"Vore", "VoreActions", "VorePreyInterAction"
+					]
+				},
+				Home = {
+					name: "JavaScript/Home",
+					array: [
+						"Dorm", "Home", "HomeUpgrades"
+						// ,"BrothelSystem"
+					]
+				},
+				Opponents = {
+					name: "JavaScript/Opponents",
+					array: [
+						"CaveEncounters", "SuccubusDungeon", "Mountain",
+						"Opponents", "PrintEnemies"
+					]
+				},
+				Maps = {
+					name: "JavaScript/Map",
+					array: ["Printdoor", "CurrentMap", "CheckDoor", "PrintMap"]
+				},
+				Settings = {
+					name: "JavaScript/Settings",
+					array: ["Options"]
+				},
+				Arrays = [Scripts, Buildings, Vore, Home, Opponents, Settings, Maps].forEach(function (den) {
+					den.array.forEach(function (src) {
+						const newScript = document.createElement("script");
+						newScript.src = den.name + "/" + src + ".js";
+						newScript.onload = document.head.appendChild(newScript);
+						newScript.onerror = function () {
+							alert("Error loading " + src); // Function to load script and output error when failing to load script.
+							document.getElementById("StartProgressBar").innerHTML += "Error loading " + src // For those who use script blockers
+						};
+					})
+				});
+		}
+	</script>
+	<script src="Gamescript.js"></script>
 	<!--	<script src="JavaScript/NewGamePlus.js"></script>-->
 	<!--	<script src="JavaScript/TfBonus.js"></script> -->
 </body>

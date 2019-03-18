@@ -143,7 +143,7 @@ function CombatButtons() { // Just combat buttons
     const Hit = ButtonButton();
     Hit.innerHTML = `Hit<br>${Math.floor(4 * player.Str / 2)}-${Math.floor(8 * player.Str / 2)}dmg`;
     Hit.addEventListener("click", function () {
-        const PAttack = Math.floor(RandomInt(4, 8) * player.Str / 2) // * PhyRes(ee);
+        const PAttack = Math.floor(RandomInt(4, 8) * player.Str / 2); // * PhyRes(ee);
         ee.Health -= PAttack;
         BT.innerHTML = "You dealt " + PAttack + " dmg.";
         UpdateStats(false);
@@ -161,7 +161,7 @@ function CombatButtons() { // Just combat buttons
         const Tease = ButtonButton();
         Tease.innerHTML = "Tease<br>" + Math.floor(4 * player.Charm / 2) + "-" + Math.floor(8 * player.Charm / 2) + "Will"
         Tease.addEventListener("click", function () {
-            const PAttack = Math.floor(RandomInt(4, 8) * player.Charm / 2) // * LusRes(ee);
+            const PAttack = Math.floor(RandomInt(4, 8) * player.Charm / 2); // * LusRes(ee);
             ee.WillHealth -= PAttack;
             BT.innerHTML = "You dealt " + PAttack + " will dmg."
             UpdateStats(false);

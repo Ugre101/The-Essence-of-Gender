@@ -1,11 +1,12 @@
 function isTaur(mode = 1) {
     const Taur = ["centaur"],
-        max = Math.min(3, player.RaceEssence.length);
-    for (let e in player.RaceEssence) {
+        max = Math.min(3, player.RaceEssence.length),
+        RaceEss = player.RaceEssence;
+    for (let e in RaceEss) {
         if (mode === 1) {
-            Taur.indexOf(player.RaceEssence[e].Race) > -1 ? e : false
+            Taur.indexOf(RaceEss[e].Race) > -1 ? e : false
         } else {
-            if (Taur.indexOf(player.RaceEssence[e].Race) > -1) {} else {
+            if (Taur.indexOf(RaceEss[e].Race) > -1) {} else {
                 return e; // return biggest non taur race
             }
         }
@@ -54,7 +55,7 @@ Don't like that no race = human, maybe should add a special race?
     const oldRace = player.Race,
         oldSecondRace = player.SecondRace;
     if (totalAbsorb < 100) {
-        player.Race = "humanoid" // No race is lowest form of human? or implement doll race?
+        player.Race = "humanoid"; // No race is lowest form of human? or implement doll race?
         if (RaceEss[0].amount > 50) {
             player.SecondRace = RaceEss[0].Race;
             GenitalChange(player.SecondRace); // null dick? bland dick? average?

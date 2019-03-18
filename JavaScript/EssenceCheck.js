@@ -2,7 +2,65 @@ function GrowthScale(who) {
     return (who.Height / 160)
 } // I put this a function to make it easier to trial different formulas.
 
-function OrganSize(who, Essence, MaxDiv, what, e = 0, EssDiv = 1) {
+
+function EssenceCheck(who) {
+    function DickSize(e = 0) {
+        return Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 1)) + who.OrganMod.Dick.Size) * GrowthScale(who));
+    }
+
+    function DickMaker(e = 0) {
+        const Dick = {
+            Size: DickSize(e),
+            Type: who.Race,
+            Virgin: true
+        }
+        return Dick;
+    }
+
+    function BallsSize(e = 0) {
+        return Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 2) + who.OrganMod.Balls.Size) * GrowthScale(who)));
+    }
+
+    function BallMakes(e = 0) {
+        const Ball = {
+            Size: BallsSize(e),
+            Type: who.Race,
+            CumMax: 1 / 3 * Math.PI * Math.pow(BallsSize(e), 3),
+            Cum: 1 / 6 * Math.PI * Math.pow(BallsSize(e), 3),
+            CumRate: 0,
+            CumBaseRate: 0.5
+        }
+        return Ball;
+    }
+
+    function BoobSize(e = 0) {
+        return Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 1) + who.OrganMod.Boobies.Size) * GrowthScale(who)));
+    }
+
+    function BoobMaker(e = 0) {
+        const Boob = {
+            Size: BoobSize(e),
+            Type: who.Race,
+            Milk: 0,
+            MilkBaseRate: 0,
+            MilkRate: 0,
+            MilkMax: 1 / 3 * Math.PI * Math.pow(BoobSize(e), 3)
+        }
+        return Boob;
+    }
+
+    function PussySize(e = 0) {
+        return Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 2) + who.OrganMod.Pussy.Size) * GrowthScale(who)));
+    }
+
+    function PussyMaker(e = 0) {
+        const Pussy = {
+            Size: PussySize(e),
+            Type: who.Race,
+            Virgin: true
+        }
+        return Pussy;
+    }
     if (!who.hasOwnProperty("OrganMod")) {
         who.OrganMod = {
             Dick: {
@@ -22,180 +80,116 @@ function OrganSize(who, Essence, MaxDiv, what, e = 0, EssDiv = 1) {
             }
         }
     }
-    return Math.min(who.Height / MaxDiv, (Math.sqrt(who[Essence] / EssDiv * GrowthScale(who)) - e * 18 * GrowthScale(who)) + who.OrganMod[what].Size)
-}
+    if (!who.hasOwnProperty("Dicks")) {
+        who.Dicks = [];
+    }
+    if (!who.hasOwnProperty("Balls")) {
+        who.Balls = [];
+    }
+    if (!who.hasOwnProperty("Pussies")) {
+        who.Pussies = [];
+    }
+    if (!who.hasOwnProperty("Boobies")) {
+        who.Boobies = [];
+    }
+    if (!who.hasOwnProperty("Anal")) {
+        who.Anal = []
+    }
 
-function EssenceCheck(who) {
-    if (Settings.BalanceParts) {
-        BalanceEssenceCheck(who);
+    if (DickSize() < player.Height * 0.03 && who.Dicks.length > 0) {
+        who.Dicks.pop();
     } else {
-        if (!who.hasOwnProperty("Dicks")) {
-            who.Dicks = [];
+        if (who.Dicks.length === 0) {
+            who.Dicks.push(DickMaker());
+            EssenceCheck(who); // Recursion might be a problem?
+            return;
         }
-        if (!who.hasOwnProperty("Balls")) {
-            who.Balls = [];
-        }
-        if (!who.hasOwnProperty("Pussies")) {
-            who.Pussies = [];
-        }
-        if (!who.hasOwnProperty("Boobies")) {
-            who.Boobies = [];
-        }
-        if (!who.hasOwnProperty("Anal")) {
-            who.Anal = []
-            const Anal = {
-                Size: who.Height / 3,
-                Type: who.Race,
-                Virgin: true,
-                stretch: 1,
-            }
-            who.Anal.push(Anal);
-        }
-
-        if (who.Masc < 30) {
-            if (who.Dicks.length > 0) {
-                who.Dicks.pop();
-            }
-        } else {
-            if (who.Dicks.length === 0) {
-                const Dick = {
-                    Size: 3,
-                    Type: who.SecondRace,
-                    Virgin: true
-                }
-                who.Dicks.push(Dick);
-            }
-            for (let e in who.Dicks) {
-                who.Dicks[e].Size = OrganSize(who, "Masc", 3, "Dick", e);
-                if (e == who.Dicks.length - 1 && who.Dicks[e].Size > who.Height / 5 && Settings.MaxLimbs.MaxDicks > e) {
-                    const Dick = {
-                        Size: OrganSize(who, "Masc", 3, "Dick", e + 1),
-                        Type: who.SecondRace,
-                        Virgin: true
-                    }
-                    who.Dicks.push(Dick);
-                }
-                if (who.Dicks[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxDicks) {
+        for (let e = 0; e < who.Dicks.length; e++) {
+            who.Dicks[e].Size = DickSize(e);
+            if (e + 1 === who.Dicks.length && who.Dicks[e].Size > who.Height / 5 && Settings.MaxLimbs.MaxDicks > e) {
+                who.Dicks.push(DickMaker(e + 1));
+                EssenceCheck(who); // Recursion might be a problem?
+                return;
+            } else if (who.Dicks[e].Size < player.Height * 0.03 || e >= Settings.MaxLimbs.MaxDicks) {
+                if (who.Dicks.length > 0) {
                     who.Dicks.pop();
                 }
             }
         }
+    }
 
-
-
-        if (who.Masc < 50) {
-            if (who.Balls.length > 0) {
+    if (BallsSize() < player.Height * 0.03 && who.Balls.length > 0) {
+        who.Balls.pop();
+    } else {
+        if (who.Balls.length === 0) {
+            who.Balls.push(BallMakes());
+            EssenceCheck(who);
+            return;
+        }
+        for (let e = 0; e < who.Balls.length; e++) {
+            who.Balls[e].Size = BallsSize(e);
+            if (e == who.Balls.length - 1 && who.Balls[e].Size > who.Height / 6 && Settings.MaxLimbs.MaxBalls > e) {
+                who.Balls.push(BallMakes(e + 1));
+                EssenceCheck(who);
+                return;
+            } else if (who.Balls[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxBalls) {
                 who.Balls.pop();
             }
-        } else {
-            if (who.Balls.length == 0) {
-                const Ball = {
-                    Size: OrganSize(who, "Masc", 4, "Balls", 0, 2),
-                    Type: who.SecondRace,
-                    CumMax: 1 / 3 * Math.PI * Math.pow(OrganSize(who, "Masc", 4, "Balls", 0, 2), 3),
-                    Cum: 1 / 6 * Math.PI * Math.pow(OrganSize(who, "Masc", 4, "Balls", 0, 2), 3),
-                    CumRate: 0,
-                    CumBaseRate: 0.5
-                }
-                who.Balls.push(Ball);
-            }
-            for (let e in who.Balls) {
-                who.Balls[e].Size = OrganSize(who, "Masc", 4, "Balls", e, 2)
-                if (e == who.Balls.length - 1 && who.Balls[e].Size > who.Height / 6 && Settings.MaxLimbs.MaxBalls > e) {
-                    const Ball = {
-                        Size: OrganSize(who, "Masc", 4, "Balls", e + 1, 2),
-                        Type: who.SecondRace,
-                        CumMax: 1 / 3 * Math.PI * Math.pow(OrganSize(who, "Masc", 4, "Balls", e + 1, 2), 3),
-                        Cum: 1 / 7 * Math.PI * Math.pow(OrganSize(who, "Masc", 4, "Balls", e + 1, 2), 3),
-                        CumRate: 0,
-                        CumBaseRate: 0.5
-                    }
-                    who.Balls.push(Ball);
-                }
-                if (who.Balls[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxBalls) {
-                    who.Balls.pop();
-                }
-            }
         }
 
-        if (who.Femi < 30) {
-            if (who.Pussies.length > 0) {
+    }
+
+    if (PussySize() < player.Height * 0.03 && who.Pussies.length > 0) {
+        who.Pussies.pop();
+    } else {
+        if (who.Pussies.length === 0) {
+            who.Pussies.push(PussyMaker());
+            EssenceCheck(who);
+            return;
+        }
+        for (var e = 0; e < who.Pussies.length; e++) {
+            who.Pussies[e].Size = PussySize(e);
+            if (e + 1 === who.Pussies.length && who.Pussies[e].Size > who.Height / 5 && Settings.MaxLimbs.MaxVaginas > e) {
+                who.Pussies.push(PussyMaker(e + 1));
+                EssenceCheck(who);
+                return;
+            } else if (who.Pussies[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxVaginas) {
                 who.Pussies.pop();
             }
-        } else {
-            if (who.Pussies.length == 0) {
-                const Pussy = {
-                    Size: OrganSize(who, "Femi", 3, "Pussy"),
-                    Type: who.SecondRace,
-                    Virgin: true
-                }
-                who.Pussies.push(Pussy);
-            }
-            for (let e in who.Pussies) {
-                who.Pussies[e].Size = OrganSize(who, "Femi", 3, "Pussy", e);
-                if (e == who.Pussies.length - 1 && who.Pussies[e].Size > who.Height / 5 && Settings.MaxLimbs.MaxVaginas > e) {
-                    const Pussy = {
-                        Size: OrganSize(who, "Femi", 3, "Pussy", e + 1),
-                        Type: who.SecondRace,
-                        Virgin: true
-                    }
-                    who.Pussies.push(Pussy);
-                }
-                if (who.Pussies[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxVaginas) {
-                    who.Pussies.pop();
-                }
-            }
         }
-
-
-        for (let e in who.Boobies) {
-            if (who.Boobies.length < 1) {
-                const Boob = {
-                    Size: OrganSize(who, "Femi", 3, "Boobies", e + 1),
-                    Type: who.Race,
-                    Milk: 0,
-                    MilkBaseRate: 0,
-                    MilkRate: 0,
-                    MilkMax: 1 / 3 * Math.PI * Math.pow(OrganSize(who, "Femi", 3, "Boobies", e + 1), 3)
-                }
-                who.Boobies.push(Boob);
-            }
-            if (who.Femi < 30) {
-                who.Boobies[e].Size = 0;
-                if (who.Boobies.length > 1) {
-                    who.Boobies.pop();
-                }
-            } else {
-                who.Boobies[e].Size = OrganSize(who, "Femi", 3, "Boobies", e, 2)
-                who.Boobies[e].MilkMax = 1 / 3 * Math.PI * Math.pow(who.Boobies[e].Size, 3);
-                if (e == who.Boobies.length - 1 && who.Boobies[e].Size > who.Height / 5 && Settings.MaxLimbs.MaxBoobs > e) {
-                    const Boob = {
-                        Size: OrganSize(who, "Femi", 3, "Boobies", e + 1),
-                        Type: who.Race,
-                        Milk: 0,
-                        MilkBaseRate: 0,
-                        MilkRate: 0,
-                        MilkMax: 1 / 3 * Math.PI * Math.pow(OrganSize(who, "Femi", 3, "Boobies", e + 1), 3)
-                    }
-                    who.Boobies.push(Boob);
-                }
-                if (who.Boobies.length > 1 && who.Boobies[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxBoobs) {
-                    who.Boobies.pop();
-                }
-            }
-        }
-
-        if (who.Anal.length == 0) {
-            const Anal = {
-                Size: 0,
-                Type: who.Race,
-                Virgin: true,
-                stretch: 1,
-            }
-            who.Anal.push(Anal);
-        } else {
-            who.Anal[0].Size = who.Height / 12;
-        }
-        return;
     }
+    if (who.Boobies.length === 0) {
+        who.Boobies.push(BoobMaker());
+        EssenceCheck(who);
+        return
+    }
+    for (let e = 0; e < who.Boobies.length; e++) {
+        if (e === 0) {
+            who.Boobies[e].Size = Math.max(0, BoobSize(e));
+        } else {
+            who.Boobies[e].Size = BoobSize(e)
+        }
+        who.Boobies[e].MilkMax = 1 / 3 * Math.PI * Math.pow(who.Boobies[e].Size, 3);
+        if (e + 1 === who.Boobies.length && who.Boobies[e].Size > who.Height / 5 && Settings.MaxLimbs.MaxBoobs > e) {
+            who.Boobies.push(BoobMaker(e + 1));
+            EssenceCheck(who);
+            return
+        } else if (who.Boobies.length > 1 && who.Boobies[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxBoobs) {
+            who.Boobies.pop();
+            console.log("pop")
+        }
+    }
+    if (who.Anal.length === 0) {
+        const Anal = {
+            Size: who.Height / 12,
+            Type: who.Race,
+            Virgin: true,
+            stretch: 1,
+        }
+        who.Anal.push(Anal);
+    } else {
+        who.Anal[0].Size = who.Height / 12;
+    }
+    return;
+
 }

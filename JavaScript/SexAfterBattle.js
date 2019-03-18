@@ -3,26 +3,31 @@ var PRL,
     LastPressed;
 // Mouth
 function SexActGiveBlowjob() {
+    const Text = DocId("SexText"),
+        ee = enemies[EnemyIndex];
     if (Settings.ImgPack) {
-        ImgChose(player, "GiveBlowjob", enemies[EnemyIndex]);
+        ImgChose(player, "GiveBlowjob", ee);
     }
-    enemies[EnemyIndex].Arousal += SexAttack / 2
+    ee.Arousal += SexAttack / 2
     player.Arousal += ESexAttack / 3;
     if (LastPressed === "GiveBlowjob") {
-        document.getElementById("SexText").innerHTML = "Your head continues to bob on their length as your tongue plays with their tip, electing soft moans from your opponent. As " + enemies[EnemyIndex].FirstName + " begins to softly hump into your throat, you meet each thrust by pushing your head down as far as you can. You emphasize their thrusts by sucking hard on their throbbing length. You feel their hand being placed on your head, pushing you deeper into their crotch."
-        if (enemies[EnemyIndex].Balls.length > 0) {
-            document.getElementById("SexText").innerHTML += " Your lips meet their crotch as their " + CmToInch(enemies[EnemyIndex].Balls[0].Size) + " nuts start to bump into your chin with each hump."
+        Text.innerHTML = `Your head continues to bob on their length as your tongue plays with their tip, 
+        electing soft moans from your opponent. As ${enemies[EnemyIndex].FirstName} begins to softly hump into your throat, 
+        you meet each thrust by pushing your head down as far as you can. You emphasize their thrusts by sucking hard on their throbbing length. You feel their hand being placed on your head, pushing you deeper into their crotch.`
+        if (ee.Balls.length > 0) {
+            Text.innerHTML += ` Your lips meet their crotch as their ${CmToInch(enemies[EnemyIndex].Balls[0].Size)} nuts start to bump into your chin with each hump.`
         }
-        document.getElementById("SexText").innerHTML += " Their breathing becomes deep and labored as you milk their cock for all it’s worth."
+        Text.innerHTML += ` Their breathing becomes deep and labored as you milk their cock for all it’s worth.`
     } else {
-        RL = RandomInt(0, enemies[EnemyIndex].Dicks.length - 1);
-        document.getElementById("SexText").innerHTML = "Your foe lays on their back, chest heaving with exhaustion from the recent fight. You make your way up to " + enemies[EnemyIndex].FirstName + "'s body and crouch between their legs, spreading them apart. In-between lies their " + CmToInch(enemies[EnemyIndex].Dicks[RL].Size) + " " + enemies[EnemyIndex].Dicks[RL].Type + " cock lewdly pulsing as it bobs side-to-side with each breath of your foe." +
-            " You lick your lips in anticipation as you lower your head to your prize, wrapping your lips around the head of their dick and start sucking." // They still lies on their stomach still spent from the battle. You grab their torso and flip them on their back for your viewing pleasure. Their dick lays flat against their stomach twitching almost expectantly. You lower your head between their legs and just before the they has time to protest you begin tending to their cock causing them to gasp."
+        RL = RandomInt(0, ee.Dicks.length - 1);
+        Text.innerHTML = `Your foe lays on their back, chest heaving with exhaustion from the recent fight. 
+        You make your way up to ${enemies[EnemyIndex].FirstName}'s body and crouch between their legs, 
+        spreading them apart. In-between lies their ${CmToInch(enemies[EnemyIndex].Dicks[RL].Size)} ${enemies[EnemyIndex].Dicks[RL].Type} cock lewdly pulsing as it bobs side-to-side with each breath of your foe. You lick your lips in anticipation as you lower your head to your prize, wrapping your lips around the head of their dick and start sucking.` // They still lies on their stomach still spent from the battle. You grab their torso and flip them on their back for your viewing pleasure. Their dick lays flat against their stomach twitching almost expectantly. You lower your head between their legs and just before the they has time to protest you begin tending to their cock causing them to gasp.
     }
     CheckArousal();
     LastPressed = "GiveBlowjob";
     return;
-}
+};
 
 function SexActGiveCunnilingus() {
     if (Settings.ImgPack) {

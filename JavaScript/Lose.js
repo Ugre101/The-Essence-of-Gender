@@ -28,7 +28,7 @@ document.getElementById("PlayerLoseSex").addEventListener("click", function () {
 
 function Lose(sex = true) {
 	var ee = enemies[EnemyIndex];
-	document.getElementById("LosePlayerLooks").innerHTML = "" // BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
+	document.getElementById("LosePlayerLooks").innerHTML = ""; // BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
 	if (player.Pregnant.Babies.length > 0) {
 		var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
 		if (age < 1) {
@@ -38,7 +38,7 @@ function Lose(sex = true) {
 		}
 		document.getElementById("LosePlayerLooks").innerHTML += "<br>" + age;
 	}
-	document.getElementById("LoseEnemyLooks").innerHTML = "" //BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
+	document.getElementById("LoseEnemyLooks").innerHTML = ""; //BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
 	if (ee.hasOwnProperty("Pregnant")) {
 		if (ee.Pregnant.Status) {
 			document.getElementById("LoseEnemyLooks").innerHTML += "<br>Pregnant";
@@ -576,7 +576,7 @@ function SnowScenes() {
 		getVoreBoobs: false,
 		getVoreVagina: false,
 		getVoreAnal: false
-	} //Which scenes are possible? #Removed brackets they broke code when using VisualStudio beutify -Ugre
+	}; //Which scenes are possible? #Removed brackets they broke code when using VisualStudio beutify -Ugre
 	// Need settings options if Player prey is enabled.
 	if (Settings.Vore && false) {
 		sceneList.getVoreAnal = true;

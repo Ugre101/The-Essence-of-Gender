@@ -23,7 +23,7 @@ function DragonNameGiver(who) {
 
 
 function EncounterMaiden() {
-    var MountainHalfRaces = ["human", "elf"] //
+    var MountainHalfRaces = ["human", "elf"]; //
     var OP = new enemy("Maiden", RandomString(MountainHalfRaces), RandomInt(1, 10), RandomInt(1, 10), RandomInt(20, 50), RandomInt(0, 5),
         RandomInt(5, 20), RandomInt(0, 5), 1500, 2000, RandomInt(50, 250), RandomInt(30, 100),
         "Pink", grid, RandomInt(150, 170));
@@ -42,7 +42,7 @@ function EncounterMaiden() {
 }
 
 function EncounterDragonKind() {
-    var MountainHalfRaces = ["human", "elf"] //
+    var MountainHalfRaces = ["human", "elf"];//
     var OP = new enemy("Young", "Dragonkind", RandomInt(10, 50), RandomInt(10, 50), RandomInt(10, 30), RandomInt(30, 50),
         RandomInt(10, 50), RandomInt(10, 60), 5000, 5000, RandomInt(50, 500), RandomInt(50, 500),
         "Red", grid, RandomInt(160, 240), RandomString(MountainHalfRaces));

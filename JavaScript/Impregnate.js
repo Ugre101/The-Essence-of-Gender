@@ -1,7 +1,7 @@
 function Twins(who, by) {
     // The +1 gives a 1% or less chance for non blessed to birth twins 
-    var Twins = 1 + player.Blessings.Broodmother * 1;
-    console.log(Twins);
+    // Old saves might fail totaly
+    const Twins = 1 + player.Blessings.Broodmother * 1;
     switch (who.Race) {
         case "":
             Twins += 5;
