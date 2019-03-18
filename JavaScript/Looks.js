@@ -145,11 +145,11 @@ function BoobLook(who) {
         var boobies = "";
         for (var b = 0; b < who.Boobies.length; b++) {
             if (b == 0 && (Math.round(who.Boobies[0].Size) == 2 || Math.round(who.Boobies[0].Size) == 3)) {
-                boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size, who) + "-cup chest";
+                boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
             } else if (Math.round(who.Boobies[b].Size) > 1 && Math.round(who.Boobies[b].Size < 28)) {
-                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size, who) + "-cup chest";
+                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
             } else {
-                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size, who) + " chest";
+                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
             }
         }
         return boobies + ".<br><br>";
@@ -163,11 +163,11 @@ function ExactBoobLook(who) {
         var boobies = "";
         for (var b = 0; b < who.Boobies.length; b++) {
             if (b == 0 && (Math.round(who.Boobies[0].Size) == 2 || Math.round(who.Boobies[0].Size) == 3)) {
-                boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size, who) + "-cup chest";
+                boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
             } else if (Math.round(who.Boobies[b].Size) > 1 && Math.round(who.Boobies[b].Size < 28)) {
-                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size, who) + "-cup chest";
+                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
             } else {
-                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size, who) + " chest";
+                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
             }
         }
         return boobies + ".<br><br>";
@@ -180,9 +180,8 @@ function AnalLook(who) {
 
 }
 
-function BoobSizeConvertor(Size, who) {
-    const prop = Size / GrowthScale(who); // Trial to make it in relation of body size, e.g. a fairy DD boobs should be same as giantess if they where same size.
-    switch (Math.round(prop)) {
+function BoobSizeConvertor(Size) {
+    switch (Math.round(Size)) {
         case 0:
         case 1:
             return "flat";

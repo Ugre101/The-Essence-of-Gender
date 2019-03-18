@@ -59,7 +59,7 @@ function PrintEnemies() {
             }
         }
         ctx.fillStyle = ee.Color;
-        let image = ee.Race.toLowerCase() // + gender?
+        let image = ee.Race.toLowerCase(); // + gender?
         if (typeof Enemy_images[image] !== "undefined") {
             ctx.drawImage(Enemy_images[image], ee.XPos, ee.YPos, ee.Size, ee.Size);
             ctx.fillStyle = Color();

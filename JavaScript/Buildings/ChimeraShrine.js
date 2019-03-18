@@ -1,3 +1,4 @@
+
 document.getElementById("SacRaceEss").addEventListener("click", function () {
     var SacMenu = document.getElementById("SacRaceEssMenu");
     if (SacMenu.style.display === 'grid') {

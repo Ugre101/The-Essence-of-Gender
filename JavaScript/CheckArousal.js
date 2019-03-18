@@ -1,4 +1,5 @@
 function CheckArousal() {
+    AfterBattleButtons();
     const ee = enemies[EnemyIndex],
         SexText = document.getElementById("SexText");
     if (ee.Arousal >= 100) {
@@ -43,28 +44,32 @@ function CheckArousal() {
                 break;
         }
         EssenceCheck(ee);
-        const ImpregActions = ["DoggyStyle", "Missionary", "DualPen", "MultiPen"];
-        const AnalImpregActions = ["DoggyStyleAnal"]
+        const ImpregActions = ["DoggyStyle", "Missionary", "DualPen", "MultiPen"],
+            AnalImpregActions = ["DoggyStyleAnal"];
         if (ImpregActions.indexOf(LastPressed) != -1) {
             if (!ee.hasOwnProperty("Pregnant")) {
-                ee.Pregnant = {}
-                ee.Pregnant.Status = false;
-            } else if (!ee.Pregnant.Status) {
+                ee.Pregnant = {
+                    Status: false
+                }
+            }
+            if (!ee.Pregnant.Status) {
                 for (let b of player.Balls) {
                     if (b.Cum > 10) {
-                        Impregnate(ee, player, "A", "");
+                        Impregnate(ee, player);
                         b.Cum -= 10;
                     }
                 }
             }
         } else if (AnalImpregActions.indexOf(LastPressed) != -1 && player.Blessings.MountainShrine.Malepreg > 0) {
             if (!ee.hasOwnProperty("Pregnant")) {
-                ee.Pregnant = {}
-                ee.Pregnant.Status = false;
-            } else if (!ee.Pregnant.Status) {
+                ee.Pregnant = {
+                    Status: false
+                }
+            }
+            if (!ee.Pregnant.Status) {
                 for (var b of player.Balls) {
                     if (b.Cum > 10) {
-                        Impregnate(ee, player, "A", "");
+                        Impregnate(ee, player);
                         b.Cum -= 10;
                     }
                 }
@@ -142,7 +147,6 @@ function CheckArousal() {
             "<br><br>Their body bulges with your load, but it's not enough - what they couldn't keep inside, they're now wearing outside." :
             "" // else
         )
-        AfterBattleButtons();
         CheckArousal();
     }
     const PlayerLooks = document.getElementById("PlayerLooks"),
@@ -154,7 +158,7 @@ function CheckArousal() {
         BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee) : "";
 
     if (player.Pregnant.Babies.length > 0) {
-        const age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
+        let age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
         age < 0 ? age = "Impregnated" : age = age + " months pregnant";
         PlayerLooks.innerHTML += "<br>" + age;
     }

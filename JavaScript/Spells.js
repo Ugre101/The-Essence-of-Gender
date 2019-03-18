@@ -41,7 +41,7 @@ const SpellDict = {
             if (player.Mana >= this.ManaCost()) {
                 var that = player.Spells[index];
                 var PAttack = Math.floor(RandomInt(3, 5) * this.Does(that.Exp) / 4)
-                ee.Health -= PAttack // * MagRes(ee);
+                ee.Health -= PAttack; // * MagRes(ee);
                 that.Exp++;
                 this.Succes(PAttack);
             } else {
@@ -69,7 +69,7 @@ const SpellDict = {
         },
         Cast: function (index, ee) {
             var that = player.Spells[index];
-            var ManaCost = this.ManaCost() // Affinity will lower cost
+            var ManaCost = this.ManaCost(); // Affinity will lower cost
             var Heal = this.Does(that.Exp)
             if (player.Mana > ManaCost) {
                 if (player.Health > player.MaxHealth) {
