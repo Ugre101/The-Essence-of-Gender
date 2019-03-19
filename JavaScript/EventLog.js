@@ -15,32 +15,32 @@
 	    	document.getElementById("EventText").innerHTML = LogHistory;
 	    }
 	    document.getElementById("HideEventLog").addEventListener("click", function () {
-	    	if (document.getElementById("EventLogPart").style.display == 'none') {
-				document.getElementById("EventLogPart").style.display = 'block';
-				document.getElementById("EventLogH2").style.display = 'inline-block';
+	    	if (document.getElementById("EventLogPart").style.display === 'none') {
+	    		document.getElementById("EventLogPart").style.display = 'block';
+	    		document.getElementById("EventLogH2").style.display = 'inline-block';
 	    		document.getElementById("HideEventLog").value = "Hide";
 	    	} else {
 	    		document.getElementById("EventLogPart").style.display = 'none';
-				document.getElementById("HideEventLog").value = "Show E";
-				document.getElementById("EventLogH2").style.display = 'none';
+	    		document.getElementById("HideEventLog").value = "Show E";
+	    		document.getElementById("EventLogH2").style.display = 'none';
 	    	}
 	    });
 	    document.getElementById("HideFluids").addEventListener("click", function () {
-	    	if (document.getElementById("FluidPart").style.display == 'none') {
-				document.getElementById("FluidPart").style.display = 'block';
-				document.getElementById("EventFluidsH2").style.display = 'inline-block';
-				document.getElementById("FluidsMode").style.display = 'inline-block';
+	    	if (document.getElementById("FluidPart").style.display === 'none') {
+	    		document.getElementById("FluidPart").style.display = 'block';
+	    		document.getElementById("EventFluidsH2").style.display = 'inline-block';
+	    		document.getElementById("FluidsMode").style.display = 'inline-block';
 	    		document.getElementById("HideFluids").value = "Hide";
 	    	} else {
-				document.getElementById("FluidPart").style.display = 'none';
-				document.getElementById("EventFluidsH2").style.display = 'none';
-				document.getElementById("FluidsMode").style.display = 'none';
+	    		document.getElementById("FluidPart").style.display = 'none';
+	    		document.getElementById("EventFluidsH2").style.display = 'none';
+	    		document.getElementById("FluidsMode").style.display = 'none';
 	    		document.getElementById("HideFluids").value = 'Show F';
 	    	}
 	    });
 	    document.getElementById("FluidsMode").addEventListener("click", function () {
-	    	var menu = document.getElementById("FluidContainer");
-	    	var Fluid = document.getElementById("FluidsMode");
+	    	const menu = document.getElementById("FluidContainer"),
+	    		Fluid = document.getElementById("FluidsMode");
 	    	switch (Fluid.value) {
 	    		case "1":
 	    			menu.setAttribute("class", "TwoColumn");
@@ -60,16 +60,13 @@
 	    			break;
 	    	}
 	    });
-	    var EventMax = false;
 	    document.getElementById("EventLogPart").addEventListener("click", function () {
-	    	if (EventMax) {
-	    		document.getElementById("EventLog").style.width = 20 + "vw";
-	    		document.getElementById("EventLog").style.maxHeight = 50 + "vh";
-	    		EventMax = false;
+	    	const EventLog = document.getElementById("EventLog");
+	    	if (EventLog.style.width > 20 + "vw") {
+	    		EventLog.style.width = 20 + "vw";
+	    		EventLog.style.maxHeight = 50 + "vh";
 	    	} else {
-	    		document.getElementById("EventLog").style.width = 80 + "vw";
-	    		document.getElementById("EventLog").style.maxHeight = 80 + "vh";
-	    		EventMax = true;
+	    		EventLog.style.width = 80 + "vw";
+	    		EventLog.style.maxHeight = 80 + "vh";
 	    	}
-	    	console.log("Clicks")
 	    });

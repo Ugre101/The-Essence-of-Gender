@@ -21,20 +21,20 @@ function CheatEngine() {
 }
 
 document.getElementById("Gold").addEventListener("click", function () {
-    var gold = document.getElementById("Gold");
-    var clicked = gold.dataset.clicked;
+    const gold = document.getElementById("Gold");
+    let clicked = gold.dataset.clicked;
     clicked++;
     gold.dataset.clicked = clicked;
     if (clicked > 10) {
         DisplayNone();
-        document.getElementById("CheatMenu").style.display = 'block';
-        document.getElementById("CheatsEnabled").value = "Cheats Enabled " + Settings.Cheats.Enabled;
-        document.getElementById("CheatsGold").value = "Gold " + Settings.Cheats.Gold;
-        document.getElementById("CheatsMasc").value = "Masc " + Settings.Cheats.Masc;
-        document.getElementById("CheatsFemi").value = "Femi " + Settings.Cheats.Femi;
-        document.getElementById("CheatsExp").value = "Exp " + Settings.Cheats.Exp;
-        document.getElementById("CheatsVoreExp").value = "Vore Exp " + Settings.Cheats.VoreExp;
-        document.getElementById("CheatsFastTime").value = "FastTime " + Settings.Cheats.FastTime;
+        DocId("CheatMenu").style.display = 'block';
+        DocId("CheatsEnabled").value = "Cheats Enabled " + Settings.Cheats.Enabled;
+        DocId("CheatsGold").value = "Gold " + Settings.Cheats.Gold;
+        DocId("CheatsMasc").value = "Masc " + Settings.Cheats.Masc;
+        DocId("CheatsFemi").value = "Femi " + Settings.Cheats.Femi;
+        DocId("CheatsExp").value = "Exp " + Settings.Cheats.Exp;
+        DocId("CheatsVoreExp").value = "Vore Exp " + Settings.Cheats.VoreExp;
+        DocId("CheatsFastTime").value = "FastTime " + Settings.Cheats.FastTime;
     }
 });
 document.getElementById("CheatsEnabled").addEventListener("click", function () {

@@ -1,20 +1,21 @@
 function PrintDoors() {
     function PrintDoor(NESW) {
-        var startarea = document.getElementById("hem");
-        var ctx = startarea.getContext("2d");
-        this.NESW = NESW;
-        if (NESW == "E") {
-            ctx.fillStyle = Settings.MapColor;
-            ctx.fillRect(startarea.width - grid, startarea.height / 2 - 3 * grid, grid, grid * 6);
-        } else if (NESW == "S") {
-            ctx.fillStyle = Settings.MapColor;
-            ctx.fillRect(startarea.width / 2 - 3 * grid, startarea.height - grid, grid * 6, grid);
-        } else if (NESW == "W") {
-            ctx.fillStyle = Settings.MapColor;
-            ctx.fillRect(0, startarea.height / 2 - 3 * grid, grid, grid * 6);
-        } else if (NESW == "N") {
-            ctx.fillStyle = Settings.MapColor;
-            ctx.fillRect(startarea.width / 2 - 3 * grid, 0, grid * 6, grid);
+        const startarea = document.getElementById("hem"),
+            ctx = startarea.getContext("2d");
+        ctx.fillStyle = Settings.MapColor;
+        switch (NESW.toUpperCase()) {
+            case "E":
+                ctx.fillRect(startarea.width - grid, startarea.height / 2 - 3 * grid, grid, grid * 6);
+                break;
+            case "S":
+                ctx.fillRect(startarea.width - grid, startarea.height / 2 - 3 * grid, grid, grid * 6);
+                break;
+            case "W":
+                ctx.fillRect(0, startarea.height / 2 - 3 * grid, grid, grid * 6);
+                break;
+            case "N":
+                ctx.fillRect(startarea.width / 2 - 3 * grid, 0, grid * 6, grid);
+                break;
         }
     }
     switch (player.Area) {

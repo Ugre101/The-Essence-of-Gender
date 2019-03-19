@@ -1,9 +1,9 @@
 function ImageLoad(arr, callback) { // Preload images to stop flickering
-    let images = {};
-    let loaded = 0;
+    let images = {},
+        loaded = 0;
 
     if (Array.isArray(arr)) {
-        for (var e of arr) {
+        for (let e of arr) {
             let img = new Image();
             img.onload = ImageLoaded;
             img.src = `Tiles/${e}.png`;
@@ -20,53 +20,34 @@ function ImageLoad(arr, callback) { // Preload images to stop flickering
         }
     }
 }
-var _images = {};
+var Tiles_images = {};
 const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "City", "Forest", "Forest2", "Outlaws",
     "PathToOutlaws", "PathToOutlaws2", "RoadToCity", "RoadToCity2", "RoadToHome", "RoadToWitch", "RoadToWitch2",
     "rtb2", "Start", "Witch", "MountainStart", "MountainShrinePath", "MountainShrine", "MountainClimb", "MountainClimb2",
     "MountainClimb3", "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8",
     "MountainClimb9", "MountainPlateau"
 ], function (images) {
-    _images = images;
+    Tiles_images = images;
     // Stop player from starting before tiles are loaded
     document.getElementById("LoadingImagesProgress").innerHTML = "Tiles loaded";
     document.getElementById("LoadingImagesProgress").classList.remove("visible");
     document.getElementById("LoadingImagesProgress").classList.add("hidden");
-
 });
 
-function PrintImage() { // New and improved
-    const startarea = document.getElementById("hem"),
-        ctx = startarea.getContext("2d");
-    if (typeof _images[player.Map] !== "undefined") {
-        ctx.clearRect(0, 0, startarea.width, startarea.height);
-        ctx.drawImage(_images[player.Map], 0, 0, startarea.width, startarea.height);
-        if (Settings.HighLightDoors) {
-            PrintDoors();
-        }
-    } else {
-        PaintBackground();
-        PrintDoors();
-    }
-
-    function PaintBackground() {
-        ctx.fillStyle = Settings.MapColor;
-        ctx.fillRect(0, 0, startarea.width, startarea.height);
-
-        // Wall around map
-        ctx.fillStyle = Settings.BorderColor;
-        ctx.fillRect(0, 0, grid / 2, startarea.height);
-        ctx.fillRect(0, 0, startarea.width, grid / 2);
-        ctx.fillRect(startarea.width - (grid / 2), 0, grid / 2, startarea.height);
-        ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
-    }
-};
-
 function CurrentMap() {
-    PrintImage()
-    let Npcs = []; // Moved here to avoid public handling of npcs, need to double check so I haven't
+    ; // Moved here to avoid public handling of npcs, need to double check so I haven't
     // forgoten avoid any refernce to Npcs somewhere
     //First Town
+    function Npc(Name, RealName, X, Y, width, height, Color) {
+        this.Name = Name,
+            this.RealName = RealName,
+            this.X = X,
+            this.Y = Y,
+            this.Width = width,
+            this.Height = height,
+            this.Color = Color
+    };
+    let Npcs = []
     const startarea = document.getElementById("hem"),
         ctx = startarea.getContext("2d"),
         Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)"),
@@ -102,6 +83,33 @@ function CurrentMap() {
     function Portal(Xpos, Ypos) { // Portal is function so I can change X-position & Y-position
         return new Npc("LocalPortal", "Portal", grid * Xpos, grid * Ypos, grid * 4, grid * 4, "RGB(96, 47, 107)")
     }
+
+    function PrintImage() { // New and improved
+        if (typeof Tiles_images[player.Map] !== "undefined") {
+            ctx.clearRect(0, 0, startarea.width, startarea.height);
+            ctx.drawImage(Tiles_images[player.Map], 0, 0, startarea.width, startarea.height);
+            if (Settings.HighLightDoors) {
+                PrintDoors();
+            }
+        } else {
+            PaintBackground();
+            PrintDoors();
+        }
+
+        function PaintBackground() {
+            ctx.fillStyle = Settings.MapColor;
+            ctx.fillRect(0, 0, startarea.width, startarea.height);
+
+            // Wall around map
+            ctx.fillStyle = Settings.BorderColor;
+            ctx.fillRect(0, 0, grid / 2, startarea.height);
+            ctx.fillRect(0, 0, startarea.width, grid / 2);
+            ctx.fillRect(startarea.width - (grid / 2), 0, grid / 2, startarea.height);
+            ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
+        }
+    };
+    PrintImage()
+
     //Animal testing
     /*	var aSpawn = Math.random();
     	if (enemies.length < 1 && Settings.AnimalSpawn)
@@ -315,12 +323,11 @@ function CurrentMap() {
                 sprite.x = startarea.width / 2 - grid;
                 sprite.y = startarea.height / 2;
                 UpdateNpc(n.Name);
-                document.getElementById("SellLimbs").style.display = Settings.EssenceAuto ? 'none' : 'inline-block';
             }
         }
 
         function UpdateNpc(name) {
-            var isfunction = window[name + "Func"];
+            let isfunction = window[name + "Func"];
             if (typeof isfunction === "function") { // Start replacing html building/npcs with javascript functions
                 document.getElementById("map").style.display = 'none';
                 document.getElementById("buttons").style.display = 'none';

@@ -6,35 +6,25 @@ document.getElementById("HideWorldMap").addEventListener("click", function () {
         document.getElementById("WorldMapPart").style.display = 'none';
     }
 });
-
 // Tool to print mini-map
-function TilePainter(x, y) {
-    var WorldMap = document.getElementById("WorldMap");
-    var World = WorldMap.getContext("2d");
-    var Width = WorldMap.width * 0.2;
-    var Height = WorldMap.height * 0.2;
-
-    World.fillStyle = Settings.MapColor;
-    World.fillRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
-
-    World.fillStyle = Settings.BorderColor;
-    World.strokeRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
-}
-
-// Tool to highlight current map on mini-map
-function CurrentTile(x, y) {
-    var WorldMap = document.getElementById("WorldMap");
-    var World = WorldMap.getContext("2d");
-    var Width = WorldMap.width * 0.2;
-    var Height = WorldMap.height * 0.2;
-
-    World.fillStyle = Settings.BorderColor;
-    World.fillRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
-}
-
 function PrintMap() {
-    var WorldMap = document.getElementById("WorldMap");
-    var World = WorldMap.getContext("2d");
+    const WorldMap = document.getElementById("WorldMap"),
+        World = WorldMap.getContext("2d"),
+        Width = WorldMap.width * 0.2,
+        Height = WorldMap.height * 0.2;
+
+    function TilePainter(x, y) {
+        World.fillStyle = Settings.MapColor;
+        World.fillRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
+
+        World.fillStyle = Settings.BorderColor;
+        World.strokeRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
+    }
+    // Tool to highlight current map on mini-map
+    function CurrentTile(x, y) {
+        World.fillStyle = Settings.BorderColor;
+        World.fillRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
+    }
     World.fillStyle = "#404040";
     World.fillRect(0, 0, WorldMap.width, WorldMap.height);
 

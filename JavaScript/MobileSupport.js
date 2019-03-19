@@ -3,7 +3,7 @@ var MobileButtons = false;
 document.getElementById("MobileButtons").addEventListener("click", function () {
     switch (MobileButtons) {
         case true:
-            document.getElementById("buttons").style.width = 17 + "%";
+            document.getElementById("buttons").style.width = 18 + "%";
             document.getElementById("buttons").style.maxWidth = 260 + "px";
             document.getElementById("FirstButtons").style.display = 'none';
             document.getElementById("SecondButtons").style.display = 'none';

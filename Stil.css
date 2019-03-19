@@ -10,6 +10,7 @@
    }
 
    body {
+       width: 100%;
        background-color: #643a6d;
        display: flex;
        align-items: center;
@@ -768,7 +769,7 @@
        max-width: 220px;
        height: 5vh;
        max-height: 40px;
-       margin: 0.5em 0.6em;
+       margin: 0.4em 0.6em;
 
        border: 1px solid rgb(83, 57, 43);
        border-radius: 10px;
@@ -966,13 +967,9 @@
        grid-template-columns: 1fr 1fr 1fr;
    }
 
-   #BlackMarket {
-       max-height: 90vh;
-       overflow: auto;
-   }
-
-   #LimbSale {
-       max-height: 40vh;
+   div.LimbSale {
+       max-height: 50vh;
+       border: 2px ridge black;
        overflow: auto;
    }
 

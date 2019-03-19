@@ -1,23 +1,25 @@
 function LocalPortalFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings"),
+        InnerDiv = document.createElement("div"),
+        Frag = document.createDocumentFragment(),
+        p = document.createElement("p"),
+        Container = [p]
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
 
     if (window.innerHeight > 600) { // No title on small screen
-        var h1 = document.createElement("h1");
-        var h1text = document.createTextNode("Portal");
+        const h1 = document.createElement("h1"),
+            h1text = document.createTextNode("Portal");
         h1.appendChild(h1text);
-        div.appendChild(h1);
+        Container.unshift(h1);
     }
 
-    var p = document.createElement("p");
+
     p.classList.add("TextBox");
-    div.appendChild(p);
 
     if (player.Map === "Outlaws" && House.Portal.BlackMarket === false) {
-        var Activate = InputButton("Activate", "Sync this local portal with your home portal");
+        const Activate = InputButton("Activate", "Sync this local portal with your home portal");
         Activate.addEventListener("click", function () {
             House.Portal.BlackMarket = true;
             p.innerHTML = "Sync"
@@ -26,10 +28,9 @@ function LocalPortalFunc() {
         Activate.addEventListener("mouseover", function () {
             p.innerHTML = "Sync this local portal with your home portal";
         });
-        div.appendChild(Activate);
-    }
-    if (player.Map === "MountainPlateau" && House.Portal.MountainPlateau != true) {
-        var Activate = InputButton("Activate", "Sync this local portal with your home portal");
+        Container.push(Activate);
+    } else if (player.Map === "MountainPlateau" && House.Portal.MountainPlateau != true) {
+        const Activate = InputButton("Activate", "Sync this local portal with your home portal");
         Activate.addEventListener("click", function () {
             House.Portal.MountainPlateau = true;
             p.innerHTML = "Sync"
@@ -38,10 +39,10 @@ function LocalPortalFunc() {
         Activate.addEventListener("mouseover", function () {
             p.innerHTML = "Sync this local portal with your home portal";
         });
-        div.appendChild(Activate);
+        Container.push(Activate);
     }
 
-    var input1 = InputButton("Home")
+    const input1 = InputButton("Home")
     input1.addEventListener("click", function () {
         player.Area = "First";
         player.Map = "RoadToHome";
@@ -59,11 +60,11 @@ function LocalPortalFunc() {
     input1.addEventListener("mouseover", function () {
 
     });
-    div.appendChild(input1);
+    Container.push(input1)
 
     // TODO in future when there is more portals make main buttons for each region
     if (House.Portal.Mountain) {
-        var Mountain = InputButton("Mountain")
+        const Mountain = InputButton("Mountain")
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
@@ -78,11 +79,11 @@ function LocalPortalFunc() {
             }
             return;
         });
-        div.appendChild(Mountain);
+        Container.push(Mountain);
     }
 
     if (House.Portal.BlackMarket) {
-        var BlackMarket = InputButton("BlackMarket")
+        const BlackMarket = InputButton("BlackMarket")
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
@@ -100,10 +101,10 @@ function LocalPortalFunc() {
         BlackMarket.addEventListener("mouseover", function () {
 
         });
-        div.appendChild(BlackMarket);
+        Container.push(BlackMarket);
     }
     if (House.Portal.MountainPlateau) {
-        var MountainPlateau = InputButton("Mountain plateau")
+        const MountainPlateau = InputButton("Mountain plateau")
         MountainPlateau.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainPlateau";
@@ -121,9 +122,13 @@ function LocalPortalFunc() {
         MountainPlateau.addEventListener("mouseover", function () {
 
         });
-        div.appendChild(MountainPlateau);
+        Container.push(MountainPlateau);
     }
-    div.appendChild(LeaveBuilding());
-    Buildings.appendChild(div);
+    Container.push((LeaveBuilding()));
+    Container.forEach((src) => {
+        Frag.appendChild(src);
+    });
+    InnerDiv.appendChild(Frag);
+    Buildings.appendChild(InnerDiv);
     Buildings.style.display = "block";
 }

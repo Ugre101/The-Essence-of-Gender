@@ -4,7 +4,7 @@
         Settings.Vore = Settings.Vore ? false : true;
         document.getElementById("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none';
         document.getElementById("Vore").value = "Vore " + Settings.Vore;
-        if (!player.hasOwnProperty("Vore")) { 
+        if (!player.hasOwnProperty("Vore")) {
             player.Vore = {
                 Level: 0,
                 Exp: 0,
@@ -147,20 +147,20 @@
     });
 
     function VoreEngine(progress = 0.001) {
-        var VoreMaxExp = 30 + Math.pow(1.05, player.Vore.Level - 1);
+        const VoreMaxExp = 30 + Math.pow(1.05, player.Vore.Level - 1);
         if (player.Vore.Exp >= VoreMaxExp) {
             player.Vore.Exp = player.Vore.Exp - VoreMaxExp;
             player.Vore.Level++;
             player.Vore.VorePoints++;
         }
-        document.getElementById("VoreLevel").innerHTML = player.Vore.Level;
-        document.getElementById("VoreLevel").style.width = 100 * (player.Vore.Exp / VoreMaxExp) + "%";
-        document.getElementById("ShowStomach").innerHTML = "Stomach<br>" + KgToPound(MaxStomachCapacity() - StomachCapacity()) + " prey <br> " + KgToPound(MaxStomachCapacity()) + " Max";
-        document.getElementById("ShowVagina").innerHTML = "Pussy<br>" + KgToPound(MaxVaginaCapacity() - VaginaCapacity()) + " prey <br> " + KgToPound(MaxVaginaCapacity()) + " Max";
-        document.getElementById("ShowBreast").innerHTML = "Breast<br>" + KgToPound(MaxBreastCapacity() - BreastCapacity()) + " prey <br> " + KgToPound(MaxBreastCapacity()) + " Max";
-        document.getElementById("ShowBalls").innerHTML = "Balls<br>" + KgToPound(MaxBallsCapacity() - BallsCapacity()) + " prey <br> " + KgToPound(MaxBallsCapacity()) + " Max";
-        document.getElementById("ShowAnal").innerHTML = "Anal<br>" + KgToPound(MaxAnalCapacity() - AnalCapacity()) + " prey <br> " + KgToPound(MaxAnalCapacity()) + " Max";
-        document.getElementById("VorePerks").style.display = player.Vore.VorePoints > 0 ? 'inline-block' : 'none';
+        DocId("VoreLevel").innerHTML = player.Vore.Level;
+        DocId("VoreLevel").style.width = 100 * (player.Vore.Exp / VoreMaxExp) + "%";
+        DocId("ShowStomach").innerHTML = `Stomach<br>${KgToPound(MaxStomachCapacity() - StomachCapacity())} prey<br>${KgToPound(MaxStomachCapacity())} Max`;
+        DocId("ShowVagina").innerHTML = `Pussy<br>${KgToPound(MaxVaginaCapacity() - VaginaCapacity())} prey<br>${KgToPound(MaxVaginaCapacity())} Max`;
+        DocId("ShowBreast").innerHTML = `Breast<br>${KgToPound(MaxBreastCapacity() - BreastCapacity())} prey<br>${KgToPound(MaxBreastCapacity())} Max`;
+        DocId("ShowBalls").innerHTML = `Balls<br>${KgToPound(MaxBallsCapacity() - BallsCapacity())} prey<br>${KgToPound(MaxBallsCapacity())} Max`;
+        DocId("ShowAnal").innerHTML = `Anal<br>${KgToPound(MaxAnalCapacity() - AnalCapacity())} prey<br>${KgToPound(MaxAnalCapacity())} Max`;
+        DocId("VorePerks").style.display = player.Vore.VorePoints > 0 ? 'inline-block' : 'none';
 
         // Digestion perk
         var digestionCount = 1;
@@ -170,14 +170,14 @@
 
         // Stomach
         var content = 0;
-        for (var e of player.Vore.Stomach) {
+        for (let e of player.Vore.Stomach) {
             content += e.Weight;
         }
         while (content > MaxStomachCapacity()) {
             enemies.push(player.Vore.Stomach[player.Vore.Stomach.length - 1]);
             player.Vore.Stomach.pop();
             content = 0;
-            for (var e of player.Vore.Stomach) {
+            for (let e of player.Vore.Stomach) {
                 content += e.Weight;
             }
         }

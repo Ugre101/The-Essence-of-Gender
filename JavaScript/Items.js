@@ -454,11 +454,11 @@ const ItemDict = {
         },
         Name: "Pocket portal",
         Use: function (who, item) {
-            console.log(House.Portal)
             if (who.Map === "RoadToHome") {
                 document.getElementById("InventoryText").innerHTML = "... seriously?"
                 item.Quantity++;
             } else if (House.Portal.Owned) {
+                enemies = [];
                 who.Area = "First";
                 who.Map = "RoadToHome";
                 DisplayGame();

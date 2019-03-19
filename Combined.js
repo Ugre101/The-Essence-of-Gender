@@ -295,13 +295,13 @@ var Partners = {
 }
 
 // Start values for canvas
-var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.MapPercent) * 20;
-var grid = (medium / 20);
-var sprite = {
-    x: grid,
-    y: grid,
-    Size: 1
-};
+var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.MapPercent) * 20,
+    grid = (medium / 20),
+    sprite = {
+        x: grid,
+        y: grid,
+        Size: 1
+    };
 
 // Start page
 document.getElementById("GoToCharCreator").addEventListener("click", function () {
@@ -475,7 +475,6 @@ function Pronoun(gender) {
             return Settings.Pronoun.Status ? Settings.Pronoun.DickGirl : gender;
         case "doll":
             return Settings.Pronoun.Status ? Settings.Pronoun.Doll : gender;
-
     }
 }
 
@@ -489,28 +488,26 @@ function CheckTitle(who) {
 }
 
 function CheckGender(who) {
-    let gender;
     if (who.Dicks.length > 0 && who.Pussies.length > 0) {
-        gender = "hermaphrodite";
+        return "hermaphrodite";
     } else if (who.Dicks.length > 0 && Math.floor(who.Boobies.some(e => e.Size > 1))) {
-        gender = "dickgirl";
+        return "dickgirl";
     } else if (who.Dicks.length > 0) {
-        gender = "male";
+        return "male";
     } else if (who.Pussies.length > 0 && who.Boobies.some(e => e.Size < 1)) { // Check all rows of boobs
-        gender = "cuntboy";
+        return "cuntboy";
     } else if (who.Pussies.length > 0) {
-        gender = "female";
+        return "female";
     } else {
-        gender = "doll"
+        return "doll"
     }
-    return gender;
 }
 // Level System
 
 function ExpCheck() {
     const MaxExp = 30 * Math.pow(1.05, player.level - 1);
-    document.getElementById("StatusLevel").style.width = Math.min(100 * (player.Exp / MaxExp), 100) + "%";
-    document.getElementById("LevelButton").style.display = (player.SkillPoints > 0 || player.PerkPoints > 0) ? 'inline-block' : 'none';
+    DocId("StatusLevel").style.width = Math.min(100 * (player.Exp / MaxExp), 100) + "%";
+    DocId("LevelButton").style.display = (player.SkillPoints > 0 || player.PerkPoints > 0) ? 'inline-block' : 'none';
 
     if (player.Exp >= MaxExp) {
         player.Exp = player.Exp - MaxExp;
@@ -523,7 +520,7 @@ function ExpCheck() {
 
 function StringCounter(array, string) {
     var counts = 0;
-    for (var i = 0; i < array.length; i++) {
+    for (let i = 0; i < array.length; i++) {
         if (array[i] === string) {
             counts++;
         }
@@ -665,22 +662,22 @@ function SexColor(who, where) {
 
 function HealthWillBars() {
     const health = document.getElementById("StatusHealth"),
-        will = document.getElementById("StatusWillHealth");
+        will = document.getElementById("StatusWillHealth"),
+        red = 150 + 105 * (player.Health / player.MaxHealth),
+        blue = 150 + 105 * (player.WillHealth / player.MaxWillHealth);
     health.innerHTML = Math.round(player.Health);
     health.style.width = Math.min(100 * (player.Health / player.MaxHealth), 103) + "%";
     will.innerHTML = Math.round(player.WillHealth);
     will.style.width = Math.min(100 * (player.WillHealth / player.MaxWillHealth), 103) + "%";
     // Trial of making the bars darker the lower as health goes down.
-    let red = 150 + 105 * (player.Health / player.MaxHealth),
-        blue = 150 + 105 * (player.WillHealth / player.MaxWillHealth);
     health.style.backgroundColor = "rgb(" + red + ",0,0)";
     will.style.backgroundColor = "rgb(0,0," + blue + ")";
 }
 
 function HouseEngine() {
     if (House.Gym > 0) {
-        var maxMuscle;
-        for (var e = 0; e < House.Dormmates.length; e++) {
+        let maxMuscle;
+        for (let e = 0; e < House.Dormmates.length; e++) {
             maxMuscle = (House.Dormmates[e].Height / 3) * (House.Gym * 0.1);
             if (House.Dormmates[e].Fat > 1 && (House.Dormmates[e].Muscle < maxMuscle)) {
                 House.Dormmates[e].Muscle += 0.1;
@@ -689,8 +686,8 @@ function HouseEngine() {
         }
     }
     if (House.Kitchen > 0) {
-        var maxFat;
-        for (var e = 0; e < House.Dormmates.length; e++) {
+        let maxFat;
+        for (let e = 0; e < House.Dormmates.length; e++) {
             maxFat = (House.Dormmates[e].Height / 2) * (House.Kitchen * 0.1);
             if (House.Dormmates[e].Fat < maxFat) {
                 House.Dormmates[e].Fat += 0.4;
@@ -699,7 +696,7 @@ function HouseEngine() {
     }
     if (House.Dormmates.length > 0) {
         player.Gold += 0.001 * House.Dormmates.length;
-        for (var esf = 0; House.Dormmates.length > esf; esf++) {
+        for (let esf = 0; House.Dormmates.length > esf; esf++) {
             if (Settings.Brothel.ServeMasc && Settings.Brothel.ServeFemi) {
                 House.Dormmates[esf].Masc += 0.05 * House.Brothel;
                 House.Dormmates[esf].Femi += 0.05 * House.Brothel;
@@ -756,27 +753,17 @@ function FoodEngine() {
     player.Fat -= 0.0002;
 }
 
-function Npc(Name, RealName, X, Y, width, height, Color) {
-    this.Name = Name,
-        this.RealName = RealName,
-        this.X = X,
-        this.Y = Y,
-        this.Width = width,
-        this.Height = height,
-        this.Color = Color
-};
-
 var EnemyIndex;
 
 function BattleSetup(who) {
-    document.getElementById("map").style.display = 'none';
-    document.getElementById("Encounter").style.display = 'grid';
-    document.getElementById("status").style.display = 'none';
-    document.getElementById("buttons").style.display = 'none';
-    document.getElementById("EmptyButtons").style.display = 'none';
-    document.getElementById("EventLog").style.display = 'none';
-    document.getElementById("BattleText").innerHTML = null;
-    document.getElementById("BattleText2").innerHTML = null;
+    const none = [DocId("map"), DocId("status"), DocId("buttons"),
+        DocId("EmptyButtons"), DocId("EventLog")
+    ].forEach((src) => {
+        src.style.display = 'none';
+    })
+    DocId("Encounter").style.display = 'grid';
+    DocId("BattleText").innerHTML = null;
+    DocId("BattleText2").innerHTML = null;
     battle = true;
     who.Health = who.FullHealth;
     who.WillHealth = who.FullWillHealth;
@@ -790,24 +777,23 @@ function Touching() {
     if (battle === true) {
         return;
     }
-
-    for (let j in enemies) {
-        if (sprite.x + grid * sprite.Size >= enemies[j].XPos && sprite.x < enemies[j].XPos + enemies[j].Size &&
-            sprite.y + grid * sprite.Size >= enemies[j].YPos && sprite.y < enemies[j].YPos + enemies[j].Size) {
+    enemies.forEach((j, i) => {
+        if (sprite.x + grid * sprite.Size >= j.XPos && sprite.x < j.XPos + j.Size &&
+            sprite.y + grid * sprite.Size >= j.YPos && sprite.y < j.YPos + j.Size) {
             if (mousedowner) {
                 clearInterval(mFunction);
                 mousedowner = false;
             }
-            EnemyIndex = j;
-            EssenceCheck(enemies[j]);
-            enemies[j].XPos = RandomInt(2, 18) * grid;
-            enemies[j].YPos = RandomInt(2, 18) * grid;
-            BattleSetup(enemies[j]);
+            EnemyIndex = i;
+            EssenceCheck(j);
+            j.XPos = RandomInt(2, 18) * grid;
+            j.YPos = RandomInt(2, 18) * grid;
+            BattleSetup(j);
         }
-    }
+    })
 };
 
-var fps = [];
+const fps = [];
 
 function loop() {
     requestAnimationFrame(loop);
@@ -820,22 +806,21 @@ function loop() {
         fps.pop();
     }
 
-    document.getElementById("StatusArea").innerHTML = "Area: " + player.Area + " and Map: " + player.Map;
+    DocId("StatusArea").innerHTML = `Area: ${player.Area} and Map: ${player.Map}`;
     player.MaxHealth = player.End * 10 + player.Perks.ExtraHealth.Count * 20;
     player.MaxWillHealth = player.Will * 10 + player.Perks.ExtraWillHealth.Count * 20;
-    document.getElementById("StatusName").innerHTML = player.Name + " " + player.LastName;
+    DocId("StatusName").innerHTML = player.Name + " " + player.LastName;
     HealthWillBars();
-    document.getElementById("StatusLevel").innerHTML = player.level;
-    document.getElementById("Gold").innerHTML = "Gold: " + Math.floor(player.Gold);
-    document.getElementById("Hunger").innerHTML = (player.Fat <= player.Height / 100) ? "You are starving" : null
-    document.getElementById("EssenceTracker").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
-    document.getElementById("BlackMarketEssence").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
-    document.getElementById("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none'
+    DocId("StatusLevel").innerHTML = player.level;
+    DocId("Gold").innerHTML = "Gold: " + Math.floor(player.Gold);
+    DocId("Hunger").innerHTML = (player.Fat <= player.Height / 100) ? "You are starving" : null
+    DocId("EssenceTracker").innerHTML = `Masculinity: ${Math.round(player.Masc)} and Femininity: ${Math.round(player.Femi)}`;
+    DocId("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none'
     ExpCheck();
 
     if (!battle) {
-        var startarea = document.getElementById("hem");
-        var ctx = startarea.getContext("2d");
+        const startarea = document.getElementById("hem"),
+            ctx = startarea.getContext("2d");
         startarea.width = medium;
         startarea.height = medium;
 
@@ -862,7 +847,7 @@ function loop() {
 
             sprite.Size = 1; //Math.min(0.8 + player.Height / 320, 1.2);
             if (typeof Thefps === "number") { // Stop typing NaN but I still need to figure out why NaN in first place
-                document.getElementById("Fps").innerHTML = Math.round(1000 / Thefps) + "fps";
+                DocId("Fps").innerHTML = Math.round(1000 / Thefps) + "fps";
             }
         }
     };
@@ -1134,19 +1119,6 @@ function AgeEngine() {
             }
     }
 }
-// Ideas for blessing to add later to unlock
-var Blessings = {
-    Incubator: 0, /* add behind baby age at preg engine to change time before birth have like a quest to get it*/
-    Breeder: 0, // same but for dorm servants
-    TwinsChance: 0 // remake impregnation so you can have twins or more
-}
-
-// Ideas for curses player can get stuck with until finding way to get rid of
-var Curses = {
-    Hunger: 0, // increase fatburn to force player into overeating to stop starving
-    Sub: 0, // Gives player a random chance to just lose a battle
-    Race: "Race" // Makes it so player contantly changes to a race
-}
 function BarFunc() {
     var Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
@@ -1382,123 +1354,52 @@ function BarberFunc() {
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
 }
-    // Black market code
-    document.getElementById("SellLimbs").addEventListener("click", function () {
-        document.getElementById("LimbSale").style.display = 'block';
-        document.getElementById("SellLimbs").style.display = 'none';
-        LimbSale();
+function BlackMarketFunc() {
+    const Buildings = document.getElementById("Buildings"),
+        MainFrag = document.createDocumentFragment(),
+        p = document.createElement("p"),
+        input1 = InputButton("Sell limbs"),
+        limbcon = document.createElement("div"),
+        PESS = document.createElement("p"),
+        input2 = InputButton("Sell 50 femininity 100g"),
+        input3 = InputButton("Sell 50 masculinity 100g"),
+        input4 = InputButton("Why can't I buy?", "I see a plenty signs here of what you are buying, but I see nothing about what I can buy?"),
+        Content = Settings.EssenceAuto ? [p, PESS, input2, input3, input4, LeaveBuilding()] : [p, input1, limbcon, PESS, input2, input3, input4, LeaveBuilding()];
+
+
+
+    while (Buildings.hasChildNodes()) {
+        Buildings.removeChild(Buildings.firstChild);
+    }
+
+    if (window.innerHeight > 200) { // No title on small screen
+        const h1 = document.createElement("h1"),
+            h1text = document.createTextNode("Black Market");
+        h1.appendChild(h1text);
+        Content.unshift(h1);
+    }
+
+    p.classList.add("TextBox");
+
+    input1.addEventListener("click", function () {
+        limbcon.classList.add("LimbSale")
+        if (limbcon.hasChildNodes()) {
+            while (limbcon.hasChildNodes()) {
+                limbcon.removeChild(limbcon.firstChild);
+            };
+            p.style.display = 'block';
+        } else {
+            LimbSale();
+            p.style.display = 'none';
+        }
+    });
+    input1.addEventListener("mouseover", function () {
+
     });
 
-    function LimbSale() {
-        var SellDicks = [];
-        for (var e = 0; e < player.Dicks.length; e++) {
-            var temp = "<button onclick=\"SellDicks(" + e + "); LimbSale()\">Dick: " + (e + 1) + ", " + CmToInch(player.Dicks[e].Size) + "</button>";
-            SellDicks += temp;
-        }
-        document.getElementById("SellDicks").innerHTML = SellDicks;
-        var SellDickSize = [];
-        for (var e = 0; e < player.Dicks.length; e++) {
-            var temp = "<button onclick=\"SellDickSize(" + e + "); LimbSale()\">Dick: " + (e + 1) + ", " + CmToInch(player.Dicks[e].Size) + "</button>";
-            SellDickSize += temp;
-        }
-        document.getElementById("SellDickSize").innerHTML = SellDickSize;
+    PESS.innerHTML = `Masc: ${player.Masc} Femi: ${player.Femi}`
 
-        var SellBalls = [];
-        for (var e = 0; e < player.Balls.length; e++) {
-            var temp = "<button onclick=\"SellBalls(" + e + "); LimbSale()\">Ball: " + (e + 1) + ", " + CmToInch(player.Balls[e].Size) + "</button>";
-            SellBalls += temp;
-        }
-        document.getElementById("SellBalls").innerHTML = SellBalls;
-        var SellBallSize = [];
-        for (var e = 0; e < player.Balls.length; e++) {
-            var temp = "<button onclick=\"SellBallSize(" + e + "); LimbSale()\">Ball: " + (e + 1) + ", " + CmToInch(player.Balls[e].Size) + "</button>";
-            SellBallSize += temp;
-        }
-        document.getElementById("SellBallSize").innerHTML = SellBallSize;
-
-        var SellBreasts = [];
-        for (var e = 1; e < player.Boobies.length; e++) {
-            var temp = "<button onclick=\"SellBreasts(" + e + "); LimbSale()\">Boobs: " + (e + 1) + ", " + CmToInch(player.Boobies[e].Size) + "</button>";
-            SellBreasts += temp;
-        }
-        document.getElementById("SellBreasts").innerHTML = SellBreasts;
-        var SellBreastSize = [];
-        for (var e = 0; e < player.Boobies.length; e++) {
-            var temp = "<button onclick=\"SellBreastSize(" + e + "); LimbSale()\">Boobs: " + (e + 1) + ", " + CmToInch(player.Boobies[e].Size) + "</button>";
-            SellBreastSize += temp;
-        }
-        document.getElementById("SellBreastSize").innerHTML = SellBreastSize;
-
-        var SellVaginas = [];
-        for (var e = 0; e < player.Pussies.length; e++) {
-            var temp = "<button onclick=\"SellVaginas(" + e + "); LimbSale()\">Pussy: " + (e + 1) + ", " + CmToInch(player.Pussies[e].Size) + "</button>";
-            SellVaginas += temp;
-        }
-        document.getElementById("SellVaginas").innerHTML = SellVaginas;
-        var SellVaginaSize = [];
-        for (var e = 0; e < player.Pussies.length; e++) {
-            var temp = "<button onclick=\"SellVaginaSize(" + e + "); LimbSale()\">Pussy: " + (e + 1) + ", " + CmToInch(player.Pussies[e].Size) + "</button>";
-            SellVaginaSize += temp;
-        }
-        document.getElementById("SellVaginaSize").innerHTML = SellVaginaSize;
-    }
-
-    function SellDicks(e) {
-        player.Gold += player.Dicks[e].Size * 30;
-        player.Dicks.splice(e, 1);
-    }
-
-    function SellDickSize(e) {
-        if (player.Dicks[e].Size - 1 < 1) {
-            player.Dicks[e].Size = 1;
-        } else {
-            player.Gold += 25;
-            player.Dicks[e].Size--;
-        }
-    }
-
-    function SellBalls(e) {
-        player.Gold += player.Balls[e].Size * 30;
-        player.Balls.splice(e, 1);
-    }
-
-    function SellBallSize(e) {
-        if (player.Balls[e].Size - 1 < 1) {
-            player.Balls[e].Size = 1;
-        } else {
-            player.Gold += 25;
-            player.Balls[e].Size--;
-        }
-    }
-
-    function SellBreasts(e) {
-        player.Gold += player.Boobies[e].Size * 30;
-        player.Boobies.splice(e, 1);
-    }
-
-    function SellBreastSize(e) {
-        if (player.Boobies[e].Size - 1 < 0) {
-            player.Boobies[e].Size = 0;
-        } else {
-            player.Gold += 25;
-            player.Boobies[e].Size--;
-        }
-    }
-
-    function SellVaginas(e) {
-        player.Gold += player.Pussies[e].Size * 30;
-        player.Pussies.splice(e, 1);
-    }
-
-    function SellVaginaSize(e) {
-        if (player.Pussies[e].Size - 1 < 1) {
-            player.Pussies[e].Size = 1;
-        } else {
-            player.Gold += 25;
-            player.Pussies[e].Size--;
-        }
-    }
-    document.getElementById("SellFemininity").addEventListener("click", function () {
+    input2.addEventListener("click", function () {
         if (player.Femi >= 50) {
             player.Femi -= 50;
             player.Gold += 100;
@@ -1506,8 +1407,13 @@ function BarberFunc() {
             player.Gold += Math.max(0, player.Femi);
             player.Femi = 0;
         }
+        BlackMarketFunc();
     });
-    document.getElementById("SellMasculinity").addEventListener("click", function () {
+    input2.addEventListener("mouseover", function () {
+
+    });
+
+    input3.addEventListener("click", function () {
         if (player.Masc >= 50) {
             player.Masc -= 50;
             player.Gold += 100;
@@ -1515,19 +1421,164 @@ function BarberFunc() {
             player.Gold += Math.max(0, player.Masc);
             player.Masc = 0;
         }
+        BlackMarketFunc();
     });
-    document.getElementById("BlackMarket").addEventListener("mouseover", function (e) {
-        document.getElementById("BlackMarketText").innerHTML = e.target.title;
+    input3.addEventListener("mouseover", function () {
+
     });
-    document.getElementById("BlackMarketWhy").addEventListener("click", function () {
-        document.getElementById("BlackMarketText").innerHTML = "Yeah we are only buying essence here, you see we have a contract with guys in the capital where we can sell for a lot more to nobles.  Nobles you might ask aren’t they the ones who preach about how you should only have as much essence you can conquer!" +
-            " The thing is though while they say trading essence are forbidden and for the weak, the rich don’t follow the rules they only pretend to in order to maintain their image. ";
+
+    input4.addEventListener("click", function () {
+        p.innerHTML = `Yeah we are only buying essence here, you see we have a contract with guys in the capital where we can sell for a lot more to nobles.  Nobles you might ask aren’t they the ones who preach about how you should only have as much essence you can conquer!
+             The thing is though while they say trading essence are forbidden and for the weak, the rich don’t follow the rules they only pretend to in order to maintain their image.`
     });
-    document.getElementById("LeaveBlackMarket").addEventListener("click", function () {
-        document.getElementById("LimbSale").style.display = 'none';
-        document.getElementById("SellLimbs").style.display = 'inline-block';
+    input4.addEventListener("mouseover", function () {
+        p.innerHTML = `I see a plenty signs here of what you are buying, but I see nothing about what I can buy?`
     });
-    // End Black market
+
+    Content.forEach((val) => {
+        MainFrag.appendChild(val);
+    });
+    Buildings.appendChild(MainFrag);
+    document.getElementById("Buildings").style.display = 'block';
+
+    function LimbSale() {
+        while (limbcon.hasChildNodes()) {
+            limbcon.removeChild(limbcon.firstChild);
+        };
+        const Frag = document.createDocumentFragment(),
+            H41 = document.createElement("h4"),
+            H41Text = document.createTextNode("Sell sexual organs 30g/cm"),
+            label1 = document.createElement("label"),
+            div1 = document.createElement("div"),
+            label2 = document.createElement("label"),
+            div2 = document.createElement("div"),
+            label3 = document.createElement("label"),
+            div3 = document.createElement("div"),
+            label4 = document.createElement("label"),
+            div4 = document.createElement("div"),
+            H42 = document.createElement("h4"),
+            H42Text = document.createTextNode("Sell sexual organ size 25g/cm"),
+            label5 = document.createElement("label"),
+            div5 = document.createElement("div"),
+            label6 = document.createElement("label"),
+            div6 = document.createElement("div"),
+            label7 = document.createElement("label"),
+            div7 = document.createElement("div"),
+            label8 = document.createElement("label"),
+            div8 = document.createElement("div"),
+            SellLimbsCon = [H41, label1, div1, label2, div2, label3, div3, label4, div4,
+                H42, label5, div5, label6, div6, label7, div7, label8, div8
+            ]
+
+        H41.appendChild(H41Text);
+        H42.appendChild(H42Text);
+
+        div1.setAttribute("id", "SellDicks");
+        label1.setAttribute("for", "SellDicks");
+        label1.innerHTML = "Dicks";
+        player.Dicks.forEach((e, i) => {
+            const inp = InputButton(e.Type + " dick " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                player.Gold += e.Size * 30;
+                player.Dicks.splice(i, 1);
+                LimbSale();
+            });
+            div1.appendChild(inp);
+        });
+
+        div2.setAttribute("id", "SellBalls");
+        label2.setAttribute("for", "SellBalls");
+        label2.innerHTML = "Balls";
+        player.Balls.forEach((e, i) => {
+            const inp = InputButton(e.Type + " balls " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                player.Gold += e.Size * 30;
+                player.Balls.splice(i, 1);
+                LimbSale();
+            });
+            div2.appendChild(inp);
+        });
+
+        div3.setAttribute("id", "SellBreasts");
+        label3.setAttribute("for", "SellBreasts");
+        label3.innerHTML = "Breasts";
+        player.Boobies.forEach((e, i) => {
+            const inp = InputButton(e.Type + " boobs " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                player.Gold += e.Size * 30;
+                player.Boobies.splice(i, 1);
+                LimbSale();
+            });
+            div3.appendChild(inp);
+        });
+
+        div4.setAttribute("id", "SellVaginas");
+        label4.setAttribute("for", "SellVaginas");
+        label4.innerHTML = "Vaginas";
+        player.Pussies.forEach((e, i) => {
+            const inp = InputButton(e.Type + " vagina " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                player.Gold += e.Size * 30;
+                player.Pussies.splice(i, 1);
+                LimbSale();
+            });
+            div4.appendChild(inp);
+        });
+
+        div5.setAttribute("id", "SellDickSize");
+        label5.setAttribute("for", "SellDickSize");
+        label5.innerHTML = "Dick size";
+        player.Dicks.forEach((e, i) => {
+            const inp = InputButton(e.Type + " dick " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
+                LimbSale();
+            });
+            div5.appendChild(inp);
+        });
+
+        div6.setAttribute("id", "SellBallSize");
+        label6.setAttribute("for", "SellBallSize");
+        label6.innerHTML = "Ball size";
+        player.Balls.forEach((e, i) => {
+            const inp = InputButton(e.Type + " balls " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
+                LimbSale();
+            });
+            div6.appendChild(inp);
+        });
+
+        div7.setAttribute("id", "SellBreastSize");
+        label7.setAttribute("for", "SellBreastSize");
+        label7.innerHTML = "Breast size";
+        player.Boobies.forEach((e, i) => {
+            const inp = InputButton(e.Type + " boobs " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
+                LimbSale();
+            });
+            div7.appendChild(inp);
+        });
+
+        div8.setAttribute("id", "SellVaginaSize");
+        label8.setAttribute("for", "SellVaginaSize");
+        label8.innerHTML = "Vagina depth";
+        player.Pussies.forEach((e, i) => {
+            const inp = InputButton(e.Type + " vagina " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
+                LimbSale();
+            });
+            div8.appendChild(inp);
+        });
+
+        SellLimbsCon.forEach((src) => {
+            Frag.appendChild(src)
+        });
+        limbcon.appendChild(Frag);
+    }
+}
 
 document.getElementById("SacRaceEss").addEventListener("click", function () {
     var SacMenu = document.getElementById("SacRaceEssMenu");
@@ -1712,25 +1763,27 @@ function GymFunc() {
     document.getElementById("Buildings").style.display = 'block';
 }
 function LocalPortalFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings"),
+        InnerDiv = document.createElement("div"),
+        Frag = document.createDocumentFragment(),
+        p = document.createElement("p"),
+        Container = [p]
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
 
     if (window.innerHeight > 600) { // No title on small screen
-        var h1 = document.createElement("h1");
-        var h1text = document.createTextNode("Portal");
+        const h1 = document.createElement("h1"),
+            h1text = document.createTextNode("Portal");
         h1.appendChild(h1text);
-        div.appendChild(h1);
+        Container.unshift(h1);
     }
 
-    var p = document.createElement("p");
+
     p.classList.add("TextBox");
-    div.appendChild(p);
 
     if (player.Map === "Outlaws" && House.Portal.BlackMarket === false) {
-        var Activate = InputButton("Activate", "Sync this local portal with your home portal");
+        const Activate = InputButton("Activate", "Sync this local portal with your home portal");
         Activate.addEventListener("click", function () {
             House.Portal.BlackMarket = true;
             p.innerHTML = "Sync"
@@ -1739,10 +1792,9 @@ function LocalPortalFunc() {
         Activate.addEventListener("mouseover", function () {
             p.innerHTML = "Sync this local portal with your home portal";
         });
-        div.appendChild(Activate);
-    }
-    if (player.Map === "MountainPlateau" && House.Portal.MountainPlateau != true) {
-        var Activate = InputButton("Activate", "Sync this local portal with your home portal");
+        Container.push(Activate);
+    } else if (player.Map === "MountainPlateau" && House.Portal.MountainPlateau != true) {
+        const Activate = InputButton("Activate", "Sync this local portal with your home portal");
         Activate.addEventListener("click", function () {
             House.Portal.MountainPlateau = true;
             p.innerHTML = "Sync"
@@ -1751,10 +1803,10 @@ function LocalPortalFunc() {
         Activate.addEventListener("mouseover", function () {
             p.innerHTML = "Sync this local portal with your home portal";
         });
-        div.appendChild(Activate);
+        Container.push(Activate);
     }
 
-    var input1 = InputButton("Home")
+    const input1 = InputButton("Home")
     input1.addEventListener("click", function () {
         player.Area = "First";
         player.Map = "RoadToHome";
@@ -1772,11 +1824,11 @@ function LocalPortalFunc() {
     input1.addEventListener("mouseover", function () {
 
     });
-    div.appendChild(input1);
+    Container.push(input1)
 
     // TODO in future when there is more portals make main buttons for each region
     if (House.Portal.Mountain) {
-        var Mountain = InputButton("Mountain")
+        const Mountain = InputButton("Mountain")
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
@@ -1791,11 +1843,11 @@ function LocalPortalFunc() {
             }
             return;
         });
-        div.appendChild(Mountain);
+        Container.push(Mountain);
     }
 
     if (House.Portal.BlackMarket) {
-        var BlackMarket = InputButton("BlackMarket")
+        const BlackMarket = InputButton("BlackMarket")
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
@@ -1813,10 +1865,10 @@ function LocalPortalFunc() {
         BlackMarket.addEventListener("mouseover", function () {
 
         });
-        div.appendChild(BlackMarket);
+        Container.push(BlackMarket);
     }
     if (House.Portal.MountainPlateau) {
-        var MountainPlateau = InputButton("Mountain plateau")
+        const MountainPlateau = InputButton("Mountain plateau")
         MountainPlateau.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainPlateau";
@@ -1834,10 +1886,14 @@ function LocalPortalFunc() {
         MountainPlateau.addEventListener("mouseover", function () {
 
         });
-        div.appendChild(MountainPlateau);
+        Container.push(MountainPlateau);
     }
-    div.appendChild(LeaveBuilding());
-    Buildings.appendChild(div);
+    Container.push((LeaveBuilding()));
+    Container.forEach((src) => {
+        Frag.appendChild(src);
+    });
+    InnerDiv.appendChild(Frag);
+    Buildings.appendChild(InnerDiv);
     Buildings.style.display = "block";
 }
 // Test of new way to add quests, in order to avoid public vars.
@@ -2802,20 +2858,20 @@ function CheatEngine() {
 }
 
 document.getElementById("Gold").addEventListener("click", function () {
-    var gold = document.getElementById("Gold");
-    var clicked = gold.dataset.clicked;
+    const gold = document.getElementById("Gold");
+    let clicked = gold.dataset.clicked;
     clicked++;
     gold.dataset.clicked = clicked;
     if (clicked > 10) {
         DisplayNone();
-        document.getElementById("CheatMenu").style.display = 'block';
-        document.getElementById("CheatsEnabled").value = "Cheats Enabled " + Settings.Cheats.Enabled;
-        document.getElementById("CheatsGold").value = "Gold " + Settings.Cheats.Gold;
-        document.getElementById("CheatsMasc").value = "Masc " + Settings.Cheats.Masc;
-        document.getElementById("CheatsFemi").value = "Femi " + Settings.Cheats.Femi;
-        document.getElementById("CheatsExp").value = "Exp " + Settings.Cheats.Exp;
-        document.getElementById("CheatsVoreExp").value = "Vore Exp " + Settings.Cheats.VoreExp;
-        document.getElementById("CheatsFastTime").value = "FastTime " + Settings.Cheats.FastTime;
+        DocId("CheatMenu").style.display = 'block';
+        DocId("CheatsEnabled").value = "Cheats Enabled " + Settings.Cheats.Enabled;
+        DocId("CheatsGold").value = "Gold " + Settings.Cheats.Gold;
+        DocId("CheatsMasc").value = "Masc " + Settings.Cheats.Masc;
+        DocId("CheatsFemi").value = "Femi " + Settings.Cheats.Femi;
+        DocId("CheatsExp").value = "Exp " + Settings.Cheats.Exp;
+        DocId("CheatsVoreExp").value = "Vore Exp " + Settings.Cheats.VoreExp;
+        DocId("CheatsFastTime").value = "FastTime " + Settings.Cheats.FastTime;
     }
 });
 document.getElementById("CheatsEnabled").addEventListener("click", function () {
@@ -3132,42 +3188,38 @@ function SexLooksExactAndKinda() { // A function to be able to enter a bunch of 
     });
 }
 SexLooksExactAndKinda();
-function DoorHandler(NESW) {
-    var startarea = document.getElementById("hem");
-    if (NESW === "N") {
-        sprite.y = startarea.height - 3 * grid;
-        enemies = [];
-    } else if (NESW === "E") {
-        sprite.x = 2 * grid;
-        enemies = [];
-    } else if (NESW === "S") {
-        sprite.y = 2 * grid;
-        enemies = [];
-    } else if (NESW === "W") {
-        sprite.x = startarea.width - 3 * grid;
-        enemies = [];
-    }
-}
-
-function MakeDoor(x, y, width, height, NESW) {
-    this.x = x,
-        this.y = y,
-        this.width = width,
-        this.height = height,
-        this.NESW = NESW
-};
-
 function CheckDoor() {
-    var startarea = document.getElementById("hem");
-    DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E");
-    DoorS = new MakeDoor(startarea.width / 2 - 3 * grid, startarea.height - 2 * grid, grid * 5, grid, "S");
-    DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W");
-    DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N");
-    var Doors = [DoorE, DoorS, DoorN, DoorW];
-    for (var i = 0; i < Doors.length; i++) {
-        var Door = Doors[i].NESW;
-        if (sprite.x + grid * sprite.Size >= Doors[i].x && sprite.x <= Doors[i].x + Doors[i].width &&
-            sprite.y + grid * sprite.Size >= Doors[i].y && sprite.y <= Doors[i].y + Doors[i].height) {
+    const startarea = document.getElementById("hem"),
+        DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E"),
+        DoorS = new MakeDoor(startarea.width / 2 - 3 * grid, startarea.height - 2 * grid, grid * 5, grid, "S"),
+        DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W"),
+        DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N"),
+        Doors = [DoorE, DoorS, DoorN, DoorW];
+
+    function DoorHandler(NESW) {
+        enemies = [];
+        if (NESW === "N") {
+            sprite.y = startarea.height - 3 * grid;
+        } else if (NESW === "E") {
+            sprite.x = 2 * grid;
+        } else if (NESW === "S") {
+            sprite.y = 2 * grid;
+        } else if (NESW === "W") {
+            sprite.x = startarea.width - 3 * grid;
+        }
+    }
+
+    function MakeDoor(x, y, width, height, NESW) {
+        this.x = x,
+            this.y = y,
+            this.width = width,
+            this.height = height,
+            this.NESW = NESW
+    };
+    for (let d of Doors) {
+        let Door = d.NESW;
+        if (sprite.x + grid * sprite.Size >= d.x && sprite.x <= d.x + d.width &&
+            sprite.y + grid * sprite.Size >= d.y && sprite.y <= d.y + d.height) {
             switch (player.Area) {
                 case "First":
                     switch (player.Map) {
@@ -3510,17 +3562,17 @@ function CheckFlags() {
     // Flags
 
     // load Settings
-    document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+    DocId("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
 
     document.body.style.backgroundColor = Settings.BackColor;
     MapColor = Settings.MapColor
     document.body.style.color = Settings.TextColor
     document.body.style.fontFamily = Settings.TextFont
 
-    document.getElementById("backcolor").value = Settings.BackColor;
-    document.getElementById("MapColor").value = Settings.MapColor;
-    document.getElementById("textcolor").value = Settings.TextColor;
-    document.getElementById("textfont").value = Settings.TextFont;
+    DocId("backcolor").value = Settings.BackColor;
+    DocId("MapColor").value = Settings.MapColor;
+    DocId("textcolor").value = Settings.TextColor;
+    DocId("textfont").value = Settings.TextFont;
 
     if (!Settings.hasOwnProperty("MapPercent")) {
         Settings.MapPercent = 0.9;
@@ -3811,26 +3863,26 @@ function CheckFlags() {
         }
        } */
     // Convert old willpower to new will, so it's the same as player.
-    for (var e of House.Dormmates) {
+    for (let e of House.Dormmates) {
         if (e.hasOwnProperty("Willpower")) {
             e.Will = e.Willpower
         }
     }
-    if (Settings.Vore) {
-        for (var e of player.Vore.Stomach) {
+    if (Settings.Vore) { // This doesn't look right
+        for (let e of player.Vore.Stomach) {
             e.Will = e.Willpower;
         }
-        for (var e of player.Vore.Vagina) {
+        for (let e of player.Vore.Vagina) {
             e.Will = e.Willpower;
         }
-        for (var e of player.Vore.Balls) {
+        for (let e of player.Vore.Balls) {
             e.Will = e.Willpower;
             console.log(e)
         }
-        for (var e of player.Vore.Anal) {
+        for (let e of player.Vore.Anal) {
             e.Will = e.Willpower;
         }
-        for (var e of player.Vore.Breast) {
+        for (let e of player.Vore.Breast) {
             e.Will = e.Willpower;
         }
     }
@@ -4188,430 +4240,6 @@ function SpellButton(index) { // Instead of repeating, Can only add fireball now
         console.log(it);
     });
     return Spell;
-}
-function PrintDoor(NESW) {
-    var startarea = document.getElementById("hem");
-    var ctx = startarea.getContext("2d");
-    this.NESW = NESW;
-    if (NESW == "E") {
-        ctx.fillStyle = Settings.MapColor;
-        ctx.fillRect(startarea.width - grid, startarea.height / 2 - 3 * grid, grid, grid * 6);
-    } else if (NESW == "S") {
-        ctx.fillStyle = Settings.MapColor;
-        ctx.fillRect(startarea.width / 2 - 3 * grid, startarea.height - grid, grid * 6, grid);
-    } else if (NESW == "W") {
-        ctx.fillStyle = Settings.MapColor;
-        ctx.fillRect(0, startarea.height / 2 - 3 * grid, grid, grid * 6);
-    } else if (NESW == "N") {
-        ctx.fillStyle = Settings.MapColor;
-        ctx.fillRect(startarea.width / 2 - 3 * grid, 0, grid * 6, grid);
-    }
-}
-
-function ImageLoad(arr, callback) { // Preload images to stop flickering
-    this.images = {};
-    var loaded = 0;
-
-    if (Array.isArray(arr)) {
-        for (var e of arr) {
-            var img = new Image();
-            img.onload = ImageLoaded;
-            img.src = "Tiles/" + e + ".png";
-            images[e] = img;
-        }
-    } else {
-        return
-    }
-
-    function ImageLoaded() {
-        loaded++;
-        if (loaded >= arr.length) {
-            callback();
-        }
-    }
-}
-var _images = {};
-var loader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "City", "Forest", "Forest2", "Outlaws",
-    "PathToOutlaws", "PathToOutlaws2", "RoadToCity", "RoadToCity2", "RoadToHome", "RoadToWitch", "RoadToWitch2",
-    "rtb2", "Start", "Witchhut"
-], function () {
-    _images = this.images;
-    // Stop player from starting before tiles are loaded
-    document.getElementById("LoadingImagesProgress").style.visibility = "hidden";
-    document.getElementById("GoToCharCreator").style.visibility = "visible"
-    document.getElementById("LoadButton").style.visibility = "visible"
-});
-
-function PrintImage() { // New and improved
-    var startarea = document.getElementById("hem");
-    var ctx = startarea.getContext("2d");
-    if (typeof _images[player.Map] !== "undefined") {
-        ctx.clearRect(0, 0, startarea.width, startarea.height);
-        ctx.drawImage(_images[player.Map], 0, 0, startarea.width, startarea.height);
-    } else {
-        PaintBackground()
-    }
-};
-
-function CurrentMap() {
-    var Npcs = []; // Moved here to avoid public handling of npcs, need to double check so I haven't
-    // forgoten avoid any refernce to Npcs somewhere
-    PrintImage()
-    //First Town
-    var Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)");
-    var Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)");
-    var Bar = new Npc("Bar", "Bar", 14 * grid, 14 * grid, grid * 5.5, grid * 5.5, "RGB(133,94,66)")
-    // RtW
-    var Gym = new Npc("Gym", "Gym", grid / 2, grid * 5, grid * 4.5, grid * 10, "RGB(133,94,66)");
-    var WitchShop = new Npc("WitchShop", "Witch shop", grid * 15, grid * 6, grid * 4.5, grid * 10, "RGB(133,94,66)");
-    // Witch
-    var WitchHut = new Npc("WitchHut", "Witch hut", grid * 12, grid * 5, grid * 8.5, grid * 10, "RGB(133,94,66)");
-    var ChimeraShrine = new Npc("ChimeraShrine", "Chimera shrine", grid * 3, grid * 17, grid * 2, grid * 2, "RGB(133,94,66)");
-    // Misc
-    var Tempsson = new Npc("Temp_Tempsson", "Temp Tempsson", grid * 10, grid * 18, grid, grid, "RGB(133,94,66)");
-
-    function Portal(Xpos, Ypos) { // Portal is function so I can change X-position & Y-position
-        return new Npc("LocalPortal", "Portal", grid * Xpos, grid * Ypos, grid * 4, grid * 4, "RGB(96, 47, 107)")
-    }
-    var Barber = new Npc("Barber", "Hair salon", grid * 15, grid, grid * 5, grid * 4, "RGB(133,94,66)");
-    var PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)");
-    //Outlaw
-    var BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)");
-    // Dungeons
-    var FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)");
-    // Farm
-    var FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)");
-    var FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)");
-    // Shrine
-    var MountainShrine = new Npc("MountainShrine", "Shrine", grid * 5, grid * 1, grid * 2, grid * 2, "Pink");
-    var ShrinePriestess = new Npc("ShrinePriestess", "Priestess", grid * 15, grid, grid, grid, "Pink");
-    // Dragons
-    var TribeChief = new Npc("TribeChief", "", grid * 2, grid * 8, grid, grid, "#841A31");
-    var TribeChiefWife = new Npc("TribeChiefWife", "", grid * 2, grid * 10, grid, grid, "#841A31");
-    var TribeShop = new Npc("TribeShop", "", grid * 12, grid * 15, grid * 4, grid * 5, "RGB(133,94,66)");
-
-    //Animal testing
-    /*	var aSpawn = Math.random();
-    	if (enemies.length < 1 && Settings.AnimalSpawn)
-    	{
-    		enemies = [animalSpawn(player.Height), animalSpawn(player.Height)];
-    		return;
-        }*/
-    PrintMap();
-    switch (player.Area) {
-        case "First":
-            switch (player.Map) {
-                case "Start":
-                    if (enemies.length < 1) {
-                        enemies = [EncounterStart(), EncounterStart(), EncounterStart()];
-                    }
-                    PrintImage("Start");
-                    break;
-                case "RoadToCity":
-                    if (enemies.length < 1) {
-                        enemies = [EncounterPath1(), EncounterPath1(), EncounterPath1()];
-                    }
-                    PrintImage("RoadToCity")
-                    break;
-                case "Bandit":
-                    if (enemies.length < 1) {
-                        enemies = [EncounterBandit(), EncounterBandit(), EncounterBandit(), EncounterBanditLord()];
-                    }
-                    PrintImage("Bandit");
-                    break;
-                case "RoadToCity2":
-                    if (enemies.length < 1) {
-                        enemies = [EncounterPath2(), EncounterPath2(), EncounterPath2()];
-                    }
-                    PrintImage("RoadToCity2");
-                    break;
-                case "City":
-                    enemies = [];
-                    Npcs = [Townhall, Bar, Shop];
-                    PrintImage("City");
-                    break;
-                case "RoadToHome":
-                    enemies = [];
-                    Npcs = [ChimeraShrine];
-                    PrintImage("RoadToHome");
-                    break;
-                case "RoadToWitch":
-                    enemies = [];
-                    Npcs = [Gym, WitchShop, Barber];
-                    PrintImage("RoadToWitch");
-                    break;
-                case "RoadToWitch2":
-                    if (enemies.length < 1) {
-                        enemies = [EncounterPathToWitch2(), EncounterPathToWitch2(), EncounterPathToWitch2(), EncounterPathToWitch2()];
-                    }
-                    PrintImage("RoadToWitch2");
-                    break;
-                case "Witch":
-                    enemies = [];
-                    Npcs = [WitchHut];
-                    PrintImage("Witchhut");
-                    break;
-                case "Forest":
-                    if (enemies.length < 1) {
-                        enemies = [EncounterForest(), EncounterForest(), EncounterForest(), RespawnBlocker()];
-                    }
-                    PrintImage("Forest");
-                    break
-                case "Forest2":
-                    if (enemies.length < 1) {
-                        enemies = [EncounterForest2(), EncounterForest2(), EncounterForest2(), EncounterForest2(), RespawnBlocker()];
-                    }
-                    PrintImage("Forest2");
-                    break;
-            }
-            break;
-        case "Second":
-            switch (player.Map) {
-                case "PathToOutlaws":
-                    if (enemies.length < 1) {
-
-                    }
-                    PrintImage("PathToOutlaws");
-                    break;
-                case "PathToOutlaws2":
-                    if (enemies.length < 1) {
-
-                    }
-                    PrintImage("PathToOutlaws2");
-                    break;
-                case "Farm":
-                    PrintDoor("W");
-                    if (enemies.length < 1) {}
-                    Npcs = [FarmOwner, FarmBarn]
-                    break;
-                case "Outlaws":
-                    if (enemies.length < 1) {
-
-                    }
-                    Npcs = [BlackMarket, PortalShop, Portal(15,15)]
-                    PrintImage("Outlaws");
-                    break;
-                case "Cave1":
-                    if (enemies.length < 1) {
-                        enemies = [EncounterCave1(), EncounterCave1(), EncounterCave1(), EncounterCave1(), EncounterCave1()]
-                    }
-                    PrintImage("Cave1");
-                    break;
-                case "Cave2":
-                    if (enemies.length < 1) {
-                        enemies = [EncounterCave2(), EncounterCave2(), EncounterCave2(), EncounterCave2(), EncounterCave2()]
-                    }
-                    PrintImage("Cave2");
-                    break;
-                case "Cave3":
-                    if (enemies.length < 1) {
-                        enemies = [EncounterCave3(), EncounterCave3(), EncounterCave3()]
-                    }
-                    PrintImage("Cave3");
-                    break;
-                case "Cave4":
-                    if (enemies.length < 1) {
-                        enemies = [EncounterCave4(), EncounterCave4(), EncounterCave4(), EncounterCave4()]
-                    }
-                    Npcs = [FirstDungeon];
-                    PrintImage("Cave4");
-                    break;
-            }
-            break;
-        case "Mountain":
-            switch (player.Map) {
-                case "MountainStart":
-                    PrintDoor("S");
-                    PrintDoor("W");
-                    if (enemies.length < 1) {
-
-                    }
-                    Npcs = [Portal(2, 2)];
-                    break;
-                case "MountainShrinePath":
-                    PrintDoor("E");
-                    PrintDoor("W");
-                    if (enemies.length < 1) {
-                        var a = RandomInt(2, 4);
-                        enemies = [];
-                        for (var e = 0; e < a; e++) {
-                            enemies.push(EncounterMaiden());
-                        }
-                    }
-                    break;
-                case "MountainShrine":
-                    PrintDoor("E");
-                    PrintDoor("W");
-                    if (enemies.length < 1) {
-
-                    }
-                    Npcs = [MountainShrine];
-                    break;
-                case "MountainClimb":
-                    PrintDoor("S");
-                    PrintDoor("N");
-                    if (enemies.length < 1) {
-
-                    }
-                    break;
-                case "MountainClimb2":
-                    PrintDoor("E");
-                    PrintDoor("N");
-                    if (enemies.length < 1) {
-                        enemies = [EncounterHarpy(), EncounterHarpy(), EncounterHarpy(), EncounterHarpy(), EncounterHarpy()]
-                    }
-                    break;
-                case "MountainClimb3":
-                    PrintDoor("E");
-                    PrintDoor("W");
-                    if (enemies.length < 1) {
-                        enemies = [];
-                    }
-                    break;
-                case "MountainClimb4":
-                    PrintDoor("W");
-                    PrintDoor("N");
-                    if (enemies.length < 1) {
-                        enemies = [EncounterDragonKind(), EncounterDragonKind(), EncounterDragonKind(), EncounterDragonKind()];
-                    }
-                    break;
-                case "MountainClimb5":
-                    PrintDoor("S");
-                    PrintDoor("N");
-                    if (enemies.length < 1) {
-                        enemies = [EncounterDragonKind(), EncounterDragonKind(), EncounterDragonKind(), EncounterDragonKind(), EncounterAnthroDragon()];
-                    }
-                    break;
-                case "MountainClimb6":
-                    PrintDoor("S");
-                    PrintDoor("N");
-                    if (enemies.length < 1) {
-                        enemies = [EncounterDragonKind(), EncounterAnthroDragon(), EncounterAnthroDragon()]
-                    }
-                    break;
-                case "MountainClimb7":
-                    PrintDoor("S");
-                    PrintDoor("N");
-                    if (enemies.length < 1) {
-                        enemies = [EncounterAnthroDragon(), EncounterAnthroDragon(), EncounterAnthroDragon()];
-                    }
-                    break;
-                case "MountainTribe":
-                    PrintDoor("E");
-                    PrintDoor("N");
-                    Npcs = [TribeChief, TribeChiefWife, TribeShop];
-                    enemies = [];
-                    break;
-                case "MountainClimb8":
-                    PrintDoor("S");
-                    PrintDoor("W");
-                    if (enemies.length < 1) {
-
-                    }
-                    break;
-                case "MountainClimb9":
-                    PrintDoor("W");
-                    PrintDoor("E");
-                    if (enemies.length < 1) {
-
-                    }
-                    break;
-                case "MountainClimb10":
-                    PrintDoor("N");
-                    PrintDoor("E");
-                    if (enemies.length < 1) {
-
-                    }
-                    Npcs = [Portal(2, 2)];
-                    break;
-            }
-            break;
-        default:
-            switch (player.Map) {
-                case "TempCity":
-                    if (enemies.length < 1) {
-
-                    }
-                    Npcs = [Portal(18, 18)];
-                    break;
-            }
-    }
-    Npcs.length > 0 ? (PrintNpcs(Npcs), TouchNpc(Npcs)) : false;
-}
-
-function PrintNpcs(Npcs) {
-    var startarea = document.getElementById("hem");
-    var ctx = startarea.getContext("2d");
-    var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
-    // Switched it so new npcs always print
-    var DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"];
-    for (var e of Npcs) {
-        if (DontneedPrint.indexOf(e.Name) === -1) {
-            ctx.fillStyle = e.Color;
-            ctx.fillRect(e.X, e.Y, e.Width, e.Height);
-        }
-        ctx.fillStyle = Settings.TextColor;
-        ctx.font = "4vh Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(e.RealName, e.X + e.Width / 2, e.Y + e.Height / 1.8);
-    }
-};
-
-function TouchNpc(Npcs) {
-    for (var n of Npcs) {
-        if (sprite.x + grid * sprite.Size >= n.X && sprite.x < n.X + n.Width &&
-            sprite.y + grid * sprite.Size >= n.Y && sprite.y < n.Y + n.Height) {
-            if (mousedowner) {
-                clearInterval(mFunction);
-                mousedowner = false;
-            }
-            battle = true;
-            var startarea = document.getElementById("hem");
-            sprite.x = startarea.width / 2 - grid;
-            sprite.y = startarea.height / 2;
-            UpdateNpc(n.Name);
-            document.getElementById("SellLimbs").style.display = Settings.EssenceAuto ? 'none' : 'inline-block';
-        }
-    }
-}
-
-function UpdateNpc(name) {
-    var isfunction = window[name + "Func"];
-    if (typeof isfunction === "function") { // Start replacing html building/npcs with javascript functions
-        document.getElementById("map").style.display = 'none';
-        document.getElementById("buttons").style.display = 'none';
-        document.getElementById("EmptyButtons").style.display = 'block';
-        isfunction();
-    } else {
-        document.getElementById(name).style.display = 'block';
-        document.getElementById("map").style.display = 'none';
-        document.getElementById("buttons").style.display = 'none';
-        document.getElementById("EmptyButtons").style.display = 'block';
-        document.getElementById("Leave" + name).addEventListener("click", function () {
-            battle = false;
-            document.getElementById(name).style.display = 'none';
-            document.getElementById("map").style.display = 'block';
-            document.getElementById("buttons").style.display = 'block';
-            document.getElementById("EmptyButtons").style.display = 'none';
-            document.getElementById("status").style.display = 'block';
-            document.getElementById(name + "Text").innerHTML = null;
-            return;
-        });
-    }
-}
-
-function PaintBackground() {
-    var startarea = document.getElementById("hem");
-    var ctx = startarea.getContext("2d");
-    ctx.fillStyle = Settings.MapColor;
-    ctx.fillRect(0, 0, startarea.width, startarea.height);
-
-    // Wall around map
-    ctx.fillStyle = Settings.BorderColor;
-    ctx.fillRect(0, 0, grid / 2, startarea.height);
-    ctx.fillRect(0, 0, startarea.width, grid / 2);
-    ctx.fillRect(startarea.width - (grid / 2), 0, grid / 2, startarea.height);
-    ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
 }
 function DateTracker() {
     if (!battle) {
@@ -5296,7 +4924,7 @@ function EssenceCheck(who) {
         who.Anal = []
     }
 
-    if (DickSize() < player.Height * 0.03 && who.Dicks.length > 0) {
+    if (DickSize() < who.Height * 0.03 && who.Dicks.length > 0) {
         who.Dicks.pop();
     } else {
         if (who.Dicks.length === 0) {
@@ -5310,7 +4938,7 @@ function EssenceCheck(who) {
                 who.Dicks.push(DickMaker(e + 1));
                 EssenceCheck(who); // Recursion might be a problem?
                 return;
-            } else if (who.Dicks[e].Size < player.Height * 0.03 || e >= Settings.MaxLimbs.MaxDicks) {
+            } else if (who.Dicks[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxDicks) {
                 if (who.Dicks.length > 0) {
                     who.Dicks.pop();
                 }
@@ -5318,7 +4946,7 @@ function EssenceCheck(who) {
         }
     }
 
-    if (BallsSize() < player.Height * 0.03 && who.Balls.length > 0) {
+    if (BallsSize() < who.Height * 0.03 && who.Balls.length > 0) {
         who.Balls.pop();
     } else {
         if (who.Balls.length === 0) {
@@ -5339,7 +4967,7 @@ function EssenceCheck(who) {
 
     }
 
-    if (PussySize() < player.Height * 0.03 && who.Pussies.length > 0) {
+    if (PussySize() < who.Height * 0.03 && who.Pussies.length > 0) {
         who.Pussies.pop();
     } else {
         if (who.Pussies.length === 0) {
@@ -5410,32 +5038,32 @@ function EssenceCheck(who) {
 	    	document.getElementById("EventText").innerHTML = LogHistory;
 	    }
 	    document.getElementById("HideEventLog").addEventListener("click", function () {
-	    	if (document.getElementById("EventLogPart").style.display == 'none') {
-				document.getElementById("EventLogPart").style.display = 'block';
-				document.getElementById("EventLogH2").style.display = 'inline-block';
+	    	if (document.getElementById("EventLogPart").style.display === 'none') {
+	    		document.getElementById("EventLogPart").style.display = 'block';
+	    		document.getElementById("EventLogH2").style.display = 'inline-block';
 	    		document.getElementById("HideEventLog").value = "Hide";
 	    	} else {
 	    		document.getElementById("EventLogPart").style.display = 'none';
-				document.getElementById("HideEventLog").value = "Show E";
-				document.getElementById("EventLogH2").style.display = 'none';
+	    		document.getElementById("HideEventLog").value = "Show E";
+	    		document.getElementById("EventLogH2").style.display = 'none';
 	    	}
 	    });
 	    document.getElementById("HideFluids").addEventListener("click", function () {
-	    	if (document.getElementById("FluidPart").style.display == 'none') {
-				document.getElementById("FluidPart").style.display = 'block';
-				document.getElementById("EventFluidsH2").style.display = 'inline-block';
-				document.getElementById("FluidsMode").style.display = 'inline-block';
+	    	if (document.getElementById("FluidPart").style.display === 'none') {
+	    		document.getElementById("FluidPart").style.display = 'block';
+	    		document.getElementById("EventFluidsH2").style.display = 'inline-block';
+	    		document.getElementById("FluidsMode").style.display = 'inline-block';
 	    		document.getElementById("HideFluids").value = "Hide";
 	    	} else {
-				document.getElementById("FluidPart").style.display = 'none';
-				document.getElementById("EventFluidsH2").style.display = 'none';
-				document.getElementById("FluidsMode").style.display = 'none';
+	    		document.getElementById("FluidPart").style.display = 'none';
+	    		document.getElementById("EventFluidsH2").style.display = 'none';
+	    		document.getElementById("FluidsMode").style.display = 'none';
 	    		document.getElementById("HideFluids").value = 'Show F';
 	    	}
 	    });
 	    document.getElementById("FluidsMode").addEventListener("click", function () {
-	    	var menu = document.getElementById("FluidContainer");
-	    	var Fluid = document.getElementById("FluidsMode");
+	    	const menu = document.getElementById("FluidContainer"),
+	    		Fluid = document.getElementById("FluidsMode");
 	    	switch (Fluid.value) {
 	    		case "1":
 	    			menu.setAttribute("class", "TwoColumn");
@@ -5455,18 +5083,15 @@ function EssenceCheck(who) {
 	    			break;
 	    	}
 	    });
-	    var EventMax = false;
 	    document.getElementById("EventLogPart").addEventListener("click", function () {
-	    	if (EventMax) {
-	    		document.getElementById("EventLog").style.width = 20 + "vw";
-	    		document.getElementById("EventLog").style.maxHeight = 50 + "vh";
-	    		EventMax = false;
+	    	const EventLog = document.getElementById("EventLog");
+	    	if (EventLog.style.width > 20 + "vw") {
+	    		EventLog.style.width = 20 + "vw";
+	    		EventLog.style.maxHeight = 50 + "vh";
 	    	} else {
-	    		document.getElementById("EventLog").style.width = 80 + "vw";
-	    		document.getElementById("EventLog").style.maxHeight = 80 + "vh";
-	    		EventMax = true;
+	    		EventLog.style.width = 80 + "vw";
+	    		EventLog.style.maxHeight = 80 + "vh";
 	    	}
-	    	console.log("Clicks")
 	    });
 function FluidsEngine() {
     document.getElementById("FemcumBar").style.display = 'none';
@@ -5570,20 +5195,19 @@ function HairGrowth() {
             document.getElementById("LessButtons").style.display = 'none';
             document.getElementById("MobileButtons").style.display = 'none';
         }
-        var startarea = document.getElementById("hem");
-        var OldMap = medium;
+        const startarea = document.getElementById("hem"),
+            OldMap = medium;
         medium = Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20;
         startarea.width = medium;
-        3
         startarea.height = medium;
-        var NewMap = medium;
+        const NewMap = medium;
         grid = (startarea.height / 20);
         sprite.x = sprite.x * NewMap / OldMap;
         sprite.y = sprite.y * NewMap / OldMap;
-        for (var j = 0; j < enemies.length; j++) {
-            enemies[j].Size = enemies[j].Size * (NewMap / OldMap);
-            enemies[j].XPos = enemies[j].XPos * (NewMap / OldMap);
-            enemies[j].YPos = enemies[j].YPos * (NewMap / OldMap);
+        for (let j of enemies) {
+            j.Size = j.Size * (NewMap / OldMap);
+            j.XPos = j.XPos * (NewMap / OldMap);
+            j.YPos = j.YPos * (NewMap / OldMap);
         }
         return;
     }
@@ -6437,131 +6061,131 @@ function LeaveHome() {
 
         // Barn.innerHTML = "Allows you to milk your lactating servants. The milk can be brought with you as a travel snack or you can sell it for gold."
     }
-function Twins(who, by) {
-    // The +1 gives a 1% or less chance for non blessed to birth twins 
-    // Old saves might fail totaly
-    const Twins = 1 + player.Blessings.Broodmother * 1;
-    switch (who.Race) {
-        case "":
-            Twins += 5;
-            break;
-        default:
-            break;
-    }
-    switch (who.SecondRace) {
-        case "":
-            Twins += 5;
-            break;
-        default:
-            break;
-    }
-    switch (by.Race) {
-        case "":
-            Twins += 5;
-            break;
-        default:
-            break;
-    }
-    switch (by.SecondRace) {
-        case "":
-            Twins += 5;
-            break;
-        default:
-            break;
-    }
-    // Some races will have higher chance
-    var NoTwins = RandomInt(0, 100);
-    if (NoTwins < Twins * 2) {
-        return 3;
-    } else if (NoTwins < Twins) {
-        return 2;
-    } else {
-        return 1;
-    }
-}
-
-function BabyMaker(who, by) {
-    who.Pregnant.Status = true;
-    Flags.Impregnations++;
-    if (!Array.isArray(who.Pregnant.Babies)) {
-        who.Pregnant.Babies = [];
-    }
-    if (player.Quests.some(e => e.Name === "Impregnate maidens") && who.Name == "Maiden") {
-        var i = player.Quests.findIndex(e => e.Name == "Impregnate maidens");
-        player.Quests[i].Count++;
-        player.Quests[i].Completed = true;
-        who.Name = "Priestess";
-        var x = Twins(who, by);
-        for (var e = 0; e < x; e++) {
-            var Baby = {
-                BabyAge: 0,
-                BabyRace: player.Race,
-                Father: by.Name + " " + by.LastName,
-                Mother: who.FirstName + " " + who.LastName,
-                Blessed: "Fertility" // Not in use for the moment, but I want it so children made during quest is different. 
-                //Maybe they leave house to join the shrine
-            }
-            who.Pregnant.Babies.push(Baby);
-        }
-    } else {
-        var x = Twins(who, by);
-        for (var e = 0; e < x; e++) {
-            var Father = RandomInt(1, 4);
-            if (Father > 2) {
-                Father = by;
-            } else {
-                Father = who;
-            }
-            var Baby = {
-                BabyAge: 0,
-                BabyRace: Father.Race,
-                Father: by.Name + " " + by.LastName,
-                Mother: who.FirstName + " " + who.LastName
-            }
-            who.Pregnant.Babies.push(Baby);
-        }
-    }
-}
-
-function playerBabyMaker(by) {
-    Flags.Pregnations++;
-    player.Pregnant.Status = true;
-    if (player.Quests.some(e => e.Name === "Get Impregnated")) {
-        var i = player.Quests.findIndex(e => e.Name == "Get Impregnated");
-        player.Quests[i].Completed = true;
-        var x = Twins(player, by);
-        for (var e = 0; e < x; e++) {
-            var Baby = {
-                BabyAge: 0,
-                BabyRace: who.Race,
-                Father: by.FirstName + " " + by.LastName,
-                Mother: player.Name + " " + player.LastName,
-                Blessed: "Fertility"
-            }
-            player.Pregnant.Babies.push(Baby);
-            player.Quests[i].Count++;
-        }
-    } else {
-        var x = Twins(player, by);
-        for (var e = 0; e < x; e++) {
-            var Father = RandomInt(1, 4);
-            if (Father > 2) {
-                Father = by;
-            } else {
-                Father = player;
-            }
-            var Baby = {
-                BabyAge: 0,
-                BabyRace: Father.Race,
-                Father: by.FirstName + " " + by.LastName,
-                Mother: player.Name + " " + player.LastName
-            }
-            player.Pregnant.Babies.push(Baby);
-        }
-    }
-}
-
 function Impregnate(who, by, mode = "A", where = "") {
+    function Twins() {
+        // The +1 gives a 1% or less chance for non blessed to birth twins 
+        // Old saves might fail totaly
+        const Twins = typeof (player.Blessings.Broodmother) === Number ? 1 + player.Blessings.Broodmother * 1 : 1,
+            NoTwins = RandomInt(0, 100);
+        console.log(`${Twins} >< ${NoTwins}`)
+        switch (who.Race) {
+            case "":
+                Twins += 5;
+                break;
+            default:
+                break;
+        }
+        switch (who.SecondRace) {
+            case "":
+                Twins += 5;
+                break;
+            default:
+                break;
+        }
+        switch (by.Race) {
+            case "":
+                Twins += 5;
+                break;
+            default:
+                break;
+        }
+        switch (by.SecondRace) {
+            case "":
+                Twins += 5;
+                break;
+            default:
+                break;
+        }
+        // Some races will have higher chance
+        if (NoTwins < Twins * 2) {
+            return 3;
+        } else if (NoTwins < Twins) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
+    function BabyMaker() {
+        who.Pregnant.Status = true;
+        Flags.Impregnations++;
+        if (!Array.isArray(who.Pregnant.Babies)) {
+            who.Pregnant.Babies = [];
+        }
+        if (player.Quests.some(e => e.Name === "Impregnate maidens") && who.Name == "Maiden") {
+            var i = player.Quests.findIndex(e => e.Name == "Impregnate maidens");
+            player.Quests[i].Count++;
+            player.Quests[i].Completed = true;
+            who.Name = "Priestess";
+            var x = Twins();
+            for (var e = 0; e < x; e++) {
+                var Baby = {
+                    BabyAge: 0,
+                    BabyRace: player.Race,
+                    Father: by.Name + " " + by.LastName,
+                    Mother: who.FirstName + " " + who.LastName,
+                    Blessed: "Fertility" // Not in use for the moment, but I want it so children made during quest is different. 
+                    //Maybe they leave house to join the shrine
+                }
+                who.Pregnant.Babies.push(Baby);
+            }
+        } else {
+            var x = Twins();
+            for (var e = 0; e < x; e++) {
+                var Father = RandomInt(1, 4);
+                if (Father > 2) {
+                    Father = by;
+                } else {
+                    Father = who;
+                }
+                var Baby = {
+                    BabyAge: 0,
+                    BabyRace: Father.Race,
+                    Father: by.Name + " " + by.LastName,
+                    Mother: who.FirstName + " " + who.LastName
+                }
+                who.Pregnant.Babies.push(Baby);
+            }
+        }
+    }
+
+    function playerBabyMaker() {
+        Flags.Pregnations++;
+        player.Pregnant.Status = true;
+        if (player.Quests.some(e => e.Name === "Get Impregnated")) {
+            var i = player.Quests.findIndex(e => e.Name == "Get Impregnated");
+            player.Quests[i].Completed = true;
+            var x = Twins();
+            for (var e = 0; e < x; e++) {
+                var Baby = {
+                    BabyAge: 0,
+                    BabyRace: who.Race,
+                    Father: by.FirstName + " " + by.LastName,
+                    Mother: player.Name + " " + player.LastName,
+                    Blessed: "Fertility"
+                }
+                player.Pregnant.Babies.push(Baby);
+                player.Quests[i].Count++;
+            }
+        } else {
+            var x = Twins();
+            for (var e = 0; e < x; e++) {
+                var Father = RandomInt(1, 4);
+                if (Father > 2) {
+                    Father = by;
+                } else {
+                    Father = player;
+                }
+                var Baby = {
+                    BabyAge: 0,
+                    BabyRace: Father.Race,
+                    Father: by.FirstName + " " + by.LastName,
+                    Mother: player.Name + " " + player.LastName
+                }
+                player.Pregnant.Babies.push(Baby);
+            }
+        }
+    }
     if (who.hasOwnProperty("Pregnant")) {
         if (who.Pregnant.Status) {
             return;
@@ -6572,37 +6196,37 @@ function Impregnate(who, by, mode = "A", where = "") {
         switch (CheckGender(who)) {
             case "cuntboy":
                 if (by.Virility >= Impregnation) {
-                    BabyMaker(who, by);
+                    BabyMaker();
                     document.getElementById(where + "SexText").innerHTML = "You have impregnated him!"
                 }
                 break;
             case "female":
                 if (by.Virility >= Impregnation) {
-                    BabyMaker(who, by);
+                    BabyMaker();
                     document.getElementById(where + "SexStats").innerHTML = "You have impregnated her!"
                 }
                 break;
             case "hermaphrodite":
                 if (by.Virility >= Impregnation) {
-                    BabyMaker(who, by);
+                    BabyMaker();
                     document.getElementById(where + "SexText").innerHTML = "You have impregnated hir!"
                 }
                 break;
             case "male":
                 if (by.Virility - 100 >= Impregnation) {
-                    BabyMaker(who, by);
+                    BabyMaker();
                     document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate him!"
                 }
                 break;
             case "dickgirl":
                 if (by.Virility - 100 >= Impregnation) {
-                    BabyMaker(who, by);
+                    BabyMaker();
                     document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate her!"
                 }
                 break;
             default:
                 if (by.Virility - 100 >= Impregnation) {
-                    BabyMaker(who, by);
+                    BabyMaker();
                     document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnated the doll!"
                 }
                 break;
@@ -6613,13 +6237,13 @@ function Impregnate(who, by, mode = "A", where = "") {
             case "cuntboy":
             case "female":
                 if (who.Fertility >= Impregnation) {
-                    playerBabyMaker(by);
+                    playerBabyMaker();
                     document.getElementById(where + "SexText").innerHTML = "You have been impregnated!"
                 }
                 break;
             case "hermaphrodite":
                 if (who.Fertility >= Impregnation) {
-                    playerBabyMaker(by);
+                    playerBabyMaker();
                     document.getElementById(where + "SexText").innerHTML = "You have been impregnated!"
                 }
                 break;
@@ -6627,7 +6251,7 @@ function Impregnate(who, by, mode = "A", where = "") {
             case "male":
                 if (false) { //Need to make a way to enable make impreg (item/blessing/curse)
                     if (who.Fertility - 50 >= Impregnation) {
-                        playerBabyMaker(by);
+                        playerBabyMaker();
                         document.getElementById(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
                     }
                 }
@@ -6635,7 +6259,7 @@ function Impregnate(who, by, mode = "A", where = "") {
             default:
                 if (false) {
                     if (who.Fertility - 50 >= Impregnation) {
-                        playerBabyMaker(by);
+                        playerBabyMaker();
                         document.getElementById(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
                     }
                 }
@@ -7328,11 +6952,11 @@ const ItemDict = {
         },
         Name: "Pocket portal",
         Use: function (who, item) {
-            console.log(House.Portal)
             if (who.Map === "RoadToHome") {
                 document.getElementById("InventoryText").innerHTML = "... seriously?"
                 item.Quantity++;
             } else if (House.Portal.Owned) {
+                enemies = [];
                 who.Area = "First";
                 who.Map = "RoadToHome";
                 DisplayGame();
@@ -7808,6 +7432,7 @@ function AnalLook(who) {
 }
 
 function BoobSizeConvertor(Size) {
+    //const Prop = Size / GrowthScale(who)
     switch (Math.round(Size)) {
         case 0:
         case 1:
@@ -9449,11 +9074,11 @@ function CheckDoor() {
     }
 };
 function ImageLoad(arr, callback) { // Preload images to stop flickering
-    let images = {};
-    let loaded = 0;
+    let images = {},
+        loaded = 0;
 
     if (Array.isArray(arr)) {
-        for (var e of arr) {
+        for (let e of arr) {
             let img = new Image();
             img.onload = ImageLoaded;
             img.src = `Tiles/${e}.png`;
@@ -9470,53 +9095,34 @@ function ImageLoad(arr, callback) { // Preload images to stop flickering
         }
     }
 }
-var _images = {};
+var Tiles_images = {};
 const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "City", "Forest", "Forest2", "Outlaws",
     "PathToOutlaws", "PathToOutlaws2", "RoadToCity", "RoadToCity2", "RoadToHome", "RoadToWitch", "RoadToWitch2",
     "rtb2", "Start", "Witch", "MountainStart", "MountainShrinePath", "MountainShrine", "MountainClimb", "MountainClimb2",
     "MountainClimb3", "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8",
     "MountainClimb9", "MountainPlateau"
 ], function (images) {
-    _images = images;
+    Tiles_images = images;
     // Stop player from starting before tiles are loaded
     document.getElementById("LoadingImagesProgress").innerHTML = "Tiles loaded";
     document.getElementById("LoadingImagesProgress").classList.remove("visible");
     document.getElementById("LoadingImagesProgress").classList.add("hidden");
-
 });
 
-function PrintImage() { // New and improved
-    const startarea = document.getElementById("hem"),
-        ctx = startarea.getContext("2d");
-    if (typeof _images[player.Map] !== "undefined") {
-        ctx.clearRect(0, 0, startarea.width, startarea.height);
-        ctx.drawImage(_images[player.Map], 0, 0, startarea.width, startarea.height);
-        if (Settings.HighLightDoors) {
-            PrintDoors();
-        }
-    } else {
-        PaintBackground();
-        PrintDoors();
-    }
-
-    function PaintBackground() {
-        ctx.fillStyle = Settings.MapColor;
-        ctx.fillRect(0, 0, startarea.width, startarea.height);
-
-        // Wall around map
-        ctx.fillStyle = Settings.BorderColor;
-        ctx.fillRect(0, 0, grid / 2, startarea.height);
-        ctx.fillRect(0, 0, startarea.width, grid / 2);
-        ctx.fillRect(startarea.width - (grid / 2), 0, grid / 2, startarea.height);
-        ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
-    }
-};
-
 function CurrentMap() {
-    PrintImage()
-    let Npcs = []; // Moved here to avoid public handling of npcs, need to double check so I haven't
+    ; // Moved here to avoid public handling of npcs, need to double check so I haven't
     // forgoten avoid any refernce to Npcs somewhere
     //First Town
+    function Npc(Name, RealName, X, Y, width, height, Color) {
+        this.Name = Name,
+            this.RealName = RealName,
+            this.X = X,
+            this.Y = Y,
+            this.Width = width,
+            this.Height = height,
+            this.Color = Color
+    };
+    let Npcs = []
     const startarea = document.getElementById("hem"),
         ctx = startarea.getContext("2d"),
         Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)"),
@@ -9552,6 +9158,33 @@ function CurrentMap() {
     function Portal(Xpos, Ypos) { // Portal is function so I can change X-position & Y-position
         return new Npc("LocalPortal", "Portal", grid * Xpos, grid * Ypos, grid * 4, grid * 4, "RGB(96, 47, 107)")
     }
+
+    function PrintImage() { // New and improved
+        if (typeof Tiles_images[player.Map] !== "undefined") {
+            ctx.clearRect(0, 0, startarea.width, startarea.height);
+            ctx.drawImage(Tiles_images[player.Map], 0, 0, startarea.width, startarea.height);
+            if (Settings.HighLightDoors) {
+                PrintDoors();
+            }
+        } else {
+            PaintBackground();
+            PrintDoors();
+        }
+
+        function PaintBackground() {
+            ctx.fillStyle = Settings.MapColor;
+            ctx.fillRect(0, 0, startarea.width, startarea.height);
+
+            // Wall around map
+            ctx.fillStyle = Settings.BorderColor;
+            ctx.fillRect(0, 0, grid / 2, startarea.height);
+            ctx.fillRect(0, 0, startarea.width, grid / 2);
+            ctx.fillRect(startarea.width - (grid / 2), 0, grid / 2, startarea.height);
+            ctx.fillRect(0, startarea.height - (grid / 2), startarea.width, grid / 2);
+        }
+    };
+    PrintImage()
+
     //Animal testing
     /*	var aSpawn = Math.random();
     	if (enemies.length < 1 && Settings.AnimalSpawn)
@@ -9765,12 +9398,11 @@ function CurrentMap() {
                 sprite.x = startarea.width / 2 - grid;
                 sprite.y = startarea.height / 2;
                 UpdateNpc(n.Name);
-                document.getElementById("SellLimbs").style.display = Settings.EssenceAuto ? 'none' : 'inline-block';
             }
         }
 
         function UpdateNpc(name) {
-            var isfunction = window[name + "Func"];
+            let isfunction = window[name + "Func"];
             if (typeof isfunction === "function") { // Start replacing html building/npcs with javascript functions
                 document.getElementById("map").style.display = 'none';
                 document.getElementById("buttons").style.display = 'none';
@@ -9797,21 +9429,22 @@ function CurrentMap() {
 }
 function PrintDoors() {
     function PrintDoor(NESW) {
-        var startarea = document.getElementById("hem");
-        var ctx = startarea.getContext("2d");
-        this.NESW = NESW;
-        if (NESW == "E") {
-            ctx.fillStyle = Settings.MapColor;
-            ctx.fillRect(startarea.width - grid, startarea.height / 2 - 3 * grid, grid, grid * 6);
-        } else if (NESW == "S") {
-            ctx.fillStyle = Settings.MapColor;
-            ctx.fillRect(startarea.width / 2 - 3 * grid, startarea.height - grid, grid * 6, grid);
-        } else if (NESW == "W") {
-            ctx.fillStyle = Settings.MapColor;
-            ctx.fillRect(0, startarea.height / 2 - 3 * grid, grid, grid * 6);
-        } else if (NESW == "N") {
-            ctx.fillStyle = Settings.MapColor;
-            ctx.fillRect(startarea.width / 2 - 3 * grid, 0, grid * 6, grid);
+        const startarea = document.getElementById("hem"),
+            ctx = startarea.getContext("2d");
+        ctx.fillStyle = Settings.MapColor;
+        switch (NESW.toUpperCase()) {
+            case "E":
+                ctx.fillRect(startarea.width - grid, startarea.height / 2 - 3 * grid, grid, grid * 6);
+                break;
+            case "S":
+                ctx.fillRect(startarea.width - grid, startarea.height / 2 - 3 * grid, grid, grid * 6);
+                break;
+            case "W":
+                ctx.fillRect(0, startarea.height / 2 - 3 * grid, grid, grid * 6);
+                break;
+            case "N":
+                ctx.fillRect(startarea.width / 2 - 3 * grid, 0, grid * 6, grid);
+                break;
         }
     }
     switch (player.Area) {
@@ -9970,35 +9603,25 @@ document.getElementById("HideWorldMap").addEventListener("click", function () {
         document.getElementById("WorldMapPart").style.display = 'none';
     }
 });
-
 // Tool to print mini-map
-function TilePainter(x, y) {
-    var WorldMap = document.getElementById("WorldMap");
-    var World = WorldMap.getContext("2d");
-    var Width = WorldMap.width * 0.2;
-    var Height = WorldMap.height * 0.2;
-
-    World.fillStyle = Settings.MapColor;
-    World.fillRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
-
-    World.fillStyle = Settings.BorderColor;
-    World.strokeRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
-}
-
-// Tool to highlight current map on mini-map
-function CurrentTile(x, y) {
-    var WorldMap = document.getElementById("WorldMap");
-    var World = WorldMap.getContext("2d");
-    var Width = WorldMap.width * 0.2;
-    var Height = WorldMap.height * 0.2;
-
-    World.fillStyle = Settings.BorderColor;
-    World.fillRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
-}
-
 function PrintMap() {
-    var WorldMap = document.getElementById("WorldMap");
-    var World = WorldMap.getContext("2d");
+    const WorldMap = document.getElementById("WorldMap"),
+        World = WorldMap.getContext("2d"),
+        Width = WorldMap.width * 0.2,
+        Height = WorldMap.height * 0.2;
+
+    function TilePainter(x, y) {
+        World.fillStyle = Settings.MapColor;
+        World.fillRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
+
+        World.fillStyle = Settings.BorderColor;
+        World.strokeRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
+    }
+    // Tool to highlight current map on mini-map
+    function CurrentTile(x, y) {
+        World.fillStyle = Settings.BorderColor;
+        World.fillRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
+    }
     World.fillStyle = "#404040";
     World.fillRect(0, 0, WorldMap.width, WorldMap.height);
 
@@ -10264,7 +9887,7 @@ var MobileButtons = false;
 document.getElementById("MobileButtons").addEventListener("click", function () {
     switch (MobileButtons) {
         case true:
-            document.getElementById("buttons").style.width = 17 + "%";
+            document.getElementById("buttons").style.width = 18 + "%";
             document.getElementById("buttons").style.maxWidth = 260 + "px";
             document.getElementById("FirstButtons").style.display = 'none';
             document.getElementById("SecondButtons").style.display = 'none';
@@ -11203,11 +10826,11 @@ function EncounterPathToWitch2() {
     return OP;
 }
 function EnemyImageLoad(arr, callback) { // Preload images to stop flickering
-    let images = {};
-    var loaded = 0;
+    let images = {},
+        loaded = 0;
     if (Array.isArray(arr)) {
-        for (var e of arr) {
-            var img = new Image();
+        for (let e of arr) {
+            let img = new Image();
             img.onload = EmageLoaded;
             img.src = "Res/" + e + ".png";
             images[e] = img;
@@ -11223,64 +10846,64 @@ function EnemyImageLoad(arr, callback) { // Preload images to stop flickering
         }
     }
 }
-var Enemy_images = {};
-const Enemyloader = EnemyImageLoad(["orc"], function (images) {
-    Enemy_images = images;
+var Enemy_SpriteImages = {};
+const EnemySpriteLoader = EnemyImageLoad(["orc"], function (images) {
+    Enemy_SpriteImages = images;
 });
 
 function PrintEnemies() {
-    function Color() {
-        var color;
-        switch (CheckGender(enemies[e])) {
-            case "cuntboy":
-                color = "blue";
-                break;
-            case "female":
-                color = "rgb(231, 84, 128)";
-                break;
-            case "dickgirl":
-                color = "rgb(231, 84, 128)";
-                break;
-            case "male":
-                color = "Blue";
-                break;
-            case "hermaphrodite":
-                color = "Purple";
-                break;
-            case "doll":
-                color = "Beige";
-                break;
+    const startarea = document.getElementById("hem"),
+        ctx = startarea.getContext("2d");
+    for (let e = 0; e < enemies.length; e++) {
+        const ee = enemies[e],
+            image = ee.Race.toLowerCase(); // + gender?
+        function Color() {
+            let color;
+            switch (CheckGender(ee)) {
+                case "cuntboy":
+                    color = "blue";
+                    break;
+                case "female":
+                    color = "rgb(231, 84, 128)";
+                    break;
+                case "dickgirl":
+                    color = "rgb(231, 84, 128)";
+                    break;
+                case "male":
+                    color = "Blue";
+                    break;
+                case "hermaphrodite":
+                    color = "Purple";
+                    break;
+                case "doll":
+                    color = "Beige";
+                    break;
+            }
+            return color
         }
-        return color
-    }
-    var startarea = document.getElementById("hem");
-    var ctx = startarea.getContext("2d");
-    for (var e = 0; e < enemies.length; e++) {
-        var ee = enemies[e];
-        for (var i = e + 1; i < enemies.length; i++) {
+        for (let i = e + 1; i < enemies.length; i++) {
             if (ee.XPos == enemies[i].XPos) {
                 ee.XPos = RandomInt(2, 18) * grid;
             }
         }
         ctx.fillStyle = ee.Color;
-        let image = ee.Race.toLowerCase(); // + gender?
-        if (typeof Enemy_images[image] !== "undefined") {
-            ctx.drawImage(Enemy_images[image], ee.XPos, ee.YPos, ee.Size, ee.Size);
+        if (typeof Enemy_SpriteImages[image] !== "undefined") {
+            ctx.drawImage(Enemy_SpriteImages[image], ee.XPos, ee.YPos, ee.Size, ee.Size);
             ctx.fillStyle = Color();
-            ctx.fillRect(enemies[e].XPos + enemies[e].Size / 3, enemies[e].YPos - enemies[e].Size + enemies[e].Size / 3, enemies[e].Size / 3, enemies[e].Size / 3);
+            ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos - ee.Size + ee.Size / 3, ee.Size / 3, ee.Size / 3);
             ctx.fillStyle = "Black";
-            ctx.strokeRect(enemies[e].XPos + enemies[e].Size / 3, enemies[e].YPos + enemies[e].Size / 3, enemies[e].Size / 3, enemies[e].Size / 3);
+            ctx.strokeRect(ee.XPos + ee.Size / 3, ee.YPos + ee.Size / 3, ee.Size / 3, ee.Size / 3);
         } else {
-            ctx.fillRect(enemies[e].XPos, enemies[e].YPos, enemies[e].Size, enemies[e].Size);
+            ctx.fillRect(ee.XPos, ee.YPos, ee.Size, ee.Size);
             ctx.fillStyle = Color();
-            ctx.fillRect(enemies[e].XPos + enemies[e].Size / 3, enemies[e].YPos + enemies[e].Size / 3, enemies[e].Size / 3, enemies[e].Size / 3);
+            ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos + ee.Size / 3, ee.Size / 3, ee.Size / 3);
             ctx.fillStyle = "Black";
-            ctx.strokeRect(enemies[e].XPos + enemies[e].Size / 3, enemies[e].YPos + enemies[e].Size / 3, enemies[e].Size / 3, enemies[e].Size / 3);
+            ctx.strokeRect(ee.XPos + ee.Size / 3, ee.YPos + ee.Size / 3, ee.Size / 3, ee.Size / 3);
         }
         ctx.fillStyle = Settings.TextColor;
         ctx.font = "1vh Arial";
         ctx.textAlign = "center";
-        ctx.fillText(enemies[e].Name + " " + enemies[e].Race, enemies[e].XPos + enemies[e].Size / 2, enemies[e].YPos);
+        ctx.fillText(ee.Name + " " + ee.Race, ee.XPos + ee.Size / 2, ee.YPos);
     }
 };
 function FirstWave() {
@@ -11474,12 +11097,12 @@ function MakeHerSubmit() {
 function UseAndIgonore() {
     // Sex where you skip taking her as partner
 }
-function PerkHandler(perket) {
-    player.PerkPoints--;
-    player.Perks[perket].Count++
-}
 // Changeing perk menu to a func so I can make a more advanced perk menu e.g. unlocked perk etc..
 function PerkMenuFunc() {
+    function PerkHandler(perket) {
+        player.PerkPoints--;
+        player.Perks[perket].Count++
+    }
     let div = document.getElementById("LevelMenu");
     while (div.hasChildNodes()) {
         div.removeChild(div.firstChild);
@@ -11709,220 +11332,6 @@ function PregnanyEngine() {
         }
     }
 }
-document.getElementById("HideWorldMap").addEventListener("click", function () {
-    if (document.getElementById("WorldMapPart").style.display == 'none') {
-        document.getElementById("WorldMapPart").style.display = 'block';
-        PrintMap();
-    } else {
-        document.getElementById("WorldMapPart").style.display = 'none';
-    }
-});
-
-// Tool to print mini-map
-function TilePainter(x, y) {
-    var WorldMap = document.getElementById("WorldMap");
-    var World = WorldMap.getContext("2d");
-    var Width = WorldMap.width * 0.2;
-    var Height = WorldMap.height * 0.2;
-
-    World.fillStyle = Settings.MapColor;
-    World.fillRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
-
-    World.fillStyle = Settings.BorderColor;
-    World.strokeRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
-}
-
-// Tool to highlight current map on mini-map
-function CurrentTile(x, y) {
-    var WorldMap = document.getElementById("WorldMap");
-    var World = WorldMap.getContext("2d");
-    var Width = WorldMap.width * 0.2;
-    var Height = WorldMap.height * 0.2;
-
-    World.fillStyle = Settings.BorderColor;
-    World.fillRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
-}
-
-function PrintMap() {
-    var WorldMap = document.getElementById("WorldMap");
-    var World = WorldMap.getContext("2d");
-    World.fillStyle = "#404040";
-    World.fillRect(0, 0, WorldMap.width, WorldMap.height);
-
-    World.strokeStyle = Settings.BorderColor;
-    switch (player.Area) {
-        case "First":
-            TilePainter(0, 1); //Start
-            TilePainter(1, 1); //RTC1
-            TilePainter(1, 0); //Bandit
-            TilePainter(1, 2); //RTC2
-            TilePainter(2, 2); //City
-            TilePainter(3, 2); //RTH
-            TilePainter(2, 3); //Forest
-            TilePainter(2, 4); //Forest2
-            TilePainter(3, 1); //RTW
-            TilePainter(3, 0); //RTW2
-            TilePainter(4, 0); //Witch
-
-            World.font = "2em Arial";
-            World.strokeText("B", WorldMap.width * 0.27, WorldMap.height * 0.17);
-            World.strokeText("C", WorldMap.width * 0.46, WorldMap.height * 0.57);
-            World.strokeText("W", WorldMap.width * 0.85, WorldMap.height * 0.17);
-            if (House.Owned == true) {
-                TilePainter(4, 2, WorldMap.width * 0.2, WorldMap.height * 0.2);
-                World.strokeText("H", WorldMap.width * 0.87, WorldMap.height * 0.57);
-            }
-
-            World.font = "1em Arial";
-            World.strokeText("⇩", WorldMap.width * 0.485, WorldMap.height)
-
-
-            switch (player.Map) {
-                case "Start":
-                    CurrentTile(0, 1);
-                    break;
-                case "RoadToCity1":
-                    CurrentTile(1, 1);
-                    break;
-                case "Bandit":
-                    CurrentTile(1, 0);
-                    break;
-                case "RoadToCity2":
-                    CurrentTile(1, 2);
-                    break;
-                case "City":
-                    CurrentTile(2, 2);
-                    break;
-                case "RoadToHome":
-                    CurrentTile(3, 2);
-                    break;
-                case "RoadToWitch":
-                    CurrentTile(3, 1);
-                    break;
-                case "RoadToWitch2":
-                    CurrentTile(3, 0);
-                    break;
-                case "Witch":
-                    CurrentTile(4, 0);
-                    break;
-                case "Forest":
-                    CurrentTile(2, 3);
-                    break;
-                case "Forest2":
-                    CurrentTile(2, 4);
-                    break;
-            }
-            break;
-        case "Second":
-            TilePainter(2, 0);
-            TilePainter(1, 0);
-            TilePainter(0, 0);
-            TilePainter(0, 1);
-            TilePainter(0, 2);
-            TilePainter(2, 1);
-            TilePainter(2, 2);
-            TilePainter(3, 1);
-
-
-            World.font = "2em Arial";
-            World.strokeText("O", WorldMap.width * 0.46, WorldMap.height * 0.57);
-            World.strokeText("F", WorldMap.width * 0.66, WorldMap.height * 0.37);
-
-            World.font = "1em Arial";
-            World.strokeText("⇧", WorldMap.width * 0.485, WorldMap.height * 0.07)
-
-            switch (player.Map) {
-                case "PathToOutlaws":
-                    CurrentTile(2, 0);
-                    break;
-                case "PathToOutlaws2":
-                    CurrentTile(2, 1);
-                    break;
-                case "Farm":
-                    CurrentTile(3, 1);
-                    break;
-                case "Outlaws":
-                    CurrentTile(2, 2);
-                    break;
-                case "Cave1":
-                    CurrentTile(1, 0);
-                    break;
-                case "Cave2":
-                    CurrentTile(0, 0);
-                    break;
-                case "Cave3":
-                    CurrentTile(0, 1);
-                    break;
-                case "Cave4":
-                    CurrentTile(0, 2);
-                    break;
-            }
-            break;
-        case "Mountain":
-            TilePainter(1, 2);
-            TilePainter(0, 2);
-
-            TilePainter(2, 2);
-            TilePainter(2, 3);
-            TilePainter(2, 4);
-            TilePainter(3, 4);
-            TilePainter(4, 4);
-            TilePainter(4, 3);
-            TilePainter(4, 2);
-            TilePainter(4, 1);
-            TilePainter(4, 0);
-            TilePainter(3, 0);
-            TilePainter(2, 0);
-            World.font = "1em Arial";
-            World.strokeText("⇧", WorldMap.width * 0.485, WorldMap.height * 0.07)
-            World.strokeText("⇦", 0, WorldMap.height * 0.525)
-
-            switch (player.Map) {
-                case "MountainStart":
-                    CurrentTile(2, 2);
-                    break;
-                case "MountainShrinePath":
-                    CurrentTile(1, 2);
-                    break;
-                case "MountainShrine":
-                    CurrentTile(0, 2);
-                    break;
-                case "MountainClimb":
-                    CurrentTile(2, 3);
-                    break;
-                case "MountainClimb2":
-                    CurrentTile(2, 4);
-                    break;
-                case "MountainClimb3":
-                    CurrentTile(3, 4);
-                    break;
-                case "MountainClimb4":
-                    CurrentTile(4, 4);
-                    break;
-                case "MountainClimb5":
-                    CurrentTile(4, 3);
-                    break;
-                case "MountainClimb6":
-                    CurrentTile(4, 2);
-                    break;
-                case "MountainClimb7":
-                    CurrentTile(4, 1);
-                    break;
-                case "MountainTribe":
-                    CurrentTile(3, 1);
-                    break;
-                case "MountainClimb8":
-                    CurrentTile(4, 0);
-                    break;
-                case "MountainClimb9":
-                    CurrentTile(3, 0);
-                    break;
-            }
-            break;
-    }
-};
-
-// ⇦ ⇨ ⇩ ⇧ Unicode arrows
 // Capitalize first letter of a string
 String.prototype.Capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
@@ -13173,115 +12582,6 @@ function TotalSexSkill() {
     }
     return SexSkill;
 }
-var TF = {
-    Status: false,
-    Counter: 0,
-    To: "human"
-}
-
-function TfEngine(Tf_to) {
-    if (!TF.Status) {
-        TF.Status = true;
-        TF.To = Tf_to;
-        TF.Counter = 0;
-    } else {
-        TF.Counter++;
-        switch (TF.To) {
-            case "elf":
-                if (player.SecondRace != "elf") {
-                    if (TF.Counter > 1000) {
-                        player.SecondRace = "elf";
-                        EventLog("Completing the transfomation you are now half elf, half " + player.Race);
-                        player.Race = "elf";
-                        TF.Status = false;
-                        TF.Counter = 0;
-                        GenitalChange("elf");
-                    } else if (TF.Counter == 500) {
-                        EventLog("Your skin feels smooth as silk.")
-                    }
-                } else {
-                    if (TF.Counter > 1000) {
-                        EventLog("You are now an elf!");
-                        player.Race = "elf";
-                        TF.Status = false;
-                        TF.Counter = 0;
-                        GenitalChange("elf");
-                    } else if (TF.Counter == 500) {
-                        EventLog("Your ears grow to a pointy shape.");
-                    }
-                }
-                break;
-            case "human":
-                if (player.SecondRace != "human") {
-                    if (TF.Counter > 1000) {
-                        EventLog("You are now a human!");
-                        player.SecondRace = "human";
-                        TF.Status = false;
-                        TF.Counter = 0;
-                        GenitalChange("human");
-                    } else if (TF.Counter == 500) {
-                        EventLog("Your body starts to feel familiar...");
-                    }
-                } else {
-                    if (TF.Counter > 1000) {
-                        EventLog("You are now a human!");
-                        player.Race = "human";
-                        TF.Status = false;
-                        TF.Counter = 0;
-                        GenitalChange("human")
-                    } else if (TF.Counter == 500) {
-                        EventLog("Your body starts to feel familiar...");
-                    }
-                }
-                break;
-            case "centaur":
-                if (player.SecondRace != "centaur") {
-                    if (TF.Counter > 1000) {
-                        EventLog("Completing the transformation, you are now a centaur with a horse's lower body and a " + player.Race + "'s upper body.");
-                        player.SecondRace = "centaur";
-                        TF.Status = false;
-                        TF.Counter = 0;
-                        GenitalChange("equine");
-                    } else if (TF.Counter == 300) {
-                        EventLog("The changes to your lower body is so dramatic that you fall to the ground. Trying to get back up, you see your torso split, bending in half, then stretching back.")
-                    } else if (TF.Counter == 400) {
-                        EventLog("Where your torso split you grow a second set of legs; all four legs transform to those of a horse.");
-                    } else if (TF.Counter == 600) {
-                        EventLog("You feel your lower torso growing wider, soon resembling a horse's torso.");
-                    } else if (TF.Counter == 800) {
-                        EventLog("Your genitals shift around as they transform into their equine equivalent.");
-                    }
-                }
-                break;
-            case "equine":
-                if (player.SecondRace != "equine") {
-                    if (TF.Counter > 1000) {
-                        EventLog("Completing the transformation, you are now a satyr with an equine lower body and a " + player.Race + " upperbody.");
-                        player.SecondRace = "equine";
-                        TF.Status = false;
-                        TF.Counter = 0;
-                        GenitalChange("equine");
-                    } else if (TF.Counter == 300) {
-                        EventLog("The skin on your legs thicken and grow a thin layer of fur. Your toes fuse together, transforming into hooves.")
-                    } else if (TF.Counter == 600) {
-                        EventLog("Your genitals transform into their equine equivalent.")
-                    }
-                } else {
-                    if (TF.Counter > 1000) {
-                        EventLog("Completing the transformation you are now a anthropomorphic equine.");
-                        PlayerDay.Race = "equine";
-                        TF.Status = false;
-                        TF.Counter = 0;
-                        GenitalChange("equine");
-                    } else if (TF.Counter == 300) {
-                        EventLog("The fur that covered your legs continues to spread upwards, soon covering your entire torso.");
-                    } else if (TF.Counter == 600) {
-                        EventLog("You see your face stretch out, shifting into a horse's muzzle.");
-                    }
-                }
-        }
-    }
-}
 // Start Farm
 document.getElementById("EquineTaurTF").addEventListener("click", function () {
     if (player.SecondRace == "centaur") {
@@ -13485,7 +12785,7 @@ function FarmBarnFunc() {
         Settings.Vore = Settings.Vore ? false : true;
         document.getElementById("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none';
         document.getElementById("Vore").value = "Vore " + Settings.Vore;
-        if (!player.hasOwnProperty("Vore")) { 
+        if (!player.hasOwnProperty("Vore")) {
             player.Vore = {
                 Level: 0,
                 Exp: 0,
@@ -13628,20 +12928,20 @@ function FarmBarnFunc() {
     });
 
     function VoreEngine(progress = 0.001) {
-        var VoreMaxExp = 30 + Math.pow(1.05, player.Vore.Level - 1);
+        const VoreMaxExp = 30 + Math.pow(1.05, player.Vore.Level - 1);
         if (player.Vore.Exp >= VoreMaxExp) {
             player.Vore.Exp = player.Vore.Exp - VoreMaxExp;
             player.Vore.Level++;
             player.Vore.VorePoints++;
         }
-        document.getElementById("VoreLevel").innerHTML = player.Vore.Level;
-        document.getElementById("VoreLevel").style.width = 100 * (player.Vore.Exp / VoreMaxExp) + "%";
-        document.getElementById("ShowStomach").innerHTML = "Stomach<br>" + KgToPound(MaxStomachCapacity() - StomachCapacity()) + " prey <br> " + KgToPound(MaxStomachCapacity()) + " Max";
-        document.getElementById("ShowVagina").innerHTML = "Pussy<br>" + KgToPound(MaxVaginaCapacity() - VaginaCapacity()) + " prey <br> " + KgToPound(MaxVaginaCapacity()) + " Max";
-        document.getElementById("ShowBreast").innerHTML = "Breast<br>" + KgToPound(MaxBreastCapacity() - BreastCapacity()) + " prey <br> " + KgToPound(MaxBreastCapacity()) + " Max";
-        document.getElementById("ShowBalls").innerHTML = "Balls<br>" + KgToPound(MaxBallsCapacity() - BallsCapacity()) + " prey <br> " + KgToPound(MaxBallsCapacity()) + " Max";
-        document.getElementById("ShowAnal").innerHTML = "Anal<br>" + KgToPound(MaxAnalCapacity() - AnalCapacity()) + " prey <br> " + KgToPound(MaxAnalCapacity()) + " Max";
-        document.getElementById("VorePerks").style.display = player.Vore.VorePoints > 0 ? 'inline-block' : 'none';
+        DocId("VoreLevel").innerHTML = player.Vore.Level;
+        DocId("VoreLevel").style.width = 100 * (player.Vore.Exp / VoreMaxExp) + "%";
+        DocId("ShowStomach").innerHTML = `Stomach<br>${KgToPound(MaxStomachCapacity() - StomachCapacity())} prey<br>${KgToPound(MaxStomachCapacity())} Max`;
+        DocId("ShowVagina").innerHTML = `Pussy<br>${KgToPound(MaxVaginaCapacity() - VaginaCapacity())} prey<br>${KgToPound(MaxVaginaCapacity())} Max`;
+        DocId("ShowBreast").innerHTML = `Breast<br>${KgToPound(MaxBreastCapacity() - BreastCapacity())} prey<br>${KgToPound(MaxBreastCapacity())} Max`;
+        DocId("ShowBalls").innerHTML = `Balls<br>${KgToPound(MaxBallsCapacity() - BallsCapacity())} prey<br>${KgToPound(MaxBallsCapacity())} Max`;
+        DocId("ShowAnal").innerHTML = `Anal<br>${KgToPound(MaxAnalCapacity() - AnalCapacity())} prey<br>${KgToPound(MaxAnalCapacity())} Max`;
+        DocId("VorePerks").style.display = player.Vore.VorePoints > 0 ? 'inline-block' : 'none';
 
         // Digestion perk
         var digestionCount = 1;
@@ -13651,14 +12951,14 @@ function FarmBarnFunc() {
 
         // Stomach
         var content = 0;
-        for (var e of player.Vore.Stomach) {
+        for (let e of player.Vore.Stomach) {
             content += e.Weight;
         }
         while (content > MaxStomachCapacity()) {
             enemies.push(player.Vore.Stomach[player.Vore.Stomach.length - 1]);
             player.Vore.Stomach.pop();
             content = 0;
-            for (var e of player.Vore.Stomach) {
+            for (let e of player.Vore.Stomach) {
                 content += e.Weight;
             }
         }

@@ -181,6 +181,7 @@ function AnalLook(who) {
 }
 
 function BoobSizeConvertor(Size) {
+    //const Prop = Size / GrowthScale(who)
     switch (Math.round(Size)) {
         case 0:
         case 1:
