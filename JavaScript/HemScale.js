@@ -19,20 +19,19 @@
             document.getElementById("LessButtons").style.display = 'none';
             document.getElementById("MobileButtons").style.display = 'none';
         }
-        var startarea = document.getElementById("hem");
-        var OldMap = medium;
+        const startarea = document.getElementById("hem"),
+            OldMap = medium;
         medium = Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20;
         startarea.width = medium;
-        3
         startarea.height = medium;
-        var NewMap = medium;
+        const NewMap = medium;
         grid = (startarea.height / 20);
         sprite.x = sprite.x * NewMap / OldMap;
         sprite.y = sprite.y * NewMap / OldMap;
-        for (var j = 0; j < enemies.length; j++) {
-            enemies[j].Size = enemies[j].Size * (NewMap / OldMap);
-            enemies[j].XPos = enemies[j].XPos * (NewMap / OldMap);
-            enemies[j].YPos = enemies[j].YPos * (NewMap / OldMap);
+        for (let j of enemies) {
+            j.Size = j.Size * (NewMap / OldMap);
+            j.XPos = j.XPos * (NewMap / OldMap);
+            j.YPos = j.YPos * (NewMap / OldMap);
         }
         return;
     }

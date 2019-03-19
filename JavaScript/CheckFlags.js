@@ -3,17 +3,17 @@ function CheckFlags() {
     // Flags
 
     // load Settings
-    document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+    DocId("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
 
     document.body.style.backgroundColor = Settings.BackColor;
     MapColor = Settings.MapColor
     document.body.style.color = Settings.TextColor
     document.body.style.fontFamily = Settings.TextFont
 
-    document.getElementById("backcolor").value = Settings.BackColor;
-    document.getElementById("MapColor").value = Settings.MapColor;
-    document.getElementById("textcolor").value = Settings.TextColor;
-    document.getElementById("textfont").value = Settings.TextFont;
+    DocId("backcolor").value = Settings.BackColor;
+    DocId("MapColor").value = Settings.MapColor;
+    DocId("textcolor").value = Settings.TextColor;
+    DocId("textfont").value = Settings.TextFont;
 
     if (!Settings.hasOwnProperty("MapPercent")) {
         Settings.MapPercent = 0.9;
@@ -304,26 +304,26 @@ function CheckFlags() {
         }
        } */
     // Convert old willpower to new will, so it's the same as player.
-    for (var e of House.Dormmates) {
+    for (let e of House.Dormmates) {
         if (e.hasOwnProperty("Willpower")) {
             e.Will = e.Willpower
         }
     }
-    if (Settings.Vore) {
-        for (var e of player.Vore.Stomach) {
+    if (Settings.Vore) { // This doesn't look right
+        for (let e of player.Vore.Stomach) {
             e.Will = e.Willpower;
         }
-        for (var e of player.Vore.Vagina) {
+        for (let e of player.Vore.Vagina) {
             e.Will = e.Willpower;
         }
-        for (var e of player.Vore.Balls) {
+        for (let e of player.Vore.Balls) {
             e.Will = e.Willpower;
             console.log(e)
         }
-        for (var e of player.Vore.Anal) {
+        for (let e of player.Vore.Anal) {
             e.Will = e.Willpower;
         }
-        for (var e of player.Vore.Breast) {
+        for (let e of player.Vore.Breast) {
             e.Will = e.Willpower;
         }
     }

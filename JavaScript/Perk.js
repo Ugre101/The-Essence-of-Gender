@@ -1,9 +1,9 @@
-function PerkHandler(perket) {
-    player.PerkPoints--;
-    player.Perks[perket].Count++
-}
 // Changeing perk menu to a func so I can make a more advanced perk menu e.g. unlocked perk etc..
 function PerkMenuFunc() {
+    function PerkHandler(perket) {
+        player.PerkPoints--;
+        player.Perks[perket].Count++
+    }
     let div = document.getElementById("LevelMenu");
     while (div.hasChildNodes()) {
         div.removeChild(div.firstChild);

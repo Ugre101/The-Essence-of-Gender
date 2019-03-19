@@ -96,7 +96,7 @@ function EssenceCheck(who) {
         who.Anal = []
     }
 
-    if (DickSize() < player.Height * 0.03 && who.Dicks.length > 0) {
+    if (DickSize() < who.Height * 0.03 && who.Dicks.length > 0) {
         who.Dicks.pop();
     } else {
         if (who.Dicks.length === 0) {
@@ -110,7 +110,7 @@ function EssenceCheck(who) {
                 who.Dicks.push(DickMaker(e + 1));
                 EssenceCheck(who); // Recursion might be a problem?
                 return;
-            } else if (who.Dicks[e].Size < player.Height * 0.03 || e >= Settings.MaxLimbs.MaxDicks) {
+            } else if (who.Dicks[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxDicks) {
                 if (who.Dicks.length > 0) {
                     who.Dicks.pop();
                 }
@@ -118,7 +118,7 @@ function EssenceCheck(who) {
         }
     }
 
-    if (BallsSize() < player.Height * 0.03 && who.Balls.length > 0) {
+    if (BallsSize() < who.Height * 0.03 && who.Balls.length > 0) {
         who.Balls.pop();
     } else {
         if (who.Balls.length === 0) {
@@ -139,7 +139,7 @@ function EssenceCheck(who) {
 
     }
 
-    if (PussySize() < player.Height * 0.03 && who.Pussies.length > 0) {
+    if (PussySize() < who.Height * 0.03 && who.Pussies.length > 0) {
         who.Pussies.pop();
     } else {
         if (who.Pussies.length === 0) {

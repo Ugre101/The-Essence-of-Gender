@@ -1,120 +1,49 @@
-    // Black market code
-    document.getElementById("SellLimbs").addEventListener("click", function () {
-        document.getElementById("LimbSale").style.display = 'block';
-        document.getElementById("SellLimbs").style.display = 'none';
-        LimbSale();
+function BlackMarketFunc() {
+    const Buildings = document.getElementById("Buildings"),
+        MainFrag = document.createDocumentFragment(),
+        p = document.createElement("p"),
+        input1 = InputButton("Sell limbs"),
+        limbcon = document.createElement("div"),
+        PESS = document.createElement("p"),
+        input2 = InputButton("Sell 50 femininity 100g"),
+        input3 = InputButton("Sell 50 masculinity 100g"),
+        input4 = InputButton("Why can't I buy?", "I see a plenty signs here of what you are buying, but I see nothing about what I can buy?"),
+        Content = Settings.EssenceAuto ? [p, PESS, input2, input3, input4, LeaveBuilding()] : [p, input1, limbcon, PESS, input2, input3, input4, LeaveBuilding()];
+
+
+
+    while (Buildings.hasChildNodes()) {
+        Buildings.removeChild(Buildings.firstChild);
+    }
+
+    if (window.innerHeight > 200) { // No title on small screen
+        const h1 = document.createElement("h1"),
+            h1text = document.createTextNode("Black Market");
+        h1.appendChild(h1text);
+        Content.unshift(h1);
+    }
+
+    p.classList.add("TextBox");
+
+    input1.addEventListener("click", function () {
+        limbcon.classList.add("LimbSale")
+        if (limbcon.hasChildNodes()) {
+            while (limbcon.hasChildNodes()) {
+                limbcon.removeChild(limbcon.firstChild);
+            };
+            p.style.display = 'block';
+        } else {
+            LimbSale();
+            p.style.display = 'none';
+        }
+    });
+    input1.addEventListener("mouseover", function () {
+
     });
 
-    function LimbSale() {
-        var SellDicks = [];
-        for (var e = 0; e < player.Dicks.length; e++) {
-            var temp = "<button onclick=\"SellDicks(" + e + "); LimbSale()\">Dick: " + (e + 1) + ", " + CmToInch(player.Dicks[e].Size) + "</button>";
-            SellDicks += temp;
-        }
-        document.getElementById("SellDicks").innerHTML = SellDicks;
-        var SellDickSize = [];
-        for (var e = 0; e < player.Dicks.length; e++) {
-            var temp = "<button onclick=\"SellDickSize(" + e + "); LimbSale()\">Dick: " + (e + 1) + ", " + CmToInch(player.Dicks[e].Size) + "</button>";
-            SellDickSize += temp;
-        }
-        document.getElementById("SellDickSize").innerHTML = SellDickSize;
+    PESS.innerHTML = `Masc: ${player.Masc} Femi: ${player.Femi}`
 
-        var SellBalls = [];
-        for (var e = 0; e < player.Balls.length; e++) {
-            var temp = "<button onclick=\"SellBalls(" + e + "); LimbSale()\">Ball: " + (e + 1) + ", " + CmToInch(player.Balls[e].Size) + "</button>";
-            SellBalls += temp;
-        }
-        document.getElementById("SellBalls").innerHTML = SellBalls;
-        var SellBallSize = [];
-        for (var e = 0; e < player.Balls.length; e++) {
-            var temp = "<button onclick=\"SellBallSize(" + e + "); LimbSale()\">Ball: " + (e + 1) + ", " + CmToInch(player.Balls[e].Size) + "</button>";
-            SellBallSize += temp;
-        }
-        document.getElementById("SellBallSize").innerHTML = SellBallSize;
-
-        var SellBreasts = [];
-        for (var e = 1; e < player.Boobies.length; e++) {
-            var temp = "<button onclick=\"SellBreasts(" + e + "); LimbSale()\">Boobs: " + (e + 1) + ", " + CmToInch(player.Boobies[e].Size) + "</button>";
-            SellBreasts += temp;
-        }
-        document.getElementById("SellBreasts").innerHTML = SellBreasts;
-        var SellBreastSize = [];
-        for (var e = 0; e < player.Boobies.length; e++) {
-            var temp = "<button onclick=\"SellBreastSize(" + e + "); LimbSale()\">Boobs: " + (e + 1) + ", " + CmToInch(player.Boobies[e].Size) + "</button>";
-            SellBreastSize += temp;
-        }
-        document.getElementById("SellBreastSize").innerHTML = SellBreastSize;
-
-        var SellVaginas = [];
-        for (var e = 0; e < player.Pussies.length; e++) {
-            var temp = "<button onclick=\"SellVaginas(" + e + "); LimbSale()\">Pussy: " + (e + 1) + ", " + CmToInch(player.Pussies[e].Size) + "</button>";
-            SellVaginas += temp;
-        }
-        document.getElementById("SellVaginas").innerHTML = SellVaginas;
-        var SellVaginaSize = [];
-        for (var e = 0; e < player.Pussies.length; e++) {
-            var temp = "<button onclick=\"SellVaginaSize(" + e + "); LimbSale()\">Pussy: " + (e + 1) + ", " + CmToInch(player.Pussies[e].Size) + "</button>";
-            SellVaginaSize += temp;
-        }
-        document.getElementById("SellVaginaSize").innerHTML = SellVaginaSize;
-    }
-
-    function SellDicks(e) {
-        player.Gold += player.Dicks[e].Size * 30;
-        player.Dicks.splice(e, 1);
-    }
-
-    function SellDickSize(e) {
-        if (player.Dicks[e].Size - 1 < 1) {
-            player.Dicks[e].Size = 1;
-        } else {
-            player.Gold += 25;
-            player.Dicks[e].Size--;
-        }
-    }
-
-    function SellBalls(e) {
-        player.Gold += player.Balls[e].Size * 30;
-        player.Balls.splice(e, 1);
-    }
-
-    function SellBallSize(e) {
-        if (player.Balls[e].Size - 1 < 1) {
-            player.Balls[e].Size = 1;
-        } else {
-            player.Gold += 25;
-            player.Balls[e].Size--;
-        }
-    }
-
-    function SellBreasts(e) {
-        player.Gold += player.Boobies[e].Size * 30;
-        player.Boobies.splice(e, 1);
-    }
-
-    function SellBreastSize(e) {
-        if (player.Boobies[e].Size - 1 < 0) {
-            player.Boobies[e].Size = 0;
-        } else {
-            player.Gold += 25;
-            player.Boobies[e].Size--;
-        }
-    }
-
-    function SellVaginas(e) {
-        player.Gold += player.Pussies[e].Size * 30;
-        player.Pussies.splice(e, 1);
-    }
-
-    function SellVaginaSize(e) {
-        if (player.Pussies[e].Size - 1 < 1) {
-            player.Pussies[e].Size = 1;
-        } else {
-            player.Gold += 25;
-            player.Pussies[e].Size--;
-        }
-    }
-    document.getElementById("SellFemininity").addEventListener("click", function () {
+    input2.addEventListener("click", function () {
         if (player.Femi >= 50) {
             player.Femi -= 50;
             player.Gold += 100;
@@ -122,8 +51,13 @@
             player.Gold += Math.max(0, player.Femi);
             player.Femi = 0;
         }
+        BlackMarketFunc();
     });
-    document.getElementById("SellMasculinity").addEventListener("click", function () {
+    input2.addEventListener("mouseover", function () {
+
+    });
+
+    input3.addEventListener("click", function () {
         if (player.Masc >= 50) {
             player.Masc -= 50;
             player.Gold += 100;
@@ -131,16 +65,161 @@
             player.Gold += Math.max(0, player.Masc);
             player.Masc = 0;
         }
+        BlackMarketFunc();
     });
-    document.getElementById("BlackMarket").addEventListener("mouseover", function (e) {
-        document.getElementById("BlackMarketText").innerHTML = e.target.title;
+    input3.addEventListener("mouseover", function () {
+
     });
-    document.getElementById("BlackMarketWhy").addEventListener("click", function () {
-        document.getElementById("BlackMarketText").innerHTML = "Yeah we are only buying essence here, you see we have a contract with guys in the capital where we can sell for a lot more to nobles.  Nobles you might ask aren’t they the ones who preach about how you should only have as much essence you can conquer!" +
-            " The thing is though while they say trading essence are forbidden and for the weak, the rich don’t follow the rules they only pretend to in order to maintain their image. ";
+
+    input4.addEventListener("click", function () {
+        p.innerHTML = `Yeah we are only buying essence here, you see we have a contract with guys in the capital where we can sell for a lot more to nobles.  Nobles you might ask aren’t they the ones who preach about how you should only have as much essence you can conquer!
+             The thing is though while they say trading essence are forbidden and for the weak, the rich don’t follow the rules they only pretend to in order to maintain their image.`
     });
-    document.getElementById("LeaveBlackMarket").addEventListener("click", function () {
-        document.getElementById("LimbSale").style.display = 'none';
-        document.getElementById("SellLimbs").style.display = 'inline-block';
+    input4.addEventListener("mouseover", function () {
+        p.innerHTML = `I see a plenty signs here of what you are buying, but I see nothing about what I can buy?`
     });
-    // End Black market
+
+    Content.forEach((val) => {
+        MainFrag.appendChild(val);
+    });
+    Buildings.appendChild(MainFrag);
+    document.getElementById("Buildings").style.display = 'block';
+
+    function LimbSale() {
+        while (limbcon.hasChildNodes()) {
+            limbcon.removeChild(limbcon.firstChild);
+        };
+        const Frag = document.createDocumentFragment(),
+            H41 = document.createElement("h4"),
+            H41Text = document.createTextNode("Sell sexual organs 30g/cm"),
+            label1 = document.createElement("label"),
+            div1 = document.createElement("div"),
+            label2 = document.createElement("label"),
+            div2 = document.createElement("div"),
+            label3 = document.createElement("label"),
+            div3 = document.createElement("div"),
+            label4 = document.createElement("label"),
+            div4 = document.createElement("div"),
+            H42 = document.createElement("h4"),
+            H42Text = document.createTextNode("Sell sexual organ size 25g/cm"),
+            label5 = document.createElement("label"),
+            div5 = document.createElement("div"),
+            label6 = document.createElement("label"),
+            div6 = document.createElement("div"),
+            label7 = document.createElement("label"),
+            div7 = document.createElement("div"),
+            label8 = document.createElement("label"),
+            div8 = document.createElement("div"),
+            SellLimbsCon = [H41, label1, div1, label2, div2, label3, div3, label4, div4,
+                H42, label5, div5, label6, div6, label7, div7, label8, div8
+            ]
+
+        H41.appendChild(H41Text);
+        H42.appendChild(H42Text);
+
+        div1.setAttribute("id", "SellDicks");
+        label1.setAttribute("for", "SellDicks");
+        label1.innerHTML = "Dicks";
+        player.Dicks.forEach((e, i) => {
+            const inp = InputButton(e.Type + " dick " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                player.Gold += e.Size * 30;
+                player.Dicks.splice(i, 1);
+                LimbSale();
+            });
+            div1.appendChild(inp);
+        });
+
+        div2.setAttribute("id", "SellBalls");
+        label2.setAttribute("for", "SellBalls");
+        label2.innerHTML = "Balls";
+        player.Balls.forEach((e, i) => {
+            const inp = InputButton(e.Type + " balls " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                player.Gold += e.Size * 30;
+                player.Balls.splice(i, 1);
+                LimbSale();
+            });
+            div2.appendChild(inp);
+        });
+
+        div3.setAttribute("id", "SellBreasts");
+        label3.setAttribute("for", "SellBreasts");
+        label3.innerHTML = "Breasts";
+        player.Boobies.forEach((e, i) => {
+            const inp = InputButton(e.Type + " boobs " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                player.Gold += e.Size * 30;
+                player.Boobies.splice(i, 1);
+                LimbSale();
+            });
+            div3.appendChild(inp);
+        });
+
+        div4.setAttribute("id", "SellVaginas");
+        label4.setAttribute("for", "SellVaginas");
+        label4.innerHTML = "Vaginas";
+        player.Pussies.forEach((e, i) => {
+            const inp = InputButton(e.Type + " vagina " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                player.Gold += e.Size * 30;
+                player.Pussies.splice(i, 1);
+                LimbSale();
+            });
+            div4.appendChild(inp);
+        });
+
+        div5.setAttribute("id", "SellDickSize");
+        label5.setAttribute("for", "SellDickSize");
+        label5.innerHTML = "Dick size";
+        player.Dicks.forEach((e, i) => {
+            const inp = InputButton(e.Type + " dick " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
+                LimbSale();
+            });
+            div5.appendChild(inp);
+        });
+
+        div6.setAttribute("id", "SellBallSize");
+        label6.setAttribute("for", "SellBallSize");
+        label6.innerHTML = "Ball size";
+        player.Balls.forEach((e, i) => {
+            const inp = InputButton(e.Type + " balls " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
+                LimbSale();
+            });
+            div6.appendChild(inp);
+        });
+
+        div7.setAttribute("id", "SellBreastSize");
+        label7.setAttribute("for", "SellBreastSize");
+        label7.innerHTML = "Breast size";
+        player.Boobies.forEach((e, i) => {
+            const inp = InputButton(e.Type + " boobs " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
+                LimbSale();
+            });
+            div7.appendChild(inp);
+        });
+
+        div8.setAttribute("id", "SellVaginaSize");
+        label8.setAttribute("for", "SellVaginaSize");
+        label8.innerHTML = "Vagina depth";
+        player.Pussies.forEach((e, i) => {
+            const inp = InputButton(e.Type + " vagina " + CmToInch(e.Size));
+            inp.addEventListener("click", function () {
+                (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
+                LimbSale();
+            });
+            div8.appendChild(inp);
+        });
+
+        SellLimbsCon.forEach((src) => {
+            Frag.appendChild(src)
+        });
+        limbcon.appendChild(Frag);
+    }
+}

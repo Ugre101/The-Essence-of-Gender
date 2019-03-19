@@ -295,13 +295,13 @@ var Partners = {
 }
 
 // Start values for canvas
-var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.MapPercent) * 20;
-var grid = (medium / 20);
-var sprite = {
-    x: grid,
-    y: grid,
-    Size: 1
-};
+var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.MapPercent) * 20,
+    grid = (medium / 20),
+    sprite = {
+        x: grid,
+        y: grid,
+        Size: 1
+    };
 
 // Start page
 document.getElementById("GoToCharCreator").addEventListener("click", function () {
@@ -475,7 +475,6 @@ function Pronoun(gender) {
             return Settings.Pronoun.Status ? Settings.Pronoun.DickGirl : gender;
         case "doll":
             return Settings.Pronoun.Status ? Settings.Pronoun.Doll : gender;
-
     }
 }
 
@@ -489,28 +488,26 @@ function CheckTitle(who) {
 }
 
 function CheckGender(who) {
-    let gender;
     if (who.Dicks.length > 0 && who.Pussies.length > 0) {
-        gender = "hermaphrodite";
+        return "hermaphrodite";
     } else if (who.Dicks.length > 0 && Math.floor(who.Boobies.some(e => e.Size > 1))) {
-        gender = "dickgirl";
+        return "dickgirl";
     } else if (who.Dicks.length > 0) {
-        gender = "male";
+        return "male";
     } else if (who.Pussies.length > 0 && who.Boobies.some(e => e.Size < 1)) { // Check all rows of boobs
-        gender = "cuntboy";
+        return "cuntboy";
     } else if (who.Pussies.length > 0) {
-        gender = "female";
+        return "female";
     } else {
-        gender = "doll"
+        return "doll"
     }
-    return gender;
 }
 // Level System
 
 function ExpCheck() {
     const MaxExp = 30 * Math.pow(1.05, player.level - 1);
-    document.getElementById("StatusLevel").style.width = Math.min(100 * (player.Exp / MaxExp), 100) + "%";
-    document.getElementById("LevelButton").style.display = (player.SkillPoints > 0 || player.PerkPoints > 0) ? 'inline-block' : 'none';
+    DocId("StatusLevel").style.width = Math.min(100 * (player.Exp / MaxExp), 100) + "%";
+    DocId("LevelButton").style.display = (player.SkillPoints > 0 || player.PerkPoints > 0) ? 'inline-block' : 'none';
 
     if (player.Exp >= MaxExp) {
         player.Exp = player.Exp - MaxExp;
@@ -523,7 +520,7 @@ function ExpCheck() {
 
 function StringCounter(array, string) {
     var counts = 0;
-    for (var i = 0; i < array.length; i++) {
+    for (let i = 0; i < array.length; i++) {
         if (array[i] === string) {
             counts++;
         }
@@ -665,22 +662,22 @@ function SexColor(who, where) {
 
 function HealthWillBars() {
     const health = document.getElementById("StatusHealth"),
-        will = document.getElementById("StatusWillHealth");
+        will = document.getElementById("StatusWillHealth"),
+        red = 150 + 105 * (player.Health / player.MaxHealth),
+        blue = 150 + 105 * (player.WillHealth / player.MaxWillHealth);
     health.innerHTML = Math.round(player.Health);
     health.style.width = Math.min(100 * (player.Health / player.MaxHealth), 103) + "%";
     will.innerHTML = Math.round(player.WillHealth);
     will.style.width = Math.min(100 * (player.WillHealth / player.MaxWillHealth), 103) + "%";
     // Trial of making the bars darker the lower as health goes down.
-    let red = 150 + 105 * (player.Health / player.MaxHealth),
-        blue = 150 + 105 * (player.WillHealth / player.MaxWillHealth);
     health.style.backgroundColor = "rgb(" + red + ",0,0)";
     will.style.backgroundColor = "rgb(0,0," + blue + ")";
 }
 
 function HouseEngine() {
     if (House.Gym > 0) {
-        var maxMuscle;
-        for (var e = 0; e < House.Dormmates.length; e++) {
+        let maxMuscle;
+        for (let e = 0; e < House.Dormmates.length; e++) {
             maxMuscle = (House.Dormmates[e].Height / 3) * (House.Gym * 0.1);
             if (House.Dormmates[e].Fat > 1 && (House.Dormmates[e].Muscle < maxMuscle)) {
                 House.Dormmates[e].Muscle += 0.1;
@@ -689,8 +686,8 @@ function HouseEngine() {
         }
     }
     if (House.Kitchen > 0) {
-        var maxFat;
-        for (var e = 0; e < House.Dormmates.length; e++) {
+        let maxFat;
+        for (let e = 0; e < House.Dormmates.length; e++) {
             maxFat = (House.Dormmates[e].Height / 2) * (House.Kitchen * 0.1);
             if (House.Dormmates[e].Fat < maxFat) {
                 House.Dormmates[e].Fat += 0.4;
@@ -699,7 +696,7 @@ function HouseEngine() {
     }
     if (House.Dormmates.length > 0) {
         player.Gold += 0.001 * House.Dormmates.length;
-        for (var esf = 0; House.Dormmates.length > esf; esf++) {
+        for (let esf = 0; House.Dormmates.length > esf; esf++) {
             if (Settings.Brothel.ServeMasc && Settings.Brothel.ServeFemi) {
                 House.Dormmates[esf].Masc += 0.05 * House.Brothel;
                 House.Dormmates[esf].Femi += 0.05 * House.Brothel;
@@ -756,27 +753,17 @@ function FoodEngine() {
     player.Fat -= 0.0002;
 }
 
-function Npc(Name, RealName, X, Y, width, height, Color) {
-    this.Name = Name,
-        this.RealName = RealName,
-        this.X = X,
-        this.Y = Y,
-        this.Width = width,
-        this.Height = height,
-        this.Color = Color
-};
-
 var EnemyIndex;
 
 function BattleSetup(who) {
-    document.getElementById("map").style.display = 'none';
-    document.getElementById("Encounter").style.display = 'grid';
-    document.getElementById("status").style.display = 'none';
-    document.getElementById("buttons").style.display = 'none';
-    document.getElementById("EmptyButtons").style.display = 'none';
-    document.getElementById("EventLog").style.display = 'none';
-    document.getElementById("BattleText").innerHTML = null;
-    document.getElementById("BattleText2").innerHTML = null;
+    const none = [DocId("map"), DocId("status"), DocId("buttons"),
+        DocId("EmptyButtons"), DocId("EventLog")
+    ].forEach((src) => {
+        src.style.display = 'none';
+    })
+    DocId("Encounter").style.display = 'grid';
+    DocId("BattleText").innerHTML = null;
+    DocId("BattleText2").innerHTML = null;
     battle = true;
     who.Health = who.FullHealth;
     who.WillHealth = who.FullWillHealth;
@@ -790,24 +777,23 @@ function Touching() {
     if (battle === true) {
         return;
     }
-
-    for (let j in enemies) {
-        if (sprite.x + grid * sprite.Size >= enemies[j].XPos && sprite.x < enemies[j].XPos + enemies[j].Size &&
-            sprite.y + grid * sprite.Size >= enemies[j].YPos && sprite.y < enemies[j].YPos + enemies[j].Size) {
+    enemies.forEach((j, i) => {
+        if (sprite.x + grid * sprite.Size >= j.XPos && sprite.x < j.XPos + j.Size &&
+            sprite.y + grid * sprite.Size >= j.YPos && sprite.y < j.YPos + j.Size) {
             if (mousedowner) {
                 clearInterval(mFunction);
                 mousedowner = false;
             }
-            EnemyIndex = j;
-            EssenceCheck(enemies[j]);
-            enemies[j].XPos = RandomInt(2, 18) * grid;
-            enemies[j].YPos = RandomInt(2, 18) * grid;
-            BattleSetup(enemies[j]);
+            EnemyIndex = i;
+            EssenceCheck(j);
+            j.XPos = RandomInt(2, 18) * grid;
+            j.YPos = RandomInt(2, 18) * grid;
+            BattleSetup(j);
         }
-    }
+    })
 };
 
-var fps = [];
+const fps = [];
 
 function loop() {
     requestAnimationFrame(loop);
@@ -820,22 +806,21 @@ function loop() {
         fps.pop();
     }
 
-    document.getElementById("StatusArea").innerHTML = "Area: " + player.Area + " and Map: " + player.Map;
+    DocId("StatusArea").innerHTML = `Area: ${player.Area} and Map: ${player.Map}`;
     player.MaxHealth = player.End * 10 + player.Perks.ExtraHealth.Count * 20;
     player.MaxWillHealth = player.Will * 10 + player.Perks.ExtraWillHealth.Count * 20;
-    document.getElementById("StatusName").innerHTML = player.Name + " " + player.LastName;
+    DocId("StatusName").innerHTML = player.Name + " " + player.LastName;
     HealthWillBars();
-    document.getElementById("StatusLevel").innerHTML = player.level;
-    document.getElementById("Gold").innerHTML = "Gold: " + Math.floor(player.Gold);
-    document.getElementById("Hunger").innerHTML = (player.Fat <= player.Height / 100) ? "You are starving" : null
-    document.getElementById("EssenceTracker").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
-    document.getElementById("BlackMarketEssence").innerHTML = "Masculinity: " + Math.round(player.Masc) + " and Femininity: " + Math.round(player.Femi);
-    document.getElementById("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none'
+    DocId("StatusLevel").innerHTML = player.level;
+    DocId("Gold").innerHTML = "Gold: " + Math.floor(player.Gold);
+    DocId("Hunger").innerHTML = (player.Fat <= player.Height / 100) ? "You are starving" : null
+    DocId("EssenceTracker").innerHTML = `Masculinity: ${Math.round(player.Masc)} and Femininity: ${Math.round(player.Femi)}`;
+    DocId("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none'
     ExpCheck();
 
     if (!battle) {
-        var startarea = document.getElementById("hem");
-        var ctx = startarea.getContext("2d");
+        const startarea = document.getElementById("hem"),
+            ctx = startarea.getContext("2d");
         startarea.width = medium;
         startarea.height = medium;
 
@@ -862,7 +847,7 @@ function loop() {
 
             sprite.Size = 1; //Math.min(0.8 + player.Height / 320, 1.2);
             if (typeof Thefps === "number") { // Stop typing NaN but I still need to figure out why NaN in first place
-                document.getElementById("Fps").innerHTML = Math.round(1000 / Thefps) + "fps";
+                DocId("Fps").innerHTML = Math.round(1000 / Thefps) + "fps";
             }
         }
     };

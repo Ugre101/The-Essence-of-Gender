@@ -169,7 +169,7 @@
 		<br><br><input type="file" id="LoadFile" value="Load from computer" />
 	</div>
 
-	<div id="NewGamePlusMenu" class="SLMenu None">
+	<!--	<div id="NewGamePlusMenu" class="SLMenu None">
 		<h1>Old Save Game</h1>
 		<input type="button" id="NGPLoadPlayer1" value="Load 1 " />
 		<input type="button" id="NGPLoadPlayer2" value="Load 2" />
@@ -179,7 +179,7 @@
 		<input type="button" id="NGPLoadLeaveStart" value="Leave">
 		<br><br><input type="file" id="NGPLoadFile" value="Load from computer" />
 	</div>
-
+-->
 	<div id="LevelMenu" class="LPMenu None"></div>
 
 	<div id="ShowLooks" class="None Looks">
@@ -196,14 +196,16 @@
 	</div>
 
 	<div id="DetailedInfo" class="None Looks">
-		<h1>Details</h1>
-		<p id="FullRace"></p>
-		<br>
-		<p id="Pregnancy"></p>
-		<input type="button" id="Children" value="Children(alpha)" />
-		<br>
-		<p id="ExtraStats"></p>
-		<input type="button" id="CloseExtra" value="Close" />
+		<div class="LooksInner">
+			<h1>Details</h1>
+			<p id="FullRace"></p>
+			<br>
+			<p id="Pregnancy"></p>
+			<input type="button" id="Children" value="Children(alpha)" />
+			<br>
+			<p id="ExtraStats"></p>
+			<input type="button" id="CloseExtra" value="Close" />
+		</div>
 	</div>
 
 	<div id="Levels" class="None Looks">
@@ -217,10 +219,12 @@
 	</div>
 
 	<div id="ShowQuests" class="None Options">
-		<h1>Quests</h1>
-		<div id="QuestTexts">
+		<div class="OptionsInnerDiv">
+			<h1>Quests</h1>
+			<div id="QuestTexts">
+			</div>
+			<input type="button" id="QuestsLeave" value="Close" />
 		</div>
-		<input type="button" id="QuestsLeave" value="Close" />
 	</div>
 
 
@@ -247,31 +251,33 @@
 	</div>
 
 	<div id="CheatMenu" class="Options None">
-		<h1>Cheats</h1>
-		<div class="TwoColumn">
-			<div>
-				<input type="button" id="CheatsEnabled" value="Cheats Enabled false" />
-			</div>
-			<div>
-				<input type="button" id="CheatsGold" value="Gold false" />
-			</div>
-			<div>
-				<input type="button" id="CheatsMasc" value="Masc false" />
-			</div>
-			<div>
-				<input type="button" id="CheatsFemi" value="Femi false" />
-			</div>
-			<div>
-				<input type="button" id="CheatsExp" value="Exp false" />
-			</div>
-			<div>
-				<input type="button" id="CheatsVoreExp" value="Vore Exp false" />
-			</div>
-			<div>
-				<input type="button" id="CheatsFastTime" value="FastTime false" />
-			</div>
-			<div>
-				<input type="button" id="CloseCheatMenu" value="Close" />
+		<div class="OptionsInnerDiv">
+			<h1>Cheats</h1>
+			<div class="TwoColumn">
+				<div>
+					<input type="button" id="CheatsEnabled" value="Cheats Enabled false" />
+				</div>
+				<div>
+					<input type="button" id="CheatsGold" value="Gold false" />
+				</div>
+				<div>
+					<input type="button" id="CheatsMasc" value="Masc false" />
+				</div>
+				<div>
+					<input type="button" id="CheatsFemi" value="Femi false" />
+				</div>
+				<div>
+					<input type="button" id="CheatsExp" value="Exp false" />
+				</div>
+				<div>
+					<input type="button" id="CheatsVoreExp" value="Vore Exp false" />
+				</div>
+				<div>
+					<input type="button" id="CheatsFastTime" value="FastTime false" />
+				</div>
+				<div>
+					<input type="button" id="CloseCheatMenu" value="Close" />
+				</div>
 			</div>
 		</div>
 	</div>
@@ -370,22 +376,24 @@
 		</div>
 	</div>
 
-	<div id="PronounForm" class="None">
-		<label for="Herm">Herm</label>
-		<input type="text" id="Herm" placeholder="hermaphrodite" value="hermaphrodite" />
-		<label for="Male">Male</label>
-		<input type="text" id="Male" placeholder="male" value="male" />
-		<label for="Female">Female</label>
-		<input type="text" id="Female" placeholder="female" value="female" />
-		<label for="Doll">Doll</label>
-		<input type="text" id="Doll" placeholder="doll" value="doll" />
-		<label for="DickGirl">Dickgirl</label>
-		<input type="text" id="DickGirl" placeholder="dickgirl" value="dickgirl" />
-		<label for="CuntBoy">Cuntboy</label>
-		<input type="text" id="CuntBoy" placeholder="CuntBoy" value="cuntboy" />
-		<br><br>
-		<input type="button" id="DisablePronoun" value="Disable" />
-		<input type="button" id="AcceptPronoun" value="Accept" />
+	<div id="PronounForm" class="None Options">
+		<div class="OptionsInnerDiv">
+			<label for="Herm">Herm</label>
+			<input type="text" id="Herm" placeholder="hermaphrodite" value="hermaphrodite" />
+			<label for="Male">Male</label>
+			<input type="text" id="Male" placeholder="male" value="male" />
+			<label for="Female">Female</label>
+			<input type="text" id="Female" placeholder="female" value="female" />
+			<label for="Doll">Doll</label>
+			<input type="text" id="Doll" placeholder="doll" value="doll" />
+			<label for="DickGirl">Dickgirl</label>
+			<input type="text" id="DickGirl" placeholder="dickgirl" value="dickgirl" />
+			<label for="CuntBoy">Cuntboy</label>
+			<input type="text" id="CuntBoy" placeholder="CuntBoy" value="cuntboy" />
+			<br><br>
+			<input type="button" id="DisablePronoun" value="Disable" />
+			<input type="button" id="AcceptPronoun" value="Accept" />
+		</div>
 	</div>
 
 	<div id="EssenceOptionsMenu" class="None Options">
@@ -858,41 +866,6 @@
 		<input type="button" id="TeleportHome" value="Home" />
 	</div>
 
-	<div id="BlackMarket" class="None Building">
-		<p id="BlackMarketText" class="TextBox"></p>
-		<input type="button" id="SellLimbs" value="Sell limbs" />
-		<div id="LimbSale" class="None">
-			<h4>Sell sexual organs 30g/cm</h4>
-			<label for="SellDicks">Dicks</label>
-			<div id="SellDicks"></div>
-			<label for="SellBalls">Balls</label>
-			<div id="SellBalls"></div>
-			<label for="SellBreasts">breasts</label>
-			<div id="SellBreasts"></div>
-			<label for="SellVaginas">Vaginas</label>
-			<div id="SellVaginas"></div>
-			<br><br>
-			<h4>Sell sexual organ size 25g/cm</h4>
-			<label for="SellDickSize">Dick size</label>
-			<div id="SellDickSize"></div>
-			<label for="SellBallSize">Ball size</label>
-			<div id="SellBallSize"></div>
-			<label for="SellBreastSize">Breast size</label>
-			<div id="SellBreastSize"></div>
-			<label for="SellVaginaSize">Vagina depth</label>
-			<div id="SellVaginaSize"></div>
-		</div>
-		<br>
-		<div>
-			<p id="BlackMarketEssence"></p>
-			<input type="button" id="SellFemininity" value="Sell 50 femininity 100g" />
-			<input type="button" id="SellMasculinity" value="Sell 50 masculinity 100g" />
-		</div>
-
-		<input type="button" id="BlackMarketWhy" value="Why can't I buy?" title="I see a plenty signs here of what you are buying, but I see nothing about what I can buy?" />
-		<input type="button" id="LeaveBlackMarket" value="Leave" />
-	</div>
-
 	<div id="FarmOwner" class="None Building">
 		<p id="FarmOwnerText" class="TextBox"></p>
 		<div id="FarmTitles">
@@ -946,7 +919,7 @@
 						"Impregnate", "InferiorUnit", "Items", "Inventory", "LevelMenu", "Loader", "Looks",
 						"Lose", "ManualEssence", "MaxLimbs", "MobileSupport", "MountainTribe", "Movement",
 						"Perk", "Pregnancy", "RaceEssence", "Racebonus",
-						"Save", "SexAfterBattle", "TfEngine", "TheFarm", "Winbattle", "Spells", "StatsHandler",
+						"Save", "SexAfterBattle", "TheFarm", "Winbattle", "Spells", "StatsHandler",
 						"LooksMenu"
 					]
 				},
