@@ -128,6 +128,11 @@ document.getElementById("Skip").addEventListener("click", function () {
     document.getElementById("Skip").value = "Skip " + Settings.Skip;
 });
 
+document.getElementById("PlayerSpriteEnable").addEventListener("click", function(){
+    Settings.PlayerSpriteEnable = Settings.PlayerSpriteEnable ? false : true;
+    document.getElementById("PlayerSpriteEnable").value = Settings.PlayerSpriteEnable;
+})
+
 document.getElementById("OptionGiveEssence").addEventListener("click", function () {
     switch (Settings.GiveEssence) {
         case "Both":

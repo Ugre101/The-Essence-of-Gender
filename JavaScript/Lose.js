@@ -90,7 +90,7 @@ function Lose(sex = true) {
 				if (Settings.EssenceAuto) {
 					const Organs = ["Dick", "Balls", "Boobies", "Pussy"],
 						a = RandomString(Organs);
-					player.OrganMod[a].Size--; // Need to make a way to get rid of the penalty.
+					//player.OrganMod[a].Size--; // Need to make a way to get rid of the penalty.
 					LoseText.innerHTML = "Something doesn't feel right..."; // 
 				} else {
 					const Organs = ["Dicks", "Balls", "Boobies", "Pussies"],
