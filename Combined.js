@@ -255,7 +255,8 @@ var Settings = {
         VoreExp: false,
         FastTime: false
     },
-    HighLightDoors: false
+    HighLightDoors: false,
+    PlayerSpriteEnable: false
 }
 
 var Partners = {
@@ -294,13 +295,42 @@ var Partners = {
     }
 }
 
+function PlayerImageLoad(arr, callback) { // Preload images to stop flickering
+    let images = {},
+        loaded = 0;
+    if (Array.isArray(arr)) {
+        for (let e of arr) {
+            let img = new Image();
+            img.onload = EmageLoaded;
+            img.src = "Res/" + e + ".png";
+            images[e] = img;
+        }
+    } else {
+        return
+    }
+
+    function EmageLoaded() {
+        loaded++;
+        if (loaded >= arr.length) {
+            callback(images);
+        }
+    }
+}
+var Player_SpriteImages = {};
+const PlayerSpriteLoader = PlayerImageLoad(["playerSprite"], function (images) {
+    Player_SpriteImages = images;
+    console.log(Player_SpriteImages)
+});
+
+
+
 // Start values for canvas
 var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.MapPercent) * 20,
     grid = (medium / 20),
     sprite = {
         x: grid,
         y: grid,
-        Size: 1
+        Size: 1,
     };
 
 // Start page
@@ -831,8 +861,12 @@ function loop() {
         Settings.Vore ? VoreEngine() : false; // However it does shrink the size of code quite a lot... idk
         Settings.Cheats.Enabled ? CheatEngine() : false;
         (enemies.length > 0) ? PrintEnemies(): false;
-        ctx.fillStyle = "BlueViolet";
-        ctx.fillRect(sprite.x, sprite.y, grid * sprite.Size, grid * sprite.Size);
+        if (Settings.PlayerSpriteEnable) {
+            ctx.drawImage(Player_SpriteImages["playerSprite"], sprite.x, sprite.y, grid * 2, grid * 2);
+        } else {
+            ctx.fillStyle = "BlueViolet";
+            ctx.fillRect(sprite.x, sprite.y, grid * sprite.Size, grid * sprite.Size);
+        }
         Laglimiter++;
         if (Laglimiter % 80 == 0) {
             Laglimiter = 0;
@@ -844,6 +878,8 @@ function loop() {
             player.Height = Math.max(5, player.Height);
             player.Health = Math.max(1, player.Health);
             player.WillHealth = Math.max(1, player.WillHealth);
+            player.Masc = Math.max(0, player.Masc);
+            player.Femi = Math.max(0, player.Femi);
 
             sprite.Size = 1; //Math.min(0.8 + player.Height / 320, 1.2);
             if (typeof Thefps === "number") { // Stop typing NaN but I still need to figure out why NaN in first place
@@ -4393,7 +4429,7 @@ function GrowthScale(who) {
 
 function EssenceCheck(who) {
     function DickSize(e = 0) {
-        return Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 1)) + who.OrganMod.Dick.Size) * GrowthScale(who));
+        return Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 1)) + who.OrganMod.Dick.Size) * GrowthScale(who)));
     }
 
     function DickMaker(e = 0) {
@@ -4406,7 +4442,7 @@ function EssenceCheck(who) {
     }
 
     function BallsSize(e = 0) {
-        return Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 2) + who.OrganMod.Balls.Size) * GrowthScale(who)));
+        return Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 2) + who.OrganMod.Balls.Size) * GrowthScale(who))));
     }
 
     function BallMakes(e = 0) {
@@ -4422,7 +4458,7 @@ function EssenceCheck(who) {
     }
 
     function BoobSize(e = 0) {
-        return Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 1) + who.OrganMod.Boobies.Size) * GrowthScale(who)));
+        return Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 1) + who.OrganMod.Boobies.Size) * GrowthScale(who))));
     }
 
     function BoobMaker(e = 0) {
@@ -4438,7 +4474,7 @@ function EssenceCheck(who) {
     }
 
     function PussySize(e = 0) {
-        return Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 2) + who.OrganMod.Pussy.Size) * GrowthScale(who)));
+        return Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 2) + who.OrganMod.Pussy.Size) * GrowthScale(who))));
     }
 
     function PussyMaker(e = 0) {
@@ -7322,7 +7358,7 @@ function Lose(sex = true) {
 				if (Settings.EssenceAuto) {
 					const Organs = ["Dick", "Balls", "Boobies", "Pussy"],
 						a = RandomString(Organs);
-					player.OrganMod[a].Size--; // Need to make a way to get rid of the penalty.
+					//player.OrganMod[a].Size--; // Need to make a way to get rid of the penalty.
 					LoseText.innerHTML = "Something doesn't feel right..."; // 
 				} else {
 					const Organs = ["Dicks", "Balls", "Boobies", "Pussies"],
@@ -7436,8 +7472,8 @@ function Lose(sex = true) {
 	};
 }
 document.getElementById("LoseSubmit").addEventListener("click", function () {
-	const takeM = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5), player.Masc)),
-		takeF = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5), player.Femi)),
+	const takeM = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5)), player.Masc),
+		takeF = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5)), player.Femi),
 		selectScene = SnowScenes(),
 		a = ["forcedBJ", "getBJ", "getRidden", "getRiddenAnal"],
 		b = ["forcedCunn", "getCunn", "getFucked", "getFuckedAnal"]
@@ -8611,7 +8647,7 @@ const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "Ci
         "PathToOutlaws", "PathToOutlaws2", "RoadToCity", "RoadToCity2", "RoadToHome", "RoadToWitch", "RoadToWitch2",
         "rtb2", "Start", "Witch", "MountainStart", "MountainShrinePath", "MountainShrine", "MountainClimb", "MountainClimb2",
         "MountainClimb3", "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8",
-        "MountainClimb9", "MountainPlateau"
+        "MountainClimb9", "MountainPlateau","Farm"
     ], function (images) {
         Tiles_images = images;
         // Stop player from starting before tiles are loaded
@@ -8619,7 +8655,7 @@ const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "Ci
         document.getElementById("LoadingImagesProgress").classList.remove("visible");
         document.getElementById("LoadingImagesProgress").classList.add("hidden");
     }),
-    NpcImageLoader = NpcImageLoad(["LocalPortal"], function (images) {
+    NpcImageLoader = NpcImageLoad(["LocalPortal","FarmBarn"], function (images) {
         Npc_images = images;
     });
 
@@ -8698,7 +8734,6 @@ function CurrentMap() {
         }
     };
     PrintImage()
-
     //Animal testing
     /*	var aSpawn = Math.random();
     	if (enemies.length < 1 && Settings.AnimalSpawn)
@@ -8886,7 +8921,7 @@ function CurrentMap() {
 
     function PrintNpcs() {
         const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"],
-            HasSprite = ["LocalPortal"];
+            HasSprite = ["LocalPortal","FarmBarn"];
         // var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
         // Switched it so new npcs always print
         for (var e of Npcs) {
@@ -10366,6 +10401,7 @@ function EnemyImageLoad(arr, callback) { // Preload images to stop flickering
 var Enemy_SpriteImages = {};
 const EnemySpriteLoader = EnemyImageLoad(["orc","troll"], function (images) {
     Enemy_SpriteImages = images;
+    console.log(Enemy_SpriteImages)
 });
 
 function PrintEnemies() {
@@ -10408,8 +10444,6 @@ function PrintEnemies() {
             ctx.drawImage(Enemy_SpriteImages[image], ee.XPos, ee.YPos, ee.Size, ee.Size);
             ctx.fillStyle = Color();
             ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos - ee.Size + ee.Size / 3, ee.Size / 3, ee.Size / 3);
-            ctx.fillStyle = "Black";
-            ctx.strokeRect(ee.XPos + ee.Size / 3, ee.YPos + ee.Size / 3, ee.Size / 3, ee.Size / 3);
         } else {
             ctx.fillRect(ee.XPos, ee.YPos, ee.Size, ee.Size);
             ctx.fillStyle = Color();
@@ -11356,6 +11390,11 @@ document.getElementById("Skip").addEventListener("click", function () {
     Settings.Skip = Settings.Skip ? false : true;
     document.getElementById("Skip").value = "Skip " + Settings.Skip;
 });
+
+document.getElementById("PlayerSpriteEnable").addEventListener("click", function(){
+    Settings.PlayerSpriteEnable = Settings.PlayerSpriteEnable ? false : true;
+    document.getElementById("PlayerSpriteEnable").value = Settings.PlayerSpriteEnable;
+})
 
 document.getElementById("OptionGiveEssence").addEventListener("click", function () {
     switch (Settings.GiveEssence) {
