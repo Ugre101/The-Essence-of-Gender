@@ -204,8 +204,8 @@ function Lose(sex = true) {
 	};
 }
 document.getElementById("LoseSubmit").addEventListener("click", function () {
-	const takeM = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5), player.Masc)),
-		takeF = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5), player.Femi)),
+	const takeM = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5)), player.Masc),
+		takeF = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5)), player.Femi),
 		selectScene = SnowScenes(),
 		a = ["forcedBJ", "getBJ", "getRidden", "getRiddenAnal"],
 		b = ["forcedCunn", "getCunn", "getFucked", "getFuckedAnal"]

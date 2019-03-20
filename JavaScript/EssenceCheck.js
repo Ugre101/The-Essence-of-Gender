@@ -5,7 +5,7 @@ function GrowthScale(who) {
 
 function EssenceCheck(who) {
     function DickSize(e = 0) {
-        return Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 1)) + who.OrganMod.Dick.Size) * GrowthScale(who));
+        return Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 1)) + who.OrganMod.Dick.Size) * GrowthScale(who)));
     }
 
     function DickMaker(e = 0) {
@@ -18,7 +18,7 @@ function EssenceCheck(who) {
     }
 
     function BallsSize(e = 0) {
-        return Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 2) + who.OrganMod.Balls.Size) * GrowthScale(who)));
+        return Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 2) + who.OrganMod.Balls.Size) * GrowthScale(who))));
     }
 
     function BallMakes(e = 0) {
@@ -34,7 +34,7 @@ function EssenceCheck(who) {
     }
 
     function BoobSize(e = 0) {
-        return Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 1) + who.OrganMod.Boobies.Size) * GrowthScale(who)));
+        return Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 1) + who.OrganMod.Boobies.Size) * GrowthScale(who))));
     }
 
     function BoobMaker(e = 0) {
@@ -50,7 +50,7 @@ function EssenceCheck(who) {
     }
 
     function PussySize(e = 0) {
-        return Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 2) + who.OrganMod.Pussy.Size) * GrowthScale(who)));
+        return Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 2) + who.OrganMod.Pussy.Size) * GrowthScale(who))));
     }
 
     function PussyMaker(e = 0) {
