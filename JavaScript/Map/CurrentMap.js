@@ -20,19 +20,46 @@ function ImageLoad(arr, callback) { // Preload images to stop flickering
         }
     }
 }
-var Tiles_images = {};
+
+function NpcImageLoad(arr, callback) { // Preload images to stop flickering
+    let images = {},
+        loaded = 0;
+
+    if (Array.isArray(arr)) {
+        for (let e of arr) {
+            let img = new Image();
+            img.onload = ImageLoaded;
+            img.src = `Res/${e}.png`;
+            images[e] = img;
+        }
+    } else {
+        return
+    }
+
+    function ImageLoaded() {
+        loaded++;
+        if (loaded >= arr.length) {
+            callback(images);
+        }
+    }
+}
+var Tiles_images = {},
+    Npc_images = {};
 const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "City", "Forest", "Forest2", "Outlaws",
-    "PathToOutlaws", "PathToOutlaws2", "RoadToCity", "RoadToCity2", "RoadToHome", "RoadToWitch", "RoadToWitch2",
-    "rtb2", "Start", "Witch", "MountainStart", "MountainShrinePath", "MountainShrine", "MountainClimb", "MountainClimb2",
-    "MountainClimb3", "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8",
-    "MountainClimb9", "MountainPlateau"
-], function (images) {
-    Tiles_images = images;
-    // Stop player from starting before tiles are loaded
-    document.getElementById("LoadingImagesProgress").innerHTML = "Tiles loaded";
-    document.getElementById("LoadingImagesProgress").classList.remove("visible");
-    document.getElementById("LoadingImagesProgress").classList.add("hidden");
-});
+        "PathToOutlaws", "PathToOutlaws2", "RoadToCity", "RoadToCity2", "RoadToHome", "RoadToWitch", "RoadToWitch2",
+        "rtb2", "Start", "Witch", "MountainStart", "MountainShrinePath", "MountainShrine", "MountainClimb", "MountainClimb2",
+        "MountainClimb3", "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8",
+        "MountainClimb9", "MountainPlateau"
+    ], function (images) {
+        Tiles_images = images;
+        // Stop player from starting before tiles are loaded
+        document.getElementById("LoadingImagesProgress").innerHTML = "Tiles loaded";
+        document.getElementById("LoadingImagesProgress").classList.remove("visible");
+        document.getElementById("LoadingImagesProgress").classList.add("hidden");
+    }),
+    NpcImageLoader = NpcImageLoad(["LocalPortal"], function (images) {
+        Npc_images = images;
+    });
 
 function CurrentMap() {
     ; // Moved here to avoid public handling of npcs, need to double check so I haven't
@@ -296,11 +323,14 @@ function CurrentMap() {
     Npcs.length > 0 ? (PrintNpcs(), TouchNpc()) : false;
 
     function PrintNpcs() {
-        const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"];
+        const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"],
+            HasSprite = ["LocalPortal"];
         // var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
         // Switched it so new npcs always print
         for (var e of Npcs) {
-            if (DontneedPrint.indexOf(e.Name) === -1) {
+            if (HasSprite.indexOf(e.Name) > -1) {
+                ctx.drawImage(Npc_images[e.Name], e.X, e.Y, e.Width, e.Height);
+            } else if (DontneedPrint.indexOf(e.Name) === -1) {
                 ctx.fillStyle = e.Color;
                 ctx.fillRect(e.X, e.Y, e.Width, e.Height);
             }

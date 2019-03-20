@@ -1087,38 +1087,6 @@ function AfterBattleButtons(Sex = true, Vored = false) {
     div.appendChild(Frag);
 
 }
-function AgeEngine() {
-    var AgelimitMod = 1;
-
-    switch (player.Race) {
-        case "human":
-            if (player.Age > 100 + AgelimitMod) {
-                return "Dead";
-            } else if (player.Age > 90) {
-                return "old";
-            } else {
-                return "";
-            }
-        case "elf":
-            if (player.Age > 90) {
-                return "young adult";
-            } else {
-                return "";
-            }
-        case "equine":
-            if (player.Age > 30) {
-                return "Dead";
-                /* probably to short, but could work with option to contuine 
-                               with heir or means prolong life */
-            } else if (player.Age > 25) {
-                return "old";
-            } else if (player.Age > 20) {
-                return "adult";
-            } else {
-                return "young adult";
-            }
-    }
-}
 function BarFunc() {
     var Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
@@ -1923,12 +1891,11 @@ function PregQuests() {
             x.removeChild(x.firstChild);
         }
 
-        p.innerHTML = "I wish of you to impregnate our local maidens, our scripture only allows temple" +
-            " maidens to copulate with those who can defeat them in battle.<br><br> Usually they would find a mate " +
-            "among the local dragons, but after their tribe leader defeated by our strongest maiden his pride" +
-            " got wounded souring our relationship. <br><br> It’ s a shame he could not defeat her, she has grown" +
-            " quite bitter over time and I believe that finally losing her virginity and becoming a mother" +
-            " would improve her personalty.";
+        p.innerHTML = `Get impregnated while carrying our goddesses blessing, when the child is born we will send a cartage to collect so it can be raised here at our temple.
+        <br><br>
+        I wish of you to impregnate our local maidens, our scripture only allows temple maidens to copulate with those who can defeat them in battle. Usually they would find a mate among the local dragons, but after their new tribe leader got defeated by our strongest maiden his pride got wounded and our relationship has soured. 
+        <br><br>
+        It’s a shame he could not defeat her, she has grown bitter over the years and I believe that finally losing her virginity and learning the joys of motherhood would greatly improve her personalty.`;
 
         var Accept = document.createElement("INPUT");
         Accept.setAttribute("type", "button");
@@ -3188,375 +3155,6 @@ function SexLooksExactAndKinda() { // A function to be able to enter a bunch of 
     });
 }
 SexLooksExactAndKinda();
-function CheckDoor() {
-    const startarea = document.getElementById("hem"),
-        DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E"),
-        DoorS = new MakeDoor(startarea.width / 2 - 3 * grid, startarea.height - 2 * grid, grid * 5, grid, "S"),
-        DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W"),
-        DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N"),
-        Doors = [DoorE, DoorS, DoorN, DoorW];
-
-    function DoorHandler(NESW) {
-        enemies = [];
-        if (NESW === "N") {
-            sprite.y = startarea.height - 3 * grid;
-        } else if (NESW === "E") {
-            sprite.x = 2 * grid;
-        } else if (NESW === "S") {
-            sprite.y = 2 * grid;
-        } else if (NESW === "W") {
-            sprite.x = startarea.width - 3 * grid;
-        }
-    }
-
-    function MakeDoor(x, y, width, height, NESW) {
-        this.x = x,
-            this.y = y,
-            this.width = width,
-            this.height = height,
-            this.NESW = NESW
-    };
-    for (let d of Doors) {
-        let Door = d.NESW;
-        if (sprite.x + grid * sprite.Size >= d.x && sprite.x <= d.x + d.width &&
-            sprite.y + grid * sprite.Size >= d.y && sprite.y <= d.y + d.height) {
-            switch (player.Area) {
-                case "First":
-                    switch (player.Map) {
-                        case "Start":
-                            if (Door == "E") {
-                                player.Map = "RoadToCity";
-                                DoorHandler("E");
-                            }
-                            break;
-                        case "RoadToCity":
-                            if (Door == "S") {
-                                player.Map = "RoadToCity2";
-                                DoorHandler("S");
-                            } else if (Door == "W") {
-                                player.Map = "Start";
-                                DoorHandler("W");
-                            } else if (Door == "N") {
-                                player.Map = "Bandit";
-                                DoorHandler("N");
-                            }
-                            break;
-                        case "Bandit":
-                            if (Door == "S") {
-                                player.Map = "RoadToCity";
-                                DoorHandler("S");
-                            }
-                            break;
-                        case "RoadToCity2":
-                            if (Door == "N") {
-                                player.Map = "RoadToCity";
-                                DoorHandler("N");
-                            } else if (Door == "E") {
-                                player.Map = "City";
-                                DoorHandler("E");
-                            }
-                            break;
-                        case "City":
-                            if (Door == "W") {
-                                player.Map = "RoadToCity2";
-                                DoorHandler("W");
-                            } else if (Door == "E") {
-                                player.Map = "RoadToHome";
-                                DoorHandler("E");
-                            } else if (Door == "S") {
-                                player.Map = "Forest";
-                                DoorHandler("S");
-                            }
-                            break;
-                        case "RoadToHome":
-                            if (Door == "W") {
-                                player.Map = "City";
-                                DoorHandler("W");
-                            } else if (Door == "E" && House.Owned == true) {
-                                battle = true;
-                                sprite.x = startarea.width - 3 * grid;
-                                document.getElementById("map").style.display = 'none';
-                                document.getElementById("buttons").style.display = 'none';
-                                document.getElementById("EmptyButtons").style.display = 'block';
-                                document.getElementById("Home").style.display = 'block';
-                                document.getElementById("HomeText").style.display = 'block';
-                                if (House.Dorm > 0) {
-                                    document.getElementById("Dorm").style.display = "inline-block";
-                                } else {
-                                    document.getElementById("Dorm").style.display = "none"
-                                }
-                                if (House.Portal.Owned) {
-                                    document.getElementById("Portal").style.display = 'inline-block'
-                                } else {
-                                    document.getElementById("Portal").style.display = 'none'
-                                }
-                                if (House.Brothel > 0) {
-                                    document.getElementById("Brothel").style.display = 'inline-block';
-                                } else {
-                                    document.getElementById("Brothel").style.display = 'none';
-                                }
-                            } else if (Door == "N") {
-                                player.Map = "RoadToWitch";
-                                DoorHandler("N");
-                            }
-                            break;
-                        case "RoadToWitch":
-                            if (Door == "S") {
-                                player.Map = "RoadToHome";
-                                DoorHandler("S");
-                            } else if (Door == "N") {
-                                player.Map = "RoadToWitch2"
-                                DoorHandler("N");
-                            }
-                            break;
-                        case "RoadToWitch2":
-                            if (Door == "S") {
-                                player.Map = "RoadToWitch";
-                                DoorHandler("S");
-                            } else if (Door == "E") {
-                                player.Map = "Witch";
-                                DoorHandler("E");
-                            }
-                            break;
-                        case "Witch":
-                            if (Door == "W") {
-                                player.Map = "RoadToWitch2";
-                                DoorHandler("W");
-                            }
-                            break;
-                        case "Forest":
-                            if (Door == "N") {
-                                player.Map = "City";
-                                DoorHandler("N");
-                            } else if (Doors[i].NESW == "S") {
-                                player.Map = "Forest2";
-                                DoorHandler("S");
-                            }
-                            break;
-                        case "Forest2":
-                            if (Door == "N") {
-                                player.Map = "Forest";
-                                DoorHandler("N");
-                            } else if (Door == "S") {
-                                player.Map = "PathToOutlaws";
-                                player.Area = "Second";
-                                DoorHandler("S");
-                            }
-                            break;
-                    }
-                    break;
-                case "Second":
-                    switch (player.Map) {
-                        case "PathToOutlaws":
-                            if (Door == "N") {
-                                player.Map = "Forest2";
-                                player.Area = "First";
-                                DoorHandler("N");
-                            } else if (Door == "W") {
-                                player.Map = "Cave1";
-                                DoorHandler("W");
-                            } else if (Door == "S") {
-                                player.Map = "PathToOutlaws2";
-                                DoorHandler("S");
-                            }
-                            break;
-                        case "PathToOutlaws2":
-                            if (Door == "N") {
-                                player.Map = "PathToOutlaws";
-                                DoorHandler("N");
-                            } else if (Door == "S") {
-                                player.Map = "Outlaws";
-                                DoorHandler("S");
-                            } else if (Door == "E") {
-                                player.Map = "Farm";
-                                DoorHandler("E");
-                            }
-                            break;
-                        case "Farm":
-                            if (Door == "W") {
-                                player.Map = "PathToOutlaws2";
-                                DoorHandler("W");
-                            }
-                            break;
-                        case "Outlaws":
-                            if (Door == "N") {
-                                player.Map = "PathToOutlaws2";
-                                DoorHandler("N");
-                            }
-                            break;
-                        case "Cave1":
-                            if (Door == "E") {
-                                player.Map = "PathToOutlaws";
-                                DoorHandler("E");
-                            } else if (Door == "W") {
-                                player.Map = "Cave2";
-                                DoorHandler("W");
-                            }
-                            break;
-                        case "Cave2":
-                            if (Door == "E") {
-                                player.Map = "Cave1";
-                                DoorHandler("E");
-                            } else if (Door == "S") {
-                                player.Map = "Cave3";
-                                DoorHandler("S");
-                            }
-                            break;
-                        case "Cave3":
-                            if (Door == "N") {
-                                player.Map = "Cave2";
-                                DoorHandler("N");
-                            } else if (Door == "S") {
-                                player.Map = "Cave4";
-                                DoorHandler("S");
-                            }
-                            break;
-                        case "Cave4":
-                            if (Door == "N") {
-                                player.Map = "Cave3";
-                                DoorHandler("N");
-                            }
-                    }
-                    break;
-                case "Mountain":
-                    switch (player.Map) {
-                        case "MountainStart":
-                            if (Door == "S") {
-                                player.Map = "MountainClimb";
-                                DoorHandler("S");
-                            } else if (Door == "W") {
-                                player.Map = "MountainShrinePath";
-                                DoorHandler("W");
-                            }
-                            break;
-                        case "MountainShrinePath":
-                            if (Door == "E") {
-                                player.Map = "MountainStart";
-                                DoorHandler("E");
-                            } else if (Door == "W") {
-                                player.Map = "MountainShrine";
-                                DoorHandler("W");
-                            }
-                            break;
-                        case "MountainShrine":
-                            if (Door == "E") {
-                                player.Map = "MountainShrinePath";
-                                DoorHandler("E");
-                            } else if (Door == "W") {
-                                //player.Map = "";
-                                //DoorHandler("W");
-                            }
-                            break;
-                        case "MountainClimb":
-                            if (Door == "N") {
-                                player.Map = "MountainStart";
-                                DoorHandler("N");
-                            } else if (Door == "S") {
-                                player.Map = "MountainClimb2";
-                                DoorHandler("S");
-                            }
-                            break;
-                        case "MountainClimb2":
-                            if (Door == "N") {
-                                player.Map = "MountainClimb";
-                                DoorHandler("N");
-                            } else if (Door == "E") {
-                                player.Map = "MountainClimb3";
-                                DoorHandler("E");
-                            }
-                            break;
-                        case "MountainClimb3":
-                            if (Door == "W") {
-                                player.Map = "MountainClimb2";
-                                DoorHandler("W");
-                            } else if (Door == "E") {
-                                player.Map = "MountainClimb4";
-                                DoorHandler("E");
-                            }
-                            break;
-                        case "MountainClimb4":
-                            if (Door == "N") {
-                                player.Map = "MountainClimb5";
-                                DoorHandler("N");
-                            } else if (Door == "W") {
-                                player.Map = "MountainClimb3";
-                                DoorHandler("W");
-                            }
-                            break;
-                        case "MountainClimb5":
-                            if (Door == "N") {
-                                player.Map = "MountainClimb6";
-                                DoorHandler("N");
-                            } else if (Door == "S") {
-                                player.Map = "MountainClimb4";
-                                DoorHandler("S");
-                            }
-                            break;
-                        case "MountainClimb6":
-                            if (Door == "N") {
-                                player.Map = "MountainClimb7";
-                                DoorHandler("N");
-                            } else if (Door == "S") {
-                                player.Map = "MountainClimb5";
-                                DoorHandler("S");
-                            }
-                            break;
-                        case "MountainClimb7":
-                            if (Door == "N") {
-                                player.Map = "MountainClimb8";
-                                DoorHandler("N");
-                            } else if (Door == "S") {
-                                player.Map = "MountainClimb6";
-                                DoorHandler("S");
-                            } else if (Door == "W") {
-                                player.Map = "MountainTribe";
-                                DoorHandler("W");
-                            }
-                            break;
-                        case "MountainTribe":
-                            if (Door == "E") {
-                                player.Map = "MountainClimb7";
-                                DoorHandler("E");
-                            } else if (Door == "N") {
-                                player.Map = "MountainClimb9";
-                                DoorHandler("N");
-                            }
-                            break
-                        case "MountainClimb8":
-                            if (Door == "W") {
-                                player.Map = "MountainClimb9";
-                                DoorHandler("W");
-                            } else if (Door == "S") {
-                                player.Map = "MountainClimb7";
-                                DoorHandler("S");
-                            }
-                            break;
-                        case "MountainClimb9":
-                            if (Door == "W") {
-                                player.Map = "MountainClimb10";
-                                DoorHandler("W");
-                            } else if (Door == "E") {
-                                player.Map = "MountainClimb8";
-                                DoorHandler("E");
-                            } else if (Door == "S") {
-                                player.Map = "MountainTribe";
-                                DoorHandler("S");
-                            }
-                            break;
-                        case "MountainClimb10":
-                            if (Door == "N") {
-                                DoorHandler("N");
-                            } else if (Door == "E") {
-                                player.Map = "MountainClimb9";
-                                DoorHandler("E");
-                            }
-                            break;
-                    }
-                    break
-            }
-        }
-    }
-};
 // Checks flags, settings, etc at load
 function CheckFlags() {
     // Flags
@@ -4788,44 +4386,6 @@ function DropSystem(who) {
         }
     }
 }
-function EEChanges(ee) {
-    switch (ee.Name) {
-        case "Pure":
-            ee.Name = "Depraved"
-            break;
-        default:
-            break;
-    }
-    switch (ee.Race) {
-        default:
-            break;
-    }
-}
-/* Not in use for the moment but I made it so that if I add more scenarios like pure maiden, it's easy 
-    to expand on*/
-const Equipment = {
-    itemTemplate: {
-        Name: "Name of the item",
-        Equip: "No",
-        Drop: true, // or false
-        Does: "Short desc.",
-        Quantity: 1,
-        Title: "Long description of the item",
-    },
-    blade: {
-        Lite: {
-            Name: "Blade"
-        },
-        // currently used in TestFlags.js
-        Name: "Blade",
-        //Use: "Yes",
-        Equip: "Yes",
-        Drop: true,
-        Does: "Temp+5",
-        Quantity: 1,
-        Title: "Temp_Tempsson legendary temp sword gives +999 to testing."
-    }
-}
 function GrowthScale(who) {
     return (who.Height / 160)
 } // I put this a function to make it easier to trial different formulas.
@@ -5171,9 +4731,6 @@ function GotMilk(who) {
     }
     return false;
 }
-function HairGrowth() {
-    player.Face.HairLength++;
-}
     // Makes sure map scales correctly when user change screen size.
     function HemScale() {
         if (window.innerHeight < 500) {
@@ -5211,54 +4768,6 @@ function HairGrowth() {
         }
         return;
     }
-var BrothelLogArray = [];
-
-/* Instead of constant passive gain through brothel, servants will gain gold & essence 
-in burst through customers. */
-
-// Recycled eventlog for brothel
-function BrothelLog(LogText) {
-    var newText = LogText + "<br>";
-    BrothelLogArray.unshift(newText);
-    while (BrothelLogArray.length > Settings.LogLength) {
-        LogArray.pop();
-    }
-    var BrothelLogHistory = "";
-    for (var e of BrothelLogArray) {
-        BrothelLogHistory += e + "<br>";
-    }
-    //LogHistory = newText + LogHistory;
-    document.getElementById("").innerHTML = BrothelLogHistory; // Make a brothelTextLog
-} // This will be inside brothel at home.
-function BrothelEngine() {
-    for (var e of House.Dormmates) {
-        var male = 0,
-            female = 0;
-        if (Settings.Brothel.ServeFemi) {
-            /* Remember to make it so on randomint(min,max) min is affect by servants essence e.g. a 
-            servant with say high masculinity attracts more customers.*/
-            var a = RandomInt(1, 30 + 20 * House.Brothel);
-            female = a;
-        }
-        if (Settings.Brothel.ServeMasc) {
-            var a = RandomInt(1, 20 + 20 * House.Brothel);
-            male = a
-        }
-        if (male > 40 && female > 40) {
-            // serve herm or maybe a mixed gender group? (if you're lucky)
-            BrothelLog(e.FirstName + " served a ");
-        } else if (male > 40) {
-            // serve male
-        } else if (female > 40) {
-            // serve female
-        } else {
-            // no luck
-        }
-    }
-}
-
-/* ToDo options to whore yourself. maybe give bonus dependent on level/rank? 
-Like customer find it exciting to fuck a high rank adventurer(need add ranks). */
 document.getElementById("Dorm").addEventListener("click", function () {
     document.getElementById("HomeStart").style.display = 'none';
     document.getElementById("TheDorm").style.display = 'block';
@@ -7722,123 +7231,235 @@ document.getElementById("CloseLooks").addEventListener("click", function () {
     DisplayGame();
 });
 document.getElementById("EnemyLoseSex").addEventListener("click", function () {
-	if (document.getElementById("LoseEnemyKinda").style.display === 'none') {
-		document.getElementById("LoseSexStats").innerHTML = " ";
-		document.getElementById("LoseEnemyKinda").style.display = 'block';
-		document.getElementById("LoseEnemyExact").style.display = 'none';
-		document.getElementById("LoseEnemyExact").innerHTML = "";
+	if (DocId("LoseEnemyKinda").style.display === 'none') {
+		DocId("LoseSexStats").innerHTML = " ";
+		DocId("LoseEnemyKinda").style.display = 'block';
+		DocId("LoseEnemyExact").style.display = 'none';
+		DocId("LoseEnemyExact").innerHTML = "";
 	} else {
-		var ee = enemies[EnemyIndex];
-		document.getElementById("LoseSexStats").innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
-		document.getElementById("LoseEnemyKinda").style.display = 'none';
-		document.getElementById("LoseEnemyExact").style.display = 'block';
-		document.getElementById("LoseEnemyExact").innerHTML = "<p>" + ExactBoobLook(ee) + ExactPussyLook(ee) + ExactDickLook(ee) + ExactBallLook(ee) +
-			"</p>";
+		const ee = enemies[EnemyIndex];
+		DocId("LoseSexStats").innerHTML = `Looking at them you estimate that they are about ${CmToInch(ee.Height)} tall and look to weigh around ${KgToPound(ee.Weight)}`;
+		DocId("LoseEnemyKinda").style.display = 'none';
+		DocId("LoseEnemyExact").style.display = 'block';
+		DocId("LoseEnemyExact").innerHTML = `<p>${ExactBoobLook(ee) + ExactPussyLook(ee) + ExactDickLook(ee) + ExactBallLook(ee)}</p>`;
 	}
 });
 document.getElementById("PlayerLoseSex").addEventListener("click", function () {
-	if (document.getElementById("LoseplayerKinda").style.display === 'none') {
-		document.getElementById("LoseplayerKinda").style.display = 'block';
-		document.getElementById("LoseplayerExact").style.display = 'none';
-		document.getElementById("LoseplayerExact").innerHTML = "";
+	if (DocId("LoseplayerKinda").style.display === 'none') {
+		DocId("LoseplayerKinda").style.display = 'block';
+		DocId("LoseplayerExact").style.display = 'none';
+		DocId("LoseplayerExact").innerHTML = "";
 	} else {
-		document.getElementById("LoseplayerKinda").style.display = 'none';
-		document.getElementById("LoseplayerExact").style.display = 'block';
-		document.getElementById("LoseplayerExact").innerHTML = "<p>" + ExactBoobLook(player) + ExactPussyLook(player) + ExactDickLook(player) + ExactBallLook(player) +
-			"</p>";
+		DocId("LoseplayerKinda").style.display = 'none';
+		DocId("LoseplayerExact").style.display = 'block';
+		DocId("LoseplayerExact").innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + ExactDickLook(player) + ExactBallLook(player)}</p>`;
 	}
 });
 
 function Lose(sex = true) {
-	var ee = enemies[EnemyIndex];
-	document.getElementById("LosePlayerLooks").innerHTML = ""; // BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
+	const ee = enemies[EnemyIndex],
+		LPL = document.getElementById("LosePlayerLooks"),
+		LoseText = document.getElementById("LoseSexStats");
+
+	LPL.innerHTML = ""; // BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
 	if (player.Pregnant.Babies.length > 0) {
-		var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
-		if (age < 1) {
-			age = "Impregnated";
-		} else {
-			age = age + " months pregnant";
-		}
-		document.getElementById("LosePlayerLooks").innerHTML += "<br>" + age;
+		const age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
+		LPL.innerHTML += "<br>" + (age < 1) ? "Impregnated" : age + " months pregnant";
 	}
 	document.getElementById("LoseEnemyLooks").innerHTML = ""; //BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
 	if (ee.hasOwnProperty("Pregnant")) {
 		if (ee.Pregnant.Status) {
-			document.getElementById("LoseEnemyLooks").innerHTML += "<br>Pregnant";
+			DocId("LoseEnemyLooks").innerHTML += "<br>Pregnant";
 		}
 	}
 	Winner = false;
-	document.getElementById("LosePName").innerHTML = player.Name + " " + player.LastName;
-	document.getElementById("LoseEName").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronoun(CheckGender(ee));
-	document.getElementById("LoseMascu").innerHTML = Math.round(player.Masc);
-	document.getElementById("LoseFemin").innerHTML = Math.round(player.Femi);
-	document.getElementById("LoseEMascu").innerHTML = Math.round(ee.Masc);
-	document.getElementById("LoseEFemin").innerHTML = Math.round(ee.Femi);
+	DocId("LosePName").innerHTML = player.Name + " " + player.LastName;
+	DocId("LoseEName").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronoun(CheckGender(ee));
+	DocId("LoseMascu").innerHTML = Math.round(player.Masc);
+	DocId("LoseFemin").innerHTML = Math.round(player.Femi);
+	DocId("LoseEMascu").innerHTML = Math.round(ee.Masc);
+	DocId("LoseEFemin").innerHTML = Math.round(ee.Femi);
 	SexColor(player, "PlayerLose");
 	SexColor(ee, "EnemyLose");
-	var DelatMed = 2;
-	if (player.Masc >= ee.Masc && player.Masc >= ee.Femi && player.Masc >= player.Femi) {
-		DelatMed = 100 / player.Masc;
-	} else if (player.Femi >= ee.Masc && player.Femi >= ee.Femi && player.Femi >= player.Masc) {
-		DelatMed = 100 / player.Femi;
-	} else if (ee.Masc >= player.Masc && ee.Masc >= ee.Femi && ee.Masc >= player.Femi) {
-		DelatMed = 100 / ee.Masc;
-	} else {
-		DelatMed = 100 / ee.Femi;
-	}
+	const DelatMed = (player.Masc >= ee.Masc && player.Masc >= ee.Femi && player.Masc >= player.Femi) ? 100 / player.Masc :
+		(player.Femi >= ee.Masc && player.Femi >= ee.Femi && player.Femi >= player.Masc) ? 100 / player.Femi :
+		(ee.Masc >= player.Masc && ee.Masc >= ee.Femi && ee.Masc >= player.Femi) ? 100 / ee.Masc :
+		100 / ee.Femi;
 
-	document.getElementById("LoseMascu").style.width = player.Masc * DelatMed + "%";
-	document.getElementById("LoseFemin").style.width = player.Femi * DelatMed + "%";
-	document.getElementById("LoseEMascu").style.width = ee.Masc * DelatMed + "%";
-	document.getElementById("LoseEFemin").style.width = ee.Femi * DelatMed + "%";
+	DocId("LoseMascu").style.width = player.Masc * DelatMed + "%";
+	DocId("LoseFemin").style.width = player.Femi * DelatMed + "%";
+	DocId("LoseEMascu").style.width = ee.Masc * DelatMed + "%";
+	DocId("LoseEFemin").style.width = ee.Femi * DelatMed + "%";
 
-	document.getElementById("Encounter").style.display = 'none';
-	document.getElementById("Lose").style.display = 'grid';
-	document.getElementById("LeaveLose").style.display = 'none';
-	document.getElementById("DungeonLose").style.display = 'none';
+	DocId("Encounter").style.display = 'none';
+	DocId("Lose").style.display = 'grid';
+	DocId("LeaveLose").style.display = 'none';
+	DocId("DungeonLose").style.display = 'none';
 	if (sex) {
-		if (document.getElementById("LoseSexText").style.display = 'none')
-			document.getElementById("LoseSexText").style.display = 'block'
-		document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronoun(CheckGender(ee)) + " " + ee.Race + " " + ee.Name;
+		if (LoseText.style.display = 'none') {
+			LoseText.style.display = 'block';
+		}
+		LoseText.innerHTML = `You lost to a ${Pronoun(CheckGender(ee))} ${ee.Race} ${ee.Name}`;
 		NameConq(ee);
 	} else {
-		document.getElementById("LoseSexText").style.display = 'none';
-		document.getElementById("LoseStruggle").style.display = 'none';
-		document.getElementById("LoseSubmit").style.display = 'none';
+		LoseText.style.display = 'none';
+		DocId("LoseStruggle").style.display = 'none';
+		DocId("LoseSubmit").style.display = 'none';
 		if (Dungeon) {
-			document.getElementById("DungeonLose").style.display = 'inline-block';
+			DocId("DungeonLose").style.display = 'inline-block';
 		} else {
-			document.getElementById("LeaveLose").style.display = 'inline-block';
+			DocId("LeaveLose").style.display = 'inline-block';
 		}
 	}
 	return;
+
+	function NameConq() { // Name/title/type e.g. witch, maiden
+		const Name = ee.Name.toLowerCase(),
+			LoseText = document.getElementById("LoseSexStats");
+		switch (Name) {
+			case "wizard":
+				// Curse? Maybe add a organ mod on auto and shrink on manual; might make organmod effect manual
+				if (Settings.EssenceAuto) {
+					const Organs = ["Dick", "Balls", "Boobies", "Pussy"],
+						a = RandomString(Organs);
+					player.OrganMod[a].Size--; // Need to make a way to get rid of the penalty.
+					LoseText.innerHTML = "Something doesn't feel right..."; // 
+				} else {
+					const Organs = ["Dicks", "Balls", "Boobies", "Pussies"],
+						a = RandomString(Organs);
+					if (player[a].length > 0) {
+						for (var e of player[a]) {
+							if (e.Size > 0) {
+								e.Size--;
+							}
+						}
+						LoseText.innerHTML = "Something doesn't feel right..."; // 
+					} else {
+						LoseText.innerHTML = ""; // He failed
+					}
+				}
+			case "witch":
+				PotionDrunk("Amphibian", RandomInt(1, 5));
+				RaceConq();
+				break;
+			case "maiden":
+				Lose(false); // "No sex"
+				LoseText.innerHTML = "Your defeat proves you unworthy to father her children, " +
+					"she walks away avoiding wasting more time on you."
+				break;
+			default:
+				RaceConq(); // Some enemies don't trigger race conq like e.g. maiden.
+				break;
+		}
+	};
+
+	function RaceConq() {
+		const race = ee.Race.toLowerCase(),
+			enemy = ee,
+			LoseText = document.getElementById("LoseSexText");
+		switch (race) {
+			case "human":
+				const steal = Math.min(RandomInt(25, 200), player.Gold)
+				player.Gold -= steal; // Robbed, why not. #Nerfed
+				LoseText.innerHTML += "They steal " + steal + " gold from you.";
+				break;
+			case "orc":
+				const Steal = Math.min(30, player.Masc);
+				player.Femi += 30;
+				player.Masc -= Steal;
+				enemy.Masc += Steal;
+				// player.Mind.Sub++
+				if (enemy.Balls.length > 0) {
+					let i = 0;
+					while (i < 3 && !player.Pregnant.Status) { // try more than once
+						Impregnate(player, enemy, "B");
+					}
+				}
+				// LoseText.innerHTML = "Following their natrual instincts the orc try to breed you, " +
+				// "while also transforminng you to better suit their preference."
+				break;
+			case "fairy":
+				if (player.Height > 30) {
+					player.Height -= Math.min(RandomInt(7, player.Height / 10), 50);
+				}
+				PotionDrunk("Fairy", RandomInt(10, 20));
+				LoseText.innerHTML += "Attempting to transform you into a fairy they shrunk you"
+				break;
+			case "elf":
+				break;
+			case "dark elf":
+				break;
+			case "amazon":
+				break;
+			case "goblin":
+				if (player.Balls.length > 0) {
+					Impregnate(player, enemy, "B"); // Breeding stereotype
+					// = "Stradling you they ride you, drain your balls trying to impregnate themself."
+					if (enemy.Balls.length > 0) {
+						Impregnate(enemy, player);
+						// = " Once satisfied they move on to fucking with "
+					}
+				} else if (enemy.Balls.length > 0) {
+					Impregnate(enemy, player);
+					// = "They "
+				}
+				break;
+			case "incubus":
+				if (player.Masc > 0) {
+					const take = Math.min(400, player.Masc * Math.min(0.15, Math.random)); // Up to 15% or 400ess
+					player.Masc -= take;
+					enemy.Masc += take;
+				}
+				Impregnate(player, enemy, "B");
+				// "drainging your masculinity "
+				break;
+			case "succubus":
+				if (player.Femi > 0) {
+					const take = Math.min(400, player.Femi * Math.min(0.15, Math.random)); // Up to 15% or 400ess
+					player.Femi -= take;
+					enemy.Femi += take;
+				}
+				Impregnate(enemy, player);
+				// "draining your feminity"
+				break;
+			case "dragon":
+				if (player.RaceEssence.some(e => e.Race == "Dragon")) { // Dragon doesn't like weaklings being dragons. 
+					let b = player.RaceEssence.findIndex(e => e.Race == "Dragon");
+					player.RaceEssence[b].amount -= Math.min(RandomInt(1, 25), player.RaceEssence[b].amount)
+				}
+				break;
+			case "Demon":
+				// player.Mind.Corruption++;
+			default:
+				break;
+		}
+	};
 }
 document.getElementById("LoseSubmit").addEventListener("click", function () {
-	var take = Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5));
-	var selectScene = SnowScenes();
-	document.getElementById("LosePlayerOrgasm").innerHTML = loseScene(false, selectScene, enemies[EnemyIndex], player);
-	if (selectScene === "forcedBJ" || selectScene === "getBJ" || selectScene === "getRidden" || selectScene === "getRiddenAnal") {
-		take = Math.min(take, player.Masc);
-		player.Masc -= take;
-		enemies[EnemyIndex].Masc += take;
-	} else if (selectScene === "forcedCunn" || selectScene === "getCunn" || selectScene === "getFucked" || selectScene === "getFuckedAnal") {
-		take = Math.min(take, player.Femi);
-		player.Femi -= take;
-		enemies[EnemyIndex].Femi += take;
-	} else {
-		var takeM = Math.min(take, player.Masc) / 2;
-		take = Math.min(take, player.Femi) / 2;
+	const takeM = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5), player.Masc)),
+		takeF = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5), player.Femi)),
+		selectScene = SnowScenes(),
+		a = ["forcedBJ", "getBJ", "getRidden", "getRiddenAnal"],
+		b = ["forcedCunn", "getCunn", "getFucked", "getFuckedAnal"]
+	document.getElementById("LosePlayerOrgasm").innerHTML = loseScene(false, selectScene);
+	if (a.indexOf(selectScene) > -1) {
 		player.Masc -= takeM;
-		player.Femi -= take;
 		enemies[EnemyIndex].Masc += takeM;
-		enemies[EnemyIndex].Femi += take;
+	} else if (b.indexOf(selectScene) > -1) {
+		player.Femi -= takeF;
+		enemies[EnemyIndex].Femi += takeF;
+	} else {
+		player.Masc -= takeM / 2;
+		player.Femi -= takeF / 2;
+		enemies[EnemyIndex].Masc += takeM / 2;
+		enemies[EnemyIndex].Femi += takeF / 2;
 	}
 	Lose(false);
 });
 document.getElementById("LoseStruggle").addEventListener("click", function () {
 	var take = Math.round(enemies[EnemyIndex].SexSkill * RandomInt(1, 7));
-	var selectScene = SnowScenes();
-	document.getElementById("LosePlayerOrgasm").innerHTML = loseScene(true, selectScene, enemies[EnemyIndex], player);
+	const selectScene = SnowScenes();
+	document.getElementById("LosePlayerOrgasm").innerHTML = loseScene(true, selectScene);
 	if (selectScene === "forcedBJ" || selectScene === "getBJ" || selectScene === "getRidden" || selectScene === "getRiddenAnal") {
 		take = Math.min(take, player.Masc);
 		player.Masc -= take;
@@ -7875,15 +7496,11 @@ document.getElementById("LoseStruggle").addEventListener("click", function () {
 	Lose(false);
 });
 document.getElementById("LeaveLose").addEventListener("click", function () {
-	battle = false;
+	DisplayGame();
 	document.getElementById("Lose").style.display = 'none';
-	document.getElementById("map").style.display = 'block';
-	document.getElementById("status").style.display = 'block';
-	document.getElementById("buttons").style.display = 'block';
 	document.getElementById("LoseStruggle").style.display = 'inline-block';
 	document.getElementById("LoseSubmit").style.display = 'inline-block';
 	document.getElementById("LosePlayerOrgasm").innerHTML = " ";
-	document.getElementById("EventLog").style.display = 'block';
 	LastPressed = " ";
 });
 
@@ -7913,29 +7530,26 @@ document.getElementById("LeaveLose").addEventListener("click", function () {
 	}
 });*/
 
-//If you lose, and your opponent drains you. Set up for other uses, and milk if it gets implemented.
-function fluid(who, what) {
-	var part;
-	if (what === "Cum")
-		part = "Balls";
-	else if (what === "Milk")
-		part = "Breasts";
-	else {
-		console.log("Fluid drain error! " + what);
-		return;
+function loseScene(struggle, selectScene) {
+	const Player = player,
+		Enemy = enemies[EnemyIndex]; // bad fix for now wanting to rename all Player to player
+	function DrainBalls() {
+		if (player.Balls.length > 0) {
+			player.Balls.forEach((b) => {
+				b.Cum = 0;
+			})
+		}
 	}
-	for (var i = 0; i < who.part.length; i++)
-		who.part[i].what = 0;
-}
-
-function loseScene(struggle, selectScene, Enemy, Player) {
 	var enemyCum = 0;
 	var playerCum = 0;
 	if (Enemy.hasOwnProperty("Balls")) {
-		for (var i = 0; i < Enemy.Balls.length; i++)
+		for (var i = 0; i < Enemy.Balls.length; i++) {
 			enemyCum += Enemy.Balls[i].Size / 4;
+		}
 		enemyCum = LToGal(enemyCum) + " down your throat.";
-	} else enemyCum = ".";
+	} else {
+		enemyCum = ".";
+	}
 
 	if (Player.hasOwnProperty("Balls")) {
 		for (var i = 0; i < Player.Balls.length; i++)
@@ -7946,7 +7560,7 @@ function loseScene(struggle, selectScene, Enemy, Player) {
 	if (struggle) {
 		switch (selectScene) {
 			case "forcedBJ":
-				returnText = Enemy.FirstName + " forces your head to their crotch, and starts thrusting their " + CmToInch(Enemy.Dicks[0].Size) + " dick into your mouth. Despite your intentions, your body betrays you and orgasms as they cum" + enemyCum;
+				returnText = `${Enemy.FirstName} forces your head to their crotch, and starts thrusting their ${CmToInch(Enemy.Dicks[0].Size)} dick into your mouth. Despite your intentions, your body betrays you and orgasms as they cum ${enemyCum}`;
 				break;
 			case "forcedCunn":
 				returnText = Enemy.FirstName + " forces your head to their crotch, forcing you to start eating them out. "
@@ -7954,52 +7568,61 @@ function loseScene(struggle, selectScene, Enemy, Player) {
 					returnText += "Their " + CmToInch(Enemy.Balls[0].Size) + " balls cover your face, forcing their musky scent into your nose. "
 				}
 				returnText += "Despite your intentions, your body betrays you and orgasms as they cover your face in girlcum."
-				if (CheckGender(Enemy) === "hermaphrodite")
+				if (CheckGender(Enemy) === "hermaphrodite") {
 					returnText += "<br>You feel their balls twitch on your face, shooting cum over your back, eventually dripping into your hair."
+				}
 				break;
 			case "forcedRim":
-				if (CheckGender(Enemy) != "doll")
-					returnText = "Despite having more sensitive erogenous zones, " + Enemy.FirstName + " wants to maximize your humiliation by forcing you to eat their ass out. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
-				else if (CheckGender(Enemy) === "doll" && player.Dicks.length <= 0)
+				if (CheckGender(Enemy) != "doll") {
+					returnText = `Despite having more sensitive erogenous zones, ${Enemy.FirstName} wants to maximize your humiliation by forcing you to eat their ass out. 
+					They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure.`
+				} else if (CheckGender(Enemy) === "doll" && player.Dicks.length <= 0) {
 					returnText = "With no other way to get pleasure, " + Enemy.FirstName + " forces you to the ground and sit on your face, giving you no other option than to eat their ass out for pleasure. "
-				else
-					returnText = "Rather that let you use your dick on their only hole, " + Enemy.FirstName + " decides to force you to use your tongue. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
+				} else {
+					returnText = `Rather that let you use your dick on their only hole, ${Enemy.FirstName} decides to force you to use your tongue. 
+					They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure.`
+				}
 				returnText += "<br>Despite your humiliating position, you find your body responding, reaching orgasm as you feel them shudder above you."
 				break;
 			case "getBJ":
 				returnText = "Forcing you onto your back, " + Enemy.FirstName + " expertly massages your cock and balls, quickly bringing you erect. "
-				if (player.Pussies.length > 0)
+				if (player.Pussies.length > 0) {
 					returnText += "They even tease your pussy a bit, all to make you cum quicker. "
+				}
 				returnText += "<br>Unable to put up more than a feeble struggle, you find yourself cumming " + playerCum + " down their throat seconds after their lips meet your dick's head.";
-				fluid(player, Cum);
+				DrainBalls()
 				break;
 			case "getCunn":
 				returnText = "Forcing you onto your back, " + Enemy.FirstName + " expertly fingers your pussy, quickly making you wet. "
-				if (player.Balls.length > 0)
+				if (player.Balls.length > 0) {
 					returnText += "They even tease your balls a bit, all to make you cum quicker. "
+				}
 				returnText += "<br>Unable to put up more than a feeble struggle, you find yourself cumming around their tongue seconds after it penetrates your lower lips."
 				break;
 			case "getRim":
-				if (CheckGender(Player) === "doll" && enemies[EnemyIndex].Dicks.length > 0)
+				if (CheckGender(Player) === "doll" && enemies[EnemyIndex].Dicks.length > 0) {
 					returnText = "Rather than use their penis on your ass, they'd rather find a pussy instead. "
-				else if (CheckGender(Player) != "doll")
+				} else if (CheckGender(Player) != "doll") {
 					returnText = "Rather than pleasuring your more sensitive organs, they've decided to humiliate you instead. "
+				}
 				returnText += "<br>Forcing you onto your stomach, your enemy repeatedly smacks your ass, bringing a blush to both sets of cheeks. Despite your humiliation (and your ass getting sore), you soon orgasm"
-				if (CheckGender(Player) === "hermaphrodite")
+				if (CheckGender(Player) === "hermaphrodite") {
 					returnText += ", spurting cum from your dick onto your belly and soaking your thighs."
-				else if (player.Dicks.length > 0)
+				} else if (player.Dicks.length > 0) {
 					returnText += ", spurting cum from your dick onto your belly."
-				else if (player.Pussies.length > 0)
+				} else if (player.Pussies.length > 0) {
 					returnText += ",  soaking your thighs."
-				else
+				} else {
 					returnText += ", shuddering in unwanted pleasure."
+				}
 				break;
 			case "getFucked":
 				returnText = "Forcing you on your back, your enemy fondles your clit just enough for your body to betray you and your pussy to get wet. "
-				if (CheckGender(Player) === "hermaphrodite")
+				if (CheckGender(Player) === "hermaphrodite") {
 					returnText += "Moving your balls to the side, they thrust in to you."
-				else
+				} else {
 					returnText += "Spreading your lips with one hand, they thrust into you."
+				}
 				returnText += "<br>Knowing how to handle someone with as little experience as you, they pin your arms above your head and quickly bring you to orgasm, your shuddering walls causing them to cum inside you. "
 				/*if(player.Pregnant.Babies.length > 0)
 					returnText += "Fortunately, you're alredy pregnant, and won't have to carry their child."
@@ -8015,11 +7638,13 @@ function loseScene(struggle, selectScene, Enemy, Player) {
 				break;
 			case "getFuckedDoggy":
 				returnText = "Your enemy forces your beaten body to its hands and knees; you can't even muster the energy to collapse. Your body, however, has other plans, and you feel your pussy start to drip. Your opponent wastes little time, and quickly gets into position, soon thrusting deeply into you. "
-				if (CheckGender(Player) === "hermaphrodite")
+				if (CheckGender(Player) === "hermaphrodite") {
 					returnText += "With every thrust, you feel their balls tapping into yours, sending little bursts of unintended pleasure through your dick. "
+				}
 				returnText += "<br>It doesn't take long for you to cum, your pussy's walls quivering around their dick. "
-				if (CheckGender(Player) === "hermaphrodite")
+				if (CheckGender(Player) === "hermaphrodite") {
 					returnText += "Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
+				}
 				returnText += "Your enemy cums soon after, quickly filling your pussy and collapses onto your back, spent. "
 				/*if(player.Pregnant.Babies.length > 0)
 					returnText += "Fortunately, you're alredy pregnant, and won't have to carry their child."
@@ -8035,17 +7660,19 @@ function loseScene(struggle, selectScene, Enemy, Player) {
 				break;
 			case "getFuckedAnal":
 				returnText = "Your enemy forces your beaten body to its hands and knees; you can't even muster the energy to collapse. "
-				if (player.Pussies.length > 0)
+				if (player.Pussies.length > 0) {
 					returnText += "Your body, however, has other plans, and you feel your pussy start to drip. Even with such a clear signal, though, your enemy positions themselves a little higher. "
+				}
 				returnText += "Having gotten into position, your enemy spreads your ass cheeks, and slowly works their dick into your bowels. Unable to respond, you feel your ass getting stretched. "
-				if (CheckGender(Player) === "hermaphrodite")
+				if (CheckGender(Player) === "hermaphrodite") {
 					returnText += "With every thrust, you feel their balls tapping your balls and clit, sending little bursts of unintended pleasure through your organs.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
-				else if (player.Pussies.length > 0)
+				} else if (player.Pussies.length > 0) {
 					returnText += "With every thrust, you feel their balls tapping your clit, sending little bursts of unintended pleasure through your pussy.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. "
-				else if (player.Balls.length > 0)
+				} else if (player.Balls.length > 0) {
 					returnText += "With every thrust, you feel their balls tapping yours, sending little bursts of unintended pleasure through your dick.<br>It doesn't take long for you to orgasm, your balls unloading themselves onto your stomach and the ground. "
-				else
+				} else {
 					returnText += "<br>It doesn't take long for you to orgasm, a pleasurable heat spreading from your ass. "
+				}
 				returnText += "Your enemy cums soon after, quickly filling your ass and collapses onto your back, spent. "
 				/*if(player.Pregnant.Babies.length <= 0) {
 					Impregnate(player, enemies[EnemyIndex], "B", "");
@@ -8066,8 +7693,9 @@ function loseScene(struggle, selectScene, Enemy, Player) {
 				break;
 			case "getRidden":
 				returnText = "Pushing you over, your enemy fondles your balls, quickly giving you an erection. Straddling your groin, they quickly thrust down, riding your dick. "
-				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3)
+				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3) {
 					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
+				}
 				returnText = "<br>It doesn't take long before you cum, emptying your balls into their pussy. They're not satisfied yet, though, and continue to ride you for several orgasms. "
 				/*if(enemies[EnemyIndex].hasOwnProperty(Pregnant)) {
 				} else {
@@ -8080,8 +7708,9 @@ function loseScene(struggle, selectScene, Enemy, Player) {
 				break;
 			case "getRiddenAnal":
 				returnText = "Pushing you over, your enemy fondles your balls, quickly giving you an erection. Straddling your groin, they quickly thrust down, riding your dick. "
-				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3)
+				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3) {
 					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
+				}
 				returnText = "<br>It doesn't take long before you cum, emptying your balls into their ass. They're not satisfied yet, though, and continue to ride you for several orgasms. "
 				/*if(!enemies[EnemyIndex].hasOwnProperty(Pregnant)) {
 					Impregnate(enemies[EnemyIndex], player, "A", "");
@@ -8117,53 +7746,61 @@ function loseScene(struggle, selectScene, Enemy, Player) {
 				break;
 			case "forcedCunn":
 				returnText = "They force your head to their crotch and you dive in, eagerly eating them out. "
-				if (CheckGender(Enemy) === "hermaphrodite")
+				if (CheckGender(Enemy) === "hermaphrodite") {
 					returnText += "Their balls cover your nose, forcing their musky scent into your nose. "
+				}
 				returnText += "As they cover your face in girlcum, your body orgasms, proud of its job. "
-				if (CheckGender(Enemy) === "hermaphrodite")
+				if (CheckGender(Enemy) === "hermaphrodite") {
 					returnText += "<br>As they cover your face, you feel their balls twitch, shooting cum over your back. As they wind down, their cum drips into your hair, arousing you further."
+				}
 				break;
 			case "forcedRim":
-				if (CheckGender(Enemy) != "doll")
+				if (CheckGender(Enemy) != "doll") {
 					returnText = "Despite having more sensitive erogenous zones, they want to maximize your humiliation by forcing you to eat their ass out. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
-				else if (CheckGender(Enemy) === "doll" && player.Dicks.length <= 0)
+				} else if (CheckGender(Enemy) === "doll" && player.Dicks.length <= 0) {
 					returnText = "With no other way to get pleasure, they force you to the ground and sit on your face, giving you no other option than to eat their ass out. "
-				else
+				} else {
 					returnText = "Rather that let you use your dick on their only hole, they decide to force you to use your tongue. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
+				}
 				returnText += "<br>You find your body responding well to the harsh treatment, reaching orgasm as you feel them shudder above you."
 				break;
 			case "getBJ":
 				returnText = "Motioning you to lie down on your back, they expertly massage your cock and balls, quickly bringing you erect. "
-				if (CheckGender(Player) === "hermaphrodite")
+				if (CheckGender(Player) === "hermaphrodite") {
 					returnText += "They even tease your pussy a bit, adding to your growing pleasure. "
+				}
 				returnText += "<br>Eagerly responding to their actions, you find yourself cumming before they start blowing you, coating your stomach with your seed. Before you can go soft, though, they wrap their lips around your dick, giving you immense pleasure. Seconds later, you cum again, this time down their throat."
 				break;
 			case "getCunn":
 				returnText = "Motioning you to lie down on your back, they expertly finger your pussy, quickly making you wet. "
-				if (CheckGender(Player) === "hermaphrodite")
+				if (CheckGender(Player) === "hermaphrodite") {
 					returnText += "They even tease your balls a bit, adding to your growing pleasure. "
+				}
 				returnText += "<br>Eagerly responding to their actions, you find yourself cumming as their tongue approachess your cunt. "
-				if (CheckGender(Player) === "hermaphrodite")
+				if (CheckGender(Player) === "hermaphrodite") {
 					returnText += "<br>Your dick, refusing to be left out, coats your stomach with your seed. "
+				}
 				returnText += "Before you can recover, though, they start eating you out, quickly driving you to several more orgasms."
 				break;
 			case "getRim":
 				returnText = "<br>Motioning you onto your stomach, your enemy massages your butt cheeks, bringing you a surprising amount of pleasure. As they stick a finger up your ass, you orgasm"
-				if (CheckGender(Player) === "hermaphrodite")
+				if (CheckGender(Player) === "hermaphrodite") {
 					returnText += ", spurting cum from your dick onto your belly and soaking your thighs."
-				else if (player.Dicks.length > 0)
+				} else if (player.Dicks.length > 0) {
 					returnText += ", spurting cum from your dick onto your belly."
-				else if (player.Pussies.length > 0)
+				} else if (player.Pussies.length > 0) {
 					returnText += ", soaking your thighs."
-				else
+				} else {
 					returnText += ", shuddering in pleasure."
+				}
 				break;
 			case "getFucked":
 				returnText = "Motioning you onto your back, your enemy fondles your clit and lower lips, giving you a mini-orgasm. Appreciating your lack of resistance, they tenderly move above you. "
-				if (CheckGender(Player) === "hermaphrodite")
+				if (CheckGender(Player) === "hermaphrodite") {
 					returnText += "Shifting your balls to the side, they gently ease in to you."
-				else
+				} else {
 					returnText += "Spreading your lips with one hand, they gently ease in to you."
+				}
 				returnText += "<br>Tenderly fucking your pussy, you're brought into a world of pleasure. Pinching your clit, you cum hard, soaking their crotch with your juices. Your quivering lips stimulate their dick, making them cum into you."
 				/*if(player.Pregnant.Babies.length > 0)
 					returnText += "You're alredy pregnant, and feel a twinge of regret that you won't carry their child."
@@ -8179,13 +7816,15 @@ function loseScene(struggle, selectScene, Enemy, Player) {
 				break;
 			case "getFuckedDoggy":
 				returnText = "Your enemy eases your beaten body to its hands and knees, making sure you can keep your balance. Your body instincively responds to the position, and you feel your pussy start to drip. Your opponent teases your cunt, causing your body to shudder, before getting into position and thrusting deeply into you. "
-				if (CheckGender(Player) === "hermaphrodite")
+				if (CheckGender(Player) === "hermaphrodite") {
 					returnText += "With every thrust, you feel their balls tapping into yours, sending little bursts of unintended pleasure through your dick. "
-				if (player.Boobies[0].size > 3)
+				}
+				if (player.Boobies[0].size > 3) {
 					returnText += "Bending over your back, they reach down and fondle your nipples, not stopping their thrusts. You let out a low moan, your pleasure mounting ever higher. "
+				}
 				returnText += "<br>It doesn't take long for you to cum, your pussy's walls quivering around their dick. "
-				if (CheckGender(Player) === "hermaphrodite") er
-				returnText += "Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
+				if (CheckGender(Player) === "hermaphrodite")
+					returnText += "Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
 				returnText += "Your enemy cums soon after, quickly filling your pussy and collapses onto your back, spent. "
 				/*if(player.Pregnant.Babies.length > 0)
 					returnText += "You're alredy pregnant, and feel a twinge of regret that you won't carry their child."
@@ -8282,24 +7921,7 @@ function loseScene(struggle, selectScene, Enemy, Player) {
 }
 
 function SnowScenes() {
-	var eLoss = enemies[EnemyIndex];
-	var sceneList = {
-		forcedBJ: false,
-		forcedCunn: false,
-		forcedRim: true,
-		getBJ: false,
-		getCunn: false,
-		getRim: true,
-		getFucked: false,
-		getFuckedAnal: false,
-		getRidden: false,
-		getRiddenAnal: false,
-		getVoreStomach: false,
-		getVoreBalls: false,
-		getVoreBoobs: false,
-		getVoreVagina: false,
-		getVoreAnal: false
-	}; //Which scenes are possible? #Removed brackets they broke code when using VisualStudio beutify -Ugre
+	let sceneList = ["forcedRim", "getRim"]; //Which scenes are possible? #Removed brackets they broke code when using VisualStudio beutify -Ugre
 	// Need settings options if Player prey is enabled.
 	if (Settings.Vore && false) {
 		sceneList.getVoreAnal = true;
@@ -8312,159 +7934,24 @@ function SnowScenes() {
 			sceneList.getVoreVagina = true;
 	}
 	if (enemies[EnemyIndex].Dicks.length > 0) {
-		sceneList.forcedBJ = true;
-		sceneList.getFuckedAnal = true;
+		sceneList.push("forcedBJ", "getFuckedAnal");
 	}
 	if (enemies[EnemyIndex].Pussies.length > 0) {
-		sceneList.forcedCunn = true;
+		sceneList.push("forcedCunn");
 	}
 	if (player.Dicks.length > 0) {
-		sceneList.getRiddenAnal = true;
-		sceneList.getBJ = true;
-		if (enemies[EnemyIndex].Pussies.length > 0)
-			sceneList.getRidden = true;
-	}
-	if (player.Pussies.length > 0) {
-		sceneList.getCunn = true;
-		if (enemies[EnemyIndex].Dicks.length > 0)
-			sceneList.getFucked = true;
-	}
-
-	var scenePoss = [];
-//	console.log("Length " + Object.keys(sceneList).length);
-	for (var i = 0; i < Object.keys(sceneList).length; i++) {
-		if (sceneList[Object.keys(sceneList)[i]]) {
-			scenePoss[scenePoss.length] = Object.keys(sceneList)[i];
-			console.log("Object " + i + " " + Object.keys(sceneList)[i]);
-			console.log(scenePoss[scenePoss.length - 1]);
+		sceneList.push("getRiddenAnal", "getBJ");
+		if (enemies[EnemyIndex].Pussies.length > 0) {
+			sceneList.push("getRidden");
 		}
 	}
-	var selectScene = scenePoss[Math.floor(Math.random() * scenePoss.length)];
-//	console.log("Selected: " + selectScene);
-	return selectScene;
-}
-
-
-function RaceConq(enemy) {
-	var race = enemy.Race.toLowerCase();
-	var LoseText = document.getElementById("LoseSexText");
-	switch (race) {
-		case "human":
-			var steal = Math.min(RandomInt(25, 200), player.Gold)
-			player.Gold -= steal; // Robbed, why not. #Nerfed
-			LoseText.innerHTML += "They steal " + steal + " gold from you.";
-			break;
-		case "orc":
-			var Steal = Math.min(30, player.Masc);
-			player.Femi += 30;
-			player.Masc -= Steal;
-			enemy.Masc += Steal;
-			// player.Mind.Sub++
-			if (enemy.Balls.length > 0) {
-				var i = 0;
-				while (i < 3 && !player.Pregnant.Status) { // try more than once
-					Impregnate(player, enemy, "B");
-				}
-			}
-			// LoseText.innerHTML = "Following their natrual instincts the orc try to breed you, " +
-			// "while also transforminng you to better suit their preference."
-			break;
-		case "fairy":
-			if (player.Height > 30) {
-				player.Height -= Math.min(RandomInt(7, player.Height / 10), 50);
-			}
-			PotionDrunk("Fairy", RandomInt(10, 20));
-			LoseText.innerHTML += "Attempting to transform you into a fairy they shrunk you"
-			break;
-		case "elf":
-			break;
-		case "dark elf":
-			break;
-		case "amazon":
-			break;
-		case "goblin":
-			if (player.Balls.length > 0) {
-				Impregnate(player, enemy, "B"); // Breeding stereotype
-				// = "Stradling you they ride you, drain your balls trying to impregnate themself."
-				if (enemy.Balls.length > 0) {
-					Impregnate(enemy, player);
-					// = " Once satisfied they move on to fucking with "
-				}
-			} else if (enemy.Balls.length > 0) {
-				Impregnate(enemy, player);
-				// = "They "
-			}
-
-			break;
-		case "incubus":
-			if (player.Masc > 0) {
-				var take = player.Masc * Math.min(0.75, Math.random); // Up to 75%
-				player.Masc -= take;
-				enemy.Masc += take;
-			}
-			Impregnate(player, enemy, "B");
-			// "drainging your masculinity "
-			break;
-		case "succubus":
-			if (player.Femi > 0) {
-				var take = player.Femi * Math.min(0.75, Math.random); // Up to 75%
-				player.Femi -= take;
-				enemy.Femi += take;
-			}
-			Impregnate(enemy, player);
-			// "draining your feminity"
-			break;
-		case "dragon":
-			if (player.RaceEssence.some(e => e.Race == "Dragon")) { // Dragon doesn't like weaklings being dragons. 
-				var b = player.RaceEssence.findIndex(e => e.Race == "Dragon");
-				player.RaceEssence[b].amount -= Math.min(RandomInt(1, 25), player.RaceEssence[b].amount)
-			}
-			break;
-		case "Demon":
-			// player.Mind.Corruption++;
-		default:
-			break;
+	if (player.Pussies.length > 0) {
+		sceneList.push("getCunn");
+		if (enemies[EnemyIndex].Dicks.length > 0) {
+			sceneList.push("getFucked");
+		}
 	}
-}
-
-function NameConq(enemy) { // Name/title/type e.g. witch, maiden
-	var Name = enemy.Name.toLowerCase();
-	var LoseText = document.getElementById("LoseSexStats");
-	switch (Name) {
-		case "wizard":
-			// Curse? Maybe add a organ mod on auto and shrink on manual; might make organmod effect manual
-			if (Settings.EssenceAuto) {
-				var Organs = ["Dicks", "Balls", "Boobies", "Pussies"];
-				var a = RandomString(Organs);
-				if (player[a].length > 0) {
-					for (var e of player[a]) {
-						if (e.Size > 0) {
-							e.Size--;
-						}
-					}
-					LoseText.innerHTML = "Something doesn't feel right..."; // 
-				} else {
-					LoseText.innerHTML = ""; // He failed
-				}
-			} else {
-				var Organs = ["Dick", "Balls", "Boobies", "Pussy"];
-				var a = RandomString(Organs);
-				player.OrganMod[a].Size--; // Need to make a way to get rid of the penalty.
-				LoseText.innerHTML = "Something doesn't feel right..."; // 
-			}
-		case "witch":
-			PotionDrunk("Amphibian", RandomInt(1, 5));
-			RaceConq(ee);
-			break;
-		case "maiden":
-			Lose(false); // "No sex"
-			LoseText.innerHTML = "Your defeat proves you unworthy to father her children, " +
-				"she walks away avoiding wasting more time on you."
-			break;
-		default:
-			RaceConq(ee); // Some enemies don't trigger race conq like e.g. maiden.
-			break;
-	}
+	return RandomString(sceneList);
 }
 function ManualGrowthScale() {
     return (player.Height / 160)
@@ -9095,19 +8582,46 @@ function ImageLoad(arr, callback) { // Preload images to stop flickering
         }
     }
 }
-var Tiles_images = {};
+
+function NpcImageLoad(arr, callback) { // Preload images to stop flickering
+    let images = {},
+        loaded = 0;
+
+    if (Array.isArray(arr)) {
+        for (let e of arr) {
+            let img = new Image();
+            img.onload = ImageLoaded;
+            img.src = `Res/${e}.png`;
+            images[e] = img;
+        }
+    } else {
+        return
+    }
+
+    function ImageLoaded() {
+        loaded++;
+        if (loaded >= arr.length) {
+            callback(images);
+        }
+    }
+}
+var Tiles_images = {},
+    Npc_images = {};
 const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "City", "Forest", "Forest2", "Outlaws",
-    "PathToOutlaws", "PathToOutlaws2", "RoadToCity", "RoadToCity2", "RoadToHome", "RoadToWitch", "RoadToWitch2",
-    "rtb2", "Start", "Witch", "MountainStart", "MountainShrinePath", "MountainShrine", "MountainClimb", "MountainClimb2",
-    "MountainClimb3", "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8",
-    "MountainClimb9", "MountainPlateau"
-], function (images) {
-    Tiles_images = images;
-    // Stop player from starting before tiles are loaded
-    document.getElementById("LoadingImagesProgress").innerHTML = "Tiles loaded";
-    document.getElementById("LoadingImagesProgress").classList.remove("visible");
-    document.getElementById("LoadingImagesProgress").classList.add("hidden");
-});
+        "PathToOutlaws", "PathToOutlaws2", "RoadToCity", "RoadToCity2", "RoadToHome", "RoadToWitch", "RoadToWitch2",
+        "rtb2", "Start", "Witch", "MountainStart", "MountainShrinePath", "MountainShrine", "MountainClimb", "MountainClimb2",
+        "MountainClimb3", "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8",
+        "MountainClimb9", "MountainPlateau"
+    ], function (images) {
+        Tiles_images = images;
+        // Stop player from starting before tiles are loaded
+        document.getElementById("LoadingImagesProgress").innerHTML = "Tiles loaded";
+        document.getElementById("LoadingImagesProgress").classList.remove("visible");
+        document.getElementById("LoadingImagesProgress").classList.add("hidden");
+    }),
+    NpcImageLoader = NpcImageLoad(["LocalPortal"], function (images) {
+        Npc_images = images;
+    });
 
 function CurrentMap() {
     ; // Moved here to avoid public handling of npcs, need to double check so I haven't
@@ -9371,11 +8885,14 @@ function CurrentMap() {
     Npcs.length > 0 ? (PrintNpcs(), TouchNpc()) : false;
 
     function PrintNpcs() {
-        const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"];
+        const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"],
+            HasSprite = ["LocalPortal"];
         // var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
         // Switched it so new npcs always print
         for (var e of Npcs) {
-            if (DontneedPrint.indexOf(e.Name) === -1) {
+            if (HasSprite.indexOf(e.Name) > -1) {
+                ctx.drawImage(Npc_images[e.Name], e.X, e.Y, e.Width, e.Height);
+            } else if (DontneedPrint.indexOf(e.Name) === -1) {
                 ctx.fillStyle = e.Color;
                 ctx.fillRect(e.X, e.Y, e.Width, e.Height);
             }
@@ -10756,7 +10273,7 @@ function EncounterBandit() {
     var RacesBandit = ["Orc", "Troll"];
     var OP = new enemy("Bandit", RandomString(RacesBandit), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15),
         RandomInt(8, 15), RandomInt(10, 15), 170, 170, RandomInt(30, 45), RandomInt(30, 55),
-        'tomato ', grid, RandomInt(140, 180));
+        'tomato ', grid *2, RandomInt(140, 180));
     GenderLock(OP, 500, "male");
     FatMuscle(OP, 7, 70);
     StandardEnemy(OP);
@@ -10768,7 +10285,7 @@ function EncounterBanditLord() {
     var RacesBandit = ["Orc", "Troll"];
     var OP = new enemy("Banditlord", RandomString(RacesBandit), RandomInt(20, 35), RandomInt(10, 15), RandomInt(20, 35), RandomInt(20, 35),
         RandomInt(20, 35), RandomInt(40, 60), 350, 300, RandomInt(55, 85), RandomInt(75, 150),
-        'tomato', 1.5 * grid, RandomInt(160, 200));
+        'tomato', 2.5 * grid, RandomInt(160, 200));
     GenderLock(OP, 1000, "male");
     FatMuscle(OP, 7, 80);
     StandardEnemy(OP);
@@ -10847,7 +10364,7 @@ function EnemyImageLoad(arr, callback) { // Preload images to stop flickering
     }
 }
 var Enemy_SpriteImages = {};
-const EnemySpriteLoader = EnemyImageLoad(["orc"], function (images) {
+const EnemySpriteLoader = EnemyImageLoad(["orc","troll"], function (images) {
     Enemy_SpriteImages = images;
 });
 
@@ -10901,7 +10418,7 @@ function PrintEnemies() {
             ctx.strokeRect(ee.XPos + ee.Size / 3, ee.YPos + ee.Size / 3, ee.Size / 3, ee.Size / 3);
         }
         ctx.fillStyle = Settings.TextColor;
-        ctx.font = "1vh Arial";
+        ctx.font = "2vh Arial";
         ctx.textAlign = "center";
         ctx.fillText(ee.Name + " " + ee.Race, ee.XPos + ee.Size / 2, ee.YPos);
     }
@@ -11414,60 +10931,6 @@ function RaceBonus(who) {
         case "Fairy":
             who.Height = Math.ceil(who.Height / 9);
             who.Weight = Math.ceil(who.Weight / 9);
-            break;
-        case "Elf":
-            who.Int += 1;
-            who.Charm += 1;
-            break;
-        case "Dark elf":
-            who.SexSkill += 1;
-            who.Charm += 1;
-            break;
-        case "Amazon":
-            who.Str += 1;
-            who.SexSkill += 2;
-            break;
-        case "Imp":
-            if (who.Femi > who.Masc) {
-                who.Masc = who.Femi;
-            }
-            who.Femi = 0;
-            break;
-        case "Demon":
-            who.WillHealth += 20;
-            who.FullWillHealth += 20;
-            break;
-        case "Dhampir":
-            who.WillHealth += 40;
-            who.WillFullHealth += 40;
-            who.Will += 1;
-            break;
-        case "Succubus":
-            who.Femi += who.Masc;
-            who.Masc = 0;
-            break;
-        case "Incubus":
-            who.Masc += who.Femi;
-            who.Femi = 0;
-            break;
-    }
-    return who;
-};
-function RaceBonus(who) {
-    // 
-    switch (who.Race) {
-        case "Halfling":
-            who.Height = who.Height / 2;
-            who.Weight = who.Weight / 2;
-            who.Size = who.Size * 0.8;
-            break;
-        case "Orc":
-            who.Str += 1;
-            break;
-        case "Fairy":
-            who.Height = Math.ceil(who.Height / 9);
-            who.Weight = Math.ceil(who.Weight / 9);
-            who.Size = who.Size * 0.4;
             break;
         case "Elf":
             who.Int += 1;

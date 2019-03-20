@@ -25,12 +25,11 @@ function PregQuests() {
             x.removeChild(x.firstChild);
         }
 
-        p.innerHTML = "I wish of you to impregnate our local maidens, our scripture only allows temple" +
-            " maidens to copulate with those who can defeat them in battle.<br><br> Usually they would find a mate " +
-            "among the local dragons, but after their tribe leader defeated by our strongest maiden his pride" +
-            " got wounded souring our relationship. <br><br> It’ s a shame he could not defeat her, she has grown" +
-            " quite bitter over time and I believe that finally losing her virginity and becoming a mother" +
-            " would improve her personalty.";
+        p.innerHTML = `Get impregnated while carrying our goddesses blessing, when the child is born we will send a cartage to collect so it can be raised here at our temple.
+        <br><br>
+        I wish of you to impregnate our local maidens, our scripture only allows temple maidens to copulate with those who can defeat them in battle. Usually they would find a mate among the local dragons, but after their new tribe leader got defeated by our strongest maiden his pride got wounded and our relationship has soured. 
+        <br><br>
+        It’s a shame he could not defeat her, she has grown bitter over the years and I believe that finally losing her virginity and learning the joys of motherhood would greatly improve her personalty.`;
 
         var Accept = document.createElement("INPUT");
         Accept.setAttribute("type", "button");

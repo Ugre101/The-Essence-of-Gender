@@ -1,57 +1,52 @@
 document.getElementById("EnemyLoseSex").addEventListener("click", function () {
-	if (document.getElementById("LoseEnemyKinda").style.display === 'none') {
-		document.getElementById("LoseSexStats").innerHTML = " ";
-		document.getElementById("LoseEnemyKinda").style.display = 'block';
-		document.getElementById("LoseEnemyExact").style.display = 'none';
-		document.getElementById("LoseEnemyExact").innerHTML = "";
+	if (DocId("LoseEnemyKinda").style.display === 'none') {
+		DocId("LoseSexStats").innerHTML = " ";
+		DocId("LoseEnemyKinda").style.display = 'block';
+		DocId("LoseEnemyExact").style.display = 'none';
+		DocId("LoseEnemyExact").innerHTML = "";
 	} else {
-		var ee = enemies[EnemyIndex];
-		document.getElementById("LoseSexStats").innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
-		document.getElementById("LoseEnemyKinda").style.display = 'none';
-		document.getElementById("LoseEnemyExact").style.display = 'block';
-		document.getElementById("LoseEnemyExact").innerHTML = "<p>" + ExactBoobLook(ee) + ExactPussyLook(ee) + ExactDickLook(ee) + ExactBallLook(ee) +
-			"</p>";
+		const ee = enemies[EnemyIndex];
+		DocId("LoseSexStats").innerHTML = `Looking at them you estimate that they are about ${CmToInch(ee.Height)} tall and look to weigh around ${KgToPound(ee.Weight)}`;
+		DocId("LoseEnemyKinda").style.display = 'none';
+		DocId("LoseEnemyExact").style.display = 'block';
+		DocId("LoseEnemyExact").innerHTML = `<p>${ExactBoobLook(ee) + ExactPussyLook(ee) + ExactDickLook(ee) + ExactBallLook(ee)}</p>`;
 	}
 });
 document.getElementById("PlayerLoseSex").addEventListener("click", function () {
-	if (document.getElementById("LoseplayerKinda").style.display === 'none') {
-		document.getElementById("LoseplayerKinda").style.display = 'block';
-		document.getElementById("LoseplayerExact").style.display = 'none';
-		document.getElementById("LoseplayerExact").innerHTML = "";
+	if (DocId("LoseplayerKinda").style.display === 'none') {
+		DocId("LoseplayerKinda").style.display = 'block';
+		DocId("LoseplayerExact").style.display = 'none';
+		DocId("LoseplayerExact").innerHTML = "";
 	} else {
-		document.getElementById("LoseplayerKinda").style.display = 'none';
-		document.getElementById("LoseplayerExact").style.display = 'block';
-		document.getElementById("LoseplayerExact").innerHTML = "<p>" + ExactBoobLook(player) + ExactPussyLook(player) + ExactDickLook(player) + ExactBallLook(player) +
-			"</p>";
+		DocId("LoseplayerKinda").style.display = 'none';
+		DocId("LoseplayerExact").style.display = 'block';
+		DocId("LoseplayerExact").innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + ExactDickLook(player) + ExactBallLook(player)}</p>`;
 	}
 });
 
 function Lose(sex = true) {
 	const ee = enemies[EnemyIndex],
-		LPL = document.getElementById("LosePlayerLooks");
+		LPL = document.getElementById("LosePlayerLooks"),
+		LoseText = document.getElementById("LoseSexStats");
+
 	LPL.innerHTML = ""; // BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
 	if (player.Pregnant.Babies.length > 0) {
-		let age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
-		if (age < 1) {
-			age = "Impregnated";
-		} else {
-			age += " months pregnant";
-		}
-		LPL.innerHTML += "<br>" + age;
+		const age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
+		LPL.innerHTML += "<br>" + (age < 1) ? "Impregnated" : age + " months pregnant";
 	}
 	document.getElementById("LoseEnemyLooks").innerHTML = ""; //BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
 	if (ee.hasOwnProperty("Pregnant")) {
 		if (ee.Pregnant.Status) {
-			document.getElementById("LoseEnemyLooks").innerHTML += "<br>Pregnant";
+			DocId("LoseEnemyLooks").innerHTML += "<br>Pregnant";
 		}
 	}
 	Winner = false;
-	document.getElementById("LosePName").innerHTML = player.Name + " " + player.LastName;
-	document.getElementById("LoseEName").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronoun(CheckGender(ee));
-	document.getElementById("LoseMascu").innerHTML = Math.round(player.Masc);
-	document.getElementById("LoseFemin").innerHTML = Math.round(player.Femi);
-	document.getElementById("LoseEMascu").innerHTML = Math.round(ee.Masc);
-	document.getElementById("LoseEFemin").innerHTML = Math.round(ee.Femi);
+	DocId("LosePName").innerHTML = player.Name + " " + player.LastName;
+	DocId("LoseEName").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronoun(CheckGender(ee));
+	DocId("LoseMascu").innerHTML = Math.round(player.Masc);
+	DocId("LoseFemin").innerHTML = Math.round(player.Femi);
+	DocId("LoseEMascu").innerHTML = Math.round(ee.Masc);
+	DocId("LoseEFemin").innerHTML = Math.round(ee.Femi);
 	SexColor(player, "PlayerLose");
 	SexColor(ee, "EnemyLose");
 	const DelatMed = (player.Masc >= ee.Masc && player.Masc >= ee.Femi && player.Masc >= player.Femi) ? 100 / player.Masc :
@@ -59,29 +54,29 @@ function Lose(sex = true) {
 		(ee.Masc >= player.Masc && ee.Masc >= ee.Femi && ee.Masc >= player.Femi) ? 100 / ee.Masc :
 		100 / ee.Femi;
 
-	document.getElementById("LoseMascu").style.width = player.Masc * DelatMed + "%";
-	document.getElementById("LoseFemin").style.width = player.Femi * DelatMed + "%";
-	document.getElementById("LoseEMascu").style.width = ee.Masc * DelatMed + "%";
-	document.getElementById("LoseEFemin").style.width = ee.Femi * DelatMed + "%";
+	DocId("LoseMascu").style.width = player.Masc * DelatMed + "%";
+	DocId("LoseFemin").style.width = player.Femi * DelatMed + "%";
+	DocId("LoseEMascu").style.width = ee.Masc * DelatMed + "%";
+	DocId("LoseEFemin").style.width = ee.Femi * DelatMed + "%";
 
-	document.getElementById("Encounter").style.display = 'none';
-	document.getElementById("Lose").style.display = 'grid';
-	document.getElementById("LeaveLose").style.display = 'none';
-	document.getElementById("DungeonLose").style.display = 'none';
+	DocId("Encounter").style.display = 'none';
+	DocId("Lose").style.display = 'grid';
+	DocId("LeaveLose").style.display = 'none';
+	DocId("DungeonLose").style.display = 'none';
 	if (sex) {
-		if (document.getElementById("LoseSexText").style.display = 'none') {
-			document.getElementById("LoseSexText").style.display = 'block';
+		if (LoseText.style.display = 'none') {
+			LoseText.style.display = 'block';
 		}
-		document.getElementById("LoseSexText").innerHTML = "You lost to a " + Pronoun(CheckGender(ee)) + " " + ee.Race + " " + ee.Name;
+		LoseText.innerHTML = `You lost to a ${Pronoun(CheckGender(ee))} ${ee.Race} ${ee.Name}`;
 		NameConq(ee);
 	} else {
-		document.getElementById("LoseSexText").style.display = 'none';
-		document.getElementById("LoseStruggle").style.display = 'none';
-		document.getElementById("LoseSubmit").style.display = 'none';
+		LoseText.style.display = 'none';
+		DocId("LoseStruggle").style.display = 'none';
+		DocId("LoseSubmit").style.display = 'none';
 		if (Dungeon) {
-			document.getElementById("DungeonLose").style.display = 'inline-block';
+			DocId("DungeonLose").style.display = 'inline-block';
 		} else {
-			document.getElementById("LeaveLose").style.display = 'inline-block';
+			DocId("LeaveLose").style.display = 'inline-block';
 		}
 	}
 	return;
@@ -128,6 +123,7 @@ function Lose(sex = true) {
 
 	function RaceConq() {
 		const race = ee.Race.toLowerCase(),
+			enemy = ee,
 			LoseText = document.getElementById("LoseSexText");
 		switch (race) {
 			case "human":
@@ -208,24 +204,23 @@ function Lose(sex = true) {
 	};
 }
 document.getElementById("LoseSubmit").addEventListener("click", function () {
-	var take = Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5));
-	const selectScene = SnowScenes();
+	const takeM = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5), player.Masc)),
+		takeF = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5), player.Femi)),
+		selectScene = SnowScenes(),
+		a = ["forcedBJ", "getBJ", "getRidden", "getRiddenAnal"],
+		b = ["forcedCunn", "getCunn", "getFucked", "getFuckedAnal"]
 	document.getElementById("LosePlayerOrgasm").innerHTML = loseScene(false, selectScene);
-	if (selectScene === "forcedBJ" || selectScene === "getBJ" || selectScene === "getRidden" || selectScene === "getRiddenAnal") {
-		take = Math.min(take, player.Masc);
-		player.Masc -= take;
-		enemies[EnemyIndex].Masc += take;
-	} else if (selectScene === "forcedCunn" || selectScene === "getCunn" || selectScene === "getFucked" || selectScene === "getFuckedAnal") {
-		take = Math.min(take, player.Femi);
-		player.Femi -= take;
-		enemies[EnemyIndex].Femi += take;
-	} else {
-		var takeM = Math.min(take, player.Masc) / 2;
-		take = Math.min(take, player.Femi) / 2;
+	if (a.indexOf(selectScene) > -1) {
 		player.Masc -= takeM;
-		player.Femi -= take;
 		enemies[EnemyIndex].Masc += takeM;
-		enemies[EnemyIndex].Femi += take;
+	} else if (b.indexOf(selectScene) > -1) {
+		player.Femi -= takeF;
+		enemies[EnemyIndex].Femi += takeF;
+	} else {
+		player.Masc -= takeM / 2;
+		player.Femi -= takeF / 2;
+		enemies[EnemyIndex].Masc += takeM / 2;
+		enemies[EnemyIndex].Femi += takeF / 2;
 	}
 	Lose(false);
 });
@@ -269,15 +264,11 @@ document.getElementById("LoseStruggle").addEventListener("click", function () {
 	Lose(false);
 });
 document.getElementById("LeaveLose").addEventListener("click", function () {
-	battle = false;
+	DisplayGame();
 	document.getElementById("Lose").style.display = 'none';
-	document.getElementById("map").style.display = 'block';
-	document.getElementById("status").style.display = 'block';
-	document.getElementById("buttons").style.display = 'block';
 	document.getElementById("LoseStruggle").style.display = 'inline-block';
 	document.getElementById("LoseSubmit").style.display = 'inline-block';
 	document.getElementById("LosePlayerOrgasm").innerHTML = " ";
-	document.getElementById("EventLog").style.display = 'block';
 	LastPressed = " ";
 });
 
@@ -320,10 +311,13 @@ function loseScene(struggle, selectScene) {
 	var enemyCum = 0;
 	var playerCum = 0;
 	if (Enemy.hasOwnProperty("Balls")) {
-		for (var i = 0; i < Enemy.Balls.length; i++)
+		for (var i = 0; i < Enemy.Balls.length; i++) {
 			enemyCum += Enemy.Balls[i].Size / 4;
+		}
 		enemyCum = LToGal(enemyCum) + " down your throat.";
-	} else enemyCum = ".";
+	} else {
+		enemyCum = ".";
+	}
 
 	if (Player.hasOwnProperty("Balls")) {
 		for (var i = 0; i < Player.Balls.length; i++)
