@@ -20,7 +20,7 @@ function EnemyImageLoad(arr, callback) { // Preload images to stop flickering
     }
 }
 var Enemy_SpriteImages = {};
-const EnemySpriteLoader = EnemyImageLoad(["orc"], function (images) {
+const EnemySpriteLoader = EnemyImageLoad(["orc","troll"], function (images) {
     Enemy_SpriteImages = images;
 });
 
@@ -74,7 +74,7 @@ function PrintEnemies() {
             ctx.strokeRect(ee.XPos + ee.Size / 3, ee.YPos + ee.Size / 3, ee.Size / 3, ee.Size / 3);
         }
         ctx.fillStyle = Settings.TextColor;
-        ctx.font = "1vh Arial";
+        ctx.font = "2vh Arial";
         ctx.textAlign = "center";
         ctx.fillText(ee.Name + " " + ee.Race, ee.XPos + ee.Size / 2, ee.YPos);
     }
