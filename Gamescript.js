@@ -255,7 +255,8 @@ var Settings = {
         VoreExp: false,
         FastTime: false
     },
-    HighLightDoors: false
+    HighLightDoors: false,
+    PlayerSpriteEnable: false
 }
 
 var Partners = {
@@ -294,13 +295,42 @@ var Partners = {
     }
 }
 
+function PlayerImageLoad(arr, callback) { // Preload images to stop flickering
+    let images = {},
+        loaded = 0;
+    if (Array.isArray(arr)) {
+        for (let e of arr) {
+            let img = new Image();
+            img.onload = EmageLoaded;
+            img.src = "Res/" + e + ".png";
+            images[e] = img;
+        }
+    } else {
+        return
+    }
+
+    function EmageLoaded() {
+        loaded++;
+        if (loaded >= arr.length) {
+            callback(images);
+        }
+    }
+}
+var Player_SpriteImages = {};
+const PlayerSpriteLoader = PlayerImageLoad(["playerSprite"], function (images) {
+    Player_SpriteImages = images;
+    console.log(Player_SpriteImages)
+});
+
+
+
 // Start values for canvas
 var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.MapPercent) * 20,
     grid = (medium / 20),
     sprite = {
         x: grid,
         y: grid,
-        Size: 1
+        Size: 1,
     };
 
 // Start page
@@ -831,8 +861,12 @@ function loop() {
         Settings.Vore ? VoreEngine() : false; // However it does shrink the size of code quite a lot... idk
         Settings.Cheats.Enabled ? CheatEngine() : false;
         (enemies.length > 0) ? PrintEnemies(): false;
-        ctx.fillStyle = "BlueViolet";
-        ctx.fillRect(sprite.x, sprite.y, grid * sprite.Size, grid * sprite.Size);
+        if (Settings.PlayerSpriteEnable) {
+            ctx.drawImage(Player_SpriteImages["playerSprite"], sprite.x, sprite.y, grid * 2, grid * 2);
+        } else {
+            ctx.fillStyle = "BlueViolet";
+            ctx.fillRect(sprite.x, sprite.y, grid * sprite.Size, grid * sprite.Size);
+        }
         Laglimiter++;
         if (Laglimiter % 80 == 0) {
             Laglimiter = 0;
@@ -844,6 +878,8 @@ function loop() {
             player.Height = Math.max(5, player.Height);
             player.Health = Math.max(1, player.Health);
             player.WillHealth = Math.max(1, player.WillHealth);
+            player.Masc = Math.max(0, player.Masc);
+            player.Femi = Math.max(0, player.Femi);
 
             sprite.Size = 1; //Math.min(0.8 + player.Height / 320, 1.2);
             if (typeof Thefps === "number") { // Stop typing NaN but I still need to figure out why NaN in first place
