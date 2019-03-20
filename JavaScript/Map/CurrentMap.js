@@ -49,7 +49,7 @@ const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "Ci
         "PathToOutlaws", "PathToOutlaws2", "RoadToCity", "RoadToCity2", "RoadToHome", "RoadToWitch", "RoadToWitch2",
         "rtb2", "Start", "Witch", "MountainStart", "MountainShrinePath", "MountainShrine", "MountainClimb", "MountainClimb2",
         "MountainClimb3", "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8",
-        "MountainClimb9", "MountainPlateau"
+        "MountainClimb9", "MountainPlateau","Farm"
     ], function (images) {
         Tiles_images = images;
         // Stop player from starting before tiles are loaded
@@ -57,7 +57,7 @@ const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "Ci
         document.getElementById("LoadingImagesProgress").classList.remove("visible");
         document.getElementById("LoadingImagesProgress").classList.add("hidden");
     }),
-    NpcImageLoader = NpcImageLoad(["LocalPortal"], function (images) {
+    NpcImageLoader = NpcImageLoad(["LocalPortal","FarmBarn"], function (images) {
         Npc_images = images;
     });
 
@@ -136,7 +136,6 @@ function CurrentMap() {
         }
     };
     PrintImage()
-
     //Animal testing
     /*	var aSpawn = Math.random();
     	if (enemies.length < 1 && Settings.AnimalSpawn)
@@ -324,7 +323,7 @@ function CurrentMap() {
 
     function PrintNpcs() {
         const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"],
-            HasSprite = ["LocalPortal"];
+            HasSprite = ["LocalPortal","FarmBarn"];
         // var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
         // Switched it so new npcs always print
         for (var e of Npcs) {

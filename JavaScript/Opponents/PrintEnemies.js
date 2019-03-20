@@ -22,6 +22,7 @@ function EnemyImageLoad(arr, callback) { // Preload images to stop flickering
 var Enemy_SpriteImages = {};
 const EnemySpriteLoader = EnemyImageLoad(["orc","troll"], function (images) {
     Enemy_SpriteImages = images;
+    console.log(Enemy_SpriteImages)
 });
 
 function PrintEnemies() {
@@ -64,8 +65,6 @@ function PrintEnemies() {
             ctx.drawImage(Enemy_SpriteImages[image], ee.XPos, ee.YPos, ee.Size, ee.Size);
             ctx.fillStyle = Color();
             ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos - ee.Size + ee.Size / 3, ee.Size / 3, ee.Size / 3);
-            ctx.fillStyle = "Black";
-            ctx.strokeRect(ee.XPos + ee.Size / 3, ee.YPos + ee.Size / 3, ee.Size / 3, ee.Size / 3);
         } else {
             ctx.fillRect(ee.XPos, ee.YPos, ee.Size, ee.Size);
             ctx.fillStyle = Color();
