@@ -47,14 +47,14 @@ document.addEventListener('keydown', function (e) {
 function mousedownfunc() {
     const startarea = DocId("hem"),
         MapRect = startarea.getBoundingClientRect();
-    if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x + grid * sprite.Size < startarea.width) {
+    if (mouseX - MapRect.left > sprite.x + 1.2 * grid && sprite.x + grid * sprite.Size < startarea.width) {
         sprite.x += grid * sprite.Size;
-    } else if (mouseX - MapRect.left + grid / 2 < sprite.x && sprite.x > 0) {
+    } else if (mouseX - MapRect.left + grid * 0.2 < sprite.x && sprite.x > 0) {
         sprite.x -= grid * sprite.Size;
     }
-    if (mouseY - MapRect.top > sprite.y + 1.5 * grid && sprite.y < startarea.height) {
+    if (mouseY - MapRect.top > sprite.y + 1.2 * grid && sprite.y < startarea.height) {
         sprite.y += grid * sprite.Size;
-    } else if (mouseY - MapRect.top + grid / 2 < sprite.y && sprite.y > 0) {
+    } else if (mouseY - MapRect.top + grid * 0.2 < sprite.y && sprite.y > 0) {
         sprite.y -= grid * sprite.Size;
     }
     Touching();

@@ -212,9 +212,11 @@
 
    div.Building {
        background-color: rgb(235, 235, 228);
-       border: 2px solid black;
-       border-radius: 5px;
-       width: 700px;
+       border: 20px solid transparent;
+       border-image: url(Res/frame_s_01.png) 20;
+       border-radius: 20px;
+
+       width: 800px;
        max-width: 90%;
        min-height: 300px;
        height: auto;

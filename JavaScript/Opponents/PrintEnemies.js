@@ -20,7 +20,7 @@ function EnemyImageLoad(arr, callback) { // Preload images to stop flickering
     }
 }
 var Enemy_SpriteImages = {};
-const EnemySpriteLoader = EnemyImageLoad(["orc","troll"], function (images) {
+const EnemySpriteLoader = EnemyImageLoad(["orc", "troll"], function (images) {
     Enemy_SpriteImages = images;
     console.log(Enemy_SpriteImages)
 });
@@ -32,26 +32,24 @@ function PrintEnemies() {
         const ee = enemies[e],
             image = ee.Race.toLowerCase(); // + gender?
         function Color() {
-            let color;
+            const grd = ctx.createLinearGradient(ee.XPos + ee.Size / 3, 0, ee.XPos + ee.Size * 0.6, 0);
             switch (CheckGender(ee)) {
                 case "cuntboy":
-                    color = "blue";
-                    break;
+                    grd.addColorStop(0, "blue");
+                    grd.addColorStop(1, "pink");
+                    return grd;
                 case "female":
-                    color = "rgb(231, 84, 128)";
-                    break;
+                    return "rgb(231, 84, 128)";
                 case "dickgirl":
-                    color = "rgb(231, 84, 128)";
-                    break;
+                    grd.addColorStop(0, "pink");
+                    grd.addColorStop(1, "purple");
+                    return grd;
                 case "male":
-                    color = "Blue";
-                    break;
+                    return "Blue";
                 case "hermaphrodite":
-                    color = "Purple";
-                    break;
+                    return "Purple";
                 case "doll":
-                    color = "Beige";
-                    break;
+                    return "Beige";
             }
             return color
         }
@@ -66,6 +64,7 @@ function PrintEnemies() {
             ctx.fillStyle = Color();
             ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos - ee.Size + ee.Size / 3, ee.Size / 3, ee.Size / 3);
         } else {
+            console.log(CheckGender(ee) + " " + Color())
             ctx.fillRect(ee.XPos, ee.YPos, ee.Size, ee.Size);
             ctx.fillStyle = Color();
             ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos + ee.Size / 3, ee.Size / 3, ee.Size / 3);
