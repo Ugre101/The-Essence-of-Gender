@@ -11,42 +11,42 @@ function EssenceExtraCost(what) {
     return Math.round((30 * Math.pow(3, what.length)));
 };
 
-document.getElementById("EssenceAuto").addEventListener("click", function () {
+DocId("EssenceAuto").addEventListener("click", function () {
     Settings.EssenceAuto = !Settings.EssenceAuto;
     if (Settings.EssenceAuto) {
-        document.getElementById("EssenceAuto").value = "Essence Auto";
-        document.getElementById("ManualGrowth").style.display = 'none';
+        DocId("EssenceAuto").value = "Essence Auto";
+        DocId("ManualGrowth").style.display = 'none';
 
     } else {
-        document.getElementById("EssenceAuto").value = "Essence Manual";
-        document.getElementById("ManualGrowth").style.display = 'block';
+        DocId("EssenceAuto").value = "Essence Manual";
+        DocId("ManualGrowth").style.display = 'block';
         Settings.BalanceParts = false;
     }
 });
 
-document.getElementById("GrowBalls").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'none';
-    document.getElementById("ManualOrgans").style.display = 'block';
+DocId("GrowBalls").addEventListener("click", function () {
+    DocId("EssenceStart").style.display = 'none';
+    DocId("ManualOrgans").style.display = 'block';
     BallsButtons();
 });
-document.getElementById("GrowPussy").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'none';
-    document.getElementById("ManualOrgans").style.display = 'block';
+DocId("GrowPussy").addEventListener("click", function () {
+    DocId("EssenceStart").style.display = 'none';
+    DocId("ManualOrgans").style.display = 'block';
     PussyButtons();
 });
-document.getElementById("GrowBreast").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'none';
-    document.getElementById("ManualOrgans").style.display = 'block';
+DocId("GrowBreast").addEventListener("click", function () {
+    DocId("EssenceStart").style.display = 'none';
+    DocId("ManualOrgans").style.display = 'block';
     BreastButtons();
 });
-document.getElementById("GrowDick").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'none';
-    document.getElementById("ManualOrgans").style.display = 'block';
+DocId("GrowDick").addEventListener("click", function () {
+    DocId("EssenceStart").style.display = 'none';
+    DocId("ManualOrgans").style.display = 'block';
     DickButtons();
 });
 
 function BreastButtons() {
-    var ManualOrgans = document.getElementById("ManualOrgans");
+    var ManualOrgans = DocId("ManualOrgans");
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
@@ -93,7 +93,7 @@ function BreastButton(e) {
 }
 
 function PussyButtons() {
-    var ManualOrgans = document.getElementById("ManualOrgans");
+    var ManualOrgans = DocId("ManualOrgans");
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
@@ -135,7 +135,7 @@ function PussyButton(e) {
 }
 
 function DickButtons() {
-    var ManualOrgans = document.getElementById("ManualOrgans");
+    var ManualOrgans = DocId("ManualOrgans");
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
@@ -177,7 +177,7 @@ function DickButton(e) {
 }
 
 function BallsButtons() {
-    var ManualOrgans = document.getElementById("ManualOrgans");
+    var ManualOrgans = DocId("ManualOrgans");
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
@@ -225,7 +225,7 @@ function BallsButton(e) {
 function ManualOrgansClose() {
     var Close = InputButton("Back");
     Close.addEventListener("click", function () {
-        document.getElementById("EssenceStart").style.display = 'block';
+        DocId("EssenceStart").style.display = 'block';
         ManualOrgans.style.display = 'none';
         while (ManualOrgans.hasChildNodes()) {
             ManualOrgans.removeChild(ManualOrgans.firstChild);
@@ -234,13 +234,13 @@ function ManualOrgansClose() {
     return Close;
 }
 
-document.getElementById("EssenceOptionsLeave").addEventListener("click", function () {
-    var ManualOrgans = document.getElementById("ManualOrgans");
+DocId("EssenceOptionsLeave").addEventListener("click", function () {
+    var ManualOrgans = DocId("ManualOrgans");
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
-    document.getElementById("EssenceStart").style.display = 'block';
-    document.getElementById("ManualGrowth").style.display = 'none';
+    DocId("EssenceStart").style.display = 'block';
+    DocId("ManualGrowth").style.display = 'none';
     DisplayNone();
     DisplayGame();
 });

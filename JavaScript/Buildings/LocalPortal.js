@@ -1,5 +1,5 @@
 function LocalPortalFunc() {
-    const Buildings = document.getElementById("Buildings"),
+    const Buildings = DocId("Buildings"),
         InnerDiv = document.createElement("div"),
         Frag = document.createDocumentFragment(),
         p = document.createElement("p"),
@@ -47,10 +47,10 @@ function LocalPortalFunc() {
         player.Area = "First";
         player.Map = "RoadToHome";
         battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
+        DocId("map").style.display = 'block';
+        DocId("buttons").style.display = 'block';
+        DocId("EmptyButtons").style.display = 'none';
+        DocId("status").style.display = 'block';
         Buildings.style.display = 'none';
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
@@ -69,10 +69,10 @@ function LocalPortalFunc() {
             player.Area = "Mountain";
             player.Map = "MountainStart";
             battle = false;
-            document.getElementById("map").style.display = 'block';
-            document.getElementById("buttons").style.display = 'block';
-            document.getElementById("EmptyButtons").style.display = 'none';
-            document.getElementById("status").style.display = 'block';
+            DocId("map").style.display = 'block';
+            DocId("buttons").style.display = 'block';
+            DocId("EmptyButtons").style.display = 'none';
+            DocId("status").style.display = 'block';
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
                 Buildings.removeChild(Buildings.firstChild);
@@ -88,10 +88,10 @@ function LocalPortalFunc() {
             player.Area = "Second";
             player.Map = "Outlaws";
             battle = false;
-            document.getElementById("map").style.display = 'block';
-            document.getElementById("buttons").style.display = 'block';
-            document.getElementById("EmptyButtons").style.display = 'none';
-            document.getElementById("status").style.display = 'block';
+            DocId("map").style.display = 'block';
+            DocId("buttons").style.display = 'block';
+            DocId("EmptyButtons").style.display = 'none';
+            DocId("status").style.display = 'block';
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
                 Buildings.removeChild(Buildings.firstChild);
@@ -109,10 +109,10 @@ function LocalPortalFunc() {
             player.Area = "Mountain";
             player.Map = "MountainPlateau";
             battle = false;
-            document.getElementById("map").style.display = 'block';
-            document.getElementById("buttons").style.display = 'block';
-            document.getElementById("EmptyButtons").style.display = 'none';
-            document.getElementById("status").style.display = 'block';
+            DocId("map").style.display = 'block';
+            DocId("buttons").style.display = 'block';
+            DocId("EmptyButtons").style.display = 'none';
+            DocId("status").style.display = 'block';
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
                 Buildings.removeChild(Buildings.firstChild);

@@ -1,11 +1,11 @@
-document.getElementById("Children").addEventListener("click", function () {
+DocId("Children").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("ChildrenMenu").style.display = 'block';
+    DocId("ChildrenMenu").style.display = 'block';
     Childs();
 });
-document.getElementById("LeaveChildrenMenu").addEventListener("click", function () {
+DocId("LeaveChildrenMenu").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("DetailedInfo").style.display = 'block';
+    DocId("DetailedInfo").style.display = 'block';
 })
 
 function Childs() {
@@ -42,5 +42,5 @@ function Childs() {
         }
     }
     console.log(player.Children)
-    document.getElementById("ChildCorner").innerHTML = Children;
+    DocId("ChildCorner").innerHTML = Children;
 }

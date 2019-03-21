@@ -79,7 +79,7 @@ function SuccubusBossUnique() {
 }
 var Dungeon = false;
 var Wave = 0;
-document.getElementById("EnterDungeon").addEventListener("click", function () {
+DocId("EnterDungeon").addEventListener("click", function () {
     enemies = [];
     if (false) {
         enemies = [FirstWave(), SecondWave(), ThirdWave(), FourthWave(), SuccubusBossUnique()];
@@ -90,81 +90,81 @@ document.getElementById("EnterDungeon").addEventListener("click", function () {
     EnemyIndex = Wave;
     BattleSetup(enemies[Wave]);
 
-    document.getElementById("FirstDungeon").style.display = 'none';
-    document.getElementById("FirstDungeonText").innerHTML = "Wave " + (Wave + 2);
+    DocId("FirstDungeon").style.display = 'none';
+    DocId("FirstDungeonText").innerHTML = "Wave " + (Wave + 2);
     EssenceCheck(enemies[Wave]);
     Dungeon = true;
 });
 
 function DungeonStopButton() {
-    document.getElementById("status").style.display = 'block';
-    document.getElementById("buttons").style.display = 'none';
-    document.getElementById("EmptyButtons").style.display = 'block';
-    document.getElementById("EventLog").style.display = 'block';
+    DocId("status").style.display = 'block';
+    DocId("buttons").style.display = 'none';
+    DocId("EmptyButtons").style.display = 'block';
+    DocId("EventLog").style.display = 'block';
 
     player.Orgasm = 0;
-    document.getElementById("AfterBattle").style.display = 'none';
-    document.getElementById("FirstDungeon").style.display = 'block';
+    DocId("AfterBattle").style.display = 'none';
+    DocId("FirstDungeon").style.display = 'block';
     Wave++;
     if (Wave == 4 && !Flags.BeatSuccubus && false) {
         Flags.BeatSuccubus = true;
-        document.getElementById("FirstDungeonText").innerHTML = "Having beaten her you found a teleport shard to a new world,"
+        DocId("FirstDungeonText").innerHTML = "Having beaten her you found a teleport shard to a new world,"
         if (House.Portal) {
-            document.getElementById("FirstDungeonText").innerHTML += " you can use it at your portal at home!"
+            DocId("FirstDungeonText").innerHTML += " you can use it at your portal at home!"
         } else {
-            document.getElementById("FirstDungeonText").innerHTML += " you should build a portal at your mansion so you can use it."
+            DocId("FirstDungeonText").innerHTML += " you should build a portal at your mansion so you can use it."
         }
     }
     if (Wave == 5) {
         Wave = 0;
-        document.getElementById("FirstDungeonText").innerHTML += "<br><br> You beat the dungeon more to come!"
+        DocId("FirstDungeonText").innerHTML += "<br><br> You beat the dungeon more to come!"
     }
     LastPressed = " ";
     return;
 };
 
 function DungeonCapture() {
-    document.getElementById("status").style.display = 'block';
-    document.getElementById("buttons").style.display = 'none';
-    document.getElementById("EmptyButtons").style.display = 'block';
-    document.getElementById("EventLog").style.display = 'block';
+    DocId("status").style.display = 'block';
+    DocId("buttons").style.display = 'none';
+    DocId("EmptyButtons").style.display = 'block';
+    DocId("EventLog").style.display = 'block';
 
     House.Dormmates.push(enemies[EnemyIndex]);
     player.Orgasm = 0;
-    document.getElementById("AfterBattle").style.display = 'none';
-    document.getElementById("FirstDungeon").style.display = 'block';
+    DocId("AfterBattle").style.display = 'none';
+    DocId("FirstDungeon").style.display = 'block';
     Wave++;
     LastPressed = " ";
     if (Wave == 4) {
         Wave = 0;
-        document.getElementById("FirstDungeonText").innerHTML += "<br><br> You beat the dungeon more to come!"
+        DocId("FirstDungeonText").innerHTML += "<br><br> You beat the dungeon more to come!"
     }
     LastPressed = " ";
     return;
 };
-document.getElementById("DungeonLose").addEventListener("click", function () {
+DocId("DungeonLose").addEventListener("click", function () {
     battle = false;
-    document.getElementById("Lose").style.display = 'none';
-    document.getElementById("map").style.display = 'block';
-    document.getElementById("status").style.display = 'block';
-    document.getElementById("buttons").style.display = 'block';
-    document.getElementById("LoseStruggle").style.display = 'inline-block';
-    document.getElementById("LoseSubmit").style.display = 'inline-block';
-    document.getElementById("LosePlayerOrgasm").innerHTML = " ";
-    document.getElementById("EventLog").style.display = 'block';
+    DocId("Lose").style.display = 'none';
+    DocId("map").style.display = 'block';
+    DocId("status").style.display = 'block';
+    DocId("buttons").style.display = 'block';
+    DocId("LoseStruggle").style.display = 'inline-block';
+    DocId("LoseSubmit").style.display = 'inline-block';
+    DocId("LosePlayerOrgasm").innerHTML = " ";
+    DocId("EventLog").style.display = 'block';
     enemies = [];
     Dungeon = false;
     Wave = 0;
 });
-document.getElementById("LeaveFirstDungeon").addEventListener("click", function () {
+DocId("LeaveFirstDungeon").addEventListener("click", function () {
     enemies = [];
     battle = false;
     player.Orgasm = 0;
-    document.getElementById("AfterBattle").style.display = 'none';
-    document.getElementById("map").style.display = 'block';
-    document.getElementById("status").style.display = 'block';
-    document.getElementById("buttons").style.display = 'block';
-    document.getElementById("EventLog").style.display = 'block';
+    DocId("AfterBattle").style.display = 'none';
+    DocId("map").style.display = 'block';
+    DocId("status").style.display = 'block';
+    DocId("buttons").style.display = 'block';
+    DocId("EventLog").style.display = 'block';
     LastPressed = " ";
     Dungeon = false;
     Wave = 0;

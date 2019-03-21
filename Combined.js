@@ -334,21 +334,21 @@ var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.M
     };
 
 // Start page
-document.getElementById("GoToCharCreator").addEventListener("click", function () {
+DocId("GoToCharCreator").addEventListener("click", function () {
     CharCreator();
-    document.getElementById("CharCreator").style.display = 'flex';
-    document.getElementById("StartPage").style.display = 'none';
+    DocId("CharCreator").style.display = 'flex';
+    DocId("StartPage").style.display = 'none';
 });
 
 function CharCreator() { // No need have these active for players who use load.
     // Maybe a bit overkill but did it to train.
-    const BeginButton = document.getElementById("Begin"),
-        BackHomeButton = document.getElementById("BackHome"),
-        StartAutoEssenceButton = document.getElementById("StartAutoEssence"),
-        startgameButton = document.getElementById("startgame"),
-        VoreStartButton = document.getElementById("VoreStart"),
-        CharCreator = document.getElementById("CharCreator"),
-        page2 = document.getElementById("page2");
+    const BeginButton = DocId("Begin"),
+        BackHomeButton = DocId("BackHome"),
+        StartAutoEssenceButton = DocId("StartAutoEssence"),
+        startgameButton = DocId("startgame"),
+        VoreStartButton = DocId("VoreStart"),
+        CharCreator = DocId("CharCreator"),
+        page2 = DocId("page2");
 
     BeginButton.addEventListener("click", begin)
     BackHomeButton.addEventListener("click", BackHome)
@@ -368,8 +368,8 @@ function CharCreator() { // No need have these active for players who use load.
         player.Face.HairColor = form[2].value;
         player.Skincolor = form[3].value;
         player.Spells.push(SpellDictLite.MinorHealing);
-        document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
-        document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.LastName + ", a " + Math.round(player.Height) + "cm tall " + Pronoun(CheckGender(player)) +
+        DocId("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+        DocId("looks").innerHTML = "You are  " + player.Name + " " + player.LastName + ", a " + Math.round(player.Height) + "cm tall " + Pronoun(CheckGender(player)) +
             ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Face.HairColor + " hair and " + player.Skincolor +
             " skin; hopefully the last time you see your body absent of any other details or personality.<br><br>For today, you will forge your own way in this world.";
 
@@ -379,7 +379,7 @@ function CharCreator() { // No need have these active for players who use load.
 
     function BackHome() {
         CharCreator.style.display = 'none';
-        document.getElementById("StartPage").style.display = 'grid';
+        DocId("StartPage").style.display = 'grid';
         RemoveListerners();
     };
 
@@ -422,11 +422,11 @@ function DisplayNone() {
         "ShowQuests", "DetailedInfo", "Levels", "ShowVore", "EssenceOptionsMenu",
         "PronounForm", "Inventory", "ChildrenMenu", "SpellBook"
     ].forEach(function (src) {
-        document.getElementById(src).style.display = 'none';
+        DocId(src).style.display = 'none';
     });
     if (window.innerHeight < 600) {
         const MobileNone = ["map", "buttons", "status", "EventLog"].forEach(function (src) {
-            document.getElementById(src).style.display = 'none';
+            DocId(src).style.display = 'none';
         })
 
     }
@@ -435,31 +435,31 @@ function DisplayNone() {
 function DisplayGame() {
     battle = false;
     const DisplayGameArray = ["map", "buttons", "status", "EventLog"].forEach(function (src) {
-        document.getElementById(src).style.display = 'block';
+        DocId(src).style.display = 'block';
     });
-    document.getElementById("EmptyButtons").style.display = 'none';
+    DocId("EmptyButtons").style.display = 'none';
     if (MobileButtons) {
-        document.getElementById("buttons").style.width = 18 + "%";
-        document.getElementById("buttons").style.maxWidth = 260 + "px";
-        document.getElementById("FirstButtons").style.display = 'none';
-        document.getElementById("SecondButtons").style.display = 'none';
+        DocId("buttons").style.width = 18 + "%";
+        DocId("buttons").style.maxWidth = 260 + "px";
+        DocId("FirstButtons").style.display = 'none';
+        DocId("SecondButtons").style.display = 'none';
         MobileButtons = false;
     }
 }
 // More buttons for small screen height
-document.getElementById("MoreButtons").addEventListener("click", function () {
-    document.getElementById("FirstButtons").style.display = 'none';
-    document.getElementById("SecondButtons").style.display = 'block';
+DocId("MoreButtons").addEventListener("click", function () {
+    DocId("FirstButtons").style.display = 'none';
+    DocId("SecondButtons").style.display = 'block';
 });
 
-document.getElementById("LessButtons").addEventListener("click", function () {
-    document.getElementById("FirstButtons").style.display = 'block';
-    document.getElementById("SecondButtons").style.display = 'none';
+DocId("LessButtons").addEventListener("click", function () {
+    DocId("FirstButtons").style.display = 'block';
+    DocId("SecondButtons").style.display = 'none';
 });
 
-document.getElementById("Quests").addEventListener("click", function () {
+DocId("Quests").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("ShowQuests").style.display = 'block';
+    DocId("ShowQuests").style.display = 'block';
 
     let questText = " ";
     for (var e of player.Quests) {
@@ -472,11 +472,11 @@ document.getElementById("Quests").addEventListener("click", function () {
         }
         questText += `<div><h4>${e.Name}</h4>Completed: ${e.Completed} <br>Count:  ${e.Count} ${Tier} <br><br></div>`;
     }
-    document.getElementById("QuestTexts").innerHTML = questText;
+    DocId("QuestTexts").innerHTML = questText;
 });
 
-document.getElementById("QuestsLeave").addEventListener("click", function () {
-    document.getElementById("ShowQuests").style.display = 'none';
+DocId("QuestsLeave").addEventListener("click", function () {
+    DocId("ShowQuests").style.display = 'none';
     DisplayGame();
 });
 
@@ -562,7 +562,7 @@ function StringCounter(array, string) {
 
 var enemies = [];
 
-document.getElementById("ImgPack").addEventListener("click", function () {
+DocId("ImgPack").addEventListener("click", function () {
     switch (Settings.ImgPack) {
         case false:
             Settings.ImgPack = "Mode1";
@@ -577,7 +577,7 @@ document.getElementById("ImgPack").addEventListener("click", function () {
             Settings.ImgPack = false;
             break;
     }
-    document.getElementById("ImgPack").value = `Img pack: ${Settings.ImgPack}`;
+    DocId("ImgPack").value = `Img pack: ${Settings.ImgPack}`;
 });
 
 function ImgChose(who, what, who2) {
@@ -604,10 +604,10 @@ function ImgChose(who, what, who2) {
     console.log(source);
     myimg.src = "imgPack/" + source + ".jpg";
     myimg.onload = function () {
-        document.getElementById("MyImg").src = "imgPack/" + source + ".jpg";
+        DocId("MyImg").src = "imgPack/" + source + ".jpg";
     }
     myimg.onerror = function () {
-        document.getElementById("MyImg").src = "imgPack/Default.jpg";
+        DocId("MyImg").src = "imgPack/Default.jpg";
     }
 }
 
@@ -623,8 +623,8 @@ function checkImageExists(src, callback) {
     }
 }
 
-//    document.getElementById("PlayerLooks").innerHTML = BoobLook(player) + "<br>" + PussyLook(player) + "<br>" + DickLook(player);
-//    document.getElementById("EnemyLooks").innerHTML = BoobLook(enemies[EnemyIndex]) + "<br>" + PussyLook(enemies[EnemyIndex]) + "<br>" + DickLook(enemies[EnemyIndex]);
+//    DocId("PlayerLooks").innerHTML = BoobLook(player) + "<br>" + PussyLook(player) + "<br>" + DickLook(player);
+//    DocId("EnemyLooks").innerHTML = BoobLook(enemies[EnemyIndex]) + "<br>" + PussyLook(enemies[EnemyIndex]) + "<br>" + DickLook(enemies[EnemyIndex]);
 
 function HeightSystem(me, they) {
     let a;
@@ -667,7 +667,7 @@ function HeightSystem(me, they) {
 };
 
 function SexColor(who, where) {
-    const WS = document.getElementById(where + "Sex").style;
+    const WS = DocId(where + "Sex").style;
     switch (CheckGender(who)) {
         case "cuntboy":
         case "female":
@@ -691,8 +691,8 @@ function SexColor(who, where) {
 }
 
 function HealthWillBars() {
-    const health = document.getElementById("StatusHealth"),
-        will = document.getElementById("StatusWillHealth"),
+    const health = DocId("StatusHealth"),
+        will = DocId("StatusWillHealth"),
         red = 150 + 105 * (player.Health / player.MaxHealth),
         blue = 150 + 105 * (player.WillHealth / player.MaxWillHealth);
     health.innerHTML = Math.round(player.Health);
@@ -849,7 +849,7 @@ function loop() {
     ExpCheck();
 
     if (!battle) {
-        const startarea = document.getElementById("hem"),
+        const startarea = DocId("hem"),
             ctx = startarea.getContext("2d");
         startarea.width = medium;
         startarea.height = medium;
@@ -880,6 +880,8 @@ function loop() {
             player.WillHealth = Math.max(1, player.WillHealth);
             player.Masc = Math.max(0, player.Masc);
             player.Femi = Math.max(0, player.Femi);
+            player.EssenceDrain = 5 + (player.Perks.StealMore.Count * 3);
+            player.GiveEssence = 0 + (player.Perks.GiveEssence.Count * 3);
 
             sprite.Size = 1; //Math.min(0.8 + player.Height / 320, 1.2);
             if (typeof Thefps === "number") { // Stop typing NaN but I still need to figure out why NaN in first place
@@ -889,6 +891,10 @@ function loop() {
     };
 };
 var Laglimiter = 0;
+
+function DocId(id) { // Important Prototype.js must be loaded before where you want to use this!
+    return document.getElementById(id);
+}
 
 
 (function () {
@@ -1767,7 +1773,7 @@ function GymFunc() {
     document.getElementById("Buildings").style.display = 'block';
 }
 function LocalPortalFunc() {
-    const Buildings = document.getElementById("Buildings"),
+    const Buildings = DocId("Buildings"),
         InnerDiv = document.createElement("div"),
         Frag = document.createDocumentFragment(),
         p = document.createElement("p"),
@@ -1815,10 +1821,10 @@ function LocalPortalFunc() {
         player.Area = "First";
         player.Map = "RoadToHome";
         battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
+        DocId("map").style.display = 'block';
+        DocId("buttons").style.display = 'block';
+        DocId("EmptyButtons").style.display = 'none';
+        DocId("status").style.display = 'block';
         Buildings.style.display = 'none';
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
@@ -1837,10 +1843,10 @@ function LocalPortalFunc() {
             player.Area = "Mountain";
             player.Map = "MountainStart";
             battle = false;
-            document.getElementById("map").style.display = 'block';
-            document.getElementById("buttons").style.display = 'block';
-            document.getElementById("EmptyButtons").style.display = 'none';
-            document.getElementById("status").style.display = 'block';
+            DocId("map").style.display = 'block';
+            DocId("buttons").style.display = 'block';
+            DocId("EmptyButtons").style.display = 'none';
+            DocId("status").style.display = 'block';
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
                 Buildings.removeChild(Buildings.firstChild);
@@ -1856,10 +1862,10 @@ function LocalPortalFunc() {
             player.Area = "Second";
             player.Map = "Outlaws";
             battle = false;
-            document.getElementById("map").style.display = 'block';
-            document.getElementById("buttons").style.display = 'block';
-            document.getElementById("EmptyButtons").style.display = 'none';
-            document.getElementById("status").style.display = 'block';
+            DocId("map").style.display = 'block';
+            DocId("buttons").style.display = 'block';
+            DocId("EmptyButtons").style.display = 'none';
+            DocId("status").style.display = 'block';
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
                 Buildings.removeChild(Buildings.firstChild);
@@ -1877,10 +1883,10 @@ function LocalPortalFunc() {
             player.Area = "Mountain";
             player.Map = "MountainPlateau";
             battle = false;
-            document.getElementById("map").style.display = 'block';
-            document.getElementById("buttons").style.display = 'block';
-            document.getElementById("EmptyButtons").style.display = 'none';
-            document.getElementById("status").style.display = 'block';
+            DocId("map").style.display = 'block';
+            DocId("buttons").style.display = 'block';
+            DocId("EmptyButtons").style.display = 'none';
+            DocId("status").style.display = 'block';
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
                 Buildings.removeChild(Buildings.firstChild);
@@ -2860,8 +2866,8 @@ function CheatEngine() {
     }
 }
 
-document.getElementById("Gold").addEventListener("click", function () {
-    const gold = document.getElementById("Gold");
+DocId("Gold").addEventListener("click", function () {
+    const gold = DocId("Gold");
     let clicked = gold.dataset.clicked;
     clicked++;
     gold.dataset.clicked = clicked;
@@ -2877,36 +2883,36 @@ document.getElementById("Gold").addEventListener("click", function () {
         DocId("CheatsFastTime").value = "FastTime " + Settings.Cheats.FastTime;
     }
 });
-document.getElementById("CheatsEnabled").addEventListener("click", function () {
+DocId("CheatsEnabled").addEventListener("click", function () {
     Settings.Cheats.Enabled = !Settings.Cheats.Enabled;
-    document.getElementById("CheatsEnabled").value = "Cheats Enabled " + Settings.Cheats.Enabled;
+    DocId("CheatsEnabled").value = "Cheats Enabled " + Settings.Cheats.Enabled;
 });
-document.getElementById("CheatsGold").addEventListener("click", function () {
+DocId("CheatsGold").addEventListener("click", function () {
     Settings.Cheats.Gold = !Settings.Cheats.Gold;
-    document.getElementById("CheatsGold").value = "Gold " + Settings.Cheats.Gold;
+    DocId("CheatsGold").value = "Gold " + Settings.Cheats.Gold;
 });
-document.getElementById("CheatsMasc").addEventListener("click", function () {
+DocId("CheatsMasc").addEventListener("click", function () {
     Settings.Cheats.Masc = !Settings.Cheats.Masc;
-    document.getElementById("CheatsMasc").value = "Masc " + Settings.Cheats.Masc;
+    DocId("CheatsMasc").value = "Masc " + Settings.Cheats.Masc;
 });
-document.getElementById("CheatsFemi").addEventListener("click", function () {
+DocId("CheatsFemi").addEventListener("click", function () {
     Settings.Cheats.Femi = !Settings.Cheats.Femi;
-    document.getElementById("CheatsFemi").value = "Femi " + Settings.Cheats.Femi;
+    DocId("CheatsFemi").value = "Femi " + Settings.Cheats.Femi;
 });
-document.getElementById("CheatsExp").addEventListener("click", function () {
+DocId("CheatsExp").addEventListener("click", function () {
     Settings.Cheats.Exp = !Settings.Cheats.Exp;
-    document.getElementById("CheatsExp").value = "Exp " + Settings.Cheats.Exp;
+    DocId("CheatsExp").value = "Exp " + Settings.Cheats.Exp;
 });
-document.getElementById("CheatsVoreExp").addEventListener("click", function () {
+DocId("CheatsVoreExp").addEventListener("click", function () {
     Settings.Cheats.VoreExp = !Settings.Cheats.VoreExp;
-    document.getElementById("CheatsVoreExp").value = "Vore Exp " + Settings.Cheats.VoreExp;
+    DocId("CheatsVoreExp").value = "Vore Exp " + Settings.Cheats.VoreExp;
 });
-document.getElementById("CheatsFastTime").addEventListener("click", function () {
+DocId("CheatsFastTime").addEventListener("click", function () {
     Settings.Cheats.FastTime = !Settings.Cheats.FastTime;
-    document.getElementById("CheatsFastTime").value = "FastTime " + Settings.Cheats.FastTime;
+    DocId("CheatsFastTime").value = "FastTime " + Settings.Cheats.FastTime;
 });
-document.getElementById("CloseCheatMenu").addEventListener("click", function () {
-    document.getElementById("CheatMenu").style.display = 'none';
+DocId("CloseCheatMenu").addEventListener("click", function () {
+    DocId("CheatMenu").style.display = 'none';
     DisplayGame();
 });
 function CheckArousal() {
@@ -2940,6 +2946,7 @@ function CheckArousal() {
         player.Orgasm++;
         player.Arousal = 0;
         player.SessionOrgasm++;
+        console.log(player.GiveEssence)
         switch (Settings.GiveEssence) {
             case "Both":
                 ee.Masc += Math.round(player.GiveEssence / 2);
@@ -3297,15 +3304,15 @@ function CheckFlags() {
     }
 
     if (window.innerHeight < 800) {
-        document.getElementById("FirstButtons").style.display = 'block';
-        document.getElementById("SecondButtons").style.display = 'none';
-        document.getElementById("MoreButtons").style.display = 'inline-block';
-        document.getElementById("LessButtons").style.display = 'inline-block';
+        DocId("FirstButtons").style.display = 'block';
+        DocId("SecondButtons").style.display = 'none';
+        DocId("MoreButtons").style.display = 'inline-block';
+        DocId("LessButtons").style.display = 'inline-block';
     } else {
-        document.getElementById("SecondButtons").style.display = 'block';
-        document.getElementById("FirstButtons").style.display = 'block';
-        document.getElementById("MoreButtons").style.display = 'none';
-        document.getElementById("LessButtons").style.display = 'none';
+        DocId("SecondButtons").style.display = 'block';
+        DocId("FirstButtons").style.display = 'block';
+        DocId("MoreButtons").style.display = 'none';
+        DocId("LessButtons").style.display = 'none';
     }
     if (!Settings.hasOwnProperty("MaxLimbs")) {
         Settings.MaxLimbs = {
@@ -3383,23 +3390,23 @@ function CheckFlags() {
         }
     }
     if (window.innerHeight < 600) {
-        document.getElementById("FirstButtons").style.display = 'none';
-        document.getElementById("SecondButtons").style.display = 'none';
-        document.getElementById("MoreButtons").style.display = 'inline-block';
-        document.getElementById("LessButtons").style.display = 'inline-block';
-        document.getElementById("MobileButtons").style.display = 'inline-block';
+        DocId("FirstButtons").style.display = 'none';
+        DocId("SecondButtons").style.display = 'none';
+        DocId("MoreButtons").style.display = 'inline-block';
+        DocId("LessButtons").style.display = 'inline-block';
+        DocId("MobileButtons").style.display = 'inline-block';
     } else if (window.innerHeight < 800) {
-        document.getElementById("FirstButtons").style.display = 'block';
-        document.getElementById("SecondButtons").style.display = 'none';
-        document.getElementById("MoreButtons").style.display = 'inline-block';
-        document.getElementById("LessButtons").style.display = 'inline-block';
-        document.getElementById("MobileButtons").style.display = 'none';
+        DocId("FirstButtons").style.display = 'block';
+        DocId("SecondButtons").style.display = 'none';
+        DocId("MoreButtons").style.display = 'inline-block';
+        DocId("LessButtons").style.display = 'inline-block';
+        DocId("MobileButtons").style.display = 'none';
     } else {
-        document.getElementById("SecondButtons").style.display = 'block';
-        document.getElementById("FirstButtons").style.display = 'block';
-        document.getElementById("MoreButtons").style.display = 'none';
-        document.getElementById("LessButtons").style.display = 'none';
-        document.getElementById("MobileButtons").style.display = 'none';
+        DocId("SecondButtons").style.display = 'block';
+        DocId("FirstButtons").style.display = 'block';
+        DocId("MoreButtons").style.display = 'none';
+        DocId("LessButtons").style.display = 'none';
+        DocId("MobileButtons").style.display = 'none';
     }
 
     if (!player.hasOwnProperty("Blessings")) {
@@ -3558,14 +3565,14 @@ function CheckFlags() {
         }
     }
  */
-document.getElementById("Children").addEventListener("click", function () {
+DocId("Children").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("ChildrenMenu").style.display = 'block';
+    DocId("ChildrenMenu").style.display = 'block';
     Childs();
 });
-document.getElementById("LeaveChildrenMenu").addEventListener("click", function () {
+DocId("LeaveChildrenMenu").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("DetailedInfo").style.display = 'block';
+    DocId("DetailedInfo").style.display = 'block';
 })
 
 function Childs() {
@@ -3602,7 +3609,7 @@ function Childs() {
         }
     }
     console.log(player.Children)
-    document.getElementById("ChildCorner").innerHTML = Children;
+    DocId("ChildCorner").innerHTML = Children;
 }
 function UpdateStats(YourTurn = true) {
     let ee = enemies[EnemyIndex];
@@ -4024,130 +4031,95 @@ function RaceDrain(whose) {
 };
 
 function DrainDrainM() {
-    var old = JSON.parse(JSON.stringify(player));
-    var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
-    var enemy = enemies[EnemyIndex];
-    if (player.EssenceDrain >= enemies[EnemyIndex].Masc && enemies[EnemyIndex].Masc > 0) {
-        enemies[EnemyIndex].SessionOrgasm--;
-        if (player.ForcedFemale)
-            player.Femi += enemies[EnemyIndex].Masc;
-        else
-            player.Masc += enemies[EnemyIndex].Masc;
-        enemies[EnemyIndex].Masc = 0;
-        EssenceCheck(enemies[EnemyIndex]);
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        Ess = Math.min(ee.Masc, player.EssenceDrain);
+    if (ee.Masc > 0) {
+        ee.SessionOrgasm--;
+        //disabled (player.ForcedFemale) ? (player.Femi += ee.Masc) : (player.Masc += ee.Masc);
+        player.Masc += Ess;
+        ee.Masc -= Ess;
+        EssenceCheck(ee);
         if (Settings.EssenceAuto) {
             EssenceCheck(player);
         }
-        document.getElementById("SexText").innerHTML = "You siphon the last essence of masculinity from them leaving them with no signs of masculinity left." + DrainChanges(old, player, eold, enemies[EnemyIndex]);
-    } else if (player.EssenceDrain < enemies[EnemyIndex].Masc) {
-        enemies[EnemyIndex].SessionOrgasm--;
-        if (player.ForcedFemale)
-            player.Femi += player.EssenceDrain;
-        else
-            player.Masc += player.EssenceDrain;
-        enemies[EnemyIndex].Masc -= player.EssenceDrain;
-        EssenceCheck(enemies[EnemyIndex]);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
-        document.getElementById("SexText").innerHTML = "You siphon essence of masculinity from them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
-    }
-    RaceDrain(enemy);
-    AfterBattleButtons();
-    CheckArousal();
-    return;
-};
+        DocId("SexText").innerHTML = (Ess >= ee.Masc) ?
+            `You siphon the last essence of masculinity from them leaving them with no signs of masculinity left.<br>${DrainChanges(old, player, eold, ee)}` :
+            `You siphon essence of masculinity from them.<br>${DrainChanges(old, player, eold, ee)}`;
+        RaceDrain(ee);
+        AfterBattleButtons();
+        CheckArousal();
+        return;
+    };
+}
 
 function DrainDrainF() {
-    var old = JSON.parse(JSON.stringify(player));
-    var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
-    var enemy = enemies[EnemyIndex];
-    if (player.EssenceDrain >= enemies[EnemyIndex].Femi && enemies[EnemyIndex].Femi > 0) {
-        enemies[EnemyIndex].SessionOrgasm--;
-        if (player.ForcedMale)
-            player.Masc += enemies[EnemyIndex].Femi;
-        else
-            player.Femi += enemies[EnemyIndex].Femi;
-        enemies[EnemyIndex].Femi = 0;
-        EssenceCheck(enemies[EnemyIndex]);
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        Ess = Math.min(ee.Femi, player.EssenceDrain);
+    if (ee.Femi > 0) {
+        ee.SessionOrgasm--;
+        //player.ForcedMale ? (player.Masc += ee.Femi) : (player.Femi += ee.Femi);
+        player.Femi += Ess;
+        ee.Femi -= Ess;
+        EssenceCheck(ee);
         if (Settings.EssenceAuto) {
             EssenceCheck(player);
         }
-        document.getElementById("SexText").innerHTML = "You siphon the last essence of femininity from them leaving them with no signs of femininity left. " + DrainChanges(old, player, eold, enemies[EnemyIndex]);
-    } else if (player.EssenceDrain < enemies[EnemyIndex].Femi) {
-        enemies[EnemyIndex].SessionOrgasm--;
-        if (player.ForcedMale)
-            player.Masc += player.EssenceDrain;
-        else
-            player.Femi += player.EssenceDrain;
-        enemies[EnemyIndex].Femi -= player.EssenceDrain;
-        EssenceCheck(enemies[EnemyIndex]);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
-        document.getElementById("SexText").innerHTML = "You siphon essence of femininity from them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+        DocId("SexText").innerHTML = (Ess >= ee.Femi) ?
+            `You siphon the last essence of femininity from them leaving them with no signs of femininity left.<br>${DrainChanges(old, player, eold, ee)}` :
+            `You siphon essence of femininity from them.<br>${DrainChanges(old, player, eold, ee)}`;
     }
-    RaceDrain(enemy);
+    RaceDrain(ee);
     AfterBattleButtons();
     CheckArousal();
     return;
 };
 
 function DrainInjectM() {
-    var q = Math.min(player.GiveEssence, player.Masc);
-    var old = JSON.parse(JSON.stringify(player));
-    var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
-    if (player.GiveEssence >= player.Masc && player.Masc > 0) {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        Ess = Math.min(player.GiveEssence * 33, player.Masc);
+    if (player.Masc > 0) {
         player.SessionOrgasm--;
-        player.Masc -= q;
-        enemies[EnemyIndex].Masc += q;
-        EssenceCheck(enemies[EnemyIndex]);
+        player.Masc -= Ess;
+        ee.Masc += Ess;
+        EssenceCheck(ee);
         if (Settings.EssenceAuto) {
             EssenceCheck(player);
         }
-        document.getElementById("SexText").innerHTML = "You inject them with your last essence of masculinity, leaving yourself male-free." + DrainChanges(old, player, eold, enemies[EnemyIndex]);
-    } else if (player.GiveEssence < player.Masc) {
-        player.SessionOrgasm--;
-        player.Masc -= q;
-        enemies[EnemyIndex].Masc += q;
-        EssenceCheck(enemies[EnemyIndex]);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
-        document.getElementById("SexText").innerHTML = "You inject essence of masculinity into them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+        DocId("SexText").innerHTML = (Ess >= player.Masc) ?
+            `You inject them with your last essence of masculinity, leaving yourself male-free.<br>${DrainChanges(old, player, eold, ee)}` :
+            `You inject essence of masculinity into them.<br>${DrainChanges(old, player, eold, ee)}`;
     }
-
     AfterBattleButtons();
     CheckArousal();
     return;
 };
 
 function DrainInjectF() {
-    var q = Math.min(player.GiveEssence, player.Femi);
-    var old = JSON.parse(JSON.stringify(player));
-    var eold = JSON.parse(JSON.stringify(enemies[EnemyIndex]));
-    if (player.GiveEssence >= player.Femi && player.Femi > 0) {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        Ess = Math.min(player.GiveEssence * 33, player.Femi);
+    if (player.Femi > 0) {
         player.SessionOrgasm--;
-        player.Femi -= q;
-        enemies[EnemyIndex].Femi += q;
-        EssenceCheck(enemies[EnemyIndex]);
+        player.Femi -= Ess;
+        ee.Femi += Ess;
+        EssenceCheck(ee);
         if (Settings.EssenceAuto) {
             EssenceCheck(player);
         }
-        document.getElementById("SexText").innerHTML = "You give them the last of your femininity, leaving yourself female-free. " + DrainChanges(old, player, eold, enemies[EnemyIndex]);
-    } else if (player.GiveEssence < player.Femi) {
-        player.SessionOrgasm--;
-        player.Femi -= q;
-        enemies[EnemyIndex].Femi += q;
-        EssenceCheck(enemies[EnemyIndex]);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
-        document.getElementById("SexText").innerHTML = "You inject essence of femininity into them.<br>" + DrainChanges(old, player, eold, enemies[EnemyIndex]);
+        DocId("SexText").innerHTML = (Ess >= player.Femi) ?
+            `You give them the last of your femininity, leaving yourself female-free.<br>${DrainChanges(old, player, eold, ee)}` :
+            `You inject essence of femininity into them.<br>${DrainChanges(old, player, eold, ee)}`;
+        AfterBattleButtons();
+        CheckArousal();
+        return;
     }
-    AfterBattleButtons();
-    CheckArousal();
-    return;
 };
 
 function IntToAge(int) {
@@ -4631,35 +4603,35 @@ function EssenceCheck(who) {
 	    		LogHistory += LogArray[e] + "<br>";
 	    	}
 	    	//LogHistory = newText + LogHistory;
-	    	document.getElementById("EventText").innerHTML = LogHistory;
+	    	DocId("EventText").innerHTML = LogHistory;
 	    }
-	    document.getElementById("HideEventLog").addEventListener("click", function () {
-	    	if (document.getElementById("EventLogPart").style.display === 'none') {
-	    		document.getElementById("EventLogPart").style.display = 'block';
-	    		document.getElementById("EventLogH2").style.display = 'inline-block';
-	    		document.getElementById("HideEventLog").value = "Hide";
+	    DocId("HideEventLog").addEventListener("click", function () {
+	    	if (DocId("EventLogPart").style.display === 'none') {
+	    		DocId("EventLogPart").style.display = 'block';
+	    		DocId("EventLogH2").style.display = 'inline-block';
+	    		DocId("HideEventLog").value = "Hide";
 	    	} else {
-	    		document.getElementById("EventLogPart").style.display = 'none';
-	    		document.getElementById("HideEventLog").value = "Show E";
-	    		document.getElementById("EventLogH2").style.display = 'none';
+	    		DocId("EventLogPart").style.display = 'none';
+	    		DocId("HideEventLog").value = "Show E";
+	    		DocId("EventLogH2").style.display = 'none';
 	    	}
 	    });
-	    document.getElementById("HideFluids").addEventListener("click", function () {
-	    	if (document.getElementById("FluidPart").style.display === 'none') {
-	    		document.getElementById("FluidPart").style.display = 'block';
-	    		document.getElementById("EventFluidsH2").style.display = 'inline-block';
-	    		document.getElementById("FluidsMode").style.display = 'inline-block';
-	    		document.getElementById("HideFluids").value = "Hide";
+	    DocId("HideFluids").addEventListener("click", function () {
+	    	if (DocId("FluidPart").style.display === 'none') {
+	    		DocId("FluidPart").style.display = 'block';
+	    		DocId("EventFluidsH2").style.display = 'inline-block';
+	    		DocId("FluidsMode").style.display = 'inline-block';
+	    		DocId("HideFluids").value = "Hide";
 	    	} else {
-	    		document.getElementById("FluidPart").style.display = 'none';
-	    		document.getElementById("EventFluidsH2").style.display = 'none';
-	    		document.getElementById("FluidsMode").style.display = 'none';
-	    		document.getElementById("HideFluids").value = 'Show F';
+	    		DocId("FluidPart").style.display = 'none';
+	    		DocId("EventFluidsH2").style.display = 'none';
+	    		DocId("FluidsMode").style.display = 'none';
+	    		DocId("HideFluids").value = 'Show F';
 	    	}
 	    });
-	    document.getElementById("FluidsMode").addEventListener("click", function () {
-	    	const menu = document.getElementById("FluidContainer"),
-	    		Fluid = document.getElementById("FluidsMode");
+	    DocId("FluidsMode").addEventListener("click", function () {
+	    	const menu = DocId("FluidContainer"),
+	    		Fluid = DocId("FluidsMode");
 	    	switch (Fluid.value) {
 	    		case "1":
 	    			menu.setAttribute("class", "TwoColumn");
@@ -4679,8 +4651,8 @@ function EssenceCheck(who) {
 	    			break;
 	    	}
 	    });
-	    document.getElementById("EventLogPart").addEventListener("click", function () {
-	    	const EventLog = document.getElementById("EventLog");
+	    DocId("EventLogPart").addEventListener("click", function () {
+	    	const EventLog = DocId("EventLog");
 	    	if (EventLog.style.width > 20 + "vw") {
 	    		EventLog.style.width = 20 + "vw";
 	    		EventLog.style.maxHeight = 50 + "vh";
@@ -4690,7 +4662,7 @@ function EssenceCheck(who) {
 	    	}
 	    });
 function FluidsEngine() {
-    document.getElementById("FemcumBar").style.display = 'none';
+    DocId("FemcumBar").style.display = 'none';
     if (player.Balls.length > 0) {
         for (var b = 0; b < player.Balls.length; b++) {
             player.Balls[b].CumMax = 1 / 3 * Math.PI * Math.pow(player.Balls[b].Size, 3),
@@ -4699,7 +4671,7 @@ function FluidsEngine() {
                 player.Balls[b].Cum += Math.max(0, player.Balls[b].CumRate + player.Balls[b].CumBaseRate);
             }
         }
-        document.getElementById("CumBar").style.display = 'block';
+        DocId("CumBar").style.display = 'block';
         var TotalCum = 0,
             TotalCumMax = 0;
         for (var e = 0; e < player.Balls.length; e++) {
@@ -4710,14 +4682,14 @@ function FluidsEngine() {
         if (false) {
             EventLog("Your balls are so full that you can barely hold it!")
         }
-        document.getElementById("FluidCum").innerHTML = Math.round((Math.round(TotalCum) / 1000) * 10) / 10 + "L";
-        document.getElementById("FluidCum").style.width = Math.min(1, CumPercent) * 100 + "%";
+        DocId("FluidCum").innerHTML = Math.round((Math.round(TotalCum) / 1000) * 10) / 10 + "L";
+        DocId("FluidCum").style.width = Math.min(1, CumPercent) * 100 + "%";
 
     } else {
-        document.getElementById("CumBar").style.display = 'none';
+        DocId("CumBar").style.display = 'none';
     }
     if (player.Boobies.length > 0 && GotMilk(player)) {
-        document.getElementById("MilkBar").style.display = 'block';
+        DocId("MilkBar").style.display = 'block';
         var TotalMilk = 0,
             TotalMilkMax = 0;
         for (var b = 0; b < player.Boobies.length; b++) {
@@ -4736,11 +4708,11 @@ function FluidsEngine() {
         if (false) {
             EventLog("You breasts are so full that they have started leaking!")
         }
-        document.getElementById("FluidMilk").innerHTML = Math.round((Math.round(TotalMilk) / 1000) * 10) / 10 + "L";
-        document.getElementById("FluidMilk").style.width = Math.min(1, MilkPercent) * 100 + "%";
+        DocId("FluidMilk").innerHTML = Math.round((Math.round(TotalMilk) / 1000) * 10) / 10 + "L";
+        DocId("FluidMilk").style.width = Math.min(1, MilkPercent) * 100 + "%";
 
     } else {
-        document.getElementById("MilkBar").style.display = 'none';
+        DocId("MilkBar").style.display = 'none';
     }
     if (House.Dormmates.length > 0) {
         for (var e = 0; e < House.Dormmates.length; e++) {
@@ -4770,25 +4742,25 @@ function GotMilk(who) {
     // Makes sure map scales correctly when user change screen size.
     function HemScale() {
         if (window.innerHeight < 500) {
-            document.getElementById("FirstButtons").style.display = 'none';
-            document.getElementById("SecondButtons").style.display = 'none';
-            document.getElementById("MoreButtons").style.display = 'inline-block';
-            document.getElementById("LessButtons").style.display = 'inline-block';
-            document.getElementById("MobileButtons").style.display = 'inline-block';
+            DocId("FirstButtons").style.display = 'none';
+            DocId("SecondButtons").style.display = 'none';
+            DocId("MoreButtons").style.display = 'inline-block';
+            DocId("LessButtons").style.display = 'inline-block';
+            DocId("MobileButtons").style.display = 'inline-block';
         } else if (window.innerHeight < 850) {
-            document.getElementById("FirstButtons").style.display = 'block';
-            document.getElementById("SecondButtons").style.display = 'none';
-            document.getElementById("MoreButtons").style.display = 'inline-block';
-            document.getElementById("LessButtons").style.display = 'inline-block';
-            document.getElementById("MobileButtons").style.display = 'none';
+            DocId("FirstButtons").style.display = 'block';
+            DocId("SecondButtons").style.display = 'none';
+            DocId("MoreButtons").style.display = 'inline-block';
+            DocId("LessButtons").style.display = 'inline-block';
+            DocId("MobileButtons").style.display = 'none';
         } else {
-            document.getElementById("SecondButtons").style.display = 'block';
-            document.getElementById("FirstButtons").style.display = 'block';
-            document.getElementById("MoreButtons").style.display = 'none';
-            document.getElementById("LessButtons").style.display = 'none';
-            document.getElementById("MobileButtons").style.display = 'none';
+            DocId("SecondButtons").style.display = 'block';
+            DocId("FirstButtons").style.display = 'block';
+            DocId("MoreButtons").style.display = 'none';
+            DocId("LessButtons").style.display = 'none';
+            DocId("MobileButtons").style.display = 'none';
         }
-        const startarea = document.getElementById("hem"),
+        const startarea = DocId("hem"),
             OldMap = medium;
         medium = Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20;
         startarea.width = medium;
@@ -4804,21 +4776,21 @@ function GotMilk(who) {
         }
         return;
     }
-document.getElementById("Dorm").addEventListener("click", function () {
-    document.getElementById("HomeStart").style.display = 'none';
-    document.getElementById("TheDorm").style.display = 'block';
-    document.getElementById("ButtonMates").style.display = 'grid';
-    document.getElementById("DivMates").style.display = 'none';
-    document.getElementById("LeaveDorm").style.display = 'inline-block'
-    document.getElementById("flex").style.display = 'none';
+DocId("Dorm").addEventListener("click", function () {
+    DocId("HomeStart").style.display = 'none';
+    DocId("TheDorm").style.display = 'block';
+    DocId("ButtonMates").style.display = 'grid';
+    DocId("DivMates").style.display = 'none';
+    DocId("LeaveDorm").style.display = 'inline-block'
+    DocId("flex").style.display = 'none';
     ButtonMates();
 
     if (House.Dormmates.length > 0 && player.Balls.length > 0) {
-        document.getElementById("ImpregOrgy").style.display = 'inline-block';
-        document.getElementById("GetImpregOrgy").style.display = 'inline-block';
+        DocId("ImpregOrgy").style.display = 'inline-block';
+        DocId("GetImpregOrgy").style.display = 'inline-block';
     } else {
-        document.getElementById("ImpregOrgy").style.display = 'none';
-        document.getElementById("GetImpregOrgy").style.display = 'none';
+        DocId("ImpregOrgy").style.display = 'none';
+        DocId("GetImpregOrgy").style.display = 'none';
     }
 
 
@@ -4853,7 +4825,7 @@ function ButtonMates() {
             House.Dormmates[e].Name + " " + House.Dormmates[e].Race + "</button  >"
         Inputs += Input;
     }
-    document.getElementById("ButtonMates").innerHTML = Inputs;
+    DocId("ButtonMates").innerHTML = Inputs;
 }
 
 var MateIndex;
@@ -4861,11 +4833,11 @@ var MateIndex;
 function MateDiv(e) {
     MateIndex = e;
     var rm = House.Dormmates[e];
-    document.getElementById("ButtonMates").style.display = 'none';
-    document.getElementById("DivMates").style.display = 'flex';
-    document.getElementById("flex").style.display = 'grid';
+    DocId("ButtonMates").style.display = 'none';
+    DocId("DivMates").style.display = 'flex';
+    DocId("flex").style.display = 'grid';
     var RoomMate = "<div id=\"" + e + "\"></div>"
-    document.getElementById("DivMates").innerHTML = RoomMate;
+    DocId("DivMates").innerHTML = RoomMate;
     var PregnantStatus = "";
     if (rm.hasOwnProperty("Pregnant")) {
         if (rm.Pregnant.Status) {
@@ -4884,59 +4856,59 @@ function MateDiv(e) {
     if (rm.hasOwnProperty("LastName")) {
         DormName += " " + rm.LastName;
     };
-    document.getElementById(e).innerHTML = "<div>" + DormName + "<br>" + rm.Name + " " + rm.Race + "<br>" + Pronoun(CheckGender(rm)) +
+    DocId(e).innerHTML = "<div>" + DormName + "<br>" + rm.Name + " " + rm.Race + "<br>" + Pronoun(CheckGender(rm)) +
         "<br><br>Height: " + CmToInch(Math.round(rm.Height)) + "<br>Weight: " + KgToPound(rm.Weight) + "<br>Muscle: " + KgToPound(rm.Muscle) + "<br>Fat: " + KgToPound(rm.Fat) +
         "<br>" + PregnantStatus + "<br><br>" + BoobLook(rm) + DickLook(rm) + BallLook(rm) + PussyLook(rm) + "<div> Strength: " + rm.Str +
         "<br>Charm: " + rm.Charm + "<br>Endurance: " + rm.End + "<br>Int: " + rm.Int + "<br>Sexskill: " + rm.SexSkill +
         "<br> Willpower: " + rm.Will + "</div></div>   "
-    document.getElementById(e).style.display = 'block'
-    document.getElementById("LeaveRoom").style.display = 'block';
-    document.getElementById("LeaveDorm").style.display = 'none';
-    document.getElementById("ImpregOrgy").style.display = 'none';
-    document.getElementById("GetImpregOrgy").style.display = 'none';
-    document.getElementById("KickOut").style.display = 'block';
-    document.getElementById("Fuck").style.display = 'block';
-    document.getElementById("Rename").style.display = 'block';
+    DocId(e).style.display = 'block'
+    DocId("LeaveRoom").style.display = 'block';
+    DocId("LeaveDorm").style.display = 'none';
+    DocId("ImpregOrgy").style.display = 'none';
+    DocId("GetImpregOrgy").style.display = 'none';
+    DocId("KickOut").style.display = 'block';
+    DocId("Fuck").style.display = 'block';
+    DocId("Rename").style.display = 'block';
 }
-document.getElementById("KickYes").addEventListener("click", function () {
-    document.getElementById("flex").style.display = 'grid';
-    document.getElementById("KickYesNo").style.display = 'none';
-    document.getElementById("HomeStart").style.display = 'block';
-    document.getElementById("TheDorm").style.display = 'none';
-    document.getElementById("ImpregOrgy").style.display = 'inline-block';
-    document.getElementById("GetImpregOrgy").style.display = 'inline-block';
+DocId("KickYes").addEventListener("click", function () {
+    DocId("flex").style.display = 'grid';
+    DocId("KickYesNo").style.display = 'none';
+    DocId("HomeStart").style.display = 'block';
+    DocId("TheDorm").style.display = 'none';
+    DocId("ImpregOrgy").style.display = 'inline-block';
+    DocId("GetImpregOrgy").style.display = 'inline-block';
     House.Dormmates.splice(MateIndex, 1);
     return;
 });
-document.getElementById("KickNo").addEventListener("click", function () {
-    document.getElementById("flex").style.display = 'grid';
-    document.getElementById("KickYesNo").style.display = 'none';
+DocId("KickNo").addEventListener("click", function () {
+    DocId("flex").style.display = 'grid';
+    DocId("KickYesNo").style.display = 'none';
 });
-document.getElementById("Fuck").addEventListener("click", function () {
-    document.getElementById("Home").style.display = 'none';
-    document.getElementById("FuckDorm").style.display = 'grid';
-    document.getElementById("status").style.display = 'none';
-    document.getElementById("EmptyButtons").style.display = 'none';
-    document.getElementById("EventLog").style.display = 'none';
+DocId("Fuck").addEventListener("click", function () {
+    DocId("Home").style.display = 'none';
+    DocId("FuckDorm").style.display = 'grid';
+    DocId("status").style.display = 'none';
+    DocId("EmptyButtons").style.display = 'none';
+    DocId("EventLog").style.display = 'none';
     DormSex();
 });
-document.getElementById("Rename").addEventListener("click", function () {
+DocId("Rename").addEventListener("click", function () {
     var e = House.Dormmates[MateIndex];
     if (e.hasOwnProperty("FirstName")) {
-        document.getElementById("DormFirstName").value = e.FirstName;
+        DocId("DormFirstName").value = e.FirstName;
     }
     if (e.hasOwnProperty("LastName")) {
-        document.getElementById("DormLastName").value = e.LastName
+        DocId("DormLastName").value = e.LastName
     }
-    document.getElementById("DormNameChangeForm").style.display = 'block';
-    document.getElementById(MateIndex).style.display = 'none';
-    document.getElementById("flex").style.display = 'none';
+    DocId("DormNameChangeForm").style.display = 'block';
+    DocId(MateIndex).style.display = 'none';
+    DocId("flex").style.display = 'none';
 });
-document.getElementById("AcceptDormName").addEventListener("click", function () {
+DocId("AcceptDormName").addEventListener("click", function () {
     var e = House.Dormmates[MateIndex];
-    e.FirstName = document.getElementById("DormFirstName").value;
-    e.LastName = document.getElementById("DormLastName").value;
-    document.getElementById("DormNameChangeForm").style.display = 'none';
+    e.FirstName = DocId("DormFirstName").value;
+    e.LastName = DocId("DormLastName").value;
+    DocId("DormNameChangeForm").style.display = 'none';
     MateDiv(MateIndex);
 });
 
@@ -4946,36 +4918,36 @@ function DormSex() {
     if (Settings.EssenceAuto) {
         EssenceCheck(player);
     }
-    document.getElementById("DormPName").innerHTML = player.Name + " " + player.LastName;
-    document.getElementById("DormEName").innerHTML = e.Name + "<br>" + e.Race + " " + Pronoun(CheckGender(e));
-    document.getElementById("DormMascu").innerHTML = Math.round(player.Masc);
-    document.getElementById("DormFemin").innerHTML = Math.round(player.Femi);
-    document.getElementById("DormEMascu").innerHTML = Math.round(e.Masc);
-    document.getElementById("DormEFemin").innerHTML = Math.round(e.Femi);
-    document.getElementById("DormPlayerLooks").innerHTML = BoobLook(player) + DickLook(player) + BallLook(player) + PussyLook(player);
-    document.getElementById("DormEnemyLooks").innerHTML = BoobLook(e) + DickLook(e) + BallLook(e) + PussyLook(e);
+    DocId("DormPName").innerHTML = player.Name + " " + player.LastName;
+    DocId("DormEName").innerHTML = e.Name + "<br>" + e.Race + " " + Pronoun(CheckGender(e));
+    DocId("DormMascu").innerHTML = Math.round(player.Masc);
+    DocId("DormFemin").innerHTML = Math.round(player.Femi);
+    DocId("DormEMascu").innerHTML = Math.round(e.Masc);
+    DocId("DormEFemin").innerHTML = Math.round(e.Femi);
+    DocId("DormPlayerLooks").innerHTML = BoobLook(player) + DickLook(player) + BallLook(player) + PussyLook(player);
+    DocId("DormEnemyLooks").innerHTML = BoobLook(e) + DickLook(e) + BallLook(e) + PussyLook(e);
     SexColor(player, "PlayerDorm");
     SexColor(e, "EnemyDorm");
     if (e.Pregnant.Status || player.Balls.length == 0) {
-        document.getElementById("Impregnate").style.display = 'none';
+        DocId("Impregnate").style.display = 'none';
     } else {
-        document.getElementById("Impregnate").style.display = 'inline-block';
+        DocId("Impregnate").style.display = 'inline-block';
     }
     if (player.Pregnant.Status) {
-        document.getElementById("GetImpregnated").style.display = 'none';
+        DocId("GetImpregnated").style.display = 'none';
         var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
         if (age < 1) {
-            document.getElementById("DormPlayerLooks").innerHTML += "<br>Impregnated";
+            DocId("DormPlayerLooks").innerHTML += "<br>Impregnated";
         } else {
-            document.getElementById("DormPlayerLooks").innerHTML += "<br>" + age + " months pregnant";
+            DocId("DormPlayerLooks").innerHTML += "<br>" + age + " months pregnant";
         }
 
 
     } else {
         if (e.Balls.length < 1) {
-            document.getElementById("GetImpregnated").style.display = 'none';
+            DocId("GetImpregnated").style.display = 'none';
         } else {
-            document.getElementById("GetImpregnated").style.display = 'inline-block';
+            DocId("GetImpregnated").style.display = 'inline-block';
         }
     }
 
@@ -4983,9 +4955,9 @@ function DormSex() {
         if (e.Pregnant.Status) {
             var age = Math.round(e.Pregnant.Baby / 10000);
             if (age < 1) {
-                document.getElementById("DormEnemyLooks").innerHTML += "<br>Impregnated";
+                DocId("DormEnemyLooks").innerHTML += "<br>Impregnated";
             } else {
-                document.getElementById("DormEnemyLooks").innerHTML += "<br>" + age + " months pregnant";
+                DocId("DormEnemyLooks").innerHTML += "<br>" + age + " months pregnant";
             }
         }
     }
@@ -5000,13 +4972,13 @@ function DormSex() {
         DelatMed = 100 / e.Femi;
     }
 
-    document.getElementById("DormMascu").style.width = player.Masc * DelatMed + "%";
-    document.getElementById("DormFemin").style.width = player.Femi * DelatMed + "%";
-    document.getElementById("DormEMascu").style.width = e.Masc * DelatMed + "%";
-    document.getElementById("DormEFemin").style.width = e.Femi * DelatMed + "%";
+    DocId("DormMascu").style.width = player.Masc * DelatMed + "%";
+    DocId("DormFemin").style.width = player.Femi * DelatMed + "%";
+    DocId("DormEMascu").style.width = e.Masc * DelatMed + "%";
+    DocId("DormEFemin").style.width = e.Femi * DelatMed + "%";
     return;
 };
-document.getElementById("DormDrainMasc").addEventListener("click", function () {
+DocId("DormDrainMasc").addEventListener("click", function () {
     var e = House.Dormmates[MateIndex];
     if (player.EssenceDrain >= e.Masc && e.Masc > 0) {
         player.Masc += e.Masc;
@@ -5016,7 +4988,7 @@ document.getElementById("DormDrainMasc").addEventListener("click", function () {
             EssenceCheck(player);
         }
         DormSex();
-        document.getElementById("DormSexText").innerHTML = "Siphon masc";
+        DocId("DormSexText").innerHTML = "Siphon masc";
         return;
     } else if (player.EssenceDrain < e.Masc) {
         player.Masc += player.EssenceDrain;
@@ -5026,13 +4998,13 @@ document.getElementById("DormDrainMasc").addEventListener("click", function () {
             EssenceCheck(player);
         }
         DormSex();
-        document.getElementById("DormSexText").innerHTML = "Siphon masc";
+        DocId("DormSexText").innerHTML = "Siphon masc";
         return;
     } else {
         return;
     }
 });
-document.getElementById("DormDrainFemi").addEventListener("click", function () {
+DocId("DormDrainFemi").addEventListener("click", function () {
     var e = House.Dormmates[MateIndex];
     if (player.EssenceDrain >= e.Femi && e.Femi > 0) {
         player.Femi += e.Femi;
@@ -5042,7 +5014,7 @@ document.getElementById("DormDrainFemi").addEventListener("click", function () {
             EssenceCheck(player);
         }
         DormSex();
-        document.getElementById("DormSexText").innerHTML = "Siphon femi";
+        DocId("DormSexText").innerHTML = "Siphon femi";
         return;
     } else if (player.EssenceDrain < e.Femi) {
         player.Femi += player.EssenceDrain;
@@ -5052,13 +5024,13 @@ document.getElementById("DormDrainFemi").addEventListener("click", function () {
             EssenceCheck(player);
         }
         DormSex();
-        document.getElementById("DormSexText").innerHTML = "Siphon femi";
+        DocId("DormSexText").innerHTML = "Siphon femi";
         return;
     } else {
         return;
     }
 });
-document.getElementById("DormInjMasc").addEventListener("click", function () {
+DocId("DormInjMasc").addEventListener("click", function () {
     var e = House.Dormmates[MateIndex];
     if (player.Masc > 0) {
         e.Masc += Math.min(100, player.Masc);
@@ -5068,11 +5040,11 @@ document.getElementById("DormInjMasc").addEventListener("click", function () {
             EssenceCheck(player);
         }
         DormSex();
-        document.getElementById("DormSexText").innerHTML = "Inject masc";
+        DocId("DormSexText").innerHTML = "Inject masc";
         return;
     }
 });
-document.getElementById("DormInjFemi").addEventListener("click", function () {
+DocId("DormInjFemi").addEventListener("click", function () {
     var e = House.Dormmates[MateIndex];
     if (player.Femi > 0) {
         e.Femi += Math.min(100, player.Femi);
@@ -5082,12 +5054,12 @@ document.getElementById("DormInjFemi").addEventListener("click", function () {
             EssenceCheck(player);
         }
         DormSex();
-        document.getElementById("DormSexText").innerHTML = "Inject femi";
+        DocId("DormSexText").innerHTML = "Inject femi";
         return;
     }
 });
-document.getElementById("Impregnate").addEventListener("click", function () {
-    document.getElementById("DormSexText").innerHTML = "You fuck your servant hoping to impregnate them, but you fail."
+DocId("Impregnate").addEventListener("click", function () {
+    DocId("DormSexText").innerHTML = "You fuck your servant hoping to impregnate them, but you fail."
     var e = House.Dormmates[MateIndex];
     if (e.Pussies.length > 0) {
         var pussypicker = RandomInt(0, e.Pussies.length - 1)
@@ -5097,7 +5069,7 @@ document.getElementById("Impregnate").addEventListener("click", function () {
     }
     if (e.hasOwnProperty("Pregnant")) {
         if (e.Pregnant.Status) {
-            document.getElementById("DormSexText").innerHTML = "You have already impregnated her!"
+            DocId("DormSexText").innerHTML = "You have already impregnated her!"
             DormSex();
             return;
         }
@@ -5111,24 +5083,24 @@ document.getElementById("Impregnate").addEventListener("click", function () {
             Impregnate(e, player, "A", "Dorm");
             player.Balls[b].Cum -= 50;
         } else {
-            document.getElementById("DormSexText").innerHTML = "You try but there is to little cum in your balls."
+            DocId("DormSexText").innerHTML = "You try but there is to little cum in your balls."
         }
 
     }
     DormSex();
 });
 var Setup = true;
-document.getElementById("GetImpregnated").addEventListener("click", function () {
+DocId("GetImpregnated").addEventListener("click", function () {
     var e = House.Dormmates[MateIndex];
     if (Setup) {
-        document.getElementById("DormSexText").innerHTML = "Desiring to get pregnant you call " + e.FirstName + " " + e.LastName + " a servant whom you feel are worthy " +
+        DocId("DormSexText").innerHTML = "Desiring to get pregnant you call " + e.FirstName + " " + e.LastName + " a servant whom you feel are worthy " +
             "fathering you child. Firmly pushing them down on the bed you get on top them straddling their face grinding your pussy against their mouth, once you feel ready you shift focus to their groin removing their clothes and free their " + CmToInch(e.Dicks[0].Size) + " " + e.Dicks[0].Type + " dick. " +
             "Positions your pussy on top of their glans letting it slowly enter, once accustomed speeding up."
     } else {
-        document.getElementById("DormSexText").innerHTML = "Not giving up you continue riding them.";
+        DocId("DormSexText").innerHTML = "Not giving up you continue riding them.";
     }
     if (player.Pregnant.Status) {
-        document.getElementById("DormSexText").innerHTML = "You are already pregnant.";
+        DocId("DormSexText").innerHTML = "You are already pregnant.";
         DormSex();
         return;
     } else if (e.Balls.length > 0) {
@@ -5138,11 +5110,11 @@ document.getElementById("GetImpregnated").addEventListener("click", function () 
                 Impregnate(player, e, "B", "Dorm");
                 e.Balls[b].Cum -= 10;
                 if (!player.Pregnant.Status) {
-                    document.getElementById("DormSexText").innerHTML += "<br><br>They failed to impregnate you";
+                    DocId("DormSexText").innerHTML += "<br><br>They failed to impregnate you";
                 }
                 break;
             } else {
-                document.getElementById("DormSexText").innerHTML += "<br><br>Their balls are dry, you have to let them recover.(10ml needed  )";
+                DocId("DormSexText").innerHTML += "<br><br>Their balls are dry, you have to let them recover.(10ml needed  )";
             }
         }
     }
@@ -5152,35 +5124,35 @@ document.getElementById("GetImpregnated").addEventListener("click", function () 
     }
     DormSex();
 });
-document.getElementById("LeaveDormSex").addEventListener("click", function () {
-    document.getElementById("Home").style.display = 'block';
-    document.getElementById("FuckDorm").style.display = 'none';
-    document.getElementById("status").style.display = 'block';
-    document.getElementById("EmptyButtons").style.display = 'block';
-    document.getElementById("DormSexText").innerHTML = " "
+DocId("LeaveDormSex").addEventListener("click", function () {
+    DocId("Home").style.display = 'block';
+    DocId("FuckDorm").style.display = 'none';
+    DocId("status").style.display = 'block';
+    DocId("EmptyButtons").style.display = 'block';
+    DocId("DormSexText").innerHTML = " "
     MateDiv(MateIndex);
     Setup = true;
 });
-document.getElementById("LeaveRoom").addEventListener("click", function () {
-    document.getElementById("DivMates").style.display = 'none';
-    document.getElementById("ButtonMates").style.display = 'grid';
-    document.getElementById("LeaveRoom").style.display = 'none';
-    document.getElementById("LeaveDorm").style.display = 'inline-block'
-    document.getElementById("ImpregOrgy").style.display = 'inline-block';
-    document.getElementById("GetImpregOrgy").style.display = 'inline-block';
-    document.getElementById("KickOut").style.display = 'none';
-    document.getElementById("Fuck").style.display = 'none';
-    document.getElementById("Rename").style.display = 'none';
-    document.getElementById("DormChildren").style.display = 'none';
+DocId("LeaveRoom").addEventListener("click", function () {
+    DocId("DivMates").style.display = 'none';
+    DocId("ButtonMates").style.display = 'grid';
+    DocId("LeaveRoom").style.display = 'none';
+    DocId("LeaveDorm").style.display = 'inline-block'
+    DocId("ImpregOrgy").style.display = 'inline-block';
+    DocId("GetImpregOrgy").style.display = 'inline-block';
+    DocId("KickOut").style.display = 'none';
+    DocId("Fuck").style.display = 'none';
+    DocId("Rename").style.display = 'none';
+    DocId("DormChildren").style.display = 'none';
     ButtonMates();
     return;
 });
-document.getElementById("KickOut").addEventListener("click", function () {
-    document.getElementById("flex").style.display = 'none';
-    document.getElementById("KickYesNo").style.display = 'block';
+DocId("KickOut").addEventListener("click", function () {
+    DocId("flex").style.display = 'none';
+    DocId("KickYesNo").style.display = 'block';
 });
-document.getElementById("ImpregOrgy").addEventListener("click", function () {
-    document.getElementById("HomeText").innerHTML = "Orgy<br>"
+DocId("ImpregOrgy").addEventListener("click", function () {
+    DocId("HomeText").innerHTML = "Orgy<br>"
     var CumTotal = 0;
     for (var b = 0; b < player.Balls.length; b++) {
         CumTotal += player.Balls[b].Cum;
@@ -5194,14 +5166,14 @@ document.getElementById("ImpregOrgy").addEventListener("click", function () {
                 Impregnate(House.Dormmates[non], player, "A", "Dorm");
                 CumTotal -= 10;
                 if (House.Dormmates[non].Pregnant.Status) {
-                    document.getElementById("HomeText").innerHTML += House.Dormmates[non].FirstName + " " + House.Dormmates[non].LastName + " is impregnated! "
+                    DocId("HomeText").innerHTML += House.Dormmates[non].FirstName + " " + House.Dormmates[non].LastName + " is impregnated! "
                 }
             }
         }
     }
     for (var non = 0; non < House.Dormmates.length; non++) {
         if (!House.Dormmates[non].Pregnant.Status) {
-            document.getElementById("HomeText").innerHTML += "You failed to impregnate " + House.Dormmates[non].FirstName + " " + House.Dormmates[non].LastName + "...";
+            DocId("HomeText").innerHTML += "You failed to impregnate " + House.Dormmates[non].FirstName + " " + House.Dormmates[non].LastName + "...";
 
         }
     }
@@ -5210,11 +5182,11 @@ document.getElementById("ImpregOrgy").addEventListener("click", function () {
     }
     FluidsEngine();
 });
-document.getElementById("TheDorm").addEventListener("mouseover", function (e) {
-    document.getElementById("HomeText").innerHTML = e.target.title;
+DocId("TheDorm").addEventListener("mouseover", function (e) {
+    DocId("HomeText").innerHTML = e.target.title;
 });
-document.getElementById("GetImpregOrgy").addEventListener("click", function () {
-    document.getElementById("HomeText").innerHTML = "Orgy";
+DocId("GetImpregOrgy").addEventListener("click", function () {
+    DocId("HomeText").innerHTML = "Orgy";
     var CumTotal = 0;
     for (var a = 0; a < House.Dormmates.length; a++) {
         for (var b = 0; b < House.Dormmates[a].Balls.length; b++) {
@@ -5230,16 +5202,16 @@ document.getElementById("GetImpregOrgy").addEventListener("click", function () {
             }
         }
     }
-    document.getElementById("HomeText").innerHTML += "<br><br> By the end of the night they have cummed " + (Math.round(CumTotal / 1000 * 100) / 100) + "L into you.";
+    DocId("HomeText").innerHTML += "<br><br> By the end of the night they have cummed " + (Math.round(CumTotal / 1000 * 100) / 100) + "L into you.";
 });
-document.getElementById("LeaveDorm").addEventListener("click", function () {
-    document.getElementById("HomeStart").style.display = 'block';
-    document.getElementById("TheDorm").style.display = 'none';
-    document.getElementById("HomeText").innerHTML = "";
+DocId("LeaveDorm").addEventListener("click", function () {
+    DocId("HomeStart").style.display = 'block';
+    DocId("TheDorm").style.display = 'none';
+    DocId("HomeText").innerHTML = "";
     return;
 });
 // Home
-document.getElementById("Sleep").addEventListener("click", function () {
+DocId("Sleep").addEventListener("click", function () {
     if (player.Health < player.MaxHealth + House.BedLevel * 5) {
         player.Health = player.MaxHealth + House.BedLevel * 5;
     }
@@ -5251,16 +5223,16 @@ document.getElementById("Sleep").addEventListener("click", function () {
         DateTracker();
     }
     battle = true;
-    document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
-    document.getElementById("HomeText").innerHTML = "You sleep well, restoring your health and willpower.";
+    DocId("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+    DocId("HomeText").innerHTML = "You sleep well, restoring your health and willpower.";
 });
 
 
 // Portal
-document.getElementById("Portal").addEventListener("click", function () {
-    document.getElementById("LeaveHome").style.display = 'none';
-    var Buildings = document.getElementById("PortalMenu")
-    document.getElementById("HomeStart").style.display = "none";
+DocId("Portal").addEventListener("click", function () {
+    DocId("LeaveHome").style.display = 'none';
+    var Buildings = DocId("PortalMenu")
+    DocId("HomeStart").style.display = "none";
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
@@ -5273,7 +5245,7 @@ document.getElementById("Portal").addEventListener("click", function () {
         div.appendChild(h1);
     }
 
-    var p = document.getElementById("HomeText");
+    var p = DocId("HomeText");
 
     // TODO in future when there is more portals make main buttons for each region
     if (House.Portal.Mountain) {
@@ -5281,7 +5253,7 @@ document.getElementById("Portal").addEventListener("click", function () {
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
-            document.getElementById("HomeStart").style.display = 'block';
+            DocId("HomeStart").style.display = 'block';
             LeaveHome();
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
@@ -5300,7 +5272,7 @@ document.getElementById("Portal").addEventListener("click", function () {
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
-            document.getElementById("HomeStart").style.display = 'block';
+            DocId("HomeStart").style.display = 'block';
             LeaveHome();
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
@@ -5319,19 +5291,19 @@ document.getElementById("Portal").addEventListener("click", function () {
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
         }
-        document.getElementById("HomeStart").style.display = 'block';
-        document.getElementById("PortalMenu").style.display = 'none';
-        document.getElementById("LeaveHome").style.display = 'inline-block';
+        DocId("HomeStart").style.display = 'block';
+        DocId("PortalMenu").style.display = 'none';
+        DocId("LeaveHome").style.display = 'inline-block';
     })
     div.appendChild(LeavePortal);
     Buildings.appendChild(div);
     Buildings.style.display = 'block';
 });
-document.getElementById("LeavePortal").addEventListener("click", function () {
-    document.getElementById("HomeStart").style.display = 'block';
-    document.getElementById("PortalMenu").style.display = 'none';
+DocId("LeavePortal").addEventListener("click", function () {
+    DocId("HomeStart").style.display = 'block';
+    DocId("PortalMenu").style.display = 'none';
 });
-document.getElementById("Portals").addEventListener("click", function (e) {
+DocId("Portals").addEventListener("click", function (e) {
     Npcs = [];
     var Chosen;
     if (e.target.type == "button") {
@@ -5359,45 +5331,45 @@ document.getElementById("Portals").addEventListener("click", function (e) {
     }
 });
 
-document.getElementById("Brothel").addEventListener("click", function () {
-    document.getElementById("TheBrothel").style.display = 'block';
-    document.getElementById("HomeStart").style.display = 'none';
+DocId("Brothel").addEventListener("click", function () {
+    DocId("TheBrothel").style.display = 'block';
+    DocId("HomeStart").style.display = 'none';
 });
-document.getElementById("ServeMasc").addEventListener("click", function () {
+DocId("ServeMasc").addEventListener("click", function () {
     Settings.Brothel.ServeMasc = !Settings.Brothel.ServeMasc;
-    document.getElementById("ServeMasc").value = "Masculine customers? " + Settings.Brothel.ServeMasc;
+    DocId("ServeMasc").value = "Masculine customers? " + Settings.Brothel.ServeMasc;
 });
-document.getElementById("ServeFemi").addEventListener("click", function () {
+DocId("ServeFemi").addEventListener("click", function () {
     Settings.Brothel.ServeFemi = !Settings.Brothel.ServeFemi;
-    document.getElementById("ServeFemi").value = "Feminine customers? " + Settings.Brothel.ServeFemi;
+    DocId("ServeFemi").value = "Feminine customers? " + Settings.Brothel.ServeFemi;
 });
-document.getElementById("CloseBrothel").addEventListener("click", function () {
-    document.getElementById("TheBrothel").style.display = 'none';
-    document.getElementById("HomeStart").style.display = 'block';
+DocId("CloseBrothel").addEventListener("click", function () {
+    DocId("TheBrothel").style.display = 'none';
+    DocId("HomeStart").style.display = 'block';
 });
 
-document.getElementById("LeaveHome").addEventListener("click", function () {
+DocId("LeaveHome").addEventListener("click", function () {
     LeaveHome();
     return;
 });
 
 function LeaveHome() {
-    document.getElementById("Home").style.display = 'none';
-    document.getElementById("EmptyButtons").style.display = 'none';
+    DocId("Home").style.display = 'none';
+    DocId("EmptyButtons").style.display = 'none';
     battle = false;
     DisplayGame();
 }
 // End home
-    document.getElementById("UpgradeHome").addEventListener("click", function () {
+    DocId("UpgradeHome").addEventListener("click", function () {
         UpgradeHomeMenu();
     })
 
     function UpgradeHomeMenu() {
-        document.getElementById("HomeStart").style.display = 'none';
-        document.getElementById("HomeText").style.display = 'none';
-        document.getElementById("Upgrades").style.display = 'block';
+        DocId("HomeStart").style.display = 'none';
+        DocId("HomeText").style.display = 'none';
+        DocId("Upgrades").style.display = 'block';
 
-        var Upgrades = document.getElementById("Upgrades");
+        var Upgrades = DocId("Upgrades");
         while (Upgrades.hasChildNodes()) {
             Upgrades.removeChild(Upgrades.firstChild);
         }
@@ -5448,7 +5420,7 @@ function LeaveHome() {
                 House.Dorm++;
                 player.Gold -= DormCost();
                 if (House.Dorm < 2) {
-                    document.getElementById("Dorm").style.display = "inline-block";
+                    DocId("Dorm").style.display = "inline-block";
                     p.innerHTML = "Hiring construction workers you give orders to build a dorm to house servants. <br><br>" +
                         "Looking outside you see the newly built dorm. You can now take home opponent you have made orgasm five times."
                 } else {
@@ -5535,7 +5507,7 @@ function LeaveHome() {
                     p.innerHTML = "You upgrade your brothel for extra income.";
                 }
                 House.Brothel++;
-                document.getElementById("Brothel").style.display = 'inline-block';
+                DocId("Brothel").style.display = 'inline-block';
                 BuildBrothel.setAttribute("value", "Upgrade brothel " + Brothelcost() + "g")
             } else {
                 p.innerHTML = "You can't afford it.";
@@ -5578,7 +5550,7 @@ function LeaveHome() {
                     player.Gold -= 1000;
                     House.Portal.Owned = true;
                     p.innerHTML = "Congratulations you now own a personal portal, a true sign of wealth for peasants to envy!"
-                    document.getElementById("Portal").style.display = 'inline-block';
+                    DocId("Portal").style.display = 'inline-block';
                     Upgrades.removeChild(BuildPortal)
                 } else {
                     p.innerHTML = "	Sadly you lack funds to afford commissions the construction of a portal…" +
@@ -5593,11 +5565,11 @@ function LeaveHome() {
 
         var Close = InputButton("Close");
         Close.addEventListener("click", function () {
-            document.getElementById("HomeStart").style.display = 'block';
-            document.getElementById("Upgrades").style.display = 'none';
-            document.getElementById("HomeText").style.display = 'block';
+            DocId("HomeStart").style.display = 'block';
+            DocId("Upgrades").style.display = 'none';
+            DocId("HomeText").style.display = 'block';
 
-            var Upgrades = document.getElementById("Upgrades");
+            var Upgrades = DocId("Upgrades");
             while (Upgrades.hasChildNodes()) {
                 Upgrades.removeChild(Upgrades.firstChild);
             }
@@ -5742,37 +5714,37 @@ function Impregnate(who, by, mode = "A", where = "") {
             case "cuntboy":
                 if (by.Virility >= Impregnation) {
                     BabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "You have impregnated him!"
+                    DocId(where + "SexText").innerHTML = "You have impregnated him!"
                 }
                 break;
             case "female":
                 if (by.Virility >= Impregnation) {
                     BabyMaker();
-                    document.getElementById(where + "SexStats").innerHTML = "You have impregnated her!"
+                    DocId(where + "SexStats").innerHTML = "You have impregnated her!"
                 }
                 break;
             case "hermaphrodite":
                 if (by.Virility >= Impregnation) {
                     BabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "You have impregnated hir!"
+                    DocId(where + "SexText").innerHTML = "You have impregnated hir!"
                 }
                 break;
             case "male":
                 if (by.Virility - 100 >= Impregnation) {
                     BabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate him!"
+                    DocId(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate him!"
                 }
                 break;
             case "dickgirl":
                 if (by.Virility - 100 >= Impregnation) {
                     BabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate her!"
+                    DocId(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate her!"
                 }
                 break;
             default:
                 if (by.Virility - 100 >= Impregnation) {
                     BabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnated the doll!"
+                    DocId(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnated the doll!"
                 }
                 break;
         }
@@ -5783,13 +5755,13 @@ function Impregnate(who, by, mode = "A", where = "") {
             case "female":
                 if (who.Fertility >= Impregnation) {
                     playerBabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "You have been impregnated!"
+                    DocId(where + "SexText").innerHTML = "You have been impregnated!"
                 }
                 break;
             case "hermaphrodite":
                 if (who.Fertility >= Impregnation) {
                     playerBabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "You have been impregnated!"
+                    DocId(where + "SexText").innerHTML = "You have been impregnated!"
                 }
                 break;
             case "dickgirl":
@@ -5797,7 +5769,7 @@ function Impregnate(who, by, mode = "A", where = "") {
                 if (false) { //Need to make a way to enable make impreg (item/blessing/curse)
                     if (who.Fertility - 50 >= Impregnation) {
                         playerBabyMaker();
-                        document.getElementById(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
+                        DocId(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
                     }
                 }
                 break;
@@ -5805,7 +5777,7 @@ function Impregnate(who, by, mode = "A", where = "") {
                 if (false) {
                     if (who.Fertility - 50 >= Impregnation) {
                         playerBabyMaker();
-                        document.getElementById(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
+                        DocId(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
                     }
                 }
                 break;
@@ -5897,10 +5869,10 @@ function LToGal(L) {
         }
     }
 }
-document.getElementById("ShowInventory").addEventListener("click", function () {
+DocId("ShowInventory").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("Inventory").style.display = 'grid';
-    //document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
+    DocId("Inventory").style.display = 'grid';
+    //DocId("InventoryBag").innerHTML = Items(player.Inventory)
     Items2();
 });
 
@@ -5922,7 +5894,7 @@ function Use(item) {
             player.Inventory.splice(item, 1);
         }
     }
-    document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
+    DocId("InventoryBag").innerHTML = Items(player.Inventory)
 }
 
 function Equip(item) {
@@ -5937,17 +5909,17 @@ function Read(item) {
 
 function Drop(item) {
     player.Inventory.splice(item, 1);
-    document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
+    DocId("InventoryBag").innerHTML = Items(player.Inventory)
 
 }
-document.getElementById("InventoryLeave").addEventListener("click", function () {
-    document.getElementById("Inventory").style.display = 'none';
+DocId("InventoryLeave").addEventListener("click", function () {
+    DocId("Inventory").style.display = 'none';
     DisplayGame();
 });
 
 // Trial of new inventory system so I can stop saving unnecessary data
 function Items2() {
-    var div = document.getElementById("InventoryBag");
+    var div = DocId("InventoryBag");
     while (div.hasChildNodes()) {
         div.removeChild(div.firstChild);
     }
@@ -5987,7 +5959,7 @@ function InventoryThing(e, b) {
     if (typeof b.Use === "function") {
         var use = InputButton("Use");
         use.addEventListener("click", function () {
-            document.getElementById("InventoryText").innerHTML = b.Use(player, e);
+            DocId("InventoryText").innerHTML = b.Use(player, e);
             if (typeof e.Quantity === "number") {
                 e.Quantity--;
                 if (e.Quantity <= 0) {
@@ -6032,10 +6004,10 @@ function InventoryThing(e, b) {
     }
     var what = InputButton("?");
     what.addEventListener("mouseover", function () {
-        document.getElementById("InventoryText").innerHTML = b.Title
+        DocId("InventoryText").innerHTML = b.Title
     });
     what.addEventListener("click", function () {
-        document.getElementById("InventoryText").innerHTML = b.Title
+        DocId("InventoryText").innerHTML = b.Title
     });
     item.appendChild(what);
 
@@ -6498,17 +6470,17 @@ const ItemDict = {
         Name: "Pocket portal",
         Use: function (who, item) {
             if (who.Map === "RoadToHome") {
-                document.getElementById("InventoryText").innerHTML = "... seriously?"
+                DocId("InventoryText").innerHTML = "... seriously?"
                 item.Quantity++;
             } else if (House.Portal.Owned) {
                 enemies = [];
                 who.Area = "First";
                 who.Map = "RoadToHome";
                 DisplayGame();
-                document.getElementById("Inventory").style.display = 'none';
+                DocId("Inventory").style.display = 'none';
             } else {
                 item.Quantity++;
-                document.getElementById("InventoryText").innerHTML = "You have no house portal.";
+                DocId("InventoryText").innerHTML = "You have no house portal.";
             }
         },
         Equip: "No",
@@ -6530,9 +6502,9 @@ ItemDict.SpellBook = {
     Quantity: "bob", // Infinity
     Title: "Long description of the item",
     Use: function (who) {
-        document.getElementById("Inventory").style.display = "none";
+        DocId("Inventory").style.display = "none";
 
-        var Div = document.getElementById("SpellBook");
+        var Div = DocId("SpellBook");
         Div.style.display = "block";
         while (Div.hasChildNodes()) {
             Div.removeChild(Div.firstChild);
@@ -6570,21 +6542,21 @@ ItemDict.SpellBook = {
                 Div.removeChild(Div.firstChild);
             }
             Div.style.display = "none";
-            document.getElementById("Inventory").style.display = "block";
+            DocId("Inventory").style.display = "block";
         });
         Div.appendChild(CloseBook);
     }
 }
     // Level Menu
-    document.getElementById("LevelButton").addEventListener("click", function () {
+    DocId("LevelButton").addEventListener("click", function () {
         DisplayNone();
         LevelMenuFunc();
-        document.getElementById("LevelMenu").style.display = 'block';
+        DocId("LevelMenu").style.display = 'block';
     });
     // Incraese stats
 
     function LevelMenuFunc() {
-        let div = document.getElementById("LevelMenu");
+        let div = DocId("LevelMenu");
         while (div.hasChildNodes()) {
             div.removeChild(div.lastChild);
         }
@@ -6710,7 +6682,7 @@ ItemDict.SpellBook = {
         div.appendChild(innerdiv);
     }
 function Loader(Load) {
-    const LoadArray = JSON.parse(localStorage.getItem(Load));   
+    const LoadArray = JSON.parse(localStorage.getItem(Load));
     player = LoadArray[0];
     House = LoadArray[1];
     Flags = LoadArray[2];
@@ -6718,31 +6690,31 @@ function Loader(Load) {
     CheckFlags();
     DisplayGame();
     requestAnimationFrame(loop);
-    document.getElementById("LoadMenu").style.display = 'none';
+    DocId("LoadMenu").style.display = 'none';
     return;
 }
 
 // Game load button
-document.getElementById("LoadButton").addEventListener("click", function () {
-    document.getElementById("LoadMenu").style.display = 'block';
-    document.getElementById("StartPage").style.display = 'none';
-    document.getElementById("StartLoad").style.display = 'inline-block';
+DocId("LoadButton").addEventListener("click", function () {
+    DocId("LoadMenu").style.display = 'block';
+    DocId("StartPage").style.display = 'none';
+    DocId("StartLoad").style.display = 'inline-block';
     for (let e = 1; e < 6; e++) {
         if (localStorage.getItem('SaveDate' + e) !== null) {
-            document.getElementById("LoadPlayer" + e).value = localStorage.getItem('SaveDate' + e);
+            DocId("LoadPlayer" + e).value = localStorage.getItem('SaveDate' + e);
         }
     }
 });
 // Start page load button
-document.getElementById("StartLoad").addEventListener("click", function () {
-    document.getElementById("LoadMenu").style.display = 'none';
-    document.getElementById("StartPage").style.display = 'grid';
+DocId("StartLoad").addEventListener("click", function () {
+    DocId("LoadMenu").style.display = 'none';
+    DocId("StartPage").style.display = 'grid';
 })
 
 // Load handler
 function Loaders() {
     for (let e = 1; e < 6; e++) {
-        document.getElementById("LoadPlayer" + e).addEventListener("click", function () {
+        DocId("LoadPlayer" + e).addEventListener("click", function () {
             enemies = [];
             if (localStorage.getItem('SavedPlayer' + e) === null) {
                 return;
@@ -6755,8 +6727,8 @@ function Loaders() {
 }
 Loaders();
 
-document.getElementById("LoadFile").addEventListener("input", function () {
-    var test = document.getElementById("LoadFile");
+DocId("LoadFile").addEventListener("input", function () {
+    var test = DocId("LoadFile");
     var reader = new FileReader();
     reader.readAsText(test.files[0]);
     reader.onload = function () {
@@ -6768,29 +6740,29 @@ document.getElementById("LoadFile").addEventListener("input", function () {
         Flags = LoadArray[2];
         Settings = LoadArray[3];
         battle = false;
-        document.getElementById("StartPage").style.display = 'none';
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("status").style.display = 'block';
-        document.getElementById("LoadMenu").style.display = 'none';
+        DocId("StartPage").style.display = 'none';
+        DocId("map").style.display = 'block';
+        DocId("buttons").style.display = 'block';
+        DocId("status").style.display = 'block';
+        DocId("LoadMenu").style.display = 'none';
         CheckFlags();
         requestAnimationFrame(loop);
     }
 });
-document.getElementById("Load").addEventListener("click", function () {
+DocId("Load").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("MapLoad").style.display = 'block';
-    document.getElementById("LoadMenu").style.display = 'block';
-    document.getElementById("StartLoad").style.display = 'none';
+    DocId("MapLoad").style.display = 'block';
+    DocId("LoadMenu").style.display = 'block';
+    DocId("StartLoad").style.display = 'none';
 
     for (var e = 1; e < 6; e++) {
         if (localStorage.getItem('SaveDate' + e) !== null) {
-            document.getElementById("LoadPlayer" + e).value = localStorage.getItem('SaveDate' + e);
+            DocId("LoadPlayer" + e).value = localStorage.getItem('SaveDate' + e);
         }
     }
 });
-document.getElementById("LoadLeave").addEventListener("click", function () {
-    document.getElementById("LoadMenu").style.display = 'none';
+DocId("LoadLeave").addEventListener("click", function () {
+    DocId("LoadMenu").style.display = 'none';
     DisplayGame();
 })
 // End Load handler
@@ -7266,7 +7238,7 @@ document.getElementById("CloseLooks").addEventListener("click", function () {
     document.getElementById("ShowLooks").style.display = 'none';
     DisplayGame();
 });
-document.getElementById("EnemyLoseSex").addEventListener("click", function () {
+DocId("EnemyLoseSex").addEventListener("click", function () {
 	if (DocId("LoseEnemyKinda").style.display === 'none') {
 		DocId("LoseSexStats").innerHTML = " ";
 		DocId("LoseEnemyKinda").style.display = 'block';
@@ -7280,7 +7252,7 @@ document.getElementById("EnemyLoseSex").addEventListener("click", function () {
 		DocId("LoseEnemyExact").innerHTML = `<p>${ExactBoobLook(ee) + ExactPussyLook(ee) + ExactDickLook(ee) + ExactBallLook(ee)}</p>`;
 	}
 });
-document.getElementById("PlayerLoseSex").addEventListener("click", function () {
+DocId("PlayerLoseSex").addEventListener("click", function () {
 	if (DocId("LoseplayerKinda").style.display === 'none') {
 		DocId("LoseplayerKinda").style.display = 'block';
 		DocId("LoseplayerExact").style.display = 'none';
@@ -7294,15 +7266,15 @@ document.getElementById("PlayerLoseSex").addEventListener("click", function () {
 
 function Lose(sex = true) {
 	const ee = enemies[EnemyIndex],
-		LPL = document.getElementById("LosePlayerLooks"),
-		LoseText = document.getElementById("LoseSexStats");
+		LPL = DocId("LosePlayerLooks"),
+		LoseText = DocId("LoseSexStats");
 
 	LPL.innerHTML = ""; // BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
 	if (player.Pregnant.Babies.length > 0) {
 		const age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
 		LPL.innerHTML += "<br>" + (age < 1) ? "Impregnated" : age + " months pregnant";
 	}
-	document.getElementById("LoseEnemyLooks").innerHTML = ""; //BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
+	DocId("LoseEnemyLooks").innerHTML = ""; //BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
 	if (ee.hasOwnProperty("Pregnant")) {
 		if (ee.Pregnant.Status) {
 			DocId("LoseEnemyLooks").innerHTML += "<br>Pregnant";
@@ -7351,7 +7323,7 @@ function Lose(sex = true) {
 
 	function NameConq() { // Name/title/type e.g. witch, maiden
 		const Name = ee.Name.toLowerCase(),
-			LoseText = document.getElementById("LoseSexStats");
+			LoseText = DocId("LoseSexStats");
 		switch (Name) {
 			case "wizard":
 				// Curse? Maybe add a organ mod on auto and shrink on manual; might make organmod effect manual
@@ -7392,7 +7364,7 @@ function Lose(sex = true) {
 	function RaceConq() {
 		const race = ee.Race.toLowerCase(),
 			enemy = ee,
-			LoseText = document.getElementById("LoseSexText");
+			LoseText = DocId("LoseSexText");
 		switch (race) {
 			case "human":
 				const steal = Math.min(RandomInt(25, 200), player.Gold)
@@ -7471,13 +7443,13 @@ function Lose(sex = true) {
 		}
 	};
 }
-document.getElementById("LoseSubmit").addEventListener("click", function () {
+DocId("LoseSubmit").addEventListener("click", function () {
 	const takeM = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5)), player.Masc),
 		takeF = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5)), player.Femi),
 		selectScene = SnowScenes(),
 		a = ["forcedBJ", "getBJ", "getRidden", "getRiddenAnal"],
 		b = ["forcedCunn", "getCunn", "getFucked", "getFuckedAnal"]
-	document.getElementById("LosePlayerOrgasm").innerHTML = loseScene(false, selectScene);
+	DocId("LosePlayerOrgasm").innerHTML = loseScene(false, selectScene);
 	if (a.indexOf(selectScene) > -1) {
 		player.Masc -= takeM;
 		enemies[EnemyIndex].Masc += takeM;
@@ -7492,10 +7464,10 @@ document.getElementById("LoseSubmit").addEventListener("click", function () {
 	}
 	Lose(false);
 });
-document.getElementById("LoseStruggle").addEventListener("click", function () {
+DocId("LoseStruggle").addEventListener("click", function () {
 	var take = Math.round(enemies[EnemyIndex].SexSkill * RandomInt(1, 7));
 	const selectScene = SnowScenes();
-	document.getElementById("LosePlayerOrgasm").innerHTML = loseScene(true, selectScene);
+	DocId("LosePlayerOrgasm").innerHTML = loseScene(true, selectScene);
 	if (selectScene === "forcedBJ" || selectScene === "getBJ" || selectScene === "getRidden" || selectScene === "getRiddenAnal") {
 		take = Math.min(take, player.Masc);
 		player.Masc -= take;
@@ -7531,17 +7503,17 @@ document.getElementById("LoseStruggle").addEventListener("click", function () {
 	}
 	Lose(false);
 });
-document.getElementById("LeaveLose").addEventListener("click", function () {
+DocId("LeaveLose").addEventListener("click", function () {
 	DisplayGame();
-	document.getElementById("Lose").style.display = 'none';
-	document.getElementById("LoseStruggle").style.display = 'inline-block';
-	document.getElementById("LoseSubmit").style.display = 'inline-block';
-	document.getElementById("LosePlayerOrgasm").innerHTML = " ";
+	DocId("Lose").style.display = 'none';
+	DocId("LoseStruggle").style.display = 'inline-block';
+	DocId("LoseSubmit").style.display = 'inline-block';
+	DocId("LosePlayerOrgasm").innerHTML = " ";
 	LastPressed = " ";
 });
 
 //Testing all scenes
-/*document.getElementById("Cycle").addEventListener("click", function () {
+/*DocId("Cycle").addEventListener("click", function () {
 	var sub = [true, false];
 	var action = ["forcedBJ", "forcedCunn", "forcedRim", "getBJ", "getCunn", "getRim", "getFucked", "getFuckedAnal", "getRidden", "getRiddenAnal", "getVoreStomach", "getVoreBalls", "getVoreBoobs", "getVoreVagina", "getVoreAnal"];
 	var gender = ["hermaphrodite", "cuntboy", "male", "female", "dickgirl", "doll"]
@@ -8002,42 +7974,42 @@ function EssenceExtraCost(what) {
     return Math.round((30 * Math.pow(3, what.length)));
 };
 
-document.getElementById("EssenceAuto").addEventListener("click", function () {
+DocId("EssenceAuto").addEventListener("click", function () {
     Settings.EssenceAuto = !Settings.EssenceAuto;
     if (Settings.EssenceAuto) {
-        document.getElementById("EssenceAuto").value = "Essence Auto";
-        document.getElementById("ManualGrowth").style.display = 'none';
+        DocId("EssenceAuto").value = "Essence Auto";
+        DocId("ManualGrowth").style.display = 'none';
 
     } else {
-        document.getElementById("EssenceAuto").value = "Essence Manual";
-        document.getElementById("ManualGrowth").style.display = 'block';
+        DocId("EssenceAuto").value = "Essence Manual";
+        DocId("ManualGrowth").style.display = 'block';
         Settings.BalanceParts = false;
     }
 });
 
-document.getElementById("GrowBalls").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'none';
-    document.getElementById("ManualOrgans").style.display = 'block';
+DocId("GrowBalls").addEventListener("click", function () {
+    DocId("EssenceStart").style.display = 'none';
+    DocId("ManualOrgans").style.display = 'block';
     BallsButtons();
 });
-document.getElementById("GrowPussy").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'none';
-    document.getElementById("ManualOrgans").style.display = 'block';
+DocId("GrowPussy").addEventListener("click", function () {
+    DocId("EssenceStart").style.display = 'none';
+    DocId("ManualOrgans").style.display = 'block';
     PussyButtons();
 });
-document.getElementById("GrowBreast").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'none';
-    document.getElementById("ManualOrgans").style.display = 'block';
+DocId("GrowBreast").addEventListener("click", function () {
+    DocId("EssenceStart").style.display = 'none';
+    DocId("ManualOrgans").style.display = 'block';
     BreastButtons();
 });
-document.getElementById("GrowDick").addEventListener("click", function () {
-    document.getElementById("EssenceStart").style.display = 'none';
-    document.getElementById("ManualOrgans").style.display = 'block';
+DocId("GrowDick").addEventListener("click", function () {
+    DocId("EssenceStart").style.display = 'none';
+    DocId("ManualOrgans").style.display = 'block';
     DickButtons();
 });
 
 function BreastButtons() {
-    var ManualOrgans = document.getElementById("ManualOrgans");
+    var ManualOrgans = DocId("ManualOrgans");
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
@@ -8084,7 +8056,7 @@ function BreastButton(e) {
 }
 
 function PussyButtons() {
-    var ManualOrgans = document.getElementById("ManualOrgans");
+    var ManualOrgans = DocId("ManualOrgans");
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
@@ -8126,7 +8098,7 @@ function PussyButton(e) {
 }
 
 function DickButtons() {
-    var ManualOrgans = document.getElementById("ManualOrgans");
+    var ManualOrgans = DocId("ManualOrgans");
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
@@ -8168,7 +8140,7 @@ function DickButton(e) {
 }
 
 function BallsButtons() {
-    var ManualOrgans = document.getElementById("ManualOrgans");
+    var ManualOrgans = DocId("ManualOrgans");
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
@@ -8216,7 +8188,7 @@ function BallsButton(e) {
 function ManualOrgansClose() {
     var Close = InputButton("Back");
     Close.addEventListener("click", function () {
-        document.getElementById("EssenceStart").style.display = 'block';
+        DocId("EssenceStart").style.display = 'block';
         ManualOrgans.style.display = 'none';
         while (ManualOrgans.hasChildNodes()) {
             ManualOrgans.removeChild(ManualOrgans.firstChild);
@@ -8225,19 +8197,19 @@ function ManualOrgansClose() {
     return Close;
 }
 
-document.getElementById("EssenceOptionsLeave").addEventListener("click", function () {
-    var ManualOrgans = document.getElementById("ManualOrgans");
+DocId("EssenceOptionsLeave").addEventListener("click", function () {
+    var ManualOrgans = DocId("ManualOrgans");
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
-    document.getElementById("EssenceStart").style.display = 'block';
-    document.getElementById("ManualGrowth").style.display = 'none';
+    DocId("EssenceStart").style.display = 'block';
+    DocId("ManualGrowth").style.display = 'none';
     DisplayNone();
     DisplayGame();
 });
 function CheckDoor() {
     function DoorHandler(NESW) {
-        const startarea = document.getElementById("hem");
+        const startarea = DocId("hem");
         enemies = [];
         switch (NESW) {
             case "N":
@@ -8262,16 +8234,16 @@ function CheckDoor() {
             this.height = height,
             this.NESW = NESW
     };
-    const startarea = document.getElementById("hem"),
-        DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E"),
-        DoorS = new MakeDoor(startarea.width / 2 - 3 * grid, startarea.height - 2 * grid, grid * 5, grid, "S"),
-        DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W"),
-        DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N"),
+    const startarea = DocId("hem"),
+        DoorE = new MakeDoor(grid * 19, grid * 7, grid, 5 * grid, "E"),
+        DoorS = new MakeDoor(grid * 7, grid * 19, grid * 5, grid, "S"),
+        DoorW = new MakeDoor(0, grid * 7, 0, 5 * grid, "W"),
+        DoorN = new MakeDoor(grid * 7, 0, grid * 5, 0, "N"),
         Doors = [DoorE, DoorS, DoorN, DoorW];
     for (let i of Doors) {
         let Door = i.NESW;
-        if (sprite.x + grid * sprite.Size >= i.x && sprite.x <= i.x + i.width &&
-            sprite.y + grid * sprite.Size >= i.y && sprite.y <= i.y + i.height) {
+        if (sprite.x >= i.x && sprite.x <= i.x + i.width &&
+            sprite.y >= i.y && sprite.y <= i.y + i.height) {
             switch (player.Area) {
                 case "First":
                     switch (player.Map) {
@@ -8327,15 +8299,15 @@ function CheckDoor() {
                             } else if (Door == "E" && House.Owned == true) {
                                 battle = true;
                                 sprite.x = startarea.width - 3 * grid;
-                                document.getElementById("map").style.display = 'none';
-                                document.getElementById("buttons").style.display = 'none';
-                                document.getElementById("EmptyButtons").style.display = 'block';
-                                document.getElementById("Home").style.display = 'block';
-                                document.getElementById("HomeText").style.display = 'block';
+                                DocId("map").style.display = 'none';
+                                DocId("buttons").style.display = 'none';
+                                DocId("EmptyButtons").style.display = 'block';
+                                DocId("Home").style.display = 'block';
+                                DocId("HomeText").style.display = 'block';
 
-                                document.getElementById("Dorm").style.display = House.Dorm > 0 ? "inline-block" : 'none';
-                                document.getElementById("Portal").style.display = House.Portal.Owned ? 'inline-block' : 'none';
-                                document.getElementById("Brothel").style.display = House.Brothel ? 'inline-block' : 'none';
+                                DocId("Dorm").style.display = House.Dorm > 0 ? "inline-block" : 'none';
+                                DocId("Portal").style.display = House.Portal.Owned ? 'inline-block' : 'none';
+                                DocId("Brothel").style.display = House.Brothel ? 'inline-block' : 'none';
                             } else if (Door == "N") {
                                 player.Map = "RoadToWitch";
                                 DoorHandler("N");
@@ -8647,15 +8619,15 @@ const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "Ci
         "PathToOutlaws", "PathToOutlaws2", "RoadToCity", "RoadToCity2", "RoadToHome", "RoadToWitch", "RoadToWitch2",
         "rtb2", "Start", "Witch", "MountainStart", "MountainShrinePath", "MountainShrine", "MountainClimb", "MountainClimb2",
         "MountainClimb3", "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8",
-        "MountainClimb9", "MountainPlateau","Farm"
+        "MountainClimb9", "MountainPlateau", "Farm"
     ], function (images) {
         Tiles_images = images;
         // Stop player from starting before tiles are loaded
-        document.getElementById("LoadingImagesProgress").innerHTML = "Tiles loaded";
-        document.getElementById("LoadingImagesProgress").classList.remove("visible");
-        document.getElementById("LoadingImagesProgress").classList.add("hidden");
+        DocId("LoadingImagesProgress").innerHTML = "Tiles loaded";
+        DocId("LoadingImagesProgress").classList.remove("visible");
+        DocId("LoadingImagesProgress").classList.add("hidden");
     }),
-    NpcImageLoader = NpcImageLoad(["LocalPortal","FarmBarn"], function (images) {
+    NpcImageLoader = NpcImageLoad(["LocalPortal", "FarmBarn"], function (images) {
         Npc_images = images;
     });
 
@@ -8673,7 +8645,7 @@ function CurrentMap() {
             this.Color = Color
     };
     let Npcs = []
-    const startarea = document.getElementById("hem"),
+    const startarea = DocId("hem"),
         ctx = startarea.getContext("2d"),
         Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)"),
         Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)"),
@@ -8921,7 +8893,7 @@ function CurrentMap() {
 
     function PrintNpcs() {
         const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"],
-            HasSprite = ["LocalPortal","FarmBarn"];
+            HasSprite = ["LocalPortal", "FarmBarn"];
         // var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
         // Switched it so new npcs always print
         for (var e of Npcs) {
@@ -8956,23 +8928,23 @@ function CurrentMap() {
         function UpdateNpc(name) {
             let isfunction = window[name + "Func"];
             if (typeof isfunction === "function") { // Start replacing html building/npcs with javascript functions
-                document.getElementById("map").style.display = 'none';
-                document.getElementById("buttons").style.display = 'none';
-                document.getElementById("EmptyButtons").style.display = 'block';
+                DocId("map").style.display = 'none';
+                DocId("buttons").style.display = 'none';
+                DocId("EmptyButtons").style.display = 'block';
                 isfunction();
             } else {
-                document.getElementById(name).style.display = 'block';
-                document.getElementById("map").style.display = 'none';
-                document.getElementById("buttons").style.display = 'none';
-                document.getElementById("EmptyButtons").style.display = 'block';
-                document.getElementById("Leave" + name).addEventListener("click", function () {
+                DocId(name).style.display = 'block';
+                DocId("map").style.display = 'none';
+                DocId("buttons").style.display = 'none';
+                DocId("EmptyButtons").style.display = 'block';
+                DocId("Leave" + name).addEventListener("click", function () {
                     battle = false;
-                    document.getElementById(name).style.display = 'none';
-                    document.getElementById("map").style.display = 'block';
-                    document.getElementById("buttons").style.display = 'block';
-                    document.getElementById("EmptyButtons").style.display = 'none';
-                    document.getElementById("status").style.display = 'block';
-                    document.getElementById(name + "Text").innerHTML = null;
+                    DocId(name).style.display = 'none';
+                    DocId("map").style.display = 'block';
+                    DocId("buttons").style.display = 'block';
+                    DocId("EmptyButtons").style.display = 'none';
+                    DocId("status").style.display = 'block';
+                    DocId(name + "Text").innerHTML = null;
                     return;
                 });
             }
@@ -8986,16 +8958,16 @@ function PrintDoors() {
         ctx.fillStyle = Settings.MapColor;
         switch (NESW.toUpperCase()) {
             case "E":
-                ctx.fillRect(startarea.width - grid, startarea.height / 2 - 3 * grid, grid, grid * 6);
+                ctx.fillRect(startarea.width - grid, startarea.height / 3, grid, grid * 6);
                 break;
             case "S":
-                ctx.fillRect(startarea.width - grid, startarea.height / 2 - 3 * grid, grid, grid * 6);
+                ctx.fillRect(startarea.width / 3, startarea.height - grid, grid * 6, grid);
                 break;
             case "W":
-                ctx.fillRect(0, startarea.height / 2 - 3 * grid, grid, grid * 6);
+                ctx.fillRect(0, startarea.height / 3, grid, grid * 6);
                 break;
             case "N":
-                ctx.fillRect(startarea.width / 2 - 3 * grid, 0, grid * 6, grid);
+                ctx.fillRect(startarea.width / 3, 0, grid * 6, grid);
                 break;
         }
     }
@@ -9050,6 +9022,7 @@ function PrintDoors() {
             switch (player.Map) {
                 case "PathToOutlaws":
                     PrintDoor("S");
+                    PrintDoor("N");
                     PrintDoor("W");
                     break;
                 case "PathToOutlaws2":
@@ -9354,103 +9327,103 @@ function PrintMap() {
 };
 
 // ⇦ ⇨ ⇩ ⇧ Unicode arrows
-document.getElementById("EssenceOptions").addEventListener("click", function () {
+DocId("EssenceOptions").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("EssenceOptionsMenu").style.display = 'block';
-    document.getElementById("MaxMenu").style.display = 'none';
+    DocId("EssenceOptionsMenu").style.display = 'block';
+    DocId("MaxMenu").style.display = 'none';
     if (Settings.EssenceAuto) {
-        document.getElementById("EssenceAuto").value = "Essence Auto";
-        document.getElementById("ManualGrowth").style.display = 'none';
+        DocId("EssenceAuto").value = "Essence Auto";
+        DocId("ManualGrowth").style.display = 'none';
     } else {
-        document.getElementById("EssenceAuto").value = "Essence Manual";
-        document.getElementById("ManualGrowth").style.display = 'block';
+        DocId("EssenceAuto").value = "Essence Manual";
+        DocId("ManualGrowth").style.display = 'block';
     }
-    document.getElementById("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
-    document.getElementById("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
-    document.getElementById("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
-    document.getElementById("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
-    document.getElementById("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
-    document.getElementById("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
-    document.getElementById("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
-    document.getElementById("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
+    DocId("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
+    DocId("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
+    DocId("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
+    DocId("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
+    DocId("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
+    DocId("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
+    DocId("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
+    DocId("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
 });
 
-document.getElementById("BoobsLess").addEventListener("click", function () {
+DocId("BoobsLess").addEventListener("click", function () {
     if (Settings.MaxLimbs.MaxBoobs > 0) {
         Settings.MaxLimbs.MaxBoobs--;
     }
-    document.getElementById("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
-    document.getElementById("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
+    DocId("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
+    DocId("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
 });
-document.getElementById("BoobsMore").addEventListener("click", function () {
+DocId("BoobsMore").addEventListener("click", function () {
     Settings.MaxLimbs.MaxBoobs++;
-    document.getElementById("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
-    document.getElementById("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
+    DocId("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
+    DocId("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
 });
-document.getElementById("VaginasLess").addEventListener("click", function () {
+DocId("VaginasLess").addEventListener("click", function () {
     if (Settings.MaxLimbs.MaxVaginas > 0) {
         Settings.MaxLimbs.MaxVaginas--;
     }
-    document.getElementById("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
-    document.getElementById("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
+    DocId("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
+    DocId("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
 });
-document.getElementById("VaginasMore").addEventListener("click", function () {
+DocId("VaginasMore").addEventListener("click", function () {
     Settings.MaxLimbs.MaxVaginas++;
-    document.getElementById("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
-    document.getElementById("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
+    DocId("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
+    DocId("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
 });
-document.getElementById("DicksLess").addEventListener("click", function () {
+DocId("DicksLess").addEventListener("click", function () {
     if (Settings.MaxLimbs.MaxDicks > 0) {
         Settings.MaxLimbs.MaxDicks--;
     }
-    document.getElementById("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
-    document.getElementById("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
+    DocId("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
+    DocId("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
 });
-document.getElementById("DicksMore").addEventListener("click", function () {
+DocId("DicksMore").addEventListener("click", function () {
     Settings.MaxLimbs.MaxDicks++;
-    document.getElementById("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
-    document.getElementById("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
+    DocId("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
+    DocId("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
 });
-document.getElementById("BallsLess").addEventListener("click", function () {
+DocId("BallsLess").addEventListener("click", function () {
     if (Settings.MaxLimbs.MaxBalls > 0) {
         Settings.MaxLimbs.MaxBalls--;
     }
-    document.getElementById("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
-    document.getElementById("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
+    DocId("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
+    DocId("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
 });
-document.getElementById("BallsMore").addEventListener("click", function () {
+DocId("BallsMore").addEventListener("click", function () {
     Settings.MaxLimbs.MaxBalls++;
-    document.getElementById("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
-    document.getElementById("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
+    DocId("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
+    DocId("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
 });
 
 
-document.getElementById("NoExtra").addEventListener("click", function () {
-    if (document.getElementById("MaxMenu").style.display == 'none') {
-        document.getElementById("MaxMenu").style.display = 'block';
-        document.getElementById("NoExtra").value = "Hide";
+DocId("NoExtra").addEventListener("click", function () {
+    if (DocId("MaxMenu").style.display == 'none') {
+        DocId("MaxMenu").style.display = 'block';
+        DocId("NoExtra").value = "Hide";
     } else {
-        document.getElementById("MaxMenu").style.display = 'none';
-        document.getElementById("NoExtra").value = "Max boobs/dicks etc";
+        DocId("MaxMenu").style.display = 'none';
+        DocId("NoExtra").value = "Max boobs/dicks etc";
     }
 });
 var MobileButtons = false;
 
-document.getElementById("MobileButtons").addEventListener("click", function () {
+DocId("MobileButtons").addEventListener("click", function () {
     switch (MobileButtons) {
         case true:
-            document.getElementById("buttons").style.width = 18 + "%";
-            document.getElementById("buttons").style.maxWidth = 260 + "px";
-            document.getElementById("FirstButtons").style.display = 'none';
-            document.getElementById("SecondButtons").style.display = 'none';
-            document.getElementById("MobileButtons").value = "Buttons";
+            DocId("buttons").style.width = 18 + "%";
+            DocId("buttons").style.maxWidth = 260 + "px";
+            DocId("FirstButtons").style.display = 'none';
+            DocId("SecondButtons").style.display = 'none';
+            DocId("MobileButtons").value = "Buttons";
             MobileButtons = false;
             break;
         default:
-            document.getElementById("buttons").style.width = 70 + "vw";
-            document.getElementById("buttons").style.maxWidth = 70 + "vw";
-            document.getElementById("FirstButtons").style.display = 'block';
-            document.getElementById("MobileButtons").value = "Buttons";
+            DocId("buttons").style.width = 70 + "vw";
+            DocId("buttons").style.maxWidth = 70 + "vw";
+            DocId("FirstButtons").style.display = 'block';
+            DocId("MobileButtons").value = "Buttons";
             MobileButtons = true;
             break;
     }
@@ -9458,30 +9431,30 @@ document.getElementById("MobileButtons").addEventListener("click", function () {
 
 window.onload = function () {
     if (window.innerHeight < 500) {
-        document.getElementById("FirstButtons").style.display = 'none';
-        document.getElementById("SecondButtons").style.display = 'none';
-        document.getElementById("MoreButtons").style.display = 'inline-block';
-        document.getElementById("LessButtons").style.display = 'inline-block';
-        document.getElementById("MobileButtons").style.display = 'inline-block';
+        DocId("FirstButtons").style.display = 'none';
+        DocId("SecondButtons").style.display = 'none';
+        DocId("MoreButtons").style.display = 'inline-block';
+        DocId("LessButtons").style.display = 'inline-block';
+        DocId("MobileButtons").style.display = 'inline-block';
         document.body.style.fontSize = Settings.FontSize + "em";
         HemScale();
     } else if (window.innerHeight < 800) {
-        document.getElementById("FirstButtons").style.display = 'block';
-        document.getElementById("SecondButtons").style.display = 'none';
-        document.getElementById("MoreButtons").style.display = 'inline-block';
-        document.getElementById("LessButtons").style.display = 'inline-block';
-        document.getElementById("MobileButtons").style.display = 'none';
+        DocId("FirstButtons").style.display = 'block';
+        DocId("SecondButtons").style.display = 'none';
+        DocId("MoreButtons").style.display = 'inline-block';
+        DocId("LessButtons").style.display = 'inline-block';
+        DocId("MobileButtons").style.display = 'none';
         document.body.style.fontSize = Settings.FontSize + "em";
     } else {
-        document.getElementById("SecondButtons").style.display = 'block';
-        document.getElementById("FirstButtons").style.display = 'block';
-        document.getElementById("MoreButtons").style.display = 'none';
-        document.getElementById("LessButtons").style.display = 'none';
-        document.getElementById("MobileButtons").style.display = 'none';
+        DocId("SecondButtons").style.display = 'block';
+        DocId("FirstButtons").style.display = 'block';
+        DocId("MoreButtons").style.display = 'none';
+        DocId("LessButtons").style.display = 'none';
+        DocId("MobileButtons").style.display = 'none';
     }
 };
 function TribeQuests() {
-    var x = document.getElementById("TribeQuestsMenu");
+    var x = DocId("TribeQuestsMenu");
     while (x.hasChildNodes()) {
         x.removeChild(x.firstChild);
     }
@@ -9800,7 +9773,7 @@ function MovementEngine(x, y) {
 **/
 
 document.addEventListener('keydown', function (e) {
-    const startarea = document.getElementById("hem");
+    const startarea = DocId("hem");
     if (battle) {
         return;
     }
@@ -9819,7 +9792,7 @@ document.addEventListener('keydown', function (e) {
 });
 
 function mousedownfunc() {
-    const startarea = document.getElementById("hem"),
+    const startarea = DocId("hem"),
         MapRect = startarea.getBoundingClientRect();
     if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x + grid * sprite.Size < startarea.width) {
         sprite.x += grid * sprite.Size;
@@ -9835,7 +9808,7 @@ function mousedownfunc() {
     CheckDoor();
 }
 
-document.getElementById("hem").addEventListener('mousedown', function (e) {
+DocId("hem").addEventListener('mousedown', function (e) {
     if (!mousedowner) {
         mousedowner = true;
         mouseX = e.pageX;
@@ -9844,7 +9817,7 @@ document.getElementById("hem").addEventListener('mousedown', function (e) {
     }
 });
 
-document.getElementById("hem").addEventListener('touchstart', function (e) {
+DocId("hem").addEventListener('touchstart', function (e) {
     if (!mousedowner) {
         mousedowner = true;
         mouseX = e.touches[e.touches.length - 1].clientX;
@@ -9867,7 +9840,7 @@ document.addEventListener('touchend', function () {
     }
 });
 
-document.getElementById("hem").addEventListener('mousemove', function (e) {
+DocId("hem").addEventListener('mousemove', function (e) {
     if (mousedowner) {
         if (mouseX != e.pageX || mouseY != e.pageY) {
             mouseX = e.pageX;
@@ -9876,7 +9849,7 @@ document.getElementById("hem").addEventListener('mousemove', function (e) {
     }
 });
 
-document.getElementById("hem").addEventListener('touchmove', function (e) {
+DocId("hem").addEventListener('touchmove', function (e) {
     if (mousedowner) {
         if (mouseX != e.touches[e.touches.length - 1].clientX || e.touches[e.touches.length - 1].clientY) {
             mouseX = e.touches[e.touches.length - 1].clientX;
@@ -10538,7 +10511,7 @@ function SuccubusBossUnique() {
 }
 var Dungeon = false;
 var Wave = 0;
-document.getElementById("EnterDungeon").addEventListener("click", function () {
+DocId("EnterDungeon").addEventListener("click", function () {
     enemies = [];
     if (false) {
         enemies = [FirstWave(), SecondWave(), ThirdWave(), FourthWave(), SuccubusBossUnique()];
@@ -10549,81 +10522,81 @@ document.getElementById("EnterDungeon").addEventListener("click", function () {
     EnemyIndex = Wave;
     BattleSetup(enemies[Wave]);
 
-    document.getElementById("FirstDungeon").style.display = 'none';
-    document.getElementById("FirstDungeonText").innerHTML = "Wave " + (Wave + 2);
+    DocId("FirstDungeon").style.display = 'none';
+    DocId("FirstDungeonText").innerHTML = "Wave " + (Wave + 2);
     EssenceCheck(enemies[Wave]);
     Dungeon = true;
 });
 
 function DungeonStopButton() {
-    document.getElementById("status").style.display = 'block';
-    document.getElementById("buttons").style.display = 'none';
-    document.getElementById("EmptyButtons").style.display = 'block';
-    document.getElementById("EventLog").style.display = 'block';
+    DocId("status").style.display = 'block';
+    DocId("buttons").style.display = 'none';
+    DocId("EmptyButtons").style.display = 'block';
+    DocId("EventLog").style.display = 'block';
 
     player.Orgasm = 0;
-    document.getElementById("AfterBattle").style.display = 'none';
-    document.getElementById("FirstDungeon").style.display = 'block';
+    DocId("AfterBattle").style.display = 'none';
+    DocId("FirstDungeon").style.display = 'block';
     Wave++;
     if (Wave == 4 && !Flags.BeatSuccubus && false) {
         Flags.BeatSuccubus = true;
-        document.getElementById("FirstDungeonText").innerHTML = "Having beaten her you found a teleport shard to a new world,"
+        DocId("FirstDungeonText").innerHTML = "Having beaten her you found a teleport shard to a new world,"
         if (House.Portal) {
-            document.getElementById("FirstDungeonText").innerHTML += " you can use it at your portal at home!"
+            DocId("FirstDungeonText").innerHTML += " you can use it at your portal at home!"
         } else {
-            document.getElementById("FirstDungeonText").innerHTML += " you should build a portal at your mansion so you can use it."
+            DocId("FirstDungeonText").innerHTML += " you should build a portal at your mansion so you can use it."
         }
     }
     if (Wave == 5) {
         Wave = 0;
-        document.getElementById("FirstDungeonText").innerHTML += "<br><br> You beat the dungeon more to come!"
+        DocId("FirstDungeonText").innerHTML += "<br><br> You beat the dungeon more to come!"
     }
     LastPressed = " ";
     return;
 };
 
 function DungeonCapture() {
-    document.getElementById("status").style.display = 'block';
-    document.getElementById("buttons").style.display = 'none';
-    document.getElementById("EmptyButtons").style.display = 'block';
-    document.getElementById("EventLog").style.display = 'block';
+    DocId("status").style.display = 'block';
+    DocId("buttons").style.display = 'none';
+    DocId("EmptyButtons").style.display = 'block';
+    DocId("EventLog").style.display = 'block';
 
     House.Dormmates.push(enemies[EnemyIndex]);
     player.Orgasm = 0;
-    document.getElementById("AfterBattle").style.display = 'none';
-    document.getElementById("FirstDungeon").style.display = 'block';
+    DocId("AfterBattle").style.display = 'none';
+    DocId("FirstDungeon").style.display = 'block';
     Wave++;
     LastPressed = " ";
     if (Wave == 4) {
         Wave = 0;
-        document.getElementById("FirstDungeonText").innerHTML += "<br><br> You beat the dungeon more to come!"
+        DocId("FirstDungeonText").innerHTML += "<br><br> You beat the dungeon more to come!"
     }
     LastPressed = " ";
     return;
 };
-document.getElementById("DungeonLose").addEventListener("click", function () {
+DocId("DungeonLose").addEventListener("click", function () {
     battle = false;
-    document.getElementById("Lose").style.display = 'none';
-    document.getElementById("map").style.display = 'block';
-    document.getElementById("status").style.display = 'block';
-    document.getElementById("buttons").style.display = 'block';
-    document.getElementById("LoseStruggle").style.display = 'inline-block';
-    document.getElementById("LoseSubmit").style.display = 'inline-block';
-    document.getElementById("LosePlayerOrgasm").innerHTML = " ";
-    document.getElementById("EventLog").style.display = 'block';
+    DocId("Lose").style.display = 'none';
+    DocId("map").style.display = 'block';
+    DocId("status").style.display = 'block';
+    DocId("buttons").style.display = 'block';
+    DocId("LoseStruggle").style.display = 'inline-block';
+    DocId("LoseSubmit").style.display = 'inline-block';
+    DocId("LosePlayerOrgasm").innerHTML = " ";
+    DocId("EventLog").style.display = 'block';
     enemies = [];
     Dungeon = false;
     Wave = 0;
 });
-document.getElementById("LeaveFirstDungeon").addEventListener("click", function () {
+DocId("LeaveFirstDungeon").addEventListener("click", function () {
     enemies = [];
     battle = false;
     player.Orgasm = 0;
-    document.getElementById("AfterBattle").style.display = 'none';
-    document.getElementById("map").style.display = 'block';
-    document.getElementById("status").style.display = 'block';
-    document.getElementById("buttons").style.display = 'block';
-    document.getElementById("EventLog").style.display = 'block';
+    DocId("AfterBattle").style.display = 'none';
+    DocId("map").style.display = 'block';
+    DocId("status").style.display = 'block';
+    DocId("buttons").style.display = 'block';
+    DocId("EventLog").style.display = 'block';
     LastPressed = " ";
     Dungeon = false;
     Wave = 0;
@@ -10927,10 +10900,10 @@ function LeaveBuilding() {
     Leave.setAttribute("value", "Leave");
     Leave.addEventListener("click", function () {
         battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
+        DocId("map").style.display = 'block';
+        DocId("buttons").style.display = 'block';
+        DocId("EmptyButtons").style.display = 'none';
+        DocId("status").style.display = 'block';
         Buildings.style.display = 'none';
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
@@ -10938,10 +10911,6 @@ function LeaveBuilding() {
         return;
     });
     return Leave
-}
-
-function DocId(id) { // Important Prototype.js must be loaded before where you want to use this!
-    return document.getElementById(id);
 }
 
 window.mobilecheck = function () { // Check if mobile device from detectmobile
@@ -11229,102 +11198,102 @@ function DetailedRaceDesc() {
         return "You're unmistakably an " + RaceEss[0].Race + ", but you're deep in an uncanny valley.";
     }
 }
-document.getElementById("Save").addEventListener("click", function () {
+DocId("Save").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("SaveMenu").style.display = 'block';
+    DocId("SaveMenu").style.display = 'block';
     for (let e = 1; e < 6; e++) {
         if (localStorage.getItem('SaveDate' + e) !== null) {
-            document.getElementById("SavePlayer" + e).value = localStorage.getItem('SaveDate' + e);
+            DocId("SavePlayer" + e).value = localStorage.getItem('SaveDate' + e);
         }
     }
 });
-document.getElementById("SaveLeave").addEventListener("click", function () {
-    document.getElementById("SaveMenu").style.display = 'none';
+DocId("SaveLeave").addEventListener("click", function () {
+    DocId("SaveMenu").style.display = 'none';
     DisplayGame();
 });
 
 function SavePlayerButtons() {
     for (let e = 1; e < 6; e++) {
-        document.getElementById("SavePlayer" + e).addEventListener("click", function () {
+        DocId("SavePlayer" + e).addEventListener("click", function () {
             const SaveArray = [player, House, Flags, Settings];
             localStorage.setItem('SavedPlayer' + e, JSON.stringify(SaveArray));
             localStorage.setItem('SaveDate' + e, Date());
-            document.getElementById("SavePlayer" + e).value = Date();
-            document.getElementById("LoadPlayer" + e).value = Date();
+            DocId("SavePlayer" + e).value = Date();
+            DocId("LoadPlayer" + e).value = Date();
         });
     }
 }
 SavePlayerButtons();
 
-document.getElementById("SaveText").addEventListener("click", function () {
+DocId("SaveText").addEventListener("click", function () {
     var SaveArray = [player, House, Flags, Settings];
     var uriContent = "data:application/octet-stream," + encodeURIComponent(JSON.stringify(SaveArray));
     newWindow = window.open(uriContent, 'neuesDokument');
 });
-document.getElementById("Options").addEventListener("click", function () {
+DocId("Options").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("optionpage").style.display = 'block';
-    document.getElementById("ImgPack").value = "Img pack: " + Settings.ImgPack;
-    document.getElementById("LogLength").innerHTML = Settings.LogLength;
-    document.getElementById("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
-    document.getElementById("Inch").value = "Inch " + Settings.Inch;
-    document.getElementById("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
+    DocId("optionpage").style.display = 'block';
+    DocId("ImgPack").value = "Img pack: " + Settings.ImgPack;
+    DocId("LogLength").innerHTML = Settings.LogLength;
+    DocId("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
+    DocId("Inch").value = "Inch " + Settings.Inch;
+    DocId("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
 });
 
-document.getElementById("FontSmaller").addEventListener("click", function () {
+DocId("FontSmaller").addEventListener("click", function () {
     Settings.FontSize -= 0.05;
     document.body.style.fontSize = Settings.FontSize + "em";
-    document.getElementById("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
+    DocId("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
 });
 
-document.getElementById("FontBigger").addEventListener("click", function () {
+DocId("FontBigger").addEventListener("click", function () {
     Settings.FontSize += 0.05;
     document.body.style.fontSize = Settings.FontSize + "em";
-    document.getElementById("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
+    DocId("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
 });
 
-document.getElementById("SetPronoun").addEventListener("click", function () {
+DocId("SetPronoun").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("PronounForm").style.display = 'block'
+    DocId("PronounForm").style.display = 'block'
 });
 
-document.getElementById("Log+10").addEventListener("click", function () {
+DocId("Log+10").addEventListener("click", function () {
     Settings.LogLength += 10;
-    document.getElementById("LogLength").innerHTML = Settings.LogLength;
+    DocId("LogLength").innerHTML = Settings.LogLength;
 });
 
-document.getElementById("Log-10").addEventListener("click", function () {
+DocId("Log-10").addEventListener("click", function () {
     Settings.LogLength -= 10;
-    document.getElementById("LogLength").innerHTML = Settings.LogLength;
+    DocId("LogLength").innerHTML = Settings.LogLength;
 });
 
-document.getElementById("AcceptPronoun").addEventListener("click", function () {
+DocId("AcceptPronoun").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("optionpage").style.display = 'block';
+    DocId("optionpage").style.display = 'block';
     Settings.Pronoun = {
-        Herm: document.getElementById("Herm").value,
-        Male: document.getElementById("Male").value,
-        Female: document.getElementById("Female").value,
-        Doll: document.getElementById("Doll").value,
-        DickGirl: document.getElementById("DickGirl").value,
-        CuntBoy: document.getElementById("CuntBoy").value,
+        Herm: DocId("Herm").value,
+        Male: DocId("Male").value,
+        Female: DocId("Female").value,
+        Doll: DocId("Doll").value,
+        DickGirl: DocId("DickGirl").value,
+        CuntBoy: DocId("CuntBoy").value,
         Status: true
     };
 });
-document.getElementById("DisablePronoun").addEventListener("click", function () {
+DocId("DisablePronoun").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("optionpage").style.display = 'block';
+    DocId("optionpage").style.display = 'block';
     Settings.Pronoun.Status = false;
 });
 
-document.getElementById("Inch").addEventListener("click", function () {
+DocId("Inch").addEventListener("click", function () {
     Settings.Inch = Settings.Inch ? false : true;
-    document.getElementById("Inch").value = "Inch " + Settings.Inch;
+    DocId("Inch").value = "Inch " + Settings.Inch;
 });
 
-document.getElementById("FullScreen").addEventListener("click", function () {
+DocId("FullScreen").addEventListener("click", function () {
     const elem = document.body,
-        button = document.getElementById("FullScreen");
+        button = DocId("FullScreen");
     if (document.fullscreenElement === null) {
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
@@ -11357,46 +11326,46 @@ document.getElementById("FullScreen").addEventListener("click", function () {
 });
 
 // Save options
-document.getElementById("saveoptions").addEventListener("click", function () {
-    document.getElementById("optionpage").style.display = 'none';
+DocId("saveoptions").addEventListener("click", function () {
+    DocId("optionpage").style.display = 'none';
     DisplayGame();
 
-    document.body.style.backgroundColor = document.getElementById("backcolor").value;
-    MapColor = document.getElementById("MapColor").value;
-    document.body.style.color = document.getElementById("textcolor").value;
-    document.body.style.fontFamily = document.getElementById("textfont").value;
+    document.body.style.backgroundColor = DocId("backcolor").value;
+    MapColor = DocId("MapColor").value;
+    document.body.style.color = DocId("textcolor").value;
+    document.body.style.fontFamily = DocId("textfont").value;
 
-    document.getElementById("status").style.backgroundColor = document.getElementById("SideBarColor").value;
-    document.getElementById("buttons").style.backgroundColor = document.getElementById("SideBarColor").value
+    DocId("status").style.backgroundColor = DocId("SideBarColor").value;
+    DocId("buttons").style.backgroundColor = DocId("SideBarColor").value
 
-    Settings.MapPercent = document.getElementById("MapScale").value;
-    Settings.BackColor = document.getElementById("backcolor").value;
-    Settings.MapColor = document.getElementById("MapColor").value;
-    Settings.TextColor = document.getElementById("textcolor").value;
-    Settings.TextFont = document.getElementById("textfont").value;
-    Settings.BorderColor = document.getElementById("BorderColor").value;
+    Settings.MapPercent = DocId("MapScale").value;
+    Settings.BackColor = DocId("backcolor").value;
+    Settings.MapColor = DocId("MapColor").value;
+    Settings.TextColor = DocId("textcolor").value;
+    Settings.TextFont = DocId("textfont").value;
+    Settings.BorderColor = DocId("BorderColor").value;
 
     HemScale();
 });
 
-document.getElementById("PerkOptions").addEventListener("click", function () {
+DocId("PerkOptions").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("PerkOptionsMenu").style.display = 'block';
-    document.getElementById("Skip").value = "Skip " + Settings.Skip;
-    document.getElementById("Vore").value = "Vore " + Settings.Vore;
+    DocId("PerkOptionsMenu").style.display = 'block';
+    DocId("Skip").value = "Skip " + Settings.Skip;
+    DocId("Vore").value = "Vore " + Settings.Vore;
 });
 
-document.getElementById("Skip").addEventListener("click", function () {
+DocId("Skip").addEventListener("click", function () {
     Settings.Skip = Settings.Skip ? false : true;
-    document.getElementById("Skip").value = "Skip " + Settings.Skip;
+    DocId("Skip").value = "Skip " + Settings.Skip;
 });
 
-document.getElementById("PlayerSpriteEnable").addEventListener("click", function(){
+DocId("PlayerSpriteEnable").addEventListener("click", function () {
     Settings.PlayerSpriteEnable = Settings.PlayerSpriteEnable ? false : true;
-    document.getElementById("PlayerSpriteEnable").value = Settings.PlayerSpriteEnable;
+    DocId("PlayerSpriteEnable").value = Settings.PlayerSpriteEnable;
 })
 
-document.getElementById("OptionGiveEssence").addEventListener("click", function () {
+DocId("OptionGiveEssence").addEventListener("click", function () {
     switch (Settings.GiveEssence) {
         case "Both":
             Settings.GiveEssence = "Femininity";
@@ -11411,17 +11380,17 @@ document.getElementById("OptionGiveEssence").addEventListener("click", function 
             Settings.GiveEssence = "Both";
             break;
     }
-    document.getElementById("OptionGiveEssence").value = Settings.GiveEssence;
+    DocId("OptionGiveEssence").value = Settings.GiveEssence;
 });
 
-document.getElementById("PerkOptionsLeave").addEventListener("click", function () {
-    document.getElementById("PerkOptionsMenu").style.display = 'none';
+DocId("PerkOptionsLeave").addEventListener("click", function () {
+    DocId("PerkOptionsMenu").style.display = 'none';
     DisplayGame();
 });
 
-document.getElementById("HighLightDoors").addEventListener("click", function () {
+DocId("HighLightDoors").addEventListener("click", function () {
     Settings.HighLightDoors = Settings.HighLightDoors ? false : true;
-    document.getElementById("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
+    DocId("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
 });
 var PRL,
     RL,
@@ -11461,10 +11430,10 @@ function SexActGiveCunnilingus() {
     enemies[EnemyIndex].Arousal += SexAttack / 2;
     player.Arousal += ESexAttack / 3;
     if (LastPressed === "GiveCunnilingus") {
-        document.getElementById("SexText").innerHTML = "Keeping them in place, you continue your tongue-lashing, electing soft moans from your opponent. Barely able to move, all " + enemies[EnemyIndex].FirstName + "can do is rest their hand on your head. You reach one hand to their clit and gently pinch it, sending a fresh wave of pleasure through their body.";
+        DocId("SexText").innerHTML = "Keeping them in place, you continue your tongue-lashing, electing soft moans from your opponent. Barely able to move, all " + enemies[EnemyIndex].FirstName + "can do is rest their hand on your head. You reach one hand to their clit and gently pinch it, sending a fresh wave of pleasure through their body.";
     } else {
         RL = RandomInt(0, enemies[EnemyIndex].Pussies.length - 1);
-        document.getElementById("SexText").innerHTML = "Your foe lays on their back, chest heaving with exhaustion from the recent fight. You make your way up to " + enemies[EnemyIndex].FirstName + "'s body and crouch between their legs, spreading them apart. In-between lies their " + enemies[EnemyIndex].Pussies[RL].type + " pussy, engorged and dripping slightly, their clit twitching lewdly with each breath of your foe." +
+        DocId("SexText").innerHTML = "Your foe lays on their back, chest heaving with exhaustion from the recent fight. You make your way up to " + enemies[EnemyIndex].FirstName + "'s body and crouch between their legs, spreading them apart. In-between lies their " + enemies[EnemyIndex].Pussies[RL].type + " pussy, engorged and dripping slightly, their clit twitching lewdly with each breath of your foe." +
             " You lick your lips in anticipation as you lower your head to your prize, spreading their lower lips with your fingers, and start eating them out.";
     }
     CheckArousal();
@@ -11479,9 +11448,9 @@ function SexActGiveRimjob() {
     enemies[EnemyIndex].Arousal += SexAttack / 2;
     player.Arousal += ESexAttack / 3;
     if (LastPressed === "GiveRimjob") {
-        document.getElementById("SexText").innerHTML = "You continue eating their ass out.";
+        DocId("SexText").innerHTML = "You continue eating their ass out.";
     } else {
-        document.getElementById("SexText").innerHTML = "You eat their ass out.";
+        DocId("SexText").innerHTML = "You eat their ass out.";
     }
     CheckArousal();
     LastPressed = "GiveRimjob";
@@ -11495,9 +11464,9 @@ function SexActScissoring() {
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
     if (LastPressed === "Scissoring") {
-        document.getElementById("SexText").innerHTML = "As you continue to grind your pussy against " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy, you reach down and toy with their clit, bringing more pleasure-filled moans to your ears.";
+        DocId("SexText").innerHTML = "As you continue to grind your pussy against " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy, you reach down and toy with their clit, bringing more pleasure-filled moans to your ears.";
     } else {
-        document.getElementById("SexText").innerHTML = "Looking down at " + enemies[EnemyIndex].FirstName + ", you feel a twinge of arousal pulse through your crotch. Straddling your opponent's thigh, you lift their other leg and bring your crotches together, grinding your pussy against theirs. Not leaving it at that, you bring their hand to your clit, and moan as they start playing with it.";
+        DocId("SexText").innerHTML = "Looking down at " + enemies[EnemyIndex].FirstName + ", you feel a twinge of arousal pulse through your crotch. Straddling your opponent's thigh, you lift their other leg and bring your crotches together, grinding your pussy against theirs. Not leaving it at that, you bring their hand to your clit, and moan as they start playing with it.";
     }
     CheckArousal();
     LastPressed = "Scissoring";
@@ -11511,10 +11480,10 @@ function SexActGetCunnilingus() {
     enemies[EnemyIndex].Arousal += SexAttack / 3;
     player.Arousal += ESexAttack / 2;
     if (LastPressed === "GetCunnilingus") {
-        document.getElementById("SexText").innerHTML = "Keeping them in place, you force them to continue eating you out, electing soft moans from your throat. Barely able to move, all " + enemies[EnemyIndex].FirstName + "can do is continue eating you out. You reach one hand to their head and gently pet it, telling them they're doing a good job.";
+        DocId("SexText").innerHTML = "Keeping them in place, you force them to continue eating you out, electing soft moans from your throat. Barely able to move, all " + enemies[EnemyIndex].FirstName + "can do is continue eating you out. You reach one hand to their head and gently pet it, telling them they're doing a good job.";
     } else {
         RL = RandomInt(0, player.Pussies.length - 1);
-        document.getElementById("SexText").innerHTML = "Your foe lays on their back, chest heaving with exhaustion from the recent fight. You make your way up " + enemies[EnemyIndex].FirstName + "'s body, licking your lips in anticipation. Squatting above their head, you line your crotch up with their mouth. Grabbing their head, you grind their face against your " + player.Pussies[RL].Type + " pussy, until they " +
+        DocId("SexText").innerHTML = "Your foe lays on their back, chest heaving with exhaustion from the recent fight. You make your way up " + enemies[EnemyIndex].FirstName + "'s body, licking your lips in anticipation. Squatting above their head, you line your crotch up with their mouth. Grabbing their head, you grind their face against your " + player.Pussies[RL].Type + " pussy, until they " +
             "start eating you out with " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Race + " tounge.";
     }
     CheckArousal();
@@ -11529,18 +11498,18 @@ function SexActRideCowgirl() {
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
     if (LastPressed === "RideCowgirl") {
-        document.getElementById("SexText").innerHTML = "Planting one hand on their chest, you continue riding " + HisHer(enemies[EnemyIndex]) + " " + CmToInch(enemies[EnemyIndex].Dicks[RL].Size) + " " + enemies[EnemyIndex].Dicks[RL].Type + " dick at an erratic pace, enjoying their groans of pleasure with each thrust."
+        DocId("SexText").innerHTML = "Planting one hand on their chest, you continue riding " + HisHer(enemies[EnemyIndex]) + " " + CmToInch(enemies[EnemyIndex].Dicks[RL].Size) + " " + enemies[EnemyIndex].Dicks[RL].Type + " dick at an erratic pace, enjoying their groans of pleasure with each thrust."
         if (enemies[EnemyIndex].Balls.length > 0) {
-            document.getElementById("SexText").innerHTML += " Every time your crotch meets theirs, you can feel their balls twitch, getting ready to cum."
+            DocId("SexText").innerHTML += " Every time your crotch meets theirs, you can feel their balls twitch, getting ready to cum."
         }
     } else {
         RL = RandomInt(0, enemies[EnemyIndex].Dicks.length - 1);
         PRL = RandomInt(0, player.Pussies.length - 1);
-        document.getElementById("SexText").innerHTML = "Looking down at your defeated opponent, lying on " + HisHer(enemies[EnemyIndex]) + " back, you position yourself above their crotch. Spreading your lower lips with one hand and positioning " + HisHer(enemies[EnemyIndex]) + " " + CmToInch(enemies[EnemyIndex].Dicks[RL].Size) + " " + enemies[EnemyIndex].Dicks[RL].Type + " dick with your other, you wrap your " + player.Pussies[PRL].Type + " pussy around them.<br>Their dick " + Tightness(enemies[EnemyIndex], player, "B") + " your pussy.";
+        DocId("SexText").innerHTML = "Looking down at your defeated opponent, lying on " + HisHer(enemies[EnemyIndex]) + " back, you position yourself above their crotch. Spreading your lower lips with one hand and positioning " + HisHer(enemies[EnemyIndex]) + " " + CmToInch(enemies[EnemyIndex].Dicks[RL].Size) + " " + enemies[EnemyIndex].Dicks[RL].Type + " dick with your other, you wrap your " + player.Pussies[PRL].Type + " pussy around them.<br>Their dick " + Tightness(enemies[EnemyIndex], player, "B") + " your pussy.";
     }
     if (player.Pussies[PRL].Virgin) {
         player.Pussies[PRL].Virgin = false;
-        document.getElementById("SexText").innerHTML += "<br>You have lost your virginity!"
+        DocId("SexText").innerHTML += "<br>You have lost your virginity!"
     }
     CheckArousal();
     LastPressed = "RideCowgirl";
@@ -11554,17 +11523,17 @@ function SexActInsertion() {
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
     if (LastPressed === "Insertion") {
-        document.getElementById("SexText").innerHTML = "Allowing them only short breaks, you continue masturbating with your living dildo. Judging from their cute squeaks of pleasure, you're not the only one enjoying this.";
+        DocId("SexText").innerHTML = "Allowing them only short breaks, you continue masturbating with your living dildo. Judging from their cute squeaks of pleasure, you're not the only one enjoying this.";
     } else {
         RL = RandomInt(0, enemies[EnemyIndex].Dicks.length - 1);
         PRL = RandomInt(0, player.Pussies.length - 1);
 
-        document.getElementById("SexText").innerHTML = "Due to their small size, conventional sex would be difficult; looking closer at their small form, however, you realize they are about the size of a dildo. to your much larger body. " +
+        DocId("SexText").innerHTML = "Due to their small size, conventional sex would be difficult; looking closer at their small form, however, you realize they are about the size of a dildo. to your much larger body. " +
             "Grabbing them you bring them to your " + CmToInch(player.Pussies[PRL].Size) + " deep " + player.Pussies[PRL].Type + " vagina, telling them look closely at the wet folds they are about to be better acquainted with. Feet first, you gently insert them into your pussy with a soft moan of pleasure. Once you're sure they can survive it, you pick up the pace."
     }
     if (player.Pussies[PRL].Virgin) {
         player.Pussies[PRL].Virgin = false;
-        document.getElementById("SexText").innerHTML += "<br>You have lost your virginity to your little dildo!"
+        DocId("SexText").innerHTML += "<br>You have lost your virginity to your little dildo!"
     }
     CheckArousal();
     LastPressed = "Insertion";
@@ -11578,14 +11547,14 @@ function SexActMissionary() {
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
     if (LastPressed === "Missionary") {
-        document.getElementById("SexText").innerHTML = "You continue fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.";
+        DocId("SexText").innerHTML = "You continue fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.";
     } else {
         PRL = RandomInt(0, player.Dicks.length - 1);
-        document.getElementById("SexText").innerHTML = "Positioning your opponent on " + HisHer(enemies[EnemyIndex]) + " back you fuck " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
+        DocId("SexText").innerHTML = "Positioning your opponent on " + HisHer(enemies[EnemyIndex]) + " back you fuck " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
     }
     if (player.Dicks[PRL].Virgin) {
         player.Dicks[PRL].Virgin = false;
-        document.getElementById("SexText").innerHTML += "<br>Your dick is no longer virgin!"
+        DocId("SexText").innerHTML += "<br>Your dick is no longer virgin!"
     }
 
     CheckArousal();
@@ -11601,22 +11570,22 @@ function SexActDualPen() {
     }
     if (enemies[EnemyIndex].Pussies.length > 0) {
         if (LastPressed === "DualPen") {
-            document.getElementById("SexText").innerHTML = "You continue fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy and ass with your " + player.Dicks[PRL].Type + " dicks, enjoying the contrast between their ass and pussy's tightness and flexibility, and your rods separated by a thin wall of their flesh.";
-            //Text 2: document.getElementById("SexText").innerHTML = "You pull your dicks out of " + HisHer(enemies[EnemyIndex]) + " holes slowly, enjoying the feeling of their pussy and ass trying to pull you back in. Without warning, you thrust forward suddenly, bottoming out again in an instant and forcing a shout of pleasure from their throat. You resume thrusting, a pleasured look on both of your faces."
+            DocId("SexText").innerHTML = "You continue fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy and ass with your " + player.Dicks[PRL].Type + " dicks, enjoying the contrast between their ass and pussy's tightness and flexibility, and your rods separated by a thin wall of their flesh.";
+            //Text 2: DocId("SexText").innerHTML = "You pull your dicks out of " + HisHer(enemies[EnemyIndex]) + " holes slowly, enjoying the feeling of their pussy and ass trying to pull you back in. Without warning, you thrust forward suddenly, bottoming out again in an instant and forcing a shout of pleasure from their throat. You resume thrusting, a pleasured look on both of your faces."
         } else {
-            document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you smile to yourself; they've got enough holes to use more than one dick. Spreading their legs, you line up your " + player.Dicks[0].Type + " with their " + enemies[EnemyIndex].Pussies[0].Type + " pussy and ass, and press in slowly. As they adapt to your dicks, you start picking up speed, thrusting at an irregular pace due to all of the pleasure.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
+            DocId("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you smile to yourself; they've got enough holes to use more than one dick. Spreading their legs, you line up your " + player.Dicks[0].Type + " with their " + enemies[EnemyIndex].Pussies[0].Type + " pussy and ass, and press in slowly. As they adapt to your dicks, you start picking up speed, thrusting at an irregular pace due to all of the pleasure.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
         }
     } else {
         if (LastPressed === "DualPen") {
-            document.getElementById("SexText").innerHTML = "You continue fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
+            DocId("SexText").innerHTML = "You continue fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
         } else {
-            document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you notice a lack of vagina. Not willing to give one dick priority over the other, you spread their legs and line up your " + player.Dicks[0].Type + " dicks with their ass, and press in slowly. To your surprise, they stretch around your dicks with only mild (vocalized) discomfort. As they adapt to your dicks, you start picking up speed, thrusting at an irregular pace due to all of the pleasure.";
+            DocId("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you notice a lack of vagina. Not willing to give one dick priority over the other, you spread their legs and line up your " + player.Dicks[0].Type + " dicks with their ass, and press in slowly. To your surprise, they stretch around your dicks with only mild (vocalized) discomfort. As they adapt to your dicks, you start picking up speed, thrusting at an irregular pace due to all of the pleasure.";
         }
     }
     if (player.Dicks[0].Virgin || player.Dicks[1].Virgin) {
         player.Dicks[0].Virgin = false;
         player.Dicks[1].Virgin = false;
-        document.getElementById("SexText").innerHTML += "<br>Your dicks are no longer virgin!"
+        DocId("SexText").innerHTML += "<br>Your dicks are no longer virgin!"
     }
 
     CheckArousal();
@@ -11639,18 +11608,18 @@ function SexActMultiPen() {
         ImgChose(player, "MultiPen", enemies[EnemyIndex]);
     }
     if (LastPressed === "MultiPen") {
-        document.getElementById("SexText").innerHTML = "Your mind's unable to handle the insane amount of pleasure, and you thrust wildly. Your entire world is focused on the pleasure your dicks are experiencing, fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " holes with your many dicks. Had you more awareness, you would've seen " + enemies[EnemyIndex].FirstName + "'s face in a state of ecstasy, unable to make a sound.";
+        DocId("SexText").innerHTML = "Your mind's unable to handle the insane amount of pleasure, and you thrust wildly. Your entire world is focused on the pleasure your dicks are experiencing, fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " holes with your many dicks. Had you more awareness, you would've seen " + enemies[EnemyIndex].FirstName + "'s face in a state of ecstasy, unable to make a sound.";
     } else if (player.Dicks.length > enemies[EnemyIndex].Pussies.length + 1) //1st case: more dicks than all holes 
     {
-        document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you are disheartened to see them lack enough holes for your arsenal of penises. Resolved to make the best of it, you pair them up and shove them into any orifice they can reach. Pressing in slowly, you're amazed at how much they stretch around your dicks, and how good it feels. Unable to control your body any longer, your mind takes a back seat as your hips thrust at a manic pace, drowning you in pleasure.";
+        DocId("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you are disheartened to see them lack enough holes for your arsenal of penises. Resolved to make the best of it, you pair them up and shove them into any orifice they can reach. Pressing in slowly, you're amazed at how much they stretch around your dicks, and how good it feels. Unable to control your body any longer, your mind takes a back seat as your hips thrust at a manic pace, drowning you in pleasure.";
     } else { //if(player.Dicks.length == enemies[EnemyIndex].Pussies.length + 1) {//2nd case: enough dicks for all holes
-        document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you're ecstatic to see enough holes for your arsenal of penises. Resolved to make this an unforgettable experience, you line up your dicks and slowly ease in. Amazed at how much they stretch around your dicks, and how good it feels, your mind barely registers their hips meeting yours. Unable to control your body any longer, your conscious thoughts takes a back seat as your hips thrust at a manic pace, drowning you in pleasure.";
+        DocId("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you're ecstatic to see enough holes for your arsenal of penises. Resolved to make this an unforgettable experience, you line up your dicks and slowly ease in. Amazed at how much they stretch around your dicks, and how good it feels, your mind barely registers their hips meeting yours. Unable to control your body any longer, your conscious thoughts takes a back seat as your hips thrust at a manic pace, drowning you in pleasure.";
     }
     /*else {//3rd case: They've got enough pussies for your dicks 
     	if (LastPressed === "MultiPen") {
-    		document.getElementById("SexText").innerHTML = "You continue fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
+    		DocId("SexText").innerHTML = "You continue fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " pussy with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.<br>Their pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to you.";
     	} else {
-    		document.getElementById("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you notice a lack of vagina. Not willing to give one dick priority over the other, you spread their legs and line up your " + player.Dicks[0].Type" dicks with their ass, and press in slowly. To your surprise, they stretch around your dicks with only mild (vocalized) discomfort. As they adapt to your dicks, you start picking up speed, thrusting at an irregular pace due to all of the pleasure.";
+    		DocId("SexText").innerHTML = "Looking down at " + HisHer(enemies[EnemyIndex]) + " crotch, you notice a lack of vagina. Not willing to give one dick priority over the other, you spread their legs and line up your " + player.Dicks[0].Type" dicks with their ass, and press in slowly. To your surprise, they stretch around your dicks with only mild (vocalized) discomfort. As they adapt to your dicks, you start picking up speed, thrusting at an irregular pace due to all of the pleasure.";
     	}
     }*/
     var v = false;
@@ -11672,14 +11641,14 @@ function SexActDoggyStyle() {
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
     if (LastPressed === "DoggyStyle") {
-        document.getElementById("SexText").innerHTML = "You continue fucking them from behind.<br>Their " + enemies[EnemyIndex].Pussies[0].Type + " pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.";
+        DocId("SexText").innerHTML = "You continue fucking them from behind.<br>Their " + enemies[EnemyIndex].Pussies[0].Type + " pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.";
     } else {
         PRL = RandomInt(0, player.Dicks.length - 1);
-        document.getElementById("SexText").innerHTML = "Commanding " + HisHer(enemies[EnemyIndex]) + " to get down on their all fours you fuck " + HisHer(enemies[EnemyIndex]) + " from behind.<br> Their " + enemies[EnemyIndex].Pussies[0].Type + " pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.";
+        DocId("SexText").innerHTML = "Commanding " + HisHer(enemies[EnemyIndex]) + " to get down on their all fours you fuck " + HisHer(enemies[EnemyIndex]) + " from behind.<br> Their " + enemies[EnemyIndex].Pussies[0].Type + " pussy " + Tightness(player, enemies[EnemyIndex], "A") + " to your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.";
     }
     if (player.Dicks[PRL].Virgin) {
         player.Dicks[PRL].Virgin = false;
-        document.getElementById("SexText").innerHTML += "<br>Your dick is no longer virgin!"
+        DocId("SexText").innerHTML += "<br>Your dick is no longer virgin!"
     }
 
     CheckArousal();
@@ -11694,14 +11663,14 @@ function SexActGetBlowjob() {
     enemies[EnemyIndex].Arousal += SexAttack / 3;
     player.Arousal += ESexAttack / 2;
     if (LastPressed === "GetBlowjob") {
-        // document.getElementById("SexText").innerHTML = "You continue humping your new toy at a constant pace. Your rhythm doesn’t falter as you use your muscles to the best of their ability. You lean back as you hilt into the back of their throat, eliciting a moan from you as you start breeding deep."
+        // DocId("SexText").innerHTML = "You continue humping your new toy at a constant pace. Your rhythm doesn’t falter as you use your muscles to the best of their ability. You lean back as you hilt into the back of their throat, eliciting a moan from you as you start breeding deep."
         if (player.Balls.length > 0) {
-            document.getElementById("SexText").innerHTML = "Continuing to thrust, your " + CmToInch(player.Balls[0].Size) + " balls slap repeatedly against your foe, causing them to grunt in annoyance." +
+            DocId("SexText").innerHTML = "Continuing to thrust, your " + CmToInch(player.Balls[0].Size) + " balls slap repeatedly against your foe, causing them to grunt in annoyance." +
                 "Your thrusting continues as you make proper use of your opponent’ s mouth. You grab your foe 's forearm and guide it to your sac, grunting in demand as they start to fondle you.<br><br>"
         }
-        document.getElementById("SexText").innerHTML = "Your thrusting continues as you make proper use of your opponent’s mouth. Your pounding of their throat continues even as your abdomen starts bumping into their nose with each thrust. Muffled groans escape from your mouth as " + enemies[EnemyIndex].FirstName + "’s mouth is pumped by your throbbing cock." //They moan as your cock snakes its way through their mouth greedily humps their throat."
+        DocId("SexText").innerHTML = "Your thrusting continues as you make proper use of your opponent’s mouth. Your pounding of their throat continues even as your abdomen starts bumping into their nose with each thrust. Muffled groans escape from your mouth as " + enemies[EnemyIndex].FirstName + "’s mouth is pumped by your throbbing cock." //They moan as your cock snakes its way through their mouth greedily humps their throat."
     } else {
-        document.getElementById("SexText").innerHTML = "You walk up to your defeated adversary as they attempt to get back on their feet. You stop them by catching their head and tilting it up to your face. You look back down at your crotch and nod to your " + CmToInch(player.Dicks[0].Size) + " cock expectantly." +
+        DocId("SexText").innerHTML = "You walk up to your defeated adversary as they attempt to get back on their feet. You stop them by catching their head and tilting it up to your face. You look back down at your crotch and nod to your " + CmToInch(player.Dicks[0].Size) + " cock expectantly." +
             " Just as your prize gets the idea and moves closer you eagerly thrust your hips into their mouth. You hold their head close starting a steady rhythm as you use their hole."
         // "Your last blow sends your foe recoiling back losing their footing and crashing to the floor. You make your way up to them until you cast a shadow of their body. Your adversary groans as they start to rise, only to be met with the sight of your (insert player dick size. small, average, hefty, enormous) member. Stunned by the position they are in you grab the back of their head and guide their mouth to its rightful place and begin to enjoy your prize"
 
@@ -11718,14 +11687,14 @@ function SexActDoggyStyleAnal() {
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
     if (LastPressed === "DoggyStyleAnal") {
-        document.getElementById("SexText").innerHTML = "You keep " + HisHer(enemies[EnemyIndex]) + " head down and fuck " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.";
+        DocId("SexText").innerHTML = "You keep " + HisHer(enemies[EnemyIndex]) + " head down and fuck " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.";
     } else {
         PRL = RandomInt(0, player.Dicks.length - 1);
-        document.getElementById("SexText").innerHTML = "You order you opponent down on " + HisHer(enemies[EnemyIndex]) + " knees, and position yourself behind them. Pushing " + HisHer(enemies[EnemyIndex]) + " head down, you start fucking " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.";
+        DocId("SexText").innerHTML = "You order you opponent down on " + HisHer(enemies[EnemyIndex]) + " knees, and position yourself behind them. Pushing " + HisHer(enemies[EnemyIndex]) + " head down, you start fucking " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[PRL].Size) + " " + player.Dicks[PRL].Type + " dick.";
     }
     if (player.Dicks[PRL].Virgin) {
         player.Dicks[PRL].Virgin = false;
-        document.getElementById("SexText").innerHTML += "<br>Your dick is no longer virgin!"
+        DocId("SexText").innerHTML += "<br>Your dick is no longer virgin!"
     }
 
     CheckArousal();
@@ -11737,17 +11706,17 @@ function SexActDualPen() {
     enemies[EnemyIndex].Arousal += SexAttack * 2;
     player.Arousal += ESexAttack * 2;
     if (LastPressed === "DualPen") {
-        document.getElementById("SexText").innerHTML = "You keep " + HisHer(enemies[EnemyIndex]) + " head down and fuck " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
+        DocId("SexText").innerHTML = "You keep " + HisHer(enemies[EnemyIndex]) + " head down and fuck " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
     } else {
-        document.getElementById("SexText").innerHTML = "You order you opponent down on " + HisHer(enemies[EnemyIndex]) + " knees, and position yourself behind them. Pushing " + HisHer(enemies[EnemyIndex]) + " head down, you start fucking " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
+        DocId("SexText").innerHTML = "You order you opponent down on " + HisHer(enemies[EnemyIndex]) + " knees, and position yourself behind them. Pushing " + HisHer(enemies[EnemyIndex]) + " head down, you start fucking " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
     }
     if (player.Dicks[0].Virgin) {
         player.Dicks[0].Virgin = false;
-        document.getElementById("SexText").innerHTML += "<br>Your first dick is no longer virgin!"
+        DocId("SexText").innerHTML += "<br>Your first dick is no longer virgin!"
     }
     if (player.Dicks[1].Virgin) {
         player.Dicks[1].Virgin = false;
-        document.getElementById("SexText").innerHTML += "<br>Your second dick is no longer virgin!"
+        DocId("SexText").innerHTML += "<br>Your second dick is no longer virgin!"
     }
 
     CheckArousal();
@@ -11766,9 +11735,9 @@ function SexActGetRimjob() {
     enemies[EnemyIndex].Arousal += SexAttack / 3;
     player.Arousal += ESexAttack / 2;
     if (LastPressed === "GetRimjob") {
-        document.getElementById("SexText").innerHTML = "You force your opponent to continue eating out your ass.";
+        DocId("SexText").innerHTML = "You force your opponent to continue eating out your ass.";
     } else {
-        document.getElementById("SexText").innerHTML = "You command your opponent to eat out your ass.";
+        DocId("SexText").innerHTML = "You command your opponent to eat out your ass.";
     }
     CheckArousal();
     LastPressed = "GetRimjob";
@@ -11785,9 +11754,9 @@ function SexActBreastFeed() {
         player.Boobies[b].Milk -= 100 / player.Boobies.length;
     }
     if (LastPressed === "BreastFeed") {
-        document.getElementById("SexText").innerHTML = "You continue feeding them your milk, releiving the pressure in your chest.";
+        DocId("SexText").innerHTML = "You continue feeding them your milk, releiving the pressure in your chest.";
     } else {
-        document.getElementById("SexText").innerHTML = "The urge to nurture is strong due the hormones released from your lactating breasts. Wanting release, you take them into your lap and guide " + HisHer(enemies[EnemyIndex]) + " head to your fullest breast. " +
+        DocId("SexText").innerHTML = "The urge to nurture is strong due the hormones released from your lactating breasts. Wanting release, you take them into your lap and guide " + HisHer(enemies[EnemyIndex]) + " head to your fullest breast. " +
             "At first they assumed you wanted them you suck on your nipples for pleasure, but once their mouth was full they had no choice but to swallow. As they quickly fell in love with the taste, you remove your hand from their head unnoticed, they don't think about stopping their feeding."
     }
     CheckArousal();
@@ -11799,11 +11768,11 @@ function StopSexButton() {
     battle = false;
     player.Orgasm = 0;
     player.cumGround = 0;
-    document.getElementById("map").style.display = 'block';
-    document.getElementById("status").style.display = 'block';
-    document.getElementById("buttons").style.display = 'block';
-    document.getElementById("EventLog").style.display = 'block';
-    document.getElementById("AfterBattle").style.display = 'none';
+    DocId("map").style.display = 'block';
+    DocId("status").style.display = 'block';
+    DocId("buttons").style.display = 'block';
+    DocId("EventLog").style.display = 'block';
+    DocId("AfterBattle").style.display = 'none';
     LastPressed = " ";
     // Trying to have ferals disappear after combat	
     /*	console.log(enemies[EnemyIndex].FirstName);
@@ -11821,11 +11790,11 @@ function SexActCapture() {
     battle = false;
     player.Orgasm = 0;
     player.cumGround = 0;
-    document.getElementById("AfterBattle").style.display = 'none';
-    document.getElementById("map").style.display = 'block';
-    document.getElementById("status").style.display = 'block';
-    document.getElementById("buttons").style.display = 'block';
-    document.getElementById("EventLog").style.display = 'block';
+    DocId("AfterBattle").style.display = 'none';
+    DocId("map").style.display = 'block';
+    DocId("status").style.display = 'block';
+    DocId("buttons").style.display = 'block';
+    DocId("EventLog").style.display = 'block';
     LastPressed = " ";
     return;
 }
@@ -11883,11 +11852,11 @@ const SpellDict = {
         }, // short description of spell & value of action in this case "40 fire type dmg" 
         Succes: function () {},
         Fail: function () {
-            document.getElementById("BattleText2").innerHTML = ""; // So it doesn't look like enemy attacked you.
+            DocId("BattleText2").innerHTML = ""; // So it doesn't look like enemy attacked you.
             return "" // e.g you are to exhausted to cast template.
         },
         Cast: function (index, ee) {
-            document.getElementById("BattleText").innerHTML = this.Succes();
+            DocId("BattleText").innerHTML = this.Succes();
 
         }
     },
@@ -11901,13 +11870,13 @@ const SpellDict = {
             return Math.floor(20 * (player.Int / 20) + (Exp / 100))
         },
         Succes: function (dmg) {
-            document.getElementById("BattleText").innerHTML = "You threw a ball covered in fire, dealing " + dmg + " damage to their HP and will!"
+            DocId("BattleText").innerHTML = "You threw a ball covered in fire, dealing " + dmg + " damage to their HP and will!"
             player.Mana -= this.ManaCost();
             player.MagicAffinity[this.Type]++;
             UpdateStats();
         },
         Fail: function () {
-            document.getElementById("BattleText2").innerHTML = "";
+            DocId("BattleText2").innerHTML = "";
             return "You're exhausted, and can't cast another fireball..."
         },
         Cast: function (index, ee) {
@@ -11918,7 +11887,7 @@ const SpellDict = {
                 that.Exp++;
                 this.Succes(PAttack);
             } else {
-                document.getElementById("BattleText").innerHTML = this.Fail();
+                DocId("BattleText").innerHTML = this.Fail();
             }
         }
     },
@@ -11932,13 +11901,13 @@ const SpellDict = {
             return Math.floor(25 * (player.Int / 20) + (Exp / 100))
         },
         Succes: function (Heal) {
-            document.getElementById("BattleText").innerHTML = "You healed for " + Heal;
+            DocId("BattleText").innerHTML = "You healed for " + Heal;
             player.Mana -= this.ManaCost();
             player.MagicAffinity[this.Type]++;
             UpdateStats();
         },
         Fail: function () {
-            document.getElementById("BattleText").innerHTML = "Fail";
+            DocId("BattleText").innerHTML = "Fail";
         },
         Cast: function (index, ee) {
             var that = player.Spells[index];
@@ -11946,7 +11915,7 @@ const SpellDict = {
             var Heal = this.Does(that.Exp)
             if (player.Mana > ManaCost) {
                 if (player.Health > player.MaxHealth) {
-                    document.getElementById("BattleText").innerHTML = "You already have full health."
+                    DocId("BattleText").innerHTML = "You already have full health."
                 } else if (player.Health + Heal > player.MaxHealth) {
                     player.Mana -= ManaCost;
                     player.Health = player.MaxHealth;
@@ -12085,13 +12054,13 @@ function TotalSexSkill() {
     return SexSkill;
 }
 // Start Farm
-document.getElementById("EquineTaurTF").addEventListener("click", function () {
+DocId("EquineTaurTF").addEventListener("click", function () {
     if (player.SecondRace == "centaur") {
-        document.getElementById("FarmOwnerText").innerHTML = "You're already a centaur!"
+        DocId("FarmOwnerText").innerHTML = "You're already a centaur!"
         return;
     }
     if (TF.Status) {
-        document.getElementById("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
+        DocId("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
         return;
     }
     if (player.Gold >= 250) {
@@ -12099,39 +12068,39 @@ document.getElementById("EquineTaurTF").addEventListener("click", function () {
         PotionDrunk("centaur")
         //TfEngine("centaur");
     } else {
-        document.getElementById("FarmOwnerText").innerHTML = "Insufficient gold.";
+        DocId("FarmOwnerText").innerHTML = "Insufficient gold.";
         return;
     }
 });
-document.getElementById("FarmTitles").addEventListener("mouseover", function (e) {
-    document.getElementById("FarmOwnerText").innerHTML = e.target.title;
+DocId("FarmTitles").addEventListener("mouseover", function (e) {
+    DocId("FarmOwnerText").innerHTML = e.target.title;
 });
-document.getElementById("EquineTF").addEventListener("click", function () {
+DocId("EquineTF").addEventListener("click", function () {
     if (player.SecondRace == "equine" && player.Race == "equine") {
-        document.getElementById("FarmOwnerText").innerHTML = "You already are a equine!"
+        DocId("FarmOwnerText").innerHTML = "You already are a equine!"
         return;
     }
     if (TF.Status) {
-        document.getElementById("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
+        DocId("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
         return;
     }
     if (player.Gold >= 250) {
         player.Gold -= 250;
         TfEngine("equine");
     } else {
-        document.getElementById("FarmOwnerText").innerHTML = "Insufficient gold.";
+        DocId("FarmOwnerText").innerHTML = "Insufficient gold.";
         return;
     }
 });
-document.getElementById("FarmOwnerLooks").addEventListener("click", function () {
-    document.getElementById("FarmOwnerText").innerHTML = "Standing before you, a centaur who introduce himself as Teoivz, looking at him it’s evident he spends many hours working on the farm. His human upper body possess muscle forged from years of work, " +
+DocId("FarmOwnerLooks").addEventListener("click", function () {
+    DocId("FarmOwnerText").innerHTML = "Standing before you, a centaur who introduce himself as Teoivz, looking at him it’s evident he spends many hours working on the farm. His human upper body possess muscle forged from years of work, " +
         "his equine lower body is not one from a race horse but a work horse.<br>Throwing an eye towards his genitals, it’s	hard to guess the exact size his two members retracted inside their penile sheath but it's obvious that they are well capable of stretching a maiden."
 });
 // End FarmOwner
 
 // The FarmBarn
 
-/*document.getElementById("InfinityMilker").addEventListener("click", function () {
+/*DocId("InfinityMilker").addEventListener("click", function () {
     if (player.Gold >= 7000) {
         player.Gold -= 7000;
         SnowInventoryAdd(ItemDict.Milker, Infinity);
@@ -12142,7 +12111,7 @@ document.getElementById("FarmOwnerLooks").addEventListener("click", function () 
 });*/
 
 function FarmBarnFunc() {
-    var Buildings = document.getElementById("Buildings")
+    var Buildings = DocId("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
@@ -12279,14 +12248,14 @@ function FarmBarnFunc() {
 
     div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
-    document.getElementById("Buildings").style.display = 'block';
+    DocId("Buildings").style.display = 'block';
 }
     // Start Vore
-    document.getElementById("VoreLooks").style.display = 'none';
-    document.getElementById("Vore").addEventListener("click", function () {
+    DocId("VoreLooks").style.display = 'none';
+    DocId("Vore").addEventListener("click", function () {
         Settings.Vore = Settings.Vore ? false : true;
-        document.getElementById("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none';
-        document.getElementById("Vore").value = "Vore " + Settings.Vore;
+        DocId("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none';
+        DocId("Vore").value = "Vore " + Settings.Vore;
         if (!player.hasOwnProperty("Vore")) {
             player.Vore = {
                 Level: 0,
@@ -12320,31 +12289,31 @@ function FarmBarnFunc() {
         }
     });
 
-    document.getElementById("VorePerks").addEventListener("click", function () {
-        document.getElementById("VoreButtons").style.display = 'none';
-        document.getElementById("VorePerkMenu").style.display = 'block';
-        document.getElementById("VorePerkPointsLeft").innerHTML = "You have " + player.Vore.VorePoints + " perk points left.";
+    DocId("VorePerks").addEventListener("click", function () {
+        DocId("VoreButtons").style.display = 'none';
+        DocId("VorePerkMenu").style.display = 'block';
+        DocId("VorePerkPointsLeft").innerHTML = "You have " + player.Vore.VorePoints + " perk points left.";
         if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
-            document.getElementById("AbsorbEssence").value = "AbsorbEssence +" + player.Vore.VorePerks.AbsorbEssence.Count;
+            DocId("AbsorbEssence").value = "AbsorbEssence +" + player.Vore.VorePerks.AbsorbEssence.Count;
         }
         if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
-            document.getElementById("FasterDigestion").value = "Faster digestion +" + player.Vore.VorePerks.FasterDigestion.Count;
+            DocId("FasterDigestion").value = "Faster digestion +" + player.Vore.VorePerks.FasterDigestion.Count;
         }
         if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
             if (player.Vore.VorePerks.AbsorbStats.Count > 9) {
-                document.getElementById("AbsorbStats").style.display = 'none';
+                DocId("AbsorbStats").style.display = 'none';
             } else {
-                document.getElementById("AbsorbStats").value = "Drain Stats +" + player.Vore.VorePerks.AbsorbStats.Count; //Had to shorten value as text got outside button
+                DocId("AbsorbStats").value = "Drain Stats +" + player.Vore.VorePerks.AbsorbStats.Count; //Had to shorten value as text got outside button
             }
         }
         if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
-            document.getElementById("HigherCapacity").value = "Higher capacity +" + player.Vore.VorePerks.HigherCapacity.Count;
+            DocId("HigherCapacity").value = "Higher capacity +" + player.Vore.VorePerks.HigherCapacity.Count;
         }
         if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
-            document.getElementById("AbsorbHeight").value = "Absorb height +" + player.Vore.VorePerks.AbsorbHeight.Count;
+            DocId("AbsorbHeight").value = "Absorb height +" + player.Vore.VorePerks.AbsorbHeight.Count;
         }
         if (player.Vore.VorePerks.hasOwnProperty("PredatorsMeta")) {
-            document.getElementById("PredatorsMeta").value = "Predators meta +" + player.Vore.VorePerks.PredatorsMeta.Count;
+            DocId("PredatorsMeta").value = "Predators meta +" + player.Vore.VorePerks.PredatorsMeta.Count;
         }
         return;
     });
@@ -12360,13 +12329,13 @@ function FarmBarnFunc() {
                 Count: 1
             }
         }
-        document.getElementById(perket).value = perket + " +" + player.Vore.VorePerks[perket].Count;
-        document.getElementById("VorePerkPointsLeft").innerHTML = "You have " + player.Vore.VorePoints + " perk points left.";
+        DocId(perket).value = perket + " +" + player.Vore.VorePerks[perket].Count;
+        DocId("VorePerkPointsLeft").innerHTML = "You have " + player.Vore.VorePoints + " perk points left.";
     }
-    document.getElementById("AbsorbEssence").addEventListener("click", function () {
+    DocId("AbsorbEssence").addEventListener("click", function () {
         player.Vore.VorePoints > 0 ? VorePerkHandler("AbsorbEssence") : false;
     });
-    document.getElementById("AbsorbStats").addEventListener("click", function () {
+    DocId("AbsorbStats").addEventListener("click", function () {
         if (player.Vore.VorePoints > 9) {
             if (!player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
                 VorePerkHandler("AbsorbStats");
@@ -12377,31 +12346,31 @@ function FarmBarnFunc() {
             return;
         }
     });
-    document.getElementById("VorePerkMenu").addEventListener("mouseover", function (e) {
-        document.getElementById("VorePerkMenuText").innerHTML = e.target.title;
+    DocId("VorePerkMenu").addEventListener("mouseover", function (e) {
+        DocId("VorePerkMenuText").innerHTML = e.target.title;
     });
-    document.getElementById("FasterDigestion").addEventListener("click", function () {
+    DocId("FasterDigestion").addEventListener("click", function () {
         player.Vore.VorePoints > 0 ? VorePerkHandler("FasterDigestion") : false;
     });
-    document.getElementById("HigherCapacity").addEventListener("click", function () {
+    DocId("HigherCapacity").addEventListener("click", function () {
         player.Vore.VorePoints > 0 ? VorePerkHandler("HigherCapacity") : false;
     });
-    document.getElementById("AbsorbHeight").addEventListener("click", function () {
+    DocId("AbsorbHeight").addEventListener("click", function () {
         player.Vore.VorePoints > 0 ? VorePerkHandler("AbsorbHeight") : false;
     });
-    document.getElementById("PredatorsMeta").addEventListener("click", function () {
+    DocId("PredatorsMeta").addEventListener("click", function () {
         player.Vore.VorePoints > 0 ? VorePerkHandler("PredatorsMeta") : false;
     });
-    document.getElementById("LeaveVorePerkMenu").addEventListener("click", function () {
-        document.getElementById("VoreButtons").style.display = 'grid';
-        document.getElementById("VorePerkMenu").style.display = 'none';
+    DocId("LeaveVorePerkMenu").addEventListener("click", function () {
+        DocId("VoreButtons").style.display = 'grid';
+        DocId("VorePerkMenu").style.display = 'none';
     });
 
-    document.getElementById("VoreSettings").addEventListener("click", function () {
-        var VoreSettings = document.getElementById("VoreSettingsMenu");
+    DocId("VoreSettings").addEventListener("click", function () {
+        var VoreSettings = DocId("VoreSettingsMenu");
         VoreSettings.style.display = VoreSettings.style.display === 'block' ? 'none' : 'block';
     });
-    document.getElementById("AbsorbEssenceSetting").addEventListener("click", function () {
+    DocId("AbsorbEssenceSetting").addEventListener("click", function () {
         switch (Settings.VoreSettings.AbsorbEssence) {
             case "Both":
                 Settings.VoreSettings.AbsorbEssence = "Femininity";
@@ -12416,21 +12385,21 @@ function FarmBarnFunc() {
                 Settings.VoreSettings.AbsorbEssence = "Both";
                 break;
         }
-        document.getElementById("AbsorbEssenceSetting").value = "Absorb Essence " + Settings.VoreSettings.AbsorbEssence;
+        DocId("AbsorbEssenceSetting").value = "Absorb Essence " + Settings.VoreSettings.AbsorbEssence;
     });
-    document.getElementById("LeaveVore").addEventListener("click", function () {
-        document.getElementById("ShowVore").style.display = 'none';
-        document.getElementById("VoreAnal").style.display = 'none';
-        document.getElementById("VoreBalls").style.display = 'none';
-        document.getElementById("VoreBreast").style.display = 'none';
-        document.getElementById("VoreVagina").style.display = 'none';
-        document.getElementById("VoreStomach").style.display = 'none';
-        document.getElementById("VoreButtons").style.display = 'grid';
+    DocId("LeaveVore").addEventListener("click", function () {
+        const none = ["ShowVore", "VoreAnal", "VoreBalls", "VoreBreast", "VoreVagina", "VoreStomach"].forEach((src) => {
+            DocId(src).style.display = 'none';
+        });
+        DocId("VoreButtons").style.display = 'grid';
         DisplayGame();
     });
 
     function VoreEngine(progress = 0.001) {
-        const VoreMaxExp = 30 + Math.pow(1.05, player.Vore.Level - 1);
+        const VoreMaxExp = 30 + Math.pow(1.05, player.Vore.Level - 1),
+            VP = player.Vore.VorePerks,
+            digestionCount = VP.hasOwnProperty("FasterDigestion") ?
+            1 + VP.FasterDigestion.Count : 1;
         if (player.Vore.Exp >= VoreMaxExp) {
             player.Vore.Exp = player.Vore.Exp - VoreMaxExp;
             player.Vore.Level++;
@@ -12446,10 +12415,6 @@ function FarmBarnFunc() {
         DocId("VorePerks").style.display = player.Vore.VorePoints > 0 ? 'inline-block' : 'none';
 
         // Digestion perk
-        var digestionCount = 1;
-        if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
-            digestionCount += player.Vore.VorePerks.FasterDigestion.Count;
-        }
 
         // Stomach
         var content = 0;
@@ -12477,34 +12442,34 @@ function FarmBarnFunc() {
             if (!player.Vore.Stomach[e].hasOwnProperty("LastName")) {
                 player.Vore.Stomach[e].LastName = "";
             }
-            if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
+            if (VP.hasOwnProperty("AbsorbEssence")) {
                 switch (Settings.VoreSettings.AbsorbEssence) {
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Masc)
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Masc)
                         player.Vore.Stomach[e].Masc -= shift;
                         player.Masc += shift;
                         break;
                     case "Femininity":
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Femi)
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Femi)
                         player.Vore.Stomach[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                     default:
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Masc)
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Masc)
                         player.Vore.Stomach[e].Masc -= shift;
                         player.Masc += shift;
-                        shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Femi)
+                        shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Femi)
                         player.Vore.Stomach[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                 }
             }
-            if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
-                if (player.Height < 160 + player.Vore.VorePerks.AbsorbHeight.Count * 20 && player.Vore.Stomach[e].Height > 1) {
-                    player.Height += player.Vore.VorePerks.AbsorbHeight.Count * progress;
-                    player.Vore.Stomach[e].Height -= player.Vore.VorePerks.AbsorbHeight.Count * progress;
+            if (VP.hasOwnProperty("AbsorbHeight")) {
+                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && player.Vore.Stomach[e].Height > 1) {
+                    player.Height += VP.AbsorbHeight.Count * progress;
+                    player.Vore.Stomach[e].Height -= VP.AbsorbHeight.Count * progress;
                 }
 
             }
@@ -12519,12 +12484,16 @@ function FarmBarnFunc() {
                 player.Fat += progress / 2 * digestionCount;
 
                 if (player.Vore.Stomach[e].Weight < 0) {
-                    if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
-                        var snowA = Math.max(10 - player.Vore.VorePerks.AbsorbStats.Count, 1);
+                    if (VP.hasOwnProperty("AbsorbStats")) {
+                        var snowA = Math.max(10 - VP.AbsorbStats.Count, 1);
                         player.Str += Math.round(player.Vore.Stomach[e].Str / snowA);
                         player.Int += Math.round(player.Vore.Stomach[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Stomach[e].Charm / snowA);
-                        player.Will += Math.round(player.Vore.Stomach[e].Will / snowA);
+                        if (player.Vore.Stomach[e].hasOwnProperty("Will")) {
+                            player.Will += Math.round(player.Vore.Stomach[e].Will / snowA);
+                        } else if (player.Vore.Stomach[e].hasOwnProperty("Willpower")) {
+                            player.Will += Math.round(player.Vore.Stomach[e].Willpower / snowA);
+                        }
                         player.End += Math.round(player.Vore.Stomach[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Stomach[e].SexSkill / snowA);
                     }
@@ -12556,34 +12525,34 @@ function FarmBarnFunc() {
             player.Vore.Exp += 0.5 * fullness * digestionCount * progress;
         }
         for (var e = 0; e < player.Vore.Vagina.length; e++) {
-            if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
+            if (VP.hasOwnProperty("AbsorbEssence")) {
                 switch (Settings.VoreSettings.AbsorbEssence) {
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Masc);
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Masc);
                         player.Vore.Vagina[e].Masc -= shift;
                         player.Masc += shift;
                         break;
                     case "Femininity":
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Femi);
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Femi);
                         player.Vore.Vagina[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                     default:
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Masc);
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Masc);
                         player.Vore.Vagina[e].Masc -= shift;
                         player.Masc += shift;
-                        shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Femi);
+                        shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Femi);
                         player.Vore.Vagina[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                 }
             }
-            if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
-                if (player.Height < 160 + player.Vore.VorePerks.AbsorbHeight.Count * 20 && player.Vore.Vagina[e].Height > 1) {
-                    player.Height += player.Vore.VorePerks.AbsorbHeight.Count * progress;
-                    player.Vore.Vagina[e].Height -= player.Vore.VorePerks.AbsorbHeight.Count * progress;
+            if (VP.hasOwnProperty("AbsorbHeight")) {
+                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && player.Vore.Vagina[e].Height > 1) {
+                    player.Height += VP.AbsorbHeight.Count * progress;
+                    player.Vore.Vagina[e].Height -= VP.AbsorbHeight.Count * progress;
                 }
             }
             if (Settings.VoreSettings.VCumDigestion) {
@@ -12595,12 +12564,16 @@ function FarmBarnFunc() {
                     } else if (q + 1 == player.RaceEssence.length) {}
                 }
                 if (player.Vore.Vagina[e].Weight < 0) {
-                    if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
-                        var snowA = Math.max(10 - player.Vore.VorePerks.AbsorbStats.Count, 1);
+                    if (VP.hasOwnProperty("AbsorbStats")) {
+                        var snowA = Math.max(10 - VP.AbsorbStats.Count, 1);
                         player.Str += Math.round(player.Vore.Vagina[e].Str / snowA);
                         player.Int += Math.round(player.Vore.Vagina[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Vagina[e].Charm / snowA);
-                        player.Will += Math.round(player.Vore.Vagina[e].Will / snowA);
+                        if (player.Vore.Vagina[e].hasOwnProperty("Will")) {
+                            player.Will += Math.round(player.Vore.Vagina[e].Will / snowA);
+                        } else if (player.Vore.Vagina[e].hasOwnProperty("Willpower")) {
+                            player.Will += Math.round(player.Vore.Vagina[e].Willpower / snowA);
+                        }
                         player.End += Math.round(player.Vore.Vagina[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Vagina[e].SexSkill / snowA);
                     }
@@ -12648,34 +12621,34 @@ function FarmBarnFunc() {
             player.Vore.Exp += 0.5 * fullness * digestionCount * progress;
         }
         for (var e = 0; e < player.Vore.Breast.length; e++) {
-            if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
+            if (VP.hasOwnProperty("AbsorbEssence")) {
                 switch (Settings.VoreSettings.AbsorbEssence) {
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Masc)
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Breast[e].Masc)
                         player.Vore.Breast[e].Masc -= shift;
                         player.Masc += shift;
                         break;
                     case "Femininity":
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Femi)
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Breast[e].Femi)
                         player.Vore.Breast[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                     default:
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Masc)
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Breast[e].Masc)
                         player.Vore.Breast[e].Masc -= shift;
                         player.Masc += shift;
-                        shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Breast[e].Femi)
+                        shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Breast[e].Femi)
                         player.Vore.Breast[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                 }
             }
-            if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
-                if (player.Height < 160 + player.Vore.VorePerks.AbsorbHeight.Count * 20 && player.Vore.Breast[e].Height > 1) {
-                    player.Height += player.Vore.VorePerks.AbsorbHeight.Count * progress;
-                    player.Vore.Breast[e].Height -= player.Vore.VorePerks.AbsorbHeight.Count * progress;
+            if (VP.hasOwnProperty("AbsorbHeight")) {
+                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && player.Vore.Breast[e].Height > 1) {
+                    player.Height += VP.AbsorbHeight.Count * progress;
+                    player.Vore.Breast[e].Height -= VP.AbsorbHeight.Count * progress;
                 }
 
             }
@@ -12693,12 +12666,16 @@ function FarmBarnFunc() {
                     }
                 }
                 if (player.Vore.Breast[e].Weight < 0) {
-                    if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
-                        var snowA = Math.max(10 - player.Vore.VorePerks.AbsorbStats.Count, 1);
+                    if (VP.hasOwnProperty("AbsorbStats")) {
+                        var snowA = Math.max(10 - VP.AbsorbStats.Count, 1);
                         player.Str += Math.round(player.Vore.Breast[e].Str / snowA);
                         player.Int += Math.round(player.Vore.Breast[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Breast[e].Charm / snowA);
-                        player.Will += Math.round(player.Vore.Breast[e].Will / snowA);
+                        if (player.Vore.Breast[e].hasOwnProperty("Will")) {
+                            player.Will += Math.round(player.Vore.Breast[e].Will / snowA);
+                        } else if (player.Vore.Breast[e].hasOwnProperty("Willpower")) {
+                            player.Will += Math.round(player.Vore.Breast[e].Willpower / snowA);
+                        }
                         player.End += Math.round(player.Vore.Breast[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Breast[e].SexSkill / snowA);
                     }
@@ -12730,34 +12707,34 @@ function FarmBarnFunc() {
             player.Vore.Exp += 0.5 * fullness * digestionCount * progress;
         }
         for (var e = 0; e < player.Vore.Balls.length; e++) {
-            if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
+            if (VP.hasOwnProperty("AbsorbEssence")) {
                 switch (Settings.VoreSettings.AbsorbEssence) {
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Masc)
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Balls[e].Masc)
                         player.Vore.Balls[e].Masc -= shift;
                         player.Masc += shift;
                         break;
                     case "Femininity":
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Femi)
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Balls[e].Femi)
                         player.Vore.Balls[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                     default:
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Masc)
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Balls[e].Masc)
                         player.Vore.Balls[e].Masc -= shift;
                         player.Masc += shift;
-                        shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Balls[e].Femi)
+                        shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Balls[e].Femi)
                         player.Vore.Balls[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                 }
             }
-            if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
-                if (player.Height < 160 + player.Vore.VorePerks.AbsorbHeight.Count * 20 && player.Vore.Balls[e].Height > 1) {
-                    player.Height += player.Vore.VorePerks.AbsorbHeight.Count * progress;
-                    player.Vore.Balls[e].Height -= player.Vore.VorePerks.AbsorbHeight.Count * progress;
+            if (VP.hasOwnProperty("AbsorbHeight")) {
+                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && player.Vore.Balls[e].Height > 1) {
+                    player.Height += VP.AbsorbHeight.Count * progress;
+                    player.Vore.Balls[e].Height -= VP.AbsorbHeight.Count * progress;
                 }
 
             }
@@ -12775,12 +12752,16 @@ function FarmBarnFunc() {
                     }
                 }
                 if (player.Vore.Balls[e].Weight < 0) {
-                    if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
-                        var snowA = Math.max(10 - player.Vore.VorePerks.AbsorbStats.Count, 1);
+                    if (VP.hasOwnProperty("AbsorbStats")) {
+                        var snowA = Math.max(10 - VP.AbsorbStats.Count, 1);
                         player.Str += Math.round(player.Vore.Balls[e].Str / snowA);
                         player.Int += Math.round(player.Vore.Balls[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Balls[e].Charm / snowA);
-                        player.Will += Math.round(player.Vore.Balls[e].Will / snowA);
+                        if (player.Vore.Balls[e].hasOwnProperty("Will")) {
+                            player.Will += Math.round(player.Vore.Balls[e].Will / snowA);
+                        } else if (player.Vore.Balls[e].hasOwnProperty("Willpower")) {
+                            player.Will += Math.round(player.Vore.Balls[e].Willpower / snowA);
+                        }
                         player.End += Math.round(player.Vore.Balls[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Balls[e].SexSkill / snowA);
                     }
@@ -12813,34 +12794,34 @@ function FarmBarnFunc() {
             player.Vore.Exp += 0.5 * fullness * digestionCount * progress;
         }
         for (var e = 0; e < player.Vore.Anal.length; e++) {
-            if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
+            if (VP.hasOwnProperty("AbsorbEssence")) {
                 switch (Settings.VoreSettings.AbsorbEssence) {
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Masc)
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Anal[e].Masc)
                         player.Vore.Anal[e].Masc -= shift;
                         player.Masc += shift;
                         break;
                     case "Femininity":
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Femi)
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Anal[e].Femi)
                         player.Vore.Anal[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                     default:
-                        var shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Masc)
+                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Anal[e].Masc)
                         player.Vore.Anal[e].Masc -= shift;
                         player.Masc += shift;
-                        shift = Math.min(player.Vore.VorePerks.AbsorbEssence.Count * progress, player.Vore.Anal[e].Femi)
+                        shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Anal[e].Femi)
                         player.Vore.Anal[e].Femi -= shift;
                         player.Femi += shift;
                         break;
                 }
             }
-            if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
-                if (player.Height < 160 + player.Vore.VorePerks.AbsorbHeight.Count * 20 && player.Vore.Anal[e].Height > 1) {
-                    player.Height += player.Vore.VorePerks.AbsorbHeight.Count * progress;
-                    player.Vore.Anal[e].Height -= player.Vore.VorePerks.AbsorbHeight.Count * progress;
+            if (VP.hasOwnProperty("AbsorbHeight")) {
+                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && player.Vore.Anal[e].Height > 1) {
+                    player.Height += VP.AbsorbHeight.Count * progress;
+                    player.Vore.Anal[e].Height -= VP.AbsorbHeight.Count * progress;
                 }
             }
             if (Settings.VoreSettings.AnalDigestion) {
@@ -12853,12 +12834,16 @@ function FarmBarnFunc() {
                 }
                 player.Fat += progress / 2 * digestionCount;
                 if (player.Vore.Anal[e].Weight < 0) {
-                    if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
-                        var snowA = Math.max(10 - player.Vore.VorePerks.AbsorbStats.Count, 1);
+                    if (VP.hasOwnProperty("AbsorbStats")) {
+                        var snowA = Math.max(10 - VP.AbsorbStats.Count, 1);
                         player.Str += Math.round(player.Vore.Anal[e].Str / snowA);
                         player.Int += Math.round(player.Vore.Anal[e].Int / snowA);
                         player.Charm += Math.round(player.Vore.Anal[e].Charm / snowA);
-                        player.Will += Math.round(player.Vore.Anal[e].Will / snowA);
+                        if (player.Vore.Anal[e].hasOwnProperty("Will")) {
+                            player.Will += Math.round(player.Vore.Anal[e].Will / snowA);
+                        } else if (player.Vore.Anal[e].hasOwnProperty("Willpower")) {
+                            player.Will += Math.round(player.Vore.Anal[e].Willpower / snowA);
+                        }
                         player.End += Math.round(player.Vore.Anal[e].End / snowA);
                         player.SexSkill += Math.round(player.Vore.Anal[e].SexSkill / snowA);
                     }
@@ -12868,6 +12853,7 @@ function FarmBarnFunc() {
             }
         }
     }
+
 
     function StomachCapacity() {
         var capacity = player.Height / 3
@@ -13045,126 +13031,130 @@ function FarmBarnFunc() {
         return capacity * bonus;
     }
     // End vore
- function VoreActionsOralVore () {
-    if (enemies[EnemyIndex].Weight < StomachCapacity()) {
-        if (Settings.ImgPack) {
-            ImgChose(player, "OralVore", enemies[EnemyIndex]);
-        }
-        enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
-        player.Vore.Stomach.push(enemies[EnemyIndex]);
-        enemies.splice(EnemyIndex, 1);
-        document.getElementById("SexText").innerHTML = "You walk up to your foe with a primal hunger in your abdomen. Your foe is still groggy from the beating you gave them, will fulfill your stomach's desire." +
-            " You swiftly grab their head with your hands and bring their face to yours. They grunt, expecting a make-out session, only for their eyes to widen as your mouth does the same. You take in their head in one motion and " +
-            "pin their arms to their waist, holding them in place. You lick their face, enjoying their taste, as you lean forward, pushing their head and neck into your greedy throat.<br><br> Loud gulping noises can be heard as you stretch your mouth even further " +
-            "and take in their shoulders. Your muscles strain and bulge as you lift your meal off the ground, suspending them in the air, allowing their torso to slide down into your stomach, leaving only their weakly-flailing legs outside." +
-            " Your stomach bulges as they enter your guts, which give a rumble of approval and anticipation for the rest of its meal. Your hands make their way up to their calves as you grip tightly and give a hard shove, pushing them in to their ankles." +
-            "<br><br>You open wide and let their feet slide in, your jaws snapping shut as your food is forced to accept its fate. Your filled stomach stretches and heaves as your prey struggles and pushes in futile attempts to free itself.";
-        if (StomachCapacity() / MaxStomachCapacity() > 0.5) {
-            document.getElementById("SexText").innerHTML += " You struggle to get back to your feet, your distended stomach sagging heavily with its weight. You wince in discomfort, walking bow-legged for a little to handle its weight.";
-        }
-        HideVore();
-    } else {
-        document.getElementById("SexText").innerHTML = "You cannot fit more into your stomach!";
-    }
-    return;
-};
-function VoreActionsUnbirth () {
-    if (enemies[EnemyIndex].Weight < VaginaCapacity()) {
-        if (Settings.ImgPack) {
-            ImgChose(player, "Unbirth", enemies[EnemyIndex]);
-        }
-        enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
-        player.Vore.Vagina.push(enemies[EnemyIndex]);
-        enemies.splice(EnemyIndex, 1);
-        document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove into your pussy!";
-        HideVore();
-    } else {
-        document.getElementById("SexText").innerHTML = "You cannot fit more into your vagina!";
-    }
-    return;
-};
-function VoreActionsCockVore () {
-    if (enemies[EnemyIndex].Weight < BallsCapacity()) {
-        if (Settings.ImgPack) {
-            ImgChose(player, "CockVore", enemies[EnemyIndex]);
-        }
-        enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
-        player.Vore.Balls.push(enemies[EnemyIndex]);
-        enemies.splice(EnemyIndex, 1);
-        if (player.SecondRace !== "centaur") { // Isn't it !=
-            document.getElementById("SexText").innerHTML = "Your confidently stride up to your opponent, looking at your next meal's form as your reach for your waist. They bend their head forward, and aren't surprised when they are greeted with your erect cock." +
-                " They open their mouth to start sucking, only for your dick to stretch wide as well. Before they have time to react, you thrust forward, quickly enveloping their head within your dick. You use your hands to squeeze the newest bulge in your member as you eagerly thrust around your foe, slowly forcing them deeper with each hump." +
-                " <br><br>Your breathing deepens as their shoulders begin their journey to your sac, stretching your dick wide to accommodate its food. Both of your hands reach around your massively-distended dick as you rub over the bulge its food is making." +
-                " Your sac churns audibly with hunger for its meal, salivating precum to speed up your foe's descent. Your massaging actions causes squelching sounds as your now-massive member greedily sucks in their waist." +
-                " Having recovered slightly from their initial shock they frantically wiggle, causing their body to twist and squirm within your member, their struggles bringing you waves of pleasure as you shiver from their protests. <br><br>You lift your cock with both hands, giving it long, slow strokes to speed up its meal." + // Both hands; your enemy's too heavy for one arm still
-                " You sigh, giving soft humps as all that remains of your foe is a bulge in your shaft, sliding down. Loud sloshing sounds can be heard as your cock's recent meal ends its journey and is deposited in your sac. Your nuts heave and drag against the floor as you haul your soon-to-be load off with you.";
-        } else {
-            document.getElementById("SexText").innerHTML = "Seeing your opponent lying there defeated gives you an idea; your cock stiffening in anticipation as you make your way to your soon-to-be prey. Your foe looks up from their position and jumps from your large equine form blocking out the sun." +
-                " Standing over your foe you convey your desires as your cock makes a loud 'thwap' against your stomach. Your opponent gets the idea, slowly approaching your shaft(s) and hesitantly stretching their hands forward." +
-                "<br><br> Sensing their hesitation, you made a deafening stomp with your hooves, causing your foe to quickly stroke your dick. You pull your hips back away from your foe, confusing their expectations - they thought you wanted a simple blowjob." +
-                " An excited whip of your tail and a small grunt of dominance are the only signs your prey receive - you make a single thrust at your opponent’s head, your equine shaft hungrily grabbing them up to their chest." +
-                " You instinctively snort as you claim your foe with your cock, its muscles sucking on their form, as if tasting them. Desperate for more, you flex your groin with immense strength and pull your prey in up to their crotch." +
-                "<br><br> Gasps of nerve-wracking pleasure escape you as your prey begins its fruitless struggles inside your monstrous shaft. Not wanting to risk an early orgasm (and releasing them), you repeatedly flex your cock, causing it to beat your meal into submission against your stomach." +
-                " Pleased with your display of power over your meal, you pull in their legs with little effort and seal your cock head around their feet. You sigh in relief as you feel the rest of your prey deposited in your sac. Feeling sated, you make your way back to the road, your nuts sagging heavily between your legs."
-        }
-        HideVore();
-    } else {
-        document.getElementById("SexText").innerHTML = "You can't fit any more into your balls!";
-    }
-    return;
-};
- function VoreActionsBreastVore () {
-    if (enemies[EnemyIndex].Weight < BreastCapacity()) {
-        if (Settings.ImgPack) {
-            ImgChose(player, "BreastVore", enemies[EnemyIndex]);
-        }
-        enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
-        player.Vore.Breast.push(enemies[EnemyIndex]);
-        enemies.splice(EnemyIndex, 1);
-        var i = "left";
-        if (Math.random() > 0.5)
-            i = "right";
-        document.getElementById("SexText").innerHTML = "Grabbing your opponent, you shove them into your " + i + " nipple.";
-        HideVore();
-    } else {
-        document.getElementById("SexText").innerHTML = "You cannot fit them into your breasts!";
-    }
-    return;
-};
-function VoreActionsAnalVore () {
-    if (enemies[EnemyIndex].Weight < AnalCapacity() + 100) {
-        if (Settings.ImgPack) {
-            ImgChose(player, "AnalVore", enemies[EnemyIndex]);
-        }
-        enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
-        player.Vore.Anal.push(enemies[EnemyIndex]);
-        enemies.splice(EnemyIndex, 1);
-        if (player.SecondRace !== "centaur") {
-            document.getElementById("SexText").innerHTML = "Seeing your foe fall, you eagerly make your way up to them as you unbutton your pants and undergarments. Your foe sighs as they imagine what you’re going to do next. " +
-                "You turn your body around and lower your ass cheeks to their face. They grab your ass with their hands and bring their mouth to your hole, seeing no other option. Your alternative plan starts as you push your ass forcefully against their face." +
-                " Your foe gasps in surprise as your hole touches their nose and stretches, enveloping their head.<br><br> Muffled protests come from your waist as they instinctively push against your cheeks, attempting to free themselves." +
-                " You squat down and grunt as your rectum pulls hard, forcing your meal up to their chest. As their shoulders get pulled in, their arms can't push against your ass, making it easier to pull them in." +
-                " Your wince as your food makes its way through your gut, stretching it as you pull them in.<br><br> You notice that only their legs are left; you grin and straighten your back, using their limbs as a pseudo-chair." +
-                " You bounce your hips, hammering them further into your bowels. Your cheeks make contact with the ground as they hungrily shove the last of your foe into your depths." +
-                " Rough shoves and struggles in your gut are all that is left of them as your gut conforms and kneads its meal.";
-        } else {
-            document.getElementById("SexText").innerHTML = "As your foe crumbles from your back hooves' last kick, you decide to keep your back turned and slowly back into them."+
-            " Rubbing their head from the final blow, your opponent has only a second to notice your large equine rear descending on them, trapping them in darkness. Rough grunting and the sounds of squeezing accompany this surprise as you lift your foe up to their chest with your twisted strength."+
-            "<br><br> Your tail flicks upward sharply with each contraction of your anal muscles, your ass feasting upon the poor soul trapped inside. The impressive display of control you have over your rear continues as your prey suddenly disappears up to their waist into your bowels."+
-            " Pleasurable struggles are given to you from inside your equine half as your conquest twists and pushes your sensitive walls, encouraging you to finish your meal.<br><br> Not wanting to disappoint your gut, you make one last effort to envelop your foe with your rectum."+
-            " With immense force, their legs are pulled in, leaving their ankles and feet squeezed harshly by your ass. With a loud \"schluck\" their ankles are pulled in, their feet following close behind."+
-            " A satisfied sigh leaves your mouth, and your ass, as you wiggle your hips in victory over your foe. You head back on your journey, your intestines beginning their work on the fresh meat you've conquered."
-        }
-        HideVore();
-    } else {
-        document.getElementById("SexText").innerHTML = "You cannot fit any more into your bowels!";
-    }
-    return;
-};
+ function VoreActionsOralVore() {
+     if (enemies[EnemyIndex].Weight < StomachCapacity()) {
+         if (Settings.ImgPack) {
+             ImgChose(player, "OralVore", enemies[EnemyIndex]);
+         }
+         enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
+         player.Vore.Stomach.push(enemies[EnemyIndex]);
+         enemies.splice(EnemyIndex, 1);
+         DocId("SexText").innerHTML = "You walk up to your foe with a primal hunger in your abdomen. Your foe is still groggy from the beating you gave them, will fulfill your stomach's desire." +
+             " You swiftly grab their head with your hands and bring their face to yours. They grunt, expecting a make-out session, only for their eyes to widen as your mouth does the same. You take in their head in one motion and " +
+             "pin their arms to their waist, holding them in place. You lick their face, enjoying their taste, as you lean forward, pushing their head and neck into your greedy throat.<br><br> Loud gulping noises can be heard as you stretch your mouth even further " +
+             "and take in their shoulders. Your muscles strain and bulge as you lift your meal off the ground, suspending them in the air, allowing their torso to slide down into your stomach, leaving only their weakly-flailing legs outside." +
+             " Your stomach bulges as they enter your guts, which give a rumble of approval and anticipation for the rest of its meal. Your hands make their way up to their calves as you grip tightly and give a hard shove, pushing them in to their ankles." +
+             "<br><br>You open wide and let their feet slide in, your jaws snapping shut as your food is forced to accept its fate. Your filled stomach stretches and heaves as your prey struggles and pushes in futile attempts to free itself.";
+         if (StomachCapacity() / MaxStomachCapacity() > 0.5) {
+             DocId("SexText").innerHTML += " You struggle to get back to your feet, your distended stomach sagging heavily with its weight. You wince in discomfort, walking bow-legged for a little to handle its weight.";
+         }
+         HideVore();
+     } else {
+         DocId("SexText").innerHTML = "You cannot fit more into your stomach!";
+     }
+     return;
+ };
 
-function HideVore() {
-    AfterBattleButtons(false, true)
-}
+ function VoreActionsUnbirth() {
+     if (enemies[EnemyIndex].Weight < VaginaCapacity()) {
+         if (Settings.ImgPack) {
+             ImgChose(player, "Unbirth", enemies[EnemyIndex]);
+         }
+         enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
+         player.Vore.Vagina.push(enemies[EnemyIndex]);
+         enemies.splice(EnemyIndex, 1);
+         DocId("SexText").innerHTML = "Grabbing your opponent, you shove into your pussy!";
+         HideVore();
+     } else {
+         DocId("SexText").innerHTML = "You cannot fit more into your vagina!";
+     }
+     return;
+ };
+
+ function VoreActionsCockVore() {
+     if (enemies[EnemyIndex].Weight < BallsCapacity()) {
+         if (Settings.ImgPack) {
+             ImgChose(player, "CockVore", enemies[EnemyIndex]);
+         }
+         enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
+         player.Vore.Balls.push(enemies[EnemyIndex]);
+         enemies.splice(EnemyIndex, 1);
+         if (player.SecondRace !== "centaur") { // Isn't it !=
+             DocId("SexText").innerHTML = "Your confidently stride up to your opponent, looking at your next meal's form as your reach for your waist. They bend their head forward, and aren't surprised when they are greeted with your erect cock." +
+                 " They open their mouth to start sucking, only for your dick to stretch wide as well. Before they have time to react, you thrust forward, quickly enveloping their head within your dick. You use your hands to squeeze the newest bulge in your member as you eagerly thrust around your foe, slowly forcing them deeper with each hump." +
+                 " <br><br>Your breathing deepens as their shoulders begin their journey to your sac, stretching your dick wide to accommodate its food. Both of your hands reach around your massively-distended dick as you rub over the bulge its food is making." +
+                 " Your sac churns audibly with hunger for its meal, salivating precum to speed up your foe's descent. Your massaging actions causes squelching sounds as your now-massive member greedily sucks in their waist." +
+                 " Having recovered slightly from their initial shock they frantically wiggle, causing their body to twist and squirm within your member, their struggles bringing you waves of pleasure as you shiver from their protests. <br><br>You lift your cock with both hands, giving it long, slow strokes to speed up its meal." + // Both hands; your enemy's too heavy for one arm still
+                 " You sigh, giving soft humps as all that remains of your foe is a bulge in your shaft, sliding down. Loud sloshing sounds can be heard as your cock's recent meal ends its journey and is deposited in your sac. Your nuts heave and drag against the floor as you haul your soon-to-be load off with you.";
+         } else {
+             DocId("SexText").innerHTML = "Seeing your opponent lying there defeated gives you an idea; your cock stiffening in anticipation as you make your way to your soon-to-be prey. Your foe looks up from their position and jumps from your large equine form blocking out the sun." +
+                 " Standing over your foe you convey your desires as your cock makes a loud 'thwap' against your stomach. Your opponent gets the idea, slowly approaching your shaft(s) and hesitantly stretching their hands forward." +
+                 "<br><br> Sensing their hesitation, you made a deafening stomp with your hooves, causing your foe to quickly stroke your dick. You pull your hips back away from your foe, confusing their expectations - they thought you wanted a simple blowjob." +
+                 " An excited whip of your tail and a small grunt of dominance are the only signs your prey receive - you make a single thrust at your opponent’s head, your equine shaft hungrily grabbing them up to their chest." +
+                 " You instinctively snort as you claim your foe with your cock, its muscles sucking on their form, as if tasting them. Desperate for more, you flex your groin with immense strength and pull your prey in up to their crotch." +
+                 "<br><br> Gasps of nerve-wracking pleasure escape you as your prey begins its fruitless struggles inside your monstrous shaft. Not wanting to risk an early orgasm (and releasing them), you repeatedly flex your cock, causing it to beat your meal into submission against your stomach." +
+                 " Pleased with your display of power over your meal, you pull in their legs with little effort and seal your cock head around their feet. You sigh in relief as you feel the rest of your prey deposited in your sac. Feeling sated, you make your way back to the road, your nuts sagging heavily between your legs."
+         }
+         HideVore();
+     } else {
+         DocId("SexText").innerHTML = "You can't fit any more into your balls!";
+     }
+     return;
+ };
+
+ function VoreActionsBreastVore() {
+     if (enemies[EnemyIndex].Weight < BreastCapacity()) {
+         if (Settings.ImgPack) {
+             ImgChose(player, "BreastVore", enemies[EnemyIndex]);
+         }
+         enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
+         player.Vore.Breast.push(enemies[EnemyIndex]);
+         enemies.splice(EnemyIndex, 1);
+         var i = "left";
+         if (Math.random() > 0.5)
+             i = "right";
+         DocId("SexText").innerHTML = "Grabbing your opponent, you shove them into your " + i + " nipple.";
+         HideVore();
+     } else {
+         DocId("SexText").innerHTML = "You cannot fit them into your breasts!";
+     }
+     return;
+ };
+
+ function VoreActionsAnalVore() {
+     if (enemies[EnemyIndex].Weight < AnalCapacity() + 100) {
+         if (Settings.ImgPack) {
+             ImgChose(player, "AnalVore", enemies[EnemyIndex]);
+         }
+         enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
+         player.Vore.Anal.push(enemies[EnemyIndex]);
+         enemies.splice(EnemyIndex, 1);
+         if (player.SecondRace !== "centaur") {
+             DocId("SexText").innerHTML = "Seeing your foe fall, you eagerly make your way up to them as you unbutton your pants and undergarments. Your foe sighs as they imagine what you’re going to do next. " +
+                 "You turn your body around and lower your ass cheeks to their face. They grab your ass with their hands and bring their mouth to your hole, seeing no other option. Your alternative plan starts as you push your ass forcefully against their face." +
+                 " Your foe gasps in surprise as your hole touches their nose and stretches, enveloping their head.<br><br> Muffled protests come from your waist as they instinctively push against your cheeks, attempting to free themselves." +
+                 " You squat down and grunt as your rectum pulls hard, forcing your meal up to their chest. As their shoulders get pulled in, their arms can't push against your ass, making it easier to pull them in." +
+                 " Your wince as your food makes its way through your gut, stretching it as you pull them in.<br><br> You notice that only their legs are left; you grin and straighten your back, using their limbs as a pseudo-chair." +
+                 " You bounce your hips, hammering them further into your bowels. Your cheeks make contact with the ground as they hungrily shove the last of your foe into your depths." +
+                 " Rough shoves and struggles in your gut are all that is left of them as your gut conforms and kneads its meal.";
+         } else {
+             DocId("SexText").innerHTML = "As your foe crumbles from your back hooves' last kick, you decide to keep your back turned and slowly back into them." +
+                 " Rubbing their head from the final blow, your opponent has only a second to notice your large equine rear descending on them, trapping them in darkness. Rough grunting and the sounds of squeezing accompany this surprise as you lift your foe up to their chest with your twisted strength." +
+                 "<br><br> Your tail flicks upward sharply with each contraction of your anal muscles, your ass feasting upon the poor soul trapped inside. The impressive display of control you have over your rear continues as your prey suddenly disappears up to their waist into your bowels." +
+                 " Pleasurable struggles are given to you from inside your equine half as your conquest twists and pushes your sensitive walls, encouraging you to finish your meal.<br><br> Not wanting to disappoint your gut, you make one last effort to envelop your foe with your rectum." +
+                 " With immense force, their legs are pulled in, leaving their ankles and feet squeezed harshly by your ass. With a loud \"schluck\" their ankles are pulled in, their feet following close behind." +
+                 " A satisfied sigh leaves your mouth, and your ass, as you wiggle your hips in victory over your foe. You head back on your journey, your intestines beginning their work on the fresh meat you've conquered."
+         }
+         HideVore();
+     } else {
+         DocId("SexText").innerHTML = "You cannot fit any more into your bowels!";
+     }
+     return;
+ };
+
+ function HideVore() {
+     AfterBattleButtons(false, true)
+ }
 function PreyButton(ps, from, index) {
     var color;
     switch (CheckGender(ps)) {
@@ -13187,107 +13177,107 @@ function PreyButton(ps, from, index) {
 }
 
 function ShowPrey(where) {
-    document.getElementById(where + "Content").style.display = 'none';
-    document.getElementById(where + "Prey").style.display = 'block';
-    document.getElementById(where + "Leave").style.display = 'none';
-    document.getElementById("LeaveVore").style.display = 'none';
-    document.getElementById("Leave" + where + "Prey").style.display = 'inline-block';
-    document.getElementById("regurgitate" + where).style.display = 'inline-block';
+    DocId(where + "Content").style.display = 'none';
+    DocId(where + "Prey").style.display = 'block';
+    DocId(where + "Leave").style.display = 'none';
+    DocId("LeaveVore").style.display = 'none';
+    DocId("Leave" + where + "Prey").style.display = 'inline-block';
+    DocId("regurgitate" + where).style.display = 'inline-block';
 }
 
 function HidePrey(where) {
-    document.getElementById(where + "Content").style.display = 'grid';
-    document.getElementById(where + "Prey").style.display = 'none';
-    document.getElementById(where + "Leave").style.display = 'inline-block';
-    document.getElementById("LeaveVore").style.display = 'none';
-    document.getElementById("Leave" + where + "Prey").style.display = 'none';
-    document.getElementById("regurgitate" + where).style.display = 'none';
+    DocId(where + "Content").style.display = 'grid';
+    DocId(where + "Prey").style.display = 'none';
+    DocId(where + "Leave").style.display = 'inline-block';
+    DocId("LeaveVore").style.display = 'none';
+    DocId("Leave" + where + "Prey").style.display = 'none';
+    DocId("regurgitate" + where).style.display = 'none';
 }
 
 function ShowAnalPrey(e) {
     var Prey = player.Vore.Anal[e];
     PreyIndex = e;
     ShowPrey("Anal")
-    document.getElementById("AnalPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
-    document.getElementById("AnalDigestion").style.display = 'none';
+    DocId("AnalPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
+    DocId("AnalDigestion").style.display = 'none';
 };
 
-document.getElementById("LeaveAnalPrey").addEventListener("click", function () {
+DocId("LeaveAnalPrey").addEventListener("click", function () {
     HidePrey("Anal")
-    document.getElementById("AnalDigestion").style.display = 'inline-block';
+    DocId("AnalDigestion").style.display = 'inline-block';
 });
-document.getElementById("regurgitateAnal").addEventListener("click", function () {
+DocId("regurgitateAnal").addEventListener("click", function () {
     var who = player.Vore.Anal[PreyIndex];
     enemies.push(who);
     player.Vore.Anal.splice(PreyIndex, 1);
     HidePrey("Anal");
-    document.getElementById("AnalDigestion").style.display = 'inline-block';
+    DocId("AnalDigestion").style.display = 'inline-block';
     var food = "";
     for (var e = 0; e < player.Vore.Anal.length; e++) {
         var ps = player.Vore.Anal[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Anal", e);
     }
-    document.getElementById("AnalContent").innerHTML = food;
+    DocId("AnalContent").innerHTML = food;
 });
 
 function ShowBallsPrey(e) {
     var Prey = player.Vore.Balls[e];
     PreyIndex = e;
     ShowPrey("Balls");
-    document.getElementById("CumDigestion").style.display = 'none';
-    document.getElementById("BallsPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
+    DocId("CumDigestion").style.display = 'none';
+    DocId("BallsPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
 };
 
-document.getElementById("LeaveBallsPrey").addEventListener("click", function () {
+DocId("LeaveBallsPrey").addEventListener("click", function () {
     HidePrey("Balls")
-    document.getElementById("CumDigestion").style.display = 'inline-block';
+    DocId("CumDigestion").style.display = 'inline-block';
 });
-document.getElementById("regurgitateBalls").addEventListener("click", function () {
+DocId("regurgitateBalls").addEventListener("click", function () {
     var who = player.Vore.Balls[PreyIndex];
     enemies.push(who);
     player.Vore.Balls.splice(PreyIndex, 1);
     HidePrey("Balls");
-    document.getElementById("CumDigestion").style.display = 'inline-block';
+    DocId("CumDigestion").style.display = 'inline-block';
     var food = "";
     for (var e = 0; e < player.Vore.Balls.length; e++) {
         var ps = player.Vore.Balls[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Balls", e);
     }
-    document.getElementById("BallsContent").innerHTML = food;
+    DocId("BallsContent").innerHTML = food;
 });
 
 function ShowVaginaPrey(e) {
     var Prey = player.Vore.Vagina[e];
     PreyIndex = e;
     ShowPrey("Vagina");
-    document.getElementById("VCumDigestion").style.display = 'none';
-    document.getElementById("ChildTF").style.display = 'none';
-    document.getElementById("VaginaPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
+    DocId("VCumDigestion").style.display = 'none';
+    DocId("ChildTF").style.display = 'none';
+    DocId("VaginaPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
 
-    document.getElementById("")
+    DocId("")
 };
 
-document.getElementById("LeaveVaginaPrey").addEventListener("click", function () {
+DocId("LeaveVaginaPrey").addEventListener("click", function () {
     HidePrey("Vagina");
-    document.getElementById("VCumDigestion").style.display = 'inline-block';
-    document.getElementById("ChildTF").style.display = 'inline-block';
+    DocId("VCumDigestion").style.display = 'inline-block';
+    DocId("ChildTF").style.display = 'inline-block';
 });
-document.getElementById("regurgitateVagina").addEventListener("click", function () {
+DocId("regurgitateVagina").addEventListener("click", function () {
     var who = player.Vore.Vagina[PreyIndex];
     enemies.push(who);
     player.Vore.Vagina.splice(PreyIndex, 1);
     HidePrey("Vagina");
-    document.getElementById("VCumDigestion").style.display = 'inline-block';
-    document.getElementById("ChildTF").style.display = 'inline-block';
+    DocId("VCumDigestion").style.display = 'inline-block';
+    DocId("ChildTF").style.display = 'inline-block';
     var food = "";
     for (var e = 0; e < player.Vore.Vagina.length; e++) {
         var ps = player.Vore.Vagina[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Vagina", e);
     }
-    document.getElementById("VaginaContent").innerHTML = food;
+    DocId("VaginaContent").innerHTML = food;
 });
 
 
@@ -13295,27 +13285,27 @@ function ShowBreastPrey(e) {
     var Prey = player.Vore.Breast[e];
     PreyIndex = e;
     ShowPrey("Breast");
-    document.getElementById("MilkTransformation").style.display = 'none';
-    document.getElementById("BreastPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
+    DocId("MilkTransformation").style.display = 'none';
+    DocId("BreastPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
 };
 
-document.getElementById("LeaveBreastPrey").addEventListener("click", function () {
+DocId("LeaveBreastPrey").addEventListener("click", function () {
     HidePrey("Breast");
-    document.getElementById("MilkTransformation").style.display = 'inline-block';
+    DocId("MilkTransformation").style.display = 'inline-block';
 });
-document.getElementById("regurgitateBreast").addEventListener("click", function () {
+DocId("regurgitateBreast").addEventListener("click", function () {
     var who = player.Vore.Breast[PreyIndex];
     enemies.push(who);
     player.Vore.Breast.splice(PreyIndex, 1);
     HidePrey("Breast");
-    document.getElementById("MilkTransformation").style.display = 'inline-block';
+    DocId("MilkTransformation").style.display = 'inline-block';
     var food = "";
     for (var e = 0; e < player.Vore.Breast.length; e++) {
         var ps = player.Vore.Breast[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Breast", e);
     }
-    document.getElementById("BreastContent").innerHTML = food;
+    DocId("BreastContent").innerHTML = food;
 });
 
 
@@ -13325,98 +13315,98 @@ function ShowStomachPrey(e) {
     var Prey = player.Vore.Stomach[e];
     PreyIndex = e;
     ShowPrey("Stomach");
-    document.getElementById("StomachDigestion").style.display = 'none';
-    document.getElementById("StomachPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
+    DocId("StomachDigestion").style.display = 'none';
+    DocId("StomachPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
 };
-document.getElementById("LeaveStomachPrey").addEventListener("click", function () {
+DocId("LeaveStomachPrey").addEventListener("click", function () {
     HidePrey("Stomach");
-    document.getElementById("StomachDigestion").style.display = 'inline-block';
+    DocId("StomachDigestion").style.display = 'inline-block';
 });
-document.getElementById("regurgitateStomach").addEventListener("click", function () {
+DocId("regurgitateStomach").addEventListener("click", function () {
     var who = player.Vore.Stomach[PreyIndex];
     enemies.push(who);
     player.Vore.Stomach.splice(PreyIndex, 1);
     HidePrey("Stomach");
-    document.getElementById("StomachDigestion").style.display = 'inline-block';
+    DocId("StomachDigestion").style.display = 'inline-block';
     var food = "";
     for (var e = 0; e < player.Vore.Stomach.length; e++) {
         var ps = player.Vore.Stomach[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Stomach", e);
     }
-    document.getElementById("StomachContent").innerHTML = food;
+    DocId("StomachContent").innerHTML = food;
 });
 
 
-document.getElementById("VoreLooks").addEventListener("click", function () {
+DocId("VoreLooks").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("ShowVore").style.display = 'block';
-    document.getElementById("VorePerkMenu").style.display = 'none';
-    document.getElementById("AbsorbEssenceSetting").value = "Absorb Essence " + Settings.VoreSettings.AbsorbEssence;
+    DocId("ShowVore").style.display = 'block';
+    DocId("VorePerkMenu").style.display = 'none';
+    DocId("AbsorbEssenceSetting").value = "Absorb Essence " + Settings.VoreSettings.AbsorbEssence;
 });
 
 function DisplayNoneVore(where) {
-    document.getElementById("VoreSettings").style.display = 'none';
-    document.getElementById("VoreButtons").style.display = 'none';
-    document.getElementById("Leave" + where + "Prey").style.display = 'none';
-    document.getElementById("regurgitate" + where).style.display = 'none';
-    document.getElementById("LeaveVore").style.display = 'none';
-    document.getElementById("Leave" + where + "Prey").style.display = 'none';
-    document.getElementById("regurgitate" + where).style.display = 'none';
+    DocId("VoreSettings").style.display = 'none';
+    DocId("VoreButtons").style.display = 'none';
+    DocId("Leave" + where + "Prey").style.display = 'none';
+    DocId("regurgitate" + where).style.display = 'none';
+    DocId("LeaveVore").style.display = 'none';
+    DocId("Leave" + where + "Prey").style.display = 'none';
+    DocId("regurgitate" + where).style.display = 'none';
 }
-document.getElementById("ShowStomach").addEventListener("click", function () {
+DocId("ShowStomach").addEventListener("click", function () {
     DisplayNoneVore("Stomach");
-    document.getElementById("VoreStomach").style.display = 'block';
-    document.getElementById("StomachDigestion").value = "Stomach digestion " + Settings.VoreSettings.StomachDigestion;
+    DocId("VoreStomach").style.display = 'block';
+    DocId("StomachDigestion").value = "Stomach digestion " + Settings.VoreSettings.StomachDigestion;
     var food = "";
     for (var e = 0; e < player.Vore.Stomach.length; e++) {
         var ps = player.Vore.Stomach[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Stomach", e);
     }
-    document.getElementById("StomachContent").innerHTML = food;
+    DocId("StomachContent").innerHTML = food;
 
 });
-document.getElementById("StomachDigestion").addEventListener("click", function () {
+DocId("StomachDigestion").addEventListener("click", function () {
     Settings.VoreSettings.StomachDigestion = !Settings.VoreSettings.StomachDigestion
-    document.getElementById("StomachDigestion").value = "Stomach digestion " + Settings.VoreSettings.StomachDigestion;
+    DocId("StomachDigestion").value = "Stomach digestion " + Settings.VoreSettings.StomachDigestion;
 });
-document.getElementById("ShowVagina").addEventListener("click", function () {
+DocId("ShowVagina").addEventListener("click", function () {
     DisplayNoneVore("Vagina")
-    document.getElementById("VoreVagina").style.display = 'block';
+    DocId("VoreVagina").style.display = 'block';
     var food = "";
     for (var e = 0; e < player.Vore.Vagina.length; e++) {
         var ps = player.Vore.Vagina[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Vagina", e);
     }
-    document.getElementById("VaginaContent").innerHTML = food;
-    document.getElementById("ChildTF").value = "Child tf/Age reduc " + Settings.VoreSettings.ChildTF;
-    document.getElementById("VCumDigestion").value = "Digestion " + Settings.VoreSettings.VCumDigestion;
+    DocId("VaginaContent").innerHTML = food;
+    DocId("ChildTF").value = "Child tf/Age reduc " + Settings.VoreSettings.ChildTF;
+    DocId("VCumDigestion").value = "Digestion " + Settings.VoreSettings.VCumDigestion;
 });
-document.getElementById("ChildTF").addEventListener("click", function () {
+DocId("ChildTF").addEventListener("click", function () {
     if (Settings.VoreSettings.ChildTF) {
         Settings.VoreSettings.ChildTF = false;
     } else {
         Settings.VoreSettings.ChildTF = true;
         Settings.VoreSettings.VCumDigestion = false;
     }
-    document.getElementById("ChildTF").value = "Child tf/Age reduc " + Settings.VoreSettings.ChildTF;
-    document.getElementById("VCumDigestion").value = "Digestion " + Settings.VoreSettings.VCumDigestion;
+    DocId("ChildTF").value = "Child tf/Age reduc " + Settings.VoreSettings.ChildTF;
+    DocId("VCumDigestion").value = "Digestion " + Settings.VoreSettings.VCumDigestion;
 });
-document.getElementById("VCumDigestion").addEventListener("click", function () {
+DocId("VCumDigestion").addEventListener("click", function () {
     if (Settings.VoreSettings.VCumDigestion) {
         Settings.VoreSettings.VCumDigestion = false;
     } else {
         Settings.VoreSettings.ChildTF = false;
         Settings.VoreSettings.VCumDigestion = true;
     }
-    document.getElementById("ChildTF").value = "Child tf/Age reduc " + Settings.VoreSettings.ChildTF;
-    document.getElementById("VCumDigestion").value = "Digestion " + Settings.VoreSettings.VCumDigestion;
+    DocId("ChildTF").value = "Child tf/Age reduc " + Settings.VoreSettings.ChildTF;
+    DocId("VCumDigestion").value = "Digestion " + Settings.VoreSettings.VCumDigestion;
 })
 
-document.getElementById("ShowBreast").addEventListener("click", function () {
-    document.getElementById("VoreBreast").style.display = 'block';
+DocId("ShowBreast").addEventListener("click", function () {
+    DocId("VoreBreast").style.display = 'block';
     DisplayNoneVore("Breast")
     var food = "";
     for (var e = 0; e < player.Vore.Breast.length; e++) {
@@ -13424,70 +13414,70 @@ document.getElementById("ShowBreast").addEventListener("click", function () {
         EssenceCheck(ps);
         food += PreyButton(ps, "Breast", e);
     }
-    document.getElementById("BreastContent").innerHTML = food;
-    document.getElementById("MilkTransformation").value = "Milk transformation " + Settings.VoreSettings.MilkTF;
+    DocId("BreastContent").innerHTML = food;
+    DocId("MilkTransformation").value = "Milk transformation " + Settings.VoreSettings.MilkTF;
 });
-document.getElementById("MilkTransformation").addEventListener("click", function () {
+DocId("MilkTransformation").addEventListener("click", function () {
     Settings.VoreSettings.MilkTF = !Settings.VoreSettings.MilkTF;
-    document.getElementById("MilkTransformation").value = "Milk transformation " + Settings.VoreSettings.MilkTF;
+    DocId("MilkTransformation").value = "Milk transformation " + Settings.VoreSettings.MilkTF;
 });
-document.getElementById("ShowBalls").addEventListener("click", function () {
+DocId("ShowBalls").addEventListener("click", function () {
     DisplayNoneVore("Balls")
-    document.getElementById("VoreBalls").style.display = 'block';
+    DocId("VoreBalls").style.display = 'block';
     var food = "";
     for (var e = 0; e < player.Vore.Balls.length; e++) {
         var ps = player.Vore.Balls[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Balls", e);
     }
-    document.getElementById("BallsContent").innerHTML = food;
-    document.getElementById("CumDigestion").value = "Cum transformation " + Settings.VoreSettings.CumTF;
+    DocId("BallsContent").innerHTML = food;
+    DocId("CumDigestion").value = "Cum transformation " + Settings.VoreSettings.CumTF;
 });
-document.getElementById("CumDigestion").addEventListener("click", function () {
+DocId("CumDigestion").addEventListener("click", function () {
     Settings.VoreSettings.CumTF = !Settings.VoreSettings.CumTF;
-    document.getElementById("CumDigestion").value = "Cum transformation " + Settings.VoreSettings.CumTF;
+    DocId("CumDigestion").value = "Cum transformation " + Settings.VoreSettings.CumTF;
 });
-document.getElementById("ShowAnal").addEventListener("click", function () {
+DocId("ShowAnal").addEventListener("click", function () {
     DisplayNoneVore("Anal")
-    document.getElementById("VoreAnal").style.display = 'block';
+    DocId("VoreAnal").style.display = 'block';
     var food = "";
     for (var e = 0; e < player.Vore.Anal.length; e++) {
         var ps = player.Vore.Anal[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Anal", e);
     }
-    document.getElementById("AnalContent").innerHTML = food;
-    document.getElementById("AnalDigestion").value = "Anal digestion " + Settings.VoreSettings.AnalDigestion;
+    DocId("AnalContent").innerHTML = food;
+    DocId("AnalDigestion").value = "Anal digestion " + Settings.VoreSettings.AnalDigestion;
 });
-document.getElementById("AnalDigestion").addEventListener("click", function () {
+DocId("AnalDigestion").addEventListener("click", function () {
     Settings.VoreSettings.AnalDigestion = !Settings.VoreSettings.AnalDigestion;
-    document.getElementById("AnalDigestion").value = "Anal Digestion " + Settings.VoreSettings.AnalDigestion;
+    DocId("AnalDigestion").value = "Anal Digestion " + Settings.VoreSettings.AnalDigestion;
 });
 
 function LeavePreyMenu() {
-    document.getElementById("VoreButtons").style.display = 'grid';
-    document.getElementById("LeaveVore").style.display = 'inline-block';
-    document.getElementById("VoreSettings").style.display = 'inline-block';
+    DocId("VoreButtons").style.display = 'grid';
+    DocId("LeaveVore").style.display = 'inline-block';
+    DocId("VoreSettings").style.display = 'inline-block';
 }
 
-document.getElementById("StomachLeave").addEventListener("click", function () {
-    document.getElementById("VoreStomach").style.display = 'none';
+DocId("StomachLeave").addEventListener("click", function () {
+    DocId("VoreStomach").style.display = 'none';
     LeavePreyMenu();
 });
-document.getElementById("VaginaLeave").addEventListener("click", function () {
-    document.getElementById("VoreVagina").style.display = 'none';
+DocId("VaginaLeave").addEventListener("click", function () {
+    DocId("VoreVagina").style.display = 'none';
     LeavePreyMenu();
 });
-document.getElementById("BreastLeave").addEventListener("click", function () {
-    document.getElementById("VoreBreast").style.display = 'none';
+DocId("BreastLeave").addEventListener("click", function () {
+    DocId("VoreBreast").style.display = 'none';
     LeavePreyMenu();
 });
-document.getElementById("BallsLeave").addEventListener("click", function () {
-    document.getElementById("VoreBalls").style.display = 'none';
+DocId("BallsLeave").addEventListener("click", function () {
+    DocId("VoreBalls").style.display = 'none';
     LeavePreyMenu();
 });
-document.getElementById("AnalLeave").addEventListener("click", function () {
-    document.getElementById("VoreAnal").style.display = 'none';
+DocId("AnalLeave").addEventListener("click", function () {
+    DocId("VoreAnal").style.display = 'none';
     LeavePreyMenu();
 });
 function WinBattle() {
@@ -13499,13 +13489,13 @@ function WinBattle() {
     CombatQuests(ee);
     //WinEnemyChanges(ee);
     DropSystem(ee);
-    document.getElementById("Encounter").style.display = 'none';
+    DocId("Encounter").style.display = 'none';
     if (Settings.Skip) {
         DisplayGame();
     } else if (false) { // Replace with ee.Name === "specific name"
-        document.getElementById("DungeonSystem").style.display = 'block';
-        document.getElementById("DungeonText").innerHTML = "What should you do with her?";
-        document.getElementById("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" +
+        DocId("DungeonSystem").style.display = 'block';
+        DocId("DungeonText").innerHTML = "What should you do with her?";
+        DocId("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" +
             "<input type=\"button\" id=\"MakeSubmit\" value=\"Make her understand her place.\" >";
     } else {
         SetupSex(ee);
@@ -13513,18 +13503,18 @@ function WinBattle() {
 }
 
 function SetupSex(ee) {
-    document.getElementById("SexText").innerHTML = HeightSystem(player, ee);
-    document.getElementById("AfterBattle").style.display = 'grid';
-    document.getElementById("SexButtons").style.display = 'grid';
+    DocId("SexText").innerHTML = HeightSystem(player, ee);
+    DocId("AfterBattle").style.display = 'grid';
+    DocId("SexButtons").style.display = 'grid';
     if (Settings.ImgPack) {
-        document.getElementById("AfterBattle").classList.remove("AfterBattle");
-        document.getElementById("AfterBattle").classList.add("AfterBattleImg");
-        document.getElementById("MyImg").style.display = 'block';
+        DocId("AfterBattle").classList.remove("AfterBattle");
+        DocId("AfterBattle").classList.add("AfterBattleImg");
+        DocId("MyImg").style.display = 'block';
 
     } else {
-        document.getElementById("AfterBattle").classList.add("AfterBattle");
-        document.getElementById("AfterBattle").classList.remove("AfterBattleImg");
-        document.getElementById("MyImg").style.display = 'none';
+        DocId("AfterBattle").classList.add("AfterBattle");
+        DocId("AfterBattle").classList.remove("AfterBattleImg");
+        DocId("MyImg").style.display = 'none';
     }
     CheckArousal();
     if (ee.Name === "Feral") {

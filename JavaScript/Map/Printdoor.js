@@ -5,16 +5,16 @@ function PrintDoors() {
         ctx.fillStyle = Settings.MapColor;
         switch (NESW.toUpperCase()) {
             case "E":
-                ctx.fillRect(startarea.width - grid, startarea.height / 2 - 3 * grid, grid, grid * 6);
+                ctx.fillRect(startarea.width - grid, startarea.height / 3, grid, grid * 6);
                 break;
             case "S":
-                ctx.fillRect(startarea.width - grid, startarea.height / 2 - 3 * grid, grid, grid * 6);
+                ctx.fillRect(startarea.width / 3, startarea.height - grid, grid * 6, grid);
                 break;
             case "W":
-                ctx.fillRect(0, startarea.height / 2 - 3 * grid, grid, grid * 6);
+                ctx.fillRect(0, startarea.height / 3, grid, grid * 6);
                 break;
             case "N":
-                ctx.fillRect(startarea.width / 2 - 3 * grid, 0, grid * 6, grid);
+                ctx.fillRect(startarea.width / 3, 0, grid * 6, grid);
                 break;
         }
     }
@@ -69,6 +69,7 @@ function PrintDoors() {
             switch (player.Map) {
                 case "PathToOutlaws":
                     PrintDoor("S");
+                    PrintDoor("N");
                     PrintDoor("W");
                     break;
                 case "PathToOutlaws2":

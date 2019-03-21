@@ -42,10 +42,10 @@ function LeaveBuilding() {
     Leave.setAttribute("value", "Leave");
     Leave.addEventListener("click", function () {
         battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
+        DocId("map").style.display = 'block';
+        DocId("buttons").style.display = 'block';
+        DocId("EmptyButtons").style.display = 'none';
+        DocId("status").style.display = 'block';
         Buildings.style.display = 'none';
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
@@ -53,10 +53,6 @@ function LeaveBuilding() {
         return;
     });
     return Leave
-}
-
-function DocId(id) { // Important Prototype.js must be loaded before where you want to use this!
-    return document.getElementById(id);
 }
 
 window.mobilecheck = function () { // Check if mobile device from detectmobile

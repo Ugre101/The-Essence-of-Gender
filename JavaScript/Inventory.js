@@ -1,7 +1,7 @@
-document.getElementById("ShowInventory").addEventListener("click", function () {
+DocId("ShowInventory").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("Inventory").style.display = 'grid';
-    //document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
+    DocId("Inventory").style.display = 'grid';
+    //DocId("InventoryBag").innerHTML = Items(player.Inventory)
     Items2();
 });
 
@@ -23,7 +23,7 @@ function Use(item) {
             player.Inventory.splice(item, 1);
         }
     }
-    document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
+    DocId("InventoryBag").innerHTML = Items(player.Inventory)
 }
 
 function Equip(item) {
@@ -38,17 +38,17 @@ function Read(item) {
 
 function Drop(item) {
     player.Inventory.splice(item, 1);
-    document.getElementById("InventoryBag").innerHTML = Items(player.Inventory)
+    DocId("InventoryBag").innerHTML = Items(player.Inventory)
 
 }
-document.getElementById("InventoryLeave").addEventListener("click", function () {
-    document.getElementById("Inventory").style.display = 'none';
+DocId("InventoryLeave").addEventListener("click", function () {
+    DocId("Inventory").style.display = 'none';
     DisplayGame();
 });
 
 // Trial of new inventory system so I can stop saving unnecessary data
 function Items2() {
-    var div = document.getElementById("InventoryBag");
+    var div = DocId("InventoryBag");
     while (div.hasChildNodes()) {
         div.removeChild(div.firstChild);
     }
@@ -88,7 +88,7 @@ function InventoryThing(e, b) {
     if (typeof b.Use === "function") {
         var use = InputButton("Use");
         use.addEventListener("click", function () {
-            document.getElementById("InventoryText").innerHTML = b.Use(player, e);
+            DocId("InventoryText").innerHTML = b.Use(player, e);
             if (typeof e.Quantity === "number") {
                 e.Quantity--;
                 if (e.Quantity <= 0) {
@@ -133,10 +133,10 @@ function InventoryThing(e, b) {
     }
     var what = InputButton("?");
     what.addEventListener("mouseover", function () {
-        document.getElementById("InventoryText").innerHTML = b.Title
+        DocId("InventoryText").innerHTML = b.Title
     });
     what.addEventListener("click", function () {
-        document.getElementById("InventoryText").innerHTML = b.Title
+        DocId("InventoryText").innerHTML = b.Title
     });
     item.appendChild(what);
 

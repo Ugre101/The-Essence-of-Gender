@@ -1,5 +1,5 @@
 function TribeQuests() {
-    var x = document.getElementById("TribeQuestsMenu");
+    var x = DocId("TribeQuestsMenu");
     while (x.hasChildNodes()) {
         x.removeChild(x.firstChild);
     }

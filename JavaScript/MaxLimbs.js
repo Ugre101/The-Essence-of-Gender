@@ -1,80 +1,80 @@
-document.getElementById("EssenceOptions").addEventListener("click", function () {
+DocId("EssenceOptions").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("EssenceOptionsMenu").style.display = 'block';
-    document.getElementById("MaxMenu").style.display = 'none';
+    DocId("EssenceOptionsMenu").style.display = 'block';
+    DocId("MaxMenu").style.display = 'none';
     if (Settings.EssenceAuto) {
-        document.getElementById("EssenceAuto").value = "Essence Auto";
-        document.getElementById("ManualGrowth").style.display = 'none';
+        DocId("EssenceAuto").value = "Essence Auto";
+        DocId("ManualGrowth").style.display = 'none';
     } else {
-        document.getElementById("EssenceAuto").value = "Essence Manual";
-        document.getElementById("ManualGrowth").style.display = 'block';
+        DocId("EssenceAuto").value = "Essence Manual";
+        DocId("ManualGrowth").style.display = 'block';
     }
-    document.getElementById("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
-    document.getElementById("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
-    document.getElementById("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
-    document.getElementById("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
-    document.getElementById("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
-    document.getElementById("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
-    document.getElementById("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
-    document.getElementById("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
+    DocId("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
+    DocId("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
+    DocId("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
+    DocId("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
+    DocId("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
+    DocId("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
+    DocId("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
+    DocId("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
 });
 
-document.getElementById("BoobsLess").addEventListener("click", function () {
+DocId("BoobsLess").addEventListener("click", function () {
     if (Settings.MaxLimbs.MaxBoobs > 0) {
         Settings.MaxLimbs.MaxBoobs--;
     }
-    document.getElementById("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
-    document.getElementById("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
+    DocId("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
+    DocId("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
 });
-document.getElementById("BoobsMore").addEventListener("click", function () {
+DocId("BoobsMore").addEventListener("click", function () {
     Settings.MaxLimbs.MaxBoobs++;
-    document.getElementById("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
-    document.getElementById("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
+    DocId("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
+    DocId("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
 });
-document.getElementById("VaginasLess").addEventListener("click", function () {
+DocId("VaginasLess").addEventListener("click", function () {
     if (Settings.MaxLimbs.MaxVaginas > 0) {
         Settings.MaxLimbs.MaxVaginas--;
     }
-    document.getElementById("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
-    document.getElementById("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
+    DocId("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
+    DocId("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
 });
-document.getElementById("VaginasMore").addEventListener("click", function () {
+DocId("VaginasMore").addEventListener("click", function () {
     Settings.MaxLimbs.MaxVaginas++;
-    document.getElementById("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
-    document.getElementById("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
+    DocId("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
+    DocId("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
 });
-document.getElementById("DicksLess").addEventListener("click", function () {
+DocId("DicksLess").addEventListener("click", function () {
     if (Settings.MaxLimbs.MaxDicks > 0) {
         Settings.MaxLimbs.MaxDicks--;
     }
-    document.getElementById("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
-    document.getElementById("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
+    DocId("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
+    DocId("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
 });
-document.getElementById("DicksMore").addEventListener("click", function () {
+DocId("DicksMore").addEventListener("click", function () {
     Settings.MaxLimbs.MaxDicks++;
-    document.getElementById("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
-    document.getElementById("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
+    DocId("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
+    DocId("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
 });
-document.getElementById("BallsLess").addEventListener("click", function () {
+DocId("BallsLess").addEventListener("click", function () {
     if (Settings.MaxLimbs.MaxBalls > 0) {
         Settings.MaxLimbs.MaxBalls--;
     }
-    document.getElementById("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
-    document.getElementById("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
+    DocId("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
+    DocId("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
 });
-document.getElementById("BallsMore").addEventListener("click", function () {
+DocId("BallsMore").addEventListener("click", function () {
     Settings.MaxLimbs.MaxBalls++;
-    document.getElementById("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
-    document.getElementById("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
+    DocId("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
+    DocId("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
 });
 
 
-document.getElementById("NoExtra").addEventListener("click", function () {
-    if (document.getElementById("MaxMenu").style.display == 'none') {
-        document.getElementById("MaxMenu").style.display = 'block';
-        document.getElementById("NoExtra").value = "Hide";
+DocId("NoExtra").addEventListener("click", function () {
+    if (DocId("MaxMenu").style.display == 'none') {
+        DocId("MaxMenu").style.display = 'block';
+        DocId("NoExtra").value = "Hide";
     } else {
-        document.getElementById("MaxMenu").style.display = 'none';
-        document.getElementById("NoExtra").value = "Max boobs/dicks etc";
+        DocId("MaxMenu").style.display = 'none';
+        DocId("NoExtra").value = "Max boobs/dicks etc";
     }
 });

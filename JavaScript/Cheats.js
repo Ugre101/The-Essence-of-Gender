@@ -20,8 +20,8 @@ function CheatEngine() {
     }
 }
 
-document.getElementById("Gold").addEventListener("click", function () {
-    const gold = document.getElementById("Gold");
+DocId("Gold").addEventListener("click", function () {
+    const gold = DocId("Gold");
     let clicked = gold.dataset.clicked;
     clicked++;
     gold.dataset.clicked = clicked;
@@ -37,35 +37,35 @@ document.getElementById("Gold").addEventListener("click", function () {
         DocId("CheatsFastTime").value = "FastTime " + Settings.Cheats.FastTime;
     }
 });
-document.getElementById("CheatsEnabled").addEventListener("click", function () {
+DocId("CheatsEnabled").addEventListener("click", function () {
     Settings.Cheats.Enabled = !Settings.Cheats.Enabled;
-    document.getElementById("CheatsEnabled").value = "Cheats Enabled " + Settings.Cheats.Enabled;
+    DocId("CheatsEnabled").value = "Cheats Enabled " + Settings.Cheats.Enabled;
 });
-document.getElementById("CheatsGold").addEventListener("click", function () {
+DocId("CheatsGold").addEventListener("click", function () {
     Settings.Cheats.Gold = !Settings.Cheats.Gold;
-    document.getElementById("CheatsGold").value = "Gold " + Settings.Cheats.Gold;
+    DocId("CheatsGold").value = "Gold " + Settings.Cheats.Gold;
 });
-document.getElementById("CheatsMasc").addEventListener("click", function () {
+DocId("CheatsMasc").addEventListener("click", function () {
     Settings.Cheats.Masc = !Settings.Cheats.Masc;
-    document.getElementById("CheatsMasc").value = "Masc " + Settings.Cheats.Masc;
+    DocId("CheatsMasc").value = "Masc " + Settings.Cheats.Masc;
 });
-document.getElementById("CheatsFemi").addEventListener("click", function () {
+DocId("CheatsFemi").addEventListener("click", function () {
     Settings.Cheats.Femi = !Settings.Cheats.Femi;
-    document.getElementById("CheatsFemi").value = "Femi " + Settings.Cheats.Femi;
+    DocId("CheatsFemi").value = "Femi " + Settings.Cheats.Femi;
 });
-document.getElementById("CheatsExp").addEventListener("click", function () {
+DocId("CheatsExp").addEventListener("click", function () {
     Settings.Cheats.Exp = !Settings.Cheats.Exp;
-    document.getElementById("CheatsExp").value = "Exp " + Settings.Cheats.Exp;
+    DocId("CheatsExp").value = "Exp " + Settings.Cheats.Exp;
 });
-document.getElementById("CheatsVoreExp").addEventListener("click", function () {
+DocId("CheatsVoreExp").addEventListener("click", function () {
     Settings.Cheats.VoreExp = !Settings.Cheats.VoreExp;
-    document.getElementById("CheatsVoreExp").value = "Vore Exp " + Settings.Cheats.VoreExp;
+    DocId("CheatsVoreExp").value = "Vore Exp " + Settings.Cheats.VoreExp;
 });
-document.getElementById("CheatsFastTime").addEventListener("click", function () {
+DocId("CheatsFastTime").addEventListener("click", function () {
     Settings.Cheats.FastTime = !Settings.Cheats.FastTime;
-    document.getElementById("CheatsFastTime").value = "FastTime " + Settings.Cheats.FastTime;
+    DocId("CheatsFastTime").value = "FastTime " + Settings.Cheats.FastTime;
 });
-document.getElementById("CloseCheatMenu").addEventListener("click", function () {
-    document.getElementById("CheatMenu").style.display = 'none';
+DocId("CloseCheatMenu").addEventListener("click", function () {
+    DocId("CheatMenu").style.display = 'none';
     DisplayGame();
 });

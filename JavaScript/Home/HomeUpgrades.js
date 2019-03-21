@@ -1,13 +1,13 @@
-    document.getElementById("UpgradeHome").addEventListener("click", function () {
+    DocId("UpgradeHome").addEventListener("click", function () {
         UpgradeHomeMenu();
     })
 
     function UpgradeHomeMenu() {
-        document.getElementById("HomeStart").style.display = 'none';
-        document.getElementById("HomeText").style.display = 'none';
-        document.getElementById("Upgrades").style.display = 'block';
+        DocId("HomeStart").style.display = 'none';
+        DocId("HomeText").style.display = 'none';
+        DocId("Upgrades").style.display = 'block';
 
-        var Upgrades = document.getElementById("Upgrades");
+        var Upgrades = DocId("Upgrades");
         while (Upgrades.hasChildNodes()) {
             Upgrades.removeChild(Upgrades.firstChild);
         }
@@ -58,7 +58,7 @@
                 House.Dorm++;
                 player.Gold -= DormCost();
                 if (House.Dorm < 2) {
-                    document.getElementById("Dorm").style.display = "inline-block";
+                    DocId("Dorm").style.display = "inline-block";
                     p.innerHTML = "Hiring construction workers you give orders to build a dorm to house servants. <br><br>" +
                         "Looking outside you see the newly built dorm. You can now take home opponent you have made orgasm five times."
                 } else {
@@ -145,7 +145,7 @@
                     p.innerHTML = "You upgrade your brothel for extra income.";
                 }
                 House.Brothel++;
-                document.getElementById("Brothel").style.display = 'inline-block';
+                DocId("Brothel").style.display = 'inline-block';
                 BuildBrothel.setAttribute("value", "Upgrade brothel " + Brothelcost() + "g")
             } else {
                 p.innerHTML = "You can't afford it.";
@@ -188,7 +188,7 @@
                     player.Gold -= 1000;
                     House.Portal.Owned = true;
                     p.innerHTML = "Congratulations you now own a personal portal, a true sign of wealth for peasants to envy!"
-                    document.getElementById("Portal").style.display = 'inline-block';
+                    DocId("Portal").style.display = 'inline-block';
                     Upgrades.removeChild(BuildPortal)
                 } else {
                     p.innerHTML = "	Sadly you lack funds to afford commissions the construction of a portal…" +
@@ -203,11 +203,11 @@
 
         var Close = InputButton("Close");
         Close.addEventListener("click", function () {
-            document.getElementById("HomeStart").style.display = 'block';
-            document.getElementById("Upgrades").style.display = 'none';
-            document.getElementById("HomeText").style.display = 'block';
+            DocId("HomeStart").style.display = 'block';
+            DocId("Upgrades").style.display = 'none';
+            DocId("HomeText").style.display = 'block';
 
-            var Upgrades = document.getElementById("Upgrades");
+            var Upgrades = DocId("Upgrades");
             while (Upgrades.hasChildNodes()) {
                 Upgrades.removeChild(Upgrades.firstChild);
             }

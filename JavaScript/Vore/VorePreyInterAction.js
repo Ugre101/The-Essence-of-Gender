@@ -20,107 +20,107 @@ function PreyButton(ps, from, index) {
 }
 
 function ShowPrey(where) {
-    document.getElementById(where + "Content").style.display = 'none';
-    document.getElementById(where + "Prey").style.display = 'block';
-    document.getElementById(where + "Leave").style.display = 'none';
-    document.getElementById("LeaveVore").style.display = 'none';
-    document.getElementById("Leave" + where + "Prey").style.display = 'inline-block';
-    document.getElementById("regurgitate" + where).style.display = 'inline-block';
+    DocId(where + "Content").style.display = 'none';
+    DocId(where + "Prey").style.display = 'block';
+    DocId(where + "Leave").style.display = 'none';
+    DocId("LeaveVore").style.display = 'none';
+    DocId("Leave" + where + "Prey").style.display = 'inline-block';
+    DocId("regurgitate" + where).style.display = 'inline-block';
 }
 
 function HidePrey(where) {
-    document.getElementById(where + "Content").style.display = 'grid';
-    document.getElementById(where + "Prey").style.display = 'none';
-    document.getElementById(where + "Leave").style.display = 'inline-block';
-    document.getElementById("LeaveVore").style.display = 'none';
-    document.getElementById("Leave" + where + "Prey").style.display = 'none';
-    document.getElementById("regurgitate" + where).style.display = 'none';
+    DocId(where + "Content").style.display = 'grid';
+    DocId(where + "Prey").style.display = 'none';
+    DocId(where + "Leave").style.display = 'inline-block';
+    DocId("LeaveVore").style.display = 'none';
+    DocId("Leave" + where + "Prey").style.display = 'none';
+    DocId("regurgitate" + where).style.display = 'none';
 }
 
 function ShowAnalPrey(e) {
     var Prey = player.Vore.Anal[e];
     PreyIndex = e;
     ShowPrey("Anal")
-    document.getElementById("AnalPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
-    document.getElementById("AnalDigestion").style.display = 'none';
+    DocId("AnalPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
+    DocId("AnalDigestion").style.display = 'none';
 };
 
-document.getElementById("LeaveAnalPrey").addEventListener("click", function () {
+DocId("LeaveAnalPrey").addEventListener("click", function () {
     HidePrey("Anal")
-    document.getElementById("AnalDigestion").style.display = 'inline-block';
+    DocId("AnalDigestion").style.display = 'inline-block';
 });
-document.getElementById("regurgitateAnal").addEventListener("click", function () {
+DocId("regurgitateAnal").addEventListener("click", function () {
     var who = player.Vore.Anal[PreyIndex];
     enemies.push(who);
     player.Vore.Anal.splice(PreyIndex, 1);
     HidePrey("Anal");
-    document.getElementById("AnalDigestion").style.display = 'inline-block';
+    DocId("AnalDigestion").style.display = 'inline-block';
     var food = "";
     for (var e = 0; e < player.Vore.Anal.length; e++) {
         var ps = player.Vore.Anal[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Anal", e);
     }
-    document.getElementById("AnalContent").innerHTML = food;
+    DocId("AnalContent").innerHTML = food;
 });
 
 function ShowBallsPrey(e) {
     var Prey = player.Vore.Balls[e];
     PreyIndex = e;
     ShowPrey("Balls");
-    document.getElementById("CumDigestion").style.display = 'none';
-    document.getElementById("BallsPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
+    DocId("CumDigestion").style.display = 'none';
+    DocId("BallsPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
 };
 
-document.getElementById("LeaveBallsPrey").addEventListener("click", function () {
+DocId("LeaveBallsPrey").addEventListener("click", function () {
     HidePrey("Balls")
-    document.getElementById("CumDigestion").style.display = 'inline-block';
+    DocId("CumDigestion").style.display = 'inline-block';
 });
-document.getElementById("regurgitateBalls").addEventListener("click", function () {
+DocId("regurgitateBalls").addEventListener("click", function () {
     var who = player.Vore.Balls[PreyIndex];
     enemies.push(who);
     player.Vore.Balls.splice(PreyIndex, 1);
     HidePrey("Balls");
-    document.getElementById("CumDigestion").style.display = 'inline-block';
+    DocId("CumDigestion").style.display = 'inline-block';
     var food = "";
     for (var e = 0; e < player.Vore.Balls.length; e++) {
         var ps = player.Vore.Balls[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Balls", e);
     }
-    document.getElementById("BallsContent").innerHTML = food;
+    DocId("BallsContent").innerHTML = food;
 });
 
 function ShowVaginaPrey(e) {
     var Prey = player.Vore.Vagina[e];
     PreyIndex = e;
     ShowPrey("Vagina");
-    document.getElementById("VCumDigestion").style.display = 'none';
-    document.getElementById("ChildTF").style.display = 'none';
-    document.getElementById("VaginaPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
+    DocId("VCumDigestion").style.display = 'none';
+    DocId("ChildTF").style.display = 'none';
+    DocId("VaginaPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
 
-    document.getElementById("")
+    DocId("")
 };
 
-document.getElementById("LeaveVaginaPrey").addEventListener("click", function () {
+DocId("LeaveVaginaPrey").addEventListener("click", function () {
     HidePrey("Vagina");
-    document.getElementById("VCumDigestion").style.display = 'inline-block';
-    document.getElementById("ChildTF").style.display = 'inline-block';
+    DocId("VCumDigestion").style.display = 'inline-block';
+    DocId("ChildTF").style.display = 'inline-block';
 });
-document.getElementById("regurgitateVagina").addEventListener("click", function () {
+DocId("regurgitateVagina").addEventListener("click", function () {
     var who = player.Vore.Vagina[PreyIndex];
     enemies.push(who);
     player.Vore.Vagina.splice(PreyIndex, 1);
     HidePrey("Vagina");
-    document.getElementById("VCumDigestion").style.display = 'inline-block';
-    document.getElementById("ChildTF").style.display = 'inline-block';
+    DocId("VCumDigestion").style.display = 'inline-block';
+    DocId("ChildTF").style.display = 'inline-block';
     var food = "";
     for (var e = 0; e < player.Vore.Vagina.length; e++) {
         var ps = player.Vore.Vagina[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Vagina", e);
     }
-    document.getElementById("VaginaContent").innerHTML = food;
+    DocId("VaginaContent").innerHTML = food;
 });
 
 
@@ -128,27 +128,27 @@ function ShowBreastPrey(e) {
     var Prey = player.Vore.Breast[e];
     PreyIndex = e;
     ShowPrey("Breast");
-    document.getElementById("MilkTransformation").style.display = 'none';
-    document.getElementById("BreastPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
+    DocId("MilkTransformation").style.display = 'none';
+    DocId("BreastPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
 };
 
-document.getElementById("LeaveBreastPrey").addEventListener("click", function () {
+DocId("LeaveBreastPrey").addEventListener("click", function () {
     HidePrey("Breast");
-    document.getElementById("MilkTransformation").style.display = 'inline-block';
+    DocId("MilkTransformation").style.display = 'inline-block';
 });
-document.getElementById("regurgitateBreast").addEventListener("click", function () {
+DocId("regurgitateBreast").addEventListener("click", function () {
     var who = player.Vore.Breast[PreyIndex];
     enemies.push(who);
     player.Vore.Breast.splice(PreyIndex, 1);
     HidePrey("Breast");
-    document.getElementById("MilkTransformation").style.display = 'inline-block';
+    DocId("MilkTransformation").style.display = 'inline-block';
     var food = "";
     for (var e = 0; e < player.Vore.Breast.length; e++) {
         var ps = player.Vore.Breast[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Breast", e);
     }
-    document.getElementById("BreastContent").innerHTML = food;
+    DocId("BreastContent").innerHTML = food;
 });
 
 
@@ -158,98 +158,98 @@ function ShowStomachPrey(e) {
     var Prey = player.Vore.Stomach[e];
     PreyIndex = e;
     ShowPrey("Stomach");
-    document.getElementById("StomachDigestion").style.display = 'none';
-    document.getElementById("StomachPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
+    DocId("StomachDigestion").style.display = 'none';
+    DocId("StomachPrey").innerHTML = Prey.FirstName + " " + Prey.LastName;
 };
-document.getElementById("LeaveStomachPrey").addEventListener("click", function () {
+DocId("LeaveStomachPrey").addEventListener("click", function () {
     HidePrey("Stomach");
-    document.getElementById("StomachDigestion").style.display = 'inline-block';
+    DocId("StomachDigestion").style.display = 'inline-block';
 });
-document.getElementById("regurgitateStomach").addEventListener("click", function () {
+DocId("regurgitateStomach").addEventListener("click", function () {
     var who = player.Vore.Stomach[PreyIndex];
     enemies.push(who);
     player.Vore.Stomach.splice(PreyIndex, 1);
     HidePrey("Stomach");
-    document.getElementById("StomachDigestion").style.display = 'inline-block';
+    DocId("StomachDigestion").style.display = 'inline-block';
     var food = "";
     for (var e = 0; e < player.Vore.Stomach.length; e++) {
         var ps = player.Vore.Stomach[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Stomach", e);
     }
-    document.getElementById("StomachContent").innerHTML = food;
+    DocId("StomachContent").innerHTML = food;
 });
 
 
-document.getElementById("VoreLooks").addEventListener("click", function () {
+DocId("VoreLooks").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("ShowVore").style.display = 'block';
-    document.getElementById("VorePerkMenu").style.display = 'none';
-    document.getElementById("AbsorbEssenceSetting").value = "Absorb Essence " + Settings.VoreSettings.AbsorbEssence;
+    DocId("ShowVore").style.display = 'block';
+    DocId("VorePerkMenu").style.display = 'none';
+    DocId("AbsorbEssenceSetting").value = "Absorb Essence " + Settings.VoreSettings.AbsorbEssence;
 });
 
 function DisplayNoneVore(where) {
-    document.getElementById("VoreSettings").style.display = 'none';
-    document.getElementById("VoreButtons").style.display = 'none';
-    document.getElementById("Leave" + where + "Prey").style.display = 'none';
-    document.getElementById("regurgitate" + where).style.display = 'none';
-    document.getElementById("LeaveVore").style.display = 'none';
-    document.getElementById("Leave" + where + "Prey").style.display = 'none';
-    document.getElementById("regurgitate" + where).style.display = 'none';
+    DocId("VoreSettings").style.display = 'none';
+    DocId("VoreButtons").style.display = 'none';
+    DocId("Leave" + where + "Prey").style.display = 'none';
+    DocId("regurgitate" + where).style.display = 'none';
+    DocId("LeaveVore").style.display = 'none';
+    DocId("Leave" + where + "Prey").style.display = 'none';
+    DocId("regurgitate" + where).style.display = 'none';
 }
-document.getElementById("ShowStomach").addEventListener("click", function () {
+DocId("ShowStomach").addEventListener("click", function () {
     DisplayNoneVore("Stomach");
-    document.getElementById("VoreStomach").style.display = 'block';
-    document.getElementById("StomachDigestion").value = "Stomach digestion " + Settings.VoreSettings.StomachDigestion;
+    DocId("VoreStomach").style.display = 'block';
+    DocId("StomachDigestion").value = "Stomach digestion " + Settings.VoreSettings.StomachDigestion;
     var food = "";
     for (var e = 0; e < player.Vore.Stomach.length; e++) {
         var ps = player.Vore.Stomach[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Stomach", e);
     }
-    document.getElementById("StomachContent").innerHTML = food;
+    DocId("StomachContent").innerHTML = food;
 
 });
-document.getElementById("StomachDigestion").addEventListener("click", function () {
+DocId("StomachDigestion").addEventListener("click", function () {
     Settings.VoreSettings.StomachDigestion = !Settings.VoreSettings.StomachDigestion
-    document.getElementById("StomachDigestion").value = "Stomach digestion " + Settings.VoreSettings.StomachDigestion;
+    DocId("StomachDigestion").value = "Stomach digestion " + Settings.VoreSettings.StomachDigestion;
 });
-document.getElementById("ShowVagina").addEventListener("click", function () {
+DocId("ShowVagina").addEventListener("click", function () {
     DisplayNoneVore("Vagina")
-    document.getElementById("VoreVagina").style.display = 'block';
+    DocId("VoreVagina").style.display = 'block';
     var food = "";
     for (var e = 0; e < player.Vore.Vagina.length; e++) {
         var ps = player.Vore.Vagina[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Vagina", e);
     }
-    document.getElementById("VaginaContent").innerHTML = food;
-    document.getElementById("ChildTF").value = "Child tf/Age reduc " + Settings.VoreSettings.ChildTF;
-    document.getElementById("VCumDigestion").value = "Digestion " + Settings.VoreSettings.VCumDigestion;
+    DocId("VaginaContent").innerHTML = food;
+    DocId("ChildTF").value = "Child tf/Age reduc " + Settings.VoreSettings.ChildTF;
+    DocId("VCumDigestion").value = "Digestion " + Settings.VoreSettings.VCumDigestion;
 });
-document.getElementById("ChildTF").addEventListener("click", function () {
+DocId("ChildTF").addEventListener("click", function () {
     if (Settings.VoreSettings.ChildTF) {
         Settings.VoreSettings.ChildTF = false;
     } else {
         Settings.VoreSettings.ChildTF = true;
         Settings.VoreSettings.VCumDigestion = false;
     }
-    document.getElementById("ChildTF").value = "Child tf/Age reduc " + Settings.VoreSettings.ChildTF;
-    document.getElementById("VCumDigestion").value = "Digestion " + Settings.VoreSettings.VCumDigestion;
+    DocId("ChildTF").value = "Child tf/Age reduc " + Settings.VoreSettings.ChildTF;
+    DocId("VCumDigestion").value = "Digestion " + Settings.VoreSettings.VCumDigestion;
 });
-document.getElementById("VCumDigestion").addEventListener("click", function () {
+DocId("VCumDigestion").addEventListener("click", function () {
     if (Settings.VoreSettings.VCumDigestion) {
         Settings.VoreSettings.VCumDigestion = false;
     } else {
         Settings.VoreSettings.ChildTF = false;
         Settings.VoreSettings.VCumDigestion = true;
     }
-    document.getElementById("ChildTF").value = "Child tf/Age reduc " + Settings.VoreSettings.ChildTF;
-    document.getElementById("VCumDigestion").value = "Digestion " + Settings.VoreSettings.VCumDigestion;
+    DocId("ChildTF").value = "Child tf/Age reduc " + Settings.VoreSettings.ChildTF;
+    DocId("VCumDigestion").value = "Digestion " + Settings.VoreSettings.VCumDigestion;
 })
 
-document.getElementById("ShowBreast").addEventListener("click", function () {
-    document.getElementById("VoreBreast").style.display = 'block';
+DocId("ShowBreast").addEventListener("click", function () {
+    DocId("VoreBreast").style.display = 'block';
     DisplayNoneVore("Breast")
     var food = "";
     for (var e = 0; e < player.Vore.Breast.length; e++) {
@@ -257,69 +257,69 @@ document.getElementById("ShowBreast").addEventListener("click", function () {
         EssenceCheck(ps);
         food += PreyButton(ps, "Breast", e);
     }
-    document.getElementById("BreastContent").innerHTML = food;
-    document.getElementById("MilkTransformation").value = "Milk transformation " + Settings.VoreSettings.MilkTF;
+    DocId("BreastContent").innerHTML = food;
+    DocId("MilkTransformation").value = "Milk transformation " + Settings.VoreSettings.MilkTF;
 });
-document.getElementById("MilkTransformation").addEventListener("click", function () {
+DocId("MilkTransformation").addEventListener("click", function () {
     Settings.VoreSettings.MilkTF = !Settings.VoreSettings.MilkTF;
-    document.getElementById("MilkTransformation").value = "Milk transformation " + Settings.VoreSettings.MilkTF;
+    DocId("MilkTransformation").value = "Milk transformation " + Settings.VoreSettings.MilkTF;
 });
-document.getElementById("ShowBalls").addEventListener("click", function () {
+DocId("ShowBalls").addEventListener("click", function () {
     DisplayNoneVore("Balls")
-    document.getElementById("VoreBalls").style.display = 'block';
+    DocId("VoreBalls").style.display = 'block';
     var food = "";
     for (var e = 0; e < player.Vore.Balls.length; e++) {
         var ps = player.Vore.Balls[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Balls", e);
     }
-    document.getElementById("BallsContent").innerHTML = food;
-    document.getElementById("CumDigestion").value = "Cum transformation " + Settings.VoreSettings.CumTF;
+    DocId("BallsContent").innerHTML = food;
+    DocId("CumDigestion").value = "Cum transformation " + Settings.VoreSettings.CumTF;
 });
-document.getElementById("CumDigestion").addEventListener("click", function () {
+DocId("CumDigestion").addEventListener("click", function () {
     Settings.VoreSettings.CumTF = !Settings.VoreSettings.CumTF;
-    document.getElementById("CumDigestion").value = "Cum transformation " + Settings.VoreSettings.CumTF;
+    DocId("CumDigestion").value = "Cum transformation " + Settings.VoreSettings.CumTF;
 });
-document.getElementById("ShowAnal").addEventListener("click", function () {
+DocId("ShowAnal").addEventListener("click", function () {
     DisplayNoneVore("Anal")
-    document.getElementById("VoreAnal").style.display = 'block';
+    DocId("VoreAnal").style.display = 'block';
     var food = "";
     for (var e = 0; e < player.Vore.Anal.length; e++) {
         var ps = player.Vore.Anal[e];
         EssenceCheck(ps);
         food += PreyButton(ps, "Anal", e);
     }
-    document.getElementById("AnalContent").innerHTML = food;
-    document.getElementById("AnalDigestion").value = "Anal digestion " + Settings.VoreSettings.AnalDigestion;
+    DocId("AnalContent").innerHTML = food;
+    DocId("AnalDigestion").value = "Anal digestion " + Settings.VoreSettings.AnalDigestion;
 });
-document.getElementById("AnalDigestion").addEventListener("click", function () {
+DocId("AnalDigestion").addEventListener("click", function () {
     Settings.VoreSettings.AnalDigestion = !Settings.VoreSettings.AnalDigestion;
-    document.getElementById("AnalDigestion").value = "Anal Digestion " + Settings.VoreSettings.AnalDigestion;
+    DocId("AnalDigestion").value = "Anal Digestion " + Settings.VoreSettings.AnalDigestion;
 });
 
 function LeavePreyMenu() {
-    document.getElementById("VoreButtons").style.display = 'grid';
-    document.getElementById("LeaveVore").style.display = 'inline-block';
-    document.getElementById("VoreSettings").style.display = 'inline-block';
+    DocId("VoreButtons").style.display = 'grid';
+    DocId("LeaveVore").style.display = 'inline-block';
+    DocId("VoreSettings").style.display = 'inline-block';
 }
 
-document.getElementById("StomachLeave").addEventListener("click", function () {
-    document.getElementById("VoreStomach").style.display = 'none';
+DocId("StomachLeave").addEventListener("click", function () {
+    DocId("VoreStomach").style.display = 'none';
     LeavePreyMenu();
 });
-document.getElementById("VaginaLeave").addEventListener("click", function () {
-    document.getElementById("VoreVagina").style.display = 'none';
+DocId("VaginaLeave").addEventListener("click", function () {
+    DocId("VoreVagina").style.display = 'none';
     LeavePreyMenu();
 });
-document.getElementById("BreastLeave").addEventListener("click", function () {
-    document.getElementById("VoreBreast").style.display = 'none';
+DocId("BreastLeave").addEventListener("click", function () {
+    DocId("VoreBreast").style.display = 'none';
     LeavePreyMenu();
 });
-document.getElementById("BallsLeave").addEventListener("click", function () {
-    document.getElementById("VoreBalls").style.display = 'none';
+DocId("BallsLeave").addEventListener("click", function () {
+    DocId("VoreBalls").style.display = 'none';
     LeavePreyMenu();
 });
-document.getElementById("AnalLeave").addEventListener("click", function () {
-    document.getElementById("VoreAnal").style.display = 'none';
+DocId("AnalLeave").addEventListener("click", function () {
+    DocId("VoreAnal").style.display = 'none';
     LeavePreyMenu();
 });

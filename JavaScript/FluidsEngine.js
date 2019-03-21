@@ -1,5 +1,5 @@
 function FluidsEngine() {
-    document.getElementById("FemcumBar").style.display = 'none';
+    DocId("FemcumBar").style.display = 'none';
     if (player.Balls.length > 0) {
         for (var b = 0; b < player.Balls.length; b++) {
             player.Balls[b].CumMax = 1 / 3 * Math.PI * Math.pow(player.Balls[b].Size, 3),
@@ -8,7 +8,7 @@ function FluidsEngine() {
                 player.Balls[b].Cum += Math.max(0, player.Balls[b].CumRate + player.Balls[b].CumBaseRate);
             }
         }
-        document.getElementById("CumBar").style.display = 'block';
+        DocId("CumBar").style.display = 'block';
         var TotalCum = 0,
             TotalCumMax = 0;
         for (var e = 0; e < player.Balls.length; e++) {
@@ -19,14 +19,14 @@ function FluidsEngine() {
         if (false) {
             EventLog("Your balls are so full that you can barely hold it!")
         }
-        document.getElementById("FluidCum").innerHTML = Math.round((Math.round(TotalCum) / 1000) * 10) / 10 + "L";
-        document.getElementById("FluidCum").style.width = Math.min(1, CumPercent) * 100 + "%";
+        DocId("FluidCum").innerHTML = Math.round((Math.round(TotalCum) / 1000) * 10) / 10 + "L";
+        DocId("FluidCum").style.width = Math.min(1, CumPercent) * 100 + "%";
 
     } else {
-        document.getElementById("CumBar").style.display = 'none';
+        DocId("CumBar").style.display = 'none';
     }
     if (player.Boobies.length > 0 && GotMilk(player)) {
-        document.getElementById("MilkBar").style.display = 'block';
+        DocId("MilkBar").style.display = 'block';
         var TotalMilk = 0,
             TotalMilkMax = 0;
         for (var b = 0; b < player.Boobies.length; b++) {
@@ -45,11 +45,11 @@ function FluidsEngine() {
         if (false) {
             EventLog("You breasts are so full that they have started leaking!")
         }
-        document.getElementById("FluidMilk").innerHTML = Math.round((Math.round(TotalMilk) / 1000) * 10) / 10 + "L";
-        document.getElementById("FluidMilk").style.width = Math.min(1, MilkPercent) * 100 + "%";
+        DocId("FluidMilk").innerHTML = Math.round((Math.round(TotalMilk) / 1000) * 10) / 10 + "L";
+        DocId("FluidMilk").style.width = Math.min(1, MilkPercent) * 100 + "%";
 
     } else {
-        document.getElementById("MilkBar").style.display = 'none';
+        DocId("MilkBar").style.display = 'none';
     }
     if (House.Dormmates.length > 0) {
         for (var e = 0; e < House.Dormmates.length; e++) {
