@@ -1,67 +1,67 @@
-document.getElementById("Options").addEventListener("click", function () {
+DocId("Options").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("optionpage").style.display = 'block';
-    document.getElementById("ImgPack").value = "Img pack: " + Settings.ImgPack;
-    document.getElementById("LogLength").innerHTML = Settings.LogLength;
-    document.getElementById("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
-    document.getElementById("Inch").value = "Inch " + Settings.Inch;
-    document.getElementById("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
+    DocId("optionpage").style.display = 'block';
+    DocId("ImgPack").value = "Img pack: " + Settings.ImgPack;
+    DocId("LogLength").innerHTML = Settings.LogLength;
+    DocId("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
+    DocId("Inch").value = "Inch " + Settings.Inch;
+    DocId("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
 });
 
-document.getElementById("FontSmaller").addEventListener("click", function () {
+DocId("FontSmaller").addEventListener("click", function () {
     Settings.FontSize -= 0.05;
     document.body.style.fontSize = Settings.FontSize + "em";
-    document.getElementById("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
+    DocId("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
 });
 
-document.getElementById("FontBigger").addEventListener("click", function () {
+DocId("FontBigger").addEventListener("click", function () {
     Settings.FontSize += 0.05;
     document.body.style.fontSize = Settings.FontSize + "em";
-    document.getElementById("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
+    DocId("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
 });
 
-document.getElementById("SetPronoun").addEventListener("click", function () {
+DocId("SetPronoun").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("PronounForm").style.display = 'block'
+    DocId("PronounForm").style.display = 'block'
 });
 
-document.getElementById("Log+10").addEventListener("click", function () {
+DocId("Log+10").addEventListener("click", function () {
     Settings.LogLength += 10;
-    document.getElementById("LogLength").innerHTML = Settings.LogLength;
+    DocId("LogLength").innerHTML = Settings.LogLength;
 });
 
-document.getElementById("Log-10").addEventListener("click", function () {
+DocId("Log-10").addEventListener("click", function () {
     Settings.LogLength -= 10;
-    document.getElementById("LogLength").innerHTML = Settings.LogLength;
+    DocId("LogLength").innerHTML = Settings.LogLength;
 });
 
-document.getElementById("AcceptPronoun").addEventListener("click", function () {
+DocId("AcceptPronoun").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("optionpage").style.display = 'block';
+    DocId("optionpage").style.display = 'block';
     Settings.Pronoun = {
-        Herm: document.getElementById("Herm").value,
-        Male: document.getElementById("Male").value,
-        Female: document.getElementById("Female").value,
-        Doll: document.getElementById("Doll").value,
-        DickGirl: document.getElementById("DickGirl").value,
-        CuntBoy: document.getElementById("CuntBoy").value,
+        Herm: DocId("Herm").value,
+        Male: DocId("Male").value,
+        Female: DocId("Female").value,
+        Doll: DocId("Doll").value,
+        DickGirl: DocId("DickGirl").value,
+        CuntBoy: DocId("CuntBoy").value,
         Status: true
     };
 });
-document.getElementById("DisablePronoun").addEventListener("click", function () {
+DocId("DisablePronoun").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("optionpage").style.display = 'block';
+    DocId("optionpage").style.display = 'block';
     Settings.Pronoun.Status = false;
 });
 
-document.getElementById("Inch").addEventListener("click", function () {
+DocId("Inch").addEventListener("click", function () {
     Settings.Inch = Settings.Inch ? false : true;
-    document.getElementById("Inch").value = "Inch " + Settings.Inch;
+    DocId("Inch").value = "Inch " + Settings.Inch;
 });
 
-document.getElementById("FullScreen").addEventListener("click", function () {
+DocId("FullScreen").addEventListener("click", function () {
     const elem = document.body,
-        button = document.getElementById("FullScreen");
+        button = DocId("FullScreen");
     if (document.fullscreenElement === null) {
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
@@ -94,46 +94,46 @@ document.getElementById("FullScreen").addEventListener("click", function () {
 });
 
 // Save options
-document.getElementById("saveoptions").addEventListener("click", function () {
-    document.getElementById("optionpage").style.display = 'none';
+DocId("saveoptions").addEventListener("click", function () {
+    DocId("optionpage").style.display = 'none';
     DisplayGame();
 
-    document.body.style.backgroundColor = document.getElementById("backcolor").value;
-    MapColor = document.getElementById("MapColor").value;
-    document.body.style.color = document.getElementById("textcolor").value;
-    document.body.style.fontFamily = document.getElementById("textfont").value;
+    document.body.style.backgroundColor = DocId("backcolor").value;
+    MapColor = DocId("MapColor").value;
+    document.body.style.color = DocId("textcolor").value;
+    document.body.style.fontFamily = DocId("textfont").value;
 
-    document.getElementById("status").style.backgroundColor = document.getElementById("SideBarColor").value;
-    document.getElementById("buttons").style.backgroundColor = document.getElementById("SideBarColor").value
+    DocId("status").style.backgroundColor = DocId("SideBarColor").value;
+    DocId("buttons").style.backgroundColor = DocId("SideBarColor").value
 
-    Settings.MapPercent = document.getElementById("MapScale").value;
-    Settings.BackColor = document.getElementById("backcolor").value;
-    Settings.MapColor = document.getElementById("MapColor").value;
-    Settings.TextColor = document.getElementById("textcolor").value;
-    Settings.TextFont = document.getElementById("textfont").value;
-    Settings.BorderColor = document.getElementById("BorderColor").value;
+    Settings.MapPercent = DocId("MapScale").value;
+    Settings.BackColor = DocId("backcolor").value;
+    Settings.MapColor = DocId("MapColor").value;
+    Settings.TextColor = DocId("textcolor").value;
+    Settings.TextFont = DocId("textfont").value;
+    Settings.BorderColor = DocId("BorderColor").value;
 
     HemScale();
 });
 
-document.getElementById("PerkOptions").addEventListener("click", function () {
+DocId("PerkOptions").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("PerkOptionsMenu").style.display = 'block';
-    document.getElementById("Skip").value = "Skip " + Settings.Skip;
-    document.getElementById("Vore").value = "Vore " + Settings.Vore;
+    DocId("PerkOptionsMenu").style.display = 'block';
+    DocId("Skip").value = "Skip " + Settings.Skip;
+    DocId("Vore").value = "Vore " + Settings.Vore;
 });
 
-document.getElementById("Skip").addEventListener("click", function () {
+DocId("Skip").addEventListener("click", function () {
     Settings.Skip = Settings.Skip ? false : true;
-    document.getElementById("Skip").value = "Skip " + Settings.Skip;
+    DocId("Skip").value = "Skip " + Settings.Skip;
 });
 
-document.getElementById("PlayerSpriteEnable").addEventListener("click", function(){
+DocId("PlayerSpriteEnable").addEventListener("click", function () {
     Settings.PlayerSpriteEnable = Settings.PlayerSpriteEnable ? false : true;
-    document.getElementById("PlayerSpriteEnable").value = Settings.PlayerSpriteEnable;
+    DocId("PlayerSpriteEnable").value = Settings.PlayerSpriteEnable;
 })
 
-document.getElementById("OptionGiveEssence").addEventListener("click", function () {
+DocId("OptionGiveEssence").addEventListener("click", function () {
     switch (Settings.GiveEssence) {
         case "Both":
             Settings.GiveEssence = "Femininity";
@@ -148,15 +148,15 @@ document.getElementById("OptionGiveEssence").addEventListener("click", function 
             Settings.GiveEssence = "Both";
             break;
     }
-    document.getElementById("OptionGiveEssence").value = Settings.GiveEssence;
+    DocId("OptionGiveEssence").value = Settings.GiveEssence;
 });
 
-document.getElementById("PerkOptionsLeave").addEventListener("click", function () {
-    document.getElementById("PerkOptionsMenu").style.display = 'none';
+DocId("PerkOptionsLeave").addEventListener("click", function () {
+    DocId("PerkOptionsMenu").style.display = 'none';
     DisplayGame();
 });
 
-document.getElementById("HighLightDoors").addEventListener("click", function () {
+DocId("HighLightDoors").addEventListener("click", function () {
     Settings.HighLightDoors = Settings.HighLightDoors ? false : true;
-    document.getElementById("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
+    DocId("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
 });

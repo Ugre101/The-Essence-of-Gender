@@ -49,15 +49,15 @@ const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "Ci
         "PathToOutlaws", "PathToOutlaws2", "RoadToCity", "RoadToCity2", "RoadToHome", "RoadToWitch", "RoadToWitch2",
         "rtb2", "Start", "Witch", "MountainStart", "MountainShrinePath", "MountainShrine", "MountainClimb", "MountainClimb2",
         "MountainClimb3", "MountainClimb4", "MountainClimb5", "MountainClimb6", "MountainClimb7", "MountainClimb8",
-        "MountainClimb9", "MountainPlateau","Farm"
+        "MountainClimb9", "MountainPlateau", "Farm"
     ], function (images) {
         Tiles_images = images;
         // Stop player from starting before tiles are loaded
-        document.getElementById("LoadingImagesProgress").innerHTML = "Tiles loaded";
-        document.getElementById("LoadingImagesProgress").classList.remove("visible");
-        document.getElementById("LoadingImagesProgress").classList.add("hidden");
+        DocId("LoadingImagesProgress").innerHTML = "Tiles loaded";
+        DocId("LoadingImagesProgress").classList.remove("visible");
+        DocId("LoadingImagesProgress").classList.add("hidden");
     }),
-    NpcImageLoader = NpcImageLoad(["LocalPortal","FarmBarn"], function (images) {
+    NpcImageLoader = NpcImageLoad(["LocalPortal", "FarmBarn"], function (images) {
         Npc_images = images;
     });
 
@@ -75,7 +75,7 @@ function CurrentMap() {
             this.Color = Color
     };
     let Npcs = []
-    const startarea = document.getElementById("hem"),
+    const startarea = DocId("hem"),
         ctx = startarea.getContext("2d"),
         Townhall = new Npc("Townhall", "Townhall", grid * 6, grid / 2, grid * 8, grid * 5.5, "RGB(133,94,66)"),
         Shop = new Npc("Shop", "Shop", grid / 2, grid * 14, grid * 5.5, grid * 5.5, "RGB(133,94,66)"),
@@ -323,7 +323,7 @@ function CurrentMap() {
 
     function PrintNpcs() {
         const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"],
-            HasSprite = ["LocalPortal","FarmBarn"];
+            HasSprite = ["LocalPortal", "FarmBarn"];
         // var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
         // Switched it so new npcs always print
         for (var e of Npcs) {
@@ -358,23 +358,23 @@ function CurrentMap() {
         function UpdateNpc(name) {
             let isfunction = window[name + "Func"];
             if (typeof isfunction === "function") { // Start replacing html building/npcs with javascript functions
-                document.getElementById("map").style.display = 'none';
-                document.getElementById("buttons").style.display = 'none';
-                document.getElementById("EmptyButtons").style.display = 'block';
+                DocId("map").style.display = 'none';
+                DocId("buttons").style.display = 'none';
+                DocId("EmptyButtons").style.display = 'block';
                 isfunction();
             } else {
-                document.getElementById(name).style.display = 'block';
-                document.getElementById("map").style.display = 'none';
-                document.getElementById("buttons").style.display = 'none';
-                document.getElementById("EmptyButtons").style.display = 'block';
-                document.getElementById("Leave" + name).addEventListener("click", function () {
+                DocId(name).style.display = 'block';
+                DocId("map").style.display = 'none';
+                DocId("buttons").style.display = 'none';
+                DocId("EmptyButtons").style.display = 'block';
+                DocId("Leave" + name).addEventListener("click", function () {
                     battle = false;
-                    document.getElementById(name).style.display = 'none';
-                    document.getElementById("map").style.display = 'block';
-                    document.getElementById("buttons").style.display = 'block';
-                    document.getElementById("EmptyButtons").style.display = 'none';
-                    document.getElementById("status").style.display = 'block';
-                    document.getElementById(name + "Text").innerHTML = null;
+                    DocId(name).style.display = 'none';
+                    DocId("map").style.display = 'block';
+                    DocId("buttons").style.display = 'block';
+                    DocId("EmptyButtons").style.display = 'none';
+                    DocId("status").style.display = 'block';
+                    DocId(name + "Text").innerHTML = null;
                     return;
                 });
             }

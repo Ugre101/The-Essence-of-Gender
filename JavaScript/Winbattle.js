@@ -7,13 +7,13 @@ function WinBattle() {
     CombatQuests(ee);
     //WinEnemyChanges(ee);
     DropSystem(ee);
-    document.getElementById("Encounter").style.display = 'none';
+    DocId("Encounter").style.display = 'none';
     if (Settings.Skip) {
         DisplayGame();
     } else if (false) { // Replace with ee.Name === "specific name"
-        document.getElementById("DungeonSystem").style.display = 'block';
-        document.getElementById("DungeonText").innerHTML = "What should you do with her?";
-        document.getElementById("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" +
+        DocId("DungeonSystem").style.display = 'block';
+        DocId("DungeonText").innerHTML = "What should you do with her?";
+        DocId("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" +
             "<input type=\"button\" id=\"MakeSubmit\" value=\"Make her understand her place.\" >";
     } else {
         SetupSex(ee);
@@ -21,18 +21,18 @@ function WinBattle() {
 }
 
 function SetupSex(ee) {
-    document.getElementById("SexText").innerHTML = HeightSystem(player, ee);
-    document.getElementById("AfterBattle").style.display = 'grid';
-    document.getElementById("SexButtons").style.display = 'grid';
+    DocId("SexText").innerHTML = HeightSystem(player, ee);
+    DocId("AfterBattle").style.display = 'grid';
+    DocId("SexButtons").style.display = 'grid';
     if (Settings.ImgPack) {
-        document.getElementById("AfterBattle").classList.remove("AfterBattle");
-        document.getElementById("AfterBattle").classList.add("AfterBattleImg");
-        document.getElementById("MyImg").style.display = 'block';
+        DocId("AfterBattle").classList.remove("AfterBattle");
+        DocId("AfterBattle").classList.add("AfterBattleImg");
+        DocId("MyImg").style.display = 'block';
 
     } else {
-        document.getElementById("AfterBattle").classList.add("AfterBattle");
-        document.getElementById("AfterBattle").classList.remove("AfterBattleImg");
-        document.getElementById("MyImg").style.display = 'none';
+        DocId("AfterBattle").classList.add("AfterBattle");
+        DocId("AfterBattle").classList.remove("AfterBattleImg");
+        DocId("MyImg").style.display = 'none';
     }
     CheckArousal();
     if (ee.Name === "Feral") {

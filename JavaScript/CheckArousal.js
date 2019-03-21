@@ -29,6 +29,7 @@ function CheckArousal() {
         player.Orgasm++;
         player.Arousal = 0;
         player.SessionOrgasm++;
+        console.log(player.GiveEssence)
         switch (Settings.GiveEssence) {
             case "Both":
                 ee.Masc += Math.round(player.GiveEssence / 2);

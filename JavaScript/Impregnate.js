@@ -134,37 +134,37 @@ function Impregnate(who, by, mode = "A", where = "") {
             case "cuntboy":
                 if (by.Virility >= Impregnation) {
                     BabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "You have impregnated him!"
+                    DocId(where + "SexText").innerHTML = "You have impregnated him!"
                 }
                 break;
             case "female":
                 if (by.Virility >= Impregnation) {
                     BabyMaker();
-                    document.getElementById(where + "SexStats").innerHTML = "You have impregnated her!"
+                    DocId(where + "SexStats").innerHTML = "You have impregnated her!"
                 }
                 break;
             case "hermaphrodite":
                 if (by.Virility >= Impregnation) {
                     BabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "You have impregnated hir!"
+                    DocId(where + "SexText").innerHTML = "You have impregnated hir!"
                 }
                 break;
             case "male":
                 if (by.Virility - 100 >= Impregnation) {
                     BabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate him!"
+                    DocId(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate him!"
                 }
                 break;
             case "dickgirl":
                 if (by.Virility - 100 >= Impregnation) {
                     BabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate her!"
+                    DocId(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate her!"
                 }
                 break;
             default:
                 if (by.Virility - 100 >= Impregnation) {
                     BabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnated the doll!"
+                    DocId(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnated the doll!"
                 }
                 break;
         }
@@ -175,13 +175,13 @@ function Impregnate(who, by, mode = "A", where = "") {
             case "female":
                 if (who.Fertility >= Impregnation) {
                     playerBabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "You have been impregnated!"
+                    DocId(where + "SexText").innerHTML = "You have been impregnated!"
                 }
                 break;
             case "hermaphrodite":
                 if (who.Fertility >= Impregnation) {
                     playerBabyMaker();
-                    document.getElementById(where + "SexText").innerHTML = "You have been impregnated!"
+                    DocId(where + "SexText").innerHTML = "You have been impregnated!"
                 }
                 break;
             case "dickgirl":
@@ -189,7 +189,7 @@ function Impregnate(who, by, mode = "A", where = "") {
                 if (false) { //Need to make a way to enable make impreg (item/blessing/curse)
                     if (who.Fertility - 50 >= Impregnation) {
                         playerBabyMaker();
-                        document.getElementById(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
+                        DocId(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
                     }
                 }
                 break;
@@ -197,7 +197,7 @@ function Impregnate(who, by, mode = "A", where = "") {
                 if (false) {
                     if (who.Fertility - 50 >= Impregnation) {
                         playerBabyMaker();
-                        document.getElementById(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
+                        DocId(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
                     }
                 }
                 break;

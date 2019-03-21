@@ -455,17 +455,17 @@ const ItemDict = {
         Name: "Pocket portal",
         Use: function (who, item) {
             if (who.Map === "RoadToHome") {
-                document.getElementById("InventoryText").innerHTML = "... seriously?"
+                DocId("InventoryText").innerHTML = "... seriously?"
                 item.Quantity++;
             } else if (House.Portal.Owned) {
                 enemies = [];
                 who.Area = "First";
                 who.Map = "RoadToHome";
                 DisplayGame();
-                document.getElementById("Inventory").style.display = 'none';
+                DocId("Inventory").style.display = 'none';
             } else {
                 item.Quantity++;
-                document.getElementById("InventoryText").innerHTML = "You have no house portal.";
+                DocId("InventoryText").innerHTML = "You have no house portal.";
             }
         },
         Equip: "No",
@@ -487,9 +487,9 @@ ItemDict.SpellBook = {
     Quantity: "bob", // Infinity
     Title: "Long description of the item",
     Use: function (who) {
-        document.getElementById("Inventory").style.display = "none";
+        DocId("Inventory").style.display = "none";
 
-        var Div = document.getElementById("SpellBook");
+        var Div = DocId("SpellBook");
         Div.style.display = "block";
         while (Div.hasChildNodes()) {
             Div.removeChild(Div.firstChild);
@@ -527,7 +527,7 @@ ItemDict.SpellBook = {
                 Div.removeChild(Div.firstChild);
             }
             Div.style.display = "none";
-            document.getElementById("Inventory").style.display = "block";
+            DocId("Inventory").style.display = "block";
         });
         Div.appendChild(CloseBook);
     }

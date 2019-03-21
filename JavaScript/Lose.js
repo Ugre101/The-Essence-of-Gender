@@ -1,4 +1,4 @@
-document.getElementById("EnemyLoseSex").addEventListener("click", function () {
+DocId("EnemyLoseSex").addEventListener("click", function () {
 	if (DocId("LoseEnemyKinda").style.display === 'none') {
 		DocId("LoseSexStats").innerHTML = " ";
 		DocId("LoseEnemyKinda").style.display = 'block';
@@ -12,7 +12,7 @@ document.getElementById("EnemyLoseSex").addEventListener("click", function () {
 		DocId("LoseEnemyExact").innerHTML = `<p>${ExactBoobLook(ee) + ExactPussyLook(ee) + ExactDickLook(ee) + ExactBallLook(ee)}</p>`;
 	}
 });
-document.getElementById("PlayerLoseSex").addEventListener("click", function () {
+DocId("PlayerLoseSex").addEventListener("click", function () {
 	if (DocId("LoseplayerKinda").style.display === 'none') {
 		DocId("LoseplayerKinda").style.display = 'block';
 		DocId("LoseplayerExact").style.display = 'none';
@@ -26,15 +26,15 @@ document.getElementById("PlayerLoseSex").addEventListener("click", function () {
 
 function Lose(sex = true) {
 	const ee = enemies[EnemyIndex],
-		LPL = document.getElementById("LosePlayerLooks"),
-		LoseText = document.getElementById("LoseSexStats");
+		LPL = DocId("LosePlayerLooks"),
+		LoseText = DocId("LoseSexStats");
 
 	LPL.innerHTML = ""; // BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
 	if (player.Pregnant.Babies.length > 0) {
 		const age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
 		LPL.innerHTML += "<br>" + (age < 1) ? "Impregnated" : age + " months pregnant";
 	}
-	document.getElementById("LoseEnemyLooks").innerHTML = ""; //BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
+	DocId("LoseEnemyLooks").innerHTML = ""; //BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
 	if (ee.hasOwnProperty("Pregnant")) {
 		if (ee.Pregnant.Status) {
 			DocId("LoseEnemyLooks").innerHTML += "<br>Pregnant";
@@ -83,7 +83,7 @@ function Lose(sex = true) {
 
 	function NameConq() { // Name/title/type e.g. witch, maiden
 		const Name = ee.Name.toLowerCase(),
-			LoseText = document.getElementById("LoseSexStats");
+			LoseText = DocId("LoseSexStats");
 		switch (Name) {
 			case "wizard":
 				// Curse? Maybe add a organ mod on auto and shrink on manual; might make organmod effect manual
@@ -124,7 +124,7 @@ function Lose(sex = true) {
 	function RaceConq() {
 		const race = ee.Race.toLowerCase(),
 			enemy = ee,
-			LoseText = document.getElementById("LoseSexText");
+			LoseText = DocId("LoseSexText");
 		switch (race) {
 			case "human":
 				const steal = Math.min(RandomInt(25, 200), player.Gold)
@@ -203,13 +203,13 @@ function Lose(sex = true) {
 		}
 	};
 }
-document.getElementById("LoseSubmit").addEventListener("click", function () {
+DocId("LoseSubmit").addEventListener("click", function () {
 	const takeM = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5)), player.Masc),
 		takeF = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5)), player.Femi),
 		selectScene = SnowScenes(),
 		a = ["forcedBJ", "getBJ", "getRidden", "getRiddenAnal"],
 		b = ["forcedCunn", "getCunn", "getFucked", "getFuckedAnal"]
-	document.getElementById("LosePlayerOrgasm").innerHTML = loseScene(false, selectScene);
+	DocId("LosePlayerOrgasm").innerHTML = loseScene(false, selectScene);
 	if (a.indexOf(selectScene) > -1) {
 		player.Masc -= takeM;
 		enemies[EnemyIndex].Masc += takeM;
@@ -224,10 +224,10 @@ document.getElementById("LoseSubmit").addEventListener("click", function () {
 	}
 	Lose(false);
 });
-document.getElementById("LoseStruggle").addEventListener("click", function () {
+DocId("LoseStruggle").addEventListener("click", function () {
 	var take = Math.round(enemies[EnemyIndex].SexSkill * RandomInt(1, 7));
 	const selectScene = SnowScenes();
-	document.getElementById("LosePlayerOrgasm").innerHTML = loseScene(true, selectScene);
+	DocId("LosePlayerOrgasm").innerHTML = loseScene(true, selectScene);
 	if (selectScene === "forcedBJ" || selectScene === "getBJ" || selectScene === "getRidden" || selectScene === "getRiddenAnal") {
 		take = Math.min(take, player.Masc);
 		player.Masc -= take;
@@ -263,17 +263,17 @@ document.getElementById("LoseStruggle").addEventListener("click", function () {
 	}
 	Lose(false);
 });
-document.getElementById("LeaveLose").addEventListener("click", function () {
+DocId("LeaveLose").addEventListener("click", function () {
 	DisplayGame();
-	document.getElementById("Lose").style.display = 'none';
-	document.getElementById("LoseStruggle").style.display = 'inline-block';
-	document.getElementById("LoseSubmit").style.display = 'inline-block';
-	document.getElementById("LosePlayerOrgasm").innerHTML = " ";
+	DocId("Lose").style.display = 'none';
+	DocId("LoseStruggle").style.display = 'inline-block';
+	DocId("LoseSubmit").style.display = 'inline-block';
+	DocId("LosePlayerOrgasm").innerHTML = " ";
 	LastPressed = " ";
 });
 
 //Testing all scenes
-/*document.getElementById("Cycle").addEventListener("click", function () {
+/*DocId("Cycle").addEventListener("click", function () {
 	var sub = [true, false];
 	var action = ["forcedBJ", "forcedCunn", "forcedRim", "getBJ", "getCunn", "getRim", "getFucked", "getFuckedAnal", "getRidden", "getRiddenAnal", "getVoreStomach", "getVoreBalls", "getVoreBoobs", "getVoreVagina", "getVoreAnal"];
 	var gender = ["hermaphrodite", "cuntboy", "male", "female", "dickgirl", "doll"]

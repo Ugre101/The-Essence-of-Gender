@@ -26,7 +26,7 @@ function MovementEngine(x, y) {
 **/
 
 document.addEventListener('keydown', function (e) {
-    const startarea = document.getElementById("hem");
+    const startarea = DocId("hem");
     if (battle) {
         return;
     }
@@ -45,7 +45,7 @@ document.addEventListener('keydown', function (e) {
 });
 
 function mousedownfunc() {
-    const startarea = document.getElementById("hem"),
+    const startarea = DocId("hem"),
         MapRect = startarea.getBoundingClientRect();
     if (mouseX - MapRect.left > sprite.x + 1.5 * grid && sprite.x + grid * sprite.Size < startarea.width) {
         sprite.x += grid * sprite.Size;
@@ -61,7 +61,7 @@ function mousedownfunc() {
     CheckDoor();
 }
 
-document.getElementById("hem").addEventListener('mousedown', function (e) {
+DocId("hem").addEventListener('mousedown', function (e) {
     if (!mousedowner) {
         mousedowner = true;
         mouseX = e.pageX;
@@ -70,7 +70,7 @@ document.getElementById("hem").addEventListener('mousedown', function (e) {
     }
 });
 
-document.getElementById("hem").addEventListener('touchstart', function (e) {
+DocId("hem").addEventListener('touchstart', function (e) {
     if (!mousedowner) {
         mousedowner = true;
         mouseX = e.touches[e.touches.length - 1].clientX;
@@ -93,7 +93,7 @@ document.addEventListener('touchend', function () {
     }
 });
 
-document.getElementById("hem").addEventListener('mousemove', function (e) {
+DocId("hem").addEventListener('mousemove', function (e) {
     if (mousedowner) {
         if (mouseX != e.pageX || mouseY != e.pageY) {
             mouseX = e.pageX;
@@ -102,7 +102,7 @@ document.getElementById("hem").addEventListener('mousemove', function (e) {
     }
 });
 
-document.getElementById("hem").addEventListener('touchmove', function (e) {
+DocId("hem").addEventListener('touchmove', function (e) {
     if (mousedowner) {
         if (mouseX != e.touches[e.touches.length - 1].clientX || e.touches[e.touches.length - 1].clientY) {
             mouseX = e.touches[e.touches.length - 1].clientX;

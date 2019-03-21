@@ -334,21 +334,21 @@ var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.M
     };
 
 // Start page
-document.getElementById("GoToCharCreator").addEventListener("click", function () {
+DocId("GoToCharCreator").addEventListener("click", function () {
     CharCreator();
-    document.getElementById("CharCreator").style.display = 'flex';
-    document.getElementById("StartPage").style.display = 'none';
+    DocId("CharCreator").style.display = 'flex';
+    DocId("StartPage").style.display = 'none';
 });
 
 function CharCreator() { // No need have these active for players who use load.
     // Maybe a bit overkill but did it to train.
-    const BeginButton = document.getElementById("Begin"),
-        BackHomeButton = document.getElementById("BackHome"),
-        StartAutoEssenceButton = document.getElementById("StartAutoEssence"),
-        startgameButton = document.getElementById("startgame"),
-        VoreStartButton = document.getElementById("VoreStart"),
-        CharCreator = document.getElementById("CharCreator"),
-        page2 = document.getElementById("page2");
+    const BeginButton = DocId("Begin"),
+        BackHomeButton = DocId("BackHome"),
+        StartAutoEssenceButton = DocId("StartAutoEssence"),
+        startgameButton = DocId("startgame"),
+        VoreStartButton = DocId("VoreStart"),
+        CharCreator = DocId("CharCreator"),
+        page2 = DocId("page2");
 
     BeginButton.addEventListener("click", begin)
     BackHomeButton.addEventListener("click", BackHome)
@@ -368,8 +368,8 @@ function CharCreator() { // No need have these active for players who use load.
         player.Face.HairColor = form[2].value;
         player.Skincolor = form[3].value;
         player.Spells.push(SpellDictLite.MinorHealing);
-        document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
-        document.getElementById("looks").innerHTML = "You are  " + player.Name + " " + player.LastName + ", a " + Math.round(player.Height) + "cm tall " + Pronoun(CheckGender(player)) +
+        DocId("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+        DocId("looks").innerHTML = "You are  " + player.Name + " " + player.LastName + ", a " + Math.round(player.Height) + "cm tall " + Pronoun(CheckGender(player)) +
             ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Face.HairColor + " hair and " + player.Skincolor +
             " skin; hopefully the last time you see your body absent of any other details or personality.<br><br>For today, you will forge your own way in this world.";
 
@@ -379,7 +379,7 @@ function CharCreator() { // No need have these active for players who use load.
 
     function BackHome() {
         CharCreator.style.display = 'none';
-        document.getElementById("StartPage").style.display = 'grid';
+        DocId("StartPage").style.display = 'grid';
         RemoveListerners();
     };
 
@@ -422,11 +422,11 @@ function DisplayNone() {
         "ShowQuests", "DetailedInfo", "Levels", "ShowVore", "EssenceOptionsMenu",
         "PronounForm", "Inventory", "ChildrenMenu", "SpellBook"
     ].forEach(function (src) {
-        document.getElementById(src).style.display = 'none';
+        DocId(src).style.display = 'none';
     });
     if (window.innerHeight < 600) {
         const MobileNone = ["map", "buttons", "status", "EventLog"].forEach(function (src) {
-            document.getElementById(src).style.display = 'none';
+            DocId(src).style.display = 'none';
         })
 
     }
@@ -435,31 +435,31 @@ function DisplayNone() {
 function DisplayGame() {
     battle = false;
     const DisplayGameArray = ["map", "buttons", "status", "EventLog"].forEach(function (src) {
-        document.getElementById(src).style.display = 'block';
+        DocId(src).style.display = 'block';
     });
-    document.getElementById("EmptyButtons").style.display = 'none';
+    DocId("EmptyButtons").style.display = 'none';
     if (MobileButtons) {
-        document.getElementById("buttons").style.width = 18 + "%";
-        document.getElementById("buttons").style.maxWidth = 260 + "px";
-        document.getElementById("FirstButtons").style.display = 'none';
-        document.getElementById("SecondButtons").style.display = 'none';
+        DocId("buttons").style.width = 18 + "%";
+        DocId("buttons").style.maxWidth = 260 + "px";
+        DocId("FirstButtons").style.display = 'none';
+        DocId("SecondButtons").style.display = 'none';
         MobileButtons = false;
     }
 }
 // More buttons for small screen height
-document.getElementById("MoreButtons").addEventListener("click", function () {
-    document.getElementById("FirstButtons").style.display = 'none';
-    document.getElementById("SecondButtons").style.display = 'block';
+DocId("MoreButtons").addEventListener("click", function () {
+    DocId("FirstButtons").style.display = 'none';
+    DocId("SecondButtons").style.display = 'block';
 });
 
-document.getElementById("LessButtons").addEventListener("click", function () {
-    document.getElementById("FirstButtons").style.display = 'block';
-    document.getElementById("SecondButtons").style.display = 'none';
+DocId("LessButtons").addEventListener("click", function () {
+    DocId("FirstButtons").style.display = 'block';
+    DocId("SecondButtons").style.display = 'none';
 });
 
-document.getElementById("Quests").addEventListener("click", function () {
+DocId("Quests").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("ShowQuests").style.display = 'block';
+    DocId("ShowQuests").style.display = 'block';
 
     let questText = " ";
     for (var e of player.Quests) {
@@ -472,11 +472,11 @@ document.getElementById("Quests").addEventListener("click", function () {
         }
         questText += `<div><h4>${e.Name}</h4>Completed: ${e.Completed} <br>Count:  ${e.Count} ${Tier} <br><br></div>`;
     }
-    document.getElementById("QuestTexts").innerHTML = questText;
+    DocId("QuestTexts").innerHTML = questText;
 });
 
-document.getElementById("QuestsLeave").addEventListener("click", function () {
-    document.getElementById("ShowQuests").style.display = 'none';
+DocId("QuestsLeave").addEventListener("click", function () {
+    DocId("ShowQuests").style.display = 'none';
     DisplayGame();
 });
 
@@ -562,7 +562,7 @@ function StringCounter(array, string) {
 
 var enemies = [];
 
-document.getElementById("ImgPack").addEventListener("click", function () {
+DocId("ImgPack").addEventListener("click", function () {
     switch (Settings.ImgPack) {
         case false:
             Settings.ImgPack = "Mode1";
@@ -577,7 +577,7 @@ document.getElementById("ImgPack").addEventListener("click", function () {
             Settings.ImgPack = false;
             break;
     }
-    document.getElementById("ImgPack").value = `Img pack: ${Settings.ImgPack}`;
+    DocId("ImgPack").value = `Img pack: ${Settings.ImgPack}`;
 });
 
 function ImgChose(who, what, who2) {
@@ -604,10 +604,10 @@ function ImgChose(who, what, who2) {
     console.log(source);
     myimg.src = "imgPack/" + source + ".jpg";
     myimg.onload = function () {
-        document.getElementById("MyImg").src = "imgPack/" + source + ".jpg";
+        DocId("MyImg").src = "imgPack/" + source + ".jpg";
     }
     myimg.onerror = function () {
-        document.getElementById("MyImg").src = "imgPack/Default.jpg";
+        DocId("MyImg").src = "imgPack/Default.jpg";
     }
 }
 
@@ -623,8 +623,8 @@ function checkImageExists(src, callback) {
     }
 }
 
-//    document.getElementById("PlayerLooks").innerHTML = BoobLook(player) + "<br>" + PussyLook(player) + "<br>" + DickLook(player);
-//    document.getElementById("EnemyLooks").innerHTML = BoobLook(enemies[EnemyIndex]) + "<br>" + PussyLook(enemies[EnemyIndex]) + "<br>" + DickLook(enemies[EnemyIndex]);
+//    DocId("PlayerLooks").innerHTML = BoobLook(player) + "<br>" + PussyLook(player) + "<br>" + DickLook(player);
+//    DocId("EnemyLooks").innerHTML = BoobLook(enemies[EnemyIndex]) + "<br>" + PussyLook(enemies[EnemyIndex]) + "<br>" + DickLook(enemies[EnemyIndex]);
 
 function HeightSystem(me, they) {
     let a;
@@ -667,7 +667,7 @@ function HeightSystem(me, they) {
 };
 
 function SexColor(who, where) {
-    const WS = document.getElementById(where + "Sex").style;
+    const WS = DocId(where + "Sex").style;
     switch (CheckGender(who)) {
         case "cuntboy":
         case "female":
@@ -691,8 +691,8 @@ function SexColor(who, where) {
 }
 
 function HealthWillBars() {
-    const health = document.getElementById("StatusHealth"),
-        will = document.getElementById("StatusWillHealth"),
+    const health = DocId("StatusHealth"),
+        will = DocId("StatusWillHealth"),
         red = 150 + 105 * (player.Health / player.MaxHealth),
         blue = 150 + 105 * (player.WillHealth / player.MaxWillHealth);
     health.innerHTML = Math.round(player.Health);
@@ -849,7 +849,7 @@ function loop() {
     ExpCheck();
 
     if (!battle) {
-        const startarea = document.getElementById("hem"),
+        const startarea = DocId("hem"),
             ctx = startarea.getContext("2d");
         startarea.width = medium;
         startarea.height = medium;
@@ -880,6 +880,8 @@ function loop() {
             player.WillHealth = Math.max(1, player.WillHealth);
             player.Masc = Math.max(0, player.Masc);
             player.Femi = Math.max(0, player.Femi);
+            player.EssenceDrain = 5 + (player.Perks.StealMore.Count * 3);
+            player.GiveEssence = 0 + (player.Perks.GiveEssence.Count * 3);
 
             sprite.Size = 1; //Math.min(0.8 + player.Height / 320, 1.2);
             if (typeof Thefps === "number") { // Stop typing NaN but I still need to figure out why NaN in first place
@@ -889,6 +891,10 @@ function loop() {
     };
 };
 var Laglimiter = 0;
+
+function DocId(id) { // Important Prototype.js must be loaded before where you want to use this!
+    return document.getElementById(id);
+}
 
 
 (function () {

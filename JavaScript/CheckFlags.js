@@ -104,15 +104,15 @@ function CheckFlags() {
     }
 
     if (window.innerHeight < 800) {
-        document.getElementById("FirstButtons").style.display = 'block';
-        document.getElementById("SecondButtons").style.display = 'none';
-        document.getElementById("MoreButtons").style.display = 'inline-block';
-        document.getElementById("LessButtons").style.display = 'inline-block';
+        DocId("FirstButtons").style.display = 'block';
+        DocId("SecondButtons").style.display = 'none';
+        DocId("MoreButtons").style.display = 'inline-block';
+        DocId("LessButtons").style.display = 'inline-block';
     } else {
-        document.getElementById("SecondButtons").style.display = 'block';
-        document.getElementById("FirstButtons").style.display = 'block';
-        document.getElementById("MoreButtons").style.display = 'none';
-        document.getElementById("LessButtons").style.display = 'none';
+        DocId("SecondButtons").style.display = 'block';
+        DocId("FirstButtons").style.display = 'block';
+        DocId("MoreButtons").style.display = 'none';
+        DocId("LessButtons").style.display = 'none';
     }
     if (!Settings.hasOwnProperty("MaxLimbs")) {
         Settings.MaxLimbs = {
@@ -190,23 +190,23 @@ function CheckFlags() {
         }
     }
     if (window.innerHeight < 600) {
-        document.getElementById("FirstButtons").style.display = 'none';
-        document.getElementById("SecondButtons").style.display = 'none';
-        document.getElementById("MoreButtons").style.display = 'inline-block';
-        document.getElementById("LessButtons").style.display = 'inline-block';
-        document.getElementById("MobileButtons").style.display = 'inline-block';
+        DocId("FirstButtons").style.display = 'none';
+        DocId("SecondButtons").style.display = 'none';
+        DocId("MoreButtons").style.display = 'inline-block';
+        DocId("LessButtons").style.display = 'inline-block';
+        DocId("MobileButtons").style.display = 'inline-block';
     } else if (window.innerHeight < 800) {
-        document.getElementById("FirstButtons").style.display = 'block';
-        document.getElementById("SecondButtons").style.display = 'none';
-        document.getElementById("MoreButtons").style.display = 'inline-block';
-        document.getElementById("LessButtons").style.display = 'inline-block';
-        document.getElementById("MobileButtons").style.display = 'none';
+        DocId("FirstButtons").style.display = 'block';
+        DocId("SecondButtons").style.display = 'none';
+        DocId("MoreButtons").style.display = 'inline-block';
+        DocId("LessButtons").style.display = 'inline-block';
+        DocId("MobileButtons").style.display = 'none';
     } else {
-        document.getElementById("SecondButtons").style.display = 'block';
-        document.getElementById("FirstButtons").style.display = 'block';
-        document.getElementById("MoreButtons").style.display = 'none';
-        document.getElementById("LessButtons").style.display = 'none';
-        document.getElementById("MobileButtons").style.display = 'none';
+        DocId("SecondButtons").style.display = 'block';
+        DocId("FirstButtons").style.display = 'block';
+        DocId("MoreButtons").style.display = 'none';
+        DocId("LessButtons").style.display = 'none';
+        DocId("MobileButtons").style.display = 'none';
     }
 
     if (!player.hasOwnProperty("Blessings")) {

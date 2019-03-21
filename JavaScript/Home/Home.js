@@ -1,5 +1,5 @@
 // Home
-document.getElementById("Sleep").addEventListener("click", function () {
+DocId("Sleep").addEventListener("click", function () {
     if (player.Health < player.MaxHealth + House.BedLevel * 5) {
         player.Health = player.MaxHealth + House.BedLevel * 5;
     }
@@ -11,16 +11,16 @@ document.getElementById("Sleep").addEventListener("click", function () {
         DateTracker();
     }
     battle = true;
-    document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
-    document.getElementById("HomeText").innerHTML = "You sleep well, restoring your health and willpower.";
+    DocId("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+    DocId("HomeText").innerHTML = "You sleep well, restoring your health and willpower.";
 });
 
 
 // Portal
-document.getElementById("Portal").addEventListener("click", function () {
-    document.getElementById("LeaveHome").style.display = 'none';
-    var Buildings = document.getElementById("PortalMenu")
-    document.getElementById("HomeStart").style.display = "none";
+DocId("Portal").addEventListener("click", function () {
+    DocId("LeaveHome").style.display = 'none';
+    var Buildings = DocId("PortalMenu")
+    DocId("HomeStart").style.display = "none";
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
@@ -33,7 +33,7 @@ document.getElementById("Portal").addEventListener("click", function () {
         div.appendChild(h1);
     }
 
-    var p = document.getElementById("HomeText");
+    var p = DocId("HomeText");
 
     // TODO in future when there is more portals make main buttons for each region
     if (House.Portal.Mountain) {
@@ -41,7 +41,7 @@ document.getElementById("Portal").addEventListener("click", function () {
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
-            document.getElementById("HomeStart").style.display = 'block';
+            DocId("HomeStart").style.display = 'block';
             LeaveHome();
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
@@ -60,7 +60,7 @@ document.getElementById("Portal").addEventListener("click", function () {
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
-            document.getElementById("HomeStart").style.display = 'block';
+            DocId("HomeStart").style.display = 'block';
             LeaveHome();
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
@@ -79,19 +79,19 @@ document.getElementById("Portal").addEventListener("click", function () {
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
         }
-        document.getElementById("HomeStart").style.display = 'block';
-        document.getElementById("PortalMenu").style.display = 'none';
-        document.getElementById("LeaveHome").style.display = 'inline-block';
+        DocId("HomeStart").style.display = 'block';
+        DocId("PortalMenu").style.display = 'none';
+        DocId("LeaveHome").style.display = 'inline-block';
     })
     div.appendChild(LeavePortal);
     Buildings.appendChild(div);
     Buildings.style.display = 'block';
 });
-document.getElementById("LeavePortal").addEventListener("click", function () {
-    document.getElementById("HomeStart").style.display = 'block';
-    document.getElementById("PortalMenu").style.display = 'none';
+DocId("LeavePortal").addEventListener("click", function () {
+    DocId("HomeStart").style.display = 'block';
+    DocId("PortalMenu").style.display = 'none';
 });
-document.getElementById("Portals").addEventListener("click", function (e) {
+DocId("Portals").addEventListener("click", function (e) {
     Npcs = [];
     var Chosen;
     if (e.target.type == "button") {
@@ -119,31 +119,31 @@ document.getElementById("Portals").addEventListener("click", function (e) {
     }
 });
 
-document.getElementById("Brothel").addEventListener("click", function () {
-    document.getElementById("TheBrothel").style.display = 'block';
-    document.getElementById("HomeStart").style.display = 'none';
+DocId("Brothel").addEventListener("click", function () {
+    DocId("TheBrothel").style.display = 'block';
+    DocId("HomeStart").style.display = 'none';
 });
-document.getElementById("ServeMasc").addEventListener("click", function () {
+DocId("ServeMasc").addEventListener("click", function () {
     Settings.Brothel.ServeMasc = !Settings.Brothel.ServeMasc;
-    document.getElementById("ServeMasc").value = "Masculine customers? " + Settings.Brothel.ServeMasc;
+    DocId("ServeMasc").value = "Masculine customers? " + Settings.Brothel.ServeMasc;
 });
-document.getElementById("ServeFemi").addEventListener("click", function () {
+DocId("ServeFemi").addEventListener("click", function () {
     Settings.Brothel.ServeFemi = !Settings.Brothel.ServeFemi;
-    document.getElementById("ServeFemi").value = "Feminine customers? " + Settings.Brothel.ServeFemi;
+    DocId("ServeFemi").value = "Feminine customers? " + Settings.Brothel.ServeFemi;
 });
-document.getElementById("CloseBrothel").addEventListener("click", function () {
-    document.getElementById("TheBrothel").style.display = 'none';
-    document.getElementById("HomeStart").style.display = 'block';
+DocId("CloseBrothel").addEventListener("click", function () {
+    DocId("TheBrothel").style.display = 'none';
+    DocId("HomeStart").style.display = 'block';
 });
 
-document.getElementById("LeaveHome").addEventListener("click", function () {
+DocId("LeaveHome").addEventListener("click", function () {
     LeaveHome();
     return;
 });
 
 function LeaveHome() {
-    document.getElementById("Home").style.display = 'none';
-    document.getElementById("EmptyButtons").style.display = 'none';
+    DocId("Home").style.display = 'none';
+    DocId("EmptyButtons").style.display = 'none';
     battle = false;
     DisplayGame();
 }

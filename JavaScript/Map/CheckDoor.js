@@ -1,6 +1,6 @@
 function CheckDoor() {
     function DoorHandler(NESW) {
-        const startarea = document.getElementById("hem");
+        const startarea = DocId("hem");
         enemies = [];
         switch (NESW) {
             case "N":
@@ -25,16 +25,16 @@ function CheckDoor() {
             this.height = height,
             this.NESW = NESW
     };
-    const startarea = document.getElementById("hem"),
-        DoorE = new MakeDoor(startarea.width - 2 * grid, startarea.height / 2 - 3 * grid, grid, 5 * grid, "E"),
-        DoorS = new MakeDoor(startarea.width / 2 - 3 * grid, startarea.height - 2 * grid, grid * 5, grid, "S"),
-        DoorW = new MakeDoor(0, startarea.height / 2 - 3 * grid, grid, 5 * grid, "W"),
-        DoorN = new MakeDoor(startarea.width / 2 - 3 * grid, 0, grid * 5, grid, "N"),
+    const startarea = DocId("hem"),
+        DoorE = new MakeDoor(grid * 19, grid * 7, grid, 5 * grid, "E"),
+        DoorS = new MakeDoor(grid * 7, grid * 19, grid * 5, grid, "S"),
+        DoorW = new MakeDoor(0, grid * 7, 0, 5 * grid, "W"),
+        DoorN = new MakeDoor(grid * 7, 0, grid * 5, 0, "N"),
         Doors = [DoorE, DoorS, DoorN, DoorW];
     for (let i of Doors) {
         let Door = i.NESW;
-        if (sprite.x + grid * sprite.Size >= i.x && sprite.x <= i.x + i.width &&
-            sprite.y + grid * sprite.Size >= i.y && sprite.y <= i.y + i.height) {
+        if (sprite.x >= i.x && sprite.x <= i.x + i.width &&
+            sprite.y >= i.y && sprite.y <= i.y + i.height) {
             switch (player.Area) {
                 case "First":
                     switch (player.Map) {
@@ -90,15 +90,15 @@ function CheckDoor() {
                             } else if (Door == "E" && House.Owned == true) {
                                 battle = true;
                                 sprite.x = startarea.width - 3 * grid;
-                                document.getElementById("map").style.display = 'none';
-                                document.getElementById("buttons").style.display = 'none';
-                                document.getElementById("EmptyButtons").style.display = 'block';
-                                document.getElementById("Home").style.display = 'block';
-                                document.getElementById("HomeText").style.display = 'block';
+                                DocId("map").style.display = 'none';
+                                DocId("buttons").style.display = 'none';
+                                DocId("EmptyButtons").style.display = 'block';
+                                DocId("Home").style.display = 'block';
+                                DocId("HomeText").style.display = 'block';
 
-                                document.getElementById("Dorm").style.display = House.Dorm > 0 ? "inline-block" : 'none';
-                                document.getElementById("Portal").style.display = House.Portal.Owned ? 'inline-block' : 'none';
-                                document.getElementById("Brothel").style.display = House.Brothel ? 'inline-block' : 'none';
+                                DocId("Dorm").style.display = House.Dorm > 0 ? "inline-block" : 'none';
+                                DocId("Portal").style.display = House.Portal.Owned ? 'inline-block' : 'none';
+                                DocId("Brothel").style.display = House.Brothel ? 'inline-block' : 'none';
                             } else if (Door == "N") {
                                 player.Map = "RoadToWitch";
                                 DoorHandler("N");

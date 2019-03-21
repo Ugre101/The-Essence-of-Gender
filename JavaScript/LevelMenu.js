@@ -1,13 +1,13 @@
     // Level Menu
-    document.getElementById("LevelButton").addEventListener("click", function () {
+    DocId("LevelButton").addEventListener("click", function () {
         DisplayNone();
         LevelMenuFunc();
-        document.getElementById("LevelMenu").style.display = 'block';
+        DocId("LevelMenu").style.display = 'block';
     });
     // Incraese stats
 
     function LevelMenuFunc() {
-        let div = document.getElementById("LevelMenu");
+        let div = DocId("LevelMenu");
         while (div.hasChildNodes()) {
             div.removeChild(div.lastChild);
         }
