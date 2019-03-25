@@ -229,11 +229,8 @@ function CheckFlags() {
             BroodmotherSeed: 0,
             MalePreg: 0
         }
-    }
-    player.RaceEssence.push(Human = {
-        Race: "Human",
-        amount: 100
-    })
+    };
+
     FluidsEngine();
     if (!player.hasOwnProperty("RaceEssence")) {
         player.RaceEssence = [
