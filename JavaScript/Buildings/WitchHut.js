@@ -76,7 +76,6 @@ function WitchHutFunc() {
         }
         if (player.Spells.some(e => e.Name === "Fireball")) {
             // Maybe add some affinity gain
-            console.log("Nah");
             p.innerHTML = "You already know the basics"
             return;
         } else if (player.Gold >= 500) {
@@ -114,7 +113,6 @@ function WitchHutFunc() {
         for (var e of EyeColors) {
             var inputs = new InputButton(e.Capitalize(), " " + e.Capitalize() + " eyes")
             inputs.addEventListener("click", function (a) {
-                console.log(e); 
                 if (player.Gold >= 50) {
                     player.Face.Eyes = a.target.value.toLowerCase();
                     p.innerHTML = "Looking in the mirror your eyes are now " + player.Face.Eyes;

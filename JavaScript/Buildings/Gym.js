@@ -15,7 +15,7 @@ function GymFunc() {
     div.appendChild(p);
 
     var row1 = document.createElement("div");
-    row1.addEventListener("mouseover", function(e) {
+    row1.addEventListener("mouseover", function (e) {
         p.innerHTML = e.target.title;
     });
 
@@ -30,7 +30,7 @@ function GymFunc() {
                 player.Muscle += gains;
                 player.Fat -= burn;
                 p.innerHTML = "You burn " + KgToPound(burn) + " of fat and gain " + KgToPound(gains) + " of muscle." +
-                "<br>" + Math.round(player.Muscle);
+                    "<br>" + Math.round(player.Muscle);
                 Flags.LastTrain = {
                     Day: Flags.Date.Day,
                     Month: Flags.Date.Month,
@@ -53,7 +53,7 @@ function GymFunc() {
             var burn = Math.round(player.Fat * 0.09);
             player.Fat -= burn;
             p.innerHTML = "You speent an hour doing cardio, when stepping on the scale in the shower room you are happy to see you lost " + KgToPound(burn) + "." +
-            "<br>" + Math.round(player.Fat);
+                "<br>" + Math.round(player.Fat);
         } else {
             p.innerHTML = "Buring more fat would be dangerous!";
         }
@@ -63,12 +63,11 @@ function GymFunc() {
     var input3 = InputButton("Lose muscle", "Sacrifice your gains to the shining swole bro.")
     input3.addEventListener("click", function () {
         var Sacrifice = Math.round(player.Muscle / 10 * 10) / 10;
-        console.log(Sacrifice)
         player.Muscle -= Sacrifice;
-        p.innerHTML = "Mesmerized by the swole bro’s flexing you cannot look away from " +
-            "show of displaying his sculpted muscle in a routine of poses, once finished he thanks for " +
-            "the audience.<br><br> Looking at him walking away he seems to have gained muscle," +
-            " looking at yourself in the mirror you seems to have lost muscle?(" + KgToPound(Sacrifice) + ")";
+        p.innerHTML = `Mesmerized by the swole bro’s flexing you cannot look away from show of displaying 
+         his sculpted muscle in a routine of poses, once finished he thanks for the audience.<br><br>
+         Looking at him walking away he seems to have gained muscle, looking at yourself in the mirror you
+          seems to have lost muscle? (${KgToPound(Sacrifice)})`
     });
     row1.appendChild(input3);
 

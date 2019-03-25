@@ -596,9 +596,9 @@
 
    div.AfterBattle {
        grid-template:
-           "b c c d"
-           "e e e e";
-       grid-template-columns: repeat(4, 1fr);
+           "b c d"
+           "e e e";
+       grid-template-columns: 22% 56% 22%;
        grid-template-rows: 60% 40%;
        grid-gap: 1em 0;
        width: 90%;
@@ -682,6 +682,17 @@
        grid-area: c;
        overflow: auto;
    }
+
+   div.SiphonButtons {
+       display: grid;
+       grid-template-columns: 15% 70% 15%;
+        justify-items: center;
+    } 
+    div.MascFemi {
+        display: grid;
+        grid-template-columns: 50% 50%;
+         justify-items: center;  
+    }
 
    #Home {
        background-color: rgb(192, 189, 192);

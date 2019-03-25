@@ -60,24 +60,16 @@ function MateDiv(e) {
     DocId("flex").style.display = 'grid';
     var RoomMate = "<div id=\"" + e + "\"></div>"
     DocId("DivMates").innerHTML = RoomMate;
-    var PregnantStatus = "";
+    let PregnantStatus = "";
     if (rm.hasOwnProperty("Pregnant")) {
         if (rm.Pregnant.Status) {
-            var age = Math.round(rm.Pregnant.Baby / 10000);
-            if (age < 1) {
-                PregnantStatus = "<br>Impregnated";
-            } else {
-                PregnantStatus = "<br>" + age + " months pregnant";
-            }
+            const age = Math.round(rm.Pregnant.Babies[0].BabyAge / 10000);
+            PregnantStatus = (age < 1) ? "<br>Impregnated" : "<br>" + age + " months pregnant";
         }
     }
-    var DormName = "";
-    if (rm.hasOwnProperty("FirstName")) {
-        DormName += rm.FirstName;
-    };
-    if (rm.hasOwnProperty("LastName")) {
-        DormName += " " + rm.LastName;
-    };
+
+    const DormName = rm.FirstName + " " + rm.LastName;;
+
     DocId(e).innerHTML = "<div>" + DormName + "<br>" + rm.Name + " " + rm.Race + "<br>" + Pronoun(CheckGender(rm)) +
         "<br><br>Height: " + CmToInch(Math.round(rm.Height)) + "<br>Weight: " + KgToPound(rm.Weight) + "<br>Muscle: " + KgToPound(rm.Muscle) + "<br>Fat: " + KgToPound(rm.Fat) +
         "<br>" + PregnantStatus + "<br><br>" + BoobLook(rm) + DickLook(rm) + BallLook(rm) + PussyLook(rm) + "<div> Strength: " + rm.Str +
@@ -183,16 +175,10 @@ function DormSex() {
             }
         }
     }
-    var DelatMed = 2;
-    if (player.Masc >= e.Masc && player.Masc >= e.Femi && player.Masc >= player.Femi) {
-        DelatMed = 100 / player.Masc;
-    } else if (player.Femi >= e.Masc && player.Femi >= e.Femi && player.Femi >= player.Masc) {
-        DelatMed = 100 / player.Femi;
-    } else if (e.Masc >= player.Masc && e.Masc >= e.Femi && e.Masc >= player.Femi) {
-        DelatMed = 100 / e.Masc;
-    } else {
-        DelatMed = 100 / e.Femi;
-    }
+    const DelatMed =
+        (player.Masc >= e.Masc && player.Masc >= e.Femi && player.Masc >= player.Femi) ? 100 / player.Masc :
+        (player.Femi >= e.Masc && player.Femi >= e.Femi && player.Femi >= player.Masc) ? 100 / player.Femi :
+        (e.Masc >= player.Masc && e.Masc >= e.Femi && e.Masc >= player.Femi) ? 100 / e.Masc : 100 / e.Femi;
 
     DocId("DormMascu").style.width = player.Masc * DelatMed + "%";
     DocId("DormFemin").style.width = player.Femi * DelatMed + "%";
@@ -419,7 +405,6 @@ DocId("GetImpregOrgy").addEventListener("click", function () {
                 } else {
                     Impregnate(player, House.Dormmates[a], "B", "Dorm")
                     House.Dormmates[a].Balls[b].Cum -= 10;
-                    console.log(House.Dormmates[a].Balls[b].Cum)
                 }
             }
         }

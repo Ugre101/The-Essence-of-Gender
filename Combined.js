@@ -319,7 +319,6 @@ function PlayerImageLoad(arr, callback) { // Preload images to stop flickering
 var Player_SpriteImages = {};
 const PlayerSpriteLoader = PlayerImageLoad(["playerSprite"], function (images) {
     Player_SpriteImages = images;
-    console.log(Player_SpriteImages)
 });
 
 
@@ -358,8 +357,6 @@ function CharCreator() { // No need have these active for players who use load.
 
     function begin() {
         const form = document.forms.CreatePlayer.elements;
-
-        console.log(form[0].value);
         CharCreator.style.display = 'none';
         page2.style.display = 'flex';
         player.Name = form[0].value;
@@ -601,7 +598,6 @@ function ImgChose(who, what, who2) {
         default:
             break;
     }
-    console.log(source);
     myimg.src = "imgPack/" + source + ".jpg";
     myimg.onload = function () {
         DocId("MyImg").src = "imgPack/" + source + ".jpg";
@@ -896,8 +892,8 @@ function DocId(id) { // Important Prototype.js must be loaded before where you w
     return document.getElementById(id);
 }
 
-
-(function () {
+/**
+ * (function () {
     var a = RandomInt(1, 6);
     a === 1 ? console.log("One") : a === 2 ? console.log("Two") : a === 3 ? console.log("Three") :
         a === 4 ? console.log("Four") : a === 5 ? console.log("Five") : console.log("Six");
@@ -912,223 +908,7 @@ function DocId(id) { // Important Prototype.js must be loaded before where you w
         console.log("Future")
     }, 4000);
 })()
-function AfterBattleButtons(Sex = true, Vored = false) {
-    const div = document.getElementById("SexButtons");
-    while (div.hasChildNodes()) {
-        div.removeChild(div.firstChild)
-    }
-
-    // Main Collumns 
-    const Mouth = document.createElement("div"),
-        Pussy = document.createElement("div"),
-        Dick = document.createElement("div"),
-        Anal = document.createElement("div"),
-        Breast = document.createElement("div"),
-        Siphon = document.createElement("div"),
-        Right = document.createElement("div"); // Container for stop & capture
-
-    const DickOne = document.createElement("div"),
-        DickTwo = document.createElement("div");
-    Dick.appendChild(DickOne);
-    Dick.appendChild(DickTwo);
-    const PlayerMaxOrgasm = Math.round(player.End / 8),
-        ee = enemies[EnemyIndex];
-    if (Sex) {
-        if (PlayerMaxOrgasm >= player.Orgasm) {
-            const GetRimjob = InputButton("Receive rimjob"),
-                GiveRimjob = InputButton("Give rimjob");
-            GetRimjob.addEventListener("click", SexActGetRimjob);
-            Anal.appendChild(GetRimjob);
-
-            GiveRimjob.addEventListener("click", SexActGiveRimjob);
-            Anal.appendChild(GiveRimjob);
-
-            if (ee.Pussies.length > 0) {
-                const GiveCunnilingus = InputButton("Give Cunnilingus");
-                GiveCunnilingus.addEventListener("click", SexActGiveCunnilingus)
-                Mouth.appendChild(GiveCunnilingus);
-
-                if (player.Pussies.length > 0) {
-                    const Scissoring = InputButton("Scissoring");
-                    Scissoring.addEventListener("click", SexActScissoring);
-                    Pussy.appendChild(Scissoring);
-                }
-
-            }
-            if (ee.Dicks.length > 0) {
-                const GiveBlowjob = InputButton("Give blowjob");
-                GiveBlowjob.addEventListener("click", SexActGiveBlowjob);
-                Mouth.appendChild(GiveBlowjob);
-
-                if (player.Pussies.length > 0) {
-                    const RideCowgirl = InputButton("Ride cowgirl");
-                    RideCowgirl.addEventListener("click", SexActRideCowgirl);
-                    Pussy.appendChild(RideCowgirl);
-                }
-            }
-            if (player.Pussies.length > 0) {
-                const GetCunnilingus = InputButton("Receive cunnilingus");
-                GetCunnilingus.addEventListener("click", SexActGetCunnilingus);
-                Mouth.appendChild(GetCunnilingus);
-
-                if (ee.Dicks.length > 1) {
-                    // Dual pen old value Get dual penetrated
-                    const DualFuckt = InputButton("");
-                    Pussy.appendChild(DualFuckt);
-                }
-
-                if (ee.Height * 9 < player.Height) {
-                    const Insertion = InputButton("Insertion");
-                    Insertion.addEventListener("click", SexActInsertion);
-                    Pussy.appendChild(Insertion);
-                }
-
-
-            }
-            if (player.Dicks.length > 0) {
-                const GetBlowjob = InputButton("Receive blowjob");
-                GetBlowjob.addEventListener("click", SexActGetBlowjob);
-                DickOne.appendChild(GetBlowjob);
-
-                if (player.Dicks.length > 1 && ee.Pussies.length > 0) {
-                    const DualPen = InputButton("");
-                    DualPen.addEventListener("click", SexActDualPen);
-                    DickTwo.appendChild(DualPen);
-                    // Dual pen
-                }
-                if (player.Dicks.length > 2 && ee.Pussies.length > 1) {
-                    // Multi pen
-                    const MultiPen = InputButton("");
-                    MultiPen.addEventListener("click", SexActMultiPen);
-                    DickTwo.appendChild(MultiPen);
-                }
-
-                if (ee.Pussies.length > 0) {
-                    const Missionary = InputButton("Missionary"),
-                        DoggyStyle = InputButton("Doggy style");
-
-                    Missionary.addEventListener("click", SexActMissionary);
-                    DickOne.appendChild(Missionary);
-
-                    DoggyStyle.addEventListener("click", SexActDoggyStyle);
-                    DickOne.appendChild(DoggyStyle);
-                }
-
-                const DoggyStyleAnal = InputButton("Anal doggy style");
-                DoggyStyleAnal.addEventListener("click", SexActDoggyStyleAnal);
-                DickTwo.appendChild(DoggyStyleAnal);
-
-            }
-            let Milktotal = 0;
-            for (let b = 0; b < player.Boobies.length; b++) {
-                Milktotal += player.Boobies[b].Milk;
-            }
-            if (Milktotal > 100) {
-                const BreastFeed = InputButton("Breast feed");
-                BreastFeed.addEventListener("click", SexActBreastFeed);
-                Breast.appendChild(BreastFeed);
-            }
-            let dickCount = DickOne.childElementCount + DickTwo.childElementCount
-            if (window.innerHeight < 800 && dickCount > 3) {
-                DickTwo.style.display = "none";
-                const DickAction = InputButton("More");
-                DickAction.addEventListener("click", function () {
-                    if (DickTwo.style.display === "none") {
-                        DickOne.style.display = "none";
-                        DickTwo.style.display = "block";
-                    } else {
-                        DickOne.style.display = "block";
-                        DickTwo.style.display = "none";
-                    }
-                });
-                Dick.appendChild(DickAction);
-            }
-        }
-    }
-    const Stop = InputButton("Stop sex");
-    Dungeon ? Stop.addEventListener("click", DungeonStopButton) :
-        Stop.addEventListener("click", StopSexButton);
-    Right.appendChild(Stop);
-    if (!Vored) {
-        if (ee.Orgasm > 4 && House.Dormmates.length < (House.Dorm * 3)) {
-            const Capture = InputButton("Take them home");
-            Dungeon ? Capture.addEventListener("click", DungeonCapture) :
-                Capture.addEventListener("click", SexActCapture);
-            Right.appendChild(Capture);
-        }
-        if (player.SessionOrgasm > 0 && player.Perks.GiveEssence.Count > 0) {
-            if (player.Masc > 0) {
-                const InjectM = InputButton("Infuse masculinity");
-                InjectM.addEventListener("click", DrainInjectM);
-                Siphon.appendChild(InjectM);
-            } else { //filler button to stop player from missclicking
-                const InjectM = InputButton("Empty");
-                Siphon.appendChild(InjectM);
-            }
-            if (player.Femi > 0) {
-                const InjectF = InputButton("Infuse femininity");
-                InjectF.addEventListener("click", DrainInjectF);
-                Siphon.appendChild(InjectF);
-            } else {
-                const InjectF = InputButton("Empty");
-                Siphon.appendChild(InjectF);
-            }
-
-        }
-        if (ee.SessionOrgasm > 0) {
-            if (ee.Masc > 0) {
-                const DrainM = InputButton("Siphon masculinity");
-                DrainM.addEventListener("click", DrainDrainM);
-                Siphon.appendChild(DrainM);
-            } else {
-                const DrainM = InputButton("Drained");
-                Siphon.appendChild(DrainM);
-            }
-
-            if (ee.Femi > 0) {
-                const DrainF = InputButton("Siphon femininity");
-                DrainF.addEventListener("click", DrainDrainF);
-                Siphon.appendChild(DrainF);
-            } else {
-                const DrainF = InputButton("Drained");
-                Siphon.appendChild(DrainF);
-            }
-        }
-        if (Settings.Vore) {
-            if (StomachCapacity() > enemies[EnemyIndex].Weight) {
-                const OralVore = InputButton("Eat them");
-                OralVore.addEventListener("click", VoreActionsOralVore);
-                Mouth.appendChild(OralVore);
-            }
-            if (VaginaCapacity() > enemies[EnemyIndex].Weight) {
-                const Unbirth = InputButton("Unbirth");
-                Unbirth.addEventListener("click", VoreActionsUnbirth);
-                Pussy.appendChild(Unbirth);
-            }
-            if (BallsCapacity() > enemies[EnemyIndex].Weight) {
-                const CockVore = InputButton("Cock vore");
-                CockVore.addEventListener("click", VoreActionsCockVore);
-                DickOne.appendChild(CockVore);
-            }
-            if (BreastCapacity() > enemies[EnemyIndex].Weight) {
-                const BreastVore = InputButton("Breast vore");
-                BreastVore.addEventListener("click", VoreActionsBreastVore);
-                Breast.appendChild(BreastVore);
-            }
-            if (AnalCapacity() > enemies[EnemyIndex].Weight) {
-                const AnalVore = InputButton("Anal vore");
-                AnalVore.addEventListener("click", VoreActionsAnalVore);
-                Anal.appendChild(AnalVore);
-            }
-        }
-    }
-    const Frag = document.createDocumentFragment(),
-        divs = [Mouth, Pussy, Dick, Anal, Breast, Siphon, Right].forEach(function (div) {
-            Frag.appendChild(div);
-        });
-    div.appendChild(Frag);
-
-}
+ */
 function BarFunc() {
     var Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
@@ -1697,7 +1477,7 @@ function GymFunc() {
     div.appendChild(p);
 
     var row1 = document.createElement("div");
-    row1.addEventListener("mouseover", function(e) {
+    row1.addEventListener("mouseover", function (e) {
         p.innerHTML = e.target.title;
     });
 
@@ -1712,7 +1492,7 @@ function GymFunc() {
                 player.Muscle += gains;
                 player.Fat -= burn;
                 p.innerHTML = "You burn " + KgToPound(burn) + " of fat and gain " + KgToPound(gains) + " of muscle." +
-                "<br>" + Math.round(player.Muscle);
+                    "<br>" + Math.round(player.Muscle);
                 Flags.LastTrain = {
                     Day: Flags.Date.Day,
                     Month: Flags.Date.Month,
@@ -1735,7 +1515,7 @@ function GymFunc() {
             var burn = Math.round(player.Fat * 0.09);
             player.Fat -= burn;
             p.innerHTML = "You speent an hour doing cardio, when stepping on the scale in the shower room you are happy to see you lost " + KgToPound(burn) + "." +
-            "<br>" + Math.round(player.Fat);
+                "<br>" + Math.round(player.Fat);
         } else {
             p.innerHTML = "Buring more fat would be dangerous!";
         }
@@ -1745,12 +1525,11 @@ function GymFunc() {
     var input3 = InputButton("Lose muscle", "Sacrifice your gains to the shining swole bro.")
     input3.addEventListener("click", function () {
         var Sacrifice = Math.round(player.Muscle / 10 * 10) / 10;
-        console.log(Sacrifice)
         player.Muscle -= Sacrifice;
-        p.innerHTML = "Mesmerized by the swole bro’s flexing you cannot look away from " +
-            "show of displaying his sculpted muscle in a routine of poses, once finished he thanks for " +
-            "the audience.<br><br> Looking at him walking away he seems to have gained muscle," +
-            " looking at yourself in the mirror you seems to have lost muscle?(" + KgToPound(Sacrifice) + ")";
+        p.innerHTML = `Mesmerized by the swole bro’s flexing you cannot look away from show of displaying 
+         his sculpted muscle in a routine of poses, once finished he thanks for the audience.<br><br>
+         Looking at him walking away he seems to have gained muscle, looking at yourself in the mirror you
+          seems to have lost muscle? (${KgToPound(Sacrifice)})`
     });
     row1.appendChild(input3);
 
@@ -1967,7 +1746,6 @@ function PregQuests() {
     ImpregReward.setAttribute("title", "Impregnate our maidens.");
     ImpregReward.addEventListener("click", function () {
         var index = player.Quests.findIndex(e => e.Name == "Impregnate maidens");
-        console.log(player.Quests[index])
         player.Blessings.MountainShrine.Points += player.Quests[index].Count;
         player.Quests.splice(index, 1);
         PregQuests();
@@ -2013,7 +1791,6 @@ function PregQuests() {
     GetImpregReward.setAttribute("title", "Get impregnated.");
     GetImpregReward.addEventListener("click", function () {
         var index = player.Quests.findIndex(e => e.Name == "Get Impregnated");
-        console.log(player.Quests[index])
         player.Blessings.MountainShrine.Points += player.Quests[index].Count * 7; // Getting yourself pregnant is harder to repeat therefore higher reward.
         player.Quests.splice(index, 1);
         PregQuests();
@@ -2388,6 +2165,203 @@ function ShopFunc() {
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
 } // Saved 13 lines with inputbutton, wow... but looks better to me atleast!    
+// Start Farm
+DocId("EquineTaurTF").addEventListener("click", function () {
+    if (player.SecondRace == "centaur") {
+        DocId("FarmOwnerText").innerHTML = "You're already a centaur!"
+        return;
+    }
+    if (TF.Status) {
+        DocId("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
+        return;
+    }
+    if (player.Gold >= 250) {
+        player.Gold -= 250;
+        PotionDrunk("centaur")
+        //TfEngine("centaur");
+    } else {
+        DocId("FarmOwnerText").innerHTML = "Insufficient gold.";
+        return;
+    }
+});
+DocId("FarmTitles").addEventListener("mouseover", function (e) {
+    DocId("FarmOwnerText").innerHTML = e.target.title;
+});
+DocId("EquineTF").addEventListener("click", function () {
+    if (player.SecondRace == "equine" && player.Race == "equine") {
+        DocId("FarmOwnerText").innerHTML = "You already are a equine!"
+        return;
+    }
+    if (TF.Status) {
+        DocId("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
+        return;
+    }
+    if (player.Gold >= 250) {
+        player.Gold -= 250;
+        TfEngine("equine");
+    } else {
+        DocId("FarmOwnerText").innerHTML = "Insufficient gold.";
+        return;
+    }
+});
+DocId("FarmOwnerLooks").addEventListener("click", function () {
+    DocId("FarmOwnerText").innerHTML = "Standing before you, a centaur who introduce himself as Teoivz, looking at him it’s evident he spends many hours working on the farm. His human upper body possess muscle forged from years of work, " +
+        "his equine lower body is not one from a race horse but a work horse.<br>Throwing an eye towards his genitals, it’s	hard to guess the exact size his two members retracted inside their penile sheath but it's obvious that they are well capable of stretching a maiden."
+});
+// End FarmOwner
+
+// The FarmBarn
+
+/*DocId("InfinityMilker").addEventListener("click", function () {
+    if (player.Gold >= 7000) {
+        player.Gold -= 7000;
+        SnowInventoryAdd(ItemDict.Milker, Infinity);
+        // Add milker
+    } else {
+        // You can't afford 
+    }
+});*/
+
+function FarmBarnFunc() {
+    var Buildings = DocId("Buildings")
+    while (Buildings.hasChildNodes()) {
+        Buildings.removeChild(Buildings.firstChild);
+    }
+    var div = document.createElement("div");
+
+    if (window.innerHeight > 600) { // No title on small screen
+        var h1 = document.createElement("h1");
+        var h1text = document.createTextNode("");
+        h1.appendChild(h1text);
+        div.appendChild(h1);
+    }
+
+    var p = document.createElement("p");
+    p.classList.add("TextBox");
+    div.appendChild(p);
+
+    var input1 = InputButton("Milker500 499g", "Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away? Buy today; a portable milker!");
+    input1.addEventListener("click", function () {
+        if (player.Gold >= 499) {
+            player.Gold -= 499;
+            SnowInventoryAdd(ItemDict.Milker, 500);
+            p.innerHTML = "Added to inventory"
+        } else {
+            p.innerHTML = "Not enough gold"
+        }
+    });
+    input1.addEventListener("mouseover", function () {
+        p.innerHTML = "Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away?<br><br> Buy today; a portable milker!"
+    });
+    div.appendChild(input1);
+
+    var input2 = InputButton("Milk booster 30g", "Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?! Well, this is for your humble (or crazy) needs!")
+    input2.addEventListener("click", function () {
+        if (player.Gold >= 30) {
+            player.Gold -= 30;
+            for (var e of player.Boobies) {
+                e.MilkRate++;
+                if (false) {
+                    // if milkrate is over certain value say stuff like wow godly amounts etc...
+                }
+            }
+            p.innerHTML = "Your breasts milk production increases."
+        } else {
+            p.innerHTML = "Sorry you can't afford this."
+        }
+    });
+    input2.addEventListener("mouseover", function () {
+        p.innerHTML = "Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?!<br><br> Well, this is for your humble (or crazy) needs!"
+    });
+    div.appendChild(input2);
+
+    var input3 = InputButton("Milk stopper 50g", "Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.' #Note this does not affect lacation rate from pregnancy.")
+    input3.addEventListener("click", function () {
+        // Lower milkrate
+        // if no breast have milkrate stop
+        if (player.Gold >= 50) {
+            player.Gold -= 50;
+            p.innerHTML = ""
+            for (var e of player.Boobies) {
+                if (e.MilkRate - 1 < 0) {
+                    e.MilkRate = 0;
+                    p.innerHTML += "Your breasts stops lactating.<br>" //Milk stops
+                } else {
+                    e.MilkRate--;
+                    p.innerHTML = "Your milk production slows.<br>"
+                }
+                if (false) {
+                    // if milkrate is over certain value say stuff like wow gogly amounts etc...
+                }
+            }
+        } else {
+            // you are broke
+            p.innerHTML = "Sorry you can't afford this."
+        }
+    })
+    input3.addEventListener("mouseover", function () {
+        p.innerHTML = "Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.'<br><br> #Note this does not affect lacation rate from pregnancy."
+    })
+    div.appendChild(input3);
+
+    if (false) { // TODO
+        var DrinkFresh = InputButton("Drink fresh milk", "It's not yours. You think.");
+        DrinkFresh.addEventListener("click", function () {
+            // Drink milk Maybe fuck a bovine furry? 
+            // Get healed + temp boost to hp & will stronger than bar meal
+            var a = RandomInt(1, 20);
+            if (a > 15) {
+                if (player.Int > 20) {
+                    if (false) {
+                        Partners.FarmOwner.Submit += 1; // ask Bovine to help you dom farmowner
+                        // Flags.BovineSometing = true;
+                    }
+                    // Fuck bovine
+                } else {
+                    // The horny bovine staddles you before you mangage to figure out what's happening.
+                }
+            }
+        })
+        var GetMilked = InputButton("Get milked", "Mooooooooooooo!");
+        GetMilked.addEventListener("click", function () {
+            // Sell milk(maybe cum to?), this can trigger a event where farmowner tries to fuck you
+            // depenent on your stats you can turn it around or get away, if your stats are to weak you get fucked.
+            var MilkTotal = 0;
+            for (var e of player.Boobies) {
+                MilkTotal += e.Milk * 0.9;
+                e.Milk = e.Milk * 0.1;
+            }
+            if (MilkTotal > 0) {
+                if (MilkTotal > 10) {
+                    var a = RandomInt(1, 20);
+                    if (a > 10) {
+                        // if (Flags.Bovine) {};
+                    }
+                }
+
+            } else {
+
+            }
+        })
+    }
+
+    // TODO add a milking event with farm owner
+    /**
+     * // Barn Milk Event
+    // Let him fuck you
+    Partners.FarmOwner.Submit -= 5;
+    Partners.FarmOwner.Like += 5;
+    // Turn it around if you have enough strength
+    Partners.FarmOwner.Submit += 5;
+    Partners.FarmOwner.Like -= 5;
+    // Get away
+    Partners.FarmOwner.Like += 3;
+     */
+
+    div.appendChild(LeaveBuilding());
+    Buildings.appendChild(div);
+    DocId("Buildings").style.display = 'block';
+}
 // Test of new way to add quests, in order to avoid public vars.
 function TownHallQuests(text = "") {
     var div = document.getElementById("Buildings");
@@ -2718,7 +2692,6 @@ function WitchHutFunc() {
         }
         if (player.Spells.some(e => e.Name === "Fireball")) {
             // Maybe add some affinity gain
-            console.log("Nah");
             p.innerHTML = "You already know the basics"
             return;
         } else if (player.Gold >= 500) {
@@ -2756,7 +2729,6 @@ function WitchHutFunc() {
         for (var e of EyeColors) {
             var inputs = new InputButton(e.Capitalize(), " " + e.Capitalize() + " eyes")
             inputs.addEventListener("click", function (a) {
-                console.log(e); 
                 if (player.Gold >= 50) {
                     player.Face.Eyes = a.target.value.toLowerCase();
                     p.innerHTML = "Looking in the mirror your eyes are now " + player.Face.Eyes;
@@ -2915,289 +2887,6 @@ DocId("CloseCheatMenu").addEventListener("click", function () {
     DocId("CheatMenu").style.display = 'none';
     DisplayGame();
 });
-function CheckArousal() {
-    AfterBattleButtons();
-    const ee = enemies[EnemyIndex],
-        SexText = document.getElementById("SexText");
-    if (ee.Arousal >= 100) {
-        ee.Orgasm++;
-        ee.SessionOrgasm++;
-        ee.Arousal = 0;
-        if (LastPressed == "RideCowgirl" && !player.Pregnant.Status) {
-            Impregnate(player, ee, "B", "");
-        }
-        if (LastPressed == "GiveBlowjob") {
-            const cum = Cumming(ee);
-            SexText.innerHTML = "Your opponent’s grip on your head tightens as they start humping you mouth in earnest. You gladly oblige their request starting to deepthroat them to the base of their cock. Their rhythm starts to falter as you push their cock to the back of your throat." +
-                " You push your head deep into their crotch as they make one last desperate thrust"
-            SexText.innerHTML += cum > 0 ? ", depositing " + LToGal(cum) + " deep into your gullet." : "."
-            SexText.innerHTML += "Your opponent takes deep breathes as they lie completely spent. You rise from between their legs admiring your work and begin to plan your next move."
-        } else if (LastPressed == "RideCowgirl") {
-            const cum = Cumming(ee);
-            SexText.innerHTML += "<br>Reading their body language, you know they are close to cumming."
-            SexText.innerHTML += cum > 0 ?
-                " Pulling them deep inside you, they release " + LToGal(cum) + " of cum into your pussy." :
-                " Nothing comes out, as they're already drained."
-        } else if (LastPressed == "GiveCunnilingus") {
-            SexText.innerHTML += "<br>Reading their body language, you know they are close to cumming. Shoving your tongue as deep as you can into them, your face gets splashed with their nectar."
-        } else if (false) SexText.innerHTML += " Nothing comes out, as they're already drained."
-    }
-    if (player.Arousal >= 100) {
-        player.Orgasm++;
-        player.Arousal = 0;
-        player.SessionOrgasm++;
-        console.log(player.GiveEssence)
-        switch (Settings.GiveEssence) {
-            case "Both":
-                ee.Masc += Math.round(player.GiveEssence / 2);
-                ee.Femi += Math.round(player.GiveEssence / 2);
-                break;
-            case "Masculinity":
-                ee.Masc += Math.round(player.GiveEssence);
-                break;
-            case "Femininity":
-                ee.Femi += Math.round(player.GiveEssence);
-                break;
-            case "None":
-                break;
-        }
-        EssenceCheck(ee);
-        const ImpregActions = ["DoggyStyle", "Missionary", "DualPen", "MultiPen"],
-            AnalImpregActions = ["DoggyStyleAnal"];
-        if (ImpregActions.indexOf(LastPressed) != -1) {
-            if (!ee.hasOwnProperty("Pregnant")) {
-                ee.Pregnant = {
-                    Status: false
-                }
-            }
-            if (!ee.Pregnant.Status) {
-                for (let b of player.Balls) {
-                    if (b.Cum > 10) {
-                        Impregnate(ee, player);
-                        b.Cum -= 10;
-                    }
-                }
-            }
-        } else if (AnalImpregActions.indexOf(LastPressed) != -1 && player.Blessings.MountainShrine.Malepreg > 0) {
-            if (!ee.hasOwnProperty("Pregnant")) {
-                ee.Pregnant = {
-                    Status: false
-                }
-            }
-            if (!ee.Pregnant.Status) {
-                for (var b of player.Balls) {
-                    if (b.Cum > 10) {
-                        Impregnate(ee, player);
-                        b.Cum -= 10;
-                    }
-                }
-            }
-        }
-        if (LastPressed == "GetBlowjob") {
-            const cum = Cumming(player);
-            SexText.innerHTML = "You reach down and grab your opponent’s head, giving a bestial grunt as you approach your climax. You ram your cock as far as you can into " + enemies[EnemyIndex].FirstName + "'s throat."
-            if (player.Balls.length > 0) {
-                SexText.innerHTML += "Your balls tense up as you pump your " + LToGal(cum) + " load down their gullet, thrusting erratically, holding your opponent tight as you empty your sac into them. You bend over their head, making small jabs into their mouth as each wave of cum is sent to their stomach."
-            }
-            SexText.innerHTML += "You stand there for a while, enjoying your afterglow, before you pull out, causing your opponent to fall over, gasping for air. You smile deviously as you ponder how you should use them next.";
-            ee.Cumin.Stomach += cum;
-            if (ee.Cumin.Stomach > (ee.Height / 100) * 2) {
-                SexText.innerHTML += "<br><br> Their stomach is overflowing with your cum; as you pull out, your excess cum follows.";
-                player.cumGround += ee.Cumin.Stomach - (ee.Height / 100) * 2;
-                ee.Cumin.Stomach = (ee.Height / 100) * 2;
-            } else if (ee.Cumin.Stomach > ee.Height / 100) {
-                SexText.innerHTML += "<br><br> Their stomach bulges visibly, filled with your cum."
-            }
-        } else if (LastPressed == "Missionary") {
-            const cum = Cumming(player);
-            ee.Cumin.Pussy += cum;
-            SexText.innerHTML = "<br>Feeling close you thrust deep inside them";
-            if (cum > 0) {
-                SexText.innerHTML += ", releasing " + LToGal(cum) + " of cum into their pussy."
-                if (ee.Cumin.Pussy > (ee.Height / 100)) {
-                    SexText.innerHTML += "<br><br> Their quim is overflowing with your cum; as you pull out, your excess seed follows.";
-                    player.cumGround += ee.Cumin.Pussy - ee.Height / 100;
-                    ee.Cumin.Pussy = ee.Height / 100;
-                } else if (ee.Cumin.Stomach > ee.Height / 200) {
-                    SexText.innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
-                }
-            } else {
-                SexText.innerHTML += ", but nothing comes out of your dick."
-            }
-        } else if (LastPressed == "DoggyStyle") {
-            const cum = Cumming(player);
-            ee.Cumin.Pussy += cum;
-            SexText.innerHTML = "<br>Feeling close, you firmly grab their hips, and thrust deep into their pussy"
-            if (cum > 0) {
-                SexText.innerHTML += ", releasing " + LToGal(cum) + " of cum into their pussy."
-                if (ee.Cumin.Pussy > (ee.Height / 100)) {
-                    SexText.innerHTML += "<br><br> Their quim is overflowing with your cum; as you pull out, your excess seed follows.";
-                    player.cumGround += ee.Cumin.Pussy - ee.Height / 100;
-                    ee.Cumin.Pussy = ee.Height / 100;
-                } else if (ee.Cumin.Stomach > ee.Height / 200) {
-                    SexText.innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
-                }
-            } else document.getElementById("SexText").innerHTML += ", but nothing comes out."
-        } else if (LastPressed == "DoggyStyleAnal") {
-            const cum = Cumming(player);
-            SexText.innerHTML = "<br>Feeling close, you firmly grab their waist, and thrust deep into their bowels"
-            if (cum > 0) {
-                ee.Cumin.Ass += cum;
-                SexText.innerHTML += ", releasing " + LToGal(cum) + " of cum into their ass."
-                if (ee.Cumin.Ass > (ee.Height / 50)) {
-                    SexText.innerHTML += "<br><br> Their ass is overflowing with your cum; as you pull out, your excess seed leaks out."
-                    player.cumGround += ee.Cumin.Ass - ee.Height / 50;
-                    ee.Cumin.Ass = ee.Height / 50;
-                } else if (ee.Cumin.Stomach > ee.Height / 100) {
-                    SexText.innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
-                }
-            }
-        } else if (false) {
-            SexText.innerHTML += ", but nothing comes out."
-        }
-        SexText.innerHTML += (player.cumGround > 20000 ? // If 
-            "<br><br>Your opponent is caked white and heavily panting, cum still flowing out of their overfilled holes. Your extreme output has covered them, and all of the ground nearby, in your semen. You're glad that you don't have to clean this up..." :
-            player.cumGround > 5000 ? // if else
-            "<br><br>You've covered your (ex-)opponent in your cum, and left a sizable puddle underneath them. They're still dripping..." :
-            player.cumGround > 500 ?
-            "<br><br>You've made quite a mess; they weren't able to handle your output, and have been covered in what their body couldn't handle." :
-            player.cumGround > 0 ?
-            "<br><br>Their body bulges with your load, but it's not enough - what they couldn't keep inside, they're now wearing outside." :
-            "" // else
-        )
-        CheckArousal();
-    }
-    const PlayerLooks = document.getElementById("PlayerLooks"),
-        EnemyLooks = document.getElementById("EnemyLooks");
-
-    PlayerLooks.innerHTML = window.innerHeight > 800 ?
-        BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player) : "";
-    EnemyLooks.innerHTML = window.innerHeight > 800 ?
-        BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee) : "";
-
-    if (player.Pregnant.Babies.length > 0) {
-        let age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
-        age < 0 ? age = "Impregnated" : age = age + " months pregnant";
-        PlayerLooks.innerHTML += "<br>" + age;
-    }
-    if (ee.hasOwnProperty("Pregnant")) {
-        if (ee.Pregnant.Status) {
-            EnemyLooks.innerHTML += "<br>Pregnant";
-        }
-    }
-
-
-    const BaseSexAttack = Math.round((RandomInt(4, 7) * player.SexSkill) / 2),
-        BaseESexAttack = Math.round((RandomInt(4, 7) * enemies[EnemyIndex].SexSkill) / 2);
-    // SexAttack is a global should probably change that, but how?
-    SexAttack = Math.min(RandomInt(45, 77), BaseSexAttack * (BaseSexAttack / BaseESexAttack));
-    ESexAttack = Math.max(RandomInt(15, 32), BaseESexAttack * (BaseESexAttack / BaseSexAttack));
-
-
-    DocId("PName").innerHTML = `${player.Name} ${player.LastName}<br>${player.Race} ${Pronoun(CheckGender(player))}`;
-    DocId("EName").innerHTML = `${ee.FirstName} ${ee.LastName}<br>${ee.Name} ${ee.Race} ${Pronoun(CheckGender(ee))}`;
-    DocId("Mascu").innerHTML = Math.round(player.Masc);
-    DocId("Femin").innerHTML = Math.round(player.Femi);
-    DocId("PArousal").innerHTML = Math.round(player.Arousal);
-    DocId("EMascu").innerHTML = ee.Masc;
-    DocId("EFemin").innerHTML = ee.Femi;
-    DocId("EArousal").innerHTML = Math.round(ee.Arousal);
-    // Divide by bigest value amoung both player and enemy
-    let DelatMed = (player.Masc >= ee.Masc && player.Masc >= ee.Femi && player.Masc >= player.Femi) ?
-        (100 / player.Masc) : (player.Femi >= ee.Masc && player.Femi >= ee.Femi && player.Femi >= player.Masc) ?
-        (100 / player.Femi) : (ee.Masc >= player.Masc && ee.Masc >= ee.Femi && ee.Masc >= player.Femi) ?
-        (100 / ee.Masc) : (100 / ee.Femi);
-
-    DocId("Mascu").style.width = player.Masc * DelatMed + "%";
-    DocId("Femin").style.width = player.Femi * DelatMed + "%";
-    DocId("PArousal").style.width = Math.max(1, player.Arousal) + "%";
-    DocId("EMascu").style.width = ee.Masc * DelatMed + "%";
-    DocId("EFemin").style.width = ee.Femi * DelatMed + "%";
-    DocId("EArousal").style.width = Math.max(1, ee.Arousal) + "%";
-
-    DocId("SexStats").innerHTML = " ";
-    DocId("EnemyOrgasm").style.display = 'block';
-    DocId("EnemyOrgasm").innerHTML = ee.Orgasm;
-    DocId("PlayerOrgasm").style.display = 'block';
-    DocId("PlayerOrgasm").innerHTML = player.Orgasm;
-
-    SexColor(player, "Player");
-    SexColor(ee, "Enemy");
-}
-
-function Cumming(who) {
-    if (who.Balls.length > 0) {
-        let Cum = 0;
-        for (let b of who.Balls) {
-            Cum += Math.min(b.Cum, Math.max(10, b.Cum / 8));
-            b.Cum -= Math.min(b.Cum, Math.max(100, b.Cum / 8));
-        }
-        Cum = Math.round((Cum / 1000) * 100) / 100;
-        return Cum;
-    }
-}
-
-function SexLooksExactAndKinda() { // A function to be able to enter a bunch of "local global consts"
-    const EnemyKinda = DocId("EnemyKinda"),
-        EnemyExact = DocId("EnemyExact"),
-        SexStats = DocId("SexStats"),
-        playerKinda = DocId("playerKinda"),
-        playerExact = DocId("playerExact"),
-        EnemySex = DocId("EnemySex"),
-        PlayerSex = DocId("PlayerSex");
-    EnemySex.addEventListener("click", function () {
-        if (EnemyKinda.style.display == 'none') {
-            SexStats.innerHTML = " ";
-            EnemyKinda.style.display = 'block';
-            EnemyExact.style.display = 'none';
-            EnemyExact.innerHTML = "";
-        } else {
-            const ee = enemies[EnemyIndex];
-            SexStats.innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
-            EnemyKinda.style.display = 'none';
-            EnemyExact.style.display = 'block';
-            EnemyExact.innerHTML = `<p>${ExactBoobLook(ee)+ExactPussyLook(ee)+ExactDickLook(ee)+ExactBallLook(ee)}</p>`;
-        }
-    });
-    EnemySex.addEventListener("mouseenter", function () {
-        const ee = enemies[EnemyIndex];
-        SexStats.innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
-        EnemyKinda.style.display = 'none';
-        EnemyExact.style.display = 'block';
-        EnemyExact.innerHTML = `<p>${ExactBoobLook(ee) + ExactPussyLook(ee) + 
-            ExactDickLook(ee) + ExactBallLook(ee)}</p>`;
-    });
-    EnemySex.addEventListener("mouseleave", function () {
-        SexStats.innerHTML = " ";
-        EnemyKinda.style.display = 'block';
-        EnemyExact.style.display = 'none';
-        EnemyExact.innerHTML = "";
-    });
-    PlayerSex.addEventListener("click", function () {
-        if (playerKinda.style.display == 'none') {
-            playerKinda.style.display = 'block';
-            playerExact.style.display = 'none';
-            playerExact.innerHTML = "";
-        } else {
-            playerKinda.style.display = 'none';
-            playerExact.style.display = 'block';
-            playerExact.innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + 
-                ExactDickLook(player) + ExactBallLook(player)}</p>`
-        }
-    });
-    PlayerSex.addEventListener("mouseenter", function () {
-        playerKinda.style.display = 'none';
-        playerExact.style.display = 'block';
-        playerExact.innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + 
-            ExactDickLook(player) + ExactBallLook(player)}</p>`
-    });
-    PlayerSex.addEventListener("mouseleave", function () {
-        playerKinda.style.display = 'block';
-        playerExact.style.display = 'none';
-        playerExact.innerHTML = "";
-    });
-}
-SexLooksExactAndKinda();
 // Checks flags, settings, etc at load
 function CheckFlags() {
     // Flags
@@ -3430,7 +3119,10 @@ function CheckFlags() {
             MalePreg: 0
         }
     }
-
+    player.RaceEssence.push(Human = {
+        Race: "Human",
+        amount: 100
+    })
     FluidsEngine();
     if (!player.hasOwnProperty("RaceEssence")) {
         player.RaceEssence = [
@@ -3565,52 +3257,6 @@ function CheckFlags() {
         }
     }
  */
-DocId("Children").addEventListener("click", function () {
-    DisplayNone();
-    DocId("ChildrenMenu").style.display = 'block';
-    Childs();
-});
-DocId("LeaveChildrenMenu").addEventListener("click", function () {
-    DisplayNone();
-    DocId("DetailedInfo").style.display = 'block';
-})
-
-function Childs() {
-    var Children = [];
-    Children += "<div>By you<br>"
-    for (var e = 0; e < player.Children.length; e++) {
-        var age = Math.round(player.Children[e].AgeCounter / 365);
-        if (age < 1) {
-            age = Math.round(player.Children[e].AgeCounter / 30) + " months";
-        } else {
-            age += " years"
-        }
-        var Child = "<button type=\"button\">Child " + (e + 1) + "<br>Father: " + player.Children[e].Father +
-            "<br>" + age + " old</button>"
-        Children += Child;
-    }
-    Children += "</div>"
-    if (House.Dormmates.length > 0) {
-        for (var e of House.Dormmates) {
-            if (e.Children.length > 0) {
-                Children += "<div>" + e.FirstName + " " + e.LastName + "<br>"
-                for (var i = 0; i < e.Children.length; i++) {
-                    var age = Math.round(e.Children[i].AgeCounter / 365);
-                    if (age < 1) {
-                        age = Math.round(e.Children[i].AgeCounter / 30) + " months";
-                    } else {
-                        age += " years"
-                    }
-                    Child = "<button type=\"button\">Child " + (i + 1) + "<br>" + age + " old </button>"
-                    Children += Child;
-                }
-                Children += "</div>"
-            }
-        }
-    }
-    console.log(player.Children)
-    DocId("ChildCorner").innerHTML = Children;
-}
 function UpdateStats(YourTurn = true) {
     let ee = enemies[EnemyIndex];
     CombatButtons();
@@ -3878,9 +3524,80 @@ function SpellButton(index) { // Instead of repeating, Can only add fireball now
     Spell.addEventListener("click", function () {
         DictIt.Cast(index, ee);
         UpdateStats(false);
-        console.log(it);
     });
     return Spell;
+}
+function WinBattle() {
+    var ee = enemies[EnemyIndex];
+    player.Exp += ee.Exp;
+    player.Gold += ee.Gold;
+    ee.SessionOrgasm = 0;
+    player.SessionOrgasm = 0;
+    CombatQuests(ee);
+    //WinEnemyChanges(ee);
+    DropSystem(ee);
+    DocId("Encounter").style.display = 'none';
+    if (Settings.Skip) {
+        DisplayGame();
+    } else if (false) { // Replace with ee.Name === "specific name"
+        DocId("DungeonSystem").style.display = 'block';
+        DocId("DungeonText").innerHTML = "What should you do with her?";
+        DocId("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" +
+            "<input type=\"button\" id=\"MakeSubmit\" value=\"Make her understand her place.\" >";
+    } else {
+        SetupSex(ee);
+    }
+}
+
+function SetupSex(ee) {
+    DocId("SexText").innerHTML = HeightSystem(player, ee);
+    DocId("AfterBattle").style.display = 'grid';
+    DocId("SexButtons").style.display = 'grid';
+    if (Settings.ImgPack) {
+        DocId("AfterBattle").classList.remove("AfterBattle");
+        DocId("AfterBattle").classList.add("AfterBattleImg");
+        DocId("MyImg").style.display = 'block';
+
+    } else {
+        DocId("AfterBattle").classList.add("AfterBattle");
+        DocId("AfterBattle").classList.remove("AfterBattleImg");
+        DocId("MyImg").style.display = 'none';
+    }
+    CheckArousal();
+    if (ee.Name === "Feral") {
+        AfterBattleButtons(false);
+    } else {
+        AfterBattleButtons();
+    }
+}
+
+// Handles quests related to combat
+function CombatQuests(ee) {
+    for (var q of player.Quests) {
+        if (q.Name === "ElfHunt") {
+            if (ee.Race === "Elf") {
+                q.Count++;
+                if (q.Count >= 3) {
+                    q.Completed = true;
+                    if (q.Count % 3 === 0) {
+                        q.hasOwnProperty("Tier") ? q.Tier++ : q.Tier = 1;
+                    }
+                }
+            }
+        }
+        if (q.Name === "BanditLord" && q.Completed === false) {
+            if (ee.Name === "Banditlord") {
+                q.Completed = true;
+            }
+        }
+    }
+}
+
+// Some enemies change when you win
+function WinEnemyChanges(ee) {
+    if (ee.Race === "Dragon") {
+        ee.Race = "Anthro dragon";
+    }
 }
 function DateTracker() {
     if (!battle) {
@@ -4005,394 +3722,6 @@ function TestDialog() {
     Inputs.appendChild(Option2);
 
     Npc.appendChild(Inputs);
-}
-function RaceDrain(whose) {
-    const RaceEss = player.RaceEssence,
-        a = RaceEss.findIndex(e => e.Race == whose.Race);
-    if (a > -1) {
-        RaceEss[a].amount += RandomInt(2, 10);
-    } else {
-        const Race = {
-            Race: whose.Race,
-            amount: RandomInt(2, 10)
-        }
-        RaceEss.push(Race);
-    }
-    const b = RaceEss.findIndex(e => e.Race == whose.SecondRace);
-    if (b > -1) {
-        RaceEss[b].amount += RandomInt(1, 5);
-    } else {
-        const Race = {
-            Race: whose.SecondRace,
-            amount: RandomInt(1, 5)
-        }
-        RaceEss.push(Race);
-    }
-};
-
-function DrainDrainM() {
-    const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        Ess = Math.min(ee.Masc, player.EssenceDrain);
-    if (ee.Masc > 0) {
-        ee.SessionOrgasm--;
-        //disabled (player.ForcedFemale) ? (player.Femi += ee.Masc) : (player.Masc += ee.Masc);
-        player.Masc += Ess;
-        ee.Masc -= Ess;
-        EssenceCheck(ee);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
-        DocId("SexText").innerHTML = (Ess >= ee.Masc) ?
-            `You siphon the last essence of masculinity from them leaving them with no signs of masculinity left.<br>${DrainChanges(old, player, eold, ee)}` :
-            `You siphon essence of masculinity from them.<br>${DrainChanges(old, player, eold, ee)}`;
-        RaceDrain(ee);
-        AfterBattleButtons();
-        CheckArousal();
-        return;
-    };
-}
-
-function DrainDrainF() {
-    const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        Ess = Math.min(ee.Femi, player.EssenceDrain);
-    if (ee.Femi > 0) {
-        ee.SessionOrgasm--;
-        //player.ForcedMale ? (player.Masc += ee.Femi) : (player.Femi += ee.Femi);
-        player.Femi += Ess;
-        ee.Femi -= Ess;
-        EssenceCheck(ee);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
-        DocId("SexText").innerHTML = (Ess >= ee.Femi) ?
-            `You siphon the last essence of femininity from them leaving them with no signs of femininity left.<br>${DrainChanges(old, player, eold, ee)}` :
-            `You siphon essence of femininity from them.<br>${DrainChanges(old, player, eold, ee)}`;
-    }
-    RaceDrain(ee);
-    AfterBattleButtons();
-    CheckArousal();
-    return;
-};
-
-function DrainInjectM() {
-    const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        Ess = Math.min(player.GiveEssence * 33, player.Masc);
-    if (player.Masc > 0) {
-        player.SessionOrgasm--;
-        player.Masc -= Ess;
-        ee.Masc += Ess;
-        EssenceCheck(ee);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
-        DocId("SexText").innerHTML = (Ess >= player.Masc) ?
-            `You inject them with your last essence of masculinity, leaving yourself male-free.<br>${DrainChanges(old, player, eold, ee)}` :
-            `You inject essence of masculinity into them.<br>${DrainChanges(old, player, eold, ee)}`;
-    }
-    AfterBattleButtons();
-    CheckArousal();
-    return;
-};
-
-function DrainInjectF() {
-    const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        Ess = Math.min(player.GiveEssence * 33, player.Femi);
-    if (player.Femi > 0) {
-        player.SessionOrgasm--;
-        player.Femi -= Ess;
-        ee.Femi += Ess;
-        EssenceCheck(ee);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
-        DocId("SexText").innerHTML = (Ess >= player.Femi) ?
-            `You give them the last of your femininity, leaving yourself female-free.<br>${DrainChanges(old, player, eold, ee)}` :
-            `You inject essence of femininity into them.<br>${DrainChanges(old, player, eold, ee)}`;
-        AfterBattleButtons();
-        CheckArousal();
-        return;
-    }
-};
-
-function IntToAge(int) {
-    switch (int) {
-        case 1:
-            return "one year";
-        case 2:
-            return "two years";
-        case 3:
-            return "three years";
-        case 4:
-            return "four years";
-        case 5:
-            return "five years";
-        case 6:
-            return "six years";
-        default:
-            return int + "years";
-    }
-}
-
-function DrainChangesEnemy(eold, ecurrent) {
-    var b = "";
-    if (eold.Dicks.length > ecurrent.Dicks.length) {
-        if (ecurrent.Dicks.length < 1) {
-            b += "You see their dick shrinking completely into their body, turning them into a " + Pronoun(CheckGender(ecurrent)) + ".";
-        } else {
-            b += "They lost a dick"
-        }
-    } else if (eold.Dicks.length < ecurrent.Dicks.length) {
-        b += "They have grown a dick"
-    } else if (ecurrent.Dicks.length > 0) {
-        for (var e = 0; e < eold.Dicks.length; e++) {
-            if (Math.round(eold.Dicks[e].Size) > Math.round(ecurrent.Dicks[e].Size)) {
-                b = "You see their dick shrinking" //Need to add what dick e.g. their second dick shrinks etc
-            } else if (Math.round(eold.Dicks[e].Size) > Math.round(ecurrent.Dicks[e].Size)) {
-                b = "You see their dick growing"
-            }
-        }
-    }
-
-    if (eold.Balls.length > ecurrent.Balls.length) {
-        if (ecurrent.Balls.length < 1) {
-            b += "<br>They lost a pair of balls"
-        } else {
-            b += "<br>They lost a pair of balls"
-        }
-    } else if (eold.Balls.length < ecurrent.Balls.length) {
-        b += "<br>They have grown a pair of balls"
-    } else if (ecurrent.Balls.length > 0) {
-        for (var e = 0; e < ecurrent.Balls.length; e++) {
-            if (Math.round(eold.Balls[e].Size) > Math.round(ecurrent.Balls[e].Size)) {
-                b += "<br>You see their balls shrinking"
-            } else if (Math.round(eold.Balls[e].Size) < Math.round(ecurrent.Balls[e].Size)) {
-                b += "<br>You see their balls growing"
-            }
-        }
-    }
-
-    if (eold.Boobies.length > ecurrent.Boobies.length) {
-        b += "<br>They loost a pair of breasts";
-    } else if (eold.Boobies.length < ecurrent.Boobies.length) {
-        b += "<br>They have grown a pair of breasts";
-    } else {
-        for (var e = 0; e < eold.Boobies.length; e++) {
-            if (Math.round(eold.Boobies[e].Size) > Math.round(ecurrent.Boobies[e].Size)) {
-                b += "<br>You see their breasts shrinking."
-            } else if (Math.round(eold.Boobies[e].Size) < Math.round(ecurrent.Boobies[e].Size)) {
-                b += "<br>You see their breasts growing."
-            }
-        }
-    }
-
-    if (eold.Pussies.length > ecurrent.Pussies.length) {
-        if (ecurrent.Pussies.length < 1) {
-            b += "<br>You see their pussy closing completely and disappear, turning them into a " + Pronoun(CheckGender(ecurrent)) + ".";
-        } else {
-            b += "<br>They a lost a pussy"
-        }
-    } else if (eold.Pussies.length < ecurrent.Pussies.length) {
-        b += "<br>They a have grown a pussy"
-    } else if (ecurrent.Pussies.length > 0) {
-        for (var e = 0; e < eold.Pussies.length; e++) {
-            if (Math.round(eold.Pussies[e].Size) > Math.round(ecurrent.Pussies[e].Size)) {
-                b += "You feel their pussy tightening"
-            } else if (Math.round(eold.Pussies[e].Size) < Math.round(ecurrent.Pussies[e].Size)) {
-                b += "You feel their pussy growing" //Need better word/phrase than growing
-            }
-        }
-    }
-    return b;
-}
-
-//Need to do same for player
-function DrainChanges(old, current, eold, ecurrent) {
-    var a = " ";
-    var b = " ";
-
-    if (old.Dicks.length < current.Dicks.length) {
-        a = "You have grown a dick!";
-    } else if (current.Dicks.length < old.Dicks.length) {
-        if (current.Dicks.length < 1) {
-
-        } else {
-            a = "You have lost a dick";
-        }
-
-    } else if (current.Dicks.length > 0) {
-        for (var e = 0; e < current.Dicks.length; e++) {
-            if (Math.round(old.Dicks[e].Size) < Math.round(current.Dicks[e].Size)) {
-                a += "<br>You feel your dick growing.";
-            } else if (Math.round(current.Dicks[e].Size) < Math.round(old.Dicks[e].Size)) {
-                a += "<br>You feel your dick shrinking.";
-            }
-        }
-    }
-
-    if (old.Balls.length < current.Balls.length) {
-        a += "<br>you have grown a pair of balls"
-    } else if (current.Balls.length < old.Balls.length) {
-        a += "<br>you have lost a pair of balls"
-    } else if (current.Balls.length > 0) {
-        for (var e = 0; e < current.Balls.length; e++) {
-            if (Math.round(old.Balls[e].Size) < Math.round(current.Balls[e].Size)) {
-                a += "<br>you feel you balls growing"
-            } else if (Math.round(current.Balls[e].Size) < Math.round(old.Balls[e].Size)) {
-                a += "<br>you feel you balls shrinking"
-            }
-        }
-    }
-
-    if (old.Boobies.length < current.Boobies.length) {
-        a += "<br>You have grown a new pair of breasts."
-    } else if (current.Boobies.length < old.Boobies.length) {
-        a += "<br>You have lost a pair of breasts"
-    } else if (current.Boobies.length > 0) {
-        for (var e = 0; e < current.Boobies.length; e++) {
-            if (Math.round(old.Boobies[e].Size) < Math.round(current.Boobies[e].Size)) {
-                a += "<br>You feel your breasts grow bigger.";
-            } else if (Math.round(current.Boobies[e].Size) < Math.round(old.Boobies[e].Size)) {
-                a += "<br>You feel your breasts shrinking.";
-            }
-        }
-    }
-
-    if (old.Pussies.length < current.Pussies.length) {
-        a += "<br>You gave grown a pussy";
-    } else if (current.Pussies.length < old.Pussies.length) {
-        a += "<br>You have lost a pussy";
-    } else if (current.Pussies.length > 0) {
-        for (var e = 0; e < current.Pussies.length; e++) {
-            if (Math.round(old.Pussies[e].Size) < Math.round(current.Pussies[e].Size)) {
-                a += "<br>You feel your pussy grow";
-            } else if (Math.round(current.Pussies[e].Size) < Math.round(old.Pussies[e].Size)) {
-                a += "<br>You feel your pussy tighten";
-            }
-        }
-    }
-    if (CheckGender(old) != CheckGender(current)) {
-        a += "<br><br>You have become a " + Pronoun(CheckGender(current)) + "!<br>";
-    }
-    b = DrainChangesEnemy(eold, ecurrent);
-    return "<br>" + a + "<br>" + b;
-}
-function SnowInventoryAdd(item, quantity = 1) {
-    var i = 0;
-    for (i = 0; i < player.Inventory.length; i++) {
-        var q = false;
-        if (player.Inventory[i].Name === item.Name) {
-            player.Inventory[i].Quantity += quantity;
-            q = true;
-            break;
-        }
-    }
-    if (!q) {
-        item.Quantity = quantity;
-        player.Inventory.push(item);
-    }
-}
-
-function DropSystem(who) {
-    var dropRate = {
-        "Human": 1.00,
-        "Halfling": 1.00,
-        "Orc": 1.00,
-        "Troll": 1.00,
-        "Farmer": 1.00,
-        "Elf": 1.00,
-        "Amazon": 1.00,
-        "Fairy": 1.00,
-        "Commoner": 1.00,
-        "Thug": 1.00,
-        "Dark elf": 1.00,
-        "Imp": 1.00,
-        "Goblin": 1.00,
-        "Dhampir": 1.00,
-        "Demon": 1.00,
-        "Succubus": 1.00,
-        "Incubus": 1.00,
-        "Witch": 1.00
-    }
-    var e = who;
-    var r = Math.random();
-    if (r <= dropRate[e.Name]) {
-        switch (e.Name) {
-            case "Banditlord":
-                SnowInventoryAdd(ItemDict.orcCum.Lite);
-                break;
-            case "Commoner":
-                SnowInventoryAdd(ItemDict.halfPouch.Lite);
-                break;
-            case "Farmer":
-                SnowInventoryAdd(ItemDict.milkJug.Lite);
-                break;
-            case "Thug":
-                SnowInventoryAdd(ItemDict.halfPouch.Lite);
-                break;
-            case "Witch":
-                SnowInventoryAdd(ItemDict.book.Lite);
-                break;
-            default:
-                break;
-        }
-    }
-    var r = Math.random();
-    if (r <= dropRate[e.Race]) {
-        switch (e.Race) {
-            case "Fairy":
-                SnowInventoryAdd(ItemDict.fairyDust.Lite);
-                break;
-            case "Human":
-                SnowInventoryAdd(ItemDict.humanity.Lite);
-                break;
-            case "Halfling":
-                SnowInventoryAdd(ItemDict.pouch.Lite);
-                break;
-            case "Orc":
-                SnowInventoryAdd(ItemDict.orcBrew.Lite);
-                break;
-            case "Troll":
-                SnowInventoryAdd(ItemDict.trollMilk.Lite);
-                break;
-            case "Elf":
-                SnowInventoryAdd(ItemDict.elvenHair.Lite);
-                break;
-            case "Amazon":
-                SnowInventoryAdd(ItemDict.amazonGirdle.Lite);
-                break;
-            case "Dark Elf":
-                SnowInventoryAdd(ItemDict.elvenHair.Lite);
-                break;
-            case "Goblin":
-                SnowInventoryAdd(ItemDict.fertilityIdol.Lite);
-                break;
-            case "Imp":
-                SnowInventoryAdd(ItemDict.cockyRock.Lite);
-                break;
-            case "Demon":
-                SnowInventoryAdd(ItemDict.infernalSemen.Lite);
-                break;
-            case "Dhampir":
-                SnowInventoryAdd(ItemDict.infernalMilk.Lite);
-                break;
-            case "Succubus":
-                SnowInventoryAdd(ItemDict.SuccMilk.Lite);
-                break;
-            case "Incubus":
-                SnowInventoryAdd(ItemDict.IncSemen.Lite);
-                break;
-            default:
-                break;
-        }
-    }
 }
 function GrowthScale(who) {
     return (who.Height / 160)
@@ -4588,6 +3917,465 @@ function EssenceCheck(who) {
     }
     return;
 
+}
+function ManualGrowthScale() {
+    return (player.Height / 160)
+} // I put this a function to make it easier to trial different formulas.
+
+
+function EssenceCost(what) {
+    return Math.min(2000, Math.round((30 * Math.pow(1.05, what.Size))));
+};
+
+function EssenceExtraCost(what) {
+    return Math.round((30 * Math.pow(3, what.length)));
+};
+
+DocId("EssenceAuto").addEventListener("click", function () {
+    Settings.EssenceAuto = !Settings.EssenceAuto;
+    if (Settings.EssenceAuto) {
+        DocId("EssenceAuto").value = "Essence Auto";
+        DocId("ManualGrowth").style.display = 'none';
+
+    } else {
+        DocId("EssenceAuto").value = "Essence Manual";
+        DocId("ManualGrowth").style.display = 'block';
+        Settings.BalanceParts = false;
+    }
+});
+
+DocId("GrowBalls").addEventListener("click", function () {
+    DocId("EssenceStart").style.display = 'none';
+    DocId("ManualOrgans").style.display = 'block';
+    BallsButtons();
+});
+DocId("GrowPussy").addEventListener("click", function () {
+    DocId("EssenceStart").style.display = 'none';
+    DocId("ManualOrgans").style.display = 'block';
+    PussyButtons();
+});
+DocId("GrowBreast").addEventListener("click", function () {
+    DocId("EssenceStart").style.display = 'none';
+    DocId("ManualOrgans").style.display = 'block';
+    BreastButtons();
+});
+DocId("GrowDick").addEventListener("click", function () {
+    DocId("EssenceStart").style.display = 'none';
+    DocId("ManualOrgans").style.display = 'block';
+    DickButtons();
+});
+
+function BreastButtons() {
+    var ManualOrgans = DocId("ManualOrgans");
+    while (ManualOrgans.hasChildNodes()) {
+        ManualOrgans.removeChild(ManualOrgans.firstChild);
+    }
+
+    var Extraboobs = InputButton("Extra breasts " + EssenceExtraCost(player.Boobies) + "F");
+    Extraboobs.addEventListener("click", function () {
+        var cost = EssenceExtraCost(player.Boobies);
+        if (player.Femi >= cost) {
+            player.Femi -= cost;
+            var Boob = {
+                Size: 0,
+                Type: player.Race,
+                Milk: 0,
+                MilkBaseRate: 0,
+                MilkRate: 0,
+                MilkMax: 0
+
+            }
+            player.Boobies.push(Boob);
+        }
+        BreastButtons();
+    });
+    ManualOrgans.appendChild(Extraboobs);
+    ManualOrgans.appendChild(ManualOrgansClose());
+    for (var e of player.Boobies) {
+        ManualOrgans.appendChild(BreastButton(e));
+    }
+}
+
+function BreastButton(e) {
+    var boob = document.createElement("button");
+    boob.setAttribute("type", "button");
+    boob.innerHTML = BoobSizeConvertor(e.Size) + " " + EssenceCost(e) + "Feminity";
+    boob.addEventListener("click", function () {
+        var cost = EssenceCost(e);
+        if (player.Femi >= cost) {
+            player.Femi -= cost;
+            e.Size += 1 * ManualGrowthScale();
+            e.MilkMax = Math.round(e.Size * 400);
+        }
+        BreastButtons();
+    });
+    return boob;
+}
+
+function PussyButtons() {
+    var ManualOrgans = DocId("ManualOrgans");
+    while (ManualOrgans.hasChildNodes()) {
+        ManualOrgans.removeChild(ManualOrgans.firstChild);
+    }
+
+    var ExtraPussy = InputButton("Extra pussy " + EssenceExtraCost(player.Pussies) + "F");
+    ExtraPussy.addEventListener("click", function () {
+        var cost = EssenceExtraCost(player.Pussies);
+        if (player.Femi >= cost) {
+            player.Femi -= cost;
+            var Pussy = {
+                Size: 5,
+                Type: player.Race,
+                Virgin: true
+            }
+            player.Pussies.push(Pussy);
+            PussyButtons();
+        }
+    });
+    ManualOrgans.appendChild(ExtraPussy);
+    ManualOrgans.appendChild(ManualOrgansClose());
+    for (var e of player.Pussies) {
+        ManualOrgans.appendChild(PussyButton(e))
+    };
+}
+
+function PussyButton(e) {
+    var pussy = document.createElement("button");
+    pussy.setAttribute("type", "button");
+    pussy.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Feminity";
+    pussy.addEventListener("click", function () {
+        var cost = EssenceCost(e);
+        if (player.Femi >= cost) {
+            player.Femi -= cost;
+            e.Size += 1 * ManualGrowthScale();
+            PussyButtons();
+        }
+    });
+    return pussy;
+}
+
+function DickButtons() {
+    var ManualOrgans = DocId("ManualOrgans");
+    while (ManualOrgans.hasChildNodes()) {
+        ManualOrgans.removeChild(ManualOrgans.firstChild);
+    }
+
+    var ExtraDick = InputButton("Extra dick " + EssenceExtraCost(player.Dicks) + "M");
+    ExtraDick.addEventListener("click", function () {
+        var cost = EssenceExtraCost(player.Dicks);
+        if (player.Masc >= cost) {
+            player.Masc -= cost;
+            var Dick = {
+                Size: 5,
+                Type: player.Race,
+                Virgin: true
+            }
+            player.Dicks.push(Dick);
+            DickButtons();
+        }
+    });
+    ManualOrgans.appendChild(ExtraDick);
+    ManualOrgans.appendChild(ManualOrgansClose());
+    for (var e of player.Dicks) {
+        ManualOrgans.appendChild(DickButton(e));
+    }
+}
+
+function DickButton(e) {
+    var Dick = document.createElement("button");
+    Dick.setAttribute("type", "button");
+    Dick.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Masculinity";
+    Dick.addEventListener("click", function () {
+        var cost = EssenceCost(e);
+        if (player.Masc >= cost) {
+            player.Masc -= cost;
+            e.Size += 1 * ManualGrowthScale();
+            DickButtons();
+        }
+    });
+    return Dick;
+}
+
+function BallsButtons() {
+    var ManualOrgans = DocId("ManualOrgans");
+    while (ManualOrgans.hasChildNodes()) {
+        ManualOrgans.removeChild(ManualOrgans.firstChild);
+    }
+    var ExtraBall = InputButton("Extra Balls " + EssenceExtraCost(player.Balls) + "M");
+    ExtraBall.addEventListener("click", function () {
+        var cost = EssenceExtraCost(player.Balls);
+        if (player.Masc >= cost) {
+            player.Masc -= cost;
+            var Ball = {
+                Size: 2,
+                Type: player.Race,
+                CumMax: 2,
+                Cum: 0,
+                CumRate: 0,
+                CumBaseRate: 0.5
+            }
+            player.Balls.push(Ball);
+            BallsButtons();
+        }
+    });
+    ManualOrgans.appendChild(ExtraBall);
+    ManualOrgans.appendChild(ManualOrgansClose())
+    var br = document.createElement("br");
+    ManualOrgans.appendChild(br);
+    for (var e of player.Balls) {
+        ManualOrgans.appendChild(BallsButton(e));
+    }
+}
+
+function BallsButton(e) {
+    var Ball = document.createElement("button");
+    Ball.setAttribute("type", "button");
+    Ball.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Masculinity";
+    Ball.addEventListener("click", function () {
+        var cost = EssenceCost(e);
+        if (player.Masc >= cost) {
+            player.Masc -= cost;
+            e.Size += 1 * ManualGrowthScale();
+            BallsButtons();
+        }
+    });
+    return Ball;
+}
+
+function ManualOrgansClose() {
+    var Close = InputButton("Back");
+    Close.addEventListener("click", function () {
+        DocId("EssenceStart").style.display = 'block';
+        ManualOrgans.style.display = 'none';
+        while (ManualOrgans.hasChildNodes()) {
+            ManualOrgans.removeChild(ManualOrgans.firstChild);
+        }
+    });
+    return Close;
+}
+
+DocId("EssenceOptionsLeave").addEventListener("click", function () {
+    var ManualOrgans = DocId("ManualOrgans");
+    while (ManualOrgans.hasChildNodes()) {
+        ManualOrgans.removeChild(ManualOrgans.firstChild);
+    }
+    DocId("EssenceStart").style.display = 'block';
+    DocId("ManualGrowth").style.display = 'none';
+    DisplayNone();
+    DisplayGame();
+});
+function isTaur(mode = 1) {
+    const Taur = ["centaur"],
+        max = Math.min(3, player.RaceEssence.length),
+        RaceEss = player.RaceEssence;
+    for (let e in RaceEss) {
+        if (mode === 1) {
+            Taur.indexOf(RaceEss[e].Race) > -1 ? e : false
+        } else {
+            if (Taur.indexOf(RaceEss[e].Race) > -1) {} else {
+                return e; // return biggest non taur race
+            }
+        }
+    }
+}
+
+
+function EssenceBalance() { // Concept for calculating what species you're treated as
+    const RaceEss = player.RaceEssence,
+        RA = [];
+    if (RaceEss.some(e => e.Race !== e.Race.Capitalize())) { // Make sure all races have first letter cap + rest lowercase
+        console.log("Non cap race");
+        for (let e of RaceEss) {
+            e.Race = e.Race.Capitalize();
+        }
+    };
+    if (RaceEss.some(e => e.amount < 1)) {
+        for (let i in RaceEss) { // Clearing/Spicing out anything below 1
+            if (RaceEss[i].amount < 1) {
+                console.log("Spliced " + RaceEss[i].Race);
+                RaceEss.splice(i, 1);
+            }
+        }
+    };
+    for (let e in RaceEss) { // Clearing/splicing duplicates
+        for (let i in RaceEss) {
+            if (RaceEss[e].Race === RaceEss[i].Race && e != i) {
+                console.log("Duplicate race");
+                RaceEss[e].amount += RaceEss[i].amount;
+                RaceEss.splice(i, 1);
+            }
+        }
+    };
+    RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
+
+    let totalAbsorb = 0;
+    for (let i of RaceEss) {
+        totalAbsorb += i.amount;
+    };
+
+    for (let i of RaceEss) {
+        if (i.amount / totalAbsorb > 0.01 && i.amount > 10) { // Bigger than 1 precent and higher value than 10
+            RA.push(i);
+        }
+    }
+
+    /* Will convert to use this insted to I can make changed dependant on amount of essence.
+Need to make it like earlier so that low essence doesn't give a race, 
+e.g. you are not a dragon because you have 1 dragon essence.
+
+Don't like that no race = human, maybe should add a special race?
+    */
+    const oldRace = player.Race,
+        oldSecondRace = player.SecondRace;
+    if (totalAbsorb < 100) {
+        player.Race = "humanoid"; // No race is lowest form of human? or implement doll race?
+        if (RaceEss[0].amount > 50) {
+            player.SecondRace = RaceEss[0].Race;
+            GenitalChange(player.SecondRace); // null dick? bland dick? average?
+        } else {
+            player.SecondRace = player.Race
+            GenitalChange(player.SecondRace)
+        }
+    } else {
+        const R1 = Math.round(100 * RA[0].amount / totalAbsorb),
+            R2 = RA.length > 1 ? Math.round(100 * RA[1].amount / totalAbsorb) : 0,
+            R3 = RA.length > 2 ? Math.round(100 * RA[2].amount / totalAbsorb) : 0;
+        if (isTaur()) { // centaur always second race?
+            player.Race = player.RaceEssence.length < 2 ? "human" : RaceEss[isTaur("B")].Race;
+            player.SecondRace = RaceEss[isTaur()].Race;
+            GenitalChange(RaceEss[isTaur()].Race);
+        } else if (R1 + R2 + R3 < 50 && R1 > 0 && R2 > 0 && R3 > 0) {
+            player.Race = "chimera";
+            player.SecondRace = "chimera";
+            GenitalChange(RaceEss[0].Race); // change GenitalsChange you can have organs from more than on race
+        } else {
+            if (R2 > 25) {
+                player.Race = RaceEss[0].Race;
+                player.SecondRace = RaceEss[1].Race
+                GenitalChange(RaceEss[1].Race); // Will add options to chose what race genitals is.
+            } else {
+                player.Race = RaceEss[0].Race;
+                player.SecondRace = player.Race;
+                GenitalChange(RaceEss[0].Race);
+            }
+        }
+        player.Race = player.Race.toLowerCase();
+        player.SecondRace = player.SecondRace.toLowerCase();
+    }
+    if (player.Race !== oldRace) { // Add a call to eventlog #TODO write text to reflect race change
+        console.log("Race change!");
+    }
+    if (player.SecondRace !== oldSecondRace) {
+        console.log("SecondRace change");
+    }
+}
+
+function PotionDrunk(race, Dose = 50) {
+    const RaceEss = player.RaceEssence,
+        a = RaceEss.findIndex(e => e.Race === race.Capitalize());
+    if (a > -1) {
+        RaceEss[a].amount += Dose;
+    } else {
+        const Race = {
+            Race: race.Capitalize(),
+            amount: Dose
+        }
+        RaceEss.push(Race);
+    }
+}
+
+function RaceDesc(who) {
+    const Race = who.Race.toLowerCase(),
+        SecondRace = who.SecondRace.toLowerCase();
+    switch (Race) {
+        case "human":
+            if (SecondRace == "human") {
+                return "human";
+            } else if (SecondRace == "elf") {
+                return "half elf";
+            } else if (SecondRace == "centaur") {
+                return "centaur";
+            } else if (SecondRace == "equine") {
+                return "satyr";
+            }
+        case "elf":
+            if (SecondRace == "human") {
+                return "half elf";
+            } else if (SecondRace == "elf") {
+                return "elf";
+            } else if (SecondRace == "centaur") {
+                return "centaur";
+            } else if (SecondRace == "equine") {
+                return "satyr";
+            }
+        case "equine":
+            if (SecondRace == "human") {
+                return "humanoid equine";
+            } else if (SecondRace == "elf") {
+                return "humanoid equine";
+            } else if (SecondRace == "centaur") {
+                return "anthropomorphic centaur";
+            } else if (SecondRace == "equine") {
+                return "equine";
+            }
+        default:
+            return Race;
+    }
+}
+
+function DetailedRaceDesc() {
+    const RaceEss = player.RaceEssence,
+        RA = RaceEss;
+    RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
+    let totalAbsorb = 0;
+    for (let i of RaceEss) {
+        totalAbsorb += i.amount;
+    }
+    const R1 = Math.round(100 * RA[0].amount / totalAbsorb),
+        R2 = RA.length > 1 ? Math.round(100 * RA[1].amount / totalAbsorb) : 0,
+        R3 = RA.length > 2 ? Math.round(100 * RA[2].amount / totalAbsorb) : 0;
+
+    let text
+    if (totalAbsorb < 100) {
+        text = "Yor're an "
+        if (RaceEss[0].amount > 20) {
+            text += RaceEss[0].Race + " looking humaniod."
+        } else {
+            text += "humaniod."
+        }
+        return text;
+    } else if (R1 > 99) {
+        return "You're fully " + RaceEss[0].Race + "!";
+    } else if (R1 + R2 + R3 < 50) {
+        return "You're an unnatural mix of an assortment of species!";
+    } else if (R1 > 90) {
+        return "You're indistinguishable from any other " + RaceEss[0].Race;
+    } else if (R1 > 80) {
+        text = "You're mostly " + RaceEss[0].Race + ", but you've got";
+        if (R2 > 10) {
+            text += " some " + RaceEss[1].Race + " traits.";
+        } else {
+            text += " other traits mixed in.";
+        }
+        return text;
+    } else if (R1 > 70) {
+        text = "You're mostly " + RaceEss[0].Race + ", but"
+        if (R2 > 20) {
+            text += " could be confused for a half-" + RaceEss[1].Race + ".";
+        } else if (R2 + R3 > 20) {
+            text += " you've added a few other traits, notably " + RaceEss[1].Race + " and " +
+                RaceEss[2].Race + ".";
+        } else {
+            text += " you've added a few other traits.";
+        }
+        return text;
+    } else if (R1 < R2 + 10) {
+        return "You're half-" + RaceEss[0].Race + ", half " + RaceEss[1].Race + ".";
+    } else if (R1 < R2 + R3) {
+        return "You're a curious hybrid, a mix between " + RaceEss[0].Race + ", " + RaceEss[1].Race + ", and " + RaceEss[2].Race + ".";
+    } else {
+        return "You're unmistakably an " + RaceEss[0].Race + ", but you're deep in an uncanny valley.";
+    }
 }
 	    // Event log
 	    var LogArray = [];
@@ -4838,24 +4626,16 @@ function MateDiv(e) {
     DocId("flex").style.display = 'grid';
     var RoomMate = "<div id=\"" + e + "\"></div>"
     DocId("DivMates").innerHTML = RoomMate;
-    var PregnantStatus = "";
+    let PregnantStatus = "";
     if (rm.hasOwnProperty("Pregnant")) {
         if (rm.Pregnant.Status) {
-            var age = Math.round(rm.Pregnant.Baby / 10000);
-            if (age < 1) {
-                PregnantStatus = "<br>Impregnated";
-            } else {
-                PregnantStatus = "<br>" + age + " months pregnant";
-            }
+            const age = Math.round(rm.Pregnant.Babies[0].BabyAge / 10000);
+            PregnantStatus = (age < 1) ? "<br>Impregnated" : "<br>" + age + " months pregnant";
         }
     }
-    var DormName = "";
-    if (rm.hasOwnProperty("FirstName")) {
-        DormName += rm.FirstName;
-    };
-    if (rm.hasOwnProperty("LastName")) {
-        DormName += " " + rm.LastName;
-    };
+
+    const DormName = rm.FirstName + " " + rm.LastName;;
+
     DocId(e).innerHTML = "<div>" + DormName + "<br>" + rm.Name + " " + rm.Race + "<br>" + Pronoun(CheckGender(rm)) +
         "<br><br>Height: " + CmToInch(Math.round(rm.Height)) + "<br>Weight: " + KgToPound(rm.Weight) + "<br>Muscle: " + KgToPound(rm.Muscle) + "<br>Fat: " + KgToPound(rm.Fat) +
         "<br>" + PregnantStatus + "<br><br>" + BoobLook(rm) + DickLook(rm) + BallLook(rm) + PussyLook(rm) + "<div> Strength: " + rm.Str +
@@ -4961,16 +4741,10 @@ function DormSex() {
             }
         }
     }
-    var DelatMed = 2;
-    if (player.Masc >= e.Masc && player.Masc >= e.Femi && player.Masc >= player.Femi) {
-        DelatMed = 100 / player.Masc;
-    } else if (player.Femi >= e.Masc && player.Femi >= e.Femi && player.Femi >= player.Masc) {
-        DelatMed = 100 / player.Femi;
-    } else if (e.Masc >= player.Masc && e.Masc >= e.Femi && e.Masc >= player.Femi) {
-        DelatMed = 100 / e.Masc;
-    } else {
-        DelatMed = 100 / e.Femi;
-    }
+    const DelatMed =
+        (player.Masc >= e.Masc && player.Masc >= e.Femi && player.Masc >= player.Femi) ? 100 / player.Masc :
+        (player.Femi >= e.Masc && player.Femi >= e.Femi && player.Femi >= player.Masc) ? 100 / player.Femi :
+        (e.Masc >= player.Masc && e.Masc >= e.Femi && e.Masc >= player.Femi) ? 100 / e.Masc : 100 / e.Femi;
 
     DocId("DormMascu").style.width = player.Masc * DelatMed + "%";
     DocId("DormFemin").style.width = player.Femi * DelatMed + "%";
@@ -5197,7 +4971,6 @@ DocId("GetImpregOrgy").addEventListener("click", function () {
                 } else {
                     Impregnate(player, House.Dormmates[a], "B", "Dorm")
                     House.Dormmates[a].Balls[b].Cum -= 10;
-                    console.log(House.Dormmates[a].Balls[b].Cum)
                 }
             }
         }
@@ -5578,213 +5351,6 @@ function LeaveHome() {
 
         // Barn.innerHTML = "Allows you to milk your lactating servants. The milk can be brought with you as a travel snack or you can sell it for gold."
     }
-function Impregnate(who, by, mode = "A", where = "") {
-    function Twins() {
-        // The +1 gives a 1% or less chance for non blessed to birth twins 
-        // Old saves might fail totaly
-        const Twins = typeof (player.Blessings.Broodmother) === Number ? 1 + player.Blessings.Broodmother * 1 : 1,
-            NoTwins = RandomInt(0, 100);
-        console.log(`${Twins} >< ${NoTwins}`)
-        switch (who.Race) {
-            case "":
-                Twins += 5;
-                break;
-            default:
-                break;
-        }
-        switch (who.SecondRace) {
-            case "":
-                Twins += 5;
-                break;
-            default:
-                break;
-        }
-        switch (by.Race) {
-            case "":
-                Twins += 5;
-                break;
-            default:
-                break;
-        }
-        switch (by.SecondRace) {
-            case "":
-                Twins += 5;
-                break;
-            default:
-                break;
-        }
-        // Some races will have higher chance
-        if (NoTwins < Twins * 2) {
-            return 3;
-        } else if (NoTwins < Twins) {
-            return 2;
-        } else {
-            return 1;
-        }
-    }
-
-    function BabyMaker() {
-        who.Pregnant.Status = true;
-        Flags.Impregnations++;
-        if (!Array.isArray(who.Pregnant.Babies)) {
-            who.Pregnant.Babies = [];
-        }
-        if (player.Quests.some(e => e.Name === "Impregnate maidens") && who.Name == "Maiden") {
-            var i = player.Quests.findIndex(e => e.Name == "Impregnate maidens");
-            player.Quests[i].Count++;
-            player.Quests[i].Completed = true;
-            who.Name = "Priestess";
-            var x = Twins();
-            for (var e = 0; e < x; e++) {
-                var Baby = {
-                    BabyAge: 0,
-                    BabyRace: player.Race,
-                    Father: by.Name + " " + by.LastName,
-                    Mother: who.FirstName + " " + who.LastName,
-                    Blessed: "Fertility" // Not in use for the moment, but I want it so children made during quest is different. 
-                    //Maybe they leave house to join the shrine
-                }
-                who.Pregnant.Babies.push(Baby);
-            }
-        } else {
-            var x = Twins();
-            for (var e = 0; e < x; e++) {
-                var Father = RandomInt(1, 4);
-                if (Father > 2) {
-                    Father = by;
-                } else {
-                    Father = who;
-                }
-                var Baby = {
-                    BabyAge: 0,
-                    BabyRace: Father.Race,
-                    Father: by.Name + " " + by.LastName,
-                    Mother: who.FirstName + " " + who.LastName
-                }
-                who.Pregnant.Babies.push(Baby);
-            }
-        }
-    }
-
-    function playerBabyMaker() {
-        Flags.Pregnations++;
-        player.Pregnant.Status = true;
-        if (player.Quests.some(e => e.Name === "Get Impregnated")) {
-            var i = player.Quests.findIndex(e => e.Name == "Get Impregnated");
-            player.Quests[i].Completed = true;
-            var x = Twins();
-            for (var e = 0; e < x; e++) {
-                var Baby = {
-                    BabyAge: 0,
-                    BabyRace: who.Race,
-                    Father: by.FirstName + " " + by.LastName,
-                    Mother: player.Name + " " + player.LastName,
-                    Blessed: "Fertility"
-                }
-                player.Pregnant.Babies.push(Baby);
-                player.Quests[i].Count++;
-            }
-        } else {
-            var x = Twins();
-            for (var e = 0; e < x; e++) {
-                var Father = RandomInt(1, 4);
-                if (Father > 2) {
-                    Father = by;
-                } else {
-                    Father = player;
-                }
-                var Baby = {
-                    BabyAge: 0,
-                    BabyRace: Father.Race,
-                    Father: by.FirstName + " " + by.LastName,
-                    Mother: player.Name + " " + player.LastName
-                }
-                player.Pregnant.Babies.push(Baby);
-            }
-        }
-    }
-    if (who.hasOwnProperty("Pregnant")) {
-        if (who.Pregnant.Status) {
-            return;
-        }
-    }
-    if (mode == "A") {
-        var Impregnation = RandomInt(0, 100);
-        switch (CheckGender(who)) {
-            case "cuntboy":
-                if (by.Virility >= Impregnation) {
-                    BabyMaker();
-                    DocId(where + "SexText").innerHTML = "You have impregnated him!"
-                }
-                break;
-            case "female":
-                if (by.Virility >= Impregnation) {
-                    BabyMaker();
-                    DocId(where + "SexStats").innerHTML = "You have impregnated her!"
-                }
-                break;
-            case "hermaphrodite":
-                if (by.Virility >= Impregnation) {
-                    BabyMaker();
-                    DocId(where + "SexText").innerHTML = "You have impregnated hir!"
-                }
-                break;
-            case "male":
-                if (by.Virility - 100 >= Impregnation) {
-                    BabyMaker();
-                    DocId(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate him!"
-                }
-                break;
-            case "dickgirl":
-                if (by.Virility - 100 >= Impregnation) {
-                    BabyMaker();
-                    DocId(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate her!"
-                }
-                break;
-            default:
-                if (by.Virility - 100 >= Impregnation) {
-                    BabyMaker();
-                    DocId(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnated the doll!"
-                }
-                break;
-        }
-    } else if (mode == "B") {
-        var Impregnation = RandomInt(0, (500 - by.Masc));
-        switch (CheckGender(who)) {
-            case "cuntboy":
-            case "female":
-                if (who.Fertility >= Impregnation) {
-                    playerBabyMaker();
-                    DocId(where + "SexText").innerHTML = "You have been impregnated!"
-                }
-                break;
-            case "hermaphrodite":
-                if (who.Fertility >= Impregnation) {
-                    playerBabyMaker();
-                    DocId(where + "SexText").innerHTML = "You have been impregnated!"
-                }
-                break;
-            case "dickgirl":
-            case "male":
-                if (false) { //Need to make a way to enable make impreg (item/blessing/curse)
-                    if (who.Fertility - 50 >= Impregnation) {
-                        playerBabyMaker();
-                        DocId(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
-                    }
-                }
-                break;
-            default:
-                if (false) {
-                    if (who.Fertility - 50 >= Impregnation) {
-                        playerBabyMaker();
-                        DocId(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
-                    }
-                }
-                break;
-        }
-    }
-    return;
-}
 function CmToInch(cm) {
     if (Settings.Inch) {
         var Inch = Math.round(cm / 2.54);
@@ -5866,6 +5432,116 @@ function LToGal(L) {
             return Math.round(L * 10) + "dl";
         } else {
             return Math.round(L) + "L";
+        }
+    }
+}
+function SnowInventoryAdd(item, quantity = 1) {
+    var i = 0;
+    for (i = 0; i < player.Inventory.length; i++) {
+        var q = false;
+        if (player.Inventory[i].Name === item.Name) {
+            player.Inventory[i].Quantity += quantity;
+            q = true;
+            break;
+        }
+    }
+    if (!q) {
+        item.Quantity = quantity;
+        player.Inventory.push(item);
+    }
+}
+
+function DropSystem(who) {
+    var dropRate = {
+        "Human": 1.00,
+        "Halfling": 1.00,
+        "Orc": 1.00,
+        "Troll": 1.00,
+        "Farmer": 1.00,
+        "Elf": 1.00,
+        "Amazon": 1.00,
+        "Fairy": 1.00,
+        "Commoner": 1.00,
+        "Thug": 1.00,
+        "Dark elf": 1.00,
+        "Imp": 1.00,
+        "Goblin": 1.00,
+        "Dhampir": 1.00,
+        "Demon": 1.00,
+        "Succubus": 1.00,
+        "Incubus": 1.00,
+        "Witch": 1.00
+    }
+    var e = who;
+    var r = Math.random();
+    if (r <= dropRate[e.Name]) {
+        switch (e.Name) {
+            case "Banditlord":
+                SnowInventoryAdd(ItemDict.orcCum.Lite);
+                break;
+            case "Commoner":
+                SnowInventoryAdd(ItemDict.halfPouch.Lite);
+                break;
+            case "Farmer":
+                SnowInventoryAdd(ItemDict.milkJug.Lite);
+                break;
+            case "Thug":
+                SnowInventoryAdd(ItemDict.halfPouch.Lite);
+                break;
+            case "Witch":
+                SnowInventoryAdd(ItemDict.book.Lite);
+                break;
+            default:
+                break;
+        }
+    }
+    var r = Math.random();
+    if (r <= dropRate[e.Race]) {
+        switch (e.Race) {
+            case "Fairy":
+                SnowInventoryAdd(ItemDict.fairyDust.Lite);
+                break;
+            case "Human":
+                SnowInventoryAdd(ItemDict.humanity.Lite);
+                break;
+            case "Halfling":
+                SnowInventoryAdd(ItemDict.pouch.Lite);
+                break;
+            case "Orc":
+                SnowInventoryAdd(ItemDict.orcBrew.Lite);
+                break;
+            case "Troll":
+                SnowInventoryAdd(ItemDict.trollMilk.Lite);
+                break;
+            case "Elf":
+                SnowInventoryAdd(ItemDict.elvenHair.Lite);
+                break;
+            case "Amazon":
+                SnowInventoryAdd(ItemDict.amazonGirdle.Lite);
+                break;
+            case "Dark Elf":
+                SnowInventoryAdd(ItemDict.elvenHair.Lite);
+                break;
+            case "Goblin":
+                SnowInventoryAdd(ItemDict.fertilityIdol.Lite);
+                break;
+            case "Imp":
+                SnowInventoryAdd(ItemDict.cockyRock.Lite);
+                break;
+            case "Demon":
+                SnowInventoryAdd(ItemDict.infernalSemen.Lite);
+                break;
+            case "Dhampir":
+                SnowInventoryAdd(ItemDict.infernalMilk.Lite);
+                break;
+            case "Succubus":
+                SnowInventoryAdd(ItemDict.SuccMilk.Lite);
+                break;
+            case "Incubus":
+                SnowInventoryAdd(ItemDict.IncSemen.Lite);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -6529,9 +6205,8 @@ ItemDict.SpellBook = {
             var DictSpell = InputButton(DictIt.Name);
             DictSpell.addEventListener("click", function () {
                 h1.innerHTML = DictIt.Name
-                p.innerHTML = SpellDictLite[it.Name].Title + "<br><br>Manacost: " + DictIt.ManaCost(it.Exp) + "<br>Type: " + DictIt.Type +
-                    "<br>Exp: " + it.Exp;
-                console.log(e);
+                p.innerHTML = `${SpellDictLite[it.Name].Title}<br><br>Manacost: ${DictIt.ManaCost(it.Exp)}<br>
+                Type: ${DictIt.Type}<br>Exp: ${it.Exp}`
             });
             Div.appendChild(DictSpell);
             return DictSpell
@@ -7079,42 +6754,41 @@ function Fitness(who) {
     return a + b + c;
 }
 document.getElementById("Perks").addEventListener("click", function () {
-    // Moved everything to the button to clean up the player var.
+    // Moved everything to the button to clean up the player const.
     DisplayNone();
-    var div = document.getElementById("Levels");
+    const div = document.getElementById("Levels");
     while (div.hasChildNodes()) {
         div.removeChild(div.lastChild);
     }
 
-    var StatsLevel = document.createElement("div");
-
-    var h3 = document.createElement("h3");
-    var h3Text = document.createTextNode("Stats:");
+    const StatsLevel = document.createElement("div"),
+        h3 = document.createElement("h3"),
+        h3Text = document.createTextNode("Stats:");
     h3.appendChild(h3Text);
     StatsLevel.appendChild(h3);
 
-    var RawStats = document.createElement("div");
+    const RawStats = document.createElement("div");
     RawStats.style.display = 'inline-block';
     RawStats.style.marginRight = "5px";
-    var Stats = document.createElement("div");
+    const Stats = document.createElement("div");
     Stats.style.display = 'inline-block';
 
-    var RawH4 = document.createElement("h4");
-    var RawH4Text = document.createTextNode("Raw:");
+    const RawH4 = document.createElement("h4"),
+        RawH4Text = document.createTextNode("Raw:");
     RawH4.appendChild(RawH4Text);
     RawStats.appendChild(RawH4);
 
-    var RawP = document.createElement("ol");
+    const RawP = document.createElement("ol");
     RawP.innerHTML = "<li>Str: " + player.Str + "</li><li>End: " + player.End + "</li><li>Will: " + player.Will +
         "</li><li>Charm: " + player.Charm + "</li><li>Int: " + player.Int + "</li><li>Sex skill: " + player.SexSkill + "</li>";
     RawStats.appendChild(RawP);
 
-    var H4 = document.createElement("h4");
-    var H4Text = document.createTextNode("Total:");
+    const H4 = document.createElement("h4"),
+        H4Text = document.createTextNode("Total:");
     H4.appendChild(H4Text);
     Stats.appendChild(H4);
 
-    var P = document.createElement("ol");
+    const P = document.createElement("ol");
     P.innerHTML = "<li>Str: " + TotalStr() + "</li><li>End: " + TotalEnd() + "</li><li>Will: " + TotalWill() +
         "</li><li>Charm: " + TotalCharm() + "</li><li>Int: " + TotalInt() + "</li><li>Sex skill: " + TotalSexSkill() + "</li>";
     Stats.appendChild(P);
@@ -7124,65 +6798,65 @@ document.getElementById("Perks").addEventListener("click", function () {
     div.appendChild(StatsLevel);
     document.getElementById("Levels").style.display = 'block';
 
-    var Perks = document.createElement("div");
+    const Perks = document.createElement("div");
     Perks.style.display = "inline-block"
-    var PerksH4 = document.createElement("h4");
-    var PerksH4text = document.createTextNode("Perks:");
+    const PerksH4 = document.createElement("h4"),
+        PerksH4text = document.createTextNode("Perks:");
     PerksH4.appendChild(PerksH4text);
     Perks.appendChild(PerksH4);
 
-    var PerksP = document.createElement("ol");
-
-    for (var i = 0; i < Object.keys(player.Perks).length; i++) {
-        if (player.Perks[Object.keys(player.Perks)[i]].Count > 0) {
-            var perkLi = document.createElement("li");
-            perkLi.innerHTML = Object.keys(player.Perks)[i] + ": " + player.Perks[Object.keys(player.Perks)[i]].Count;
+    const PerksP = document.createElement("ol");
+    for (let i of Object.keys(player.Perks)) {
+        if (player.Perks[i].Count > 0) {
+            const perkLi = document.createElement("li");
+            perkLi.innerHTML = i + ": " + player.Perks[i].Count;
             PerksP.appendChild(perkLi);
         }
-    }
+    };
     Perks.appendChild(PerksP);
     div.appendChild(Perks);
 
-    var Races = document.createElement("div");
+    const Races = document.createElement("div");
     Races.style.display = "inline-block";
 
-    var RacesH4 = document.createElement("h4");
-    var RacesH4Text = document.createTextNode("Race essence:");
+    const RacesH4 = document.createElement("h4"),
+        RacesH4Text = document.createTextNode("Race essence:");
     RacesH4.appendChild(RacesH4Text);
     Races.appendChild(RacesH4);
 
-    var RacesP = document.createElement("ol");
-    var RaceTotal = 0;
-    for (var e = 0; e < player.RaceEssence.length; e++) {
+    const RacesP = document.createElement("ol");
+    let RaceTotal = 0;
+    for (let e = 0; e < player.RaceEssence.length; e++) {
         RaceTotal += player.RaceEssence[e].amount;
     }
     if (RaceTotal < 100) {
         RaceTotal = 100;
     }
-    for (var e = 0; e < player.RaceEssence.length; e++) {
-        var RacesLi = document.createElement("li");
-        RacesLi.innerHTML = player.RaceEssence[e].Race + ": " + Math.round(player.RaceEssence[e].amount / RaceTotal * 100) + "%  (" + player.RaceEssence[e].amount + ")";
+    for (let e of player.RaceEssence) {
+        const RacesLi = document.createElement("li");
+        RacesLi.innerHTML = Math.round(e.amount / RaceTotal * 100) > 1 ?
+            `${e.Race}: ${Math.round(e.amount / RaceTotal * 100)}%  (${e.amount})` :
+            `${e.Race}: <1%  (${e.amount})`;
         RacesP.appendChild(RacesLi);
     }
     Races.appendChild(RacesP);
     div.appendChild(Races);
 
-
     if (Settings.Vore) {
-        var Vore = document.createElement("div");
+        const Vore = document.createElement("div");
         Vore.style.display = "inline-block";
 
-        var VoreH4 = document.createElement("h4");
-        var VoreH4Text = document.createTextNode("Vore perks:");
+        const VoreH4 = document.createElement("h4"),
+            VoreH4Text = document.createTextNode("Vore perks:");
         VoreH4.appendChild(VoreH4Text);
         Vore.appendChild(VoreH4);
 
-        var VoreP = document.createElement("ol");
-        var v = player.Vore.VorePerks;
+        const VoreP = document.createElement("ol"),
+            v = player.Vore.VorePerks;
         if (Object.keys(v).length > 0) {
-            for (var i = 0; i < Object.keys(v).length; i++) {
-                var VoreLi = document.createElement("li");
-                VoreLi.innerHTML = Object.keys(v)[i] + ": " + v[Object.keys(v)[i]].Count;
+            for (let i of Object.keys(v)) {
+                const VoreLi = document.createElement("li");
+                VoreLi.innerHTML = i + ": " + v[i].Count;
                 VoreP.appendChild(VoreLi);
             }
         }
@@ -7190,10 +6864,10 @@ document.getElementById("Perks").addEventListener("click", function () {
         div.appendChild(Vore);
     }
 
-    var br = document.createElement("br");
+    const br = document.createElement("br");
     div.appendChild(br);
 
-    var CloseLevel = InputButton("Close");
+    const CloseLevel = InputButton("Close");
     CloseLevel.addEventListener("click", function () {
         document.getElementById("Levels").style.display = 'none';
         DisplayGame();
@@ -7236,975 +6910,6 @@ document.getElementById("Looks").addEventListener("click", function () {
 
 document.getElementById("CloseLooks").addEventListener("click", function () {
     document.getElementById("ShowLooks").style.display = 'none';
-    DisplayGame();
-});
-DocId("EnemyLoseSex").addEventListener("click", function () {
-	if (DocId("LoseEnemyKinda").style.display === 'none') {
-		DocId("LoseSexStats").innerHTML = " ";
-		DocId("LoseEnemyKinda").style.display = 'block';
-		DocId("LoseEnemyExact").style.display = 'none';
-		DocId("LoseEnemyExact").innerHTML = "";
-	} else {
-		const ee = enemies[EnemyIndex];
-		DocId("LoseSexStats").innerHTML = `Looking at them you estimate that they are about ${CmToInch(ee.Height)} tall and look to weigh around ${KgToPound(ee.Weight)}`;
-		DocId("LoseEnemyKinda").style.display = 'none';
-		DocId("LoseEnemyExact").style.display = 'block';
-		DocId("LoseEnemyExact").innerHTML = `<p>${ExactBoobLook(ee) + ExactPussyLook(ee) + ExactDickLook(ee) + ExactBallLook(ee)}</p>`;
-	}
-});
-DocId("PlayerLoseSex").addEventListener("click", function () {
-	if (DocId("LoseplayerKinda").style.display === 'none') {
-		DocId("LoseplayerKinda").style.display = 'block';
-		DocId("LoseplayerExact").style.display = 'none';
-		DocId("LoseplayerExact").innerHTML = "";
-	} else {
-		DocId("LoseplayerKinda").style.display = 'none';
-		DocId("LoseplayerExact").style.display = 'block';
-		DocId("LoseplayerExact").innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + ExactDickLook(player) + ExactBallLook(player)}</p>`;
-	}
-});
-
-function Lose(sex = true) {
-	const ee = enemies[EnemyIndex],
-		LPL = DocId("LosePlayerLooks"),
-		LoseText = DocId("LoseSexStats");
-
-	LPL.innerHTML = ""; // BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
-	if (player.Pregnant.Babies.length > 0) {
-		const age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
-		LPL.innerHTML += "<br>" + (age < 1) ? "Impregnated" : age + " months pregnant";
-	}
-	DocId("LoseEnemyLooks").innerHTML = ""; //BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
-	if (ee.hasOwnProperty("Pregnant")) {
-		if (ee.Pregnant.Status) {
-			DocId("LoseEnemyLooks").innerHTML += "<br>Pregnant";
-		}
-	}
-	Winner = false;
-	DocId("LosePName").innerHTML = player.Name + " " + player.LastName;
-	DocId("LoseEName").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronoun(CheckGender(ee));
-	DocId("LoseMascu").innerHTML = Math.round(player.Masc);
-	DocId("LoseFemin").innerHTML = Math.round(player.Femi);
-	DocId("LoseEMascu").innerHTML = Math.round(ee.Masc);
-	DocId("LoseEFemin").innerHTML = Math.round(ee.Femi);
-	SexColor(player, "PlayerLose");
-	SexColor(ee, "EnemyLose");
-	const DelatMed = (player.Masc >= ee.Masc && player.Masc >= ee.Femi && player.Masc >= player.Femi) ? 100 / player.Masc :
-		(player.Femi >= ee.Masc && player.Femi >= ee.Femi && player.Femi >= player.Masc) ? 100 / player.Femi :
-		(ee.Masc >= player.Masc && ee.Masc >= ee.Femi && ee.Masc >= player.Femi) ? 100 / ee.Masc :
-		100 / ee.Femi;
-
-	DocId("LoseMascu").style.width = player.Masc * DelatMed + "%";
-	DocId("LoseFemin").style.width = player.Femi * DelatMed + "%";
-	DocId("LoseEMascu").style.width = ee.Masc * DelatMed + "%";
-	DocId("LoseEFemin").style.width = ee.Femi * DelatMed + "%";
-
-	DocId("Encounter").style.display = 'none';
-	DocId("Lose").style.display = 'grid';
-	DocId("LeaveLose").style.display = 'none';
-	DocId("DungeonLose").style.display = 'none';
-	if (sex) {
-		if (LoseText.style.display = 'none') {
-			LoseText.style.display = 'block';
-		}
-		LoseText.innerHTML = `You lost to a ${Pronoun(CheckGender(ee))} ${ee.Race} ${ee.Name}`;
-		NameConq(ee);
-	} else {
-		LoseText.style.display = 'none';
-		DocId("LoseStruggle").style.display = 'none';
-		DocId("LoseSubmit").style.display = 'none';
-		if (Dungeon) {
-			DocId("DungeonLose").style.display = 'inline-block';
-		} else {
-			DocId("LeaveLose").style.display = 'inline-block';
-		}
-	}
-	return;
-
-	function NameConq() { // Name/title/type e.g. witch, maiden
-		const Name = ee.Name.toLowerCase(),
-			LoseText = DocId("LoseSexStats");
-		switch (Name) {
-			case "wizard":
-				// Curse? Maybe add a organ mod on auto and shrink on manual; might make organmod effect manual
-				if (Settings.EssenceAuto) {
-					const Organs = ["Dick", "Balls", "Boobies", "Pussy"],
-						a = RandomString(Organs);
-					//player.OrganMod[a].Size--; // Need to make a way to get rid of the penalty.
-					LoseText.innerHTML = "Something doesn't feel right..."; // 
-				} else {
-					const Organs = ["Dicks", "Balls", "Boobies", "Pussies"],
-						a = RandomString(Organs);
-					if (player[a].length > 0) {
-						for (var e of player[a]) {
-							if (e.Size > 0) {
-								e.Size--;
-							}
-						}
-						LoseText.innerHTML = "Something doesn't feel right..."; // 
-					} else {
-						LoseText.innerHTML = ""; // He failed
-					}
-				}
-			case "witch":
-				PotionDrunk("Amphibian", RandomInt(1, 5));
-				RaceConq();
-				break;
-			case "maiden":
-				Lose(false); // "No sex"
-				LoseText.innerHTML = "Your defeat proves you unworthy to father her children, " +
-					"she walks away avoiding wasting more time on you."
-				break;
-			default:
-				RaceConq(); // Some enemies don't trigger race conq like e.g. maiden.
-				break;
-		}
-	};
-
-	function RaceConq() {
-		const race = ee.Race.toLowerCase(),
-			enemy = ee,
-			LoseText = DocId("LoseSexText");
-		switch (race) {
-			case "human":
-				const steal = Math.min(RandomInt(25, 200), player.Gold)
-				player.Gold -= steal; // Robbed, why not. #Nerfed
-				LoseText.innerHTML += "They steal " + steal + " gold from you.";
-				break;
-			case "orc":
-				const Steal = Math.min(30, player.Masc);
-				player.Femi += 30;
-				player.Masc -= Steal;
-				enemy.Masc += Steal;
-				// player.Mind.Sub++
-				if (enemy.Balls.length > 0) {
-					let i = 0;
-					while (i < 3 && !player.Pregnant.Status) { // try more than once
-						Impregnate(player, enemy, "B");
-					}
-				}
-				// LoseText.innerHTML = "Following their natrual instincts the orc try to breed you, " +
-				// "while also transforminng you to better suit their preference."
-				break;
-			case "fairy":
-				if (player.Height > 30) {
-					player.Height -= Math.min(RandomInt(7, player.Height / 10), 50);
-				}
-				PotionDrunk("Fairy", RandomInt(10, 20));
-				LoseText.innerHTML += "Attempting to transform you into a fairy they shrunk you"
-				break;
-			case "elf":
-				break;
-			case "dark elf":
-				break;
-			case "amazon":
-				break;
-			case "goblin":
-				if (player.Balls.length > 0) {
-					Impregnate(player, enemy, "B"); // Breeding stereotype
-					// = "Stradling you they ride you, drain your balls trying to impregnate themself."
-					if (enemy.Balls.length > 0) {
-						Impregnate(enemy, player);
-						// = " Once satisfied they move on to fucking with "
-					}
-				} else if (enemy.Balls.length > 0) {
-					Impregnate(enemy, player);
-					// = "They "
-				}
-				break;
-			case "incubus":
-				if (player.Masc > 0) {
-					const take = Math.min(400, player.Masc * Math.min(0.15, Math.random)); // Up to 15% or 400ess
-					player.Masc -= take;
-					enemy.Masc += take;
-				}
-				Impregnate(player, enemy, "B");
-				// "drainging your masculinity "
-				break;
-			case "succubus":
-				if (player.Femi > 0) {
-					const take = Math.min(400, player.Femi * Math.min(0.15, Math.random)); // Up to 15% or 400ess
-					player.Femi -= take;
-					enemy.Femi += take;
-				}
-				Impregnate(enemy, player);
-				// "draining your feminity"
-				break;
-			case "dragon":
-				if (player.RaceEssence.some(e => e.Race == "Dragon")) { // Dragon doesn't like weaklings being dragons. 
-					let b = player.RaceEssence.findIndex(e => e.Race == "Dragon");
-					player.RaceEssence[b].amount -= Math.min(RandomInt(1, 25), player.RaceEssence[b].amount)
-				}
-				break;
-			case "Demon":
-				// player.Mind.Corruption++;
-			default:
-				break;
-		}
-	};
-}
-DocId("LoseSubmit").addEventListener("click", function () {
-	const takeM = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5)), player.Masc),
-		takeF = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5)), player.Femi),
-		selectScene = SnowScenes(),
-		a = ["forcedBJ", "getBJ", "getRidden", "getRiddenAnal"],
-		b = ["forcedCunn", "getCunn", "getFucked", "getFuckedAnal"]
-	DocId("LosePlayerOrgasm").innerHTML = loseScene(false, selectScene);
-	if (a.indexOf(selectScene) > -1) {
-		player.Masc -= takeM;
-		enemies[EnemyIndex].Masc += takeM;
-	} else if (b.indexOf(selectScene) > -1) {
-		player.Femi -= takeF;
-		enemies[EnemyIndex].Femi += takeF;
-	} else {
-		player.Masc -= takeM / 2;
-		player.Femi -= takeF / 2;
-		enemies[EnemyIndex].Masc += takeM / 2;
-		enemies[EnemyIndex].Femi += takeF / 2;
-	}
-	Lose(false);
-});
-DocId("LoseStruggle").addEventListener("click", function () {
-	var take = Math.round(enemies[EnemyIndex].SexSkill * RandomInt(1, 7));
-	const selectScene = SnowScenes();
-	DocId("LosePlayerOrgasm").innerHTML = loseScene(true, selectScene);
-	if (selectScene === "forcedBJ" || selectScene === "getBJ" || selectScene === "getRidden" || selectScene === "getRiddenAnal") {
-		take = Math.min(take, player.Masc);
-		player.Masc -= take;
-		enemies[EnemyIndex].Masc += take;
-	} else if (selectScene === "forcedCunn" || selectScene === "getCunn" || selectScene === "getFucked" || selectScene === "getFuckedAnal") {
-		take = Math.min(take, player.Femi);
-		player.Femi -= take;
-		enemies[EnemyIndex].Femi += take;
-	} else if (selectScene === "forcedRim" || selectScene === "getRim") {
-		var takeM = Math.min(take, player.Masc) / 2;
-		take = Math.min(take, player.Femi) / 2;
-		player.Masc -= takeM;
-		player.Femi -= take;
-		enemies[EnemyIndex].Masc += takeM;
-		enemies[EnemyIndex].Femi += take;
-	} else {
-		var shift = player.height / 2;
-		player.height -= shift;
-		enemies[EnemyIndex].height += shift;
-		for (var i = 0; i < player.Boobies.length; i++) {
-			shift = player.Boobies[i].Milk;
-			player.Boobies[i].Milk = 0;
-			enemies[EnemyIndex].Boobies[0].Milk = Math.min(enemies[EnemyIndex].Boobies[0].MilkMax, enemies[EnemyIndex].Boobies[0].Milk + shift);
-		}
-		for (var i = 0; i < player.Balls.length; i++) {
-			shift = player.Balls[i].Cum;
-			player.Balls[i].Cum = 0;
-			enemies[EnemyIndex].Balls[0].Cum = Math.min(enemies[EnemyIndex].Balls[0].CumMax, enemies[EnemyIndex].Balls[0].Cum + shift);
-		}
-		shift = player.Gold / 2;
-		enemies[EnemyIndex].Gold += shift;
-		player.Gold /= 2;
-	}
-	Lose(false);
-});
-DocId("LeaveLose").addEventListener("click", function () {
-	DisplayGame();
-	DocId("Lose").style.display = 'none';
-	DocId("LoseStruggle").style.display = 'inline-block';
-	DocId("LoseSubmit").style.display = 'inline-block';
-	DocId("LosePlayerOrgasm").innerHTML = " ";
-	LastPressed = " ";
-});
-
-//Testing all scenes
-/*DocId("Cycle").addEventListener("click", function () {
-	var sub = [true, false];
-	var action = ["forcedBJ", "forcedCunn", "forcedRim", "getBJ", "getCunn", "getRim", "getFucked", "getFuckedAnal", "getRidden", "getRiddenAnal", "getVoreStomach", "getVoreBalls", "getVoreBoobs", "getVoreVagina", "getVoreAnal"];
-	var gender = ["hermaphrodite", "cuntboy", "male", "female", "dickgirl", "doll"]
-	console.log("Let's do this.");
-    for(var a = 0; a < sub.length; a++)
-	{
-		for(var b = 0; b < action.length; b++)
-		{
-			for(var c = 0; c < gender.length; c++)
-			{
-				for(var d = 0; d < gender.length; d++)
-				{
-				try{
-					console.log(loseScene(sub[a], action[b], gender[c], gender[d]));
-				}
-				catch {
-					console.log("Error at "+sub[a]+ action[b]+ gender[c]+ gender[d]);
-				}
-				}
-			}
-		}
-	}
-});*/
-
-function loseScene(struggle, selectScene) {
-	const Player = player,
-		Enemy = enemies[EnemyIndex]; // bad fix for now wanting to rename all Player to player
-	function DrainBalls() {
-		if (player.Balls.length > 0) {
-			player.Balls.forEach((b) => {
-				b.Cum = 0;
-			})
-		}
-	}
-	var enemyCum = 0;
-	var playerCum = 0;
-	if (Enemy.hasOwnProperty("Balls")) {
-		for (var i = 0; i < Enemy.Balls.length; i++) {
-			enemyCum += Enemy.Balls[i].Size / 4;
-		}
-		enemyCum = LToGal(enemyCum) + " down your throat.";
-	} else {
-		enemyCum = ".";
-	}
-
-	if (Player.hasOwnProperty("Balls")) {
-		for (var i = 0; i < Player.Balls.length; i++)
-			playerCum += Player.Balls[0].Cum;
-		playerCum = LToGal(playerCum);
-	}
-	var returnText;
-	if (struggle) {
-		switch (selectScene) {
-			case "forcedBJ":
-				returnText = `${Enemy.FirstName} forces your head to their crotch, and starts thrusting their ${CmToInch(Enemy.Dicks[0].Size)} dick into your mouth. Despite your intentions, your body betrays you and orgasms as they cum ${enemyCum}`;
-				break;
-			case "forcedCunn":
-				returnText = Enemy.FirstName + " forces your head to their crotch, forcing you to start eating them out. "
-				if (Enemy.Balls.length > 0) {
-					returnText += "Their " + CmToInch(Enemy.Balls[0].Size) + " balls cover your face, forcing their musky scent into your nose. "
-				}
-				returnText += "Despite your intentions, your body betrays you and orgasms as they cover your face in girlcum."
-				if (CheckGender(Enemy) === "hermaphrodite") {
-					returnText += "<br>You feel their balls twitch on your face, shooting cum over your back, eventually dripping into your hair."
-				}
-				break;
-			case "forcedRim":
-				if (CheckGender(Enemy) != "doll") {
-					returnText = `Despite having more sensitive erogenous zones, ${Enemy.FirstName} wants to maximize your humiliation by forcing you to eat their ass out. 
-					They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure.`
-				} else if (CheckGender(Enemy) === "doll" && player.Dicks.length <= 0) {
-					returnText = "With no other way to get pleasure, " + Enemy.FirstName + " forces you to the ground and sit on your face, giving you no other option than to eat their ass out for pleasure. "
-				} else {
-					returnText = `Rather that let you use your dick on their only hole, ${Enemy.FirstName} decides to force you to use your tongue. 
-					They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure.`
-				}
-				returnText += "<br>Despite your humiliating position, you find your body responding, reaching orgasm as you feel them shudder above you."
-				break;
-			case "getBJ":
-				returnText = "Forcing you onto your back, " + Enemy.FirstName + " expertly massages your cock and balls, quickly bringing you erect. "
-				if (player.Pussies.length > 0) {
-					returnText += "They even tease your pussy a bit, all to make you cum quicker. "
-				}
-				returnText += "<br>Unable to put up more than a feeble struggle, you find yourself cumming " + playerCum + " down their throat seconds after their lips meet your dick's head.";
-				DrainBalls()
-				break;
-			case "getCunn":
-				returnText = "Forcing you onto your back, " + Enemy.FirstName + " expertly fingers your pussy, quickly making you wet. "
-				if (player.Balls.length > 0) {
-					returnText += "They even tease your balls a bit, all to make you cum quicker. "
-				}
-				returnText += "<br>Unable to put up more than a feeble struggle, you find yourself cumming around their tongue seconds after it penetrates your lower lips."
-				break;
-			case "getRim":
-				if (CheckGender(Player) === "doll" && enemies[EnemyIndex].Dicks.length > 0) {
-					returnText = "Rather than use their penis on your ass, they'd rather find a pussy instead. "
-				} else if (CheckGender(Player) != "doll") {
-					returnText = "Rather than pleasuring your more sensitive organs, they've decided to humiliate you instead. "
-				}
-				returnText += "<br>Forcing you onto your stomach, your enemy repeatedly smacks your ass, bringing a blush to both sets of cheeks. Despite your humiliation (and your ass getting sore), you soon orgasm"
-				if (CheckGender(Player) === "hermaphrodite") {
-					returnText += ", spurting cum from your dick onto your belly and soaking your thighs."
-				} else if (player.Dicks.length > 0) {
-					returnText += ", spurting cum from your dick onto your belly."
-				} else if (player.Pussies.length > 0) {
-					returnText += ",  soaking your thighs."
-				} else {
-					returnText += ", shuddering in unwanted pleasure."
-				}
-				break;
-			case "getFucked":
-				returnText = "Forcing you on your back, your enemy fondles your clit just enough for your body to betray you and your pussy to get wet. "
-				if (CheckGender(Player) === "hermaphrodite") {
-					returnText += "Moving your balls to the side, they thrust in to you."
-				} else {
-					returnText += "Spreading your lips with one hand, they thrust into you."
-				}
-				returnText += "<br>Knowing how to handle someone with as little experience as you, they pin your arms above your head and quickly bring you to orgasm, your shuddering walls causing them to cum inside you. "
-				/*if(player.Pregnant.Babies.length > 0)
-					returnText += "Fortunately, you're alredy pregnant, and won't have to carry their child."
-				else {
-					Impregnate(player, enemies[EnemyIndex], "B", "");
-						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
-							returnText += "You feel an odd filling sensation in your belly... They couldn't have gotten you pregnant, could they?"
-						else if (player.Pregnant.Babies.length > 0)
-							returnText += "Well, looks like you've been knocked up again. You wish you could've chosen a better partner..."
-						else
-							returnText += "At least you weren't impregnated..."
-				}*/
-				break;
-			case "getFuckedDoggy":
-				returnText = "Your enemy forces your beaten body to its hands and knees; you can't even muster the energy to collapse. Your body, however, has other plans, and you feel your pussy start to drip. Your opponent wastes little time, and quickly gets into position, soon thrusting deeply into you. "
-				if (CheckGender(Player) === "hermaphrodite") {
-					returnText += "With every thrust, you feel their balls tapping into yours, sending little bursts of unintended pleasure through your dick. "
-				}
-				returnText += "<br>It doesn't take long for you to cum, your pussy's walls quivering around their dick. "
-				if (CheckGender(Player) === "hermaphrodite") {
-					returnText += "Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
-				}
-				returnText += "Your enemy cums soon after, quickly filling your pussy and collapses onto your back, spent. "
-				/*if(player.Pregnant.Babies.length > 0)
-					returnText += "Fortunately, you're alredy pregnant, and won't have to carry their child."
-				else {
-					Impregnate(player, enemies[EnemyIndex], "B", "");
-						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
-							returnText += "You feel an odd filling sensation in your belly... They couldn't have gotten you pregnant, could they?"
-						else if (player.Pregnant.Babies.length > 0)
-							returnText += "Well, looks like you've been knocked up again. You wish you could've chosen a better partner..."
-						else
-							returnText += "At least you weren't impregnated..."
-				}*/
-				break;
-			case "getFuckedAnal":
-				returnText = "Your enemy forces your beaten body to its hands and knees; you can't even muster the energy to collapse. "
-				if (player.Pussies.length > 0) {
-					returnText += "Your body, however, has other plans, and you feel your pussy start to drip. Even with such a clear signal, though, your enemy positions themselves a little higher. "
-				}
-				returnText += "Having gotten into position, your enemy spreads your ass cheeks, and slowly works their dick into your bowels. Unable to respond, you feel your ass getting stretched. "
-				if (CheckGender(Player) === "hermaphrodite") {
-					returnText += "With every thrust, you feel their balls tapping your balls and clit, sending little bursts of unintended pleasure through your organs.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
-				} else if (player.Pussies.length > 0) {
-					returnText += "With every thrust, you feel their balls tapping your clit, sending little bursts of unintended pleasure through your pussy.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. "
-				} else if (player.Balls.length > 0) {
-					returnText += "With every thrust, you feel their balls tapping yours, sending little bursts of unintended pleasure through your dick.<br>It doesn't take long for you to orgasm, your balls unloading themselves onto your stomach and the ground. "
-				} else {
-					returnText += "<br>It doesn't take long for you to orgasm, a pleasurable heat spreading from your ass. "
-				}
-				returnText += "Your enemy cums soon after, quickly filling your ass and collapses onto your back, spent. "
-				/*if(player.Pregnant.Babies.length <= 0) {
-					Impregnate(player, enemies[EnemyIndex], "B", "");
-					if(player.Pussies.length > 0) {
-						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
-							returnText += "You feel an odd filling sensation in your belly... They couldn't have gotten you pregnant, could they?"
-						else if (player.Pregnant.Babies.length > 0)
-							returnText += "Well, looks like you've been knocked up again. You wish you could've chosen a better partner..."
-					}
-					else {
-						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
-							returnText += "You feel an odd filling sensation in your belly... But you couldn't be pregnant - you don't have a pussy!"
-						else if (player.Pregnant.Babies.length > 0)
-							returnText += "Well, looks like you've been knocked up again. You wish you could've chosen a better partner..."
-
-					}
-				}*/
-				break;
-			case "getRidden":
-				returnText = "Pushing you over, your enemy fondles your balls, quickly giving you an erection. Straddling your groin, they quickly thrust down, riding your dick. "
-				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3) {
-					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
-				}
-				returnText = "<br>It doesn't take long before you cum, emptying your balls into their pussy. They're not satisfied yet, though, and continue to ride you for several orgasms. "
-				/*if(enemies[EnemyIndex].hasOwnProperty(Pregnant)) {
-				} else {
-					Impregnate(enemies[EnemyIndex], player, "A", "");
-					if(enemies[EnemyIndex].hasOwnProperty(Pregnant) && Flags.Impregnations == 1)
-						returnText += "You see them rubbing their belly, looking content... They couldn't have gotten pregnant, could they?"
-					else if (enemies[EnemyIndex].hasOwnProperty(Pregnant))
-						returnText += "Well, looks like you've knocked someone up again. You wish you could've chosen your partner..."
-				}*/
-				break;
-			case "getRiddenAnal":
-				returnText = "Pushing you over, your enemy fondles your balls, quickly giving you an erection. Straddling your groin, they quickly thrust down, riding your dick. "
-				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3) {
-					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
-				}
-				returnText = "<br>It doesn't take long before you cum, emptying your balls into their ass. They're not satisfied yet, though, and continue to ride you for several orgasms. "
-				/*if(!enemies[EnemyIndex].hasOwnProperty(Pregnant)) {
-					Impregnate(enemies[EnemyIndex], player, "A", "");
-					if(enemies[EnemyIndex].hasOwnProperty(Pregnant) && Flags.Impregnations == 1)
-							returnText += "You see them rubbing their belly, looking content... They couldn't have gotten pregnant, could they?"
-					else if (enemies[EnemyIndex].hasOwnProperty(Pregnant))
-						returnText += "Well, looks like you've knocked someone up again. You wish you could've chosen your partner..."
-				}*/
-				break;
-			case "getVoreStomach":
-				returnText = "Grabbing your arms, they try to shove you down their throat, then realize they aren't stretching enough. Maybe in a later update..."
-				break;
-			case "getVoreBalls":
-				returnText = "Grabbing your arms, they try to shove you down their dick, then realize they aren't stretching enough. Maybe in a later update..."
-				break;
-			case "getVoreBoobs":
-				returnText = "Grabbing your arms, they try to shove you into their tits, then realize they aren't stretching enough. Maybe in a later update..."
-				break;
-			case "getVoreVagina":
-				returnText = "Grabbing your arms, they try to shove you into their vagina, then realize they aren't stretching enough. Maybe in a later update..."
-				break;
-			case "getVoreAnal":
-				returnText = "Grabbing your arms, they try to shove you into their ass, then realize they aren't stretching enough. Maybe in a later update..."
-				break;
-			default:
-				returnText = "This shouldn't be here - send snowspider a message, saying \"Loss: " + struggle + ", " + selectScene + "\""
-				break;
-		}
-	} else {
-		switch (selectScene) {
-			case "forcedBJ":
-				returnText = "They force your head to their crotch, and start thrusting their dick into you. You eagerly give them head, orgasming as they cum down your throat."
-				break;
-			case "forcedCunn":
-				returnText = "They force your head to their crotch and you dive in, eagerly eating them out. "
-				if (CheckGender(Enemy) === "hermaphrodite") {
-					returnText += "Their balls cover your nose, forcing their musky scent into your nose. "
-				}
-				returnText += "As they cover your face in girlcum, your body orgasms, proud of its job. "
-				if (CheckGender(Enemy) === "hermaphrodite") {
-					returnText += "<br>As they cover your face, you feel their balls twitch, shooting cum over your back. As they wind down, their cum drips into your hair, arousing you further."
-				}
-				break;
-			case "forcedRim":
-				if (CheckGender(Enemy) != "doll") {
-					returnText = "Despite having more sensitive erogenous zones, they want to maximize your humiliation by forcing you to eat their ass out. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
-				} else if (CheckGender(Enemy) === "doll" && player.Dicks.length <= 0) {
-					returnText = "With no other way to get pleasure, they force you to the ground and sit on your face, giving you no other option than to eat their ass out. "
-				} else {
-					returnText = "Rather that let you use your dick on their only hole, they decide to force you to use your tongue. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
-				}
-				returnText += "<br>You find your body responding well to the harsh treatment, reaching orgasm as you feel them shudder above you."
-				break;
-			case "getBJ":
-				returnText = "Motioning you to lie down on your back, they expertly massage your cock and balls, quickly bringing you erect. "
-				if (CheckGender(Player) === "hermaphrodite") {
-					returnText += "They even tease your pussy a bit, adding to your growing pleasure. "
-				}
-				returnText += "<br>Eagerly responding to their actions, you find yourself cumming before they start blowing you, coating your stomach with your seed. Before you can go soft, though, they wrap their lips around your dick, giving you immense pleasure. Seconds later, you cum again, this time down their throat."
-				break;
-			case "getCunn":
-				returnText = "Motioning you to lie down on your back, they expertly finger your pussy, quickly making you wet. "
-				if (CheckGender(Player) === "hermaphrodite") {
-					returnText += "They even tease your balls a bit, adding to your growing pleasure. "
-				}
-				returnText += "<br>Eagerly responding to their actions, you find yourself cumming as their tongue approachess your cunt. "
-				if (CheckGender(Player) === "hermaphrodite") {
-					returnText += "<br>Your dick, refusing to be left out, coats your stomach with your seed. "
-				}
-				returnText += "Before you can recover, though, they start eating you out, quickly driving you to several more orgasms."
-				break;
-			case "getRim":
-				returnText = "<br>Motioning you onto your stomach, your enemy massages your butt cheeks, bringing you a surprising amount of pleasure. As they stick a finger up your ass, you orgasm"
-				if (CheckGender(Player) === "hermaphrodite") {
-					returnText += ", spurting cum from your dick onto your belly and soaking your thighs."
-				} else if (player.Dicks.length > 0) {
-					returnText += ", spurting cum from your dick onto your belly."
-				} else if (player.Pussies.length > 0) {
-					returnText += ", soaking your thighs."
-				} else {
-					returnText += ", shuddering in pleasure."
-				}
-				break;
-			case "getFucked":
-				returnText = "Motioning you onto your back, your enemy fondles your clit and lower lips, giving you a mini-orgasm. Appreciating your lack of resistance, they tenderly move above you. "
-				if (CheckGender(Player) === "hermaphrodite") {
-					returnText += "Shifting your balls to the side, they gently ease in to you."
-				} else {
-					returnText += "Spreading your lips with one hand, they gently ease in to you."
-				}
-				returnText += "<br>Tenderly fucking your pussy, you're brought into a world of pleasure. Pinching your clit, you cum hard, soaking their crotch with your juices. Your quivering lips stimulate their dick, making them cum into you."
-				/*if(player.Pregnant.Babies.length > 0)
-					returnText += "You're alredy pregnant, and feel a twinge of regret that you won't carry their child."
-				if(player.Pregnant.Babies.length <= 0) {
-					Impregnate(player, enemies[EnemyIndex], "B", "");
-						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
-							returnText += "You feel an odd filling sensation in your belly... They couldn't have gotten you pregnant, could they?"
-						else if (player.Pregnant.Babies.length > 0)
-							returnText += "Well, looks like you've been knocked up again. You're surprisingly fine with this..."
-						else
-							returnText += "You weren't impregnated, and you find yourself disappointed..."
-				}*/
-				break;
-			case "getFuckedDoggy":
-				returnText = "Your enemy eases your beaten body to its hands and knees, making sure you can keep your balance. Your body instincively responds to the position, and you feel your pussy start to drip. Your opponent teases your cunt, causing your body to shudder, before getting into position and thrusting deeply into you. "
-				if (CheckGender(Player) === "hermaphrodite") {
-					returnText += "With every thrust, you feel their balls tapping into yours, sending little bursts of unintended pleasure through your dick. "
-				}
-				if (player.Boobies[0].size > 3) {
-					returnText += "Bending over your back, they reach down and fondle your nipples, not stopping their thrusts. You let out a low moan, your pleasure mounting ever higher. "
-				}
-				returnText += "<br>It doesn't take long for you to cum, your pussy's walls quivering around their dick. "
-				if (CheckGender(Player) === "hermaphrodite")
-					returnText += "Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
-				returnText += "Your enemy cums soon after, quickly filling your pussy and collapses onto your back, spent. "
-				/*if(player.Pregnant.Babies.length > 0)
-					returnText += "You're alredy pregnant, and feel a twinge of regret that you won't carry their child."
-				else if(player.Pregnant.Babies.length <= 0) {
-					Impregnate(player, enemies[EnemyIndex], "B", "");
-						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
-							returnText += "You feel an odd filling sensation in your belly... They couldn't have gotten you pregnant, could they?"
-						else if (player.Pregnant.Babies.length > 0)
-							returnText += "Well, looks like you've been knocked up again. You're surprisingly fine with this..."
-						else
-							returnText += "You weren't impregnated, and you find yourself disappointed..."
-				}*/
-				break;
-			case "getFuckedAnal":
-				returnText = "Your enemy eases your beaten body to its hands and knees, making sure you can keep your balance. "
-				if (player.Pussies.length > 0)
-					returnText += "Your body instincively responds to the position, and you feel your pussy start to drip. Your opponent teases your cunt, causing your body to shudder. Even with such a clear signal, though, your enemy positions themselves a little higher. "
-				else
-					"They massage your cheeks, causing your body to shudder, as your enemy positions their dick at your ass. "
-				returnText += "Easing forwards, your enemy spreads your ass cheeks, and slowly works their dick into your bowels. Letting out a moan, you feel your ass getting stretched. "
-				if (player.Boobies[0].size > 3)
-					returnText += "Bending over your back, they reach down and fondle your nipples, not stopping their thrusts. You let out a low moan, your pleasure mounting ever higher. "
-				if (CheckGender(Player) === "hermaphrodite")
-					returnText += "With every thrust, you feel their balls tapping your balls and clit, sending little bursts of delicious pleasure through your organs.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
-				else if (player.Pussies.length > 0)
-					returnText += "With every thrust, you feel their balls tapping your clit, sending little bursts of delicious pleasure through your pussy.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. "
-				else if (player.Balls.length > 0)
-					returnText += "With every thrust, you feel their balls tapping yours, sending little bursts of delicious pleasure through your dick.<br>It doesn't take long for you to orgasm, your balls unloading themselves onto your stomach and the ground. "
-				else
-					returnText += "<br>It doesn't take long for you to orgasm, a pleasurable heat spreading from your ass. "
-				returnText += "Your enemy cums soon after, quickly filling your ass and collapses onto your back, spent. "
-				/*if(player.Pregnant.Babies.length <= 0) {
-					Impregnate(player, enemies[EnemyIndex], "B", "");
-					if(player.Pussies.length > 0) {
-						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
-							returnText += "You feel an odd filling sensation in your belly... They couldn't have gotten you pregnant, could they?"
-						else if (player.Pregnant.Babies.length > 0)
-							returnText += "Well, looks like you've been knocked up again. You're surprisingly fine with this..."
-					} else {
-						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
-							returnText += "You feel an odd filling sensation in your belly... But you couldn't be pregnant - you don't have a pussy!"
-						else if (player.Pregnant.Babies.length > 0)
-							returnText += "Well, looks like you've been knocked up again. You're surprisingly fine with this..."
-					}
-				}*/
-				break;
-			case "getRidden":
-				returnText = "Telling you to sit down, your enemy kisses you deeply as they fondle your balls, quickly giving you an erection. Hugging your shoulders, they ease their pussy onto your dick, causing both of you to moan out loud. "
-				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3)
-					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
-				returnText = "<br>It doesn't take long before you cum, emptying your balls into their pussy. They're not satisfied yet, though, and give you a few seconds to recover, before continuing to ride you for several orgasms. "
-				/*if(!enemies[EnemyIndex].hasOwnProperty(Pregnant)) {
-					Impregnate(enemies[EnemyIndex], player, "A", "");
-					if(enemies[EnemyIndex].hasOwnProperty(Pregnant) && Flags.Impregnations == 1)
-							returnText += "You see them rubbing their belly, looking content... They couldn't have gotten pregnant, could they?"
-					else if (enemies[EnemyIndex].hasOwnProperty(Pregnant))
-						returnText += "Well, looks like you've knocked someone up again. You hope they're alright with you being the father..."
-				}*/
-				break;
-			case "getRiddenAnal":
-				returnText = "Telling you to sit down, your enemy kisses you deeply as they fondle your balls, quickly giving you an erection. Hugging your shoulders, they ease their asshole onto your dick, causing both of you to moan out loud. "
-				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3)
-					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
-				returnText = "<br>It doesn't take long before you cum, emptying your balls into their ass. They're not satisfied yet, though, and give you a few seconds to recover, before continuing to ride you for several orgasms. "
-				/*if(!enemies[EnemyIndex].hasOwnProperty(Pregnant)) {
-					Impregnate(enemies[EnemyIndex], player, "A", "");
-					if(enemies[EnemyIndex].hasOwnProperty(Pregnant) && Flags.Impregnations == 1)
-							returnText += "You see them rubbing their belly, looking content... They couldn't have gotten pregnant, could they?"
-					else if (enemies[EnemyIndex].hasOwnProperty(Pregnant))
-						returnText += "Well, looks like you've knocked someone up again. You hope they're alright with you being the father..."
-				}*/
-				break;
-			case "getVoreStomach":
-				returnText = "Grabbing your arms, they try to shove you down their throat, then realize they aren't stretching enough. Maybe in a later update..."
-				break;
-			case "getVoreBalls":
-				returnText = "Grabbing your arms, they try to shove you down their dick, then realize they aren't stretching enough. Maybe in a later update..."
-				break;
-			case "getVoreBoobs":
-				returnText = "Grabbing your arms, they try to shove you into their tits, then realize they aren't stretching enough. Maybe in a later update..."
-				break;
-			case "getVoreVagina":
-				returnText = "Grabbing your arms, they try to shove you into their vagina, then realize they aren't stretching enough. Maybe in a later update..."
-				break;
-			case "getVoreAnal":
-				returnText = "Grabbing your arms, they try to shove you into their ass, then realize they aren't stretching enough. Maybe in a later update..."
-				break;
-			default:
-				returnText = "This shouldn't be here - send snowspider a message, saying \"Loss: " + struggle + ", " + selectScene + "\""
-				break;
-		}
-	}
-	return returnText;
-}
-
-function SnowScenes() {
-	let sceneList = ["forcedRim", "getRim"]; //Which scenes are possible? #Removed brackets they broke code when using VisualStudio beutify -Ugre
-	// Need settings options if Player prey is enabled.
-	if (Settings.Vore && false) {
-		sceneList.getVoreAnal = true;
-		sceneList.getVoreStomach = true;
-		if (enemies[EnemyIndex].Dicks.length > 0 && enemies[EnemyIndex].Balls.length > 0)
-			sceneList.getVoreBalls = true;
-		if (enemies[EnemyIndex].Boobies.length > 0)
-			sceneList.getVoreBoobs = true;
-		if (enemies[EnemyIndex].Pussies.length > 0)
-			sceneList.getVoreVagina = true;
-	}
-	if (enemies[EnemyIndex].Dicks.length > 0) {
-		sceneList.push("forcedBJ", "getFuckedAnal");
-	}
-	if (enemies[EnemyIndex].Pussies.length > 0) {
-		sceneList.push("forcedCunn");
-	}
-	if (player.Dicks.length > 0) {
-		sceneList.push("getRiddenAnal", "getBJ");
-		if (enemies[EnemyIndex].Pussies.length > 0) {
-			sceneList.push("getRidden");
-		}
-	}
-	if (player.Pussies.length > 0) {
-		sceneList.push("getCunn");
-		if (enemies[EnemyIndex].Dicks.length > 0) {
-			sceneList.push("getFucked");
-		}
-	}
-	return RandomString(sceneList);
-}
-function ManualGrowthScale() {
-    return (player.Height / 160)
-} // I put this a function to make it easier to trial different formulas.
-
-
-function EssenceCost(what) {
-    return Math.min(2000, Math.round((30 * Math.pow(1.05, what.Size))));
-};
-
-function EssenceExtraCost(what) {
-    return Math.round((30 * Math.pow(3, what.length)));
-};
-
-DocId("EssenceAuto").addEventListener("click", function () {
-    Settings.EssenceAuto = !Settings.EssenceAuto;
-    if (Settings.EssenceAuto) {
-        DocId("EssenceAuto").value = "Essence Auto";
-        DocId("ManualGrowth").style.display = 'none';
-
-    } else {
-        DocId("EssenceAuto").value = "Essence Manual";
-        DocId("ManualGrowth").style.display = 'block';
-        Settings.BalanceParts = false;
-    }
-});
-
-DocId("GrowBalls").addEventListener("click", function () {
-    DocId("EssenceStart").style.display = 'none';
-    DocId("ManualOrgans").style.display = 'block';
-    BallsButtons();
-});
-DocId("GrowPussy").addEventListener("click", function () {
-    DocId("EssenceStart").style.display = 'none';
-    DocId("ManualOrgans").style.display = 'block';
-    PussyButtons();
-});
-DocId("GrowBreast").addEventListener("click", function () {
-    DocId("EssenceStart").style.display = 'none';
-    DocId("ManualOrgans").style.display = 'block';
-    BreastButtons();
-});
-DocId("GrowDick").addEventListener("click", function () {
-    DocId("EssenceStart").style.display = 'none';
-    DocId("ManualOrgans").style.display = 'block';
-    DickButtons();
-});
-
-function BreastButtons() {
-    var ManualOrgans = DocId("ManualOrgans");
-    while (ManualOrgans.hasChildNodes()) {
-        ManualOrgans.removeChild(ManualOrgans.firstChild);
-    }
-
-    var Extraboobs = InputButton("Extra breasts " + EssenceExtraCost(player.Boobies) + "F");
-    Extraboobs.addEventListener("click", function () {
-        var cost = EssenceExtraCost(player.Boobies);
-        if (player.Femi >= cost) {
-            player.Femi -= cost;
-            var Boob = {
-                Size: 0,
-                Type: player.Race,
-                Milk: 0,
-                MilkBaseRate: 0,
-                MilkRate: 0,
-                MilkMax: 0
-
-            }
-            player.Boobies.push(Boob);
-        }
-        BreastButtons();
-    });
-    ManualOrgans.appendChild(Extraboobs);
-    ManualOrgans.appendChild(ManualOrgansClose());
-    for (var e of player.Boobies) {
-        ManualOrgans.appendChild(BreastButton(e));
-    }
-}
-
-function BreastButton(e) {
-    var boob = document.createElement("button");
-    boob.setAttribute("type", "button");
-    boob.innerHTML = BoobSizeConvertor(e.Size) + " " + EssenceCost(e) + "Feminity";
-    boob.addEventListener("click", function () {
-        var cost = EssenceCost(e);
-        if (player.Femi >= cost) {
-            player.Femi -= cost;
-            e.Size += 1 * ManualGrowthScale();
-            e.MilkMax = Math.round(e.Size * 400);
-        }
-        BreastButtons();
-    });
-    return boob;
-}
-
-function PussyButtons() {
-    var ManualOrgans = DocId("ManualOrgans");
-    while (ManualOrgans.hasChildNodes()) {
-        ManualOrgans.removeChild(ManualOrgans.firstChild);
-    }
-
-    var ExtraPussy = InputButton("Extra pussy " + EssenceExtraCost(player.Pussies) + "F");
-    ExtraPussy.addEventListener("click", function () {
-        var cost = EssenceExtraCost(player.Pussies);
-        if (player.Femi >= cost) {
-            player.Femi -= cost;
-            var Pussy = {
-                Size: 5,
-                Type: player.Race,
-                Virgin: true
-            }
-            player.Pussies.push(Pussy);
-            PussyButtons();
-        }
-    });
-    ManualOrgans.appendChild(ExtraPussy);
-    ManualOrgans.appendChild(ManualOrgansClose());
-    for (var e of player.Pussies) {
-        ManualOrgans.appendChild(PussyButton(e))
-    };
-}
-
-function PussyButton(e) {
-    var pussy = document.createElement("button");
-    pussy.setAttribute("type", "button");
-    pussy.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Feminity";
-    pussy.addEventListener("click", function () {
-        var cost = EssenceCost(e);
-        if (player.Femi >= cost) {
-            player.Femi -= cost;
-            e.Size += 1 * ManualGrowthScale();
-            PussyButtons();
-        }
-    });
-    return pussy;
-}
-
-function DickButtons() {
-    var ManualOrgans = DocId("ManualOrgans");
-    while (ManualOrgans.hasChildNodes()) {
-        ManualOrgans.removeChild(ManualOrgans.firstChild);
-    }
-
-    var ExtraDick = InputButton("Extra dick " + EssenceExtraCost(player.Dicks) + "M");
-    ExtraDick.addEventListener("click", function () {
-        var cost = EssenceExtraCost(player.Dicks);
-        if (player.Masc >= cost) {
-            player.Masc -= cost;
-            var Dick = {
-                Size: 5,
-                Type: player.Race,
-                Virgin: true
-            }
-            player.Dicks.push(Dick);
-            DickButtons();
-        }
-    });
-    ManualOrgans.appendChild(ExtraDick);
-    ManualOrgans.appendChild(ManualOrgansClose());
-    for (var e of player.Dicks) {
-        ManualOrgans.appendChild(DickButton(e));
-    }
-}
-
-function DickButton(e) {
-    var Dick = document.createElement("button");
-    Dick.setAttribute("type", "button");
-    Dick.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Masculinity";
-    Dick.addEventListener("click", function () {
-        var cost = EssenceCost(e);
-        if (player.Masc >= cost) {
-            player.Masc -= cost;
-            e.Size += 1 * ManualGrowthScale();
-            DickButtons();
-        }
-    });
-    return Dick;
-}
-
-function BallsButtons() {
-    var ManualOrgans = DocId("ManualOrgans");
-    while (ManualOrgans.hasChildNodes()) {
-        ManualOrgans.removeChild(ManualOrgans.firstChild);
-    }
-    var ExtraBall = InputButton("Extra Balls " + EssenceExtraCost(player.Balls) + "M");
-    ExtraBall.addEventListener("click", function () {
-        var cost = EssenceExtraCost(player.Balls);
-        if (player.Masc >= cost) {
-            player.Masc -= cost;
-            var Ball = {
-                Size: 2,
-                Type: player.Race,
-                CumMax: 2,
-                Cum: 0,
-                CumRate: 0,
-                CumBaseRate: 0.5
-            }
-            player.Balls.push(Ball);
-            BallsButtons();
-        }
-    });
-    ManualOrgans.appendChild(ExtraBall);
-    ManualOrgans.appendChild(ManualOrgansClose())
-    var br = document.createElement("br");
-    ManualOrgans.appendChild(br);
-    for (var e of player.Balls) {
-        ManualOrgans.appendChild(BallsButton(e));
-    }
-}
-
-function BallsButton(e) {
-    var Ball = document.createElement("button");
-    Ball.setAttribute("type", "button");
-    Ball.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Masculinity";
-    Ball.addEventListener("click", function () {
-        var cost = EssenceCost(e);
-        if (player.Masc >= cost) {
-            player.Masc -= cost;
-            e.Size += 1 * ManualGrowthScale();
-            BallsButtons();
-        }
-    });
-    return Ball;
-}
-
-function ManualOrgansClose() {
-    var Close = InputButton("Back");
-    Close.addEventListener("click", function () {
-        DocId("EssenceStart").style.display = 'block';
-        ManualOrgans.style.display = 'none';
-        while (ManualOrgans.hasChildNodes()) {
-            ManualOrgans.removeChild(ManualOrgans.firstChild);
-        }
-    });
-    return Close;
-}
-
-DocId("EssenceOptionsLeave").addEventListener("click", function () {
-    var ManualOrgans = DocId("ManualOrgans");
-    while (ManualOrgans.hasChildNodes()) {
-        ManualOrgans.removeChild(ManualOrgans.firstChild);
-    }
-    DocId("EssenceStart").style.display = 'block';
-    DocId("ManualGrowth").style.display = 'none';
-    DisplayNone();
     DisplayGame();
 });
 function CheckDoor() {
@@ -10374,7 +9079,6 @@ function EnemyImageLoad(arr, callback) { // Preload images to stop flickering
 var Enemy_SpriteImages = {};
 const EnemySpriteLoader = EnemyImageLoad(["orc", "troll"], function (images) {
     Enemy_SpriteImages = images;
-    console.log(Enemy_SpriteImages)
 });
 
 function PrintEnemies() {
@@ -10416,7 +9120,6 @@ function PrintEnemies() {
             ctx.fillStyle = Color();
             ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos - ee.Size + ee.Size / 3, ee.Size / 3, ee.Size / 3);
         } else {
-            console.log(CheckGender(ee) + " " + Color())
             ctx.fillRect(ee.XPos, ee.YPos, ee.Size, ee.Size);
             ctx.fillStyle = Color();
             ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos + ee.Size / 3, ee.Size / 3, ee.Size / 3);
@@ -10752,6 +9455,257 @@ function PerkMenuFunc() {
     innerdiv.appendChild(close);
     div.appendChild(innerdiv);
 }
+DocId("Children").addEventListener("click", function () {
+    DisplayNone();
+    DocId("ChildrenMenu").style.display = 'block';
+    Childs();
+});
+DocId("LeaveChildrenMenu").addEventListener("click", function () {
+    DisplayNone();
+    DocId("DetailedInfo").style.display = 'block';
+})
+
+function Childs() {
+    var Children = [];
+    Children += "<div>By you<br>"
+    for (var e = 0; e < player.Children.length; e++) {
+        var age = Math.round(player.Children[e].AgeCounter / 365);
+        if (age < 1) {
+            age = Math.round(player.Children[e].AgeCounter / 30) + " months";
+        } else {
+            age += " years"
+        }
+        var Child = "<button type=\"button\">Child " + (e + 1) + "<br>Father: " + player.Children[e].Father +
+            "<br>" + age + " old</button>"
+        Children += Child;
+    }
+    Children += "</div>"
+    if (House.Dormmates.length > 0) {
+        for (var e of House.Dormmates) {
+            if (e.Children.length > 0) {
+                Children += "<div>" + e.FirstName + " " + e.LastName + "<br>"
+                for (var i = 0; i < e.Children.length; i++) {
+                    var age = Math.round(e.Children[i].AgeCounter / 365);
+                    if (age < 1) {
+                        age = Math.round(e.Children[i].AgeCounter / 30) + " months";
+                    } else {
+                        age += " years"
+                    }
+                    Child = "<button type=\"button\">Child " + (i + 1) + "<br>" + age + " old </button>"
+                    Children += Child;
+                }
+                Children += "</div>"
+            }
+        }
+    }
+    DocId("ChildCorner").innerHTML = Children;
+}
+function Impregnate(who, by, mode = "A", where = "") {
+    function Twins() {
+        // The +1 gives a 1% or less chance for non blessed to birth twins 
+        // Old saves might fail totaly
+        const Twins = typeof (player.Blessings.Broodmother) === Number ? 1 + player.Blessings.Broodmother * 1 : 1,
+            NoTwins = RandomInt(0, 100);
+        switch (who.Race) {
+            case "":
+                Twins += 5;
+                break;
+            default:
+                break;
+        }
+        switch (who.SecondRace) {
+            case "":
+                Twins += 5;
+                break;
+            default:
+                break;
+        }
+        switch (by.Race) {
+            case "":
+                Twins += 5;
+                break;
+            default:
+                break;
+        }
+        switch (by.SecondRace) {
+            case "":
+                Twins += 5;
+                break;
+            default:
+                break;
+        }
+        // Some races will have higher chance
+        if (NoTwins < Twins * 2) {
+            return 3;
+        } else if (NoTwins < Twins) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
+    function BabyMaker() {
+        who.Pregnant.Status = true;
+        Flags.Impregnations++;
+        if (!Array.isArray(who.Pregnant.Babies)) {
+            who.Pregnant.Babies = [];
+        }
+        if (player.Quests.some(e => e.Name === "Impregnate maidens") && who.Name == "Maiden") {
+            var i = player.Quests.findIndex(e => e.Name == "Impregnate maidens");
+            player.Quests[i].Count++;
+            player.Quests[i].Completed = true;
+            who.Name = "Priestess";
+            var x = Twins();
+            for (var e = 0; e < x; e++) {
+                var Baby = {
+                    BabyAge: 0,
+                    BabyRace: player.Race,
+                    Father: by.Name + " " + by.LastName,
+                    Mother: who.FirstName + " " + who.LastName,
+                    Blessed: "Fertility" // Not in use for the moment, but I want it so children made during quest is different. 
+                    //Maybe they leave house to join the shrine
+                }
+                who.Pregnant.Babies.push(Baby);
+            }
+        } else {
+            var x = Twins();
+            for (var e = 0; e < x; e++) {
+                var Father = RandomInt(1, 4);
+                if (Father > 2) {
+                    Father = by;
+                } else {
+                    Father = who;
+                }
+                var Baby = {
+                    BabyAge: 0,
+                    BabyRace: Father.Race,
+                    Father: by.Name + " " + by.LastName,
+                    Mother: who.FirstName + " " + who.LastName
+                }
+                who.Pregnant.Babies.push(Baby);
+            }
+        }
+    }
+
+    function playerBabyMaker() {
+        Flags.Pregnations++;
+        player.Pregnant.Status = true;
+        if (player.Quests.some(e => e.Name === "Get Impregnated")) {
+            var i = player.Quests.findIndex(e => e.Name == "Get Impregnated");
+            player.Quests[i].Completed = true;
+            var x = Twins();
+            for (var e = 0; e < x; e++) {
+                var Baby = {
+                    BabyAge: 0,
+                    BabyRace: who.Race,
+                    Father: by.FirstName + " " + by.LastName,
+                    Mother: player.Name + " " + player.LastName,
+                    Blessed: "Fertility"
+                }
+                player.Pregnant.Babies.push(Baby);
+                player.Quests[i].Count++;
+            }
+        } else {
+            var x = Twins();
+            for (var e = 0; e < x; e++) {
+                var Father = RandomInt(1, 4);
+                if (Father > 2) {
+                    Father = by;
+                } else {
+                    Father = player;
+                }
+                var Baby = {
+                    BabyAge: 0,
+                    BabyRace: Father.Race,
+                    Father: by.FirstName + " " + by.LastName,
+                    Mother: player.Name + " " + player.LastName
+                }
+                player.Pregnant.Babies.push(Baby);
+            }
+        }
+    }
+    if (who.hasOwnProperty("Pregnant")) {
+        if (who.Pregnant.Status) {
+            return;
+        }
+    }
+    if (mode == "A") {
+        var Impregnation = RandomInt(0, 100);
+        switch (CheckGender(who)) {
+            case "cuntboy":
+                if (by.Virility >= Impregnation) {
+                    BabyMaker();
+                    DocId(where + "SexText").innerHTML = "You have impregnated him!"
+                }
+                break;
+            case "female":
+                if (by.Virility >= Impregnation) {
+                    BabyMaker();
+                    DocId(where + "SexStats").innerHTML = "You have impregnated her!"
+                }
+                break;
+            case "hermaphrodite":
+                if (by.Virility >= Impregnation) {
+                    BabyMaker();
+                    DocId(where + "SexText").innerHTML = "You have impregnated hir!"
+                }
+                break;
+            case "male":
+                if (by.Virility - 100 >= Impregnation) {
+                    BabyMaker();
+                    DocId(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate him!"
+                }
+                break;
+            case "dickgirl":
+                if (by.Virility - 100 >= Impregnation) {
+                    BabyMaker();
+                    DocId(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnate her!"
+                }
+                break;
+            default:
+                if (by.Virility - 100 >= Impregnation) {
+                    BabyMaker();
+                    DocId(where + "SexText").innerHTML = "Due your extreme virility you have managed to impregnated the doll!"
+                }
+                break;
+        }
+    } else if (mode == "B") {
+        var Impregnation = RandomInt(0, (500 - by.Masc));
+        switch (CheckGender(who)) {
+            case "cuntboy":
+            case "female":
+                if (who.Fertility >= Impregnation) {
+                    playerBabyMaker();
+                    DocId(where + "SexText").innerHTML = "You have been impregnated!"
+                }
+                break;
+            case "hermaphrodite":
+                if (who.Fertility >= Impregnation) {
+                    playerBabyMaker();
+                    DocId(where + "SexText").innerHTML = "You have been impregnated!"
+                }
+                break;
+            case "dickgirl":
+            case "male":
+                if (false) { //Need to make a way to enable make impreg (item/blessing/curse)
+                    if (who.Fertility - 50 >= Impregnation) {
+                        playerBabyMaker();
+                        DocId(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
+                    }
+                }
+                break;
+            default:
+                if (false) {
+                    if (who.Fertility - 50 >= Impregnation) {
+                        playerBabyMaker();
+                        DocId(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
+                    }
+                }
+                break;
+        }
+    }
+    return;
+}
 function PregnanyEngine() {
     if (player.Children.length > 0) {
         for (var e = 0; e < player.Children.length; e++) {
@@ -10811,7 +9765,7 @@ function PregnanyEngine() {
         }
         if (e.Pregnant.Status) {
             for (var b = 0; b < e.Pregnant.Babies.length; e++) {
-                e.Pregnant.Babies[e].BabyAge++;
+                e.Pregnant.Babies[b].BabyAge++;
                 if (e.Pregnant.Babies.BabyAge > Math.max(2, 274 - player.Blessings.MountainShrine.IncubatorSeed * 5)) {
                     var Child = {
                         AgeCounter: 0,
@@ -10820,7 +9774,7 @@ function PregnanyEngine() {
                         Father: e.Pregnant.Father
                     };
                     e.Children.push(Child);
-                    e.Babies.splice(e, 1);
+                    e.Babies.splice(b, 1);
                     if (e.Pregnant.Babies.length < 1) {
                         e.Pregnant.Status = false;
                     }
@@ -10841,7 +9795,6 @@ function PregnanyEngine() {
                     } else {
                         b.NuseryBoost += House.Nursery
                         if (b.NuseryBoost > 40) {
-                            console.log("Extra day");
                             b.NuseryBoost = 0;
                             b.AgeCounter++; //Faster aging with nusery
                             if (b.AgeCounter % 365 == 0) {
@@ -10972,231 +9925,6 @@ function RaceBonus(who) {
     }
     return who;
 };
-function isTaur(mode = 1) {
-    const Taur = ["centaur"],
-        max = Math.min(3, player.RaceEssence.length),
-        RaceEss = player.RaceEssence;
-    for (let e in RaceEss) {
-        if (mode === 1) {
-            Taur.indexOf(RaceEss[e].Race) > -1 ? e : false
-        } else {
-            if (Taur.indexOf(RaceEss[e].Race) > -1) {} else {
-                return e; // return biggest non taur race
-            }
-        }
-    }
-}
-
-
-function EssenceBalance() { // Concept for calculating what species you're treated as
-    const RaceEss = player.RaceEssence;
-    if (RaceEss.some(e => e.Race !== e.Race.Capitalize())) { // Make sure all races have firt letter cap + rest lowercase
-        console.log("Non cap race");
-        for (let e of RaceEss) {
-            e.Race = e.Race.Capitalize();
-        }
-    }
-    if (RaceEss.some(e => e.amount < 1)) {
-        for (let i in RaceEss) { // Clearing/Spicing out anything below 1
-            if (RaceEss[i].amount < 1) {
-                console.log("Spliced " + RaceEss[i].Race);
-                RaceEss.splice(i, 1);
-            }
-        }
-    }
-    for (let e in RaceEss) { // Clearing/splicing duplicates
-        for (let i in RaceEss) {
-            if (RaceEss[e].Race == RaceEss[i].Race && e != i) {
-                console.log("Duplicate race");
-                RaceEss[e].amount += RaceEss[i].amount;
-                RaceEss.splice(i, 1);
-            }
-        }
-    }
-    RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
-
-    let totalAbsorb = 0;
-    for (let i of RaceEss) {
-        totalAbsorb += i.amount;
-    }
-
-    /* Will convert to use this insted to I can make changed dependant on amount of essence.
-Need to make it like earlier so that low essence doesn't give a race, 
-e.g. you are not a dragon because you have 1 dragon essence.
-
-Don't like that no race = human, maybe should add a special race?
-    */
-    const oldRace = player.Race,
-        oldSecondRace = player.SecondRace;
-    if (totalAbsorb < 100) {
-        player.Race = "humanoid"; // No race is lowest form of human? or implement doll race?
-        if (RaceEss[0].amount > 50) {
-            player.SecondRace = RaceEss[0].Race;
-            GenitalChange(player.SecondRace); // null dick? bland dick? average?
-        } else {
-            player.SecondRace = player.Race
-            GenitalChange(player.SecondRace)
-        }
-    } else {
-        let R1 = 0,
-            R2 = 0,
-            R3 = 0;
-        if (RaceEss.length > 2) {
-            R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
-            R2 = Math.round(100 * RaceEss[1].amount / totalAbsorb);
-            R3 = Math.round(100 * RaceEss[2].amount / totalAbsorb);
-        } else if (RaceEss.length > 1) {
-            R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
-            R2 = Math.round(100 * RaceEss[1].amount / totalAbsorb);
-        } else if (RaceEss.length > 0) {
-            R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
-        }
-        if (isTaur()) { // centaur always second race?
-            player.Race = player.RaceEssence.length < 2 ? "human" : RaceEss[isTaur("B")].Race;
-            player.SecondRace = RaceEss[isTaur()].Race;
-            GenitalChange(RaceEss[isTaur()].Race);
-        } else if (R1 + R2 + R3 < 50 && R1 > 0 && R2 > 0 && R3 > 0) {
-            player.Race = "chimera";
-            player.SecondRace = "chimera";
-            GenitalChange(RaceEss[0].Race); // change GenitalsChange you can have organs from more than on race
-        } else {
-            if (R2 > 20) {
-                player.Race = RaceEss[0].Race;
-                player.SecondRace = RaceEss[1].Race
-                GenitalChange(RaceEss[1].Race); // Will add options to chose what race genitals is.
-            } else {
-                player.Race = RaceEss[0].Race;
-                player.SecondRace = player.Race;
-                GenitalChange(RaceEss[0].Race);
-            }
-        }
-        player.Race = player.Race.toLowerCase();
-        player.SecondRace = player.Race.toLowerCase();
-    }
-    if (player.Race !== oldRace) { // Add a call to eventlog #TODO write text to reflect race change
-        console.log("Race change!");
-    }
-    if (player.SecondRace !== oldSecondRace) {
-        console.log("SecondRace change");
-    }
-}
-
-function PotionDrunk(race, Dose = 50) {
-    const RaceEss = player.RaceEssence,
-        a = RaceEss.findIndex(e => e.Race === race.Capitalize());
-    if (a > -1) {
-        RaceEss[a].amount += Dose;
-    } else {
-        const Race = {
-            Race: race.Capitalize(),
-            amount: Dose
-        }
-        RaceEss.push(Race);
-    }
-}
-
-function RaceDesc(who) {
-    const Race = who.Race.toLowerCase(),
-        SecondRace = who.SecondRace.toLowerCase();
-    switch (Race) {
-        case "human":
-            if (SecondRace == "human") {
-                return "human";
-            } else if (SecondRace == "elf") {
-                return "half elf";
-            } else if (SecondRace == "centaur") {
-                return "centaur";
-            } else if (SecondRace == "equine") {
-                return "satyr";
-            }
-        case "elf":
-            if (SecondRace == "human") {
-                return "half elf";
-            } else if (SecondRace == "elf") {
-                return "elf";
-            } else if (SecondRace == "centaur") {
-                return "centaur";
-            } else if (SecondRace == "equine") {
-                return "satyr";
-            }
-        case "equine":
-            if (SecondRace == "human") {
-                return "humanoid equine";
-            } else if (SecondRace == "elf") {
-                return "humanoid equine";
-            } else if (SecondRace == "centaur") {
-                return "anthropomorphic centaur";
-            } else if (SecondRace == "equine") {
-                return "equine";
-            }
-        default:
-            return Race;
-    }
-}
-
-function DetailedRaceDesc() {
-    const RaceEss = player.RaceEssence;
-    RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
-    let totalAbsorb = 0;
-    for (let i of RaceEss) {
-        totalAbsorb += i.amount;
-    }
-    let R1 = 0,
-        R2 = 0,
-        R3 = 0;
-    if (RaceEss.length > 2) {
-        R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
-        R2 = Math.round(100 * RaceEss[1].amount / totalAbsorb);
-        R3 = Math.round(100 * RaceEss[2].amount / totalAbsorb);
-    } else if (RaceEss.length > 1) {
-        R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
-        R2 = Math.round(100 * RaceEss[1].amount / totalAbsorb);
-    } else if (RaceEss.length > 0) {
-        R1 = Math.round(100 * RaceEss[0].amount / totalAbsorb);
-    }
-
-    let text
-    if (totalAbsorb < 100) {
-        text = "Yor're an "
-        if (RaceEss[0].amount > 20) {
-            text += RaceEss[0].Race + " looking humaniod."
-        } else {
-            text += "humaniod."
-        }
-        return text;
-    } else if (R1 > 99) {
-        return "You're fully " + RaceEss[0].Race + "!";
-    } else if (R1 + R2 + R3 < 50) {
-        return "You're an unnatural mix of an assortment of creatures!";
-    } else if (R1 > 90) {
-        return "You're indistinguishable from any other " + RaceEss[0].Race;
-    } else if (R1 > 80) {
-        text = "You're mostly " + RaceEss[0].Race + ", but you've got";
-        if (R2 > 10) {
-            text += " some " + RaceEss[1].Race + " traits.";
-        } else {
-            text += " other traits mixed in.";
-        }
-        return text;
-    } else if (R1 > 70) {
-        text = "You're mostly " + RaceEss[0].Race + ", but"
-        if (R2 > 20) {
-            text += " could be confused for a half-" + RaceEss[1].Race + ".";
-        } else if (R2 + R3 > 20) {
-            text += " you've added a few other traits, notably " + RaceEss[1].Race + " and " +
-                RaceEss[2].Race + ".";
-        } else {
-            text += " you've added a few other traits.";
-        }
-        return text;
-    } else if (R1 < R2 + 10) {
-        return "You're half-" + RaceEss[0].Race + ", half " + RaceEss[1].Race + ".";
-    } else if (R1 < R2 + R3) {
-        return "You're a curious hybrid, a mix between " + RaceEss[0].Race + ", " + RaceEss[1].Race + ", and " + RaceEss[2].Race + ".";
-    } else {
-        return "You're unmistakably an " + RaceEss[0].Race + ", but you're deep in an uncanny valley.";
-    }
-}
 DocId("Save").addEventListener("click", function () {
     DisplayNone();
     DocId("SaveMenu").style.display = 'block';
@@ -11391,6 +10119,1598 @@ DocId("HighLightDoors").addEventListener("click", function () {
     Settings.HighLightDoors = Settings.HighLightDoors ? false : true;
     DocId("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
 });
+function AfterBattleButtons(Sex = true, Vored = false) {
+    const div = document.getElementById("SexButtons");
+    while (div.hasChildNodes()) {
+        div.removeChild(div.firstChild)
+    }
+
+    // Main Collumns 
+    const Mouth = document.createElement("div"),
+        Pussy = document.createElement("div"),
+        Dick = document.createElement("div"),
+        Anal = document.createElement("div"),
+        Breast = document.createElement("div"),
+        Siphon = document.createElement("div"),
+        Right = document.createElement("div"); // Container for stop & capture
+
+    const DickOne = document.createElement("div"),
+        DickTwo = document.createElement("div");
+    Dick.appendChild(DickOne);
+    Dick.appendChild(DickTwo);
+    const PlayerMaxOrgasm = Math.round(player.End / 8),
+        ee = enemies[EnemyIndex];
+    if (Sex) {
+        if (PlayerMaxOrgasm >= player.Orgasm) {
+            const GetRimjob = InputButton("Receive rimjob"),
+                GiveRimjob = InputButton("Give rimjob");
+            GetRimjob.addEventListener("click", SexActGetRimjob);
+            Anal.appendChild(GetRimjob);
+
+            GiveRimjob.addEventListener("click", SexActGiveRimjob);
+            Anal.appendChild(GiveRimjob);
+
+            if (ee.Pussies.length > 0) {
+                const GiveCunnilingus = InputButton("Give Cunnilingus");
+                GiveCunnilingus.addEventListener("click", SexActGiveCunnilingus)
+                Mouth.appendChild(GiveCunnilingus);
+
+                if (player.Pussies.length > 0) {
+                    const Scissoring = InputButton("Scissoring");
+                    Scissoring.addEventListener("click", SexActScissoring);
+                    Pussy.appendChild(Scissoring);
+                }
+
+            }
+            if (ee.Dicks.length > 0) {
+                const GiveBlowjob = InputButton("Give blowjob");
+                GiveBlowjob.addEventListener("click", SexActGiveBlowjob);
+                Mouth.appendChild(GiveBlowjob);
+
+                if (player.Pussies.length > 0) {
+                    const RideCowgirl = InputButton("Ride cowgirl");
+                    RideCowgirl.addEventListener("click", SexActRideCowgirl);
+                    Pussy.appendChild(RideCowgirl);
+                }
+            }
+            if (player.Pussies.length > 0) {
+                const GetCunnilingus = InputButton("Receive cunnilingus");
+                GetCunnilingus.addEventListener("click", SexActGetCunnilingus);
+                Mouth.appendChild(GetCunnilingus);
+
+                if (ee.Dicks.length > 1) {
+                    // Dual pen old value Get dual penetrated
+                    const DualFuckt = InputButton("");
+                    Pussy.appendChild(DualFuckt);
+                }
+
+                if (ee.Height * 9 < player.Height) {
+                    const Insertion = InputButton("Insertion");
+                    Insertion.addEventListener("click", SexActInsertion);
+                    Pussy.appendChild(Insertion);
+                }
+
+
+            }
+            if (player.Dicks.length > 0) {
+                const GetBlowjob = InputButton("Receive blowjob");
+                GetBlowjob.addEventListener("click", SexActGetBlowjob);
+                DickOne.appendChild(GetBlowjob);
+
+                if (player.Dicks.length > 1 && ee.Pussies.length > 0) {
+                    const DualPen = InputButton("");
+                    DualPen.addEventListener("click", SexActDualPen);
+                    DickTwo.appendChild(DualPen);
+                    // Dual pen
+                }
+                if (player.Dicks.length > 2 && ee.Pussies.length > 1) {
+                    // Multi pen
+                    const MultiPen = InputButton("");
+                    MultiPen.addEventListener("click", SexActMultiPen);
+                    DickTwo.appendChild(MultiPen);
+                }
+
+                if (ee.Pussies.length > 0) {
+                    const Missionary = InputButton("Missionary"),
+                        DoggyStyle = InputButton("Doggy style");
+
+                    Missionary.addEventListener("click", SexActMissionary);
+                    DickOne.appendChild(Missionary);
+
+                    DoggyStyle.addEventListener("click", SexActDoggyStyle);
+                    DickOne.appendChild(DoggyStyle);
+                }
+
+                const DoggyStyleAnal = InputButton("Anal doggy style");
+                DoggyStyleAnal.addEventListener("click", SexActDoggyStyleAnal);
+                DickTwo.appendChild(DoggyStyleAnal);
+
+            }
+            let Milktotal = 0;
+            for (let b = 0; b < player.Boobies.length; b++) {
+                Milktotal += player.Boobies[b].Milk;
+            }
+            if (Milktotal > 100) {
+                const BreastFeed = InputButton("Breast feed");
+                BreastFeed.addEventListener("click", SexActBreastFeed);
+                Breast.appendChild(BreastFeed);
+            }
+            let dickCount = DickOne.childElementCount + DickTwo.childElementCount
+            if (window.innerHeight < 800 && dickCount > 3) {
+                DickTwo.style.display = "none";
+                const DickAction = InputButton("More");
+                DickAction.addEventListener("click", function () {
+                    if (DickTwo.style.display === "none") {
+                        DickOne.style.display = "none";
+                        DickTwo.style.display = "block";
+                    } else {
+                        DickOne.style.display = "block";
+                        DickTwo.style.display = "none";
+                    }
+                });
+                Dick.appendChild(DickAction);
+            }
+        }
+    }
+    const Stop = InputButton("Stop sex");
+    Dungeon ? Stop.addEventListener("click", DungeonStopButton) :
+        Stop.addEventListener("click", StopSexButton);
+    Right.appendChild(Stop);
+    if (!Vored) {
+        if (ee.Orgasm > 4 && House.Dormmates.length < (House.Dorm * 3)) {
+            const Capture = InputButton("Take them home");
+            Dungeon ? Capture.addEventListener("click", DungeonCapture) :
+                Capture.addEventListener("click", SexActCapture);
+            Right.appendChild(Capture);
+        }
+        if (player.SessionOrgasm > 0 && player.Perks.GiveEssence.Count > 0) {
+            const InfuseDiv = document.createElement("div");
+            InfuseDiv.classList.add("MascFemi");
+            if (player.Masc > 0) {
+                const InjectM = InputButton("Infuse masc");
+                InjectM.addEventListener("click", DrainInjectM);
+                InjectM.style.background = "linear-gradient(to right,white,blue)";
+
+                InfuseDiv.appendChild(InjectM);
+            } else { //filler button to stop player from missclicking
+                const InjectM = InputButton("Empty");
+                InfuseDiv.appendChild(InjectM);
+            }
+            if (player.Femi > 0) {
+                const InjectF = InputButton("Infuse femi");
+                InjectF.addEventListener("click", DrainInjectF);
+                InjectF.style.background = "linear-gradient(to right,white,#C12970)";
+                InfuseDiv.appendChild(InjectF);
+            } else {
+                const InjectF = InputButton("Empty");
+                InfuseDiv.appendChild(InjectF);
+            }
+            Siphon.appendChild(InfuseDiv);
+
+        }
+        if (ee.SessionOrgasm > 0) {
+            if (ee.Dicks.length > 0 && false) { // Trial
+                let EEDickIndex = ee.Dicks.length - 1,
+                    playerDickIndex = player.Dicks.length - 1;
+                const SiphonDickDiv = document.createElement("div"),
+                    SiphonDickIndex = InputButton(EEDickIndex + 1),
+                    SiphonDick = InputButton("Siphon dick"),
+                    SiphonPlayerDickIndex = InputButton(playerDickIndex + 1);
+
+
+                SiphonDickDiv.classList.add("SiphonButtons");
+
+                SiphonDickIndex.addEventListener("click", function () {
+                    (EEDickIndex + 1 < ee.Dicks.length) ? EEDickIndex++ : EEDickIndex = 0;
+                    SiphonDickIndex.setAttribute("value", EEDickIndex + 1);
+                });
+                SiphonDickDiv.appendChild(SiphonDickIndex);
+
+                SiphonDick.addEventListener("click", function () {
+                    DrainSiphonDick(EEDickIndex, playerDickIndex);
+                });
+                SiphonDickDiv.appendChild(SiphonDick);
+
+                SiphonPlayerDickIndex.addEventListener("click", function () {
+                    (playerDickIndex + 1 < player.Dicks.length) ? playerDickIndex++ : playerDickIndex = 0;
+                    SiphonPlayerDickIndex.setAttribute("value", playerDickIndex + 1);
+                });
+                SiphonDickDiv.appendChild(SiphonPlayerDickIndex);
+
+                Siphon.appendChild(SiphonDickDiv);
+
+                const SiphonDickToMasc = InputButton("Shrink dick");
+                SiphonDickToMasc.addEventListener("click", DrainSiphonDickToMasc);
+                Siphon.appendChild(SiphonDickToMasc);
+
+            }
+            const SiphonDiv = document.createElement("div");
+            SiphonDiv.classList.add("MascFemi");
+            if (ee.Masc > 0) {
+                const DrainM = InputButton("Siphon masculinity");
+                DrainM.addEventListener("click", DrainDrainM);
+                DrainM.style.background = "linear-gradient(to right,blue,white)";
+                SiphonDiv.appendChild(DrainM);
+            } else {
+                const DrainM = InputButton("Drained");
+                SiphonDiv.appendChild(DrainM);
+            }
+
+            if (ee.Femi > 0) {
+                const DrainF = InputButton("Siphon femininity");
+                DrainF.addEventListener("click", DrainDrainF);
+                DrainF.style.background = "linear-gradient(to right, #C12970,white)";
+
+                SiphonDiv.appendChild(DrainF);
+            } else {
+                const DrainF = InputButton("Drained");
+                SiphonDiv.appendChild(DrainF);
+            }
+            Siphon.appendChild(SiphonDiv);
+        }
+        if (Settings.Vore) {
+            if (StomachCapacity() > enemies[EnemyIndex].Weight) {
+                const OralVore = InputButton("Eat them");
+                OralVore.addEventListener("click", VoreActionsOralVore);
+                Mouth.appendChild(OralVore);
+            }
+            if (VaginaCapacity() > enemies[EnemyIndex].Weight) {
+                const Unbirth = InputButton("Unbirth");
+                Unbirth.addEventListener("click", VoreActionsUnbirth);
+                Pussy.appendChild(Unbirth);
+            }
+            if (BallsCapacity() > enemies[EnemyIndex].Weight) {
+                const CockVore = InputButton("Cock vore");
+                CockVore.addEventListener("click", VoreActionsCockVore);
+                DickOne.appendChild(CockVore);
+            }
+            if (BreastCapacity() > enemies[EnemyIndex].Weight) {
+                const BreastVore = InputButton("Breast vore");
+                BreastVore.addEventListener("click", VoreActionsBreastVore);
+                Breast.appendChild(BreastVore);
+            }
+            if (AnalCapacity() > enemies[EnemyIndex].Weight) {
+                const AnalVore = InputButton("Anal vore");
+                AnalVore.addEventListener("click", VoreActionsAnalVore);
+                Anal.appendChild(AnalVore);
+            }
+        }
+    }
+    const Frag = document.createDocumentFragment(),
+        divs = [Mouth, Pussy, Dick, Anal, Breast, Siphon, Right].forEach(function (div) {
+            Frag.appendChild(div);
+        });
+    div.appendChild(Frag);
+
+}
+function CheckArousal() {
+    const ee = enemies[EnemyIndex],
+        SexText = document.getElementById("SexText");
+    if (ee.Arousal >= 100) {
+        ee.Orgasm++;
+        ee.SessionOrgasm++;
+        ee.Arousal = 0;
+        if (LastPressed == "RideCowgirl" && !player.Pregnant.Status) {
+            Impregnate(player, ee, "B", "");
+        }
+        if (LastPressed == "GiveBlowjob") {
+            const cum = Cumming(ee);
+            SexText.innerHTML = "Your opponent’s grip on your head tightens as they start humping you mouth in earnest. You gladly oblige their request starting to deepthroat them to the base of their cock. Their rhythm starts to falter as you push their cock to the back of your throat." +
+                " You push your head deep into their crotch as they make one last desperate thrust"
+            SexText.innerHTML += cum > 0 ? ", depositing " + LToGal(cum) + " deep into your gullet." : "."
+            SexText.innerHTML += "Your opponent takes deep breathes as they lie completely spent. You rise from between their legs admiring your work and begin to plan your next move."
+        } else if (LastPressed == "RideCowgirl") {
+            const cum = Cumming(ee);
+            SexText.innerHTML += "<br>Reading their body language, you know they are close to cumming."
+            SexText.innerHTML += cum > 0 ?
+                " Pulling them deep inside you, they release " + LToGal(cum) + " of cum into your pussy." :
+                " Nothing comes out, as they're already drained."
+        } else if (LastPressed == "GiveCunnilingus") {
+            SexText.innerHTML += "<br>Reading their body language, you know they are close to cumming. Shoving your tongue as deep as you can into them, your face gets splashed with their nectar."
+        } else if (false) SexText.innerHTML += " Nothing comes out, as they're already drained."
+    }
+    if (player.Arousal >= 100) {
+        player.Orgasm++;
+        player.Arousal = 0;
+        player.SessionOrgasm++;
+        switch (Settings.GiveEssence) {
+            case "Both":
+                ee.Masc += Math.round(player.GiveEssence / 2);
+                ee.Femi += Math.round(player.GiveEssence / 2);
+                break;
+            case "Masculinity":
+                ee.Masc += Math.round(player.GiveEssence);
+                break;
+            case "Femininity":
+                ee.Femi += Math.round(player.GiveEssence);
+                break;
+            case "None":
+                break;
+        }
+        EssenceCheck(ee);
+        const ImpregActions = ["DoggyStyle", "Missionary", "DualPen", "MultiPen"],
+            AnalImpregActions = ["DoggyStyleAnal"];
+        if (ImpregActions.indexOf(LastPressed) != -1) {
+            if (!ee.hasOwnProperty("Pregnant")) {
+                ee.Pregnant = {
+                    Status: false
+                }
+            }
+            if (!ee.Pregnant.Status) {
+                for (let b of player.Balls) {
+                    if (b.Cum > 10) {
+                        Impregnate(ee, player);
+                        b.Cum -= 10;
+                    }
+                }
+            }
+        } else if (AnalImpregActions.indexOf(LastPressed) != -1 && player.Blessings.MountainShrine.Malepreg > 0) {
+            if (!ee.hasOwnProperty("Pregnant")) {
+                ee.Pregnant = {
+                    Status: false
+                }
+            }
+            if (!ee.Pregnant.Status) {
+                for (var b of player.Balls) {
+                    if (b.Cum > 10) {
+                        Impregnate(ee, player);
+                        b.Cum -= 10;
+                    }
+                }
+            }
+        }
+        if (LastPressed == "GetBlowjob") {
+            const cum = Cumming(player);
+            SexText.innerHTML = "You reach down and grab your opponent’s head, giving a bestial grunt as you approach your climax. You ram your cock as far as you can into " + enemies[EnemyIndex].FirstName + "'s throat."
+            if (player.Balls.length > 0) {
+                SexText.innerHTML += "Your balls tense up as you pump your " + LToGal(cum) + " load down their gullet, thrusting erratically, holding your opponent tight as you empty your sac into them. You bend over their head, making small jabs into their mouth as each wave of cum is sent to their stomach."
+            }
+            SexText.innerHTML += "You stand there for a while, enjoying your afterglow, before you pull out, causing your opponent to fall over, gasping for air. You smile deviously as you ponder how you should use them next.";
+            ee.Cumin.Stomach += cum;
+            if (ee.Cumin.Stomach > (ee.Height / 100) * 2) {
+                SexText.innerHTML += "<br><br> Their stomach is overflowing with your cum; as you pull out, your excess cum follows.";
+                player.cumGround += ee.Cumin.Stomach - (ee.Height / 100) * 2;
+                ee.Cumin.Stomach = (ee.Height / 100) * 2;
+            } else if (ee.Cumin.Stomach > ee.Height / 100) {
+                SexText.innerHTML += "<br><br> Their stomach bulges visibly, filled with your cum."
+            }
+        } else if (LastPressed == "Missionary") {
+            const cum = Cumming(player);
+            ee.Cumin.Pussy += cum;
+            SexText.innerHTML = "<br>Feeling close you thrust deep inside them";
+            if (cum > 0) {
+                SexText.innerHTML += ", releasing " + LToGal(cum) + " of cum into their pussy."
+                if (ee.Cumin.Pussy > (ee.Height / 100)) {
+                    SexText.innerHTML += "<br><br> Their quim is overflowing with your cum; as you pull out, your excess seed follows.";
+                    player.cumGround += ee.Cumin.Pussy - ee.Height / 100;
+                    ee.Cumin.Pussy = ee.Height / 100;
+                } else if (ee.Cumin.Stomach > ee.Height / 200) {
+                    SexText.innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
+                }
+            } else {
+                SexText.innerHTML += ", but nothing comes out of your dick."
+            }
+        } else if (LastPressed == "DoggyStyle") {
+            const cum = Cumming(player);
+            ee.Cumin.Pussy += cum;
+            SexText.innerHTML = "<br>Feeling close, you firmly grab their hips, and thrust deep into their pussy"
+            if (cum > 0) {
+                SexText.innerHTML += ", releasing " + LToGal(cum) + " of cum into their pussy."
+                if (ee.Cumin.Pussy > (ee.Height / 100)) {
+                    SexText.innerHTML += "<br><br> Their quim is overflowing with your cum; as you pull out, your excess seed follows.";
+                    player.cumGround += ee.Cumin.Pussy - ee.Height / 100;
+                    ee.Cumin.Pussy = ee.Height / 100;
+                } else if (ee.Cumin.Stomach > ee.Height / 200) {
+                    SexText.innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
+                }
+            } else document.getElementById("SexText").innerHTML += ", but nothing comes out."
+        } else if (LastPressed == "DoggyStyleAnal") {
+            const cum = Cumming(player);
+            SexText.innerHTML = "<br>Feeling close, you firmly grab their waist, and thrust deep into their bowels"
+            if (cum > 0) {
+                ee.Cumin.Ass += cum;
+                SexText.innerHTML += ", releasing " + LToGal(cum) + " of cum into their ass."
+                if (ee.Cumin.Ass > (ee.Height / 50)) {
+                    SexText.innerHTML += "<br><br> Their ass is overflowing with your cum; as you pull out, your excess seed leaks out."
+                    player.cumGround += ee.Cumin.Ass - ee.Height / 50;
+                    ee.Cumin.Ass = ee.Height / 50;
+                } else if (ee.Cumin.Stomach > ee.Height / 100) {
+                    SexText.innerHTML += "<br><br> Their belly bulges visibly, filled with your cum."
+                }
+            }
+        } else if (false) {
+            SexText.innerHTML += ", but nothing comes out."
+        }
+        SexText.innerHTML += (player.cumGround > 20000 ? // If 
+            "<br><br>Your opponent is caked white and heavily panting, cum still flowing out of their overfilled holes. Your extreme output has covered them, and all of the ground nearby, in your semen. You're glad that you don't have to clean this up..." :
+            player.cumGround > 5000 ? // if else
+            "<br><br>You've covered your (ex-)opponent in your cum, and left a sizable puddle underneath them. They're still dripping..." :
+            player.cumGround > 500 ?
+            "<br><br>You've made quite a mess; they weren't able to handle your output, and have been covered in what their body couldn't handle." :
+            player.cumGround > 0 ?
+            "<br><br>Their body bulges with your load, but it's not enough - what they couldn't keep inside, they're now wearing outside." :
+            "" // else
+        )
+        CheckArousal();
+    }
+    const PlayerLooks = document.getElementById("PlayerLooks"),
+        EnemyLooks = document.getElementById("EnemyLooks");
+
+    PlayerLooks.innerHTML = window.innerHeight > 800 ?
+        BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player) : "";
+    EnemyLooks.innerHTML = window.innerHeight > 800 ?
+        BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee) : "";
+
+    if (player.Pregnant.Babies.length > 0) {
+        let age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
+        age < 0 ? age = "Impregnated" : age = age + " months pregnant";
+        PlayerLooks.innerHTML += "<br>" + age;
+    }
+    if (ee.hasOwnProperty("Pregnant")) {
+        if (ee.Pregnant.Status) {
+            EnemyLooks.innerHTML += "<br>Pregnant";
+        }
+    }
+
+
+    const BaseSexAttack = Math.round((RandomInt(4, 7) * player.SexSkill) / 2),
+        BaseESexAttack = Math.round((RandomInt(4, 7) * enemies[EnemyIndex].SexSkill) / 2);
+    // SexAttack is a global should probably change that, but how?
+    SexAttack = Math.min(RandomInt(45, 77), BaseSexAttack * (BaseSexAttack / BaseESexAttack));
+    ESexAttack = Math.max(RandomInt(15, 32), BaseESexAttack * (BaseESexAttack / BaseSexAttack));
+
+
+    DocId("PName").innerHTML = `${player.Name} ${player.LastName}<br>${player.Race} ${Pronoun(CheckGender(player))}`;
+    DocId("EName").innerHTML = `${ee.FirstName} ${ee.LastName}<br>${ee.Name} ${ee.Race} ${Pronoun(CheckGender(ee))}`;
+    DocId("Mascu").innerHTML = Math.round(player.Masc);
+    DocId("Femin").innerHTML = Math.round(player.Femi);
+    DocId("PArousal").innerHTML = Math.round(player.Arousal);
+    DocId("EMascu").innerHTML = ee.Masc;
+    DocId("EFemin").innerHTML = ee.Femi;
+    DocId("EArousal").innerHTML = Math.round(ee.Arousal);
+    // Divide by bigest value amoung both player and enemy
+    let DelatMed = (player.Masc >= ee.Masc && player.Masc >= ee.Femi && player.Masc >= player.Femi) ?
+        (100 / player.Masc) : (player.Femi >= ee.Masc && player.Femi >= ee.Femi && player.Femi >= player.Masc) ?
+        (100 / player.Femi) : (ee.Masc >= player.Masc && ee.Masc >= ee.Femi && ee.Masc >= player.Femi) ?
+        (100 / ee.Masc) : (100 / ee.Femi);
+
+    DocId("Mascu").style.width = player.Masc * DelatMed + "%";
+    DocId("Femin").style.width = player.Femi * DelatMed + "%";
+    DocId("PArousal").style.width = Math.max(1, player.Arousal) + "%";
+    DocId("EMascu").style.width = ee.Masc * DelatMed + "%";
+    DocId("EFemin").style.width = ee.Femi * DelatMed + "%";
+    DocId("EArousal").style.width = Math.max(1, ee.Arousal) + "%";
+
+    DocId("SexStats").innerHTML = " ";
+    DocId("EnemyOrgasm").style.display = 'block';
+    DocId("EnemyOrgasm").innerHTML = ee.Orgasm;
+    DocId("PlayerOrgasm").style.display = 'block';
+    DocId("PlayerOrgasm").innerHTML = player.Orgasm;
+
+    SexColor(player, "Player");
+    SexColor(ee, "Enemy");
+    AfterBattleButtons();
+}
+
+function Cumming(who) {
+    if (who.Balls.length > 0) {
+        let Cum = 0;
+        for (let b of who.Balls) {
+            Cum += Math.min(b.Cum, Math.max(10, b.Cum / 8));
+            b.Cum -= Math.min(b.Cum, Math.max(100, b.Cum / 8));
+        }
+        Cum = Math.round((Cum / 1000) * 100) / 100;
+        return Cum;
+    }
+}
+
+function SexLooksExactAndKinda() { // A function to be able to enter a bunch of "local global consts"
+    const EnemyKinda = DocId("EnemyKinda"),
+        EnemyExact = DocId("EnemyExact"),
+        SexStats = DocId("SexStats"),
+        playerKinda = DocId("playerKinda"),
+        playerExact = DocId("playerExact"),
+        EnemySex = DocId("EnemySex"),
+        PlayerSex = DocId("PlayerSex");
+    EnemySex.addEventListener("click", function () {
+        if (EnemyKinda.style.display == 'none') {
+            SexStats.innerHTML = " ";
+            EnemyKinda.style.display = 'block';
+            EnemyExact.style.display = 'none';
+            EnemyExact.innerHTML = "";
+        } else {
+            const ee = enemies[EnemyIndex];
+            SexStats.innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
+            EnemyKinda.style.display = 'none';
+            EnemyExact.style.display = 'block';
+            EnemyExact.innerHTML = `<p>${ExactBoobLook(ee)+ExactPussyLook(ee)+ExactDickLook(ee)+ExactBallLook(ee)}</p>`;
+        }
+    });
+    EnemySex.addEventListener("mouseenter", function () {
+        const ee = enemies[EnemyIndex];
+        SexStats.innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
+        EnemyKinda.style.display = 'none';
+        EnemyExact.style.display = 'block';
+        EnemyExact.innerHTML = `<p>${ExactBoobLook(ee) + ExactPussyLook(ee) + 
+            ExactDickLook(ee) + ExactBallLook(ee)}</p>`;
+    });
+    EnemySex.addEventListener("mouseleave", function () {
+        SexStats.innerHTML = " ";
+        EnemyKinda.style.display = 'block';
+        EnemyExact.style.display = 'none';
+        EnemyExact.innerHTML = "";
+    });
+    PlayerSex.addEventListener("click", function () {
+        if (playerKinda.style.display == 'none') {
+            playerKinda.style.display = 'block';
+            playerExact.style.display = 'none';
+            playerExact.innerHTML = "";
+        } else {
+            playerKinda.style.display = 'none';
+            playerExact.style.display = 'block';
+            playerExact.innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + 
+                ExactDickLook(player) + ExactBallLook(player)}</p>`
+        }
+    });
+    PlayerSex.addEventListener("mouseenter", function () {
+        playerKinda.style.display = 'none';
+        playerExact.style.display = 'block';
+        playerExact.innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + 
+            ExactDickLook(player) + ExactBallLook(player)}</p>`
+    });
+    PlayerSex.addEventListener("mouseleave", function () {
+        playerKinda.style.display = 'block';
+        playerExact.style.display = 'none';
+        playerExact.innerHTML = "";
+    });
+}
+SexLooksExactAndKinda();
+function DrainSiphonDick(EEDickIndex, playerDickIndex = 0) {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        ed = ee.Dicks[EEDickIndex],
+        pd = player.Dicks.length > 0 ? player.Dicks[playerDickIndex] : false;
+
+    if (player.Dicks.length === 0) {
+        const Dick = {
+            Size: 1,
+            Type: player.SecondRace,
+            Virgin: true
+        }
+        player.Dicks.push(Dick);
+    } else {
+        pd.Size++;
+    }
+    ee.SessionOrgasm--;
+    ed.Size--;
+    if (ed.Size <= 0) {
+        ee.Dicks.splice(EEDickIndex, 1);
+    }
+    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
+    RaceDrain(ee);
+    CheckArousal();
+};
+
+function DrainSiphonDickToMasc() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        ed = ee.Dicks[ee.Dicks.length - 1],
+        Ess = player.EssenceDrain;
+
+    player.Masc += Ess;
+    ee.SessionOrgasm--;
+    ed.Size -= Math.round(Ess / 5);
+    if (ed.Size <= 0.5) {
+        ee.Dicks.splice()
+    }
+    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
+    RaceDrain(ee);
+    AfterBattleButtons();
+    CheckArousal();
+}
+
+function DrainDrainM() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        Ess = Math.min(ee.Masc, player.EssenceDrain);
+    if (ee.Masc > 0) {
+        ee.SessionOrgasm--;
+        //disabled (player.ForcedFemale) ? (player.Femi += ee.Masc) : (player.Masc += ee.Masc);
+        player.Masc += Ess;
+        ee.Masc -= Ess;
+        EssenceCheck(ee);
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
+        DocId("SexText").innerHTML = (Ess >= ee.Masc) ?
+            `You siphon the last essence of masculinity from them leaving them with no signs of masculinity left.<br>${DrainChanges(old, player, eold, ee)}` :
+            `You siphon essence of masculinity from them.<br>${DrainChanges(old, player, eold, ee)}`;
+        RaceDrain(ee);
+        AfterBattleButtons();
+        CheckArousal();
+        return;
+    };
+}
+
+function DrainDrainF() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        Ess = Math.min(ee.Femi, player.EssenceDrain);
+    if (ee.Femi > 0) {
+        ee.SessionOrgasm--;
+        //player.ForcedMale ? (player.Masc += ee.Femi) : (player.Femi += ee.Femi);
+        player.Femi += Ess;
+        ee.Femi -= Ess;
+        EssenceCheck(ee);
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
+        DocId("SexText").innerHTML = (Ess >= ee.Femi) ?
+            `You siphon the last essence of femininity from them leaving them with no signs of femininity left.<br>${DrainChanges(old, player, eold, ee)}` :
+            `You siphon essence of femininity from them.<br>${DrainChanges(old, player, eold, ee)}`;
+    }
+    RaceDrain(ee);
+    AfterBattleButtons();
+    CheckArousal();
+    return;
+};
+
+function DrainInjectM() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        Ess = Math.min(player.GiveEssence * 33, player.Masc);
+    if (player.Masc > 0) {
+        player.SessionOrgasm--;
+        player.Masc -= Ess;
+        ee.Masc += Ess;
+        EssenceCheck(ee);
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
+        DocId("SexText").innerHTML = (Ess >= player.Masc) ?
+            `You inject them with your last essence of masculinity, leaving yourself male-free.<br>${DrainChanges(old, player, eold, ee)}` :
+            `You inject essence of masculinity into them.<br>${DrainChanges(old, player, eold, ee)}`;
+    }
+    AfterBattleButtons();
+    CheckArousal();
+    return;
+};
+
+function DrainInjectF() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        Ess = Math.min(player.GiveEssence * 33, player.Femi);
+    if (player.Femi > 0) {
+        player.SessionOrgasm--;
+        player.Femi -= Ess;
+        ee.Femi += Ess;
+        EssenceCheck(ee);
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
+        DocId("SexText").innerHTML = (Ess >= player.Femi) ?
+            `You give them the last of your femininity, leaving yourself female-free.<br>${DrainChanges(old, player, eold, ee)}` :
+            `You inject essence of femininity into them.<br>${DrainChanges(old, player, eold, ee)}`;
+        AfterBattleButtons();
+        CheckArousal();
+        return;
+    }
+};
+function RaceDrain(whose) {
+    const RaceEss = player.RaceEssence,
+        a = RaceEss.findIndex(e => e.Race == whose.Race);
+    if (a > -1) {
+        RaceEss[a].amount += RandomInt(2, 10);
+    } else {
+        const Race = {
+            Race: whose.Race,
+            amount: RandomInt(2, 10)
+        }
+        RaceEss.push(Race);
+    }
+    const b = RaceEss.findIndex(e => e.Race == whose.SecondRace);
+    if (b > -1) {
+        RaceEss[b].amount += RandomInt(1, 5);
+    } else {
+        const Race = {
+            Race: whose.SecondRace,
+            amount: RandomInt(1, 5)
+        }
+        RaceEss.push(Race);
+    }
+};
+
+function IntToAge(int) {
+    switch (int) {
+        case 1:
+            return "one year";
+        case 2:
+            return "two years";
+        case 3:
+            return "three years";
+        case 4:
+            return "four years";
+        case 5:
+            return "five years";
+        case 6:
+            return "six years";
+        default:
+            return int + "years";
+    }
+}
+
+function DrainChangesEnemy(eold, ecurrent) {
+    var b = "";
+    if (eold.Dicks.length > ecurrent.Dicks.length) {
+        if (ecurrent.Dicks.length < 1) {
+            b += "You see their dick shrinking completely into their body, turning them into a " + Pronoun(CheckGender(ecurrent)) + ".";
+        } else {
+            b += "They lost a dick"
+        }
+    } else if (eold.Dicks.length < ecurrent.Dicks.length) {
+        b += "They have grown a dick"
+    } else if (ecurrent.Dicks.length > 0) {
+        for (var e = 0; e < eold.Dicks.length; e++) {
+            if (Math.round(eold.Dicks[e].Size) > Math.round(ecurrent.Dicks[e].Size)) {
+                b = "You see their dick shrinking" //Need to add what dick e.g. their second dick shrinks etc
+            } else if (Math.round(eold.Dicks[e].Size) > Math.round(ecurrent.Dicks[e].Size)) {
+                b = "You see their dick growing"
+            }
+        }
+    }
+
+    if (eold.Balls.length > ecurrent.Balls.length) {
+        if (ecurrent.Balls.length < 1) {
+            b += "<br>They lost a pair of balls"
+        } else {
+            b += "<br>They lost a pair of balls"
+        }
+    } else if (eold.Balls.length < ecurrent.Balls.length) {
+        b += "<br>They have grown a pair of balls"
+    } else if (ecurrent.Balls.length > 0) {
+        for (var e = 0; e < ecurrent.Balls.length; e++) {
+            if (Math.round(eold.Balls[e].Size) > Math.round(ecurrent.Balls[e].Size)) {
+                b += "<br>You see their balls shrinking"
+            } else if (Math.round(eold.Balls[e].Size) < Math.round(ecurrent.Balls[e].Size)) {
+                b += "<br>You see their balls growing"
+            }
+        }
+    }
+
+    if (eold.Boobies.length > ecurrent.Boobies.length) {
+        b += "<br>They loost a pair of breasts";
+    } else if (eold.Boobies.length < ecurrent.Boobies.length) {
+        b += "<br>They have grown a pair of breasts";
+    } else {
+        for (var e = 0; e < eold.Boobies.length; e++) {
+            if (Math.round(eold.Boobies[e].Size) > Math.round(ecurrent.Boobies[e].Size)) {
+                b += "<br>You see their breasts shrinking."
+            } else if (Math.round(eold.Boobies[e].Size) < Math.round(ecurrent.Boobies[e].Size)) {
+                b += "<br>You see their breasts growing."
+            }
+        }
+    }
+
+    if (eold.Pussies.length > ecurrent.Pussies.length) {
+        if (ecurrent.Pussies.length < 1) {
+            b += "<br>You see their pussy closing completely and disappear, turning them into a " + Pronoun(CheckGender(ecurrent)) + ".";
+        } else {
+            b += "<br>They a lost a pussy"
+        }
+    } else if (eold.Pussies.length < ecurrent.Pussies.length) {
+        b += "<br>They a have grown a pussy"
+    } else if (ecurrent.Pussies.length > 0) {
+        for (var e = 0; e < eold.Pussies.length; e++) {
+            if (Math.round(eold.Pussies[e].Size) > Math.round(ecurrent.Pussies[e].Size)) {
+                b += "You feel their pussy tightening"
+            } else if (Math.round(eold.Pussies[e].Size) < Math.round(ecurrent.Pussies[e].Size)) {
+                b += "You feel their pussy growing" //Need better word/phrase than growing
+            }
+        }
+    }
+    return b;
+}
+
+//Need to do same for player
+function DrainChanges(old, current, eold, ecurrent) {
+    var a = " ";
+    var b = " ";
+
+    if (old.Dicks.length < current.Dicks.length) {
+        a = "You have grown a dick!";
+    } else if (current.Dicks.length < old.Dicks.length) {
+        if (current.Dicks.length < 1) {
+
+        } else {
+            a = "You have lost a dick";
+        }
+
+    } else if (current.Dicks.length > 0) {
+        for (var e = 0; e < current.Dicks.length; e++) {
+            if (Math.round(old.Dicks[e].Size) < Math.round(current.Dicks[e].Size)) {
+                a += "<br>You feel your dick growing.";
+            } else if (Math.round(current.Dicks[e].Size) < Math.round(old.Dicks[e].Size)) {
+                a += "<br>You feel your dick shrinking.";
+            }
+        }
+    }
+
+    if (old.Balls.length < current.Balls.length) {
+        a += "<br>you have grown a pair of balls"
+    } else if (current.Balls.length < old.Balls.length) {
+        a += "<br>you have lost a pair of balls"
+    } else if (current.Balls.length > 0) {
+        for (var e = 0; e < current.Balls.length; e++) {
+            if (Math.round(old.Balls[e].Size) < Math.round(current.Balls[e].Size)) {
+                a += "<br>you feel you balls growing"
+            } else if (Math.round(current.Balls[e].Size) < Math.round(old.Balls[e].Size)) {
+                a += "<br>you feel you balls shrinking"
+            }
+        }
+    }
+
+    if (old.Boobies.length < current.Boobies.length) {
+        a += "<br>You have grown a new pair of breasts."
+    } else if (current.Boobies.length < old.Boobies.length) {
+        a += "<br>You have lost a pair of breasts"
+    } else if (current.Boobies.length > 0) {
+        for (var e = 0; e < current.Boobies.length; e++) {
+            if (Math.round(old.Boobies[e].Size) < Math.round(current.Boobies[e].Size)) {
+                a += "<br>You feel your breasts grow bigger.";
+            } else if (Math.round(current.Boobies[e].Size) < Math.round(old.Boobies[e].Size)) {
+                a += "<br>You feel your breasts shrinking.";
+            }
+        }
+    }
+
+    if (old.Pussies.length < current.Pussies.length) {
+        a += "<br>You gave grown a pussy";
+    } else if (current.Pussies.length < old.Pussies.length) {
+        a += "<br>You have lost a pussy";
+    } else if (current.Pussies.length > 0) {
+        for (var e = 0; e < current.Pussies.length; e++) {
+            if (Math.round(old.Pussies[e].Size) < Math.round(current.Pussies[e].Size)) {
+                a += "<br>You feel your pussy grow";
+            } else if (Math.round(current.Pussies[e].Size) < Math.round(old.Pussies[e].Size)) {
+                a += "<br>You feel your pussy tighten";
+            }
+        }
+    }
+    if (CheckGender(old) != CheckGender(current)) {
+        a += "<br><br>You have become a " + Pronoun(CheckGender(current)) + "!<br>";
+    }
+    b = DrainChangesEnemy(eold, ecurrent);
+    return "<br>" + a + "<br>" + b;
+}
+DocId("EnemyLoseSex").addEventListener("click", function () {
+	if (DocId("LoseEnemyKinda").style.display === 'none') {
+		DocId("LoseSexStats").innerHTML = " ";
+		DocId("LoseEnemyKinda").style.display = 'block';
+		DocId("LoseEnemyExact").style.display = 'none';
+		DocId("LoseEnemyExact").innerHTML = "";
+	} else {
+		const ee = enemies[EnemyIndex];
+		DocId("LoseSexStats").innerHTML = `Looking at them you estimate that they are about ${CmToInch(ee.Height)} tall and look to weigh around ${KgToPound(ee.Weight)}`;
+		DocId("LoseEnemyKinda").style.display = 'none';
+		DocId("LoseEnemyExact").style.display = 'block';
+		DocId("LoseEnemyExact").innerHTML = `<p>${ExactBoobLook(ee) + ExactPussyLook(ee) + ExactDickLook(ee) + ExactBallLook(ee)}</p>`;
+	}
+});
+DocId("PlayerLoseSex").addEventListener("click", function () {
+	if (DocId("LoseplayerKinda").style.display === 'none') {
+		DocId("LoseplayerKinda").style.display = 'block';
+		DocId("LoseplayerExact").style.display = 'none';
+		DocId("LoseplayerExact").innerHTML = "";
+	} else {
+		DocId("LoseplayerKinda").style.display = 'none';
+		DocId("LoseplayerExact").style.display = 'block';
+		DocId("LoseplayerExact").innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + ExactDickLook(player) + ExactBallLook(player)}</p>`;
+	}
+});
+
+function Lose(sex = true) {
+	const ee = enemies[EnemyIndex],
+		LPL = DocId("LosePlayerLooks"),
+		LoseText = DocId("LoseSexStats");
+
+	LPL.innerHTML = ""; // BoobLook(player) + PussyLook(player) + DickLook(player) + BallLook(player);
+	if (player.Pregnant.Babies.length > 0) {
+		const age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
+		LPL.innerHTML += "<br>" + (age < 1) ? "Impregnated" : age + " months pregnant";
+	}
+	DocId("LoseEnemyLooks").innerHTML = ""; //BoobLook(ee) + PussyLook(ee) + DickLook(ee) + BallLook(ee);
+	if (ee.hasOwnProperty("Pregnant")) {
+		if (ee.Pregnant.Status) {
+			DocId("LoseEnemyLooks").innerHTML += "<br>Pregnant";
+		}
+	}
+	Winner = false;
+	DocId("LosePName").innerHTML = player.Name + " " + player.LastName;
+	DocId("LoseEName").innerHTML = ee.Name + "<br>" + ee.Race + " " + Pronoun(CheckGender(ee));
+	DocId("LoseMascu").innerHTML = Math.round(player.Masc);
+	DocId("LoseFemin").innerHTML = Math.round(player.Femi);
+	DocId("LoseEMascu").innerHTML = Math.round(ee.Masc);
+	DocId("LoseEFemin").innerHTML = Math.round(ee.Femi);
+	SexColor(player, "PlayerLose");
+	SexColor(ee, "EnemyLose");
+	const DelatMed = (player.Masc >= ee.Masc && player.Masc >= ee.Femi && player.Masc >= player.Femi) ? 100 / player.Masc :
+		(player.Femi >= ee.Masc && player.Femi >= ee.Femi && player.Femi >= player.Masc) ? 100 / player.Femi :
+		(ee.Masc >= player.Masc && ee.Masc >= ee.Femi && ee.Masc >= player.Femi) ? 100 / ee.Masc :
+		100 / ee.Femi;
+
+	DocId("LoseMascu").style.width = player.Masc * DelatMed + "%";
+	DocId("LoseFemin").style.width = player.Femi * DelatMed + "%";
+	DocId("LoseEMascu").style.width = ee.Masc * DelatMed + "%";
+	DocId("LoseEFemin").style.width = ee.Femi * DelatMed + "%";
+
+	DocId("Encounter").style.display = 'none';
+	DocId("Lose").style.display = 'grid';
+	DocId("LeaveLose").style.display = 'none';
+	DocId("DungeonLose").style.display = 'none';
+	if (sex) {
+		if (LoseText.style.display = 'none') {
+			LoseText.style.display = 'block';
+		}
+		LoseText.innerHTML = `You lost to a ${Pronoun(CheckGender(ee))} ${ee.Race} ${ee.Name}`;
+		NameConq(ee);
+	} else {
+		LoseText.style.display = 'none';
+		DocId("LoseStruggle").style.display = 'none';
+		DocId("LoseSubmit").style.display = 'none';
+		if (Dungeon) {
+			DocId("DungeonLose").style.display = 'inline-block';
+		} else {
+			DocId("LeaveLose").style.display = 'inline-block';
+		}
+	}
+	return;
+
+	function NameConq() { // Name/title/type e.g. witch, maiden
+		const Name = ee.Name.toLowerCase(),
+			LoseText = DocId("LoseSexStats");
+		switch (Name) {
+			case "wizard":
+				// Curse? Maybe add a organ mod on auto and shrink on manual; might make organmod effect manual
+				if (Settings.EssenceAuto) {
+					const Organs = ["Dick", "Balls", "Boobies", "Pussy"],
+						a = RandomString(Organs);
+					//player.OrganMod[a].Size--; // Need to make a way to get rid of the penalty.
+					LoseText.innerHTML = "Something doesn't feel right..."; // 
+				} else {
+					const Organs = ["Dicks", "Balls", "Boobies", "Pussies"],
+						a = RandomString(Organs);
+					if (player[a].length > 0) {
+						for (var e of player[a]) {
+							if (e.Size > 0) {
+								e.Size--;
+							}
+						}
+						LoseText.innerHTML = "Something doesn't feel right..."; // 
+					} else {
+						LoseText.innerHTML = ""; // He failed
+					}
+				}
+			case "witch":
+				PotionDrunk("Amphibian", RandomInt(1, 5));
+				RaceConq();
+				break;
+			case "maiden":
+				Lose(false); // "No sex"
+				LoseText.innerHTML = "Your defeat proves you unworthy to father her children, " +
+					"she walks away avoiding wasting more time on you."
+				break;
+			default:
+				RaceConq(); // Some enemies don't trigger race conq like e.g. maiden.
+				break;
+		}
+	};
+
+	function RaceConq() {
+		const race = ee.Race.toLowerCase(),
+			enemy = ee,
+			LoseText = DocId("LoseSexText");
+		switch (race) {
+			case "human":
+				const steal = Math.min(RandomInt(25, 200), player.Gold)
+				player.Gold -= steal; // Robbed, why not. #Nerfed
+				LoseText.innerHTML += "They steal " + steal + " gold from you.";
+				break;
+			case "orc":
+				const Steal = Math.min(30, player.Masc);
+				player.Femi += 30;
+				player.Masc -= Steal;
+				enemy.Masc += Steal;
+				// player.Mind.Sub++
+				if (enemy.Balls.length > 0) {
+					let i = 0;
+					while (i < 3 && !player.Pregnant.Status) { // try more than once
+						Impregnate(player, enemy, "B");
+					}
+				}
+				// LoseText.innerHTML = "Following their natrual instincts the orc try to breed you, " +
+				// "while also transforminng you to better suit their preference."
+				break;
+			case "fairy":
+				if (player.Height > 30) {
+					player.Height -= Math.min(RandomInt(7, player.Height / 10), 50);
+				}
+				PotionDrunk("Fairy", RandomInt(10, 20));
+				LoseText.innerHTML += "Attempting to transform you into a fairy they shrunk you"
+				break;
+			case "elf":
+				break;
+			case "dark elf":
+				break;
+			case "amazon":
+				break;
+			case "goblin":
+				if (player.Balls.length > 0) {
+					Impregnate(player, enemy, "B"); // Breeding stereotype
+					// = "Stradling you they ride you, drain your balls trying to impregnate themself."
+					if (enemy.Balls.length > 0) {
+						Impregnate(enemy, player);
+						// = " Once satisfied they move on to fucking with "
+					}
+				} else if (enemy.Balls.length > 0) {
+					Impregnate(enemy, player);
+					// = "They "
+				}
+				break;
+			case "incubus":
+				if (player.Masc > 0) {
+					const take = Math.min(400, player.Masc * Math.min(0.15, Math.random)); // Up to 15% or 400ess
+					player.Masc -= take;
+					enemy.Masc += take;
+				}
+				Impregnate(player, enemy, "B");
+				// "drainging your masculinity "
+				break;
+			case "succubus":
+				if (player.Femi > 0) {
+					const take = Math.min(400, player.Femi * Math.min(0.15, Math.random)); // Up to 15% or 400ess
+					player.Femi -= take;
+					enemy.Femi += take;
+				}
+				Impregnate(enemy, player);
+				// "draining your feminity"
+				break;
+			case "dragon":
+				if (player.RaceEssence.some(e => e.Race == "Dragon")) { // Dragon doesn't like weaklings being dragons. 
+					let b = player.RaceEssence.findIndex(e => e.Race == "Dragon");
+					player.RaceEssence[b].amount -= Math.min(RandomInt(1, 25), player.RaceEssence[b].amount)
+				}
+				break;
+			case "Demon":
+				// player.Mind.Corruption++;
+			default:
+				break;
+		}
+	};
+}
+DocId("LoseSubmit").addEventListener("click", function () {
+	const takeM = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5)), player.Masc),
+		takeF = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(3, 5)), player.Femi),
+		selectScene = SnowScenes(),
+		a = ["forcedBJ", "getBJ", "getRidden", "getRiddenAnal"],
+		b = ["forcedCunn", "getCunn", "getFucked", "getFuckedAnal"]
+	DocId("LosePlayerOrgasm").innerHTML = loseScene(false, selectScene);
+	if (a.indexOf(selectScene) > -1) {
+		player.Masc -= takeM;
+		enemies[EnemyIndex].Masc += takeM;
+	} else if (b.indexOf(selectScene) > -1) {
+		player.Femi -= takeF;
+		enemies[EnemyIndex].Femi += takeF;
+	} else {
+		player.Masc -= takeM / 2;
+		player.Femi -= takeF / 2;
+		enemies[EnemyIndex].Masc += takeM / 2;
+		enemies[EnemyIndex].Femi += takeF / 2;
+	}
+	Lose(false);
+});
+DocId("LoseStruggle").addEventListener("click", function () {
+	var take = Math.round(enemies[EnemyIndex].SexSkill * RandomInt(1, 7));
+	const selectScene = SnowScenes();
+	DocId("LosePlayerOrgasm").innerHTML = loseScene(true, selectScene);
+	if (selectScene === "forcedBJ" || selectScene === "getBJ" || selectScene === "getRidden" || selectScene === "getRiddenAnal") {
+		take = Math.min(take, player.Masc);
+		player.Masc -= take;
+		enemies[EnemyIndex].Masc += take;
+	} else if (selectScene === "forcedCunn" || selectScene === "getCunn" || selectScene === "getFucked" || selectScene === "getFuckedAnal") {
+		take = Math.min(take, player.Femi);
+		player.Femi -= take;
+		enemies[EnemyIndex].Femi += take;
+	} else if (selectScene === "forcedRim" || selectScene === "getRim") {
+		var takeM = Math.min(take, player.Masc) / 2;
+		take = Math.min(take, player.Femi) / 2;
+		player.Masc -= takeM;
+		player.Femi -= take;
+		enemies[EnemyIndex].Masc += takeM;
+		enemies[EnemyIndex].Femi += take;
+	} else {
+		var shift = player.height / 2;
+		player.height -= shift;
+		enemies[EnemyIndex].height += shift;
+		for (var i = 0; i < player.Boobies.length; i++) {
+			shift = player.Boobies[i].Milk;
+			player.Boobies[i].Milk = 0;
+			enemies[EnemyIndex].Boobies[0].Milk = Math.min(enemies[EnemyIndex].Boobies[0].MilkMax, enemies[EnemyIndex].Boobies[0].Milk + shift);
+		}
+		for (var i = 0; i < player.Balls.length; i++) {
+			shift = player.Balls[i].Cum;
+			player.Balls[i].Cum = 0;
+			enemies[EnemyIndex].Balls[0].Cum = Math.min(enemies[EnemyIndex].Balls[0].CumMax, enemies[EnemyIndex].Balls[0].Cum + shift);
+		}
+		shift = player.Gold / 2;
+		enemies[EnemyIndex].Gold += shift;
+		player.Gold /= 2;
+	}
+	Lose(false);
+});
+DocId("LeaveLose").addEventListener("click", function () {
+	DisplayGame();
+	DocId("Lose").style.display = 'none';
+	DocId("LoseStruggle").style.display = 'inline-block';
+	DocId("LoseSubmit").style.display = 'inline-block';
+	DocId("LosePlayerOrgasm").innerHTML = " ";
+	LastPressed = " ";
+});
+
+//Testing all scenes
+/*DocId("Cycle").addEventListener("click", function () {
+	var sub = [true, false];
+	var action = ["forcedBJ", "forcedCunn", "forcedRim", "getBJ", "getCunn", "getRim", "getFucked", "getFuckedAnal", "getRidden", "getRiddenAnal", "getVoreStomach", "getVoreBalls", "getVoreBoobs", "getVoreVagina", "getVoreAnal"];
+	var gender = ["hermaphrodite", "cuntboy", "male", "female", "dickgirl", "doll"]
+	console.log("Let's do this.");
+    for(var a = 0; a < sub.length; a++)
+	{
+		for(var b = 0; b < action.length; b++)
+		{
+			for(var c = 0; c < gender.length; c++)
+			{
+				for(var d = 0; d < gender.length; d++)
+				{
+				try{
+					console.log(loseScene(sub[a], action[b], gender[c], gender[d]));
+				}
+				catch {
+					console.log("Error at "+sub[a]+ action[b]+ gender[c]+ gender[d]);
+				}
+				}
+			}
+		}
+	}
+});*/
+
+function loseScene(struggle, selectScene) {
+	const Player = player,
+		Enemy = enemies[EnemyIndex]; // bad fix for now wanting to rename all Player to player
+	function DrainBalls() {
+		if (player.Balls.length > 0) {
+			player.Balls.forEach((b) => {
+				b.Cum = 0;
+			})
+		}
+	}
+	var enemyCum = 0;
+	var playerCum = 0;
+	if (Enemy.hasOwnProperty("Balls")) {
+		for (var i = 0; i < Enemy.Balls.length; i++) {
+			enemyCum += Enemy.Balls[i].Size / 4;
+		}
+		enemyCum = LToGal(enemyCum) + " down your throat.";
+	} else {
+		enemyCum = ".";
+	}
+
+	if (Player.hasOwnProperty("Balls")) {
+		for (var i = 0; i < Player.Balls.length; i++)
+			playerCum += Player.Balls[0].Cum;
+		playerCum = LToGal(playerCum);
+	}
+	var returnText;
+	if (struggle) {
+		switch (selectScene) {
+			case "forcedBJ":
+				returnText = `${Enemy.FirstName} forces your head to their crotch, and starts thrusting their ${CmToInch(Enemy.Dicks[0].Size)} dick into your mouth. Despite your intentions, your body betrays you and orgasms as they cum ${enemyCum}`;
+				break;
+			case "forcedCunn":
+				returnText = Enemy.FirstName + " forces your head to their crotch, forcing you to start eating them out. "
+				if (Enemy.Balls.length > 0) {
+					returnText += "Their " + CmToInch(Enemy.Balls[0].Size) + " balls cover your face, forcing their musky scent into your nose. "
+				}
+				returnText += "Despite your intentions, your body betrays you and orgasms as they cover your face in girlcum."
+				if (CheckGender(Enemy) === "hermaphrodite") {
+					returnText += "<br>You feel their balls twitch on your face, shooting cum over your back, eventually dripping into your hair."
+				}
+				break;
+			case "forcedRim":
+				if (CheckGender(Enemy) != "doll") {
+					returnText = `Despite having more sensitive erogenous zones, ${Enemy.FirstName} wants to maximize your humiliation by forcing you to eat their ass out. 
+					They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure.`
+				} else if (CheckGender(Enemy) === "doll" && player.Dicks.length <= 0) {
+					returnText = "With no other way to get pleasure, " + Enemy.FirstName + " forces you to the ground and sit on your face, giving you no other option than to eat their ass out for pleasure. "
+				} else {
+					returnText = `Rather that let you use your dick on their only hole, ${Enemy.FirstName} decides to force you to use your tongue. 
+					They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure.`
+				}
+				returnText += "<br>Despite your humiliating position, you find your body responding, reaching orgasm as you feel them shudder above you."
+				break;
+			case "getBJ":
+				returnText = "Forcing you onto your back, " + Enemy.FirstName + " expertly massages your cock and balls, quickly bringing you erect. "
+				if (player.Pussies.length > 0) {
+					returnText += "They even tease your pussy a bit, all to make you cum quicker. "
+				}
+				returnText += "<br>Unable to put up more than a feeble struggle, you find yourself cumming " + playerCum + " down their throat seconds after their lips meet your dick's head.";
+				DrainBalls()
+				break;
+			case "getCunn":
+				returnText = "Forcing you onto your back, " + Enemy.FirstName + " expertly fingers your pussy, quickly making you wet. "
+				if (player.Balls.length > 0) {
+					returnText += "They even tease your balls a bit, all to make you cum quicker. "
+				}
+				returnText += "<br>Unable to put up more than a feeble struggle, you find yourself cumming around their tongue seconds after it penetrates your lower lips."
+				break;
+			case "getRim":
+				if (CheckGender(Player) === "doll" && enemies[EnemyIndex].Dicks.length > 0) {
+					returnText = "Rather than use their penis on your ass, they'd rather find a pussy instead. "
+				} else if (CheckGender(Player) != "doll") {
+					returnText = "Rather than pleasuring your more sensitive organs, they've decided to humiliate you instead. "
+				}
+				returnText += "<br>Forcing you onto your stomach, your enemy repeatedly smacks your ass, bringing a blush to both sets of cheeks. Despite your humiliation (and your ass getting sore), you soon orgasm"
+				if (CheckGender(Player) === "hermaphrodite") {
+					returnText += ", spurting cum from your dick onto your belly and soaking your thighs."
+				} else if (player.Dicks.length > 0) {
+					returnText += ", spurting cum from your dick onto your belly."
+				} else if (player.Pussies.length > 0) {
+					returnText += ",  soaking your thighs."
+				} else {
+					returnText += ", shuddering in unwanted pleasure."
+				}
+				break;
+			case "getFucked":
+				returnText = "Forcing you on your back, your enemy fondles your clit just enough for your body to betray you and your pussy to get wet. "
+				if (CheckGender(Player) === "hermaphrodite") {
+					returnText += "Moving your balls to the side, they thrust in to you."
+				} else {
+					returnText += "Spreading your lips with one hand, they thrust into you."
+				}
+				returnText += "<br>Knowing how to handle someone with as little experience as you, they pin your arms above your head and quickly bring you to orgasm, your shuddering walls causing them to cum inside you. "
+				/*if(player.Pregnant.Babies.length > 0)
+					returnText += "Fortunately, you're alredy pregnant, and won't have to carry their child."
+				else {
+					Impregnate(player, enemies[EnemyIndex], "B", "");
+						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
+							returnText += "You feel an odd filling sensation in your belly... They couldn't have gotten you pregnant, could they?"
+						else if (player.Pregnant.Babies.length > 0)
+							returnText += "Well, looks like you've been knocked up again. You wish you could've chosen a better partner..."
+						else
+							returnText += "At least you weren't impregnated..."
+				}*/
+				break;
+			case "getFuckedDoggy":
+				returnText = "Your enemy forces your beaten body to its hands and knees; you can't even muster the energy to collapse. Your body, however, has other plans, and you feel your pussy start to drip. Your opponent wastes little time, and quickly gets into position, soon thrusting deeply into you. "
+				if (CheckGender(Player) === "hermaphrodite") {
+					returnText += "With every thrust, you feel their balls tapping into yours, sending little bursts of unintended pleasure through your dick. "
+				}
+				returnText += "<br>It doesn't take long for you to cum, your pussy's walls quivering around their dick. "
+				if (CheckGender(Player) === "hermaphrodite") {
+					returnText += "Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
+				}
+				returnText += "Your enemy cums soon after, quickly filling your pussy and collapses onto your back, spent. "
+				/*if(player.Pregnant.Babies.length > 0)
+					returnText += "Fortunately, you're alredy pregnant, and won't have to carry their child."
+				else {
+					Impregnate(player, enemies[EnemyIndex], "B", "");
+						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
+							returnText += "You feel an odd filling sensation in your belly... They couldn't have gotten you pregnant, could they?"
+						else if (player.Pregnant.Babies.length > 0)
+							returnText += "Well, looks like you've been knocked up again. You wish you could've chosen a better partner..."
+						else
+							returnText += "At least you weren't impregnated..."
+				}*/
+				break;
+			case "getFuckedAnal":
+				returnText = "Your enemy forces your beaten body to its hands and knees; you can't even muster the energy to collapse. "
+				if (player.Pussies.length > 0) {
+					returnText += "Your body, however, has other plans, and you feel your pussy start to drip. Even with such a clear signal, though, your enemy positions themselves a little higher. "
+				}
+				returnText += "Having gotten into position, your enemy spreads your ass cheeks, and slowly works their dick into your bowels. Unable to respond, you feel your ass getting stretched. "
+				if (CheckGender(Player) === "hermaphrodite") {
+					returnText += "With every thrust, you feel their balls tapping your balls and clit, sending little bursts of unintended pleasure through your organs.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
+				} else if (player.Pussies.length > 0) {
+					returnText += "With every thrust, you feel their balls tapping your clit, sending little bursts of unintended pleasure through your pussy.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. "
+				} else if (player.Balls.length > 0) {
+					returnText += "With every thrust, you feel their balls tapping yours, sending little bursts of unintended pleasure through your dick.<br>It doesn't take long for you to orgasm, your balls unloading themselves onto your stomach and the ground. "
+				} else {
+					returnText += "<br>It doesn't take long for you to orgasm, a pleasurable heat spreading from your ass. "
+				}
+				returnText += "Your enemy cums soon after, quickly filling your ass and collapses onto your back, spent. "
+				/*if(player.Pregnant.Babies.length <= 0) {
+					Impregnate(player, enemies[EnemyIndex], "B", "");
+					if(player.Pussies.length > 0) {
+						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
+							returnText += "You feel an odd filling sensation in your belly... They couldn't have gotten you pregnant, could they?"
+						else if (player.Pregnant.Babies.length > 0)
+							returnText += "Well, looks like you've been knocked up again. You wish you could've chosen a better partner..."
+					}
+					else {
+						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
+							returnText += "You feel an odd filling sensation in your belly... But you couldn't be pregnant - you don't have a pussy!"
+						else if (player.Pregnant.Babies.length > 0)
+							returnText += "Well, looks like you've been knocked up again. You wish you could've chosen a better partner..."
+
+					}
+				}*/
+				break;
+			case "getRidden":
+				returnText = "Pushing you over, your enemy fondles your balls, quickly giving you an erection. Straddling your groin, they quickly thrust down, riding your dick. "
+				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3) {
+					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
+				}
+				returnText = "<br>It doesn't take long before you cum, emptying your balls into their pussy. They're not satisfied yet, though, and continue to ride you for several orgasms. "
+				/*if(enemies[EnemyIndex].hasOwnProperty(Pregnant)) {
+				} else {
+					Impregnate(enemies[EnemyIndex], player, "A", "");
+					if(enemies[EnemyIndex].hasOwnProperty(Pregnant) && Flags.Impregnations == 1)
+						returnText += "You see them rubbing their belly, looking content... They couldn't have gotten pregnant, could they?"
+					else if (enemies[EnemyIndex].hasOwnProperty(Pregnant))
+						returnText += "Well, looks like you've knocked someone up again. You wish you could've chosen your partner..."
+				}*/
+				break;
+			case "getRiddenAnal":
+				returnText = "Pushing you over, your enemy fondles your balls, quickly giving you an erection. Straddling your groin, they quickly thrust down, riding your dick. "
+				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3) {
+					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
+				}
+				returnText = "<br>It doesn't take long before you cum, emptying your balls into their ass. They're not satisfied yet, though, and continue to ride you for several orgasms. "
+				/*if(!enemies[EnemyIndex].hasOwnProperty(Pregnant)) {
+					Impregnate(enemies[EnemyIndex], player, "A", "");
+					if(enemies[EnemyIndex].hasOwnProperty(Pregnant) && Flags.Impregnations == 1)
+							returnText += "You see them rubbing their belly, looking content... They couldn't have gotten pregnant, could they?"
+					else if (enemies[EnemyIndex].hasOwnProperty(Pregnant))
+						returnText += "Well, looks like you've knocked someone up again. You wish you could've chosen your partner..."
+				}*/
+				break;
+			case "getVoreStomach":
+				returnText = "Grabbing your arms, they try to shove you down their throat, then realize they aren't stretching enough. Maybe in a later update..."
+				break;
+			case "getVoreBalls":
+				returnText = "Grabbing your arms, they try to shove you down their dick, then realize they aren't stretching enough. Maybe in a later update..."
+				break;
+			case "getVoreBoobs":
+				returnText = "Grabbing your arms, they try to shove you into their tits, then realize they aren't stretching enough. Maybe in a later update..."
+				break;
+			case "getVoreVagina":
+				returnText = "Grabbing your arms, they try to shove you into their vagina, then realize they aren't stretching enough. Maybe in a later update..."
+				break;
+			case "getVoreAnal":
+				returnText = "Grabbing your arms, they try to shove you into their ass, then realize they aren't stretching enough. Maybe in a later update..."
+				break;
+			default:
+				returnText = "This shouldn't be here - send snowspider a message, saying \"Loss: " + struggle + ", " + selectScene + "\""
+				break;
+		}
+	} else {
+		switch (selectScene) {
+			case "forcedBJ":
+				returnText = "They force your head to their crotch, and start thrusting their dick into you. You eagerly give them head, orgasming as they cum down your throat."
+				break;
+			case "forcedCunn":
+				returnText = "They force your head to their crotch and you dive in, eagerly eating them out. "
+				if (CheckGender(Enemy) === "hermaphrodite") {
+					returnText += "Their balls cover your nose, forcing their musky scent into your nose. "
+				}
+				returnText += "As they cover your face in girlcum, your body orgasms, proud of its job. "
+				if (CheckGender(Enemy) === "hermaphrodite") {
+					returnText += "<br>As they cover your face, you feel their balls twitch, shooting cum over your back. As they wind down, their cum drips into your hair, arousing you further."
+				}
+				break;
+			case "forcedRim":
+				if (CheckGender(Enemy) != "doll") {
+					returnText = "Despite having more sensitive erogenous zones, they want to maximize your humiliation by forcing you to eat their ass out. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
+				} else if (CheckGender(Enemy) === "doll" && player.Dicks.length <= 0) {
+					returnText = "With no other way to get pleasure, they force you to the ground and sit on your face, giving you no other option than to eat their ass out. "
+				} else {
+					returnText = "Rather that let you use your dick on their only hole, they decide to force you to use your tongue. They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure. "
+				}
+				returnText += "<br>You find your body responding well to the harsh treatment, reaching orgasm as you feel them shudder above you."
+				break;
+			case "getBJ":
+				returnText = "Motioning you to lie down on your back, they expertly massage your cock and balls, quickly bringing you erect. "
+				if (CheckGender(Player) === "hermaphrodite") {
+					returnText += "They even tease your pussy a bit, adding to your growing pleasure. "
+				}
+				returnText += "<br>Eagerly responding to their actions, you find yourself cumming before they start blowing you, coating your stomach with your seed. Before you can go soft, though, they wrap their lips around your dick, giving you immense pleasure. Seconds later, you cum again, this time down their throat."
+				break;
+			case "getCunn":
+				returnText = "Motioning you to lie down on your back, they expertly finger your pussy, quickly making you wet. "
+				if (CheckGender(Player) === "hermaphrodite") {
+					returnText += "They even tease your balls a bit, adding to your growing pleasure. "
+				}
+				returnText += "<br>Eagerly responding to their actions, you find yourself cumming as their tongue approachess your cunt. "
+				if (CheckGender(Player) === "hermaphrodite") {
+					returnText += "<br>Your dick, refusing to be left out, coats your stomach with your seed. "
+				}
+				returnText += "Before you can recover, though, they start eating you out, quickly driving you to several more orgasms."
+				break;
+			case "getRim":
+				returnText = "<br>Motioning you onto your stomach, your enemy massages your butt cheeks, bringing you a surprising amount of pleasure. As they stick a finger up your ass, you orgasm"
+				if (CheckGender(Player) === "hermaphrodite") {
+					returnText += ", spurting cum from your dick onto your belly and soaking your thighs."
+				} else if (player.Dicks.length > 0) {
+					returnText += ", spurting cum from your dick onto your belly."
+				} else if (player.Pussies.length > 0) {
+					returnText += ", soaking your thighs."
+				} else {
+					returnText += ", shuddering in pleasure."
+				}
+				break;
+			case "getFucked":
+				returnText = "Motioning you onto your back, your enemy fondles your clit and lower lips, giving you a mini-orgasm. Appreciating your lack of resistance, they tenderly move above you. "
+				if (CheckGender(Player) === "hermaphrodite") {
+					returnText += "Shifting your balls to the side, they gently ease in to you."
+				} else {
+					returnText += "Spreading your lips with one hand, they gently ease in to you."
+				}
+				returnText += "<br>Tenderly fucking your pussy, you're brought into a world of pleasure. Pinching your clit, you cum hard, soaking their crotch with your juices. Your quivering lips stimulate their dick, making them cum into you."
+				/*if(player.Pregnant.Babies.length > 0)
+					returnText += "You're alredy pregnant, and feel a twinge of regret that you won't carry their child."
+				if(player.Pregnant.Babies.length <= 0) {
+					Impregnate(player, enemies[EnemyIndex], "B", "");
+						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
+							returnText += "You feel an odd filling sensation in your belly... They couldn't have gotten you pregnant, could they?"
+						else if (player.Pregnant.Babies.length > 0)
+							returnText += "Well, looks like you've been knocked up again. You're surprisingly fine with this..."
+						else
+							returnText += "You weren't impregnated, and you find yourself disappointed..."
+				}*/
+				break;
+			case "getFuckedDoggy":
+				returnText = "Your enemy eases your beaten body to its hands and knees, making sure you can keep your balance. Your body instincively responds to the position, and you feel your pussy start to drip. Your opponent teases your cunt, causing your body to shudder, before getting into position and thrusting deeply into you. "
+				if (CheckGender(Player) === "hermaphrodite") {
+					returnText += "With every thrust, you feel their balls tapping into yours, sending little bursts of unintended pleasure through your dick. "
+				}
+				if (player.Boobies[0].size > 3) {
+					returnText += "Bending over your back, they reach down and fondle your nipples, not stopping their thrusts. You let out a low moan, your pleasure mounting ever higher. "
+				}
+				returnText += "<br>It doesn't take long for you to cum, your pussy's walls quivering around their dick. "
+				if (CheckGender(Player) === "hermaphrodite")
+					returnText += "Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
+				returnText += "Your enemy cums soon after, quickly filling your pussy and collapses onto your back, spent. "
+				/*if(player.Pregnant.Babies.length > 0)
+					returnText += "You're alredy pregnant, and feel a twinge of regret that you won't carry their child."
+				else if(player.Pregnant.Babies.length <= 0) {
+					Impregnate(player, enemies[EnemyIndex], "B", "");
+						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
+							returnText += "You feel an odd filling sensation in your belly... They couldn't have gotten you pregnant, could they?"
+						else if (player.Pregnant.Babies.length > 0)
+							returnText += "Well, looks like you've been knocked up again. You're surprisingly fine with this..."
+						else
+							returnText += "You weren't impregnated, and you find yourself disappointed..."
+				}*/
+				break;
+			case "getFuckedAnal":
+				returnText = "Your enemy eases your beaten body to its hands and knees, making sure you can keep your balance. "
+				if (player.Pussies.length > 0)
+					returnText += "Your body instincively responds to the position, and you feel your pussy start to drip. Your opponent teases your cunt, causing your body to shudder. Even with such a clear signal, though, your enemy positions themselves a little higher. "
+				else
+					"They massage your cheeks, causing your body to shudder, as your enemy positions their dick at your ass. "
+				returnText += "Easing forwards, your enemy spreads your ass cheeks, and slowly works their dick into your bowels. Letting out a moan, you feel your ass getting stretched. "
+				if (player.Boobies[0].size > 3)
+					returnText += "Bending over your back, they reach down and fondle your nipples, not stopping their thrusts. You let out a low moan, your pleasure mounting ever higher. "
+				if (CheckGender(Player) === "hermaphrodite")
+					returnText += "With every thrust, you feel their balls tapping your balls and clit, sending little bursts of delicious pleasure through your organs.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. Your balls refuse to be left out, and unload themselves onto your stomach and the ground. "
+				else if (player.Pussies.length > 0)
+					returnText += "With every thrust, you feel their balls tapping your clit, sending little bursts of delicious pleasure through your pussy.<br>It doesn't take long for you to orgasm, your pussy's walls quivering, milking a nonexistent dick. "
+				else if (player.Balls.length > 0)
+					returnText += "With every thrust, you feel their balls tapping yours, sending little bursts of delicious pleasure through your dick.<br>It doesn't take long for you to orgasm, your balls unloading themselves onto your stomach and the ground. "
+				else
+					returnText += "<br>It doesn't take long for you to orgasm, a pleasurable heat spreading from your ass. "
+				returnText += "Your enemy cums soon after, quickly filling your ass and collapses onto your back, spent. "
+				/*if(player.Pregnant.Babies.length <= 0) {
+					Impregnate(player, enemies[EnemyIndex], "B", "");
+					if(player.Pussies.length > 0) {
+						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
+							returnText += "You feel an odd filling sensation in your belly... They couldn't have gotten you pregnant, could they?"
+						else if (player.Pregnant.Babies.length > 0)
+							returnText += "Well, looks like you've been knocked up again. You're surprisingly fine with this..."
+					} else {
+						if(player.Pregnant.Babies.length > 0 && Flags.Pregnations == 1)
+							returnText += "You feel an odd filling sensation in your belly... But you couldn't be pregnant - you don't have a pussy!"
+						else if (player.Pregnant.Babies.length > 0)
+							returnText += "Well, looks like you've been knocked up again. You're surprisingly fine with this..."
+					}
+				}*/
+				break;
+			case "getRidden":
+				returnText = "Telling you to sit down, your enemy kisses you deeply as they fondle your balls, quickly giving you an erection. Hugging your shoulders, they ease their pussy onto your dick, causing both of you to moan out loud. "
+				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3)
+					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
+				returnText = "<br>It doesn't take long before you cum, emptying your balls into their pussy. They're not satisfied yet, though, and give you a few seconds to recover, before continuing to ride you for several orgasms. "
+				/*if(!enemies[EnemyIndex].hasOwnProperty(Pregnant)) {
+					Impregnate(enemies[EnemyIndex], player, "A", "");
+					if(enemies[EnemyIndex].hasOwnProperty(Pregnant) && Flags.Impregnations == 1)
+							returnText += "You see them rubbing their belly, looking content... They couldn't have gotten pregnant, could they?"
+					else if (enemies[EnemyIndex].hasOwnProperty(Pregnant))
+						returnText += "Well, looks like you've knocked someone up again. You hope they're alright with you being the father..."
+				}*/
+				break;
+			case "getRiddenAnal":
+				returnText = "Telling you to sit down, your enemy kisses you deeply as they fondle your balls, quickly giving you an erection. Hugging your shoulders, they ease their asshole onto your dick, causing both of you to moan out loud. "
+				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3)
+					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
+				returnText = "<br>It doesn't take long before you cum, emptying your balls into their ass. They're not satisfied yet, though, and give you a few seconds to recover, before continuing to ride you for several orgasms. "
+				/*if(!enemies[EnemyIndex].hasOwnProperty(Pregnant)) {
+					Impregnate(enemies[EnemyIndex], player, "A", "");
+					if(enemies[EnemyIndex].hasOwnProperty(Pregnant) && Flags.Impregnations == 1)
+							returnText += "You see them rubbing their belly, looking content... They couldn't have gotten pregnant, could they?"
+					else if (enemies[EnemyIndex].hasOwnProperty(Pregnant))
+						returnText += "Well, looks like you've knocked someone up again. You hope they're alright with you being the father..."
+				}*/
+				break;
+			case "getVoreStomach":
+				returnText = "Grabbing your arms, they try to shove you down their throat, then realize they aren't stretching enough. Maybe in a later update..."
+				break;
+			case "getVoreBalls":
+				returnText = "Grabbing your arms, they try to shove you down their dick, then realize they aren't stretching enough. Maybe in a later update..."
+				break;
+			case "getVoreBoobs":
+				returnText = "Grabbing your arms, they try to shove you into their tits, then realize they aren't stretching enough. Maybe in a later update..."
+				break;
+			case "getVoreVagina":
+				returnText = "Grabbing your arms, they try to shove you into their vagina, then realize they aren't stretching enough. Maybe in a later update..."
+				break;
+			case "getVoreAnal":
+				returnText = "Grabbing your arms, they try to shove you into their ass, then realize they aren't stretching enough. Maybe in a later update..."
+				break;
+			default:
+				returnText = "This shouldn't be here - send snowspider a message, saying \"Loss: " + struggle + ", " + selectScene + "\""
+				break;
+		}
+	}
+	return returnText;
+}
+
+function SnowScenes() {
+	let sceneList = ["forcedRim", "getRim"]; //Which scenes are possible? #Removed brackets they broke code when using VisualStudio beutify -Ugre
+	// Need settings options if Player prey is enabled.
+	if (Settings.Vore && false) {
+		sceneList.getVoreAnal = true;
+		sceneList.getVoreStomach = true;
+		if (enemies[EnemyIndex].Dicks.length > 0 && enemies[EnemyIndex].Balls.length > 0)
+			sceneList.getVoreBalls = true;
+		if (enemies[EnemyIndex].Boobies.length > 0)
+			sceneList.getVoreBoobs = true;
+		if (enemies[EnemyIndex].Pussies.length > 0)
+			sceneList.getVoreVagina = true;
+	}
+	if (enemies[EnemyIndex].Dicks.length > 0) {
+		sceneList.push("forcedBJ", "getFuckedAnal");
+	}
+	if (enemies[EnemyIndex].Pussies.length > 0) {
+		sceneList.push("forcedCunn");
+	}
+	if (player.Dicks.length > 0) {
+		sceneList.push("getRiddenAnal", "getBJ");
+		if (enemies[EnemyIndex].Pussies.length > 0) {
+			sceneList.push("getRidden");
+		}
+	}
+	if (player.Pussies.length > 0) {
+		sceneList.push("getCunn");
+		if (enemies[EnemyIndex].Dicks.length > 0) {
+			sceneList.push("getFucked");
+		}
+	}
+	return RandomString(sceneList);
+}
 var PRL,
     RL,
     LastPressed;
@@ -12051,203 +12371,6 @@ function TotalSexSkill() {
             break;
     }
     return SexSkill;
-}
-// Start Farm
-DocId("EquineTaurTF").addEventListener("click", function () {
-    if (player.SecondRace == "centaur") {
-        DocId("FarmOwnerText").innerHTML = "You're already a centaur!"
-        return;
-    }
-    if (TF.Status) {
-        DocId("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
-        return;
-    }
-    if (player.Gold >= 250) {
-        player.Gold -= 250;
-        PotionDrunk("centaur")
-        //TfEngine("centaur");
-    } else {
-        DocId("FarmOwnerText").innerHTML = "Insufficient gold.";
-        return;
-    }
-});
-DocId("FarmTitles").addEventListener("mouseover", function (e) {
-    DocId("FarmOwnerText").innerHTML = e.target.title;
-});
-DocId("EquineTF").addEventListener("click", function () {
-    if (player.SecondRace == "equine" && player.Race == "equine") {
-        DocId("FarmOwnerText").innerHTML = "You already are a equine!"
-        return;
-    }
-    if (TF.Status) {
-        DocId("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
-        return;
-    }
-    if (player.Gold >= 250) {
-        player.Gold -= 250;
-        TfEngine("equine");
-    } else {
-        DocId("FarmOwnerText").innerHTML = "Insufficient gold.";
-        return;
-    }
-});
-DocId("FarmOwnerLooks").addEventListener("click", function () {
-    DocId("FarmOwnerText").innerHTML = "Standing before you, a centaur who introduce himself as Teoivz, looking at him it’s evident he spends many hours working on the farm. His human upper body possess muscle forged from years of work, " +
-        "his equine lower body is not one from a race horse but a work horse.<br>Throwing an eye towards his genitals, it’s	hard to guess the exact size his two members retracted inside their penile sheath but it's obvious that they are well capable of stretching a maiden."
-});
-// End FarmOwner
-
-// The FarmBarn
-
-/*DocId("InfinityMilker").addEventListener("click", function () {
-    if (player.Gold >= 7000) {
-        player.Gold -= 7000;
-        SnowInventoryAdd(ItemDict.Milker, Infinity);
-        // Add milker
-    } else {
-        // You can't afford 
-    }
-});*/
-
-function FarmBarnFunc() {
-    var Buildings = DocId("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
-    var div = document.createElement("div");
-
-    if (window.innerHeight > 600) { // No title on small screen
-        var h1 = document.createElement("h1");
-        var h1text = document.createTextNode("");
-        h1.appendChild(h1text);
-        div.appendChild(h1);
-    }
-
-    var p = document.createElement("p");
-    p.classList.add("TextBox");
-    div.appendChild(p);
-
-    var input1 = InputButton("Milker500 499g", "Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away? Buy today; a portable milker!");
-    input1.addEventListener("click", function () {
-        if (player.Gold >= 499) {
-            player.Gold -= 499;
-            SnowInventoryAdd(ItemDict.Milker, 500);
-            p.innerHTML = "Added to inventory"
-        } else {
-            p.innerHTML = "Not enough gold"
-        }
-    });
-    input1.addEventListener("mouseover", function () {
-        p.innerHTML = "Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away?<br><br> Buy today; a portable milker!"
-    });
-    div.appendChild(input1);
-
-    var input2 = InputButton("Milk booster 30g", "Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?! Well, this is for your humble (or crazy) needs!")
-    input2.addEventListener("click", function () {
-        if (player.Gold >= 30) {
-            player.Gold -= 30;
-            for (var e of player.Boobies) {
-                e.MilkRate++;
-                if (false) {
-                    // if milkrate is over certain value say stuff like wow godly amounts etc...
-                }
-            }
-            p.innerHTML = "Your breasts milk production increases."
-        } else {
-            p.innerHTML = "Sorry you can't afford this."
-        }
-    });
-    input2.addEventListener("mouseover", function () {
-        p.innerHTML = "Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?!<br><br> Well, this is for your humble (or crazy) needs!"
-    });
-    div.appendChild(input2);
-
-    var input3 = InputButton("Milk stopper 50g", "Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.' #Note this does not affect lacation rate from pregnancy.")
-    input3.addEventListener("click", function () {
-        // Lower milkrate
-        // if no breast have milkrate stop
-        if (player.Gold >= 50) {
-            player.Gold -= 50;
-            p.innerHTML = ""
-            for (var e of player.Boobies) {
-                if (e.MilkRate - 1 < 0) {
-                    e.MilkRate = 0;
-                    p.innerHTML += "Your breasts stops lactating.<br>" //Milk stops
-                } else {
-                    e.MilkRate--;
-                    p.innerHTML = "Your milk production slows.<br>"
-                }
-                if (false) {
-                    // if milkrate is over certain value say stuff like wow gogly amounts etc...
-                }
-            }
-        } else {
-            // you are broke
-            p.innerHTML = "Sorry you can't afford this."
-        }
-    })
-    input3.addEventListener("mouseover", function () {
-        p.innerHTML = "Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.'<br><br> #Note this does not affect lacation rate from pregnancy."
-    })
-    div.appendChild(input3);
-
-    if (false) { // TODO
-        var DrinkFresh = InputButton("Drink fresh milk", "It's not yours. You think.");
-        DrinkFresh.addEventListener("click", function () {
-            // Drink milk Maybe fuck a bovine furry? 
-            // Get healed + temp boost to hp & will stronger than bar meal
-            var a = RandomInt(1, 20);
-            if (a > 15) {
-                if (player.Int > 20) {
-                    if (false) {
-                        Partners.FarmOwner.Submit += 1; // ask Bovine to help you dom farmowner
-                        // Flags.BovineSometing = true;
-                    }
-                    // Fuck bovine
-                } else {
-                    // The horny bovine staddles you before you mangage to figure out what's happening.
-                }
-            }
-        })
-        var GetMilked = InputButton("Get milked", "Mooooooooooooo!");
-        GetMilked.addEventListener("click", function () {
-            // Sell milk(maybe cum to?), this can trigger a event where farmowner tries to fuck you
-            // depenent on your stats you can turn it around or get away, if your stats are to weak you get fucked.
-            var MilkTotal = 0;
-            for (var e of player.Boobies) {
-                MilkTotal += e.Milk * 0.9;
-                e.Milk = e.Milk * 0.1;
-            }
-            if (MilkTotal > 0) {
-                if (MilkTotal > 10) {
-                    var a = RandomInt(1, 20);
-                    if (a > 10) {
-                        // if (Flags.Bovine) {};
-                    }
-                }
-
-            } else {
-
-            }
-        })
-    }
-
-    // TODO add a milking event with farm owner
-    /**
-     * // Barn Milk Event
-    // Let him fuck you
-    Partners.FarmOwner.Submit -= 5;
-    Partners.FarmOwner.Like += 5;
-    // Turn it around if you have enough strength
-    Partners.FarmOwner.Submit += 5;
-    Partners.FarmOwner.Like -= 5;
-    // Get away
-    Partners.FarmOwner.Like += 3;
-     */
-
-    div.appendChild(LeaveBuilding());
-    Buildings.appendChild(div);
-    DocId("Buildings").style.display = 'block';
 }
     // Start Vore
     DocId("VoreLooks").style.display = 'none';
@@ -13479,75 +13602,3 @@ DocId("AnalLeave").addEventListener("click", function () {
     DocId("VoreAnal").style.display = 'none';
     LeavePreyMenu();
 });
-function WinBattle() {
-    var ee = enemies[EnemyIndex];
-    player.Exp += ee.Exp;
-    player.Gold += ee.Gold;
-    ee.SessionOrgasm = 0;
-    player.SessionOrgasm = 0;
-    CombatQuests(ee);
-    //WinEnemyChanges(ee);
-    DropSystem(ee);
-    DocId("Encounter").style.display = 'none';
-    if (Settings.Skip) {
-        DisplayGame();
-    } else if (false) { // Replace with ee.Name === "specific name"
-        DocId("DungeonSystem").style.display = 'block';
-        DocId("DungeonText").innerHTML = "What should you do with her?";
-        DocId("DungeonButtons").innerHTML = "<input type=\"button\" id=\"Partner\" value=\"Take her as a equal.\">" +
-            "<input type=\"button\" id=\"MakeSubmit\" value=\"Make her understand her place.\" >";
-    } else {
-        SetupSex(ee);
-    }
-}
-
-function SetupSex(ee) {
-    DocId("SexText").innerHTML = HeightSystem(player, ee);
-    DocId("AfterBattle").style.display = 'grid';
-    DocId("SexButtons").style.display = 'grid';
-    if (Settings.ImgPack) {
-        DocId("AfterBattle").classList.remove("AfterBattle");
-        DocId("AfterBattle").classList.add("AfterBattleImg");
-        DocId("MyImg").style.display = 'block';
-
-    } else {
-        DocId("AfterBattle").classList.add("AfterBattle");
-        DocId("AfterBattle").classList.remove("AfterBattleImg");
-        DocId("MyImg").style.display = 'none';
-    }
-    CheckArousal();
-    if (ee.Name === "Feral") {
-        AfterBattleButtons(false);
-    } else {
-        AfterBattleButtons();
-    }
-}
-
-// Handles quests related to combat
-function CombatQuests(ee) {
-    for (var q of player.Quests) {
-        if (q.Name === "ElfHunt") {
-            if (ee.Race === "Elf") {
-                q.Count++;
-                if (q.Count >= 3) {
-                    q.Completed = true;
-                    if (q.Count % 3 === 0) {
-                        q.hasOwnProperty("Tier") ? q.Tier++ : q.Tier = 1;
-                    }
-                }
-            }
-        }
-        if (q.Name === "BanditLord" && q.Completed === false) {
-            if (ee.Name === "Banditlord") {
-                q.Completed = true;
-            }
-        }
-    }
-}
-
-// Some enemies change when you win
-function WinEnemyChanges(ee) {
-    if (ee.Race === "Dragon") {
-        ee.Race = "Anthro dragon";
-    }
-}

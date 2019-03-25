@@ -936,21 +936,18 @@
 			const Scripts = {
 					name: "JavaScript",
 					array: [
-						"Prototype", "AfterBattleButtons", "Cheats", "CheckArousal",
-						"CheckFlags", "Children", "Combat", "DateTracker", "DrainChanges",
-						"DropSystem", "EssenceCheck", "EventLog", "FluidsEngine", "HemScale",
-						"Impregnate", "InferiorUnit", "Items", "Inventory", "LevelMenu", "Loader", "Looks",
-						"Lose", "ManualEssence", "MaxLimbs", "MobileSupport", "MountainTribe", "Movement",
-						"Perk", "Pregnancy", "RaceEssence", "Racebonus",
-						"Save", "SexAfterBattle", "TheFarm", "Winbattle", "Spells", "StatsHandler",
-						"LooksMenu"
+						"Prototype", "Cheats", "CheckFlags", "DateTracker", "EventLog", "FluidsEngine",
+						"HemScale", "InferiorUnit", "LevelMenu", "Loader", "Looks",
+						"MaxLimbs", "MobileSupport", "MountainTribe", "Movement", "Perk",
+						"Racebonus", "Save", "Spells", "StatsHandler", "LooksMenu"
 					]
 				},
 				Buildings = {
 					name: "JavaScript/Buildings",
 					array: [
 						"Bar", "BlackMarket", "ChimeraShrine", "Gym", "MountainShrine", "PotionShop",
-						"PortalShop", "WitchShop", "WitchHut", "Townhall", "Barber", "LocalPortal"
+						"PortalShop", "WitchShop", "WitchHut", "Townhall", "Barber", "LocalPortal",
+						"TheFarm"
 					]
 				},
 				Vore = {
@@ -962,8 +959,7 @@
 				Home = {
 					name: "JavaScript/Home",
 					array: [
-						"Dorm", "Home", "HomeUpgrades"
-						// ,"BrothelSystem"
+						"Dorm", "Home", "HomeUpgrades" /*,"BrothelSystem"*/
 					]
 				},
 				Opponents = {
@@ -981,20 +977,46 @@
 					name: "JavaScript/Settings",
 					array: ["Options"]
 				},
-				Arrays = [Scripts, Buildings, Vore, Home, Opponents, Settings, Maps].forEach(function (den) {
-					den.array.forEach(function (src) {
-						const newScript = document.createElement("script");
-						newScript.src = den.name + "/" + src + ".js";
-						newScript.onload = document.head.appendChild(newScript);
-						newScript.onerror = function () {
-							alert("Error loading " +
-								src
+				Sex = {
+					name: "JavaScript/Sex",
+					array: ["AfterBattleButtons", "CheckArousal", "DrainChanges", "Lose", "SexAfterBattle",
+						"DrainActions"
+					]
+				},
+				Combat = {
+					name: "JavaScript/Combat",
+					array: ["Combat", "Winbattle"]
+
+				},
+				Essence = {
+					name: "JavaScript/Essence",
+					array: ["EssenceCheck", "ManualEssence", "RaceEssence"]
+				},
+				Inventory = {
+					name: "JavaScript/Inventory",
+					array: ["DropSystem", "Inventory", "Items" /*,"Equipment"*/ ]
+				},
+				Pregnancy = {
+					name: "JavaScript/Pregnancy",
+					array: ["Children", "Impregnate", "Pregnancy"]
+				},
+				Arrays = [Scripts, Buildings, Vore, Home, Opponents, Settings, Maps, Sex, Combat,
+					Essence, Inventory, Pregnancy
+				].forEach(
+					function (den) {
+						den.array.forEach(function (src) {
+							const newScript = document.createElement("script");
+							newScript.src = den.name + "/" + src + ".js";
+							newScript.onload = document.head.appendChild(newScript);
+							newScript.onerror = function () {
+								alert("Error loading " +
+									src
 								); // Function to load script and output error when failing to load script.
-							document.getElementById("StartProgressBar").innerHTML += "Error loading " +
-								src // For those who use script blockers
-						};
-					})
-				});
+								document.getElementById("StartProgressBar").innerHTML += "Error loading " +
+									src // For those who use script blockers
+							};
+						})
+					});
 		}
 	</script>
 	<script src="Gamescript.js"></script>

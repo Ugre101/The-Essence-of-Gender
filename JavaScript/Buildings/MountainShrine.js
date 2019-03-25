@@ -59,7 +59,6 @@ function PregQuests() {
     ImpregReward.setAttribute("title", "Impregnate our maidens.");
     ImpregReward.addEventListener("click", function () {
         var index = player.Quests.findIndex(e => e.Name == "Impregnate maidens");
-        console.log(player.Quests[index])
         player.Blessings.MountainShrine.Points += player.Quests[index].Count;
         player.Quests.splice(index, 1);
         PregQuests();
@@ -105,7 +104,6 @@ function PregQuests() {
     GetImpregReward.setAttribute("title", "Get impregnated.");
     GetImpregReward.addEventListener("click", function () {
         var index = player.Quests.findIndex(e => e.Name == "Get Impregnated");
-        console.log(player.Quests[index])
         player.Blessings.MountainShrine.Points += player.Quests[index].Count * 7; // Getting yourself pregnant is harder to repeat therefore higher reward.
         player.Quests.splice(index, 1);
         PregQuests();
