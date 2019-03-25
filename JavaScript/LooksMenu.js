@@ -1,40 +1,39 @@
 document.getElementById("Perks").addEventListener("click", function () {
-    // Moved everything to the button to clean up the player var.
+    // Moved everything to the button to clean up the player const.
     DisplayNone();
-    var div = document.getElementById("Levels");
+    const div = document.getElementById("Levels");
     while (div.hasChildNodes()) {
         div.removeChild(div.lastChild);
     }
 
-    var StatsLevel = document.createElement("div");
-
-    var h3 = document.createElement("h3");
-    var h3Text = document.createTextNode("Stats:");
+    const StatsLevel = document.createElement("div"),
+        h3 = document.createElement("h3"),
+        h3Text = document.createTextNode("Stats:");
     h3.appendChild(h3Text);
     StatsLevel.appendChild(h3);
 
-    var RawStats = document.createElement("div");
+    const RawStats = document.createElement("div");
     RawStats.style.display = 'inline-block';
     RawStats.style.marginRight = "5px";
-    var Stats = document.createElement("div");
+    const Stats = document.createElement("div");
     Stats.style.display = 'inline-block';
 
-    var RawH4 = document.createElement("h4");
-    var RawH4Text = document.createTextNode("Raw:");
+    const RawH4 = document.createElement("h4"),
+        RawH4Text = document.createTextNode("Raw:");
     RawH4.appendChild(RawH4Text);
     RawStats.appendChild(RawH4);
 
-    var RawP = document.createElement("ol");
+    const RawP = document.createElement("ol");
     RawP.innerHTML = "<li>Str: " + player.Str + "</li><li>End: " + player.End + "</li><li>Will: " + player.Will +
         "</li><li>Charm: " + player.Charm + "</li><li>Int: " + player.Int + "</li><li>Sex skill: " + player.SexSkill + "</li>";
     RawStats.appendChild(RawP);
 
-    var H4 = document.createElement("h4");
-    var H4Text = document.createTextNode("Total:");
+    const H4 = document.createElement("h4"),
+        H4Text = document.createTextNode("Total:");
     H4.appendChild(H4Text);
     Stats.appendChild(H4);
 
-    var P = document.createElement("ol");
+    const P = document.createElement("ol");
     P.innerHTML = "<li>Str: " + TotalStr() + "</li><li>End: " + TotalEnd() + "</li><li>Will: " + TotalWill() +
         "</li><li>Charm: " + TotalCharm() + "</li><li>Int: " + TotalInt() + "</li><li>Sex skill: " + TotalSexSkill() + "</li>";
     Stats.appendChild(P);
@@ -44,65 +43,65 @@ document.getElementById("Perks").addEventListener("click", function () {
     div.appendChild(StatsLevel);
     document.getElementById("Levels").style.display = 'block';
 
-    var Perks = document.createElement("div");
+    const Perks = document.createElement("div");
     Perks.style.display = "inline-block"
-    var PerksH4 = document.createElement("h4");
-    var PerksH4text = document.createTextNode("Perks:");
+    const PerksH4 = document.createElement("h4"),
+        PerksH4text = document.createTextNode("Perks:");
     PerksH4.appendChild(PerksH4text);
     Perks.appendChild(PerksH4);
 
-    var PerksP = document.createElement("ol");
-
-    for (var i = 0; i < Object.keys(player.Perks).length; i++) {
-        if (player.Perks[Object.keys(player.Perks)[i]].Count > 0) {
-            var perkLi = document.createElement("li");
-            perkLi.innerHTML = Object.keys(player.Perks)[i] + ": " + player.Perks[Object.keys(player.Perks)[i]].Count;
+    const PerksP = document.createElement("ol");
+    for (let i of Object.keys(player.Perks)) {
+        if (player.Perks[i].Count > 0) {
+            const perkLi = document.createElement("li");
+            perkLi.innerHTML = i + ": " + player.Perks[i].Count;
             PerksP.appendChild(perkLi);
         }
-    }
+    };
     Perks.appendChild(PerksP);
     div.appendChild(Perks);
 
-    var Races = document.createElement("div");
+    const Races = document.createElement("div");
     Races.style.display = "inline-block";
 
-    var RacesH4 = document.createElement("h4");
-    var RacesH4Text = document.createTextNode("Race essence:");
+    const RacesH4 = document.createElement("h4"),
+        RacesH4Text = document.createTextNode("Race essence:");
     RacesH4.appendChild(RacesH4Text);
     Races.appendChild(RacesH4);
 
-    var RacesP = document.createElement("ol");
-    var RaceTotal = 0;
-    for (var e = 0; e < player.RaceEssence.length; e++) {
+    const RacesP = document.createElement("ol");
+    let RaceTotal = 0;
+    for (let e = 0; e < player.RaceEssence.length; e++) {
         RaceTotal += player.RaceEssence[e].amount;
     }
     if (RaceTotal < 100) {
         RaceTotal = 100;
     }
-    for (var e = 0; e < player.RaceEssence.length; e++) {
-        var RacesLi = document.createElement("li");
-        RacesLi.innerHTML = player.RaceEssence[e].Race + ": " + Math.round(player.RaceEssence[e].amount / RaceTotal * 100) + "%  (" + player.RaceEssence[e].amount + ")";
+    for (let e of player.RaceEssence) {
+        const RacesLi = document.createElement("li");
+        RacesLi.innerHTML = Math.round(e.amount / RaceTotal * 100) > 1 ?
+            `${e.Race}: ${Math.round(e.amount / RaceTotal * 100)}%  (${e.amount})` :
+            `${e.Race}: <1%  (${e.amount})`;
         RacesP.appendChild(RacesLi);
     }
     Races.appendChild(RacesP);
     div.appendChild(Races);
 
-
     if (Settings.Vore) {
-        var Vore = document.createElement("div");
+        const Vore = document.createElement("div");
         Vore.style.display = "inline-block";
 
-        var VoreH4 = document.createElement("h4");
-        var VoreH4Text = document.createTextNode("Vore perks:");
+        const VoreH4 = document.createElement("h4"),
+            VoreH4Text = document.createTextNode("Vore perks:");
         VoreH4.appendChild(VoreH4Text);
         Vore.appendChild(VoreH4);
 
-        var VoreP = document.createElement("ol");
-        var v = player.Vore.VorePerks;
+        const VoreP = document.createElement("ol"),
+            v = player.Vore.VorePerks;
         if (Object.keys(v).length > 0) {
-            for (var i = 0; i < Object.keys(v).length; i++) {
-                var VoreLi = document.createElement("li");
-                VoreLi.innerHTML = Object.keys(v)[i] + ": " + v[Object.keys(v)[i]].Count;
+            for (let i of Object.keys(v)) {
+                const VoreLi = document.createElement("li");
+                VoreLi.innerHTML = i + ": " + v[i].Count;
                 VoreP.appendChild(VoreLi);
             }
         }
@@ -110,10 +109,10 @@ document.getElementById("Perks").addEventListener("click", function () {
         div.appendChild(Vore);
     }
 
-    var br = document.createElement("br");
+    const br = document.createElement("br");
     div.appendChild(br);
 
-    var CloseLevel = InputButton("Close");
+    const CloseLevel = InputButton("Close");
     CloseLevel.addEventListener("click", function () {
         document.getElementById("Levels").style.display = 'none';
         DisplayGame();

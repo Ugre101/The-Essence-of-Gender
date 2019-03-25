@@ -319,7 +319,6 @@ function PlayerImageLoad(arr, callback) { // Preload images to stop flickering
 var Player_SpriteImages = {};
 const PlayerSpriteLoader = PlayerImageLoad(["playerSprite"], function (images) {
     Player_SpriteImages = images;
-    console.log(Player_SpriteImages)
 });
 
 
@@ -358,8 +357,6 @@ function CharCreator() { // No need have these active for players who use load.
 
     function begin() {
         const form = document.forms.CreatePlayer.elements;
-
-        console.log(form[0].value);
         CharCreator.style.display = 'none';
         page2.style.display = 'flex';
         player.Name = form[0].value;
@@ -601,7 +598,6 @@ function ImgChose(who, what, who2) {
         default:
             break;
     }
-    console.log(source);
     myimg.src = "imgPack/" + source + ".jpg";
     myimg.onload = function () {
         DocId("MyImg").src = "imgPack/" + source + ".jpg";
@@ -896,8 +892,8 @@ function DocId(id) { // Important Prototype.js must be loaded before where you w
     return document.getElementById(id);
 }
 
-
-(function () {
+/**
+ * (function () {
     var a = RandomInt(1, 6);
     a === 1 ? console.log("One") : a === 2 ? console.log("Two") : a === 3 ? console.log("Three") :
         a === 4 ? console.log("Four") : a === 5 ? console.log("Five") : console.log("Six");
@@ -912,3 +908,4 @@ function DocId(id) { // Important Prototype.js must be loaded before where you w
         console.log("Future")
     }, 4000);
 })()
+ */
