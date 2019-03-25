@@ -686,13 +686,19 @@
    div.SiphonButtons {
        display: grid;
        grid-template-columns: 15% 70% 15%;
-        justify-items: center;
-    } 
-    div.MascFemi {
-        display: grid;
-        grid-template-columns: 50% 50%;
-         justify-items: center;  
-    }
+       justify-items: center;
+   }
+
+   div.MascFemi {
+       display: grid;
+       grid-template-columns: 50% 50%;
+       justify-items: center;
+   }
+
+   div.MascFemi>input[type=button] {
+       /*Make text easier to read*/
+       text-shadow: white 0px 0px 10px;
+   }
 
    #Home {
        background-color: rgb(192, 189, 192);

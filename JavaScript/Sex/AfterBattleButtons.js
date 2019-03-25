@@ -146,17 +146,16 @@ function AfterBattleButtons(Sex = true, Vored = false) {
             const InfuseDiv = document.createElement("div");
             InfuseDiv.classList.add("MascFemi");
             if (player.Masc > 0) {
-                const InjectM = InputButton("Infuse masc");
+                const InjectM = InputButton("Infuse Masc");
                 InjectM.addEventListener("click", DrainInjectM);
                 InjectM.style.background = "linear-gradient(to right,white,blue)";
-
                 InfuseDiv.appendChild(InjectM);
             } else { //filler button to stop player from missclicking
                 const InjectM = InputButton("Empty");
                 InfuseDiv.appendChild(InjectM);
             }
             if (player.Femi > 0) {
-                const InjectF = InputButton("Infuse femi");
+                const InjectF = InputButton("Infuse Femi");
                 InjectF.addEventListener("click", DrainInjectF);
                 InjectF.style.background = "linear-gradient(to right,white,#C12970)";
                 InfuseDiv.appendChild(InjectF);
@@ -168,13 +167,36 @@ function AfterBattleButtons(Sex = true, Vored = false) {
 
         }
         if (ee.SessionOrgasm > 0) {
-            if (ee.Dicks.length > 0 && false) { // Trial
+            const SiphonDiv = document.createElement("div");
+            SiphonDiv.classList.add("MascFemi");
+            if (ee.Masc > 0) {
+                const DrainM = InputButton("Siphon Masc");
+                DrainM.addEventListener("click", DrainDrainM);
+                DrainM.style.background = "linear-gradient(to right,blue,white)";
+                SiphonDiv.appendChild(DrainM);
+            } else {
+                const DrainM = InputButton("Drained");
+                SiphonDiv.appendChild(DrainM);
+            }
+
+            if (ee.Femi > 0) {
+                const DrainF = InputButton("Siphon Femi");
+                DrainF.addEventListener("click", DrainDrainF);
+                DrainF.style.background = "linear-gradient(to right, #C12970,white)";
+
+                SiphonDiv.appendChild(DrainF);
+            } else {
+                const DrainF = InputButton("Drained");
+                SiphonDiv.appendChild(DrainF);
+            }
+            Siphon.appendChild(SiphonDiv);
+            if (ee.Dicks.length > 0) { // Trial
                 let EEDickIndex = ee.Dicks.length - 1,
                     playerDickIndex = player.Dicks.length - 1;
                 const SiphonDickDiv = document.createElement("div"),
-                    SiphonDickIndex = InputButton(EEDickIndex + 1),
-                    SiphonDick = InputButton("Siphon dick"),
-                    SiphonPlayerDickIndex = InputButton(playerDickIndex + 1);
+                    SiphonDickIndex = InputButton(EEDickIndex + 1, "Enemy"),
+                    SiphonDick = InputButton("Siphon dick(test)"),
+                    SiphonPlayerDickIndex = InputButton(playerDickIndex + 1,"Player");
 
 
                 SiphonDickDiv.classList.add("SiphonButtons");
@@ -198,34 +220,11 @@ function AfterBattleButtons(Sex = true, Vored = false) {
 
                 Siphon.appendChild(SiphonDickDiv);
 
-                const SiphonDickToMasc = InputButton("Shrink dick");
+                const SiphonDickToMasc = InputButton("Shrink dick(test)");
                 SiphonDickToMasc.addEventListener("click", DrainSiphonDickToMasc);
                 Siphon.appendChild(SiphonDickToMasc);
 
             }
-            const SiphonDiv = document.createElement("div");
-            SiphonDiv.classList.add("MascFemi");
-            if (ee.Masc > 0) {
-                const DrainM = InputButton("Siphon masculinity");
-                DrainM.addEventListener("click", DrainDrainM);
-                DrainM.style.background = "linear-gradient(to right,blue,white)";
-                SiphonDiv.appendChild(DrainM);
-            } else {
-                const DrainM = InputButton("Drained");
-                SiphonDiv.appendChild(DrainM);
-            }
-
-            if (ee.Femi > 0) {
-                const DrainF = InputButton("Siphon femininity");
-                DrainF.addEventListener("click", DrainDrainF);
-                DrainF.style.background = "linear-gradient(to right, #C12970,white)";
-
-                SiphonDiv.appendChild(DrainF);
-            } else {
-                const DrainF = InputButton("Drained");
-                SiphonDiv.appendChild(DrainF);
-            }
-            Siphon.appendChild(SiphonDiv);
         }
         if (Settings.Vore) {
             if (StomachCapacity() > enemies[EnemyIndex].Weight) {
