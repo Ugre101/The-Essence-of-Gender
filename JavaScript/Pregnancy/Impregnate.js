@@ -128,7 +128,7 @@ function Impregnate(who, by, mode = "A", where = "") {
         }
     }
     if (mode == "A") {
-        var Impregnation = RandomInt(0, 100);
+        const Impregnation = RandomInt(0, 100);
         switch (CheckGender(who)) {
             case "cuntboy":
                 if (by.Virility >= Impregnation) {
@@ -168,7 +168,7 @@ function Impregnate(who, by, mode = "A", where = "") {
                 break;
         }
     } else if (mode == "B") {
-        var Impregnation = RandomInt(0, (500 - by.Masc));
+        const Impregnation = RandomInt(0, (500 - by.Masc));
         switch (CheckGender(who)) {
             case "cuntboy":
             case "female":
@@ -185,10 +185,12 @@ function Impregnate(who, by, mode = "A", where = "") {
                 break;
             case "dickgirl":
             case "male":
-                if (false) { //Need to make a way to enable make impreg (item/blessing/curse)
-                    if (who.Fertility - 50 >= Impregnation) {
-                        playerBabyMaker();
-                        DocId(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
+                if (player.Blessings.hasOwnProperty("MountainShrine")) { //Need to make a way to enable make impreg (item/blessing/curse)
+                    if (player.Blessings.MountainShrine.Malepreg > 0) {
+                        if (who.Fertility - 50 >= Impregnation) {
+                            playerBabyMaker();
+                            DocId(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
+                        }
                     }
                 }
                 break;

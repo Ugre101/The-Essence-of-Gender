@@ -866,8 +866,8 @@ function loop() {
         Laglimiter++;
         if (Laglimiter % 80 == 0) {
             Laglimiter = 0;
-            Settings.EssenceAuto ? EssenceCheck(player) : false;
-            EssenceBalance();
+            //Settings.EssenceAuto ? EssenceCheck(player) : false;
+            RaceEssenceBalance(); // Race essence bad name
             player.Fat = Math.max(0.1, player.Fat);
             player.Muscle = Math.max(1, player.Muscle);
             player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);
@@ -2167,14 +2167,6 @@ function ShopFunc() {
 } // Saved 13 lines with inputbutton, wow... but looks better to me atleast!    
 // Start Farm
 DocId("EquineTaurTF").addEventListener("click", function () {
-    if (player.SecondRace == "centaur") {
-        DocId("FarmOwnerText").innerHTML = "You're already a centaur!"
-        return;
-    }
-    if (TF.Status) {
-        DocId("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
-        return;
-    }
     if (player.Gold >= 250) {
         player.Gold -= 250;
         PotionDrunk("centaur")
@@ -2188,17 +2180,9 @@ DocId("FarmTitles").addEventListener("mouseover", function (e) {
     DocId("FarmOwnerText").innerHTML = e.target.title;
 });
 DocId("EquineTF").addEventListener("click", function () {
-    if (player.SecondRace == "equine" && player.Race == "equine") {
-        DocId("FarmOwnerText").innerHTML = "You already are a equine!"
-        return;
-    }
-    if (TF.Status) {
-        DocId("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
-        return;
-    }
     if (player.Gold >= 250) {
         player.Gold -= 250;
-        TfEngine("equine");
+        PotionDrunk("equine");
     } else {
         DocId("FarmOwnerText").innerHTML = "Insufficient gold.";
         return;
@@ -3119,6 +3103,10 @@ function CheckFlags() {
             MalePreg: 0
         }
     };
+    player.RaceEssence.push(            Human = {
+        Race: "bob",
+        amount: 0
+    })
 
     FluidsEngine();
     if (!player.hasOwnProperty("RaceEssence")) {
@@ -4164,9 +4152,9 @@ DocId("EssenceOptionsLeave").addEventListener("click", function () {
 });
 function isTaur(mode = 1) {
     const Taur = ["centaur"],
-        max = Math.min(3, player.RaceEssence.length),
+        max = Math.min(2, player.RaceEssence.length),
         RaceEss = player.RaceEssence;
-    for (let e in RaceEss) {
+    for (let e = 0; RaceEss.length < max; e++) {
         if (mode === 1) {
             Taur.indexOf(RaceEss[e].Race) > -1 ? e : false
         } else {
@@ -4177,25 +4165,22 @@ function isTaur(mode = 1) {
     }
 }
 
+// Concept for calculating what species you're treated as
+function RaceEssenceBalance() {
+    // filter out less than 1
+    player.RaceEssence = player.RaceEssence.filter(f => f.amount > 1);
+    const RaceEss = player.RaceEssence;
 
-function EssenceBalance() { // Concept for calculating what species you're treated as
-    const RaceEss = player.RaceEssence,
-        RA = [];
-    if (RaceEss.some(e => e.Race !== e.Race.Capitalize())) { // Make sure all races have first letter cap + rest lowercase
+    // Make sure all races have first letter cap + rest lowercase
+    if (RaceEss.some(e => e.Race !== e.Race.Capitalize())) {
         console.log("Non cap race");
         for (let e of RaceEss) {
             e.Race = e.Race.Capitalize();
         }
     };
-    if (RaceEss.some(e => e.amount < 1)) {
-        for (let i in RaceEss) { // Clearing/Spicing out anything below 1
-            if (RaceEss[i].amount < 1) {
-                console.log("Spliced " + RaceEss[i].Race);
-                RaceEss.splice(i, 1);
-            }
-        }
-    };
-    for (let e in RaceEss) { // Clearing/splicing duplicates
+
+    // Combining amounts in case of duplicates then clearing/splicing them.
+    for (let e in RaceEss) {
         for (let i in RaceEss) {
             if (RaceEss[e].Race === RaceEss[i].Race && e != i) {
                 console.log("Duplicate race");
@@ -4204,25 +4189,15 @@ function EssenceBalance() { // Concept for calculating what species you're treat
             }
         }
     };
-    RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
 
-    let totalAbsorb = 0;
-    for (let i of RaceEss) {
-        totalAbsorb += i.amount;
-    };
+    // Finding the new majority essence by sorting high to low 
+    RaceEss.sort((a, b) => b.amount - a.amount);
 
-    for (let i of RaceEss) {
-        if (i.amount / totalAbsorb > 0.01 && i.amount > 10) { // Bigger than 1 precent and higher value than 10
-            RA.push(i);
-        }
-    }
+    /* First I map the amounts then I count the total amount with reduce, after that I filter out
+       results less than 1 percent than total amount or less than 20 amount*/
+    const totalAbsorb = RaceEss.map(m => m.amount).reduce((acc, cur) => acc + cur),
+        RA = RaceEss.filter(f => f.amount / totalAbsorb > 0.01 && f.amount > 10);
 
-    /* Will convert to use this insted to I can make changed dependant on amount of essence.
-Need to make it like earlier so that low essence doesn't give a race, 
-e.g. you are not a dragon because you have 1 dragon essence.
-
-Don't like that no race = human, maybe should add a special race?
-    */
     const oldRace = player.Race,
         oldSecondRace = player.SecondRace;
     if (totalAbsorb < 100) {
@@ -4325,10 +4300,8 @@ function DetailedRaceDesc() {
     const RaceEss = player.RaceEssence,
         RA = RaceEss;
     RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
-    let totalAbsorb = 0;
-    for (let i of RaceEss) {
-        totalAbsorb += i.amount;
-    }
+    const totalAbsorb = RaceEss.map(m => m.amount).reduce((acc, cur) => acc + cur);
+
     const R1 = Math.round(100 * RA[0].amount / totalAbsorb),
         R2 = RA.length > 1 ? Math.round(100 * RA[1].amount / totalAbsorb) : 0,
         R3 = RA.length > 2 ? Math.round(100 * RA[2].amount / totalAbsorb) : 0;
@@ -4562,136 +4535,209 @@ function GotMilk(who) {
         }
         return;
     }
-DocId("Dorm").addEventListener("click", function () {
-    DocId("HomeStart").style.display = 'none';
-    DocId("TheDorm").style.display = 'block';
-    DocId("ButtonMates").style.display = 'grid';
-    DocId("DivMates").style.display = 'none';
-    DocId("LeaveDorm").style.display = 'inline-block'
-    DocId("flex").style.display = 'none';
-    ButtonMates();
+function DormFunc() {
+    const dorm = DocId("TheDorm");
+    while (dorm.hasChildNodes()) {
+        dorm.removeChild(dorm.firstChild)
+    }
+
+    const h2 = document.createElement("h2"),
+        h2text = document.createTextNode("Dorms");
+    h2.appendChild(h2text);
+    dorm.appendChild(h2);
+
+    const ButtonMates = document.createElement("div");
+    ButtonMates.classList.add("ButtonMates");
+    ButtonMates.style.display = 'grid';
+
+    function Color(e) {
+        switch (CheckGender(e)) {
+            case "female":
+                return "Pink";
+            case "male":
+                return "Blue";
+            case "hermaphrodite":
+                return "Purple";
+            case "doll":
+            default:
+                return "Beige";
+        }
+    }
+    for (let e of House.Dormmates) {
+        const dormmate = ButtonButton(),
+            DormName = e.hasOwnProperty("FirstName") ?
+            (e.hasOwnProperty("LastName") ? e.FirstName + " " + e.LastName : e.FirstName) :
+            (e.hasOwnProperty("LastName") ? e.LastName : "");
+        dormmate.style.backgroundColor = Color(e);
+        dormmate.innerHTML = `${DormName}<br>${e.Name} ${e.Race}`;
+        dormmate.addEventListener("click", function () {
+            MateDiv(e);
+        });
+        ButtonMates.appendChild(dormmate);
+    }
+    dorm.appendChild(ButtonMates);
 
     if (House.Dormmates.length > 0 && player.Balls.length > 0) {
-        DocId("ImpregOrgy").style.display = 'inline-block';
-        DocId("GetImpregOrgy").style.display = 'inline-block';
-    } else {
-        DocId("ImpregOrgy").style.display = 'none';
-        DocId("GetImpregOrgy").style.display = 'none';
+        const ImpregOrgy = InputButton("Impregnate servants",
+            "Spend the day fucking you servants, until your balls are completely emptied.")
+        dorm.appendChild(ImpregOrgy);
     }
+    const GetImpregOrgy = InputButton("Get impregnated",
+        "Spend the day getting fucked by your virile servants, till all of their balls content have been emptied into your orifices.")
+    dorm.appendChild(GetImpregOrgy);
 
-
-});
-
-function ButtonMates() {
-    var Inputs = [];
-    for (var e = 0; e < House.Dormmates.length; e++) {
-        var color;
-        switch (CheckGender(House.Dormmates[e])) {
-            case "female":
-                color = "Pink";
-                break;
-            case "male":
-                color = "Blue";
-                break;
-            case "hermaphrodite":
-                color = "Purple";
-                break;
-            case "doll":
-                color = "Beige";
-                break;
-        }
-        var DormName = "";
-        if (House.Dormmates[e].hasOwnProperty("FirstName")) {
-            DormName += House.Dormmates[e].FirstName;
-        };
-        if (House.Dormmates[e].hasOwnProperty("LastName")) {
-            DormName += " " + House.Dormmates[e].LastName;
-        };
-        var Input = "<button type=\"button\" class=\"" + color + "\" onclick=\"MateDiv(" + e + ")\">" + DormName + "<br>" +
-            House.Dormmates[e].Name + " " + House.Dormmates[e].Race + "</button  >"
-        Inputs += Input;
-    }
-    DocId("ButtonMates").innerHTML = Inputs;
+    const LeaveDorm = InputButton("Leave dorm");
+    LeaveDorm.addEventListener("click", function () {
+        DocId("HomeStart").style.display = 'block';
+        DocId("TheDorm").style.display = 'none';
+    });
+    dorm.appendChild(LeaveDorm);
 }
 
-var MateIndex;
+DocId("Dorm").addEventListener("click", function () {
+    DormFunc();
+    DocId("HomeStart").style.display = 'none';
+    DocId("TheDorm").style.display = 'block';
+});
 
 function MateDiv(e) {
-    MateIndex = e;
-    var rm = House.Dormmates[e];
-    DocId("ButtonMates").style.display = 'none';
-    DocId("DivMates").style.display = 'flex';
-    DocId("flex").style.display = 'grid';
-    var RoomMate = "<div id=\"" + e + "\"></div>"
-    DocId("DivMates").innerHTML = RoomMate;
+    // MateIndex = e;
+    const rm = e,
+        RoomMate = document.createElement("div"),
+        RoomMateInner = document.createElement("div"),
+        StatsDiv = document.createElement("div"),
+        InputCon = document.createElement("div"),
+        InnerDorm = document.createElement("div"),
+        dorm = DocId("TheDorm");
+
+    while (dorm.hasChildNodes()) {
+        dorm.removeChild(dorm.firstChild)
+    };
+
+    RoomMate.classList.add("DivMates");
+    StatsDiv.classList.add("DivMatesInner");
+    InnerDorm.classList.add("DivMatesCon");
+
     let PregnantStatus = "";
     if (rm.hasOwnProperty("Pregnant")) {
         if (rm.Pregnant.Status) {
-            const age = Math.round(rm.Pregnant.Babies[0].BabyAge / 10000);
+            const age = Math.round(rm.Pregnant.Babies[0].BabyAge / 30);
             PregnantStatus = (age < 1) ? "<br>Impregnated" : "<br>" + age + " months pregnant";
         }
     }
 
     const DormName = rm.FirstName + " " + rm.LastName;;
 
-    DocId(e).innerHTML = "<div>" + DormName + "<br>" + rm.Name + " " + rm.Race + "<br>" + Pronoun(CheckGender(rm)) +
+    const stats = ["Str", "Charm", "End", "Int", "SexSkill", "Will"].forEach((src) => {
+        StatsDiv.innerHTML += `<br>${src}: ${rm[src]}`;
+    });
+    RoomMateInner.innerHTML = DormName + "<br>" + rm.Name + " " + rm.Race + "<br>" + Pronoun(CheckGender(rm)) +
         "<br><br>Height: " + CmToInch(Math.round(rm.Height)) + "<br>Weight: " + KgToPound(rm.Weight) + "<br>Muscle: " + KgToPound(rm.Muscle) + "<br>Fat: " + KgToPound(rm.Fat) +
-        "<br>" + PregnantStatus + "<br><br>" + BoobLook(rm) + DickLook(rm) + BallLook(rm) + PussyLook(rm) + "<div> Strength: " + rm.Str +
-        "<br>Charm: " + rm.Charm + "<br>Endurance: " + rm.End + "<br>Int: " + rm.Int + "<br>Sexskill: " + rm.SexSkill +
-        "<br> Willpower: " + rm.Will + "</div></div>   "
-    DocId(e).style.display = 'block'
-    DocId("LeaveRoom").style.display = 'block';
-    DocId("LeaveDorm").style.display = 'none';
-    DocId("ImpregOrgy").style.display = 'none';
-    DocId("GetImpregOrgy").style.display = 'none';
-    DocId("KickOut").style.display = 'block';
-    DocId("Fuck").style.display = 'block';
-    DocId("Rename").style.display = 'block';
-}
-DocId("KickYes").addEventListener("click", function () {
-    DocId("flex").style.display = 'grid';
-    DocId("KickYesNo").style.display = 'none';
-    DocId("HomeStart").style.display = 'block';
-    DocId("TheDorm").style.display = 'none';
-    DocId("ImpregOrgy").style.display = 'inline-block';
-    DocId("GetImpregOrgy").style.display = 'inline-block';
-    House.Dormmates.splice(MateIndex, 1);
-    return;
-});
-DocId("KickNo").addEventListener("click", function () {
-    DocId("flex").style.display = 'grid';
-    DocId("KickYesNo").style.display = 'none';
-});
-DocId("Fuck").addEventListener("click", function () {
-    DocId("Home").style.display = 'none';
-    DocId("FuckDorm").style.display = 'grid';
-    DocId("status").style.display = 'none';
-    DocId("EmptyButtons").style.display = 'none';
-    DocId("EventLog").style.display = 'none';
-    DormSex();
-});
-DocId("Rename").addEventListener("click", function () {
-    var e = House.Dormmates[MateIndex];
-    if (e.hasOwnProperty("FirstName")) {
-        DocId("DormFirstName").value = e.FirstName;
-    }
-    if (e.hasOwnProperty("LastName")) {
-        DocId("DormLastName").value = e.LastName
-    }
-    DocId("DormNameChangeForm").style.display = 'block';
-    DocId(MateIndex).style.display = 'none';
-    DocId("flex").style.display = 'none';
-});
-DocId("AcceptDormName").addEventListener("click", function () {
-    var e = House.Dormmates[MateIndex];
-    e.FirstName = DocId("DormFirstName").value;
-    e.LastName = DocId("DormLastName").value;
-    DocId("DormNameChangeForm").style.display = 'none';
-    MateDiv(MateIndex);
-});
+        "<br>" + PregnantStatus + "<br><br>" + BoobLook(rm) + DickLook(rm) + BallLook(rm) + PussyLook(rm);
+    RoomMateInner.appendChild(StatsDiv);
+    RoomMate.appendChild(RoomMateInner);
+    InnerDorm.appendChild(RoomMate);
 
-function DormSex() {
-    var e = House.Dormmates[MateIndex];
+    const Fuck = InputButton("Fuck");
+    Fuck.addEventListener("click", function () {
+        MateIndex = rm;
+        DocId("Home").style.display = 'none';
+        DocId("FuckDorm").style.display = 'grid';
+        DocId("status").style.display = 'none';
+        DocId("EmptyButtons").style.display = 'none';
+        DocId("EventLog").style.display = 'none';
+        DormSex(rm);
+    });
+    InputCon.appendChild(Fuck);
+
+    const LeaveRoom = InputButton("Leave room");
+    LeaveRoom.addEventListener("click", function () {
+        DormFunc();
+    });
+    InputCon.appendChild(LeaveRoom);
+
+    const DormChildren = InputButton("DormChildren");
+
+    const Rename = InputButton("Rename");
+    Rename.addEventListener("click", function () {
+        DormRename();
+    });
+    InputCon.appendChild(Rename);
+
+    const KickOut = InputButton("KickOut");
+    KickOut.addEventListener("click", function () {
+        DormKickOut();
+    });
+    InputCon.appendChild(KickOut);
+    InnerDorm.appendChild(InputCon);
+    dorm.appendChild(InnerDorm);
+
+    function DormRename() {
+        while (dorm.hasChildNodes()) {
+            dorm.removeChild(dorm.firstChild)
+        };
+        const InnerRenameDorm = document.createElement("div"),
+            Firstlabel = document.createElement("label"),
+            Firstinput = document.createElement("input"),
+            Lastlabel = document.createElement("label"),
+            Lastinput = document.createElement("input"),
+            Accept = InputButton("Accept");
+
+        Firstinput.setAttribute("id", "ajog94");
+        Firstinput.setAttribute("type", "text");
+        Firstlabel.setAttribute("for", "ajog94");
+
+        Lastinput.setAttribute("id", "asegk3");
+        Lastinput.setAttribute("type", "text");
+        Lastlabel.setAttribute("for", "asegk3");
+        InnerRenameDorm.appendChild(Firstlabel);
+        InnerRenameDorm.appendChild(Firstinput);
+        InnerRenameDorm.appendChild(Lastlabel);
+        InnerRenameDorm.appendChild(Lastinput);
+
+        if (rm.hasOwnProperty("FirstName")) {
+            Firstinput.value = rm.FirstName;
+        };
+        if (rm.hasOwnProperty("LastName")) {
+            Lastinput.value = e.LastName;
+        };
+
+        Accept.addEventListener("click", function () {
+            rm.FirstName = Firstinput.value;
+            rm.LastName = Lastinput.value;
+            MateDiv(rm);
+        });
+        InnerRenameDorm.appendChild(Accept);
+        dorm.appendChild(InnerRenameDorm);
+    };
+
+    function DormKickOut() {
+        while (dorm.hasChildNodes()) {
+            dorm.removeChild(dorm.firstChild)
+        };
+
+        const index = House.Dormmates.findIndex(i => i === e),
+            who = House.Dormmates[index];
+        DocId("HomeText").innerHTML = `Are you sure you want to kick out ${who.FirstName} ${who.LastName}?`;
+
+        const kickoutdiv = document.createElement("div"),
+            Yes = InputButton("Yes"),
+            No = InputButton("No");
+        Yes.addEventListener("click", function () {
+            House.Dormmates.splice(index, 1);
+            DormFunc();
+        });
+        No.addEventListener("click", function () {
+            MateDiv(rm);
+        })
+        kickoutdiv.appendChild(Yes);
+        kickoutdiv.appendChild(No);
+        dorm.appendChild(kickoutdiv);
+    }
+};
+
+function DormSex(rm) {
+    const e = rm;
     EssenceCheck(e);
     if (Settings.EssenceAuto) {
         EssenceCheck(player);
@@ -4713,14 +4759,9 @@ function DormSex() {
     }
     if (player.Pregnant.Status) {
         DocId("GetImpregnated").style.display = 'none';
-        var age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
-        if (age < 1) {
-            DocId("DormPlayerLooks").innerHTML += "<br>Impregnated";
-        } else {
-            DocId("DormPlayerLooks").innerHTML += "<br>" + age + " months pregnant";
-        }
-
-
+        const age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
+        DocId("DormPlayerLooks").innerHTML += (age < 1) ?
+            "<br>Impregnated" : "<br>" + age + " months pregnant";
     } else {
         if (e.Balls.length < 1) {
             DocId("GetImpregnated").style.display = 'none';
@@ -4731,12 +4772,9 @@ function DormSex() {
 
     if (e.hasOwnProperty("Pregnant")) {
         if (e.Pregnant.Status) {
-            var age = Math.round(e.Pregnant.Baby / 10000);
-            if (age < 1) {
-                DocId("DormEnemyLooks").innerHTML += "<br>Impregnated";
-            } else {
-                DocId("DormEnemyLooks").innerHTML += "<br>" + age + " months pregnant";
-            }
+            const age = Math.round(e.Pregnant.Babies[0].BabyAge / 30);
+            DocId("DormEnemyLooks").innerHTML += (age < 1) ?
+                "<br>Impregnated" : "<br>" + age + " months pregnant";
         }
     }
     const DelatMed =
@@ -4751,59 +4789,33 @@ function DormSex() {
     return;
 };
 DocId("DormDrainMasc").addEventListener("click", function () {
-    var e = House.Dormmates[MateIndex];
-    if (player.EssenceDrain >= e.Masc && e.Masc > 0) {
-        player.Masc += e.Masc;
-        e.Masc = 0;
-        EssenceCheck(e);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
-        DormSex();
-        DocId("DormSexText").innerHTML = "Siphon masc";
-        return;
-    } else if (player.EssenceDrain < e.Masc) {
-        player.Masc += player.EssenceDrain;
-        e.Masc -= player.EssenceDrain;
-        EssenceCheck(e);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
-        DormSex();
-        DocId("DormSexText").innerHTML = "Siphon masc";
-        return;
-    } else {
-        return;
+    const e = MateIndex,
+        Ess = Math.min(e.Masc, player.EssenceDrain);
+
+    player.Masc += Ess;
+    e.Masc -= Ess;
+    EssenceCheck(e);
+    if (Settings.EssenceAuto) {
+        EssenceCheck(player);
     }
+    DormSex(e);
+    DocId("DormSexText").innerHTML = "Siphon masc";
 });
 DocId("DormDrainFemi").addEventListener("click", function () {
-    var e = House.Dormmates[MateIndex];
-    if (player.EssenceDrain >= e.Femi && e.Femi > 0) {
-        player.Femi += e.Femi;
-        e.Femi = 0;
-        EssenceCheck(e);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
-        DormSex();
-        DocId("DormSexText").innerHTML = "Siphon femi";
-        return;
-    } else if (player.EssenceDrain < e.Femi) {
-        player.Femi += player.EssenceDrain;
-        e.Femi -= player.EssenceDrain;
-        EssenceCheck(e);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
-        DormSex();
-        DocId("DormSexText").innerHTML = "Siphon femi";
-        return;
-    } else {
-        return;
+    const e = MateIndex,
+        Ess = Math.min(e.Femi, player.EssenceDrain);
+    player.Femi += Ess;
+    e.Femi -= Ess;
+    EssenceCheck(e);
+    if (Settings.EssenceAuto) {
+        EssenceCheck(player);
     }
+    DormSex(e);
+    DocId("DormSexText").innerHTML = "Siphon femi";
+    return;
 });
 DocId("DormInjMasc").addEventListener("click", function () {
-    var e = House.Dormmates[MateIndex];
+    const e = MateIndex;
     if (player.Masc > 0) {
         e.Masc += Math.min(100, player.Masc);
         player.Masc -= Math.min(100, player.Masc);
@@ -4811,13 +4823,13 @@ DocId("DormInjMasc").addEventListener("click", function () {
         if (Settings.EssenceAuto) {
             EssenceCheck(player);
         }
-        DormSex();
+        DormSex(e);
         DocId("DormSexText").innerHTML = "Inject masc";
         return;
     }
 });
 DocId("DormInjFemi").addEventListener("click", function () {
-    var e = House.Dormmates[MateIndex];
+    const e = MateIndex;
     if (player.Femi > 0) {
         e.Femi += Math.min(100, player.Femi);
         player.Femi -= Math.min(100, player.Femi);
@@ -4825,7 +4837,7 @@ DocId("DormInjFemi").addEventListener("click", function () {
         if (Settings.EssenceAuto) {
             EssenceCheck(player);
         }
-        DormSex();
+        DormSex(e);
         DocId("DormSexText").innerHTML = "Inject femi";
         return;
     }
@@ -4842,7 +4854,7 @@ DocId("Impregnate").addEventListener("click", function () {
     if (e.hasOwnProperty("Pregnant")) {
         if (e.Pregnant.Status) {
             DocId("DormSexText").innerHTML = "You have already impregnated her!"
-            DormSex();
+            DormSex(e);
             return;
         }
     } else {
@@ -4859,21 +4871,24 @@ DocId("Impregnate").addEventListener("click", function () {
         }
 
     }
-    DormSex();
+    DormSex(e);
 });
 var Setup = true;
 DocId("GetImpregnated").addEventListener("click", function () {
-    var e = House.Dormmates[MateIndex];
+    const e = MateIndex;
     if (Setup) {
-        DocId("DormSexText").innerHTML = "Desiring to get pregnant you call " + e.FirstName + " " + e.LastName + " a servant whom you feel are worthy " +
-            "fathering you child. Firmly pushing them down on the bed you get on top them straddling their face grinding your pussy against their mouth, once you feel ready you shift focus to their groin removing their clothes and free their " + CmToInch(e.Dicks[0].Size) + " " + e.Dicks[0].Type + " dick. " +
-            "Positions your pussy on top of their glans letting it slowly enter, once accustomed speeding up."
+        DocId("DormSexText").innerHTML = `Desiring to get pregnant you call ${e.FirstName} ${e.LastName} a 
+        servant whom you feel are worthy fathering you child. Firmly pushing them down on the bed you 
+        get on top them straddling their face grinding your pussy against their mouth, once you feel ready 
+        you shift focus to their groin removing their clothes and free their ${CmToInch(e.Dicks[0].Size)} 
+        ${e.Dicks[0].Type} dick. Positions your pussy on top of their glans letting it slowly enter, 
+        once accustomed speeding up.`
     } else {
-        DocId("DormSexText").innerHTML = "Not giving up you continue riding them.";
+        DocId("DormSexText").innerHTML = `Not giving up you continue riding them.`;
     }
     if (player.Pregnant.Status) {
         DocId("DormSexText").innerHTML = "You are already pregnant.";
-        DormSex();
+        DormSex(e);
         return;
     } else if (e.Balls.length > 0) {
         Setup = false;
@@ -4894,7 +4909,7 @@ DocId("GetImpregnated").addEventListener("click", function () {
     if (player.Pussies[pussypicker].Virgin) {
         player.Pussies[pussypicker].Virgin = false;
     }
-    DormSex();
+    DormSex(e);
 });
 DocId("LeaveDormSex").addEventListener("click", function () {
     DocId("Home").style.display = 'block';
@@ -4905,24 +4920,26 @@ DocId("LeaveDormSex").addEventListener("click", function () {
     MateDiv(MateIndex);
     Setup = true;
 });
-DocId("LeaveRoom").addEventListener("click", function () {
-    DocId("DivMates").style.display = 'none';
-    DocId("ButtonMates").style.display = 'grid';
-    DocId("LeaveRoom").style.display = 'none';
-    DocId("LeaveDorm").style.display = 'inline-block'
-    DocId("ImpregOrgy").style.display = 'inline-block';
-    DocId("GetImpregOrgy").style.display = 'inline-block';
-    DocId("KickOut").style.display = 'none';
-    DocId("Fuck").style.display = 'none';
-    DocId("Rename").style.display = 'none';
-    DocId("DormChildren").style.display = 'none';
-    ButtonMates();
-    return;
+DocId("GetImpregOrgy").addEventListener("click", function () {
+    DocId("HomeText").innerHTML = "Orgy";
+    var CumTotal = 0;
+    for (var a = 0; a < House.Dormmates.length; a++) {
+        for (var b = 0; b < House.Dormmates[a].Balls.length; b++) {
+            CumTotal += House.Dormmates[a].Balls[b].Cum;
+            while (House.Dormmates[a].Balls[b].Cum >= 10) {
+                if (player.Pregnant.Status) {
+                    break;
+                } else {
+                    Impregnate(player, House.Dormmates[a], "B", "Dorm")
+                    House.Dormmates[a].Balls[b].Cum -= 10;
+                }
+            }
+        }
+    }
+    DocId("HomeText").innerHTML += "<br><br> By the end of the night they have cummed " + (Math.round(CumTotal / 1000 * 100) / 100) + "L into you.";
 });
-DocId("KickOut").addEventListener("click", function () {
-    DocId("flex").style.display = 'none';
-    DocId("KickYesNo").style.display = 'block';
-});
+
+
 DocId("ImpregOrgy").addEventListener("click", function () {
     DocId("HomeText").innerHTML = "Orgy<br>"
     var CumTotal = 0;
@@ -4953,33 +4970,6 @@ DocId("ImpregOrgy").addEventListener("click", function () {
         player.Balls[b].Cum = 0;
     }
     FluidsEngine();
-});
-DocId("TheDorm").addEventListener("mouseover", function (e) {
-    DocId("HomeText").innerHTML = e.target.title;
-});
-DocId("GetImpregOrgy").addEventListener("click", function () {
-    DocId("HomeText").innerHTML = "Orgy";
-    var CumTotal = 0;
-    for (var a = 0; a < House.Dormmates.length; a++) {
-        for (var b = 0; b < House.Dormmates[a].Balls.length; b++) {
-            CumTotal += House.Dormmates[a].Balls[b].Cum;
-            while (House.Dormmates[a].Balls[b].Cum >= 10) {
-                if (player.Pregnant.Status) {
-                    break;
-                } else {
-                    Impregnate(player, House.Dormmates[a], "B", "Dorm")
-                    House.Dormmates[a].Balls[b].Cum -= 10;
-                }
-            }
-        }
-    }
-    DocId("HomeText").innerHTML += "<br><br> By the end of the night they have cummed " + (Math.round(CumTotal / 1000 * 100) / 100) + "L into you.";
-});
-DocId("LeaveDorm").addEventListener("click", function () {
-    DocId("HomeStart").style.display = 'block';
-    DocId("TheDorm").style.display = 'none';
-    DocId("HomeText").innerHTML = "";
-    return;
 });
 // Home
 DocId("Sleep").addEventListener("click", function () {
@@ -6833,7 +6823,7 @@ document.getElementById("Perks").addEventListener("click", function () {
     for (let e of player.RaceEssence) {
         const RacesLi = document.createElement("li");
         RacesLi.innerHTML = Math.round(e.amount / RaceTotal * 100) > 1 ?
-            `${e.Race}: ${Math.round(e.amount / RaceTotal * 100)}%  (${e.amount})` :
+            `${e.Race}: ${Math.round(e.amount / RaceTotal * 100)}%  (${Math.round(e.amount)})` :
             `${e.Race}: <1%  (${e.amount})`;
         RacesP.appendChild(RacesLi);
     }
@@ -9628,7 +9618,7 @@ function Impregnate(who, by, mode = "A", where = "") {
         }
     }
     if (mode == "A") {
-        var Impregnation = RandomInt(0, 100);
+        const Impregnation = RandomInt(0, 100);
         switch (CheckGender(who)) {
             case "cuntboy":
                 if (by.Virility >= Impregnation) {
@@ -9668,7 +9658,7 @@ function Impregnate(who, by, mode = "A", where = "") {
                 break;
         }
     } else if (mode == "B") {
-        var Impregnation = RandomInt(0, (500 - by.Masc));
+        const Impregnation = RandomInt(0, (500 - by.Masc));
         switch (CheckGender(who)) {
             case "cuntboy":
             case "female":
@@ -9685,10 +9675,12 @@ function Impregnate(who, by, mode = "A", where = "") {
                 break;
             case "dickgirl":
             case "male":
-                if (false) { //Need to make a way to enable make impreg (item/blessing/curse)
-                    if (who.Fertility - 50 >= Impregnation) {
-                        playerBabyMaker();
-                        DocId(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
+                if (player.Blessings.hasOwnProperty("MountainShrine")) { //Need to make a way to enable make impreg (item/blessing/curse)
+                    if (player.Blessings.MountainShrine.Malepreg > 0) {
+                        if (who.Fertility - 50 >= Impregnation) {
+                            playerBabyMaker();
+                            DocId(where + "SexText").innerHTML = "Due your extreme fertility and their virility you have been impregnated!"
+                        }
                     }
                 }
                 break;
@@ -9706,52 +9698,54 @@ function Impregnate(who, by, mode = "A", where = "") {
 }
 function PregnanyEngine() {
     if (player.Children.length > 0) {
-        for (var e = 0; e < player.Children.length; e++) {
-            player.Children[e].AgeCounter++;
-            if (player.Children[e].AgeCounter % 365 == 0) {
-                var age = Math.round(player.Children[e].AgeCounter / 365);
-                EventLog("Your child has grown " + IntToAge(age) + " old.");
+        for (let e of player.Children) {
+            e.AgeCounter++;
+            if (e.AgeCounter % 365 == 0) {
+                const age = Math.round(e.AgeCounter / 365);
+                EventLog(`Your child has grown ${IntToAge(age)} old.`);
             }
+            console.log(e)
         }
     }
     if (player.Pregnant.Babies.length > 0) {
-        for (var e = 0; e < player.Pregnant.Babies.length; e++) {
-            player.Pregnant.Babies[e].BabyAge++;
-            if (player.Pregnant.Babies[e].BabyAge > Math.max(2, 274 - player.Blessings.MountainShrine.Incubator * 5)) {
-                if (player.Pregnant.Babies[e].hasOwnProperty("Blessed")) {
-                    var Child = {
-                        AgeCounter: 0,
-                        Race: player.Pregnant.Babies[e].BabyRace,
-                        Mother: player.Pregnant.Babies[e].Mother,
-                        Father: player.Pregnant.Babies[e].Father,
-                        Blessed: player.Pregnant.Babies[e].Blessed
-                    };
-                } else {
-                    var Child = {
-                        AgeCounter: 0,
-                        Race: player.Pregnant.Babies[e].BabyRace,
-                        Mother: player.Pregnant.Babies[e].Mother,
-                        Father: player.Pregnant.Babies[e].Father
-                    };
-                }
+        for (let i in player.Pregnant.Babies) {
+            const e = player.Pregnant.Babies[i],
+                reduction = player.Blessings.hasOwnProperty("MountainShrine") ?
+                player.Blessings.MountainShrine.Incubator * 5 : 0;
+
+            e.BabyAge++;
+            if (e.BabyAge > Math.max(2, 274 - reduction)) {
+                const Child = e.hasOwnProperty("Blessed") ? {
+                    AgeCounter: 0,
+                    Race: e.BabyRace,
+                    Mother: e.Mother,
+                    Father: e.Father,
+                    Blessed: e.Blessed
+                } : {
+                    AgeCounter: 0,
+                    Race: e.BabyRace,
+                    Mother: e.Mother,
+                    Father: e.Father
+                };
                 player.Children.push(Child);
                 EventLog("You have given birth!")
-                player.Pregnant.Babies.splice(e, 1);
+                player.Pregnant.Babies.splice(i, 1);
                 if (player.Pregnant.Babies.length < 1) {
                     player.Pregnant.Status = false;
                 }
             }
         }
-        for (var b = 0; b < player.Boobies.length; b++) {
-            if (player.Boobies[b].Milk < player.Boobies[b].MilkMax) {
-                player.Boobies[b].MilkBaseRate = player.Boobies[b].MilkMax / 50000;
-                player.Boobies[b].Milk += player.Boobies[b].MilkBaseRate;
+
+        for (let b of player.Boobies) {
+            if (b.Milk < b.MilkMax) {
+                b.MilkBaseRate = b.MilkMax / 50000;
+                b.Milk += b.MilkBaseRate;
             }
         }
     } else {
         player.Pregnant.Status = false;
     }
-    for (var e of House.Dormmates) {
+    for (let e of House.Dormmates) {
         if (!e.hasOwnProperty("Pregnant")) {
             e.Pregnant = {
                 Status: false,
@@ -9761,19 +9755,25 @@ function PregnanyEngine() {
         if (!Array.isArray(e.Children)) {
             e.Children = [];
         }
-        if (e.Pregnant.Status) {
-            for (var b = 0; b < e.Pregnant.Babies.length; e++) {
-                e.Pregnant.Babies[b].BabyAge++;
-                if (e.Pregnant.Babies.BabyAge > Math.max(2, 274 - player.Blessings.MountainShrine.IncubatorSeed * 5)) {
-                    var Child = {
+        const {
+            Status,
+            Babies
+        } = e.Pregnant;
+        if (Status) {
+            for (let b in Babies) {
+                Babies[b].BabyAge++;
+                const reduction = player.Blessings.hasOwnProperty("MountainShrine") ?
+                    player.Blessings.MountainShrine.IncubatorSeed * 5 : 0;
+                if (Babies[b].BabyAge > Math.max(2, 274 - reduction)) {
+                    const Child = {
                         AgeCounter: 0,
                         Race: e.Race,
-                        Mother: e.Pregnant.Mother,
-                        Father: e.Pregnant.Father
+                        Mother: Babies[b].Mother,
+                        Father: Babies[b].Father
                     };
                     e.Children.push(Child);
-                    e.Babies.splice(b, 1);
-                    if (e.Pregnant.Babies.length < 1) {
+                    Babies.splice(b, 1);
+                    if (Babies.length < 1) {
                         e.Pregnant.Status = false;
                     }
                     EventLog(e.FirstName + " " + e.LastName + " have given birth!");
@@ -9781,11 +9781,11 @@ function PregnanyEngine() {
             }
         }
         if (e.Children.length > 0) {
-            for (var b of e.Children) {
-                var age = Math.round(b.AgeCounter / 365);
+            for (let b of e.Children) {
+                const age = Math.round(b.AgeCounter / 365);
                 b.AgeCounter++;
                 if (b.AgeCounter % 365 == 0) {
-                    EventLog("Your child with " + e.FirstName + " " + e.LastName + " has grown " + age + " years old.");
+                    EventLog(`Your child with ${e.FirstName} ${e.LastName} has grown ${age} years old.`);
                 }
                 if (House.Nursery > 0 && age < 18) {
                     if (!b.hasOwnProperty("NuseryBoost")) {
@@ -9796,7 +9796,7 @@ function PregnanyEngine() {
                             b.NuseryBoost = 0;
                             b.AgeCounter++; //Faster aging with nusery
                             if (b.AgeCounter % 365 == 0) {
-                                EventLog("Your child with " + e.FirstName + " " + e.LastName + " has grown " + age + " years old.");
+                                EventLog(`Your child with ${e.FirstName} ${e.LastName} has grown ${age} years old.`);
                             }
                         }
                     }
@@ -9812,7 +9812,7 @@ String.prototype.Capitalize = function () {
 }
 
 /* Checks if a array has duplicate value and if it does output a array without duplicate value
- to console so I can paste new array into code */
+ to console so I can paste new array into code #Note keep it out commeted unless needed
 Array.prototype.RemoveDup = function () {
     this.sort();
     var removed = [];
@@ -9827,7 +9827,7 @@ Array.prototype.RemoveDup = function () {
         console.log(this)
         console.log("Duplicates: " + removed);
     }
-}
+}*/
 
 function InputButton(Value, Title = "") { // Save space and stop repeating same lines
     var button = document.createElement("input");
@@ -10123,6 +10123,12 @@ function AfterBattleButtons(Sex = true, Vored = false) {
         div.removeChild(div.firstChild)
     }
 
+    function SexButton(value, func) {
+        const button = InputButton(value);
+        button.addEventListener("click", func);
+        return button
+    }
+
     // Main Collumns 
     const Mouth = document.createElement("div"),
         Pussy = document.createElement("div"),
@@ -10140,100 +10146,52 @@ function AfterBattleButtons(Sex = true, Vored = false) {
         ee = enemies[EnemyIndex];
     if (Sex) {
         if (PlayerMaxOrgasm >= player.Orgasm) {
-            const GetRimjob = InputButton("Receive rimjob"),
-                GiveRimjob = InputButton("Give rimjob");
-            GetRimjob.addEventListener("click", SexActGetRimjob);
-            Anal.appendChild(GetRimjob);
-
-            GiveRimjob.addEventListener("click", SexActGiveRimjob);
-            Anal.appendChild(GiveRimjob);
-
+            Anal.appendChild(SexButton("Receive rimjob", SexActGetRimjob));
+            Anal.appendChild(SexButton("Give rimjob", SexActGiveRimjob));
             if (ee.Pussies.length > 0) {
-                const GiveCunnilingus = InputButton("Give Cunnilingus");
-                GiveCunnilingus.addEventListener("click", SexActGiveCunnilingus)
-                Mouth.appendChild(GiveCunnilingus);
-
+                Mouth.appendChild(SexButton("Give Cunnilingus", SexActGiveCunnilingus));
                 if (player.Pussies.length > 0) {
-                    const Scissoring = InputButton("Scissoring");
-                    Scissoring.addEventListener("click", SexActScissoring);
-                    Pussy.appendChild(Scissoring);
-                }
-
-            }
+                    Pussy.appendChild(SexButton("Scissoring", SexActScissoring));
+                };
+            };
             if (ee.Dicks.length > 0) {
-                const GiveBlowjob = InputButton("Give blowjob");
-                GiveBlowjob.addEventListener("click", SexActGiveBlowjob);
-                Mouth.appendChild(GiveBlowjob);
-
+                Mouth.appendChild(SexButton("Give blowjob", SexActGiveBlowjob));
                 if (player.Pussies.length > 0) {
-                    const RideCowgirl = InputButton("Ride cowgirl");
-                    RideCowgirl.addEventListener("click", SexActRideCowgirl);
-                    Pussy.appendChild(RideCowgirl);
-                }
-            }
+                    Pussy.appendChild(SexButton("Ride cowgirl", SexActRideCowgirl));
+                };
+            };
             if (player.Pussies.length > 0) {
-                const GetCunnilingus = InputButton("Receive cunnilingus");
-                GetCunnilingus.addEventListener("click", SexActGetCunnilingus);
-                Mouth.appendChild(GetCunnilingus);
-
+                Mouth.appendChild(SexButton("Receive cunnilingus", SexActGetCunnilingus));
                 if (ee.Dicks.length > 1) {
                     // Dual pen old value Get dual penetrated
                     const DualFuckt = InputButton("");
                     Pussy.appendChild(DualFuckt);
-                }
-
+                };
                 if (ee.Height * 9 < player.Height) {
-                    const Insertion = InputButton("Insertion");
-                    Insertion.addEventListener("click", SexActInsertion);
-                    Pussy.appendChild(Insertion);
-                }
-
-
-            }
+                    Pussy.appendChild(SexButton("Insertion", SexActInsertion));
+                };
+            };
             if (player.Dicks.length > 0) {
-                const GetBlowjob = InputButton("Receive blowjob");
-                GetBlowjob.addEventListener("click", SexActGetBlowjob);
-                DickOne.appendChild(GetBlowjob);
-
+                DickOne.appendChild(SexButton("Receive blowjob", SexActGetBlowjob));
                 if (player.Dicks.length > 1 && ee.Pussies.length > 0) {
-                    const DualPen = InputButton("");
-                    DualPen.addEventListener("click", SexActDualPen);
-                    DickTwo.appendChild(DualPen);
                     // Dual pen
-                }
+                    DickTwo.appendChild(SexButton("", SexActDualPen));
+                };
                 if (player.Dicks.length > 2 && ee.Pussies.length > 1) {
                     // Multi pen
-                    const MultiPen = InputButton("");
-                    MultiPen.addEventListener("click", SexActMultiPen);
-                    DickTwo.appendChild(MultiPen);
-                }
-
+                    DickTwo.appendChild(SexButton("", SexActMultiPen));
+                };
                 if (ee.Pussies.length > 0) {
-                    const Missionary = InputButton("Missionary"),
-                        DoggyStyle = InputButton("Doggy style");
-
-                    Missionary.addEventListener("click", SexActMissionary);
-                    DickOne.appendChild(Missionary);
-
-                    DoggyStyle.addEventListener("click", SexActDoggyStyle);
-                    DickOne.appendChild(DoggyStyle);
-                }
-
-                const DoggyStyleAnal = InputButton("Anal doggy style");
-                DoggyStyleAnal.addEventListener("click", SexActDoggyStyleAnal);
-                DickTwo.appendChild(DoggyStyleAnal);
-
+                    DickOne.appendChild(SexButton("Missionary", SexActMissionary));
+                    DickOne.appendChild(SexButton("Doggy style", SexActDoggyStyle));
+                };
+                DickTwo.appendChild(SexButton("Anal doggy style", SexActDoggyStyleAnal));
             }
-            let Milktotal = 0;
-            for (let b = 0; b < player.Boobies.length; b++) {
-                Milktotal += player.Boobies[b].Milk;
-            }
+            const Milktotal = player.Boobies.map(v => v.Milk).reduce((acc, cur) => acc + cur);
             if (Milktotal > 100) {
-                const BreastFeed = InputButton("Breast feed");
-                BreastFeed.addEventListener("click", SexActBreastFeed);
-                Breast.appendChild(BreastFeed);
+                Breast.appendChild(SexButton("Breast feed", SexActBreastFeed));
             }
-            let dickCount = DickOne.childElementCount + DickTwo.childElementCount
+            const dickCount = DickOne.childElementCount + DickTwo.childElementCount
             if (window.innerHeight < 800 && dickCount > 3) {
                 DickTwo.style.display = "none";
                 const DickAction = InputButton("More");
@@ -10315,8 +10273,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 const SiphonDickDiv = document.createElement("div"),
                     SiphonDickIndex = InputButton(EEDickIndex + 1, "Enemy"),
                     SiphonDick = InputButton("Siphon dick(test)"),
-                    SiphonPlayerDickIndex = InputButton(playerDickIndex + 1,"Player");
-
+                    SiphonPlayerDickIndex = InputButton(playerDickIndex + 1, "Player");
 
                 SiphonDickDiv.classList.add("SiphonButtons");
 
@@ -10336,40 +10293,63 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                     SiphonPlayerDickIndex.setAttribute("value", playerDickIndex + 1);
                 });
                 SiphonDickDiv.appendChild(SiphonPlayerDickIndex);
-
                 Siphon.appendChild(SiphonDickDiv);
 
                 const SiphonDickToMasc = InputButton("Shrink dick(test)");
                 SiphonDickToMasc.addEventListener("click", DrainSiphonDickToMasc);
                 Siphon.appendChild(SiphonDickToMasc);
+            }
+            if (ee.Balls.length > 0) {
+                let EBI = ee.Balls.length - 1,
+                    PBI = player.Balls.length - 1;
+                const SiphonBallsDiv = document.createElement("div"),
+                    SiphonBallsIndex = InputButton(EBI + 1, "Enemy"),
+                    SiphonBalls = InputButton("Siphon balls(test)"),
+                    SiphonPlayerBallsIndex = InputButton(PBI + 1, "Player");
 
+                SiphonBallsDiv.classList.add("SiphonButtons");
+
+                SiphonBallsIndex.addEventListener("click", function () {
+                    (EBI + 1 < ee.Balls.length) ? EBI++ : EBI = 0;
+                    SiphonBallsIndex.setAttribute("value", EBI + 1);
+                });
+                SiphonBallsDiv.appendChild(SiphonBallsIndex);
+
+                SiphonBalls.addEventListener("click", function () {
+                    DrainSiphonBalls(EBI, PBI);
+                });
+                SiphonBallsDiv.appendChild(SiphonBalls);
+
+                SiphonPlayerBallsIndex.addEventListener("click", function () {
+                    (PBI + 1 < player.Balls.length) ? PBI++ : PBI = 0;
+                    SiphonPlayerBallsIndex.setAttribute("value", PBI + 1);
+                });
+                SiphonBallsDiv.appendChild(SiphonPlayerBallsIndex);
+                Siphon.appendChild(SiphonBallsDiv);
+
+                const SiphonBallsToMasc = InputButton("Shrink balls(test)");
+                SiphonBallsToMasc.addEventListener("click", DrainSiphonBallsToMasc);
+                Siphon.appendChild(SiphonBallsToMasc);
             }
         }
         if (Settings.Vore) {
-            if (StomachCapacity() > enemies[EnemyIndex].Weight) {
-                const OralVore = InputButton("Eat them");
-                OralVore.addEventListener("click", VoreActionsOralVore);
-                Mouth.appendChild(OralVore);
+            const {
+                Weight
+            } = ee;
+            if (StomachCapacity() > Weight) {
+                Mouth.appendChild(SexButton("Eat them", VoreActionsOralVore));
             }
-            if (VaginaCapacity() > enemies[EnemyIndex].Weight) {
-                const Unbirth = InputButton("Unbirth");
-                Unbirth.addEventListener("click", VoreActionsUnbirth);
-                Pussy.appendChild(Unbirth);
+            if (VaginaCapacity() > Weight) {
+                Pussy.appendChild(SexButton("Unbirth", VoreActionsUnbirth));
             }
-            if (BallsCapacity() > enemies[EnemyIndex].Weight) {
-                const CockVore = InputButton("Cock vore");
-                CockVore.addEventListener("click", VoreActionsCockVore);
-                DickOne.appendChild(CockVore);
+            if (BallsCapacity() > Weight) {
+                DickOne.appendChild(SexButton("Cock vore", VoreActionsCockVore));
             }
-            if (BreastCapacity() > enemies[EnemyIndex].Weight) {
-                const BreastVore = InputButton("Breast vore");
-                BreastVore.addEventListener("click", VoreActionsBreastVore);
-                Breast.appendChild(BreastVore);
+            if (BreastCapacity() > Weight) {
+                Breast.appendChild(SexButton("Breast vore", VoreActionsBreastVore));
             }
-            if (AnalCapacity() > enemies[EnemyIndex].Weight) {
-                const AnalVore = InputButton("Anal vore");
-                AnalVore.addEventListener("click", VoreActionsAnalVore);
-                Anal.appendChild(AnalVore);
+            if (AnalCapacity() > Weight) {
+                Anal.appendChild(SexButton("Anal vore", VoreActionsAnalVore));
             }
         }
     }
@@ -10701,6 +10681,55 @@ function DrainSiphonDickToMasc() {
     ed.Size -= Math.round(Ess / 5);
     if (ed.Size <= 0.5) {
         ee.Dicks.splice()
+    }
+    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
+    RaceDrain(ee);
+    AfterBattleButtons();
+    CheckArousal();
+}
+
+function DrainSiphonBalls(EEBallsIndex, playerBallsIndex = 0) {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        eb = ee.Balls[EEBallsIndex],
+        pb = player.Balls.length > 0 ? player.Balls[playerBallsIndex] : false;
+
+    if (player.Balls.length === 0) {
+        const Ball = {
+            Size: 1,
+            Type: who.Race,
+            CumMax: 1 / 3 * Math.PI * Math.pow(1, 3),
+            Cum: 1 / 6 * Math.PI * Math.pow(1, 3),
+            CumRate: 0,
+            CumBaseRate: 0.5
+        }
+        player.Balls.push(Ball);
+    } else {
+        pb.Size++;
+    }
+    ee.SessionOrgasm--;
+    eb.Size--;
+    if (eb.Size <= 0) {
+        ee.Balls.splice(EEBallsIndex, 1);
+    }
+    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
+    RaceDrain(ee);
+    CheckArousal();
+};
+
+function DrainSiphonBallsToMasc() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        eb = ee.Balls[ee.Balls.length - 1],
+        Ess = player.EssenceDrain;
+
+    player.Masc += Ess;
+    ee.SessionOrgasm--;
+    eb.Size -= Math.round(Ess / 5);
+    if (eb.Size <= 0.5) {
+        ee.Balls.splice()
     }
     DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
     RaceDrain(ee);

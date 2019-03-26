@@ -4,7 +4,7 @@ String.prototype.Capitalize = function () {
 }
 
 /* Checks if a array has duplicate value and if it does output a array without duplicate value
- to console so I can paste new array into code */
+ to console so I can paste new array into code #Note keep it out commeted unless needed
 Array.prototype.RemoveDup = function () {
     this.sort();
     var removed = [];
@@ -19,7 +19,7 @@ Array.prototype.RemoveDup = function () {
         console.log(this)
         console.log("Duplicates: " + removed);
     }
-}
+}*/
 
 function InputButton(Value, Title = "") { // Save space and stop repeating same lines
     var button = document.createElement("input");

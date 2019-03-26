@@ -1,8 +1,8 @@
 function isTaur(mode = 1) {
     const Taur = ["centaur"],
-        max = Math.min(3, player.RaceEssence.length),
+        max = Math.min(2, player.RaceEssence.length),
         RaceEss = player.RaceEssence;
-    for (let e in RaceEss) {
+    for (let e = 0; RaceEss.length < max; e++) {
         if (mode === 1) {
             Taur.indexOf(RaceEss[e].Race) > -1 ? e : false
         } else {
@@ -13,25 +13,22 @@ function isTaur(mode = 1) {
     }
 }
 
+// Concept for calculating what species you're treated as
+function RaceEssenceBalance() {
+    // filter out less than 1
+    player.RaceEssence = player.RaceEssence.filter(f => f.amount > 1);
+    const RaceEss = player.RaceEssence;
 
-function EssenceBalance() { // Concept for calculating what species you're treated as
-    const RaceEss = player.RaceEssence,
-        RA = [];
-    if (RaceEss.some(e => e.Race !== e.Race.Capitalize())) { // Make sure all races have first letter cap + rest lowercase
+    // Make sure all races have first letter cap + rest lowercase
+    if (RaceEss.some(e => e.Race !== e.Race.Capitalize())) {
         console.log("Non cap race");
         for (let e of RaceEss) {
             e.Race = e.Race.Capitalize();
         }
     };
-    if (RaceEss.some(e => e.amount < 1)) {
-        for (let i in RaceEss) { // Clearing/Spicing out anything below 1
-            if (RaceEss[i].amount < 1) {
-                console.log("Spliced " + RaceEss[i].Race);
-                RaceEss.splice(i, 1);
-            }
-        }
-    };
-    for (let e in RaceEss) { // Clearing/splicing duplicates
+
+    // Combining amounts in case of duplicates then clearing/splicing them.
+    for (let e in RaceEss) {
         for (let i in RaceEss) {
             if (RaceEss[e].Race === RaceEss[i].Race && e != i) {
                 console.log("Duplicate race");
@@ -40,25 +37,15 @@ function EssenceBalance() { // Concept for calculating what species you're treat
             }
         }
     };
-    RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
 
-    let totalAbsorb = 0;
-    for (let i of RaceEss) {
-        totalAbsorb += i.amount;
-    };
+    // Finding the new majority essence by sorting high to low 
+    RaceEss.sort((a, b) => b.amount - a.amount);
 
-    for (let i of RaceEss) {
-        if (i.amount / totalAbsorb > 0.01 && i.amount > 10) { // Bigger than 1 precent and higher value than 10
-            RA.push(i);
-        }
-    }
+    /* First I map the amounts then I count the total amount with reduce, after that I filter out
+       results less than 1 percent than total amount or less than 20 amount*/
+    const totalAbsorb = RaceEss.map(m => m.amount).reduce((acc, cur) => acc + cur),
+        RA = RaceEss.filter(f => f.amount / totalAbsorb > 0.01 && f.amount > 10);
 
-    /* Will convert to use this insted to I can make changed dependant on amount of essence.
-Need to make it like earlier so that low essence doesn't give a race, 
-e.g. you are not a dragon because you have 1 dragon essence.
-
-Don't like that no race = human, maybe should add a special race?
-    */
     const oldRace = player.Race,
         oldSecondRace = player.SecondRace;
     if (totalAbsorb < 100) {
@@ -161,10 +148,8 @@ function DetailedRaceDesc() {
     const RaceEss = player.RaceEssence,
         RA = RaceEss;
     RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
-    let totalAbsorb = 0;
-    for (let i of RaceEss) {
-        totalAbsorb += i.amount;
-    }
+    const totalAbsorb = RaceEss.map(m => m.amount).reduce((acc, cur) => acc + cur);
+
     const R1 = Math.round(100 * RA[0].amount / totalAbsorb),
         R2 = RA.length > 1 ? Math.round(100 * RA[1].amount / totalAbsorb) : 0,
         R3 = RA.length > 2 ? Math.round(100 * RA[2].amount / totalAbsorb) : 0;
