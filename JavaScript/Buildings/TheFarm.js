@@ -1,13 +1,5 @@
 // Start Farm
 DocId("EquineTaurTF").addEventListener("click", function () {
-    if (player.SecondRace == "centaur") {
-        DocId("FarmOwnerText").innerHTML = "You're already a centaur!"
-        return;
-    }
-    if (TF.Status) {
-        DocId("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
-        return;
-    }
     if (player.Gold >= 250) {
         player.Gold -= 250;
         PotionDrunk("centaur")
@@ -21,17 +13,9 @@ DocId("FarmTitles").addEventListener("mouseover", function (e) {
     DocId("FarmOwnerText").innerHTML = e.target.title;
 });
 DocId("EquineTF").addEventListener("click", function () {
-    if (player.SecondRace == "equine" && player.Race == "equine") {
-        DocId("FarmOwnerText").innerHTML = "You already are a equine!"
-        return;
-    }
-    if (TF.Status) {
-        DocId("FarmOwnerText").innerHTML = "Your body is already ongoing transformation."
-        return;
-    }
     if (player.Gold >= 250) {
         player.Gold -= 250;
-        TfEngine("equine");
+        PotionDrunk("equine");
     } else {
         DocId("FarmOwnerText").innerHTML = "Insufficient gold.";
         return;

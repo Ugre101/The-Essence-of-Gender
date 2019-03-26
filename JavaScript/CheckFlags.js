@@ -230,6 +230,10 @@ function CheckFlags() {
             MalePreg: 0
         }
     };
+    player.RaceEssence.push(            Human = {
+        Race: "bob",
+        amount: 0
+    })
 
     FluidsEngine();
     if (!player.hasOwnProperty("RaceEssence")) {

@@ -44,6 +44,55 @@ function DrainSiphonDickToMasc() {
     CheckArousal();
 }
 
+function DrainSiphonBalls(EEBallsIndex, playerBallsIndex = 0) {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        eb = ee.Balls[EEBallsIndex],
+        pb = player.Balls.length > 0 ? player.Balls[playerBallsIndex] : false;
+
+    if (player.Balls.length === 0) {
+        const Ball = {
+            Size: 1,
+            Type: who.Race,
+            CumMax: 1 / 3 * Math.PI * Math.pow(1, 3),
+            Cum: 1 / 6 * Math.PI * Math.pow(1, 3),
+            CumRate: 0,
+            CumBaseRate: 0.5
+        }
+        player.Balls.push(Ball);
+    } else {
+        pb.Size++;
+    }
+    ee.SessionOrgasm--;
+    eb.Size--;
+    if (eb.Size <= 0) {
+        ee.Balls.splice(EEBallsIndex, 1);
+    }
+    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
+    RaceDrain(ee);
+    CheckArousal();
+};
+
+function DrainSiphonBallsToMasc() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        eb = ee.Balls[ee.Balls.length - 1],
+        Ess = player.EssenceDrain;
+
+    player.Masc += Ess;
+    ee.SessionOrgasm--;
+    eb.Size -= Math.round(Ess / 5);
+    if (eb.Size <= 0.5) {
+        ee.Balls.splice()
+    }
+    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
+    RaceDrain(ee);
+    AfterBattleButtons();
+    CheckArousal();
+}
+
 function DrainDrainM() {
     const old = JSON.parse(JSON.stringify(player)),
         eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),

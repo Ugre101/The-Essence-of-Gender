@@ -4,6 +4,12 @@ function AfterBattleButtons(Sex = true, Vored = false) {
         div.removeChild(div.firstChild)
     }
 
+    function SexButton(value, func) {
+        const button = InputButton(value);
+        button.addEventListener("click", func);
+        return button
+    }
+
     // Main Collumns 
     const Mouth = document.createElement("div"),
         Pussy = document.createElement("div"),
@@ -21,100 +27,52 @@ function AfterBattleButtons(Sex = true, Vored = false) {
         ee = enemies[EnemyIndex];
     if (Sex) {
         if (PlayerMaxOrgasm >= player.Orgasm) {
-            const GetRimjob = InputButton("Receive rimjob"),
-                GiveRimjob = InputButton("Give rimjob");
-            GetRimjob.addEventListener("click", SexActGetRimjob);
-            Anal.appendChild(GetRimjob);
-
-            GiveRimjob.addEventListener("click", SexActGiveRimjob);
-            Anal.appendChild(GiveRimjob);
-
+            Anal.appendChild(SexButton("Receive rimjob", SexActGetRimjob));
+            Anal.appendChild(SexButton("Give rimjob", SexActGiveRimjob));
             if (ee.Pussies.length > 0) {
-                const GiveCunnilingus = InputButton("Give Cunnilingus");
-                GiveCunnilingus.addEventListener("click", SexActGiveCunnilingus)
-                Mouth.appendChild(GiveCunnilingus);
-
+                Mouth.appendChild(SexButton("Give Cunnilingus", SexActGiveCunnilingus));
                 if (player.Pussies.length > 0) {
-                    const Scissoring = InputButton("Scissoring");
-                    Scissoring.addEventListener("click", SexActScissoring);
-                    Pussy.appendChild(Scissoring);
-                }
-
-            }
+                    Pussy.appendChild(SexButton("Scissoring", SexActScissoring));
+                };
+            };
             if (ee.Dicks.length > 0) {
-                const GiveBlowjob = InputButton("Give blowjob");
-                GiveBlowjob.addEventListener("click", SexActGiveBlowjob);
-                Mouth.appendChild(GiveBlowjob);
-
+                Mouth.appendChild(SexButton("Give blowjob", SexActGiveBlowjob));
                 if (player.Pussies.length > 0) {
-                    const RideCowgirl = InputButton("Ride cowgirl");
-                    RideCowgirl.addEventListener("click", SexActRideCowgirl);
-                    Pussy.appendChild(RideCowgirl);
-                }
-            }
+                    Pussy.appendChild(SexButton("Ride cowgirl", SexActRideCowgirl));
+                };
+            };
             if (player.Pussies.length > 0) {
-                const GetCunnilingus = InputButton("Receive cunnilingus");
-                GetCunnilingus.addEventListener("click", SexActGetCunnilingus);
-                Mouth.appendChild(GetCunnilingus);
-
+                Mouth.appendChild(SexButton("Receive cunnilingus", SexActGetCunnilingus));
                 if (ee.Dicks.length > 1) {
                     // Dual pen old value Get dual penetrated
                     const DualFuckt = InputButton("");
                     Pussy.appendChild(DualFuckt);
-                }
-
+                };
                 if (ee.Height * 9 < player.Height) {
-                    const Insertion = InputButton("Insertion");
-                    Insertion.addEventListener("click", SexActInsertion);
-                    Pussy.appendChild(Insertion);
-                }
-
-
-            }
+                    Pussy.appendChild(SexButton("Insertion", SexActInsertion));
+                };
+            };
             if (player.Dicks.length > 0) {
-                const GetBlowjob = InputButton("Receive blowjob");
-                GetBlowjob.addEventListener("click", SexActGetBlowjob);
-                DickOne.appendChild(GetBlowjob);
-
+                DickOne.appendChild(SexButton("Receive blowjob", SexActGetBlowjob));
                 if (player.Dicks.length > 1 && ee.Pussies.length > 0) {
-                    const DualPen = InputButton("");
-                    DualPen.addEventListener("click", SexActDualPen);
-                    DickTwo.appendChild(DualPen);
                     // Dual pen
-                }
+                    DickTwo.appendChild(SexButton("", SexActDualPen));
+                };
                 if (player.Dicks.length > 2 && ee.Pussies.length > 1) {
                     // Multi pen
-                    const MultiPen = InputButton("");
-                    MultiPen.addEventListener("click", SexActMultiPen);
-                    DickTwo.appendChild(MultiPen);
-                }
-
+                    DickTwo.appendChild(SexButton("", SexActMultiPen));
+                };
                 if (ee.Pussies.length > 0) {
-                    const Missionary = InputButton("Missionary"),
-                        DoggyStyle = InputButton("Doggy style");
-
-                    Missionary.addEventListener("click", SexActMissionary);
-                    DickOne.appendChild(Missionary);
-
-                    DoggyStyle.addEventListener("click", SexActDoggyStyle);
-                    DickOne.appendChild(DoggyStyle);
-                }
-
-                const DoggyStyleAnal = InputButton("Anal doggy style");
-                DoggyStyleAnal.addEventListener("click", SexActDoggyStyleAnal);
-                DickTwo.appendChild(DoggyStyleAnal);
-
+                    DickOne.appendChild(SexButton("Missionary", SexActMissionary));
+                    DickOne.appendChild(SexButton("Doggy style", SexActDoggyStyle));
+                };
+                DickTwo.appendChild(SexButton("Anal doggy style", SexActDoggyStyleAnal));
             }
-            let Milktotal = 0;
-            for (let b = 0; b < player.Boobies.length; b++) {
-                Milktotal += player.Boobies[b].Milk;
-            }
+            const Milktotal = player.Boobies.map(v => v.Milk).reduce((acc, cur) => acc + cur);
             if (Milktotal > 100) {
-                const BreastFeed = InputButton("Breast feed");
-                BreastFeed.addEventListener("click", SexActBreastFeed);
-                Breast.appendChild(BreastFeed);
+                Breast.appendChild(SexButton("Breast feed", SexActBreastFeed));
             }
-            let dickCount = DickOne.childElementCount + DickTwo.childElementCount
+            const dickCount = DickOne.childElementCount + DickTwo.childElementCount
             if (window.innerHeight < 800 && dickCount > 3) {
                 DickTwo.style.display = "none";
                 const DickAction = InputButton("More");
@@ -196,8 +154,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 const SiphonDickDiv = document.createElement("div"),
                     SiphonDickIndex = InputButton(EEDickIndex + 1, "Enemy"),
                     SiphonDick = InputButton("Siphon dick(test)"),
-                    SiphonPlayerDickIndex = InputButton(playerDickIndex + 1,"Player");
-
+                    SiphonPlayerDickIndex = InputButton(playerDickIndex + 1, "Player");
 
                 SiphonDickDiv.classList.add("SiphonButtons");
 
@@ -217,40 +174,63 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                     SiphonPlayerDickIndex.setAttribute("value", playerDickIndex + 1);
                 });
                 SiphonDickDiv.appendChild(SiphonPlayerDickIndex);
-
                 Siphon.appendChild(SiphonDickDiv);
 
                 const SiphonDickToMasc = InputButton("Shrink dick(test)");
                 SiphonDickToMasc.addEventListener("click", DrainSiphonDickToMasc);
                 Siphon.appendChild(SiphonDickToMasc);
+            }
+            if (ee.Balls.length > 0) {
+                let EBI = ee.Balls.length - 1,
+                    PBI = player.Balls.length - 1;
+                const SiphonBallsDiv = document.createElement("div"),
+                    SiphonBallsIndex = InputButton(EBI + 1, "Enemy"),
+                    SiphonBalls = InputButton("Siphon balls(test)"),
+                    SiphonPlayerBallsIndex = InputButton(PBI + 1, "Player");
 
+                SiphonBallsDiv.classList.add("SiphonButtons");
+
+                SiphonBallsIndex.addEventListener("click", function () {
+                    (EBI + 1 < ee.Balls.length) ? EBI++ : EBI = 0;
+                    SiphonBallsIndex.setAttribute("value", EBI + 1);
+                });
+                SiphonBallsDiv.appendChild(SiphonBallsIndex);
+
+                SiphonBalls.addEventListener("click", function () {
+                    DrainSiphonBalls(EBI, PBI);
+                });
+                SiphonBallsDiv.appendChild(SiphonBalls);
+
+                SiphonPlayerBallsIndex.addEventListener("click", function () {
+                    (PBI + 1 < player.Balls.length) ? PBI++ : PBI = 0;
+                    SiphonPlayerBallsIndex.setAttribute("value", PBI + 1);
+                });
+                SiphonBallsDiv.appendChild(SiphonPlayerBallsIndex);
+                Siphon.appendChild(SiphonBallsDiv);
+
+                const SiphonBallsToMasc = InputButton("Shrink balls(test)");
+                SiphonBallsToMasc.addEventListener("click", DrainSiphonBallsToMasc);
+                Siphon.appendChild(SiphonBallsToMasc);
             }
         }
         if (Settings.Vore) {
-            if (StomachCapacity() > enemies[EnemyIndex].Weight) {
-                const OralVore = InputButton("Eat them");
-                OralVore.addEventListener("click", VoreActionsOralVore);
-                Mouth.appendChild(OralVore);
+            const {
+                Weight
+            } = ee;
+            if (StomachCapacity() > Weight) {
+                Mouth.appendChild(SexButton("Eat them", VoreActionsOralVore));
             }
-            if (VaginaCapacity() > enemies[EnemyIndex].Weight) {
-                const Unbirth = InputButton("Unbirth");
-                Unbirth.addEventListener("click", VoreActionsUnbirth);
-                Pussy.appendChild(Unbirth);
+            if (VaginaCapacity() > Weight) {
+                Pussy.appendChild(SexButton("Unbirth", VoreActionsUnbirth));
             }
-            if (BallsCapacity() > enemies[EnemyIndex].Weight) {
-                const CockVore = InputButton("Cock vore");
-                CockVore.addEventListener("click", VoreActionsCockVore);
-                DickOne.appendChild(CockVore);
+            if (BallsCapacity() > Weight) {
+                DickOne.appendChild(SexButton("Cock vore", VoreActionsCockVore));
             }
-            if (BreastCapacity() > enemies[EnemyIndex].Weight) {
-                const BreastVore = InputButton("Breast vore");
-                BreastVore.addEventListener("click", VoreActionsBreastVore);
-                Breast.appendChild(BreastVore);
+            if (BreastCapacity() > Weight) {
+                Breast.appendChild(SexButton("Breast vore", VoreActionsBreastVore));
             }
-            if (AnalCapacity() > enemies[EnemyIndex].Weight) {
-                const AnalVore = InputButton("Anal vore");
-                AnalVore.addEventListener("click", VoreActionsAnalVore);
-                Anal.appendChild(AnalVore);
+            if (AnalCapacity() > Weight) {
+                Anal.appendChild(SexButton("Anal vore", VoreActionsAnalVore));
             }
         }
     }

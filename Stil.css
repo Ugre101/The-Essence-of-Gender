@@ -702,8 +702,8 @@
 
    #Home {
        background-color: rgb(192, 189, 192);
-       width: 50%;
-       height: 80%;
+       width: 60%;
+       height: 92%;
        box-shadow: 0 0 2px 1px black;
        border-radius: 5px;
        overflow: auto;
@@ -716,7 +716,7 @@
        text-align: center;
    }
 
-   #ButtonMates {
+   div.ButtonMates {
        display: grid;
        grid-template-columns: repeat(auto-fit, minmax(100px, 210px));
        grid-column-gap: 3px;
@@ -724,7 +724,7 @@
        justify-content: center;
    }
 
-   #DivMates>div>div {
+   div.DivMates {
        position: relative;
        float: left;
        height: auto;
@@ -736,7 +736,7 @@
        overflow: auto;
    }
 
-   #DivMates>div>div>div {
+   div.DivMatesInner {
        position: absolute;
        top: 0;
        right: 0;
@@ -746,8 +746,10 @@
        border-radius: 10px;
    }
 
-   #DivMates>div>input[type=button] {
-       float: left;
+   div.DivMatesCon {
+       display: grid;
+       grid-template-columns: 70% 30%;
+       grid-gap: 1em;
    }
 
    #flex {
@@ -878,15 +880,21 @@
    }
 
    div.Vore {
-       width: 40%;
-       max-width: 55%;
-       min-height: 200px;
+       width: 60%;
+       min-height: 400px;
        height: auto;
-       padding: 10px;
+       padding: 1em;
        border: 1px solid black;
        border-radius: 5px;
        background-color: rgb(235, 235, 228);
        text-align: center;
+   }
+
+   @media screen and (max-height: 600px) {
+       div.Vore {
+           width: 96%;
+           height: 95%;
+       }
    }
 
    div.Vore>#Stomach {

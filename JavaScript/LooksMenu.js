@@ -80,7 +80,7 @@ document.getElementById("Perks").addEventListener("click", function () {
     for (let e of player.RaceEssence) {
         const RacesLi = document.createElement("li");
         RacesLi.innerHTML = Math.round(e.amount / RaceTotal * 100) > 1 ?
-            `${e.Race}: ${Math.round(e.amount / RaceTotal * 100)}%  (${e.amount})` :
+            `${e.Race}: ${Math.round(e.amount / RaceTotal * 100)}%  (${Math.round(e.amount)})` :
             `${e.Race}: <1%  (${e.amount})`;
         RacesP.appendChild(RacesLi);
     }
