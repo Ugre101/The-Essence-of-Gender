@@ -44,12 +44,10 @@ function BlackMarketFunc() {
     PESS.innerHTML = `Masc: ${player.Masc} Femi: ${player.Femi}`
 
     input2.addEventListener("click", function () {
-        if (player.Femi >= 50) {
-            player.Femi -= 50;
-            player.Gold += 100;
-        } else {
-            player.Gold += Math.max(0, player.Femi);
-            player.Femi = 0;
+        const amount = Math.min(50, player.Femi);
+        if (typeof amount === "number") {
+            player.Femi -= amount;
+            player.Gold += amount * 2;
         }
         BlackMarketFunc();
     });
@@ -58,12 +56,10 @@ function BlackMarketFunc() {
     });
 
     input3.addEventListener("click", function () {
-        if (player.Masc >= 50) {
-            player.Masc -= 50;
-            player.Gold += 100;
-        } else {
-            player.Gold += Math.max(0, player.Masc);
-            player.Masc = 0;
+        const amount = Math.min(5000000, player.Masc);
+        if (typeof amount === "number") {
+            player.Masc -= amount;
+            player.Gold += amount * 2;
         }
         BlackMarketFunc();
     });

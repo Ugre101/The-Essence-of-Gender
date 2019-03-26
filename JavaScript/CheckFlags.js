@@ -313,24 +313,6 @@ function CheckFlags() {
             e.Will = e.Willpower
         }
     }
-    if (Settings.Vore) { // This doesn't look right
-        for (let e of player.Vore.Stomach) {
-            e.Will = e.Willpower;
-        }
-        for (let e of player.Vore.Vagina) {
-            e.Will = e.Willpower;
-        }
-        for (let e of player.Vore.Balls) {
-            e.Will = e.Willpower;
-            console.log(e)
-        }
-        for (let e of player.Vore.Anal) {
-            e.Will = e.Willpower;
-        }
-        for (let e of player.Vore.Breast) {
-            e.Will = e.Willpower;
-        }
-    }
     if (!player.hasOwnProperty("Mana")) {
         player.Mana = 100;
     }
