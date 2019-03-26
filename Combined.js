@@ -875,7 +875,13 @@ function loop() {
             player.Health = Math.max(1, player.Health);
             player.WillHealth = Math.max(1, player.WillHealth);
             player.Masc = Math.max(0, player.Masc);
+            if (typeof player.Masc !== "number") {
+                player.Masc = 0;
+            };
             player.Femi = Math.max(0, player.Femi);
+            if (typeof player.Femi !== "number") {
+                player.Femi = 0;
+            };
             player.EssenceDrain = 5 + (player.Perks.StealMore.Count * 3);
             player.GiveEssence = 0 + (player.Perks.GiveEssence.Count * 3);
 
@@ -1190,12 +1196,10 @@ function BlackMarketFunc() {
     PESS.innerHTML = `Masc: ${player.Masc} Femi: ${player.Femi}`
 
     input2.addEventListener("click", function () {
-        if (player.Femi >= 50) {
-            player.Femi -= 50;
-            player.Gold += 100;
-        } else {
-            player.Gold += Math.max(0, player.Femi);
-            player.Femi = 0;
+        const amount = Math.min(50, player.Femi);
+        if (typeof amount === "number") {
+            player.Femi -= amount;
+            player.Gold += amount * 2;
         }
         BlackMarketFunc();
     });
@@ -1204,12 +1208,10 @@ function BlackMarketFunc() {
     });
 
     input3.addEventListener("click", function () {
-        if (player.Masc >= 50) {
-            player.Masc -= 50;
-            player.Gold += 100;
-        } else {
-            player.Gold += Math.max(0, player.Masc);
-            player.Masc = 0;
+        const amount = Math.min(5000000, player.Masc);
+        if (typeof amount === "number") {
+            player.Masc -= amount;
+            player.Gold += amount * 2;
         }
         BlackMarketFunc();
     });
@@ -3186,24 +3188,6 @@ function CheckFlags() {
             e.Will = e.Willpower
         }
     }
-    if (Settings.Vore) { // This doesn't look right
-        for (let e of player.Vore.Stomach) {
-            e.Will = e.Willpower;
-        }
-        for (let e of player.Vore.Vagina) {
-            e.Will = e.Willpower;
-        }
-        for (let e of player.Vore.Balls) {
-            e.Will = e.Willpower;
-            console.log(e)
-        }
-        for (let e of player.Vore.Anal) {
-            e.Will = e.Willpower;
-        }
-        for (let e of player.Vore.Breast) {
-            e.Will = e.Willpower;
-        }
-    }
     if (!player.hasOwnProperty("Mana")) {
         player.Mana = 100;
     }
@@ -4580,12 +4564,16 @@ function DormFunc() {
     if (House.Dormmates.length > 0 && player.Balls.length > 0) {
         const ImpregOrgy = InputButton("Impregnate servants",
             "Spend the day fucking you servants, until your balls are completely emptied.")
+        ImpregOrgy.addEventListener("click", ImpregOrgyFunc)
         dorm.appendChild(ImpregOrgy);
     }
-    const GetImpregOrgy = InputButton("Get impregnated",
-        "Spend the day getting fucked by your virile servants, till all of their balls content have been emptied into your orifices.")
-    dorm.appendChild(GetImpregOrgy);
+    if (House.Dormmates.length > 0) {
+        const GetImpregOrgy = InputButton("Get impregnated",
+            "Spend the day getting fucked by your virile servants, till all of their balls content have been emptied into your orifices.")
+        GetImpregOrgy.addEventListener("click", GetImpregOrgyFunc);
+        dorm.appendChild(GetImpregOrgy);
 
+    }
     const LeaveDorm = InputButton("Leave dorm");
     LeaveDorm.addEventListener("click", function () {
         DocId("HomeStart").style.display = 'block';
@@ -4788,6 +4776,66 @@ function DormSex(rm) {
     DocId("DormEFemin").style.width = e.Femi * DelatMed + "%";
     return;
 };
+DocId("LeaveDormSex").addEventListener("click", function () {
+    DocId("Home").style.display = 'block';
+    DocId("FuckDorm").style.display = 'none';
+    DocId("status").style.display = 'block';
+    DocId("EmptyButtons").style.display = 'block';
+    DocId("DormSexText").innerHTML = " "
+    MateDiv(MateIndex);
+    Setup = true;
+});
+function GetImpregOrgyFunc() {
+    DocId("HomeText").innerHTML = "Orgy";
+    var CumTotal = 0;
+    for (var a = 0; a < House.Dormmates.length; a++) {
+        for (var b = 0; b < House.Dormmates[a].Balls.length; b++) {
+            CumTotal += House.Dormmates[a].Balls[b].Cum;
+            while (House.Dormmates[a].Balls[b].Cum >= 10) {
+                if (player.Pregnant.Status) {
+                    break;
+                } else {
+                    Impregnate(player, House.Dormmates[a], "B", "Dorm")
+                    House.Dormmates[a].Balls[b].Cum -= 10;
+                }
+            }
+        }
+    }
+    DocId("HomeText").innerHTML += "<br><br> By the end of the night they have cummed " + (Math.round(CumTotal / 1000 * 100) / 100) + "L into you.";
+};
+
+function ImpregOrgyFunc() {
+    DocId("HomeText").innerHTML = "Orgy<br>"
+    var CumTotal = 0;
+    for (var b = 0; b < player.Balls.length; b++) {
+        CumTotal += player.Balls[b].Cum;
+    }
+    while (CumTotal >= 10) {
+        for (var non = 0; non < House.Dormmates.length; non++) {
+            if (House.Dormmates[non].Pregnant.Status) {
+                CumTotal--;
+                continue;
+            } else {
+                Impregnate(House.Dormmates[non], player, "A", "Dorm");
+                CumTotal -= 10;
+                if (House.Dormmates[non].Pregnant.Status) {
+                    DocId("HomeText").innerHTML += House.Dormmates[non].FirstName + " " + House.Dormmates[non].LastName + " is impregnated! "
+                }
+            }
+        }
+    }
+    for (var non = 0; non < House.Dormmates.length; non++) {
+        if (!House.Dormmates[non].Pregnant.Status) {
+            DocId("HomeText").innerHTML += "You failed to impregnate " + House.Dormmates[non].FirstName + " " + House.Dormmates[non].LastName + "...";
+
+        }
+    }
+    for (var b = 0; b < player.Balls.length; b++) {
+        player.Balls[b].Cum = 0;
+    }
+    FluidsEngine();
+};
+
 DocId("DormDrainMasc").addEventListener("click", function () {
     const e = MateIndex,
         Ess = Math.min(e.Masc, player.EssenceDrain);
@@ -4844,7 +4892,7 @@ DocId("DormInjFemi").addEventListener("click", function () {
 });
 DocId("Impregnate").addEventListener("click", function () {
     DocId("DormSexText").innerHTML = "You fuck your servant hoping to impregnate them, but you fail."
-    var e = House.Dormmates[MateIndex];
+    const e = MateIndex;
     if (e.Pussies.length > 0) {
         var pussypicker = RandomInt(0, e.Pussies.length - 1)
         if (e.Pussies[pussypicker].Virgin) {
@@ -4910,66 +4958,6 @@ DocId("GetImpregnated").addEventListener("click", function () {
         player.Pussies[pussypicker].Virgin = false;
     }
     DormSex(e);
-});
-DocId("LeaveDormSex").addEventListener("click", function () {
-    DocId("Home").style.display = 'block';
-    DocId("FuckDorm").style.display = 'none';
-    DocId("status").style.display = 'block';
-    DocId("EmptyButtons").style.display = 'block';
-    DocId("DormSexText").innerHTML = " "
-    MateDiv(MateIndex);
-    Setup = true;
-});
-DocId("GetImpregOrgy").addEventListener("click", function () {
-    DocId("HomeText").innerHTML = "Orgy";
-    var CumTotal = 0;
-    for (var a = 0; a < House.Dormmates.length; a++) {
-        for (var b = 0; b < House.Dormmates[a].Balls.length; b++) {
-            CumTotal += House.Dormmates[a].Balls[b].Cum;
-            while (House.Dormmates[a].Balls[b].Cum >= 10) {
-                if (player.Pregnant.Status) {
-                    break;
-                } else {
-                    Impregnate(player, House.Dormmates[a], "B", "Dorm")
-                    House.Dormmates[a].Balls[b].Cum -= 10;
-                }
-            }
-        }
-    }
-    DocId("HomeText").innerHTML += "<br><br> By the end of the night they have cummed " + (Math.round(CumTotal / 1000 * 100) / 100) + "L into you.";
-});
-
-
-DocId("ImpregOrgy").addEventListener("click", function () {
-    DocId("HomeText").innerHTML = "Orgy<br>"
-    var CumTotal = 0;
-    for (var b = 0; b < player.Balls.length; b++) {
-        CumTotal += player.Balls[b].Cum;
-    }
-    while (CumTotal >= 10) {
-        for (var non = 0; non < House.Dormmates.length; non++) {
-            if (House.Dormmates[non].Pregnant.Status) {
-                CumTotal--;
-                continue;
-            } else {
-                Impregnate(House.Dormmates[non], player, "A", "Dorm");
-                CumTotal -= 10;
-                if (House.Dormmates[non].Pregnant.Status) {
-                    DocId("HomeText").innerHTML += House.Dormmates[non].FirstName + " " + House.Dormmates[non].LastName + " is impregnated! "
-                }
-            }
-        }
-    }
-    for (var non = 0; non < House.Dormmates.length; non++) {
-        if (!House.Dormmates[non].Pregnant.Status) {
-            DocId("HomeText").innerHTML += "You failed to impregnate " + House.Dormmates[non].FirstName + " " + House.Dormmates[non].LastName + "...";
-
-        }
-    }
-    for (var b = 0; b < player.Balls.length; b++) {
-        player.Balls[b].Cum = 0;
-    }
-    FluidsEngine();
 });
 // Home
 DocId("Sleep").addEventListener("click", function () {
@@ -9704,7 +9692,6 @@ function PregnanyEngine() {
                 const age = Math.round(e.AgeCounter / 365);
                 EventLog(`Your child has grown ${IntToAge(age)} old.`);
             }
-            console.log(e)
         }
     }
     if (player.Pregnant.Babies.length > 0) {

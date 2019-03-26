@@ -875,7 +875,13 @@ function loop() {
             player.Health = Math.max(1, player.Health);
             player.WillHealth = Math.max(1, player.WillHealth);
             player.Masc = Math.max(0, player.Masc);
+            if (typeof player.Masc !== "number") {
+                player.Masc = 0;
+            };
             player.Femi = Math.max(0, player.Femi);
+            if (typeof player.Femi !== "number") {
+                player.Femi = 0;
+            };
             player.EssenceDrain = 5 + (player.Perks.StealMore.Count * 3);
             player.GiveEssence = 0 + (player.Perks.GiveEssence.Count * 3);
 

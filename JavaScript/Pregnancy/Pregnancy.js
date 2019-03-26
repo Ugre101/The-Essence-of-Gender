@@ -6,7 +6,6 @@ function PregnanyEngine() {
                 const age = Math.round(e.AgeCounter / 365);
                 EventLog(`Your child has grown ${IntToAge(age)} old.`);
             }
-            console.log(e)
         }
     }
     if (player.Pregnant.Babies.length > 0) {
