@@ -183,7 +183,7 @@ DocId("regurgitateStomach").addEventListener("click", function () {
 
 DocId("VoreLooks").addEventListener("click", function () {
     DisplayNone();
-    DocId("ShowVore").style.display = 'block';
+    DocId("ShowVore").style.display = 'grid';
     DocId("VorePerkMenu").style.display = 'none';
     DocId("AbsorbEssenceSetting").value = "Absorb Essence " + Settings.VoreSettings.AbsorbEssence;
 });

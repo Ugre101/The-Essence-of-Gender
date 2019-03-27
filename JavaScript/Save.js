@@ -7,23 +7,21 @@ DocId("Save").addEventListener("click", function () {
         }
     }
 });
+
 DocId("SaveLeave").addEventListener("click", function () {
     DocId("SaveMenu").style.display = 'none';
     DisplayGame();
 });
 
-function SavePlayerButtons() {
-    for (let e = 1; e < 6; e++) {
-        DocId("SavePlayer" + e).addEventListener("click", function () {
-            const SaveArray = [player, House, Flags, Settings];
-            localStorage.setItem('SavedPlayer' + e, JSON.stringify(SaveArray));
-            localStorage.setItem('SaveDate' + e, Date());
-            DocId("SavePlayer" + e).value = Date();
-            DocId("LoadPlayer" + e).value = Date();
-        });
-    }
+for (let e = 1; e < 6; e++) {
+    DocId("SavePlayer" + e).addEventListener("click", function () {
+        const SaveArray = [player, House, Flags, Settings];
+        localStorage.setItem('SavedPlayer' + e, JSON.stringify(SaveArray));
+        localStorage.setItem('SaveDate' + e, Date());
+        DocId("SavePlayer" + e).value = Date();
+        DocId("LoadPlayer" + e).value = Date();
+    });
 }
-SavePlayerButtons();
 
 DocId("SaveText").addEventListener("click", function () {
     var SaveArray = [player, House, Flags, Settings];
