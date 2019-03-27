@@ -1,4 +1,4 @@
-function Loader(Load) {
+function SaveLoader(Load) {
     const LoadArray = JSON.parse(localStorage.getItem(Load));
     player = LoadArray[0];
     House = LoadArray[1];
@@ -29,20 +29,17 @@ DocId("StartLoad").addEventListener("click", function () {
 })
 
 // Load handler
-function Loaders() {
-    for (let e = 1; e < 6; e++) {
-        DocId("LoadPlayer" + e).addEventListener("click", function () {
-            enemies = [];
-            if (localStorage.getItem('SavedPlayer' + e) === null) {
-                return;
-            } else {
-                Loader('SavedPlayer' + e);
-            }
+for (let e = 1; e < 6; e++) {
+    DocId("LoadPlayer" + e).addEventListener("click", function () {
+        enemies = [];
+        if (localStorage.getItem('SavedPlayer' + e) === null) {
             return;
-        });
-    }
+        } else {
+            SaveLoader('SavedPlayer' + e);
+        }
+        return;
+    });
 }
-Loaders();
 
 DocId("LoadFile").addEventListener("input", function () {
     var test = DocId("LoadFile");
@@ -72,7 +69,7 @@ DocId("Load").addEventListener("click", function () {
     DocId("LoadMenu").style.display = 'block';
     DocId("StartLoad").style.display = 'none';
 
-    for (var e = 1; e < 6; e++) {
+    for (let e = 1; e < 6; e++) {
         if (localStorage.getItem('SaveDate' + e) !== null) {
             DocId("LoadPlayer" + e).value = localStorage.getItem('SaveDate' + e);
         }

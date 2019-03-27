@@ -6332,7 +6332,7 @@ ItemDict.SpellBook = {
         innerdiv.appendChild(Done);
         div.appendChild(innerdiv);
     }
-function Loader(Load) {
+function SaveLoader(Load) {
     const LoadArray = JSON.parse(localStorage.getItem(Load));
     player = LoadArray[0];
     House = LoadArray[1];
@@ -6363,20 +6363,17 @@ DocId("StartLoad").addEventListener("click", function () {
 })
 
 // Load handler
-function Loaders() {
-    for (let e = 1; e < 6; e++) {
-        DocId("LoadPlayer" + e).addEventListener("click", function () {
-            enemies = [];
-            if (localStorage.getItem('SavedPlayer' + e) === null) {
-                return;
-            } else {
-                Loader('SavedPlayer' + e);
-            }
+for (let e = 1; e < 6; e++) {
+    DocId("LoadPlayer" + e).addEventListener("click", function () {
+        enemies = [];
+        if (localStorage.getItem('SavedPlayer' + e) === null) {
             return;
-        });
-    }
+        } else {
+            SaveLoader('SavedPlayer' + e);
+        }
+        return;
+    });
 }
-Loaders();
 
 DocId("LoadFile").addEventListener("input", function () {
     var test = DocId("LoadFile");
@@ -6406,7 +6403,7 @@ DocId("Load").addEventListener("click", function () {
     DocId("LoadMenu").style.display = 'block';
     DocId("StartLoad").style.display = 'none';
 
-    for (var e = 1; e < 6; e++) {
+    for (let e = 1; e < 6; e++) {
         if (localStorage.getItem('SaveDate' + e) !== null) {
             DocId("LoadPlayer" + e).value = localStorage.getItem('SaveDate' + e);
         }
@@ -8683,28 +8680,30 @@ function EncounterShapeDragon() {
     StandardEnemy(OP);
     NameGiver(OP);
 }
-function enemy(EnemyName, EnemyRace, Strength, Endurance, Willpower, Charm,
-    Intelligence, SexSkill, EnemyHealth, EnemyWillHealth, ExpDrop, GoldDrop,
-    Color, Size, Height, EnemySecondRace = EnemyRace, EnemyFullHealth = EnemyHealth,
-    EnemyFullWillHealth = EnemyWillHealth) {
-    this.Name = EnemyName;
-    this.Race = EnemyRace;
-    this.Str = Strength;
-    this.End = Endurance;
-    this.Will = Willpower;
-    this.Charm = Charm;
-    this.Int = Intelligence;
-    this.SexSkill = SexSkill;
-    this.Health = EnemyHealth;
-    this.WillHealth = EnemyWillHealth;
-    this.Exp = ExpDrop;
-    this.Gold = GoldDrop;
-    this.Color = Color;
-    this.Size = Size;
-    this.Height = Height;
-    this.SecondRace = EnemySecondRace;
-    this.FullHealth = EnemyFullHealth;
-    this.FullWillHealth = EnemyFullWillHealth;
+class enemy {
+    constructor(
+        EnemyName, EnemyRace, Strength, Endurance, Willpower, Charm,
+        Intelligence, SexSkill, EnemyHealth, EnemyWillHealth, ExpDrop, GoldDrop,
+        Color, Size, Height, EnemySecondRace = EnemyRace) {
+        this.Name = EnemyName;
+        this.Race = EnemyRace;
+        this.Str = Strength;
+        this.End = Endurance;
+        this.Will = Willpower;
+        this.Charm = Charm;
+        this.Int = Intelligence;
+        this.SexSkill = SexSkill;
+        this.Health = EnemyHealth;
+        this.WillHealth = EnemyWillHealth;
+        this.Exp = ExpDrop;
+        this.Gold = GoldDrop;
+        this.Color = Color;
+        this.Size = Size;
+        this.Height = Height;
+        this.SecondRace = EnemySecondRace;
+        this.FullHealth = EnemyHealth;
+        this.FullWillHealth = EnemyWillHealth;
+    }
 }
 
 // Feral concept list
@@ -8738,9 +8737,15 @@ function NameGiver(who) {
 }
 
 function EvilNameGiver(who) {
-    const EvilMaleFirstNames = ["Neclord", "Virion", "Dario", "Grumio", "Auron", "Jaymes", "Fark", "Cidolfus", "Bartholomew", "Arthur"],
-        EvilFemaleFirstNames = ["Autumn", "Imeena", "Margorie", "Draven", "Lauden", "Ethel", "Cat", "Raven", "Senka", "Jinx"],
-        EvilLastNames = ["Crimson", "Kane", "Duke", "Interfector", "Geulimja", "Ebonywood", "Grove", "Helion", "Church", "Geulimja", "Moonfall", "Winter", "Hart", "Calarook", "Crypt", "Wolf", "Rex", "Fadington", "Maganti", "Hook"];
+    const EvilMaleFirstNames = [
+            "Neclord", "Virion", "Dario", "Grumio", "Auron", "Jaymes", "Fark", "Cidolfus", "Bartholomew", "Arthur"
+        ],
+        EvilFemaleFirstNames = [
+            "Autumn", "Imeena", "Margorie", "Draven", "Lauden", "Ethel", "Cat", "Raven", "Senka", "Jinx"
+        ],
+        EvilLastNames = [
+            "Crimson", "Kane", "Duke", "Interfector", "Geulimja", "Ebonywood", "Grove", "Helion", "Church", "Geulimja", "Moonfall", "Winter", "Hart", "Calarook", "Crypt", "Wolf", "Rex", "Fadington", "Maganti", "Hook"
+        ];
     //EvilMaleFirstNames.RemoveDup();
     switch (CheckGender(who)) {
         case "cuntboy":
@@ -8828,8 +8833,8 @@ function EssenceGiver(who, amount, GenderPref = 0) { // Gives random gender
 }
 
 function FatMuscle(who, minfatprocent, minweight) {
-    var fatratio = RandomInt(minfatprocent, minfatprocent + 10);
-    var muscleration = 100 - fatratio;
+    const fatratio = RandomInt(minfatprocent, minfatprocent + 10),
+        muscleration = 100 - fatratio;
     who.Fat = minweight / 200 * fatratio;
     who.Muscle = minweight / 200 * muscleration;
     who.Weight = minweight + who.Fat + who.Muscle;
@@ -8962,7 +8967,7 @@ function EncounterBandit() {
     var RacesBandit = ["Orc", "Troll"];
     var OP = new enemy("Bandit", RandomString(RacesBandit), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15),
         RandomInt(8, 15), RandomInt(10, 15), 170, 170, RandomInt(30, 45), RandomInt(30, 55),
-        'tomato ', grid *2, RandomInt(140, 180));
+        'tomato ', grid * 2, RandomInt(140, 180));
     GenderLock(OP, 500, "male");
     FatMuscle(OP, 7, 70);
     StandardEnemy(OP);
@@ -9860,10 +9865,12 @@ window.mobilecheck = function () { // Check if mobile device from detectmobile
 
 console.log(mobilecheck())
 function RaceBonus(who) {
+    // 
     switch (who.Race) {
         case "Halfling":
             who.Height = who.Height / 2;
             who.Weight = who.Weight / 2;
+            who.Size = who.Size * 0.8;
             break;
         case "Orc":
             who.Str += 1;
@@ -9871,6 +9878,7 @@ function RaceBonus(who) {
         case "Fairy":
             who.Height = Math.ceil(who.Height / 9);
             who.Weight = Math.ceil(who.Weight / 9);
+            who.Size = who.Size * 0.4;
             break;
         case "Elf":
             who.Int += 1;
@@ -9919,23 +9927,21 @@ DocId("Save").addEventListener("click", function () {
         }
     }
 });
+
 DocId("SaveLeave").addEventListener("click", function () {
     DocId("SaveMenu").style.display = 'none';
     DisplayGame();
 });
 
-function SavePlayerButtons() {
-    for (let e = 1; e < 6; e++) {
-        DocId("SavePlayer" + e).addEventListener("click", function () {
-            const SaveArray = [player, House, Flags, Settings];
-            localStorage.setItem('SavedPlayer' + e, JSON.stringify(SaveArray));
-            localStorage.setItem('SaveDate' + e, Date());
-            DocId("SavePlayer" + e).value = Date();
-            DocId("LoadPlayer" + e).value = Date();
-        });
-    }
+for (let e = 1; e < 6; e++) {
+    DocId("SavePlayer" + e).addEventListener("click", function () {
+        const SaveArray = [player, House, Flags, Settings];
+        localStorage.setItem('SavedPlayer' + e, JSON.stringify(SaveArray));
+        localStorage.setItem('SaveDate' + e, Date());
+        DocId("SavePlayer" + e).value = Date();
+        DocId("LoadPlayer" + e).value = Date();
+    });
 }
-SavePlayerButtons();
 
 DocId("SaveText").addEventListener("click", function () {
     var SaveArray = [player, House, Flags, Settings];
@@ -13475,7 +13481,7 @@ DocId("regurgitateStomach").addEventListener("click", function () {
 
 DocId("VoreLooks").addEventListener("click", function () {
     DisplayNone();
-    DocId("ShowVore").style.display = 'block';
+    DocId("ShowVore").style.display = 'grid';
     DocId("VorePerkMenu").style.display = 'none';
     DocId("AbsorbEssenceSetting").value = "Absorb Essence " + Settings.VoreSettings.AbsorbEssence;
 });

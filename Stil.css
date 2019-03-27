@@ -785,6 +785,7 @@
        text-align: center;
        font-family: inherit;
        font-size: inherit;
+       font-weight: bold;
        color: inherit;
        width: 90%;
        max-width: 220px;
@@ -888,7 +889,8 @@
        border-radius: 5px;
        background-color: rgb(235, 235, 228);
        text-align: center;
-   }
+    justify-items: center;
+    }
 
    @media screen and (max-height: 600px) {
        div.Vore {
@@ -909,6 +911,13 @@
        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
        grid-template-rows: repeat(auto-fit, 140px);
        overflow: auto;
+   }
+
+   #VoreButtons {
+       display: grid;
+       grid-template-columns: 1fr 1fr 1fr;
+       justify-items: center;
+       width: 80%;
    }
 
    #Inventory {
@@ -987,11 +996,6 @@
            margin: 0;
            padding: 0;
        }
-   }
-
-   #VoreButtons {
-       display: grid;
-       grid-template-columns: 1fr 1fr 1fr;
    }
 
    div.LimbSale {
