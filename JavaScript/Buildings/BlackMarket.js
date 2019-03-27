@@ -56,7 +56,7 @@ function BlackMarketFunc() {
     });
 
     input3.addEventListener("click", function () {
-        const amount = Math.min(5000000, player.Masc);
+        const amount = Math.min(50, player.Masc);
         if (typeof amount === "number") {
             player.Masc -= amount;
             player.Gold += amount * 2;
