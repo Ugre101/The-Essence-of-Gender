@@ -866,7 +866,7 @@ function loop() {
         Laglimiter++;
         if (Laglimiter % 80 == 0) {
             Laglimiter = 0;
-            //Settings.EssenceAuto ? EssenceCheck(player) : false;
+            Settings.EssenceAuto ? EssenceCheck(player) : false;
             RaceEssenceBalance(); // Race essence bad name
             player.Fat = Math.max(0.1, player.Fat);
             player.Muscle = Math.max(1, player.Muscle);
