@@ -1,7 +1,6 @@
-function GrowthScale(who) {
-    return (who.Height / 160)
-} // I put this a function to make it easier to trial different formulas.
-
+function OrganSize(Size, who) {
+    return Math.ceil(Math.sqrt(Size) * GrowthScale(who));
+}
 
 function EssenceCheck(who) {
     function DickSize(e = 0) {

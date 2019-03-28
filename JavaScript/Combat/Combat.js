@@ -1,12 +1,12 @@
 function UpdateStats(YourTurn = true) {
-    let ee = enemies[EnemyIndex];
     CombatButtons();
-    const ESH = document.getElementById("EnemyStatusHealth"),
-        ESWH = document.getElementById("EnemyStatusWillHealth"),
-        SH = document.getElementById("StatusHealth2"),
-        SWH = document.getElementById("StatusWillHealth2"),
-        BE = document.getElementById("BattleEnemy"),
-        SN = document.getElementById("StatusName2");
+    const ee = enemies[EnemyIndex],
+        ESH = DocId("EnemyStatusHealth"),
+        ESWH = DocId("EnemyStatusWillHealth"),
+        SH = DocId("StatusHealth2"),
+        SWH = DocId("StatusWillHealth2"),
+        BE = DocId("BattleEnemy"),
+        SN = DocId("StatusName2");
     // Enemy Status
     BE.innerHTML = `${ee.Name}<br>${ee.Race} ${Pronoun(CheckGender(ee))}`;
     ESH.innerHTML = Math.round(ee.Health);
@@ -32,40 +32,42 @@ function UpdateStats(YourTurn = true) {
     if (YourTurn === false) {
         EnemyAttack();
     }
-
-
-}
+};
 
 function EnemyAttack() {
-    const PhysicalAttacks = [
-            "kicks", "hits", "grapple with"
-        ],
-        BT = document.getElementById("BattleText2");
-
-    let ee = enemies[EnemyIndex];
-    if (ee.Str >= ee.Charm) {
-        let EAttack = (RandomInt(1, 5) * ee.Str) / 2;
+    const BT = DocId("BattleText2"),
+        {
+            Charm,
+            Str,
+            Boobies,
+            Balls
+        } = enemies[EnemyIndex];
+    if (Str >= Charm) {
+        const PhysicalAttacks = [
+                "kicks", "hits", "grapple with"
+            ],
+            EAttack = (RandomInt(1, 5) * Str) / 2;
         player.Health -= EAttack;
-        BT.innerHTML = "Your opponent " + RandomString(PhysicalAttacks) + " you, causing " + EAttack + " dmg.";
+        BT.innerHTML = `Your opponent ${RandomString(PhysicalAttacks)} you, causing ${EAttack} dmg.`;
         UpdateStats();
         return;
     } else { // if (ee.Str < ee.Charm) Unnesary?
-        let LustAttacks = ["tease you"];
-        if (ee.Boobies[0].Size > 5) {
-            let boob = "fondle their breast in a seductive manner";
+        const LustAttacks = ["tease you"],
+            EAttack = (RandomInt(1, 5) * Charm) / 2;
+        if (Boobies[0].Size > 5) {
+            const boob = "fondle their breast in a seductive manner";
             LustAttacks.push(boob);
-        }
-        if (ee.Balls.length > 0) {
-            let ball = "fondle their balls in a teasing manner";
+        };
+        if (Balls.length > 0) {
+            const ball = "fondle their balls in a teasing manner";
             LustAttacks.push(ball);
-        }
-        let EAttack = (RandomInt(1, 5) * ee.Charm) / 2;
+        };
         BT.innerHTML = `Your opponent ${RandomString(LustAttacks)} causing your will to suffer by ${EAttack}.`;
         player.WillHealth -= EAttack;
         UpdateStats();
         return;
-    }
-}
+    };
+};
 /**
  * Need to make enemy attack more flavour full
  * Make it so enemies tease with different movement & hit with stuff like kick, sweeps, slashing, etc..
@@ -93,7 +95,7 @@ function MagRes(who) {
 }
 
 function CombatFunc() { // Whole combat div
-    const Combat = document.getElementById("Encounter");
+    const Combat = DocId("Encounter");
     while (Combat.hasChildNodes()) {
         Combat.removeChild(Combat.firstChild);
     }
@@ -128,8 +130,8 @@ function CombatFunc() { // Whole combat div
 
 function CombatButtons() { // Just combat buttons
     let ee = enemies[EnemyIndex];
-    const Combat = document.getElementById("CombatButtons"),
-        BT = document.getElementById("BattleText");
+    const Combat = DocId("CombatButtons"),
+        BT = DocId("BattleText");
     // Purge old children
     while (Combat.hasChildNodes()) {
         Combat.removeChild(Combat.firstChild);
@@ -140,8 +142,7 @@ function CombatButtons() { // Just combat buttons
         row3 = document.createElement("div"),
         row4 = document.createElement("div");
 
-    const Hit = ButtonButton();
-    Hit.innerHTML = `Hit<br>${Math.floor(4 * player.Str / 2)}-${Math.floor(8 * player.Str / 2)}dmg`;
+    const Hit = ButtonButton(`Hit<br>${Math.floor(4 * player.Str / 2)}-${Math.floor(8 * player.Str / 2)}dmg`);
     Hit.addEventListener("click", function () {
         const PAttack = Math.floor(RandomInt(4, 8) * player.Str / 2); // * PhyRes(ee);
         ee.Health -= PAttack;
@@ -158,8 +159,7 @@ function CombatButtons() { // Just combat buttons
         // Nothing for now will later make it so tease doesn't get created.
         console.log("Non tease")
     } else {
-        const Tease = ButtonButton();
-        Tease.innerHTML = "Tease<br>" + Math.floor(4 * player.Charm / 2) + "-" + Math.floor(8 * player.Charm / 2) + "Will"
+        const Tease = ButtonButton(`Tease<br>${Math.floor(4 * player.Charm / 2)}-${Math.floor(8 * player.Charm / 2)}Will`);
         Tease.addEventListener("click", function () {
             const PAttack = Math.floor(RandomInt(4, 8) * player.Charm / 2); // * LusRes(ee);
             ee.WillHealth -= PAttack;
@@ -174,7 +174,6 @@ function CombatButtons() { // Just combat buttons
             const Spell = SpellButton(e);
             row3.appendChild(Spell);
         }
-        // if more than 3 spells spawn a spell book
         // Todo make it so that instead of spell with index 0,1,2 spawn at outside book make it so
         // that last casted spells is at the "quick cast" menu 
         if (player.Spells.length >= 2) {
@@ -189,11 +188,10 @@ function CombatButtons() { // Just combat buttons
 
     const FleeBattle = InputButton("Flee");
     FleeBattle.addEventListener("click", function () {
-        const a = RandomInt(1, 10);
-        if (a > 7) {
+        if (RandomInt(1, 10) > 7) {
             battle = false;
             DisplayGame();
-            document.getElementById("Encounter").style.display = 'none';
+            DocId("Encounter").style.display = 'none';
             BT.innerHTML = "Success!"
         }
         UpdateStats(false);
@@ -211,7 +209,7 @@ function CombatButtons() { // Just combat buttons
 
 function Spellbook() {
     // Replace all buttons with spells
-    const Combat = document.getElementById("CombatButtons");
+    const Combat = DocId("CombatButtons");
     // Purge old children
     while (Combat.hasChildNodes()) {
         Combat.removeChild(Combat.firstChild);
@@ -228,19 +226,14 @@ function Spellbook() {
     });
     row4.appendChild(CloseBook);
 
-    // Using same e
-    for (var e = 0; e < Math.min(player.Spells.length, 3); e++) {
-        const Spell = SpellButton(e);
-        row1.appendChild(Spell);
-    }
-    if (player.Spells.length > 2) {
-        for (e = 3; e < Math.min(player.Spells.length, 7); e++) {
+    for (let e = 0; e < player.Spells.length; e++) {
+        if (e < 3) {
+            const Spell = SpellButton(e);
+            row1.appendChild(Spell);
+        } else if (e < 6) {
             const Spell = SpellButton(e);
             row2.appendChild(Spell);
-        }
-    }
-    if (player.Spells.length > 6) {
-        for (e = 7; e < Math.min(player.Spells.length, 10); e++) {
+        } else {
             const Spell = SpellButton(e);
             row3.appendChild(Spell);
         }
@@ -257,11 +250,9 @@ function Spellbook() {
 function SpellButton(index) { // Instead of repeating, Can only add fireball now need a const dic for spells
     const it = player.Spells[index],
         DictIt = SpellDict[it.Name],
-        Spell = document.createElement("button"), // + " Mana-cost: " + ManaCost;
+        Spell = ButtonButton(`${DictIt.Name} ${DictIt.ManaCost()}M<br>${DictIt.Does(it.Exp)}`,
+            SpellDictLite[it.Name].Title), // + " Mana-cost: " + ManaCost;
         ee = enemies[EnemyIndex];
-    Spell.setAttribute("type", "button");
-    Spell.setAttribute("title", SpellDictLite[it.Name].Title);
-    Spell.innerHTML = `${DictIt.Name} ${DictIt.ManaCost()}M<br>${DictIt.Does(it.Exp)}`;
     Spell.addEventListener("click", function () {
         DictIt.Cast(index, ee);
         UpdateStats(false);

@@ -1,5 +1,5 @@
 function WinBattle() {
-    var ee = enemies[EnemyIndex];
+    const ee = enemies[EnemyIndex];
     player.Exp += ee.Exp;
     player.Gold += ee.Gold;
     ee.SessionOrgasm = 0;
@@ -44,7 +44,7 @@ function SetupSex(ee) {
 
 // Handles quests related to combat
 function CombatQuests(ee) {
-    for (var q of player.Quests) {
+    for (let q of player.Quests) {
         if (q.Name === "ElfHunt") {
             if (ee.Race === "Elf") {
                 q.Count++;

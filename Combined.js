@@ -915,6 +915,7 @@ function DocId(id) { // Important Prototype.js must be loaded before where you w
     }, 4000);
 })()
  */
+
 function BarFunc() {
     var Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
@@ -1208,7 +1209,7 @@ function BlackMarketFunc() {
     });
 
     input3.addEventListener("click", function () {
-        const amount = Math.min(5000000, player.Masc);
+        const amount = Math.min(50, player.Masc);
         if (typeof amount === "number") {
             player.Masc -= amount;
             player.Gold += amount * 2;
@@ -1371,6 +1372,7 @@ function BlackMarketFunc() {
         limbcon.appendChild(Frag);
     }
 }
+
 
 document.getElementById("SacRaceEss").addEventListener("click", function () {
     var SacMenu = document.getElementById("SacRaceEssMenu");
@@ -3214,6 +3216,24 @@ function CheckFlags() {
         player.Inventory.push(ItemDict.SpellBook);
     }
     HemScale();
+    player.Spells.push( // Array so that I can add more without problems
+        Fireball = {
+            Name: "Fireball",
+            Exp: 0
+        }
+    );
+    player.Spells.push( // Array so that I can add more without problems
+        Fireball = {
+            Name: "Fireball",
+            Exp: 0
+        }
+    );
+    player.Spells.push( // Array so that I can add more without problems
+        Fireball = {
+            Name: "Fireball",
+            Exp: 0
+        }
+    );
 }
 // Hopefully obselite
 /**
@@ -3228,14 +3248,14 @@ function CheckFlags() {
  */
 
 function UpdateStats(YourTurn = true) {
-    let ee = enemies[EnemyIndex];
     CombatButtons();
-    const ESH = document.getElementById("EnemyStatusHealth"),
-        ESWH = document.getElementById("EnemyStatusWillHealth"),
-        SH = document.getElementById("StatusHealth2"),
-        SWH = document.getElementById("StatusWillHealth2"),
-        BE = document.getElementById("BattleEnemy"),
-        SN = document.getElementById("StatusName2");
+    const ee = enemies[EnemyIndex],
+        ESH = DocId("EnemyStatusHealth"),
+        ESWH = DocId("EnemyStatusWillHealth"),
+        SH = DocId("StatusHealth2"),
+        SWH = DocId("StatusWillHealth2"),
+        BE = DocId("BattleEnemy"),
+        SN = DocId("StatusName2");
     // Enemy Status
     BE.innerHTML = `${ee.Name}<br>${ee.Race} ${Pronoun(CheckGender(ee))}`;
     ESH.innerHTML = Math.round(ee.Health);
@@ -3261,40 +3281,42 @@ function UpdateStats(YourTurn = true) {
     if (YourTurn === false) {
         EnemyAttack();
     }
-
-
-}
+};
 
 function EnemyAttack() {
-    const PhysicalAttacks = [
-            "kicks", "hits", "grapple with"
-        ],
-        BT = document.getElementById("BattleText2");
-
-    let ee = enemies[EnemyIndex];
-    if (ee.Str >= ee.Charm) {
-        let EAttack = (RandomInt(1, 5) * ee.Str) / 2;
+    const BT = DocId("BattleText2"),
+        {
+            Charm,
+            Str,
+            Boobies,
+            Balls
+        } = enemies[EnemyIndex];
+    if (Str >= Charm) {
+        const PhysicalAttacks = [
+                "kicks", "hits", "grapple with"
+            ],
+            EAttack = (RandomInt(1, 5) * Str) / 2;
         player.Health -= EAttack;
-        BT.innerHTML = "Your opponent " + RandomString(PhysicalAttacks) + " you, causing " + EAttack + " dmg.";
+        BT.innerHTML = `Your opponent ${RandomString(PhysicalAttacks)} you, causing ${EAttack} dmg.`;
         UpdateStats();
         return;
     } else { // if (ee.Str < ee.Charm) Unnesary?
-        let LustAttacks = ["tease you"];
-        if (ee.Boobies[0].Size > 5) {
-            let boob = "fondle their breast in a seductive manner";
+        const LustAttacks = ["tease you"],
+            EAttack = (RandomInt(1, 5) * Charm) / 2;
+        if (Boobies[0].Size > 5) {
+            const boob = "fondle their breast in a seductive manner";
             LustAttacks.push(boob);
-        }
-        if (ee.Balls.length > 0) {
-            let ball = "fondle their balls in a teasing manner";
+        };
+        if (Balls.length > 0) {
+            const ball = "fondle their balls in a teasing manner";
             LustAttacks.push(ball);
-        }
-        let EAttack = (RandomInt(1, 5) * ee.Charm) / 2;
+        };
         BT.innerHTML = `Your opponent ${RandomString(LustAttacks)} causing your will to suffer by ${EAttack}.`;
         player.WillHealth -= EAttack;
         UpdateStats();
         return;
-    }
-}
+    };
+};
 /**
  * Need to make enemy attack more flavour full
  * Make it so enemies tease with different movement & hit with stuff like kick, sweeps, slashing, etc..
@@ -3322,7 +3344,7 @@ function MagRes(who) {
 }
 
 function CombatFunc() { // Whole combat div
-    const Combat = document.getElementById("Encounter");
+    const Combat = DocId("Encounter");
     while (Combat.hasChildNodes()) {
         Combat.removeChild(Combat.firstChild);
     }
@@ -3357,8 +3379,8 @@ function CombatFunc() { // Whole combat div
 
 function CombatButtons() { // Just combat buttons
     let ee = enemies[EnemyIndex];
-    const Combat = document.getElementById("CombatButtons"),
-        BT = document.getElementById("BattleText");
+    const Combat = DocId("CombatButtons"),
+        BT = DocId("BattleText");
     // Purge old children
     while (Combat.hasChildNodes()) {
         Combat.removeChild(Combat.firstChild);
@@ -3369,8 +3391,7 @@ function CombatButtons() { // Just combat buttons
         row3 = document.createElement("div"),
         row4 = document.createElement("div");
 
-    const Hit = ButtonButton();
-    Hit.innerHTML = `Hit<br>${Math.floor(4 * player.Str / 2)}-${Math.floor(8 * player.Str / 2)}dmg`;
+    const Hit = ButtonButton(`Hit<br>${Math.floor(4 * player.Str / 2)}-${Math.floor(8 * player.Str / 2)}dmg`);
     Hit.addEventListener("click", function () {
         const PAttack = Math.floor(RandomInt(4, 8) * player.Str / 2); // * PhyRes(ee);
         ee.Health -= PAttack;
@@ -3387,8 +3408,7 @@ function CombatButtons() { // Just combat buttons
         // Nothing for now will later make it so tease doesn't get created.
         console.log("Non tease")
     } else {
-        const Tease = ButtonButton();
-        Tease.innerHTML = "Tease<br>" + Math.floor(4 * player.Charm / 2) + "-" + Math.floor(8 * player.Charm / 2) + "Will"
+        const Tease = ButtonButton(`Tease<br>${Math.floor(4 * player.Charm / 2)}-${Math.floor(8 * player.Charm / 2)}Will`);
         Tease.addEventListener("click", function () {
             const PAttack = Math.floor(RandomInt(4, 8) * player.Charm / 2); // * LusRes(ee);
             ee.WillHealth -= PAttack;
@@ -3403,7 +3423,6 @@ function CombatButtons() { // Just combat buttons
             const Spell = SpellButton(e);
             row3.appendChild(Spell);
         }
-        // if more than 3 spells spawn a spell book
         // Todo make it so that instead of spell with index 0,1,2 spawn at outside book make it so
         // that last casted spells is at the "quick cast" menu 
         if (player.Spells.length >= 2) {
@@ -3418,11 +3437,10 @@ function CombatButtons() { // Just combat buttons
 
     const FleeBattle = InputButton("Flee");
     FleeBattle.addEventListener("click", function () {
-        const a = RandomInt(1, 10);
-        if (a > 7) {
+        if (RandomInt(1, 10) > 7) {
             battle = false;
             DisplayGame();
-            document.getElementById("Encounter").style.display = 'none';
+            DocId("Encounter").style.display = 'none';
             BT.innerHTML = "Success!"
         }
         UpdateStats(false);
@@ -3440,7 +3458,7 @@ function CombatButtons() { // Just combat buttons
 
 function Spellbook() {
     // Replace all buttons with spells
-    const Combat = document.getElementById("CombatButtons");
+    const Combat = DocId("CombatButtons");
     // Purge old children
     while (Combat.hasChildNodes()) {
         Combat.removeChild(Combat.firstChild);
@@ -3457,19 +3475,14 @@ function Spellbook() {
     });
     row4.appendChild(CloseBook);
 
-    // Using same e
-    for (var e = 0; e < Math.min(player.Spells.length, 3); e++) {
-        const Spell = SpellButton(e);
-        row1.appendChild(Spell);
-    }
-    if (player.Spells.length > 2) {
-        for (e = 3; e < Math.min(player.Spells.length, 7); e++) {
+    for (let e = 0; e < player.Spells.length; e++) {
+        if (e < 3) {
+            const Spell = SpellButton(e);
+            row1.appendChild(Spell);
+        } else if (e < 6) {
             const Spell = SpellButton(e);
             row2.appendChild(Spell);
-        }
-    }
-    if (player.Spells.length > 6) {
-        for (e = 7; e < Math.min(player.Spells.length, 10); e++) {
+        } else {
             const Spell = SpellButton(e);
             row3.appendChild(Spell);
         }
@@ -3486,11 +3499,9 @@ function Spellbook() {
 function SpellButton(index) { // Instead of repeating, Can only add fireball now need a const dic for spells
     const it = player.Spells[index],
         DictIt = SpellDict[it.Name],
-        Spell = document.createElement("button"), // + " Mana-cost: " + ManaCost;
+        Spell = ButtonButton(`${DictIt.Name} ${DictIt.ManaCost()}M<br>${DictIt.Does(it.Exp)}`,
+            SpellDictLite[it.Name].Title), // + " Mana-cost: " + ManaCost;
         ee = enemies[EnemyIndex];
-    Spell.setAttribute("type", "button");
-    Spell.setAttribute("title", SpellDictLite[it.Name].Title);
-    Spell.innerHTML = `${DictIt.Name} ${DictIt.ManaCost()}M<br>${DictIt.Does(it.Exp)}`;
     Spell.addEventListener("click", function () {
         DictIt.Cast(index, ee);
         UpdateStats(false);
@@ -3498,7 +3509,7 @@ function SpellButton(index) { // Instead of repeating, Can only add fireball now
     return Spell;
 }
 function WinBattle() {
-    var ee = enemies[EnemyIndex];
+    const ee = enemies[EnemyIndex];
     player.Exp += ee.Exp;
     player.Gold += ee.Gold;
     ee.SessionOrgasm = 0;
@@ -3543,7 +3554,7 @@ function SetupSex(ee) {
 
 // Handles quests related to combat
 function CombatQuests(ee) {
-    for (var q of player.Quests) {
+    for (let q of player.Quests) {
         if (q.Name === "ElfHunt") {
             if (ee.Race === "Elf") {
                 q.Count++;
@@ -3693,10 +3704,9 @@ function TestDialog() {
 
     Npc.appendChild(Inputs);
 }
-function GrowthScale(who) {
-    return (who.Height / 160)
-} // I put this a function to make it easier to trial different formulas.
-
+function OrganSize(Size, who) {
+    return Math.ceil(Math.sqrt(Size) * GrowthScale(who));
+}
 
 function EssenceCheck(who) {
     function DickSize(e = 0) {
@@ -4407,25 +4417,25 @@ function DetailedRaceDesc() {
 function FluidsEngine() {
     DocId("FemcumBar").style.display = 'none';
     if (player.Balls.length > 0) {
-        for (var b = 0; b < player.Balls.length; b++) {
-            player.Balls[b].CumMax = 1 / 3 * Math.PI * Math.pow(player.Balls[b].Size, 3),
-                player.Balls[b].CumBaseRate = player.Balls[b].CumMax / 500;
-            if (player.Balls[b].Cum < player.Balls[b].CumMax) {
-                player.Balls[b].Cum += Math.max(0, player.Balls[b].CumRate + player.Balls[b].CumBaseRate);
+        for (let b of player.Balls) {
+            const Size = OrganSize(b.Size, player);
+            b.CumMax = 1 / 3 * Math.PI * Math.pow(Size, 3),
+                b.CumBaseRate = b.CumMax / 500;
+            if (b.Cum < b.CumMax) {
+                b.Cum += Math.max(0, b.CumRate + b.CumBaseRate);
             }
         }
         DocId("CumBar").style.display = 'block';
-        var TotalCum = 0,
-            TotalCumMax = 0;
-        for (var e = 0; e < player.Balls.length; e++) {
-            TotalCum += player.Balls[e].Cum;
-            TotalCumMax += player.Balls[e].CumMax
-        }
-        var CumPercent = TotalCum / TotalCumMax;
+        const TotalCum = player.Balls.map(c => c.Cum).reduce((acc, cur) => acc + cur),
+            TotalCumMax = player.Balls.map(c => c.CumMax).reduce((acc, cur) => acc + cur),
+            CumPercent = TotalCum / TotalCumMax;
         if (false) {
             EventLog("Your balls are so full that you can barely hold it!")
+            // Change style of cumbar?
         }
-        DocId("FluidCum").innerHTML = Math.round((Math.round(TotalCum) / 1000) * 10) / 10 + "L";
+        DocId("FluidCum").innerHTML = CumPercent >= 1 ?
+            `Full (${LToGal(TotalCum/1000)})` :
+            `${LToGal(TotalCum/1000)}`;
         DocId("FluidCum").style.width = Math.min(1, CumPercent) * 100 + "%";
 
     } else {
@@ -4433,55 +4443,61 @@ function FluidsEngine() {
     }
     if (player.Boobies.length > 0 && GotMilk(player)) {
         DocId("MilkBar").style.display = 'block';
-        var TotalMilk = 0,
-            TotalMilkMax = 0;
-        for (var b = 0; b < player.Boobies.length; b++) {
-            if (!Settings.EssenceAuto) {
-                player.Boobies[b].MilkMax = 1 / 3 * Math.PI * Math.pow(player.Boobies[b].Size, 3);
-            }
-            if (player.Boobies[b].MilkRate > 0) {
-                player.Boobies[b].Milk += player.Boobies[b].MilkRate;
+        for (let b of player.Boobies) {
+            const Size = OrganSize(b.Size, player);
+            b.MilkMax = 1 / 3 * Math.PI * Math.pow(Size, 3);
+            if (b.MilkRate > 0) {
+                b.Milk += b.MilkRate;
             }
         }
-        for (var e = 0; e < player.Boobies.length; e++) {
-            TotalMilk += player.Boobies[e].Milk;
-            TotalMilkMax += player.Boobies[e].MilkMax
-        }
-        var MilkPercent = TotalMilk / TotalMilkMax;
+        const TotalMilk = player.Boobies.map(m => m.Milk).reduce((acc, cur) => acc + cur),
+            TotalMilkMax = player.Boobies.map(m => m.MilkMax).reduce((acc, cur) => acc + cur),
+            MilkPercent = TotalMilk / TotalMilkMax;
         if (false) {
             EventLog("You breasts are so full that they have started leaking!")
         }
-        DocId("FluidMilk").innerHTML = Math.round((Math.round(TotalMilk) / 1000) * 10) / 10 + "L";
+        DocId("FluidMilk").innerHTML = MilkPercent >= 1 ?
+            `Full (${LToGal(TotalMilk/1000)})` :
+            `${LToGal(TotalMilk/1000)}`;
         DocId("FluidMilk").style.width = Math.min(1, MilkPercent) * 100 + "%";
 
     } else {
         DocId("MilkBar").style.display = 'none';
     }
     if (House.Dormmates.length > 0) {
-        for (var e = 0; e < House.Dormmates.length; e++) {
-            EssenceCheck(House.Dormmates[e]);
-            if (House.Dormmates[e].Balls.length > 0) {
-                for (var b = 0; b < House.Dormmates[e].Balls.length; b++) {
-                    House.Dormmates[e].Balls[b].CumMax = 1 / 3 * Math.PI * Math.pow(House.Dormmates[e].Balls[b].Size, 3),
-                        House.Dormmates[e].Balls[b].CumBaseRate = House.Dormmates[e].Balls[b].CumMax / 500;
-                    if (House.Dormmates[e].Balls[b].Cum < House.Dormmates[e].Balls[b].CumMax) {
-                        House.Dormmates[e].Balls[b].Cum += Math.max(0, House.Dormmates[e].Balls[b].CumRate + House.Dormmates[e].Balls[b].CumBaseRate);
+        for (let e of House.Dormmates) {
+            EssenceCheck(e);
+            if (e.Balls.length > 0) {
+                for (let b of e.Balls) {
+                    const Size = OrganSize(b.Size, e);
+                    b.CumMax = 1 / 3 * Math.PI * Math.pow(Size, 3),
+                        b.CumBaseRate = b.CumMax / 500;
+                    if (b.Cum < b.CumMax) {
+                        b.Cum += Math.max(0, b.CumRate + b.CumBaseRate);
                     }
                 }
             }
-
+            if (GotMilk(e)) {
+                for (let b of e.Boobies) {
+                    const Size = OrganSize(b.Size, e);
+                    b.MilkMax = 1 / 3 * Math.PI * Math.pow(Size, 3);
+                    if (b.MilkRate > 0) {
+                        b.Milk += b.MilkRate;
+                    }
+                }
+            }
         }
     }
-}
-//Well, this disables *everything* below. Moving it out of the function.
+};
+
 function GotMilk(who) {
-    for (var e of who.Boobies) {
+    for (let e of who.Boobies) {
         if (e.MilkRate > 0) {
             return true;
         }
     }
     return false;
-}
+};
     // Makes sure map scales correctly when user change screen size.
     function HemScale() {
         if (window.innerHeight < 500) {
@@ -6427,21 +6443,22 @@ function IntToOne(i) {
     }
 }
 
+function GrowthScale(who) {
+    return (who.Height / 160)
+}
+
 function DickLook(who) {
     if (who.Dicks.length > 0) {
-        var dicks = "";
-        var virgin = " ";
-        if (who.SecondRace == "centaur") {
-            dicks = "Under your equine body, retracted into their penile sheath, you find "
-        } else if (who.SecondRace == "equine") {
-            dicks = "Retracted into their penile sheath, you find "
-        }
-        for (var d = 0; d < who.Dicks.length; d++) {
-            if (who.Dicks[d].Virgin) {
-                virgin = " virgin"
-            }
-            dicks += IntToOne(d) + CmToInch(who.Dicks[d].Size) + " long " + who.Dicks[d].Type.toLowerCase() + virgin + " dick";
-        }
+        let dicks = who.SecondRace == "centaur" ?
+            "Under your equine body, retracted into their penile sheath, you find " :
+            who.SecondRace == "equine" ? "Retracted into their penile sheath, you find " : "";
+
+        who.Dicks.forEach((Dick, index) => {
+            const Size = OrganSize(Dick.Size, who);
+            // width = Size / modded value;
+            dicks += `${IntToOne(index)} ${CmToInch(Size)} long ${Dick.Type.toLowerCase()} 
+            ${Dick.Virgin ? " virgin" : ""} dick`;
+        });
         return dicks + ".<br><br>";
     } else {
         return "";
@@ -6450,19 +6467,16 @@ function DickLook(who) {
 
 function ExactDickLook(who) {
     if (who.Dicks.length > 0) {
-        var dicks = "";
-        var virgin = " ";
-        if (who.SecondRace == "centaur") {
-            dicks = "Under your equine body, retracted into their penile sheath, you find "
-        } else if (who.SecondRace == "equine") {
-            dicks = "Retracted into their penile sheath, you find "
-        }
-        for (var d = 0; d < who.Dicks.length; d++) {
-            if (who.Dicks[d].Virgin) {
-                virgin = " virgin"
-            }
-            dicks += IntToOne(d) + CmToInch(who.Dicks[d].Size) + " long " + who.Dicks[d].Type.toLowerCase() + virgin + " dick";
-        }
+        let dicks = who.SecondRace == "centaur" ?
+            "Under your equine body, retracted into their penile sheath, you find " :
+            who.SecondRace == "equine" ? "Retracted into their penile sheath, you find " : "";
+
+        who.Dicks.forEach((Dick, index) => {
+            const Size = OrganSize(Dick.Size, who);
+            // width = Size / modded value;
+            dicks += `${IntToOne(index)} ${CmToInch(Size)} long ${Dick.Type.toLowerCase()} 
+            ${Dick.Virgin ? " virgin" : ""} dick`;
+        });
         return dicks + ".<br><br>";
     } else {
         return "";
@@ -6471,29 +6485,29 @@ function ExactDickLook(who) {
 
 function BallLook(who) {
     if (who.Balls.length > 0) {
-        var balls = "";
-        for (var b = 0; b < who.Balls.length; b++) {
-            balls += IntToOne(b) + "pair of " + CmToInch(who.Balls[b].Size) + " wide balls, ";
-            balls += Filled(who.Balls[b]) + " cum";
-        }
+        let balls = "";
+        who.Balls.forEach((Balls, index) => {
+            const Size = OrganSize(Balls.Size, who);
+            balls += `${IntToOne(index)} pair of ${CmToInch(Size)} wide balls, ${Filled(Balls)} cum`;
+        });
         return balls + "<br><br>";
     } else {
         return "";
-    }
-}
+    };
+};
 
 function ExactBallLook(who) {
     if (who.Balls.length > 0) {
-        var balls = "";
-        for (var b = 0; b < who.Balls.length; b++) {
-            balls += IntToOne(b) + "pair of " + CmToInch(who.Balls[b].Size) + " wide balls, ";
-            balls += "filled with " + LToGal(who.Balls[b].Cum / 1000) + " cum";
-        }
+        let balls = "";
+        who.Balls.forEach((Balls, index) => {
+            const Size = OrganSize(Balls.Size, who);
+            balls += `${IntToOne(index)} pair of ${CmToInch(Size)} wide balls, ${Filled(Balls)} cum`;
+        });
         return balls + "<br><br>";
     } else {
         return "";
-    }
-}
+    };
+};
 
 function Filled(what) {
     return "filled with " + LToGal(what.Cum / 1000)
@@ -6505,69 +6519,61 @@ function Filled(what) {
         } else if (Percent > 0.5) {
             return "filled with"
         } else if (Percent > 0.3) {
-            return ""
+            return "filled with"
         } else if (Percent > 0.1) {
             return "shrunken due their emptiness"
         } else if (Percent > 0.01) {
-            return ""
+            return "shrunken due their emptiness"
         } else {
-            return "completely emptied"
+            return "completely dried up"
         }
      */
 }
 
 function PussyLook(who) {
     if (who.Pussies.length > 0) {
-        var pussies = "";
-        var virgin = " ";
-        if (who.SecondRace == "centaur") {
-            pussies = "At your equine backside are your mare genitals, ";
-        }
-        for (var p = 0; p < who.Pussies.length; p++) {
-            if (who.Pussies[p].Virgin) {
-                virgin = " virgin"
-            }
-            who.Pussies[p].Type + virgin + " pussy <br>";
-            pussies += IntToOne(p) + CmToInch(who.Pussies[p].Size) + " deep " + who.Pussies[p].Type.toLowerCase() + virgin + " pussy";
-        }
+        let pussies = (who.SecondRace == "centaur") ?
+            "At your equine backside are your mare genitals, " : "";
+        who.Pussies.forEach((Pussy, index) => {
+            const Size = OrganSize(Pussy.Size, who);
+            pussies += `${IntToOne(index)} ${CmToInch(Size)} deep ${Pussy.Type.toLowerCase()} 
+            ${Pussy.Virgin ? " virgin" : ""} pussy`;
+        });
         return pussies + ".<br><br>";
     } else {
         return "";
-    }
-}
+    };
+};
 
 function ExactPussyLook(who) {
     if (who.Pussies.length > 0) {
-        var pussies = "";
-        var virgin = " ";
-        if (who.SecondRace == "centaur") {
-            pussies = "At your equine backside are your mare genitals, ";
-        }
-        for (var p = 0; p < who.Pussies.length; p++) {
-            if (who.Pussies[p].Virgin) {
-                virgin = " virgin"
-            }
-            who.Pussies[p].Type + virgin + " pussy <br>";
-            pussies += IntToOne(p) + CmToInch(who.Pussies[p].Size) + " deep " + who.Pussies[p].Type.toLowerCase() + virgin + " pussy";
-        }
+        let pussies = (who.SecondRace == "centaur") ?
+            "At your equine backside are your mare genitals, " : "";
+        who.Pussies.forEach((Pussy, index) => {
+            const Size = OrganSize(Pussy.Size, who);
+            pussies += `${IntToOne(index)} ${CmToInch(Size)} deep ${Pussy.Type.toLowerCase()} 
+            ${Pussy.Virgin ? " virgin" : ""} pussy`;
+        });
         return pussies + ".<br><br>";
     } else {
         return "";
-    }
-}
+    };
+};
 
 function BoobLook(who) {
     if (who.Boobies.length > 0) {
-        var boobies = "";
-        for (var b = 0; b < who.Boobies.length; b++) {
-            if (b == 0 && (Math.round(who.Boobies[0].Size) == 2 || Math.round(who.Boobies[0].Size) == 3)) {
-                boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
-            } else if (Math.round(who.Boobies[b].Size) > 1 && Math.round(who.Boobies[b].Size < 28)) {
-                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
+        let boobies = "";
+        who.Boobies.forEach((Boobs, index) => {
+            const Size = OrganSize(Boobs.Size, who);
+            if (index === 0 && Size <= 4 && Size > 1) {
+                boobies += `An ${BoobSizeConvertor(Size)}-cup chest`;
+            } else if (Size > 4 && Size < 28) {
+                boobies += `${IntToOne(index)} ${BoobSizeConvertor(Size)}-cup chest`;
             } else {
-                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
+                boobies += `${IntToOne(index)} ${BoobSizeConvertor(Size)} chest`;
             }
-        }
+            // Todo add milk desc!
+        });
         return boobies + ".<br><br>";
     } else {
         return "";
@@ -6576,16 +6582,17 @@ function BoobLook(who) {
 
 function ExactBoobLook(who) {
     if (who.Boobies.length > 0) {
-        var boobies = "";
-        for (var b = 0; b < who.Boobies.length; b++) {
-            if (b == 0 && (Math.round(who.Boobies[0].Size) == 2 || Math.round(who.Boobies[0].Size) == 3)) {
-                boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
-            } else if (Math.round(who.Boobies[b].Size) > 1 && Math.round(who.Boobies[b].Size < 28)) {
-                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
+        let boobies = "";
+        who.Boobies.forEach((Boobs, index) => {
+            const Size = OrganSize(Boobs.Size, who);
+            if (index === 0 && Size <= 4 && Size > 1) {
+                boobies += `An ${BoobSizeConvertor(Size)}-cup chest`;
+            } else if (Size > 4 && Size < 28) {
+                boobies += `${IntToOne(index)} ${BoobSizeConvertor(Size)}-cup chest`;
             } else {
-                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
+                boobies += `${IntToOne(index)} ${BoobSizeConvertor(Size)} chest`;
             }
-        }
+        });
         return boobies + ".<br><br>";
     } else {
         return "";
@@ -6659,6 +6666,7 @@ function BoobSizeConvertor(Size) {
     }
 }
 
+// TODO add pussy width
 function PussySizeConvetor(Size) { // Could be fun to reuse with a strecht factor
     if (Size <= 1) {
         return "extremely tight";
@@ -6676,7 +6684,7 @@ function PussySizeConvetor(Size) { // Could be fun to reuse with a strecht facto
 }
 
 function Fitness(who) {
-    var a, b, c;
+    let a, b, c;
     if ((who.Fat / who.Weight) * 100 <= 2) {
         a = "You look malnourished ";
     } else if ((who.Fat / who.Weight) * 100 <= 14) {
@@ -8027,7 +8035,7 @@ DocId("EssenceOptions").addEventListener("click", function () {
 });
 
 DocId("BoobsLess").addEventListener("click", function () {
-    if (Settings.MaxLimbs.MaxBoobs > 0) {
+    if (Settings.MaxLimbs.MaxBoobs > 1) {
         Settings.MaxLimbs.MaxBoobs--;
     }
     DocId("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
@@ -9829,10 +9837,11 @@ function InputButton(Value, Title = "") { // Save space and stop repeating same 
     return button;
 }
 
-function ButtonButton(Title = "") { // Same as above but for <button>
-    var button = document.createElement("button");
+function ButtonButton(inner = "", Title = "") { // Same as above but for <button>
+    const button = document.createElement("button");
     button.setAttribute("type", "button");
     button.setAttribute("title", Title);
+    button.innerHTML = inner;
     return button;
 }
 
@@ -10216,18 +10225,18 @@ function AfterBattleButtons(Sex = true, Vored = false) {
             const InfuseDiv = document.createElement("div");
             InfuseDiv.classList.add("MascFemi");
             if (player.Masc > 0) {
-                const InjectM = InputButton("Infuse Masc");
+                const InjectM = ButtonButton("Infuse Masc");
                 InjectM.addEventListener("click", DrainInjectM);
-                InjectM.style.background = "linear-gradient(to right,white,blue)";
+                InjectM.style.background = "linear-gradient(to right,rgba(245, 245, 220),blue)";
                 InfuseDiv.appendChild(InjectM);
             } else { //filler button to stop player from missclicking
                 const InjectM = InputButton("Empty");
                 InfuseDiv.appendChild(InjectM);
             }
             if (player.Femi > 0) {
-                const InjectF = InputButton("Infuse Femi");
+                const InjectF = ButtonButton("Infuse Femi");
                 InjectF.addEventListener("click", DrainInjectF);
-                InjectF.style.background = "linear-gradient(to right,white,#C12970)";
+                InjectF.style.background = "linear-gradient(to right,rgba(245, 245, 220),#C12970)";
                 InfuseDiv.appendChild(InjectF);
             } else {
                 const InjectF = InputButton("Empty");
@@ -10240,9 +10249,9 @@ function AfterBattleButtons(Sex = true, Vored = false) {
             const SiphonDiv = document.createElement("div");
             SiphonDiv.classList.add("MascFemi");
             if (ee.Masc > 0) {
-                const DrainM = InputButton("Siphon Masc");
+                const DrainM = ButtonButton("Siphon Masc");
                 DrainM.addEventListener("click", DrainDrainM);
-                DrainM.style.background = "linear-gradient(to right,blue,white)";
+                DrainM.style.background = "linear-gradient(to right,blue,rgba(245, 245, 220))";
                 SiphonDiv.appendChild(DrainM);
             } else {
                 const DrainM = InputButton("Drained");
@@ -10250,9 +10259,9 @@ function AfterBattleButtons(Sex = true, Vored = false) {
             }
 
             if (ee.Femi > 0) {
-                const DrainF = InputButton("Siphon Femi");
+                const DrainF = ButtonButton("Siphon Femi");
                 DrainF.addEventListener("click", DrainDrainF);
-                DrainF.style.background = "linear-gradient(to right, #C12970,white)";
+                DrainF.style.background = "linear-gradient(to right, #C12970,rgba(245, 245, 220))";
 
                 SiphonDiv.appendChild(DrainF);
             } else {
@@ -10261,70 +10270,70 @@ function AfterBattleButtons(Sex = true, Vored = false) {
             }
             Siphon.appendChild(SiphonDiv);
             if (ee.Dicks.length > 0) { // Trial
-                let EEDickIndex = ee.Dicks.length - 1,
-                    playerDickIndex = player.Dicks.length - 1;
                 const SiphonDickDiv = document.createElement("div"),
-                    SiphonDickIndex = InputButton(EEDickIndex + 1, "Enemy"),
-                    SiphonDick = InputButton("Siphon dick(test)"),
-                    SiphonPlayerDickIndex = InputButton(playerDickIndex + 1, "Player");
-
-                SiphonDickDiv.classList.add("SiphonButtons");
-
-                SiphonDickIndex.addEventListener("click", function () {
-                    (EEDickIndex + 1 < ee.Dicks.length) ? EEDickIndex++ : EEDickIndex = 0;
-                    SiphonDickIndex.setAttribute("value", EEDickIndex + 1);
-                });
-                SiphonDickDiv.appendChild(SiphonDickIndex);
+                    SiphonDick = ButtonButton("Siphon Dick"),
+                    SiphonDickToMasc = ButtonButton("Shrink Dick ");
+                SiphonDickDiv.classList.add("MascFemi");
 
                 SiphonDick.addEventListener("click", function () {
-                    DrainSiphonDick(EEDickIndex, playerDickIndex);
+                    DrainSiphonDick();
                 });
                 SiphonDickDiv.appendChild(SiphonDick);
 
-                SiphonPlayerDickIndex.addEventListener("click", function () {
-                    (playerDickIndex + 1 < player.Dicks.length) ? playerDickIndex++ : playerDickIndex = 0;
-                    SiphonPlayerDickIndex.setAttribute("value", playerDickIndex + 1);
-                });
-                SiphonDickDiv.appendChild(SiphonPlayerDickIndex);
-                Siphon.appendChild(SiphonDickDiv);
-
-                const SiphonDickToMasc = InputButton("Shrink dick(test)");
                 SiphonDickToMasc.addEventListener("click", DrainSiphonDickToMasc);
-                Siphon.appendChild(SiphonDickToMasc);
-            }
+                SiphonDickToMasc.style.background = "linear-gradient(to right,blue,rgba(245, 245, 220))";
+                SiphonDickDiv.appendChild(SiphonDickToMasc);
+
+                Siphon.appendChild(SiphonDickDiv);
+            };
             if (ee.Balls.length > 0) {
-                let EBI = ee.Balls.length - 1,
-                    PBI = player.Balls.length - 1;
                 const SiphonBallsDiv = document.createElement("div"),
-                    SiphonBallsIndex = InputButton(EBI + 1, "Enemy"),
-                    SiphonBalls = InputButton("Siphon balls(test)"),
-                    SiphonPlayerBallsIndex = InputButton(PBI + 1, "Player");
-
-                SiphonBallsDiv.classList.add("SiphonButtons");
-
-                SiphonBallsIndex.addEventListener("click", function () {
-                    (EBI + 1 < ee.Balls.length) ? EBI++ : EBI = 0;
-                    SiphonBallsIndex.setAttribute("value", EBI + 1);
-                });
-                SiphonBallsDiv.appendChild(SiphonBallsIndex);
+                    SiphonBalls = ButtonButton("Siphon Balls"),
+                    SiphonBallsToMasc = ButtonButton("Shrink Balls");
+                SiphonBallsDiv.classList.add("MascFemi");
 
                 SiphonBalls.addEventListener("click", function () {
-                    DrainSiphonBalls(EBI, PBI);
+                    DrainSiphonBalls();
                 });
                 SiphonBallsDiv.appendChild(SiphonBalls);
 
-                SiphonPlayerBallsIndex.addEventListener("click", function () {
-                    (PBI + 1 < player.Balls.length) ? PBI++ : PBI = 0;
-                    SiphonPlayerBallsIndex.setAttribute("value", PBI + 1);
-                });
-                SiphonBallsDiv.appendChild(SiphonPlayerBallsIndex);
-                Siphon.appendChild(SiphonBallsDiv);
-
-                const SiphonBallsToMasc = InputButton("Shrink balls(test)");
                 SiphonBallsToMasc.addEventListener("click", DrainSiphonBallsToMasc);
-                Siphon.appendChild(SiphonBallsToMasc);
+                SiphonBallsToMasc.style.background = "linear-gradient(to right,blue,rgba(245, 245, 220))";
+                SiphonBallsDiv.appendChild(SiphonBallsToMasc);
+
+                Siphon.appendChild(SiphonBallsDiv);
+            };
+            if (ee.Boobies.length > 1 || ee.Boobies[0].Size > 1) {
+                const SiphonBoobsDiv = document.createElement("div"),
+                    SiphonBoobs = ButtonButton("Siphon Boobs"),
+                    SiphonBoobsToFemi = ButtonButton("Shrink Boobs")
+                SiphonBoobsDiv.classList.add("MascFemi");
+
+                SiphonBoobs.addEventListener("click", DrainSiphonBoobs);
+                SiphonBoobsDiv.appendChild(SiphonBoobs);
+
+                SiphonBoobsToFemi.addEventListener("click", DrainSiphonBoobsToFemi);
+                SiphonBoobsToFemi.style.background = "linear-gradient(to right, #C12970,rgba(245, 245, 220))";
+                SiphonBoobsDiv.appendChild(SiphonBoobsToFemi);
+
+                Breast.appendChild(SiphonBoobsDiv);
             }
-        }
+            if (ee.Pussies.length > 0) {
+                const SiphonPussiesDiv = document.createElement("div"),
+                    SiphonPussy = ButtonButton("Siphon Pussy"),
+                    SiphonPussyToFemi = ButtonButton("Shrink Pussy")
+                SiphonPussiesDiv.classList.add("MascFemi");
+
+                SiphonPussy.addEventListener("click", DrainSiphonPussy);
+                SiphonPussiesDiv.appendChild(SiphonPussy);
+
+                SiphonPussyToFemi.addEventListener("click", DrainSiphonPussyToFemi);
+                SiphonPussyToFemi.style.background = "linear-gradient(to right, #C12970,rgba(245, 245, 220))";
+                SiphonPussiesDiv.appendChild(SiphonPussyToFemi);
+
+                Pussy.appendChild(SiphonPussiesDiv);
+            };
+        };
         if (Settings.Vore) {
             const {
                 Weight
@@ -10377,7 +10386,9 @@ function CheckArousal() {
                 " Nothing comes out, as they're already drained."
         } else if (LastPressed == "GiveCunnilingus") {
             SexText.innerHTML += "<br>Reading their body language, you know they are close to cumming. Shoving your tongue as deep as you can into them, your face gets splashed with their nectar."
-        } else if (false) SexText.innerHTML += " Nothing comes out, as they're already drained."
+        } else if (false) {
+            SexText.innerHTML += " Nothing comes out, as they're already drained."
+        }
     }
     if (player.Arousal >= 100) {
         player.Orgasm++;
@@ -10635,12 +10646,13 @@ function SexLooksExactAndKinda() { // A function to be able to enter a bunch of 
     });
 }
 SexLooksExactAndKinda();
-function DrainSiphonDick(EEDickIndex, playerDickIndex = 0) {
+function DrainSiphonDick() {
     const old = JSON.parse(JSON.stringify(player)),
         eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
         ee = enemies[EnemyIndex],
-        ed = ee.Dicks[EEDickIndex],
-        pd = player.Dicks.length > 0 ? player.Dicks[playerDickIndex] : false;
+        ed = ee.Dicks[ee.Dicks.length - 1],
+        pd = player.Dicks[player.Dicks.length - 1],
+        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
 
     if (player.Dicks.length === 0) {
         const Dick = {
@@ -10650,12 +10662,12 @@ function DrainSiphonDick(EEDickIndex, playerDickIndex = 0) {
         }
         player.Dicks.push(Dick);
     } else {
-        pd.Size++;
+        pd.Size += Siphon;
     }
     ee.SessionOrgasm--;
-    ed.Size--;
+    ed.Size -= Siphon;
     if (ed.Size <= 0) {
-        ee.Dicks.splice(EEDickIndex, 1);
+        ee.Dicks.pop();
     }
     DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
     RaceDrain(ee);
@@ -10673,7 +10685,7 @@ function DrainSiphonDickToMasc() {
     ee.SessionOrgasm--;
     ed.Size -= Math.round(Ess / 5);
     if (ed.Size <= 0.5) {
-        ee.Dicks.splice()
+        ee.Dicks.pop()
     }
     DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
     RaceDrain(ee);
@@ -10681,17 +10693,18 @@ function DrainSiphonDickToMasc() {
     CheckArousal();
 }
 
-function DrainSiphonBalls(EEBallsIndex, playerBallsIndex = 0) {
+function DrainSiphonBalls() {
     const old = JSON.parse(JSON.stringify(player)),
         eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
         ee = enemies[EnemyIndex],
-        eb = ee.Balls[EEBallsIndex],
-        pb = player.Balls.length > 0 ? player.Balls[playerBallsIndex] : false;
+        eb = ee.Balls[ee.Balls.length - 1],
+        pb = player.Balls[player.Balls.length - 1],
+        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
 
     if (player.Balls.length === 0) {
         const Ball = {
             Size: 1,
-            Type: who.Race,
+            Type: player.SecondRace,
             CumMax: 1 / 3 * Math.PI * Math.pow(1, 3),
             Cum: 1 / 6 * Math.PI * Math.pow(1, 3),
             CumRate: 0,
@@ -10699,12 +10712,12 @@ function DrainSiphonBalls(EEBallsIndex, playerBallsIndex = 0) {
         }
         player.Balls.push(Ball);
     } else {
-        pb.Size++;
+        pb.Size += Siphon;
     }
     ee.SessionOrgasm--;
-    eb.Size--;
+    eb.Size -= Siphon;
     if (eb.Size <= 0) {
-        ee.Balls.splice(EEBallsIndex, 1);
+        ee.Balls.pop();
     }
     DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
     RaceDrain(ee);
@@ -10722,13 +10735,116 @@ function DrainSiphonBallsToMasc() {
     ee.SessionOrgasm--;
     eb.Size -= Math.round(Ess / 5);
     if (eb.Size <= 0.5) {
-        ee.Balls.splice()
+        ee.Balls.pop()
     }
     DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
     RaceDrain(ee);
     AfterBattleButtons();
     CheckArousal();
-}
+};
+
+function DrainSiphonBoobs() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        eb = ee.Boobies[ee.Boobies.length - 1],
+        pb = player.Boobies[player.Boobies.length - 1],
+        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
+
+    if (player.Boobies.length === 0) {
+        const Boob = {
+            Size: 1,
+            Type: player.SecondRace,
+            Milk: 0,
+            MilkBaseRate: 0,
+            MilkRate: 0,
+            MilkMax: 1 / 3 * Math.PI * Math.pow(1, 3)
+        }
+        player.Boobies.push(Boob);
+    } else {
+        pb.Size += Siphon;
+    }
+    ee.SessionOrgasm--;
+    eb.Size -= Siphon;
+    if (eb.Size <= 0 && ee.Boobies.length > 1) {
+        ee.Boobies.pop();
+    } else if (eb.Size <= 0 && ee.Boobies.length === 1) {
+        eb.Size = 0;
+    }
+    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
+    RaceDrain(ee);
+    CheckArousal();
+};
+
+
+function DrainSiphonBoobsToFemi() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        eb = ee.Boobies[ee.Boobies.length - 1],
+        Ess = player.EssenceDrain;
+
+    player.Femi += Ess;
+    ee.SessionOrgasm--;
+    eb.Size -= Math.round(Ess / 5);
+    if (eb.Size <= 0 && ee.Boobies.length > 1) {
+        ee.Boobies.pop();
+    } else if (eb.Size <= 0 && ee.Boobies.length === 1) {
+        eb.Size = 0;
+    }
+    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
+    RaceDrain(ee);
+    AfterBattleButtons();
+    CheckArousal();
+};
+
+function DrainSiphonPussy() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        eb = ee.Pussies[ee.Pussies.length - 1],
+        pb = player.Pussies[player.Pussies.length - 1],
+        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
+
+
+    if (player.Pussies.length === 0) {
+        const Pussy = {
+            Size: 1,
+            Type: player.SecondRace,
+            Virgin: true
+        }
+        player.Pussies.push(Pussy);
+    } else {
+        pb.Size += Siphon;
+    }
+    ee.SessionOrgasm--;
+    eb.Size -= Siphon;
+    if (eb.Size <= 0) {
+        ee.Pussies.pop();
+    }
+    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
+    RaceDrain(ee);
+    CheckArousal();
+};
+
+function DrainSiphonPussyToFemi() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        eb = ee.Pussies[ee.Pussies.length - 1],
+        Ess = player.EssenceDrain;
+
+    player.Femi += Ess;
+    ee.SessionOrgasm--;
+    eb.Size -= Math.round(Ess / 5);
+    if (eb.Size <= 0.5) {
+        ee.Pussies.pop()
+    }
+    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
+    RaceDrain(ee);
+    AfterBattleButtons();
+    CheckArousal();
+};
 
 function DrainDrainM() {
     const old = JSON.parse(JSON.stringify(player)),
@@ -13508,6 +13624,28 @@ DocId("ShowStomach").addEventListener("click", function () {
     DocId("StomachContent").innerHTML = food;
 
 });
+
+function ShowStomachFuncWIP() {
+    function Color(ps) {
+        switch (CheckGender(ps)) {
+            case "female":
+                return "Pink";
+            case "male":
+                return "Blue";
+            case "hermaphrodite":
+                return "Purple";
+            case "doll":
+                return "Beige";
+        };
+    };
+    for (let ps of player.Vore.Stomach) {
+        const StomachPrey = ButtonButton(`${ps.Name} ${ps.Race}<br>${Pronoun(CheckGender(ps))}<br><br>
+    Height: ${CmToInch(ps.Height)}<br>Weight: ${KgToPound(ps.Weight)}`);
+        StomachPrey.addEventListener("click", function () {
+
+        });
+    }
+};
 DocId("StomachDigestion").addEventListener("click", function () {
     Settings.VoreSettings.StomachDigestion = !Settings.VoreSettings.StomachDigestion
     DocId("StomachDigestion").value = "Stomach digestion " + Settings.VoreSettings.StomachDigestion;

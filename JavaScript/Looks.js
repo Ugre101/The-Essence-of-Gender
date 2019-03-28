@@ -11,21 +11,22 @@ function IntToOne(i) {
     }
 }
 
+function GrowthScale(who) {
+    return (who.Height / 160)
+}
+
 function DickLook(who) {
     if (who.Dicks.length > 0) {
-        var dicks = "";
-        var virgin = " ";
-        if (who.SecondRace == "centaur") {
-            dicks = "Under your equine body, retracted into their penile sheath, you find "
-        } else if (who.SecondRace == "equine") {
-            dicks = "Retracted into their penile sheath, you find "
-        }
-        for (var d = 0; d < who.Dicks.length; d++) {
-            if (who.Dicks[d].Virgin) {
-                virgin = " virgin"
-            }
-            dicks += IntToOne(d) + CmToInch(who.Dicks[d].Size) + " long " + who.Dicks[d].Type.toLowerCase() + virgin + " dick";
-        }
+        let dicks = who.SecondRace == "centaur" ?
+            "Under your equine body, retracted into their penile sheath, you find " :
+            who.SecondRace == "equine" ? "Retracted into their penile sheath, you find " : "";
+
+        who.Dicks.forEach((Dick, index) => {
+            const Size = OrganSize(Dick.Size, who);
+            // width = Size / modded value;
+            dicks += `${IntToOne(index)} ${CmToInch(Size)} long ${Dick.Type.toLowerCase()} 
+            ${Dick.Virgin ? " virgin" : ""} dick`;
+        });
         return dicks + ".<br><br>";
     } else {
         return "";
@@ -34,19 +35,16 @@ function DickLook(who) {
 
 function ExactDickLook(who) {
     if (who.Dicks.length > 0) {
-        var dicks = "";
-        var virgin = " ";
-        if (who.SecondRace == "centaur") {
-            dicks = "Under your equine body, retracted into their penile sheath, you find "
-        } else if (who.SecondRace == "equine") {
-            dicks = "Retracted into their penile sheath, you find "
-        }
-        for (var d = 0; d < who.Dicks.length; d++) {
-            if (who.Dicks[d].Virgin) {
-                virgin = " virgin"
-            }
-            dicks += IntToOne(d) + CmToInch(who.Dicks[d].Size) + " long " + who.Dicks[d].Type.toLowerCase() + virgin + " dick";
-        }
+        let dicks = who.SecondRace == "centaur" ?
+            "Under your equine body, retracted into their penile sheath, you find " :
+            who.SecondRace == "equine" ? "Retracted into their penile sheath, you find " : "";
+
+        who.Dicks.forEach((Dick, index) => {
+            const Size = OrganSize(Dick.Size, who);
+            // width = Size / modded value;
+            dicks += `${IntToOne(index)} ${CmToInch(Size)} long ${Dick.Type.toLowerCase()} 
+            ${Dick.Virgin ? " virgin" : ""} dick`;
+        });
         return dicks + ".<br><br>";
     } else {
         return "";
@@ -55,29 +53,29 @@ function ExactDickLook(who) {
 
 function BallLook(who) {
     if (who.Balls.length > 0) {
-        var balls = "";
-        for (var b = 0; b < who.Balls.length; b++) {
-            balls += IntToOne(b) + "pair of " + CmToInch(who.Balls[b].Size) + " wide balls, ";
-            balls += Filled(who.Balls[b]) + " cum";
-        }
+        let balls = "";
+        who.Balls.forEach((Balls, index) => {
+            const Size = OrganSize(Balls.Size, who);
+            balls += `${IntToOne(index)} pair of ${CmToInch(Size)} wide balls, ${Filled(Balls)} cum`;
+        });
         return balls + "<br><br>";
     } else {
         return "";
-    }
-}
+    };
+};
 
 function ExactBallLook(who) {
     if (who.Balls.length > 0) {
-        var balls = "";
-        for (var b = 0; b < who.Balls.length; b++) {
-            balls += IntToOne(b) + "pair of " + CmToInch(who.Balls[b].Size) + " wide balls, ";
-            balls += "filled with " + LToGal(who.Balls[b].Cum / 1000) + " cum";
-        }
+        let balls = "";
+        who.Balls.forEach((Balls, index) => {
+            const Size = OrganSize(Balls.Size, who);
+            balls += `${IntToOne(index)} pair of ${CmToInch(Size)} wide balls, ${Filled(Balls)} cum`;
+        });
         return balls + "<br><br>";
     } else {
         return "";
-    }
-}
+    };
+};
 
 function Filled(what) {
     return "filled with " + LToGal(what.Cum / 1000)
@@ -89,69 +87,61 @@ function Filled(what) {
         } else if (Percent > 0.5) {
             return "filled with"
         } else if (Percent > 0.3) {
-            return ""
+            return "filled with"
         } else if (Percent > 0.1) {
             return "shrunken due their emptiness"
         } else if (Percent > 0.01) {
-            return ""
+            return "shrunken due their emptiness"
         } else {
-            return "completely emptied"
+            return "completely dried up"
         }
      */
 }
 
 function PussyLook(who) {
     if (who.Pussies.length > 0) {
-        var pussies = "";
-        var virgin = " ";
-        if (who.SecondRace == "centaur") {
-            pussies = "At your equine backside are your mare genitals, ";
-        }
-        for (var p = 0; p < who.Pussies.length; p++) {
-            if (who.Pussies[p].Virgin) {
-                virgin = " virgin"
-            }
-            who.Pussies[p].Type + virgin + " pussy <br>";
-            pussies += IntToOne(p) + CmToInch(who.Pussies[p].Size) + " deep " + who.Pussies[p].Type.toLowerCase() + virgin + " pussy";
-        }
+        let pussies = (who.SecondRace == "centaur") ?
+            "At your equine backside are your mare genitals, " : "";
+        who.Pussies.forEach((Pussy, index) => {
+            const Size = OrganSize(Pussy.Size, who);
+            pussies += `${IntToOne(index)} ${CmToInch(Size)} deep ${Pussy.Type.toLowerCase()} 
+            ${Pussy.Virgin ? " virgin" : ""} pussy`;
+        });
         return pussies + ".<br><br>";
     } else {
         return "";
-    }
-}
+    };
+};
 
 function ExactPussyLook(who) {
     if (who.Pussies.length > 0) {
-        var pussies = "";
-        var virgin = " ";
-        if (who.SecondRace == "centaur") {
-            pussies = "At your equine backside are your mare genitals, ";
-        }
-        for (var p = 0; p < who.Pussies.length; p++) {
-            if (who.Pussies[p].Virgin) {
-                virgin = " virgin"
-            }
-            who.Pussies[p].Type + virgin + " pussy <br>";
-            pussies += IntToOne(p) + CmToInch(who.Pussies[p].Size) + " deep " + who.Pussies[p].Type.toLowerCase() + virgin + " pussy";
-        }
+        let pussies = (who.SecondRace == "centaur") ?
+            "At your equine backside are your mare genitals, " : "";
+        who.Pussies.forEach((Pussy, index) => {
+            const Size = OrganSize(Pussy.Size, who);
+            pussies += `${IntToOne(index)} ${CmToInch(Size)} deep ${Pussy.Type.toLowerCase()} 
+            ${Pussy.Virgin ? " virgin" : ""} pussy`;
+        });
         return pussies + ".<br><br>";
     } else {
         return "";
-    }
-}
+    };
+};
 
 function BoobLook(who) {
     if (who.Boobies.length > 0) {
-        var boobies = "";
-        for (var b = 0; b < who.Boobies.length; b++) {
-            if (b == 0 && (Math.round(who.Boobies[0].Size) == 2 || Math.round(who.Boobies[0].Size) == 3)) {
-                boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
-            } else if (Math.round(who.Boobies[b].Size) > 1 && Math.round(who.Boobies[b].Size < 28)) {
-                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
+        let boobies = "";
+        who.Boobies.forEach((Boobs, index) => {
+            const Size = OrganSize(Boobs.Size, who);
+            if (index === 0 && Size <= 4 && Size > 1) {
+                boobies += `An ${BoobSizeConvertor(Size)}-cup chest`;
+            } else if (Size > 4 && Size < 28) {
+                boobies += `${IntToOne(index)} ${BoobSizeConvertor(Size)}-cup chest`;
             } else {
-                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
+                boobies += `${IntToOne(index)} ${BoobSizeConvertor(Size)} chest`;
             }
-        }
+            // Todo add milk desc!
+        });
         return boobies + ".<br><br>";
     } else {
         return "";
@@ -160,16 +150,17 @@ function BoobLook(who) {
 
 function ExactBoobLook(who) {
     if (who.Boobies.length > 0) {
-        var boobies = "";
-        for (var b = 0; b < who.Boobies.length; b++) {
-            if (b == 0 && (Math.round(who.Boobies[0].Size) == 2 || Math.round(who.Boobies[0].Size) == 3)) {
-                boobies += "An " + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
-            } else if (Math.round(who.Boobies[b].Size) > 1 && Math.round(who.Boobies[b].Size < 28)) {
-                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + "-cup chest";
+        let boobies = "";
+        who.Boobies.forEach((Boobs, index) => {
+            const Size = OrganSize(Boobs.Size, who);
+            if (index === 0 && Size <= 4 && Size > 1) {
+                boobies += `An ${BoobSizeConvertor(Size)}-cup chest`;
+            } else if (Size > 4 && Size < 28) {
+                boobies += `${IntToOne(index)} ${BoobSizeConvertor(Size)}-cup chest`;
             } else {
-                boobies += IntToOne(b) + BoobSizeConvertor(who.Boobies[b].Size) + " chest";
+                boobies += `${IntToOne(index)} ${BoobSizeConvertor(Size)} chest`;
             }
-        }
+        });
         return boobies + ".<br><br>";
     } else {
         return "";
@@ -243,6 +234,7 @@ function BoobSizeConvertor(Size) {
     }
 }
 
+// TODO add pussy width
 function PussySizeConvetor(Size) { // Could be fun to reuse with a strecht factor
     if (Size <= 1) {
         return "extremely tight";
@@ -260,7 +252,7 @@ function PussySizeConvetor(Size) { // Could be fun to reuse with a strecht facto
 }
 
 function Fitness(who) {
-    var a, b, c;
+    let a, b, c;
     if ((who.Fat / who.Weight) * 100 <= 2) {
         a = "You look malnourished ";
     } else if ((who.Fat / who.Weight) * 100 <= 14) {
