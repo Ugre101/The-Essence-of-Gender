@@ -339,33 +339,5 @@ function CheckFlags() {
         player.Inventory.push(ItemDict.SpellBook);
     }
     HemScale();
-    player.Spells.push( // Array so that I can add more without problems
-        Fireball = {
-            Name: "Fireball",
-            Exp: 0
-        }
-    );
-    player.Spells.push( // Array so that I can add more without problems
-        Fireball = {
-            Name: "Fireball",
-            Exp: 0
-        }
-    );
-    player.Spells.push( // Array so that I can add more without problems
-        Fireball = {
-            Name: "Fireball",
-            Exp: 0
-        }
-    );
-}
-// Hopefully obselite
-/**
- *     for (var e of player.Inventory) {
-        var itemarray = Object.values(ItemDict);
-        for (var b of itemarray) {
-            if (e.Name === b.Name) {
-                e.Use = b.Use
-            }
-        }
-    }
- */
+   
+};
