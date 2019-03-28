@@ -22,7 +22,9 @@ function CheckArousal() {
                 " Nothing comes out, as they're already drained."
         } else if (LastPressed == "GiveCunnilingus") {
             SexText.innerHTML += "<br>Reading their body language, you know they are close to cumming. Shoving your tongue as deep as you can into them, your face gets splashed with their nectar."
-        } else if (false) SexText.innerHTML += " Nothing comes out, as they're already drained."
+        } else if (false) {
+            SexText.innerHTML += " Nothing comes out, as they're already drained."
+        }
     }
     if (player.Arousal >= 100) {
         player.Orgasm++;

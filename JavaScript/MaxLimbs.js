@@ -20,7 +20,7 @@ DocId("EssenceOptions").addEventListener("click", function () {
 });
 
 DocId("BoobsLess").addEventListener("click", function () {
-    if (Settings.MaxLimbs.MaxBoobs > 0) {
+    if (Settings.MaxLimbs.MaxBoobs > 1) {
         Settings.MaxLimbs.MaxBoobs--;
     }
     DocId("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";

@@ -1,25 +1,25 @@
 function FluidsEngine() {
     DocId("FemcumBar").style.display = 'none';
     if (player.Balls.length > 0) {
-        for (var b = 0; b < player.Balls.length; b++) {
-            player.Balls[b].CumMax = 1 / 3 * Math.PI * Math.pow(player.Balls[b].Size, 3),
-                player.Balls[b].CumBaseRate = player.Balls[b].CumMax / 500;
-            if (player.Balls[b].Cum < player.Balls[b].CumMax) {
-                player.Balls[b].Cum += Math.max(0, player.Balls[b].CumRate + player.Balls[b].CumBaseRate);
+        for (let b of player.Balls) {
+            const Size = OrganSize(b.Size, player);
+            b.CumMax = 1 / 3 * Math.PI * Math.pow(Size, 3),
+                b.CumBaseRate = b.CumMax / 500;
+            if (b.Cum < b.CumMax) {
+                b.Cum += Math.max(0, b.CumRate + b.CumBaseRate);
             }
         }
         DocId("CumBar").style.display = 'block';
-        var TotalCum = 0,
-            TotalCumMax = 0;
-        for (var e = 0; e < player.Balls.length; e++) {
-            TotalCum += player.Balls[e].Cum;
-            TotalCumMax += player.Balls[e].CumMax
-        }
-        var CumPercent = TotalCum / TotalCumMax;
+        const TotalCum = player.Balls.map(c => c.Cum).reduce((acc, cur) => acc + cur),
+            TotalCumMax = player.Balls.map(c => c.CumMax).reduce((acc, cur) => acc + cur),
+            CumPercent = TotalCum / TotalCumMax;
         if (false) {
             EventLog("Your balls are so full that you can barely hold it!")
+            // Change style of cumbar?
         }
-        DocId("FluidCum").innerHTML = Math.round((Math.round(TotalCum) / 1000) * 10) / 10 + "L";
+        DocId("FluidCum").innerHTML = CumPercent >= 1 ?
+            `Full (${LToGal(TotalCum/1000)})` :
+            `${LToGal(TotalCum/1000)}`;
         DocId("FluidCum").style.width = Math.min(1, CumPercent) * 100 + "%";
 
     } else {
@@ -27,52 +27,58 @@ function FluidsEngine() {
     }
     if (player.Boobies.length > 0 && GotMilk(player)) {
         DocId("MilkBar").style.display = 'block';
-        var TotalMilk = 0,
-            TotalMilkMax = 0;
-        for (var b = 0; b < player.Boobies.length; b++) {
-            if (!Settings.EssenceAuto) {
-                player.Boobies[b].MilkMax = 1 / 3 * Math.PI * Math.pow(player.Boobies[b].Size, 3);
-            }
-            if (player.Boobies[b].MilkRate > 0) {
-                player.Boobies[b].Milk += player.Boobies[b].MilkRate;
+        for (let b of player.Boobies) {
+            const Size = OrganSize(b.Size, player);
+            b.MilkMax = 1 / 3 * Math.PI * Math.pow(Size, 3);
+            if (b.MilkRate > 0) {
+                b.Milk += b.MilkRate;
             }
         }
-        for (var e = 0; e < player.Boobies.length; e++) {
-            TotalMilk += player.Boobies[e].Milk;
-            TotalMilkMax += player.Boobies[e].MilkMax
-        }
-        var MilkPercent = TotalMilk / TotalMilkMax;
+        const TotalMilk = player.Boobies.map(m => m.Milk).reduce((acc, cur) => acc + cur),
+            TotalMilkMax = player.Boobies.map(m => m.MilkMax).reduce((acc, cur) => acc + cur),
+            MilkPercent = TotalMilk / TotalMilkMax;
         if (false) {
             EventLog("You breasts are so full that they have started leaking!")
         }
-        DocId("FluidMilk").innerHTML = Math.round((Math.round(TotalMilk) / 1000) * 10) / 10 + "L";
+        DocId("FluidMilk").innerHTML = MilkPercent >= 1 ?
+            `Full (${LToGal(TotalMilk/1000)})` :
+            `${LToGal(TotalMilk/1000)}`;
         DocId("FluidMilk").style.width = Math.min(1, MilkPercent) * 100 + "%";
 
     } else {
         DocId("MilkBar").style.display = 'none';
     }
     if (House.Dormmates.length > 0) {
-        for (var e = 0; e < House.Dormmates.length; e++) {
-            EssenceCheck(House.Dormmates[e]);
-            if (House.Dormmates[e].Balls.length > 0) {
-                for (var b = 0; b < House.Dormmates[e].Balls.length; b++) {
-                    House.Dormmates[e].Balls[b].CumMax = 1 / 3 * Math.PI * Math.pow(House.Dormmates[e].Balls[b].Size, 3),
-                        House.Dormmates[e].Balls[b].CumBaseRate = House.Dormmates[e].Balls[b].CumMax / 500;
-                    if (House.Dormmates[e].Balls[b].Cum < House.Dormmates[e].Balls[b].CumMax) {
-                        House.Dormmates[e].Balls[b].Cum += Math.max(0, House.Dormmates[e].Balls[b].CumRate + House.Dormmates[e].Balls[b].CumBaseRate);
+        for (let e of House.Dormmates) {
+            EssenceCheck(e);
+            if (e.Balls.length > 0) {
+                for (let b of e.Balls) {
+                    const Size = OrganSize(b.Size, e);
+                    b.CumMax = 1 / 3 * Math.PI * Math.pow(Size, 3),
+                        b.CumBaseRate = b.CumMax / 500;
+                    if (b.Cum < b.CumMax) {
+                        b.Cum += Math.max(0, b.CumRate + b.CumBaseRate);
                     }
                 }
             }
-
+            if (GotMilk(e)) {
+                for (let b of e.Boobies) {
+                    const Size = OrganSize(b.Size, e);
+                    b.MilkMax = 1 / 3 * Math.PI * Math.pow(Size, 3);
+                    if (b.MilkRate > 0) {
+                        b.Milk += b.MilkRate;
+                    }
+                }
+            }
         }
     }
-}
-//Well, this disables *everything* below. Moving it out of the function.
+};
+
 function GotMilk(who) {
-    for (var e of who.Boobies) {
+    for (let e of who.Boobies) {
         if (e.MilkRate > 0) {
             return true;
         }
     }
     return false;
-}
+};

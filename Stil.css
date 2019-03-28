@@ -107,7 +107,6 @@
        left: 0;
    }
 
-
    div.right {
        position: absolute;
        right: 0;
@@ -146,8 +145,6 @@
    div.StatusWillHealth {
        background-color: rgb(0, 0, 255);
    }
-
-
 
    #FluidCum,
    #FluidMilk,
@@ -193,13 +190,13 @@
 
    .TwoColumn {
        display: grid;
-       grid-template-columns: 1fr 1fr;
+       grid-template-columns: repeat(2, 1fr);
        grid-gap: 1em;
    }
 
    .ThreeColumn {
        display: grid;
-       grid-template-columns: 1fr 1fr 1fr;
+       grid-template-columns: repeat(3, 1fr);
        grid-gap: 0.1em;
    }
 
@@ -332,7 +329,6 @@
        }
    }
 
-
    #QuestTexts {
        display: grid;
        grid-template-columns: 40% 40%;
@@ -436,8 +432,6 @@
        }
    }
 
-
-
    div.SLMenu {
        background-image: url(Res/bg_01_02.png);
        background-repeat: no-repeat;
@@ -486,7 +480,6 @@
        top: 50%;
    }
 
-
    @media screen and (max-height:800px) {
        div.container {
            position: absolute;
@@ -496,12 +489,6 @@
 
    #status>input[type=button] {
        float: left;
-   }
-
-   @media screen and (max-height: 400px) {
-       #FullScreen {
-           display: none;
-       }
    }
 
    div.CombatStatus {
@@ -691,7 +678,8 @@
 
    div.MascFemi {
        display: grid;
-       grid-template-columns: 50% 50%;
+       width: 100%;
+       grid-template-columns: repeat(2, 1fr);
        justify-items: center;
    }
 
@@ -800,6 +788,18 @@
        transition: background 0.3s ease-in-out;
    }
 
+   input[type=color] {
+       width: 100%;
+       max-width: 110px;
+       height: 5vh;
+       max-height: 40px;
+
+       border: 1px solid rgb(83, 57, 43);
+       border-radius: 10px;
+       box-shadow: 0 0 2px 1px black;
+       background-color: rgb(221, 195, 160);
+   }
+
    button {
        height: auto;
        max-height: 200px;
@@ -852,45 +852,20 @@
        margin: 0.1em 0 0 0;
    }
 
-   input[type=color] {
-       width: 30%;
-       max-width: 180px;
-       height: 10vh;
-       max-height: 50px;
-       border: 1px solid #ccc;
-       border-radius: 10px;
-   }
-
-
-   .Pink {
-       background-color: pink;
-   }
-
-   .Blue {
-       background-color: blue;
-       color: white;
-   }
-
-   .Purple {
-       background-color: purple;
-       color: white;
-   }
-
-   .Beige {
-       background-color: beige;
-   }
-
    div.Vore {
-       width: 60%;
+       width: 55%;
        min-height: 400px;
        height: auto;
        padding: 1em;
-       border: 1px solid black;
        border-radius: 5px;
-       background-color: rgb(235, 235, 228);
+       background-color: rgb(231, 166, 215);
        text-align: center;
-    justify-items: center;
-    }
+       justify-items: center;
+
+       border: 20px solid transparent;
+       border-image: url(Res/slot_04.png) 20;
+       border-radius: 20px;
+   }
 
    @media screen and (max-height: 600px) {
        div.Vore {
@@ -915,9 +890,15 @@
 
    #VoreButtons {
        display: grid;
-       grid-template-columns: 1fr 1fr 1fr;
+       grid-template-columns: repeat(3, 1fr);
        justify-items: center;
        width: 80%;
+   }
+
+   @media screen and (max-height: 600px) {
+       #VoreButtons {
+           grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+       }
    }
 
    #Inventory {
@@ -1005,7 +986,6 @@
    }
 
    #ChildrenMenu {
-       height: auto;
        width: 50%;
        height: auto;
        background-color: rgb(235, 235, 228);
@@ -1036,4 +1016,22 @@
 
    li {
        list-style-type: disc;
+   }
+
+   .Pink {
+       background-color: pink;
+   }
+
+   .Blue {
+       background-color: blue;
+       color: white;
+   }
+
+   .Purple {
+       background-color: purple;
+       color: white;
+   }
+
+   .Beige {
+       background-color: beige;
    }

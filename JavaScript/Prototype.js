@@ -29,10 +29,11 @@ function InputButton(Value, Title = "") { // Save space and stop repeating same 
     return button;
 }
 
-function ButtonButton(Title = "") { // Same as above but for <button>
-    var button = document.createElement("button");
+function ButtonButton(inner = "", Title = "") { // Same as above but for <button>
+    const button = document.createElement("button");
     button.setAttribute("type", "button");
     button.setAttribute("title", Title);
+    button.innerHTML = inner;
     return button;
 }
 

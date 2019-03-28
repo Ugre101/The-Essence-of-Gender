@@ -104,18 +104,18 @@ function AfterBattleButtons(Sex = true, Vored = false) {
             const InfuseDiv = document.createElement("div");
             InfuseDiv.classList.add("MascFemi");
             if (player.Masc > 0) {
-                const InjectM = InputButton("Infuse Masc");
+                const InjectM = ButtonButton("Infuse Masc");
                 InjectM.addEventListener("click", DrainInjectM);
-                InjectM.style.background = "linear-gradient(to right,white,blue)";
+                InjectM.style.background = "linear-gradient(to right,rgba(245, 245, 220),blue)";
                 InfuseDiv.appendChild(InjectM);
             } else { //filler button to stop player from missclicking
                 const InjectM = InputButton("Empty");
                 InfuseDiv.appendChild(InjectM);
             }
             if (player.Femi > 0) {
-                const InjectF = InputButton("Infuse Femi");
+                const InjectF = ButtonButton("Infuse Femi");
                 InjectF.addEventListener("click", DrainInjectF);
-                InjectF.style.background = "linear-gradient(to right,white,#C12970)";
+                InjectF.style.background = "linear-gradient(to right,rgba(245, 245, 220),#C12970)";
                 InfuseDiv.appendChild(InjectF);
             } else {
                 const InjectF = InputButton("Empty");
@@ -128,9 +128,9 @@ function AfterBattleButtons(Sex = true, Vored = false) {
             const SiphonDiv = document.createElement("div");
             SiphonDiv.classList.add("MascFemi");
             if (ee.Masc > 0) {
-                const DrainM = InputButton("Siphon Masc");
+                const DrainM = ButtonButton("Siphon Masc");
                 DrainM.addEventListener("click", DrainDrainM);
-                DrainM.style.background = "linear-gradient(to right,blue,white)";
+                DrainM.style.background = "linear-gradient(to right,blue,rgba(245, 245, 220))";
                 SiphonDiv.appendChild(DrainM);
             } else {
                 const DrainM = InputButton("Drained");
@@ -138,9 +138,9 @@ function AfterBattleButtons(Sex = true, Vored = false) {
             }
 
             if (ee.Femi > 0) {
-                const DrainF = InputButton("Siphon Femi");
+                const DrainF = ButtonButton("Siphon Femi");
                 DrainF.addEventListener("click", DrainDrainF);
-                DrainF.style.background = "linear-gradient(to right, #C12970,white)";
+                DrainF.style.background = "linear-gradient(to right, #C12970,rgba(245, 245, 220))";
 
                 SiphonDiv.appendChild(DrainF);
             } else {
@@ -149,70 +149,70 @@ function AfterBattleButtons(Sex = true, Vored = false) {
             }
             Siphon.appendChild(SiphonDiv);
             if (ee.Dicks.length > 0) { // Trial
-                let EEDickIndex = ee.Dicks.length - 1,
-                    playerDickIndex = player.Dicks.length - 1;
                 const SiphonDickDiv = document.createElement("div"),
-                    SiphonDickIndex = InputButton(EEDickIndex + 1, "Enemy"),
-                    SiphonDick = InputButton("Siphon dick(test)"),
-                    SiphonPlayerDickIndex = InputButton(playerDickIndex + 1, "Player");
-
-                SiphonDickDiv.classList.add("SiphonButtons");
-
-                SiphonDickIndex.addEventListener("click", function () {
-                    (EEDickIndex + 1 < ee.Dicks.length) ? EEDickIndex++ : EEDickIndex = 0;
-                    SiphonDickIndex.setAttribute("value", EEDickIndex + 1);
-                });
-                SiphonDickDiv.appendChild(SiphonDickIndex);
+                    SiphonDick = ButtonButton("Siphon Dick"),
+                    SiphonDickToMasc = ButtonButton("Shrink Dick ");
+                SiphonDickDiv.classList.add("MascFemi");
 
                 SiphonDick.addEventListener("click", function () {
-                    DrainSiphonDick(EEDickIndex, playerDickIndex);
+                    DrainSiphonDick();
                 });
                 SiphonDickDiv.appendChild(SiphonDick);
 
-                SiphonPlayerDickIndex.addEventListener("click", function () {
-                    (playerDickIndex + 1 < player.Dicks.length) ? playerDickIndex++ : playerDickIndex = 0;
-                    SiphonPlayerDickIndex.setAttribute("value", playerDickIndex + 1);
-                });
-                SiphonDickDiv.appendChild(SiphonPlayerDickIndex);
-                Siphon.appendChild(SiphonDickDiv);
-
-                const SiphonDickToMasc = InputButton("Shrink dick(test)");
                 SiphonDickToMasc.addEventListener("click", DrainSiphonDickToMasc);
-                Siphon.appendChild(SiphonDickToMasc);
-            }
+                SiphonDickToMasc.style.background = "linear-gradient(to right,blue,rgba(245, 245, 220))";
+                SiphonDickDiv.appendChild(SiphonDickToMasc);
+
+                Siphon.appendChild(SiphonDickDiv);
+            };
             if (ee.Balls.length > 0) {
-                let EBI = ee.Balls.length - 1,
-                    PBI = player.Balls.length - 1;
                 const SiphonBallsDiv = document.createElement("div"),
-                    SiphonBallsIndex = InputButton(EBI + 1, "Enemy"),
-                    SiphonBalls = InputButton("Siphon balls(test)"),
-                    SiphonPlayerBallsIndex = InputButton(PBI + 1, "Player");
-
-                SiphonBallsDiv.classList.add("SiphonButtons");
-
-                SiphonBallsIndex.addEventListener("click", function () {
-                    (EBI + 1 < ee.Balls.length) ? EBI++ : EBI = 0;
-                    SiphonBallsIndex.setAttribute("value", EBI + 1);
-                });
-                SiphonBallsDiv.appendChild(SiphonBallsIndex);
+                    SiphonBalls = ButtonButton("Siphon Balls"),
+                    SiphonBallsToMasc = ButtonButton("Shrink Balls");
+                SiphonBallsDiv.classList.add("MascFemi");
 
                 SiphonBalls.addEventListener("click", function () {
-                    DrainSiphonBalls(EBI, PBI);
+                    DrainSiphonBalls();
                 });
                 SiphonBallsDiv.appendChild(SiphonBalls);
 
-                SiphonPlayerBallsIndex.addEventListener("click", function () {
-                    (PBI + 1 < player.Balls.length) ? PBI++ : PBI = 0;
-                    SiphonPlayerBallsIndex.setAttribute("value", PBI + 1);
-                });
-                SiphonBallsDiv.appendChild(SiphonPlayerBallsIndex);
-                Siphon.appendChild(SiphonBallsDiv);
-
-                const SiphonBallsToMasc = InputButton("Shrink balls(test)");
                 SiphonBallsToMasc.addEventListener("click", DrainSiphonBallsToMasc);
-                Siphon.appendChild(SiphonBallsToMasc);
+                SiphonBallsToMasc.style.background = "linear-gradient(to right,blue,rgba(245, 245, 220))";
+                SiphonBallsDiv.appendChild(SiphonBallsToMasc);
+
+                Siphon.appendChild(SiphonBallsDiv);
+            };
+            if (ee.Boobies.length > 1 || ee.Boobies[0].Size > 1) {
+                const SiphonBoobsDiv = document.createElement("div"),
+                    SiphonBoobs = ButtonButton("Siphon Boobs"),
+                    SiphonBoobsToFemi = ButtonButton("Shrink Boobs")
+                SiphonBoobsDiv.classList.add("MascFemi");
+
+                SiphonBoobs.addEventListener("click", DrainSiphonBoobs);
+                SiphonBoobsDiv.appendChild(SiphonBoobs);
+
+                SiphonBoobsToFemi.addEventListener("click", DrainSiphonBoobsToFemi);
+                SiphonBoobsToFemi.style.background = "linear-gradient(to right, #C12970,rgba(245, 245, 220))";
+                SiphonBoobsDiv.appendChild(SiphonBoobsToFemi);
+
+                Breast.appendChild(SiphonBoobsDiv);
             }
-        }
+            if (ee.Pussies.length > 0) {
+                const SiphonPussiesDiv = document.createElement("div"),
+                    SiphonPussy = ButtonButton("Siphon Pussy"),
+                    SiphonPussyToFemi = ButtonButton("Shrink Pussy")
+                SiphonPussiesDiv.classList.add("MascFemi");
+
+                SiphonPussy.addEventListener("click", DrainSiphonPussy);
+                SiphonPussiesDiv.appendChild(SiphonPussy);
+
+                SiphonPussyToFemi.addEventListener("click", DrainSiphonPussyToFemi);
+                SiphonPussyToFemi.style.background = "linear-gradient(to right, #C12970,rgba(245, 245, 220))";
+                SiphonPussiesDiv.appendChild(SiphonPussyToFemi);
+
+                Pussy.appendChild(SiphonPussiesDiv);
+            };
+        };
         if (Settings.Vore) {
             const {
                 Weight

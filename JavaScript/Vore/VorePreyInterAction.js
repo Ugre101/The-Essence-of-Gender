@@ -210,6 +210,28 @@ DocId("ShowStomach").addEventListener("click", function () {
     DocId("StomachContent").innerHTML = food;
 
 });
+
+function ShowStomachFuncWIP() {
+    function Color(ps) {
+        switch (CheckGender(ps)) {
+            case "female":
+                return "Pink";
+            case "male":
+                return "Blue";
+            case "hermaphrodite":
+                return "Purple";
+            case "doll":
+                return "Beige";
+        };
+    };
+    for (let ps of player.Vore.Stomach) {
+        const StomachPrey = ButtonButton(`${ps.Name} ${ps.Race}<br>${Pronoun(CheckGender(ps))}<br><br>
+    Height: ${CmToInch(ps.Height)}<br>Weight: ${KgToPound(ps.Weight)}`);
+        StomachPrey.addEventListener("click", function () {
+
+        });
+    }
+};
 DocId("StomachDigestion").addEventListener("click", function () {
     Settings.VoreSettings.StomachDigestion = !Settings.VoreSettings.StomachDigestion
     DocId("StomachDigestion").value = "Stomach digestion " + Settings.VoreSettings.StomachDigestion;
