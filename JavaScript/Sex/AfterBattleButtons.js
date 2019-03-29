@@ -7,6 +7,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
     function SexButton(value, func) {
         const button = InputButton(value);
         button.addEventListener("click", func);
+        button.classList.add("SexButtons");
         return button
     }
 
