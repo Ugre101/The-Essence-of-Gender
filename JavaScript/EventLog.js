@@ -17,25 +17,29 @@
 	    DocId("HideEventLog").addEventListener("click", function () {
 	    	if (DocId("EventLogPart").style.display === 'none') {
 	    		DocId("EventLogPart").style.display = 'block';
-	    		DocId("EventLogH2").style.display = 'inline-block';
-	    		DocId("HideEventLog").value = "Hide";
+	    		if (window.innerHeight > 600) {
+	    			DocId("EventLogH2").style.display = 'inline-block';
+	    		}
+	    		DocId("HideEventLog").value = "H";
 	    	} else {
 	    		DocId("EventLogPart").style.display = 'none';
-	    		DocId("HideEventLog").value = "Show E";
+	    		DocId("HideEventLog").value = "S";
 	    		DocId("EventLogH2").style.display = 'none';
 	    	}
 	    });
 	    DocId("HideFluids").addEventListener("click", function () {
 	    	if (DocId("FluidPart").style.display === 'none') {
 	    		DocId("FluidPart").style.display = 'block';
-	    		DocId("EventFluidsH2").style.display = 'inline-block';
+	    		if (window.innerHeight > 600) {
+	    			DocId("EventFluidsH2").style.display = 'inline-block';
+	    		}
 	    		DocId("FluidsMode").style.display = 'inline-block';
-	    		DocId("HideFluids").value = "Hide";
+	    		DocId("HideFluids").value = "H";
 	    	} else {
 	    		DocId("FluidPart").style.display = 'none';
 	    		DocId("EventFluidsH2").style.display = 'none';
 	    		DocId("FluidsMode").style.display = 'none';
-	    		DocId("HideFluids").value = 'Show F';
+	    		DocId("HideFluids").value = 'S';
 	    	}
 	    });
 	    DocId("FluidsMode").addEventListener("click", function () {
@@ -66,7 +70,7 @@
 	    		EventLog.style.width = 20 + "vw";
 	    		EventLog.style.maxHeight = 50 + "vh";
 	    	} else {
-	    		EventLog.style.width = 80 + "vw";
+				EventLog.style.width = 80 + "vw";
 	    		EventLog.style.maxHeight = 80 + "vh";
 	    	}
 	    });

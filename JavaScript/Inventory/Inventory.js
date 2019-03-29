@@ -48,24 +48,24 @@ DocId("InventoryLeave").addEventListener("click", function () {
 
 // Trial of new inventory system so I can stop saving unnecessary data
 function Items2() {
-    var div = DocId("InventoryBag");
+    const div = DocId("InventoryBag");
     while (div.hasChildNodes()) {
         div.removeChild(div.firstChild);
     }
-    var KeyItems = ["Pocket portal", "SpellBook"]; // Make sure important items are first in iventory
-    var Exists = 0;
-    for (var k of KeyItems) {
+    const KeyItems = ["Pocket portal", "SpellBook"]; // Make sure important items are first in iventory
+    let Exists = 0;
+    for (let k of KeyItems) {
         Exists++;
-        var index = player.Inventory.findIndex(f => f.Name === k)
+        const index = player.Inventory.findIndex(f => f.Name === k)
         if (player.Inventory.some(f => f.Name === k) && index !== Exists) {
-            var temp = player.Inventory[index]
+            let temp = player.Inventory[index]
             player.Inventory.splice(index, 1);
             player.Inventory.unshift(temp);
         }
     }
-    for (var e of player.Inventory) {
-        var itemarray = Object.values(ItemDict);
-        for (var b of itemarray) {
+    for (let e of player.Inventory) {
+        const itemarray = Object.values(ItemDict);
+        for (let b of itemarray) {
             if (e.Name === b.Name) {
                 var item = new InventoryThing(e, b)
                 div.appendChild(item);

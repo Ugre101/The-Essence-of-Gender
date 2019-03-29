@@ -36,10 +36,10 @@ function BarberFunc() {
         cut.setAttribute("type", "button");
         cut.setAttribute("value", e);
         cut.addEventListener("click", function () {
-            console.log(e);
+            player.Face.HairLength = e.toLowerCase();
         });
         cut.addEventListener("mouseover", function () {
-            console.log("Cut " + e);
+            p.innerHTML = e;
         })
         return cut;
     }
@@ -78,8 +78,9 @@ function BarberFunc() {
             while (DyeCon.hasChildNodes()) {
                 DyeCon.removeChild(DyeCon.firstChild);
             };
-            var Cuts = ["Shaved", "Buzz cut", "Short", "Medium", "Ear length", "Chin length", "Shoulder length",
-                "Armpit length", "Mid-back length", "Hip length", "Knee length", "Floor length"
+            const Cuts = [ /*"Shaved", "Buzz cut", "Short",*/ "Medium length", "Ear length", "Chin length", "Shoulder length",
+                /*"Armpit length", "Mid-back length",*/
+                "Hip length", "Knee length", "Floor length"
             ];
             for (var e of Cuts) {
                 CutCon.appendChild(CutButton(e, p));
