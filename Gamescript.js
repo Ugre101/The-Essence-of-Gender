@@ -413,7 +413,7 @@ function CharCreator() { // No need have these active for players who use load.
 
 // Sets display to none used for menu buttons
 function DisplayNone() {
-    battle = true;
+    GamePaused = true;
     const DisplayNoneArray = [
         "map", "optionpage", "ShowLooks", "LevelMenu", "LoadMenu", "SaveMenu", "PerkOptionsMenu",
         "ShowQuests", "DetailedInfo", "Levels", "ShowVore", "EssenceOptionsMenu",
@@ -431,6 +431,7 @@ function DisplayNone() {
 
 function DisplayGame() {
     battle = false;
+    GamePaused = false;
     const DisplayGameArray = ["map", "buttons", "status", "EventLog"].forEach(function (src) {
         DocId(src).style.display = 'block';
     });
@@ -486,7 +487,8 @@ function RandomString(array) {
 }
 
 
-var battle = false;
+var battle = false,
+    GamePaused = false;
 
 function Pronoun(gender) {
     switch (gender) {
@@ -844,7 +846,7 @@ function loop() {
     DocId("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none'
     ExpCheck();
 
-    if (!battle) {
+    if (!battle && !GamePaused) { // Splited so I can have time still running while on menus etc...
         const startarea = DocId("hem"),
             ctx = startarea.getContext("2d");
         startarea.width = medium;
@@ -854,8 +856,6 @@ function loop() {
             HemScale();
         };
         CurrentMap();
-        Settings.Vore ? VoreEngine() : false; // However it does shrink the size of code quite a lot... idk
-        Settings.Cheats.Enabled ? CheatEngine() : false;
         (enemies.length > 0) ? PrintEnemies(): false;
         if (Settings.PlayerSpriteEnable) {
             ctx.drawImage(Player_SpriteImages["playerSprite"], sprite.x, sprite.y, grid * 2, grid * 2);
@@ -863,6 +863,10 @@ function loop() {
             ctx.fillStyle = "BlueViolet";
             ctx.fillRect(sprite.x, sprite.y, grid * sprite.Size, grid * sprite.Size);
         }
+    }
+    if (!battle) {
+        Settings.Vore ? VoreEngine() : false; // However it does shrink the size of code quite a lot... idk
+        Settings.Cheats.Enabled ? CheatEngine() : false;
         Laglimiter++;
         if (Laglimiter % 80 == 0) {
             Laglimiter = 0;
@@ -890,7 +894,7 @@ function loop() {
                 DocId("Fps").innerHTML = Math.round(1000 / Thefps) + "fps";
             }
         }
-    };
+    }
 };
 var Laglimiter = 0;
 
