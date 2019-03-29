@@ -3220,24 +3220,6 @@ function CheckFlags() {
         player.Inventory.push(ItemDict.SpellBook);
     }
     HemScale();
-    player.Spells.push( // Array so that I can add more without problems
-        Fireball = {
-            Name: "Fireball",
-            Exp: 0
-        }
-    );
-    player.Spells.push( // Array so that I can add more without problems
-        Fireball = {
-            Name: "Fireball",
-            Exp: 0
-        }
-    );
-    player.Spells.push( // Array so that I can add more without problems
-        Fireball = {
-            Name: "Fireball",
-            Exp: 0
-        }
-    );
 }
 // Hopefully obselite
 /**
