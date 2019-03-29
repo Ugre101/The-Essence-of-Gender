@@ -128,7 +128,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
         if (ee.SessionOrgasm > 0) {
             const SiphonDiv = document.createElement("div");
             SiphonDiv.classList.add("MascFemi");
-            if (ee.Masc > 0) {
+            if (ee.Masc > 0 || ee.Balls.length > 0 || ee.Dicks.length > 0) {
                 const DrainM = ButtonButton("Siphon Masc");
                 DrainM.addEventListener("click", DrainDrainM);
                 DrainM.style.background = "linear-gradient(to right,blue,rgba(245, 245, 220))";

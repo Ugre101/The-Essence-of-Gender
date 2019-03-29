@@ -174,7 +174,7 @@ function Lose(sex = true) {
 				break;
 			case "incubus":
 				if (player.Masc > 0) {
-					const take = Math.min(400, player.Masc * Math.min(0.15, Math.random)); // Up to 15% or 400ess
+					const take = Math.min(400, player.Masc * Math.min(0.15, Math.random())); // Up to 15% or 400ess
 					player.Masc -= take;
 					enemy.Masc += take;
 				}
@@ -183,7 +183,8 @@ function Lose(sex = true) {
 				break;
 			case "succubus":
 				if (player.Femi > 0) {
-					const take = Math.min(400, player.Femi * Math.min(0.15, Math.random)); // Up to 15% or 400ess
+					const take = Math.min(400, player.Femi * Math.min(0.15, Math.random())); // Up to 15% or 400ess
+					console.log(take)
 					player.Femi -= take;
 					enemy.Femi += take;
 				}
@@ -225,41 +226,37 @@ DocId("LoseSubmit").addEventListener("click", function () {
 	Lose(false);
 });
 DocId("LoseStruggle").addEventListener("click", function () {
-	var take = Math.round(enemies[EnemyIndex].SexSkill * RandomInt(1, 7));
-	const selectScene = SnowScenes();
+	const takeM = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(1, 7)), player.Masc),
+		takeF = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(1, 7)), player.Femi),
+		selectScene = SnowScenes();
 	DocId("LosePlayerOrgasm").innerHTML = loseScene(true, selectScene);
 	if (selectScene === "forcedBJ" || selectScene === "getBJ" || selectScene === "getRidden" || selectScene === "getRiddenAnal") {
-		take = Math.min(take, player.Masc);
-		player.Masc -= take;
-		enemies[EnemyIndex].Masc += take;
-	} else if (selectScene === "forcedCunn" || selectScene === "getCunn" || selectScene === "getFucked" || selectScene === "getFuckedAnal") {
-		take = Math.min(take, player.Femi);
-		player.Femi -= take;
-		enemies[EnemyIndex].Femi += take;
-	} else if (selectScene === "forcedRim" || selectScene === "getRim") {
-		var takeM = Math.min(take, player.Masc) / 2;
-		take = Math.min(take, player.Femi) / 2;
 		player.Masc -= takeM;
-		player.Femi -= take;
 		enemies[EnemyIndex].Masc += takeM;
-		enemies[EnemyIndex].Femi += take;
+	} else if (selectScene === "forcedCunn" || selectScene === "getCunn" || selectScene === "getFucked" || selectScene === "getFuckedAnal") {
+		player.Femi -= takeF;
+		enemies[EnemyIndex].Femi += takeF;
+	} else if (selectScene === "forcedRim" || selectScene === "getRim") {
+		player.Masc -= takeM / 2;
+		player.Femi -= takeF / 2;
+		enemies[EnemyIndex].Masc += takeM / 2;
+		enemies[EnemyIndex].Femi += takeF / 2;
 	} else {
-		var shift = player.height / 2;
+		const shift = player.height / 2;
 		player.height -= shift;
 		enemies[EnemyIndex].height += shift;
-		for (var i = 0; i < player.Boobies.length; i++) {
+		/**		for (let i of player.Boobies) {
 			shift = player.Boobies[i].Milk;
 			player.Boobies[i].Milk = 0;
 			enemies[EnemyIndex].Boobies[0].Milk = Math.min(enemies[EnemyIndex].Boobies[0].MilkMax, enemies[EnemyIndex].Boobies[0].Milk + shift);
-		}
-		for (var i = 0; i < player.Balls.length; i++) {
+		} */
+		/**
+		 * 		for (let i = 0; i < player.Balls.length; i++) {
 			shift = player.Balls[i].Cum;
 			player.Balls[i].Cum = 0;
 			enemies[EnemyIndex].Balls[0].Cum = Math.min(enemies[EnemyIndex].Balls[0].CumMax, enemies[EnemyIndex].Balls[0].Cum + shift);
 		}
-		shift = player.Gold / 2;
-		enemies[EnemyIndex].Gold += shift;
-		player.Gold /= 2;
+		 */
 	}
 	Lose(false);
 });

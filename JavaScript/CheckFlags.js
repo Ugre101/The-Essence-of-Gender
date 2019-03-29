@@ -46,7 +46,7 @@ function CheckFlags() {
         }
     }
     if (!Settings.hasOwnProperty("EssenceAuto")) {
-        Settings.EssenceAuto = true;
+        Settings.EssenceAuto = false;
         console.log("Added EssenceAuto");
     }
     if (!Settings.hasOwnProperty("Pronoun")) {
@@ -230,10 +230,6 @@ function CheckFlags() {
             MalePreg: 0
         }
     };
-    player.RaceEssence.push(            Human = {
-        Race: "bob",
-        amount: 0
-    })
 
     FluidsEngine();
     if (!player.hasOwnProperty("RaceEssence")) {
@@ -339,25 +335,7 @@ function CheckFlags() {
         player.Inventory.push(ItemDict.SpellBook);
     }
     HemScale();
-    player.Spells.push( // Array so that I can add more without problems
-        Fireball = {
-            Name: "Fireball",
-            Exp: 0
-        }
-    );
-    player.Spells.push( // Array so that I can add more without problems
-        Fireball = {
-            Name: "Fireball",
-            Exp: 0
-        }
-    );
-    player.Spells.push( // Array so that I can add more without problems
-        Fireball = {
-            Name: "Fireball",
-            Exp: 0
-        }
-    );
-}
+};
 // Hopefully obselite
 /**
  *     for (var e of player.Inventory) {

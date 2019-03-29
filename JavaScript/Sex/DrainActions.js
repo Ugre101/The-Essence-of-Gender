@@ -204,22 +204,45 @@ function DrainDrainM() {
         ee = enemies[EnemyIndex],
         Ess = Math.min(ee.Masc, player.EssenceDrain);
     if (ee.Masc > 0) {
-        ee.SessionOrgasm--;
         //disabled (player.ForcedFemale) ? (player.Femi += ee.Masc) : (player.Masc += ee.Masc);
         player.Masc += Ess;
         ee.Masc -= Ess;
         EssenceCheck(ee);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
+        //if (Settings.EssenceAuto) {
+        //    EssenceCheck(player);
+        //}
         DocId("SexText").innerHTML = (Ess >= ee.Masc) ?
             `You siphon the last essence of masculinity from them leaving them with no signs of masculinity left.<br>${DrainChanges(old, player, eold, ee)}` :
             `You siphon essence of masculinity from them.<br>${DrainChanges(old, player, eold, ee)}`;
-        RaceDrain(ee);
-        AfterBattleButtons();
-        CheckArousal();
-        return;
-    };
+    } else {
+        // If masc is zero check if sexual organs exist to recyle for more masc
+        const Need = player.EssenceDrain;
+        let Have = 0;
+        while (Have < Need && (ee.Balls.length > 0 || ee.Dicks.length > 0)) {
+            if (ee.Balls.length > 0) {
+                const ball = ee.Balls[ee.Balls.length - 1];
+                ball.Size--;
+                Have += 5;
+                if (ball.Size <= 0) {
+                    ee.Balls.pop();
+                };
+            };
+            if (ee.Dicks.length > 0) {
+                const dick = ee.Dicks[ee.Dicks.length - 1];
+                dick.Size--;
+                Have += 3;
+                if (dick.Size <= 0) {
+                    ee.Dicks.pop();
+                }
+            }
+        }
+        player.Masc += Have;
+        DocId("SexText").innerHTML = `You siphon essence of masculinity from them.<br>${DrainChanges(old, player, eold, ee)}`;
+    }
+    ee.SessionOrgasm--;
+    RaceDrain(ee);
+    AfterBattleButtons();
+    CheckArousal();
 }
 
 function DrainDrainF() {
@@ -228,18 +251,39 @@ function DrainDrainF() {
         ee = enemies[EnemyIndex],
         Ess = Math.min(ee.Femi, player.EssenceDrain);
     if (ee.Femi > 0) {
-        ee.SessionOrgasm--;
         //player.ForcedMale ? (player.Masc += ee.Femi) : (player.Femi += ee.Femi);
         player.Femi += Ess;
         ee.Femi -= Ess;
         EssenceCheck(ee);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
+        //if (Settings.EssenceAuto) {
+        //    EssenceCheck(player);
+        //}
         DocId("SexText").innerHTML = (Ess >= ee.Femi) ?
             `You siphon the last essence of femininity from them leaving them with no signs of femininity left.<br>${DrainChanges(old, player, eold, ee)}` :
             `You siphon essence of femininity from them.<br>${DrainChanges(old, player, eold, ee)}`;
-    }
+    } else {
+        const Need = player.EssenceDrain;
+        let Have = 0;
+        while (Have < Need && (ee.Pussies.length > 0 || ee.Boobies.length > 0)) {
+            if (ee.Pussies.length > 0) {
+                const pussy = ee.Pussies[ee.Pussies.length - 1];
+                pussy.Size--;
+                Have += 5;
+                if (pussy.Size <= 0) {
+                    ee.Pussies.pop();
+                };
+            };
+            if (ee.Boobies[0].Size > 0) {
+                const boobs = ee.Boobies[ee.Boobies.length - 1];
+                boobs.Size--;
+                Have += 3;
+                if (boobs.Size <= 0 && ee.Boobies.length > 1) {
+                    ee.Boobies.pop();
+                };
+            };
+        };
+    };
+    ee.SessionOrgasm--;
     RaceDrain(ee);
     AfterBattleButtons();
     CheckArousal();
