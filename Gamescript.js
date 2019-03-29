@@ -878,13 +878,14 @@ function loop() {
             player.Height = Math.max(5, player.Height);
             player.Health = Math.max(1, player.Health);
             player.WillHealth = Math.max(1, player.WillHealth);
+            // Check if essence is negative of NaN
             player.Masc = Math.max(0, player.Masc);
-            if (typeof player.Masc !== "number") {
-                player.Masc = 0;
+            if (typeof player.Masc !== "number" || Number.isNaN(player.Masc)) {
+                player.Masc = 50;
             };
             player.Femi = Math.max(0, player.Femi);
-            if (typeof player.Femi !== "number") {
-                player.Femi = 0;
+            if (typeof player.Femi !== "number" || Number.isNaN(player.Femi)) {
+                player.Femi = 50;
             };
             player.EssenceDrain = 5 + (player.Perks.StealMore.Count * 3);
             player.GiveEssence = 0 + (player.Perks.GiveEssence.Count * 3);

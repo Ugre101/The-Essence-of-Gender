@@ -44,7 +44,7 @@ function CheckArousal() {
             case "None":
                 break;
         }
-        EssenceCheck(ee);
+        // EssenceCheck(ee);
         const ImpregActions = ["DoggyStyle", "Missionary", "DualPen", "MultiPen"],
             AnalImpregActions = ["DoggyStyleAnal"];
         if (ImpregActions.indexOf(LastPressed) != -1) {

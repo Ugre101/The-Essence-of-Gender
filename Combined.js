@@ -878,13 +878,14 @@ function loop() {
             player.Height = Math.max(5, player.Height);
             player.Health = Math.max(1, player.Health);
             player.WillHealth = Math.max(1, player.WillHealth);
+            // Check if essence is negative of NaN
             player.Masc = Math.max(0, player.Masc);
-            if (typeof player.Masc !== "number") {
-                player.Masc = 0;
+            if (typeof player.Masc !== "number" || Number.isNaN(player.Masc)) {
+                player.Masc = 50;
             };
             player.Femi = Math.max(0, player.Femi);
-            if (typeof player.Femi !== "number") {
-                player.Femi = 0;
+            if (typeof player.Femi !== "number" || Number.isNaN(player.Femi)) {
+                player.Femi = 50;
             };
             player.EssenceDrain = 5 + (player.Perks.StealMore.Count * 3);
             player.GiveEssence = 0 + (player.Perks.GiveEssence.Count * 3);
@@ -2927,7 +2928,7 @@ function CheckFlags() {
         }
     }
     if (!Settings.hasOwnProperty("EssenceAuto")) {
-        Settings.EssenceAuto = true;
+        Settings.EssenceAuto = false;
         console.log("Added EssenceAuto");
     }
     if (!Settings.hasOwnProperty("Pronoun")) {
@@ -3111,10 +3112,6 @@ function CheckFlags() {
             MalePreg: 0
         }
     };
-    player.RaceEssence.push(            Human = {
-        Race: "bob",
-        amount: 0
-    })
 
     FluidsEngine();
     if (!player.hasOwnProperty("RaceEssence")) {
@@ -3220,7 +3217,7 @@ function CheckFlags() {
         player.Inventory.push(ItemDict.SpellBook);
     }
     HemScale();
-}
+};
 // Hopefully obselite
 /**
  *     for (var e of player.Inventory) {
@@ -3694,12 +3691,14 @@ function TestDialog() {
     Npc.appendChild(Inputs);
 }
 function OrganSize(Size, who) {
-    return Math.ceil(Math.sqrt(Size) * GrowthScale(who));
+    return Size;
+    // return Math.ceil(Math.sqrt(Size) * GrowthScale(who));
 }
 
 function EssenceCheck(who) {
     function DickSize(e = 0) {
-        return Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 1)) + who.OrganMod.Dick.Size) * GrowthScale(who)));
+        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 1)) + who.OrganMod.Dick.Size) * GrowthScale(who)));
+        return Number.isNaN(Size) ? 0 : Size;
     }
 
     function DickMaker(e = 0) {
@@ -3712,7 +3711,8 @@ function EssenceCheck(who) {
     }
 
     function BallsSize(e = 0) {
-        return Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 2) + who.OrganMod.Balls.Size) * GrowthScale(who))));
+        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 2) + who.OrganMod.Balls.Size) * GrowthScale(who))));
+        return Number.isNaN(Size) ? 0 : Size;
     }
 
     function BallMakes(e = 0) {
@@ -3728,7 +3728,8 @@ function EssenceCheck(who) {
     }
 
     function BoobSize(e = 0) {
-        return Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 1) + who.OrganMod.Boobies.Size) * GrowthScale(who))));
+        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 1) + who.OrganMod.Boobies.Size) * GrowthScale(who))));
+        return Number.isNaN(Size) ? 0 : Size;
     }
 
     function BoobMaker(e = 0) {
@@ -3744,7 +3745,8 @@ function EssenceCheck(who) {
     }
 
     function PussySize(e = 0) {
-        return Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 2) + who.OrganMod.Pussy.Size) * GrowthScale(who))));
+        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 2) + who.OrganMod.Pussy.Size) * GrowthScale(who))));
+        return Number.isNaN(Size) ? 0 : Size;
     }
 
     function PussyMaker(e = 0) {
@@ -9542,6 +9544,11 @@ function Childs() {
     DocId("ChildCorner").innerHTML = Children;
 }
 function Impregnate(who, by, mode = "A", where = "") {
+    if (!who.hasOwnProperty("Pregnant")) {
+        who.Pregnant = {};
+        who.Pregnant.Status = false;
+    }
+
     function Twins() {
         // The +1 gives a 1% or less chance for non blessed to birth twins 
         // Old saves might fail totaly
@@ -10301,7 +10308,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
         if (ee.SessionOrgasm > 0) {
             const SiphonDiv = document.createElement("div");
             SiphonDiv.classList.add("MascFemi");
-            if (ee.Masc > 0) {
+            if (ee.Masc > 0 || ee.Balls.length > 0 || ee.Dicks.length > 0) {
                 const DrainM = ButtonButton("Siphon Masc");
                 DrainM.addEventListener("click", DrainDrainM);
                 DrainM.style.background = "linear-gradient(to right,blue,rgba(245, 245, 220))";
@@ -10461,7 +10468,7 @@ function CheckArousal() {
             case "None":
                 break;
         }
-        EssenceCheck(ee);
+        // EssenceCheck(ee);
         const ImpregActions = ["DoggyStyle", "Missionary", "DualPen", "MultiPen"],
             AnalImpregActions = ["DoggyStyleAnal"];
         if (ImpregActions.indexOf(LastPressed) != -1) {
@@ -10905,22 +10912,45 @@ function DrainDrainM() {
         ee = enemies[EnemyIndex],
         Ess = Math.min(ee.Masc, player.EssenceDrain);
     if (ee.Masc > 0) {
-        ee.SessionOrgasm--;
         //disabled (player.ForcedFemale) ? (player.Femi += ee.Masc) : (player.Masc += ee.Masc);
         player.Masc += Ess;
         ee.Masc -= Ess;
         EssenceCheck(ee);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
+        //if (Settings.EssenceAuto) {
+        //    EssenceCheck(player);
+        //}
         DocId("SexText").innerHTML = (Ess >= ee.Masc) ?
             `You siphon the last essence of masculinity from them leaving them with no signs of masculinity left.<br>${DrainChanges(old, player, eold, ee)}` :
             `You siphon essence of masculinity from them.<br>${DrainChanges(old, player, eold, ee)}`;
-        RaceDrain(ee);
-        AfterBattleButtons();
-        CheckArousal();
-        return;
-    };
+    } else {
+        // If masc is zero check if sexual organs exist to recyle for more masc
+        const Need = player.EssenceDrain;
+        let Have = 0;
+        while (Have < Need && (ee.Balls.length > 0 || ee.Dicks.length > 0)) {
+            if (ee.Balls.length > 0) {
+                const ball = ee.Balls[ee.Balls.length - 1];
+                ball.Size--;
+                Have += 5;
+                if (ball.Size <= 0) {
+                    ee.Balls.pop();
+                };
+            };
+            if (ee.Dicks.length > 0) {
+                const dick = ee.Dicks[ee.Dicks.length - 1];
+                dick.Size--;
+                Have += 3;
+                if (dick.Size <= 0) {
+                    ee.Dicks.pop();
+                }
+            }
+        }
+        player.Masc += Have;
+        DocId("SexText").innerHTML = `You siphon essence of masculinity from them.<br>${DrainChanges(old, player, eold, ee)}`;
+    }
+    ee.SessionOrgasm--;
+    RaceDrain(ee);
+    AfterBattleButtons();
+    CheckArousal();
 }
 
 function DrainDrainF() {
@@ -10929,18 +10959,39 @@ function DrainDrainF() {
         ee = enemies[EnemyIndex],
         Ess = Math.min(ee.Femi, player.EssenceDrain);
     if (ee.Femi > 0) {
-        ee.SessionOrgasm--;
         //player.ForcedMale ? (player.Masc += ee.Femi) : (player.Femi += ee.Femi);
         player.Femi += Ess;
         ee.Femi -= Ess;
         EssenceCheck(ee);
-        if (Settings.EssenceAuto) {
-            EssenceCheck(player);
-        }
+        //if (Settings.EssenceAuto) {
+        //    EssenceCheck(player);
+        //}
         DocId("SexText").innerHTML = (Ess >= ee.Femi) ?
             `You siphon the last essence of femininity from them leaving them with no signs of femininity left.<br>${DrainChanges(old, player, eold, ee)}` :
             `You siphon essence of femininity from them.<br>${DrainChanges(old, player, eold, ee)}`;
-    }
+    } else {
+        const Need = player.EssenceDrain;
+        let Have = 0;
+        while (Have < Need && (ee.Pussies.length > 0 || ee.Boobies.length > 0)) {
+            if (ee.Pussies.length > 0) {
+                const pussy = ee.Pussies[ee.Pussies.length - 1];
+                pussy.Size--;
+                Have += 5;
+                if (pussy.Size <= 0) {
+                    ee.Pussies.pop();
+                };
+            };
+            if (ee.Boobies[0].Size > 0) {
+                const boobs = ee.Boobies[ee.Boobies.length - 1];
+                boobs.Size--;
+                Have += 3;
+                if (boobs.Size <= 0 && ee.Boobies.length > 1) {
+                    ee.Boobies.pop();
+                };
+            };
+        };
+    };
+    ee.SessionOrgasm--;
     RaceDrain(ee);
     AfterBattleButtons();
     CheckArousal();
@@ -11352,7 +11403,7 @@ function Lose(sex = true) {
 				break;
 			case "incubus":
 				if (player.Masc > 0) {
-					const take = Math.min(400, player.Masc * Math.min(0.15, Math.random)); // Up to 15% or 400ess
+					const take = Math.min(400, player.Masc * Math.min(0.15, Math.random())); // Up to 15% or 400ess
 					player.Masc -= take;
 					enemy.Masc += take;
 				}
@@ -11361,7 +11412,8 @@ function Lose(sex = true) {
 				break;
 			case "succubus":
 				if (player.Femi > 0) {
-					const take = Math.min(400, player.Femi * Math.min(0.15, Math.random)); // Up to 15% or 400ess
+					const take = Math.min(400, player.Femi * Math.min(0.15, Math.random())); // Up to 15% or 400ess
+					console.log(take)
 					player.Femi -= take;
 					enemy.Femi += take;
 				}
@@ -11403,41 +11455,37 @@ DocId("LoseSubmit").addEventListener("click", function () {
 	Lose(false);
 });
 DocId("LoseStruggle").addEventListener("click", function () {
-	var take = Math.round(enemies[EnemyIndex].SexSkill * RandomInt(1, 7));
-	const selectScene = SnowScenes();
+	const takeM = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(1, 7)), player.Masc),
+		takeF = Math.min(Math.round(enemies[EnemyIndex].SexSkill * RandomInt(1, 7)), player.Femi),
+		selectScene = SnowScenes();
 	DocId("LosePlayerOrgasm").innerHTML = loseScene(true, selectScene);
 	if (selectScene === "forcedBJ" || selectScene === "getBJ" || selectScene === "getRidden" || selectScene === "getRiddenAnal") {
-		take = Math.min(take, player.Masc);
-		player.Masc -= take;
-		enemies[EnemyIndex].Masc += take;
-	} else if (selectScene === "forcedCunn" || selectScene === "getCunn" || selectScene === "getFucked" || selectScene === "getFuckedAnal") {
-		take = Math.min(take, player.Femi);
-		player.Femi -= take;
-		enemies[EnemyIndex].Femi += take;
-	} else if (selectScene === "forcedRim" || selectScene === "getRim") {
-		var takeM = Math.min(take, player.Masc) / 2;
-		take = Math.min(take, player.Femi) / 2;
 		player.Masc -= takeM;
-		player.Femi -= take;
 		enemies[EnemyIndex].Masc += takeM;
-		enemies[EnemyIndex].Femi += take;
+	} else if (selectScene === "forcedCunn" || selectScene === "getCunn" || selectScene === "getFucked" || selectScene === "getFuckedAnal") {
+		player.Femi -= takeF;
+		enemies[EnemyIndex].Femi += takeF;
+	} else if (selectScene === "forcedRim" || selectScene === "getRim") {
+		player.Masc -= takeM / 2;
+		player.Femi -= takeF / 2;
+		enemies[EnemyIndex].Masc += takeM / 2;
+		enemies[EnemyIndex].Femi += takeF / 2;
 	} else {
-		var shift = player.height / 2;
+		const shift = player.height / 2;
 		player.height -= shift;
 		enemies[EnemyIndex].height += shift;
-		for (var i = 0; i < player.Boobies.length; i++) {
+		/**		for (let i of player.Boobies) {
 			shift = player.Boobies[i].Milk;
 			player.Boobies[i].Milk = 0;
 			enemies[EnemyIndex].Boobies[0].Milk = Math.min(enemies[EnemyIndex].Boobies[0].MilkMax, enemies[EnemyIndex].Boobies[0].Milk + shift);
-		}
-		for (var i = 0; i < player.Balls.length; i++) {
+		} */
+		/**
+		 * 		for (let i = 0; i < player.Balls.length; i++) {
 			shift = player.Balls[i].Cum;
 			player.Balls[i].Cum = 0;
 			enemies[EnemyIndex].Balls[0].Cum = Math.min(enemies[EnemyIndex].Balls[0].CumMax, enemies[EnemyIndex].Balls[0].Cum + shift);
 		}
-		shift = player.Gold / 2;
-		enemies[EnemyIndex].Gold += shift;
-		player.Gold /= 2;
+		 */
 	}
 	Lose(false);
 });

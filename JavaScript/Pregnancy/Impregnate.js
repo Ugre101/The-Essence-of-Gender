@@ -1,4 +1,9 @@
 function Impregnate(who, by, mode = "A", where = "") {
+    if (!who.hasOwnProperty("Pregnant")) {
+        who.Pregnant = {};
+        who.Pregnant.Status = false;
+    }
+
     function Twins() {
         // The +1 gives a 1% or less chance for non blessed to birth twins 
         // Old saves might fail totaly
