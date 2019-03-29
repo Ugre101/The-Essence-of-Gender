@@ -4,26 +4,16 @@
        width: 100%;
        font-size: 1em;
        font-family: Verdana, Geneva, Tahoma, sans-serif;
-       overflow: hidden;
+       overflow: auto;
        margin: 0;
        padding: 0;
    }
 
    body {
-       width: 100%;
        background-color: #643a6d;
        display: flex;
        align-items: center;
        justify-content: center;
-   }
-
-   @media screen and (max-height: 500px),
-   screen and (max-width: 500px) {
-
-       html,
-       body {
-           overflow: auto;
-       }
    }
 
    canvas {
@@ -60,7 +50,7 @@
        margin: 0;
    }
 
-   @media (max-height: 600px) {
+   @media screen and (max-height: 600px) {
        #EventLog>h2 {
            display: none;
        }
@@ -70,9 +60,9 @@
        min-height: 10vh;
        max-height: 20vh;
        width: 94%;
-       margin: 0 0 0 0.5em;
-       padding: 0.5em 0.3em;
-       border: 1px solid black;
+       padding: 0.3em 0.3em;
+       border: 2px solid rgb(75, 55, 55);
+       border-right: 0px;
        border-top-left-radius: 10px;
        border-bottom-left-radius: 10px;
        background-color: white;
@@ -91,10 +81,6 @@
            position: absolute;
            right: 3vw;
            top: 2vh;
-       }
-
-       #WorldMapContainer {
-           display: none;
        }
    }
 
@@ -299,9 +285,11 @@
    }
 
    input[type="button"].SmolButton {
+       border-radius: 5px;
+       padding: 0;
+       margin: 0.3em;
+       height: auto;
        width: auto;
-       left: 0;
-       padding: 0.1em;
    }
 
    #WorldMapContainer {
@@ -312,7 +300,12 @@
    }
 
    #WorldMapContainer>p {
-       display: inline-block;
+       float: left;
+       margin-top: 0.4em;
+   }
+
+   #WorldMapContainer>input[type=button] {
+       float: right;
    }
 
    @media (max-width: 700px) {
@@ -745,10 +738,6 @@
        grid-template-columns: 70% 1fr;
    }
 
-   #DormNameChangeForm {
-       text-align: center;
-   }
-
    div.Masc {
        margin: 0 0;
        background-color: rgb(74, 74, 255);
@@ -777,9 +766,9 @@
        color: inherit;
        width: 90%;
        max-width: 220px;
-       height: 5vh;
+       height: 2rem;
        max-height: 40px;
-       margin: 0.4em 0.6em;
+       margin: 0.3em 0.6em;
 
        border: 1px solid rgb(83, 57, 43);
        border-radius: 10px;
@@ -930,9 +919,6 @@
        background-color: rgb(206, 172, 127);
        border: 20px solid transparent;
        border-image: url(Res/frame_s_01.png) 20;
-       border-radius: 20px;
-
-
        background-color: rgb(165, 138, 102);
        padding: 0.5em;
    }
@@ -951,18 +937,24 @@
 
    #InventoryBag>div>input[type=button] {
        width: 15%;
-       height: 70%;
+       height: auto;
+       margin: 0.2em;
+       padding: 0.1em;
+       border-radius: 3px;
        float: right;
-       margin: 0 2px;
    }
 
    @media screen and (max-height: 500px) {
+       #InventoryBag {
+           border: 10px solid transparent;
+           border-image: url(Res/frame_s_01.png) 20;
+       }    
+
        #InventoryBag>div {
-           border: 1px solid black;
            padding: 0;
            height: auto;
            text-align: left;
-           width: 85%;
+           width: 80%;
        }
 
        #InventoryBag>div>p {
@@ -972,10 +964,11 @@
        }
 
        #InventoryBag>div>input[type=button] {
-           width: 20%;
-           height: auto;
-           margin: 0;
+           width: auto;
+           margin: 2px;
            padding: 0;
+           border-radius: 0px;
+           float: left;
        }
    }
 
@@ -1034,4 +1027,46 @@
 
    .Beige {
        background-color: beige;
+   }
+
+   #SexButtons input[type=button],
+   #SexButtons button {
+       text-align: center;
+       font-family: inherit;
+       font-size: inherit;
+       font-weight: bold;
+       color: inherit;
+       width: 95%;
+       height: 2rem;
+       max-height: 8vh;
+       margin: 0.2em 0;
+
+       border: 1px solid rgb(56, 38, 28);
+       border-radius: 0px;
+       box-shadow: 0 0 2px 1px black;
+       background-color: rgb(221, 195, 160);
+       transition: background 0.3s ease-in-out;
+   }
+
+   #SexButtons input[type=button],
+   #SexButtons button {
+       text-align: center;
+       font-family: inherit;
+       font-size: inherit;
+       font-weight: bold;
+       color: inherit;
+       width: 95%;
+       height: 2rem;
+       margin: 0.2em 0;
+
+       border: 1px solid rgb(56, 38, 28);
+       border-radius: 2px;
+       background-color: rgb(221, 195, 160);
+       transition: background 0.3s ease-in-out;
+   }
+
+   #SexButtons input[type=button]:hover,
+   #SexButtons button:hover {
+       border: 2px solid rgb(56, 38, 28);
+       background-color: rgb(163, 138, 105);
    }

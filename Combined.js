@@ -413,7 +413,7 @@ function CharCreator() { // No need have these active for players who use load.
 
 // Sets display to none used for menu buttons
 function DisplayNone() {
-    battle = true;
+    GamePaused = true;
     const DisplayNoneArray = [
         "map", "optionpage", "ShowLooks", "LevelMenu", "LoadMenu", "SaveMenu", "PerkOptionsMenu",
         "ShowQuests", "DetailedInfo", "Levels", "ShowVore", "EssenceOptionsMenu",
@@ -431,6 +431,7 @@ function DisplayNone() {
 
 function DisplayGame() {
     battle = false;
+    GamePaused = false;
     const DisplayGameArray = ["map", "buttons", "status", "EventLog"].forEach(function (src) {
         DocId(src).style.display = 'block';
     });
@@ -486,7 +487,8 @@ function RandomString(array) {
 }
 
 
-var battle = false;
+var battle = false,
+    GamePaused = false;
 
 function Pronoun(gender) {
     switch (gender) {
@@ -844,7 +846,7 @@ function loop() {
     DocId("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none'
     ExpCheck();
 
-    if (!battle) {
+    if (!battle && !GamePaused) { // Splited so I can have time still running while on menus etc...
         const startarea = DocId("hem"),
             ctx = startarea.getContext("2d");
         startarea.width = medium;
@@ -854,8 +856,6 @@ function loop() {
             HemScale();
         };
         CurrentMap();
-        Settings.Vore ? VoreEngine() : false; // However it does shrink the size of code quite a lot... idk
-        Settings.Cheats.Enabled ? CheatEngine() : false;
         (enemies.length > 0) ? PrintEnemies(): false;
         if (Settings.PlayerSpriteEnable) {
             ctx.drawImage(Player_SpriteImages["playerSprite"], sprite.x, sprite.y, grid * 2, grid * 2);
@@ -863,6 +863,10 @@ function loop() {
             ctx.fillStyle = "BlueViolet";
             ctx.fillRect(sprite.x, sprite.y, grid * sprite.Size, grid * sprite.Size);
         }
+    }
+    if (!battle) {
+        Settings.Vore ? VoreEngine() : false; // However it does shrink the size of code quite a lot... idk
+        Settings.Cheats.Enabled ? CheatEngine() : false;
         Laglimiter++;
         if (Laglimiter % 80 == 0) {
             Laglimiter = 0;
@@ -890,7 +894,7 @@ function loop() {
                 DocId("Fps").innerHTML = Math.round(1000 / Thefps) + "fps";
             }
         }
-    };
+    }
 };
 var Laglimiter = 0;
 
@@ -915,7 +919,6 @@ function DocId(id) { // Important Prototype.js must be loaded before where you w
     }, 4000);
 })()
  */
-
 function BarFunc() {
     var Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
@@ -1072,10 +1075,10 @@ function BarberFunc() {
         cut.setAttribute("type", "button");
         cut.setAttribute("value", e);
         cut.addEventListener("click", function () {
-            console.log(e);
+            player.Face.HairLength = e.toLowerCase();
         });
         cut.addEventListener("mouseover", function () {
-            console.log("Cut " + e);
+            p.innerHTML = e;
         })
         return cut;
     }
@@ -1114,8 +1117,9 @@ function BarberFunc() {
             while (DyeCon.hasChildNodes()) {
                 DyeCon.removeChild(DyeCon.firstChild);
             };
-            var Cuts = ["Shaved", "Buzz cut", "Short", "Medium", "Ear length", "Chin length", "Shoulder length",
-                "Armpit length", "Mid-back length", "Hip length", "Knee length", "Floor length"
+            const Cuts = [ /*"Shaved", "Buzz cut", "Short",*/ "Medium length", "Ear length", "Chin length", "Shoulder length",
+                /*"Armpit length", "Mid-back length",*/
+                "Hip length", "Knee length", "Floor length"
             ];
             for (var e of Cuts) {
                 CutCon.appendChild(CutButton(e, p));
@@ -3581,27 +3585,30 @@ function WinEnemyChanges(ee) {
     }
 }
 function DateTracker() {
-    if (!battle) {
-        Flags.Date.Hour++;
-        HouseEngine();
-        FluidsEngine();
-        if (Flags.Date.Hour > 24) {
-            Flags.Date.Day++;
-            Flags.Date.Hour = 0;
-            if (Flags.Date.Day > 30) {
-                Flags.Date.Day = 1;
-                Flags.Date.Month++;
-                if (Flags.Date.Month > 12) {
-                    Flags.Date.Month = 1;
-                    Flags.Date.Year++;
-                    player.Age++;
-                }
+    Flags.Date.Hour++;
+    HouseEngine();
+    FluidsEngine();
+    if (Flags.Date.Hour % 6 === 0) {
+        DocId("CurrentDate").innerHTML = `${Flags.Date.Day}/${Flags.Date.Month}/${Flags.Date.Year} 
+        ${Flags.Date.Hour < 10 ? `0${Flags.Date.Hour}:00` : `${Flags.Date.Hour}:00`}`;
+    }
+    if (Flags.Date.Hour > 23) {
+        Flags.Date.Day++;
+        Flags.Date.Hour = 0;
+        if (Flags.Date.Day > 30) {
+            Flags.Date.Day = 1;
+            Flags.Date.Month++;
+            if (Flags.Date.Month > 12) {
+                Flags.Date.Month = 1;
+                Flags.Date.Year++;
+                player.Age++;
             }
-            document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
-            PregnanyEngine();
         }
-        FoodEngine();
-        // health/will && fat burn
+        PregnanyEngine();
+    }
+    FoodEngine();
+    // health/will && fat burn
+    if (!battle) {
         player.RestRate = 1 + player.Perks.FasterRest.Count * 1;
         if (player.Health < player.MaxHealth && player.Fat >= player.Height / 100) {
             if ((player.Health + player.RestRate) > player.MaxHealth) {
@@ -3639,12 +3646,12 @@ function DateTracker() {
                     }
                 }
                 if ((player.Fat / player.Weight) * 100 > 18) {
-                    player.Fat -= player.Fat/100 * player.Vore.VorePerks.PredatorsMeta.Count;
+                    player.Fat -= player.Fat / 100 * player.Vore.VorePerks.PredatorsMeta.Count;
                 }
             }
         }
     }
-}
+};
 function TestDialog() {
     var Npc = document.getElementById("Npcs");
     while (Npc.hasChildNodes()) {
@@ -4361,25 +4368,29 @@ function DetailedRaceDesc() {
 	    DocId("HideEventLog").addEventListener("click", function () {
 	    	if (DocId("EventLogPart").style.display === 'none') {
 	    		DocId("EventLogPart").style.display = 'block';
-	    		DocId("EventLogH2").style.display = 'inline-block';
-	    		DocId("HideEventLog").value = "Hide";
+	    		if (window.innerHeight > 600) {
+	    			DocId("EventLogH2").style.display = 'inline-block';
+	    		}
+	    		DocId("HideEventLog").value = "H";
 	    	} else {
 	    		DocId("EventLogPart").style.display = 'none';
-	    		DocId("HideEventLog").value = "Show E";
+	    		DocId("HideEventLog").value = "S";
 	    		DocId("EventLogH2").style.display = 'none';
 	    	}
 	    });
 	    DocId("HideFluids").addEventListener("click", function () {
 	    	if (DocId("FluidPart").style.display === 'none') {
 	    		DocId("FluidPart").style.display = 'block';
-	    		DocId("EventFluidsH2").style.display = 'inline-block';
+	    		if (window.innerHeight > 600) {
+	    			DocId("EventFluidsH2").style.display = 'inline-block';
+	    		}
 	    		DocId("FluidsMode").style.display = 'inline-block';
-	    		DocId("HideFluids").value = "Hide";
+	    		DocId("HideFluids").value = "H";
 	    	} else {
 	    		DocId("FluidPart").style.display = 'none';
 	    		DocId("EventFluidsH2").style.display = 'none';
 	    		DocId("FluidsMode").style.display = 'none';
-	    		DocId("HideFluids").value = 'Show F';
+	    		DocId("HideFluids").value = 'S';
 	    	}
 	    });
 	    DocId("FluidsMode").addEventListener("click", function () {
@@ -4410,7 +4421,7 @@ function DetailedRaceDesc() {
 	    		EventLog.style.width = 20 + "vw";
 	    		EventLog.style.maxHeight = 50 + "vh";
 	    	} else {
-	    		EventLog.style.width = 80 + "vw";
+				EventLog.style.width = 80 + "vw";
 	    		EventLog.style.maxHeight = 80 + "vh";
 	    	}
 	    });
@@ -5587,24 +5598,24 @@ DocId("InventoryLeave").addEventListener("click", function () {
 
 // Trial of new inventory system so I can stop saving unnecessary data
 function Items2() {
-    var div = DocId("InventoryBag");
+    const div = DocId("InventoryBag");
     while (div.hasChildNodes()) {
         div.removeChild(div.firstChild);
     }
-    var KeyItems = ["Pocket portal", "SpellBook"]; // Make sure important items are first in iventory
-    var Exists = 0;
-    for (var k of KeyItems) {
+    const KeyItems = ["Pocket portal", "SpellBook"]; // Make sure important items are first in iventory
+    let Exists = 0;
+    for (let k of KeyItems) {
         Exists++;
-        var index = player.Inventory.findIndex(f => f.Name === k)
+        const index = player.Inventory.findIndex(f => f.Name === k)
         if (player.Inventory.some(f => f.Name === k) && index !== Exists) {
-            var temp = player.Inventory[index]
+            let temp = player.Inventory[index]
             player.Inventory.splice(index, 1);
             player.Inventory.unshift(temp);
         }
     }
-    for (var e of player.Inventory) {
-        var itemarray = Object.values(ItemDict);
-        for (var b of itemarray) {
+    for (let e of player.Inventory) {
+        const itemarray = Object.values(ItemDict);
+        for (let b of itemarray) {
             if (e.Name === b.Name) {
                 var item = new InventoryThing(e, b)
                 div.appendChild(item);
@@ -7807,19 +7818,41 @@ function PrintDoors() {
     }
 }
 document.getElementById("HideWorldMap").addEventListener("click", function () {
+    const HideWorld = document.getElementById("HideWorldMap");
     if (document.getElementById("WorldMapPart").style.display == 'none') {
         document.getElementById("WorldMapPart").style.display = 'block';
+        HideWorld.value = "H";
         PrintMap();
     } else {
         document.getElementById("WorldMapPart").style.display = 'none';
+        HideWorld.value = "S"
     }
 });
+
+const MapIcons = {},
+    MapIconsToLoad = MapIconsLoader(["skull_01"])
+
+function MapIconsLoader(urls) {
+    urls.forEach((url) => {
+        const temp = new Image();
+        temp.src = `Res/${url}.png`;
+        temp.onload = () => {
+            MapIcons[url] = temp;
+            console.log(MapIcons)
+        };
+    });
+};
 // Tool to print mini-map
 function PrintMap() {
     const WorldMap = document.getElementById("WorldMap"),
         World = WorldMap.getContext("2d"),
         Width = WorldMap.width * 0.2,
         Height = WorldMap.height * 0.2;
+    World.globalAlpha = 1;
+
+    function TileImagePainter(x, y, image) {
+        World.drawImage(Tiles_images[image], WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
+    }
 
     function TilePainter(x, y) {
         World.fillStyle = Settings.MapColor;
@@ -7830,31 +7863,44 @@ function PrintMap() {
     }
     // Tool to highlight current map on mini-map
     function CurrentTile(x, y) {
-        World.fillStyle = Settings.BorderColor;
+        World.globalAlpha = 0.5;
+        World.fillStyle = "red";
         World.fillRect(WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
     }
-    World.fillStyle = "#404040";
+    World.fillStyle = "black";
     World.fillRect(0, 0, WorldMap.width, WorldMap.height);
 
-    World.strokeStyle = Settings.BorderColor;
+    World.strokeStyle = "red";
     switch (player.Area) {
         case "First":
-            TilePainter(0, 1); //Start
-            TilePainter(1, 1); //RTC1
-            TilePainter(1, 0); //Bandit
-            TilePainter(1, 2); //RTC2
-            TilePainter(2, 2); //City
-            TilePainter(3, 2); //RTH
-            TilePainter(2, 3); //Forest
-            TilePainter(2, 4); //Forest2
-            TilePainter(3, 1); //RTW
-            TilePainter(3, 0); //RTW2
-            TilePainter(4, 0); //Witch
+            if (true) {
+                TileImagePainter(0, 1, "Start");
+                TileImagePainter(1, 1, "RoadToCity"); //RTC1
+                TileImagePainter(1, 0, "Bandit"); //Bandit
+                TileImagePainter(1, 2, "RoadToCity2"); //RTC2
+                TileImagePainter(2, 2, "City"); //City
+                TileImagePainter(3, 2, "RoadToHome"); //RTH
+                TileImagePainter(2, 3, "Forest"); //Forest
+                TileImagePainter(2, 4, "Forest2"); //Forest2
+                TileImagePainter(3, 1, "RoadToWitch"); //RTW
+                TileImagePainter(3, 0, "RoadToWitch2"); //RTW2
+                TileImagePainter(4, 0, "Witch"); //Witch
 
+            } else if (false) {
+                TilePainter(0, 1); //Start
+                TilePainter(1, 1); //RTC1
+                TilePainter(1, 0); //Bandit
+                TilePainter(1, 2); //RTC2
+                TilePainter(2, 2); //City
+                TilePainter(3, 2); //RTH
+                TilePainter(2, 3); //Forest
+                TilePainter(2, 4); //Forest2
+                TilePainter(3, 1); //RTW
+                TilePainter(3, 0); //RTW2
+                TilePainter(4, 0); //Witch
+            }
             World.font = "2em Arial";
-            World.strokeText("B", WorldMap.width * 0.27, WorldMap.height * 0.17);
-            World.strokeText("C", WorldMap.width * 0.46, WorldMap.height * 0.57);
-            World.strokeText("W", WorldMap.width * 0.85, WorldMap.height * 0.17);
+            World.drawImage(MapIcons.skull_01, WorldMap.width * 0.25, WorldMap.height * 0.05, Width / 2, Height / 2);
             if (House.Owned == true) {
                 TilePainter(4, 2, WorldMap.width * 0.2, WorldMap.height * 0.2);
                 World.strokeText("H", WorldMap.width * 0.87, WorldMap.height * 0.57);
@@ -7868,7 +7914,7 @@ function PrintMap() {
                 case "Start":
                     CurrentTile(0, 1);
                     break;
-                case "RoadToCity1":
+                case "RoadToCity":
                     CurrentTile(1, 1);
                     break;
                 case "Bandit":
@@ -7901,15 +7947,25 @@ function PrintMap() {
             }
             break;
         case "Second":
-            TilePainter(2, 0);
-            TilePainter(1, 0);
-            TilePainter(0, 0);
-            TilePainter(0, 1);
-            TilePainter(0, 2);
-            TilePainter(2, 1);
-            TilePainter(2, 2);
-            TilePainter(3, 1);
-
+            if (true) {
+                TileImagePainter(2, 0, "PathToOutlaws");
+                TileImagePainter(1, 0, "Cave1");
+                TileImagePainter(0, 0, "Cave2");
+                TileImagePainter(0, 1, "Cave3");
+                TileImagePainter(0, 2, "Cave4");
+                TileImagePainter(2, 1, "PathToOutlaws2");
+                TileImagePainter(2, 2, "Outlaws");
+                TileImagePainter(3, 1, "Farm");
+            } else if (false) {
+                TilePainter(2, 0); //PTO
+                TilePainter(1, 0); //Cave1
+                TilePainter(0, 0);
+                TilePainter(0, 1);
+                TilePainter(0, 2);
+                TilePainter(2, 1);
+                TilePainter(2, 2);
+                TilePainter(3, 1);
+            }
 
             World.font = "2em Arial";
             World.strokeText("O", WorldMap.width * 0.46, WorldMap.height * 0.57);
@@ -7946,24 +8002,38 @@ function PrintMap() {
             }
             break;
         case "Mountain":
-            TilePainter(1, 2);
-            TilePainter(0, 2);
-
-            TilePainter(2, 2);
-            TilePainter(2, 3);
-            TilePainter(2, 4);
-            TilePainter(3, 4);
-            TilePainter(4, 4);
-            TilePainter(4, 3);
-            TilePainter(4, 2);
-            TilePainter(4, 1);
-            TilePainter(4, 0);
-            TilePainter(3, 0);
-            TilePainter(2, 0);
-            World.font = "1em Arial";
-            World.strokeText("⇧", WorldMap.width * 0.485, WorldMap.height * 0.07)
-            World.strokeText("⇦", 0, WorldMap.height * 0.525)
-
+            if (true) {
+                TileImagePainter(1, 2, "MountainShrinePath");
+                TileImagePainter(0, 2, "MountainShrine");
+                TileImagePainter(2, 2, "MountainStart");
+                TileImagePainter(2, 3, "MountainClimb");
+                TileImagePainter(2, 4, "MountainClimb2");
+                TileImagePainter(3, 4, "MountainClimb3");
+                TileImagePainter(4, 4, "MountainClimb4");
+                TileImagePainter(4, 3, "MountainClimb5");
+                TileImagePainter(4, 2, "MountainClimb6");
+                TileImagePainter(4, 1, "MountainClimb7");
+                TileImagePainter(4, 0, "MountainClimb8");
+                TileImagePainter(3, 0, "MountainClimb9");
+                TileImagePainter(2, 0, "MountainPlateau");
+            } else if (false) {
+                TilePainter(1, 2);
+                TilePainter(0, 2);
+                TilePainter(2, 2);
+                TilePainter(2, 3);
+                TilePainter(2, 4);
+                TilePainter(3, 4);
+                TilePainter(4, 4);
+                TilePainter(4, 3);
+                TilePainter(4, 2);
+                TilePainter(4, 1);
+                TilePainter(4, 0);
+                TilePainter(3, 0);
+                TilePainter(2, 0);
+            }
+            //World.font = "1em Arial";
+            //World.strokeText("⇧", WorldMap.width * 0.485, WorldMap.height * 0.07)
+            //World.strokeText("⇦", 0, WorldMap.height * 0.525)
             switch (player.Map) {
                 case "MountainStart":
                     CurrentTile(2, 2);
@@ -10128,6 +10198,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
     function SexButton(value, func) {
         const button = InputButton(value);
         button.addEventListener("click", func);
+        button.classList.add("SexButtons");
         return button
     }
 
