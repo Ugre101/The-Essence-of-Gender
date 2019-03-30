@@ -718,3 +718,13 @@ function SnowScenes() {
 	}
 	return RandomString(sceneList);
 }
+
+function DrainMascFromPlayer(amount) {
+	const Ess = amount;
+	if (player.Masc >= Ess) {
+		player.Masc -= Ess;
+		return Ess;
+	} else if (player.Balls.length > 0 || player.Dicks.length > 0) {
+		
+	}
+}

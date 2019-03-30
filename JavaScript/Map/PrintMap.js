@@ -23,6 +23,36 @@ function MapIconsLoader(urls) {
         };
     });
 };
+
+
+function OWImageLoad(arr, callback) { // Preload images to stop flickering
+    let images = {},
+        loaded = 0;
+
+    if (Array.isArray(arr)) {
+        for (let e of arr) {
+            let img = new Image();
+            img.onload = ImageLoaded;
+            img.src = `WorldMap/${e}.png`;
+            images[e] = img;
+        }
+    } else {
+        return
+    }
+
+    function ImageLoaded() {
+        loaded++;
+        if (loaded >= arr.length) {
+            callback(images);
+        }
+    }
+}
+var OWImages = {};
+
+const OWTilesloader = OWImageLoad(["OWStart", "OWRTC", "OWRTC2", "OWBandit", "OWCity", "OWRTH", "OWRTW", "OWRTW2", "OWWitch", "OWForest", "OWForest2"], function (images) {
+    OWImages = images;
+});
+
 // Tool to print mini-map
 function PrintMap() {
     const WorldMap = document.getElementById("WorldMap"),
@@ -32,7 +62,11 @@ function PrintMap() {
     World.globalAlpha = 1;
 
     function TileImagePainter(x, y, image) {
-        World.drawImage(Tiles_images[image], WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
+        if (typeof OWImages[image] !== 'undefined') {
+            World.drawImage(OWImages[image], WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
+        } else {
+            TilePainter(x, y);
+        }
     }
 
     function TilePainter(x, y) {
@@ -54,32 +88,17 @@ function PrintMap() {
     World.strokeStyle = "red";
     switch (player.Area) {
         case "First":
-            if (true) {
-                TileImagePainter(0, 1, "Start");
-                TileImagePainter(1, 1, "RoadToCity"); //RTC1
-                TileImagePainter(1, 0, "Bandit"); //Bandit
-                TileImagePainter(1, 2, "RoadToCity2"); //RTC2
-                TileImagePainter(2, 2, "City"); //City
-                TileImagePainter(3, 2, "RoadToHome"); //RTH
-                TileImagePainter(2, 3, "Forest"); //Forest
-                TileImagePainter(2, 4, "Forest2"); //Forest2
-                TileImagePainter(3, 1, "RoadToWitch"); //RTW
-                TileImagePainter(3, 0, "RoadToWitch2"); //RTW2
-                TileImagePainter(4, 0, "Witch"); //Witch
-
-            } else if (false) {
-                TilePainter(0, 1); //Start
-                TilePainter(1, 1); //RTC1
-                TilePainter(1, 0); //Bandit
-                TilePainter(1, 2); //RTC2
-                TilePainter(2, 2); //City
-                TilePainter(3, 2); //RTH
-                TilePainter(2, 3); //Forest
-                TilePainter(2, 4); //Forest2
-                TilePainter(3, 1); //RTW
-                TilePainter(3, 0); //RTW2
-                TilePainter(4, 0); //Witch
-            }
+            TileImagePainter(0, 1, "OWStart");
+            TileImagePainter(1, 1, "OWRTC"); //RTC1
+            TileImagePainter(1, 0, "OWBandit"); //Bandit
+            TileImagePainter(1, 2, "OWRTC2"); //RTC2
+            TileImagePainter(2, 2, "OWCity"); //City
+            TileImagePainter(3, 2, "OWRTH"); //RTH
+            TileImagePainter(2, 3, "OWForest"); //Forest
+            TileImagePainter(2, 4, "OWForest2"); //Forest2
+            TileImagePainter(3, 1, "OWRTW"); //RTW
+            TileImagePainter(3, 0, "OWRTW2"); //RTW2
+            TileImagePainter(4, 0, "OWWitch"); //Witch
             World.font = "2em Arial";
             World.drawImage(MapIcons.skull_01, WorldMap.width * 0.25, WorldMap.height * 0.05, Width / 2, Height / 2);
             if (House.Owned == true) {
@@ -128,26 +147,14 @@ function PrintMap() {
             }
             break;
         case "Second":
-            if (true) {
-                TileImagePainter(2, 0, "PathToOutlaws");
-                TileImagePainter(1, 0, "Cave1");
-                TileImagePainter(0, 0, "Cave2");
-                TileImagePainter(0, 1, "Cave3");
-                TileImagePainter(0, 2, "Cave4");
-                TileImagePainter(2, 1, "PathToOutlaws2");
-                TileImagePainter(2, 2, "Outlaws");
-                TileImagePainter(3, 1, "Farm");
-            } else if (false) {
-                TilePainter(2, 0); //PTO
-                TilePainter(1, 0); //Cave1
-                TilePainter(0, 0);
-                TilePainter(0, 1);
-                TilePainter(0, 2);
-                TilePainter(2, 1);
-                TilePainter(2, 2);
-                TilePainter(3, 1);
-            }
-
+            TileImagePainter(2, 0, "PathToOutlaws");
+            TileImagePainter(1, 0, "Cave1");
+            TileImagePainter(0, 0, "Cave2");
+            TileImagePainter(0, 1, "Cave3");
+            TileImagePainter(0, 2, "Cave4");
+            TileImagePainter(2, 1, "PathToOutlaws2");
+            TileImagePainter(2, 2, "Outlaws");
+            TileImagePainter(3, 1, "Farm");
             World.font = "2em Arial";
             World.strokeText("O", WorldMap.width * 0.46, WorldMap.height * 0.57);
             World.strokeText("F", WorldMap.width * 0.66, WorldMap.height * 0.37);
@@ -183,35 +190,19 @@ function PrintMap() {
             }
             break;
         case "Mountain":
-            if (true) {
-                TileImagePainter(1, 2, "MountainShrinePath");
-                TileImagePainter(0, 2, "MountainShrine");
-                TileImagePainter(2, 2, "MountainStart");
-                TileImagePainter(2, 3, "MountainClimb");
-                TileImagePainter(2, 4, "MountainClimb2");
-                TileImagePainter(3, 4, "MountainClimb3");
-                TileImagePainter(4, 4, "MountainClimb4");
-                TileImagePainter(4, 3, "MountainClimb5");
-                TileImagePainter(4, 2, "MountainClimb6");
-                TileImagePainter(4, 1, "MountainClimb7");
-                TileImagePainter(4, 0, "MountainClimb8");
-                TileImagePainter(3, 0, "MountainClimb9");
-                TileImagePainter(2, 0, "MountainPlateau");
-            } else if (false) {
-                TilePainter(1, 2);
-                TilePainter(0, 2);
-                TilePainter(2, 2);
-                TilePainter(2, 3);
-                TilePainter(2, 4);
-                TilePainter(3, 4);
-                TilePainter(4, 4);
-                TilePainter(4, 3);
-                TilePainter(4, 2);
-                TilePainter(4, 1);
-                TilePainter(4, 0);
-                TilePainter(3, 0);
-                TilePainter(2, 0);
-            }
+            TileImagePainter(1, 2, "MountainShrinePath");
+            TileImagePainter(0, 2, "MountainShrine");
+            TileImagePainter(2, 2, "MountainStart");
+            TileImagePainter(2, 3, "MountainClimb");
+            TileImagePainter(2, 4, "MountainClimb2");
+            TileImagePainter(3, 4, "MountainClimb3");
+            TileImagePainter(4, 4, "MountainClimb4");
+            TileImagePainter(4, 3, "MountainClimb5");
+            TileImagePainter(4, 2, "MountainClimb6");
+            TileImagePainter(4, 1, "MountainClimb7");
+            TileImagePainter(4, 0, "MountainClimb8");
+            TileImagePainter(3, 0, "MountainClimb9");
+            TileImagePainter(2, 0, "MountainPlateau");
             //World.font = "1em Arial";
             //World.strokeText("⇧", WorldMap.width * 0.485, WorldMap.height * 0.07)
             //World.strokeText("⇦", 0, WorldMap.height * 0.525)

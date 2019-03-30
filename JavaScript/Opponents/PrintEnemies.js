@@ -20,7 +20,7 @@ function EnemyImageLoad(arr, callback) { // Preload images to stop flickering
     }
 }
 var Enemy_SpriteImages = {};
-const EnemySpriteLoader = EnemyImageLoad(["orc", "troll"], function (images) {
+const EnemySpriteLoader = EnemyImageLoad(["orc", "troll", "witch","wizard"], function (images) {
     Enemy_SpriteImages = images;
 });
 
@@ -29,7 +29,8 @@ function PrintEnemies() {
         ctx = startarea.getContext("2d");
     for (let e = 0; e < enemies.length; e++) {
         const ee = enemies[e],
-            image = ee.Race.toLowerCase(); // + gender?
+            imageRace = ee.Race.toLowerCase(),
+            imageName = ee.Name.toLowerCase(); // + gender?
         function Color() {
             const grd = ctx.createLinearGradient(ee.XPos + ee.Size / 3, 0, ee.XPos + ee.Size * 0.6, 0);
             switch (CheckGender(ee)) {
@@ -58,8 +59,12 @@ function PrintEnemies() {
             }
         }
         ctx.fillStyle = ee.Color;
-        if (typeof Enemy_SpriteImages[image] !== "undefined") {
-            ctx.drawImage(Enemy_SpriteImages[image], ee.XPos, ee.YPos, ee.Size, ee.Size);
+        if (typeof Enemy_SpriteImages[imageRace] !== "undefined") {
+            ctx.drawImage(Enemy_SpriteImages[imageRace], ee.XPos, ee.YPos, ee.Size * 2, ee.Size * 2); // Banditlord becomes huge... maybe insert a math.min?
+            ctx.fillStyle = Color();
+            ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos - ee.Size + ee.Size / 3, ee.Size / 3, ee.Size / 3);
+        } else if (typeof Enemy_SpriteImages[imageName] !== 'undefined') {
+            ctx.drawImage(Enemy_SpriteImages[imageName], ee.XPos, ee.YPos, ee.Size * 2, ee.Size * 2);
             ctx.fillStyle = Color();
             ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos - ee.Size + ee.Size / 3, ee.Size / 3, ee.Size / 3);
         } else {
