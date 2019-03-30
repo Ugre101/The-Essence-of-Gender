@@ -285,7 +285,7 @@ function EncounterBandit() {
     var RacesBandit = ["Orc", "Troll"];
     var OP = new enemy("Bandit", RandomString(RacesBandit), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15),
         RandomInt(8, 15), RandomInt(10, 15), 170, 170, RandomInt(30, 45), RandomInt(30, 55),
-        'tomato ', grid * 2, RandomInt(140, 180));
+        'tomato ', grid, RandomInt(140, 180));
     GenderLock(OP, 500, "male");
     FatMuscle(OP, 7, 70);
     StandardEnemy(OP);
@@ -297,7 +297,7 @@ function EncounterBanditLord() {
     var RacesBandit = ["Orc", "Troll"];
     var OP = new enemy("Banditlord", RandomString(RacesBandit), RandomInt(20, 35), RandomInt(10, 15), RandomInt(20, 35), RandomInt(20, 35),
         RandomInt(20, 35), RandomInt(40, 60), 350, 300, RandomInt(55, 85), RandomInt(75, 150),
-        'tomato', 2.5 * grid, RandomInt(160, 200));
+        'tomato', 2 * grid, RandomInt(160, 200));
     GenderLock(OP, 1000, "male");
     FatMuscle(OP, 7, 80);
     StandardEnemy(OP);
