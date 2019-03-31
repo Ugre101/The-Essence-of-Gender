@@ -7308,7 +7308,7 @@ const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "Ci
         DocId("LoadingImagesProgress").classList.remove("visible");
         DocId("LoadingImagesProgress").classList.add("hidden");
     }),
-    NpcImageLoader = NpcImageLoad(["LocalPortal", "FarmBarn"], function (images) {
+    NpcImageLoader = NpcImageLoad(["LocalPortal", "FarmBarn","BlackMarket"], function (images) {
         Npc_images = images;
     });
 
@@ -7344,7 +7344,7 @@ function CurrentMap() {
         Barber = new Npc("Barber", "Hair salon", grid * 15, grid, grid * 5, grid * 4, "RGB(133,94,66)"),
         PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)"),
         //Outlaw
-        BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)"),
+        BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 4, grid * 6, grid * 4, "RGB(133,94,66)"),
         // Dungeons
         FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)"),
         // Farm
@@ -7573,8 +7573,8 @@ function CurrentMap() {
     Npcs.length > 0 ? (PrintNpcs(), TouchNpc()) : false;
 
     function PrintNpcs() {
-        const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"],
-            HasSprite = ["LocalPortal", "FarmBarn"];
+        const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut"],
+            HasSprite = ["LocalPortal", "FarmBarn","BlackMarket"];
         // var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
         // Switched it so new npcs always print
         for (var e of Npcs) {
@@ -7852,7 +7852,9 @@ function OWImageLoad(arr, callback) { // Preload images to stop flickering
 }
 var OWImages = {};
 
-const OWTilesloader = OWImageLoad(["OWStart", "OWRTC", "OWRTC2", "OWBandit", "OWCity", "OWRTH", "OWRTW", "OWRTW2", "OWWitch", "OWForest", "OWForest2"], function (images) {
+const OWTilesloader = OWImageLoad(["OWStart", "OWRTC", "OWRTC2", "OWBandit", "OWCity", "OWRTH", "OWRTW", "OWRTW2",
+    "OWWitch", "OWForest", "OWForest2", "OWPTO", "OWPTO2", "OWFarm", "OWOutlaws", "OWCave1"
+], function (images) {
     OWImages = images;
 });
 
@@ -7867,6 +7869,8 @@ function PrintMap() {
     function TileImagePainter(x, y, image) {
         if (typeof OWImages[image] !== 'undefined') {
             World.drawImage(OWImages[image], WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
+        } else if (typeof Tiles_images[image] !== "undefined") {
+            World.drawImage(Tiles_images[image], WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
         } else {
             TilePainter(x, y);
         }
@@ -7950,14 +7954,14 @@ function PrintMap() {
             }
             break;
         case "Second":
-            TileImagePainter(2, 0, "PathToOutlaws");
-            TileImagePainter(1, 0, "Cave1");
+            TileImagePainter(2, 0, "OWPTO");
+            TileImagePainter(1, 0, "OWCave1");
             TileImagePainter(0, 0, "Cave2");
             TileImagePainter(0, 1, "Cave3");
             TileImagePainter(0, 2, "Cave4");
-            TileImagePainter(2, 1, "PathToOutlaws2");
-            TileImagePainter(2, 2, "Outlaws");
-            TileImagePainter(3, 1, "Farm");
+            TileImagePainter(2, 1, "OWPTO2");
+            TileImagePainter(2, 2, "OWOutlaws");
+            TileImagePainter(3, 1, "OWFarm");
             World.font = "2em Arial";
             World.strokeText("O", WorldMap.width * 0.46, WorldMap.height * 0.57);
             World.strokeText("F", WorldMap.width * 0.66, WorldMap.height * 0.37);
@@ -9032,7 +9036,7 @@ function EncounterBanditLord() {
     var RacesBandit = ["Orc", "Troll"];
     var OP = new enemy("Banditlord", RandomString(RacesBandit), RandomInt(20, 35), RandomInt(10, 15), RandomInt(20, 35), RandomInt(20, 35),
         RandomInt(20, 35), RandomInt(40, 60), 350, 300, RandomInt(55, 85), RandomInt(75, 150),
-        'tomato', 2 * grid, RandomInt(160, 200));
+        'tomato', grid * 1.5, RandomInt(160, 200));
     GenderLock(OP, 1000, "male");
     FatMuscle(OP, 7, 80);
     StandardEnemy(OP);
@@ -9111,7 +9115,7 @@ function EnemyImageLoad(arr, callback) { // Preload images to stop flickering
     }
 }
 var Enemy_SpriteImages = {};
-const EnemySpriteLoader = EnemyImageLoad(["orc", "troll", "witch","wizard"], function (images) {
+const EnemySpriteLoader = EnemyImageLoad(["orc", "troll", "witch", "wizard"], function (images) {
     Enemy_SpriteImages = images;
 });
 
@@ -9150,25 +9154,26 @@ function PrintEnemies() {
             }
         }
         ctx.fillStyle = ee.Color;
-        if (typeof Enemy_SpriteImages[imageRace] !== "undefined") {
-            ctx.drawImage(Enemy_SpriteImages[imageRace], ee.XPos, ee.YPos, ee.Size * 2, ee.Size * 2); // Banditlord becomes huge... maybe insert a math.min?
+        if (typeof Enemy_SpriteImages[imageRace] !== "undefined" || typeof Enemy_SpriteImages[imageName] !== 'undefined') {
+            const image = typeof Enemy_SpriteImages[imageName] !== 'undefined' ? Enemy_SpriteImages[imageName] : Enemy_SpriteImages[imageRace];
+            ctx.drawImage(image, ee.XPos, ee.YPos, ee.Size * 2, ee.Size * 2); // Banditlord becomes huge... maybe insert a math.min?
             ctx.fillStyle = Color();
-            ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos - ee.Size + ee.Size / 3, ee.Size / 3, ee.Size / 3);
-        } else if (typeof Enemy_SpriteImages[imageName] !== 'undefined') {
-            ctx.drawImage(Enemy_SpriteImages[imageName], ee.XPos, ee.YPos, ee.Size * 2, ee.Size * 2);
-            ctx.fillStyle = Color();
-            ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos - ee.Size + ee.Size / 3, ee.Size / 3, ee.Size / 3);
+            ctx.fillRect(ee.XPos + ee.Size * 0.75, ee.YPos - ee.Size * 0.4, ee.Size / 3, ee.Size / 3);
+            ctx.fillStyle = Settings.TextColor;
+            ctx.font = "2vh Arial";
+            ctx.textAlign = "center";
+            ctx.fillText(ee.Name + " " + ee.Race, ee.XPos + ee.Size * 0.75, ee.YPos - ee.Size * 0.5);
         } else {
             ctx.fillRect(ee.XPos, ee.YPos, ee.Size, ee.Size);
             ctx.fillStyle = Color();
             ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos + ee.Size / 3, ee.Size / 3, ee.Size / 3);
             ctx.fillStyle = "Black";
             ctx.strokeRect(ee.XPos + ee.Size / 3, ee.YPos + ee.Size / 3, ee.Size / 3, ee.Size / 3);
+            ctx.fillStyle = Settings.TextColor;
+            ctx.font = "2vh Arial";
+            ctx.textAlign = "center";
+            ctx.fillText(ee.Name + " " + ee.Race, ee.XPos + ee.Size / 2, ee.YPos);
         }
-        ctx.fillStyle = Settings.TextColor;
-        ctx.font = "2vh Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(ee.Name + " " + ee.Race, ee.XPos + ee.Size / 2, ee.YPos);
     }
 };
 function FirstWave() {
