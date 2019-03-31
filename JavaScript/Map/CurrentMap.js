@@ -57,7 +57,7 @@ const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "Ci
         DocId("LoadingImagesProgress").classList.remove("visible");
         DocId("LoadingImagesProgress").classList.add("hidden");
     }),
-    NpcImageLoader = NpcImageLoad(["LocalPortal", "FarmBarn"], function (images) {
+    NpcImageLoader = NpcImageLoad(["LocalPortal", "FarmBarn","BlackMarket"], function (images) {
         Npc_images = images;
     });
 
@@ -93,7 +93,7 @@ function CurrentMap() {
         Barber = new Npc("Barber", "Hair salon", grid * 15, grid, grid * 5, grid * 4, "RGB(133,94,66)"),
         PortalShop = new Npc("PortalShop", "Portal shop", grid, grid * 15, grid * 4, grid * 4, "RGB(133,94,66)"),
         //Outlaw
-        BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 5, grid * 5, grid * 3, "RGB(133,94,66)"),
+        BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 4, grid * 6, grid * 4, "RGB(133,94,66)"),
         // Dungeons
         FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)"),
         // Farm
@@ -322,8 +322,8 @@ function CurrentMap() {
     Npcs.length > 0 ? (PrintNpcs(), TouchNpc()) : false;
 
     function PrintNpcs() {
-        const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut", "BlackMarket"],
-            HasSprite = ["LocalPortal", "FarmBarn"];
+        const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut"],
+            HasSprite = ["LocalPortal", "FarmBarn","BlackMarket"];
         // var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
         // Switched it so new npcs always print
         for (var e of Npcs) {

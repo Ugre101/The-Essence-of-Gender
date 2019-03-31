@@ -49,7 +49,9 @@ function OWImageLoad(arr, callback) { // Preload images to stop flickering
 }
 var OWImages = {};
 
-const OWTilesloader = OWImageLoad(["OWStart", "OWRTC", "OWRTC2", "OWBandit", "OWCity", "OWRTH", "OWRTW", "OWRTW2", "OWWitch", "OWForest", "OWForest2"], function (images) {
+const OWTilesloader = OWImageLoad(["OWStart", "OWRTC", "OWRTC2", "OWBandit", "OWCity", "OWRTH", "OWRTW", "OWRTW2",
+    "OWWitch", "OWForest", "OWForest2", "OWPTO", "OWPTO2", "OWFarm", "OWOutlaws", "OWCave1"
+], function (images) {
     OWImages = images;
 });
 
@@ -64,6 +66,8 @@ function PrintMap() {
     function TileImagePainter(x, y, image) {
         if (typeof OWImages[image] !== 'undefined') {
             World.drawImage(OWImages[image], WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
+        } else if (typeof Tiles_images[image] !== "undefined") {
+            World.drawImage(Tiles_images[image], WorldMap.width * (0.2 * x), WorldMap.height * (0.2 * y), Width, Height);
         } else {
             TilePainter(x, y);
         }
@@ -147,14 +151,14 @@ function PrintMap() {
             }
             break;
         case "Second":
-            TileImagePainter(2, 0, "PathToOutlaws");
-            TileImagePainter(1, 0, "Cave1");
+            TileImagePainter(2, 0, "OWPTO");
+            TileImagePainter(1, 0, "OWCave1");
             TileImagePainter(0, 0, "Cave2");
             TileImagePainter(0, 1, "Cave3");
             TileImagePainter(0, 2, "Cave4");
-            TileImagePainter(2, 1, "PathToOutlaws2");
-            TileImagePainter(2, 2, "Outlaws");
-            TileImagePainter(3, 1, "Farm");
+            TileImagePainter(2, 1, "OWPTO2");
+            TileImagePainter(2, 2, "OWOutlaws");
+            TileImagePainter(3, 1, "OWFarm");
             World.font = "2em Arial";
             World.strokeText("O", WorldMap.width * 0.46, WorldMap.height * 0.57);
             World.strokeText("F", WorldMap.width * 0.66, WorldMap.height * 0.37);

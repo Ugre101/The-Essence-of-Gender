@@ -20,7 +20,7 @@ function EnemyImageLoad(arr, callback) { // Preload images to stop flickering
     }
 }
 var Enemy_SpriteImages = {};
-const EnemySpriteLoader = EnemyImageLoad(["orc", "troll", "witch","wizard"], function (images) {
+const EnemySpriteLoader = EnemyImageLoad(["orc", "troll", "witch", "wizard"], function (images) {
     Enemy_SpriteImages = images;
 });
 
@@ -59,24 +59,25 @@ function PrintEnemies() {
             }
         }
         ctx.fillStyle = ee.Color;
-        if (typeof Enemy_SpriteImages[imageRace] !== "undefined") {
-            ctx.drawImage(Enemy_SpriteImages[imageRace], ee.XPos, ee.YPos, ee.Size * 2, ee.Size * 2); // Banditlord becomes huge... maybe insert a math.min?
+        if (typeof Enemy_SpriteImages[imageRace] !== "undefined" || typeof Enemy_SpriteImages[imageName] !== 'undefined') {
+            const image = typeof Enemy_SpriteImages[imageName] !== 'undefined' ? Enemy_SpriteImages[imageName] : Enemy_SpriteImages[imageRace];
+            ctx.drawImage(image, ee.XPos, ee.YPos, ee.Size * 2, ee.Size * 2); // Banditlord becomes huge... maybe insert a math.min?
             ctx.fillStyle = Color();
-            ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos - ee.Size + ee.Size / 3, ee.Size / 3, ee.Size / 3);
-        } else if (typeof Enemy_SpriteImages[imageName] !== 'undefined') {
-            ctx.drawImage(Enemy_SpriteImages[imageName], ee.XPos, ee.YPos, ee.Size * 2, ee.Size * 2);
-            ctx.fillStyle = Color();
-            ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos - ee.Size + ee.Size / 3, ee.Size / 3, ee.Size / 3);
+            ctx.fillRect(ee.XPos + ee.Size * 0.75, ee.YPos - ee.Size * 0.4, ee.Size / 3, ee.Size / 3);
+            ctx.fillStyle = Settings.TextColor;
+            ctx.font = "2vh Arial";
+            ctx.textAlign = "center";
+            ctx.fillText(ee.Name + " " + ee.Race, ee.XPos + ee.Size * 0.75, ee.YPos - ee.Size * 0.5);
         } else {
             ctx.fillRect(ee.XPos, ee.YPos, ee.Size, ee.Size);
             ctx.fillStyle = Color();
             ctx.fillRect(ee.XPos + ee.Size / 3, ee.YPos + ee.Size / 3, ee.Size / 3, ee.Size / 3);
             ctx.fillStyle = "Black";
             ctx.strokeRect(ee.XPos + ee.Size / 3, ee.YPos + ee.Size / 3, ee.Size / 3, ee.Size / 3);
+            ctx.fillStyle = Settings.TextColor;
+            ctx.font = "2vh Arial";
+            ctx.textAlign = "center";
+            ctx.fillText(ee.Name + " " + ee.Race, ee.XPos + ee.Size / 2, ee.YPos);
         }
-        ctx.fillStyle = Settings.TextColor;
-        ctx.font = "2vh Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(ee.Name + " " + ee.Race, ee.XPos + ee.Size / 2, ee.YPos);
     }
 };
