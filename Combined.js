@@ -561,66 +561,6 @@ function StringCounter(array, string) {
 
 var enemies = [];
 
-DocId("ImgPack").addEventListener("click", function () {
-    switch (Settings.ImgPack) {
-        case false:
-            Settings.ImgPack = "Mode1";
-            break;
-        case "Mode1":
-            Settings.ImgPack = "Mode2";
-            break;
-        case "Mode2":
-            Settings.ImgPack = "Mode3";
-            break;
-        default:
-            Settings.ImgPack = false;
-            break;
-    }
-    DocId("ImgPack").value = `Img pack: ${Settings.ImgPack}`;
-});
-
-function ImgChose(who, what, who2) {
-    var myimg = new Image();
-    var a = who.Race;
-    var b = CheckGender(who);
-    var c = what;
-    var d = who2.Race;
-    var e = CheckGender(who2);
-    var source;
-    switch (Settings.ImgPack) {
-        case "Mode1":
-            source = a + b + c;
-            break;
-        case "Mode2":
-            source = d + e + c;
-            break;
-        case "Mode3":
-            source = a + b + c + d + e;
-            break;
-        default:
-            break;
-    }
-    myimg.src = "imgPack/" + source + ".jpg";
-    myimg.onload = function () {
-        DocId("MyImg").src = "imgPack/" + source + ".jpg";
-    }
-    myimg.onerror = function () {
-        DocId("MyImg").src = "imgPack/Default.jpg";
-    }
-}
-
-function checkImageExists(src, callback) {
-    var myimg = new Image();
-    myimg.src = "../imgPack/" + src + ".jpg";
-    myimg.onload = function () {
-        var a = true;
-        return true;
-    }
-    myimg.onerror = function () {
-        return false;
-    }
-}
-
 //    DocId("PlayerLooks").innerHTML = BoobLook(player) + "<br>" + PussyLook(player) + "<br>" + DickLook(player);
 //    DocId("EnemyLooks").innerHTML = BoobLook(enemies[EnemyIndex]) + "<br>" + PussyLook(enemies[EnemyIndex]) + "<br>" + DickLook(enemies[EnemyIndex]);
 
@@ -5338,6 +5278,166 @@ function LeaveHome() {
 
         // Barn.innerHTML = "Allows you to milk your lactating servants. The milk can be brought with you as a travel snack or you can sell it for gold."
     }
+function ImgPackLoader(file) {
+
+}
+ImgPackLoader()
+
+DocId("ImgPack").addEventListener("click", function () {
+    switch (Settings.ImgPack) {
+        case false:
+            Settings.ImgPack = "Mode1";
+            break;
+        case "Mode1":
+            Settings.ImgPack = "Mode2";
+            break;
+        case "Mode2":
+            Settings.ImgPack = "Mode3";
+            break;
+        case "Mode3":
+            Settings.ImgPack = "Yllarius";
+            break
+        default:
+            Settings.ImgPack = false;
+            break;
+    }
+    DocId("ImgPack").value = `Img pack: ${Settings.ImgPack}`;
+});
+
+function ImgChose(what, who, type = "SexActs") {
+    const myimg = new Image(),
+        a = player.Race.Capitalize(),
+        b = CheckGender(player),
+        c = what,
+        d = who.Race.Capitalize(),
+        e = CheckGender(who);
+    if (Settings.ImgPack === "Yllarius") {
+        const playerGender = () => {
+                switch (b) {
+                    case "hermaphrodite":
+                    case "dickgirl":
+                        return "H";
+                    case "male":
+                        return "M";
+                    case "cuntboy":
+                        return "C";
+                    case "female":
+                        return "F";
+                    case "doll":
+                        return "D";
+                }
+            },
+            OtherGender = () => {
+                switch (e) {
+                    case "hermaphrodite":
+                    case "dickgirl":
+                        return "H";
+                    case "male":
+                        return "M";
+                    case "cuntboy":
+                        return "C";
+                    case "female":
+                        return "F";
+                    case "doll":
+                        return "D";
+                }
+            }
+        // This nested onload/onerror works but it looks like a disaster... TODO search for better way.
+        myimg.src = `imgPack/${type}/${d}/${what}/${playerGender()+OtherGender()}.png`;
+        myimg.onload = () => {
+            DocId("MyImg").src = myimg.src;
+        };
+        myimg.onerror = () => {
+            myimg.src = `imgPack/${type}/${d}/${what}/${playerGender()+OtherGender()}.jpg`;
+            myimg.onload = () => {
+                DocId("MyImg").src = myimg.src;
+            };
+            myimg.onerror = () => {
+                myimg.src = `imgPack/${type}/${d}/${what}/Default.png`;
+                myimg.onload = () => {
+                    DocId("MyImg").src = myimg.src;
+                };
+                myimg.onerror = () => {
+                    myimg.src = `imgPack/${type}/${d}/${what}/Default.jpg`;
+                    myimg.onload = () => {
+                        DocId("MyImg").src = myimg.src;
+                    };
+                    myimg.onerror = () => {
+                        myimg.src = `imgPack/${type}/${d}/Default.png`;
+                        myimg.onload = () => {
+                            DocId("MyImg").src = myimg.src;
+                        };
+                        myimg.onerror = () => {
+                            myimg.src = `imgPack/${type}/${d}/Default.jpg`;
+                            myimg.onload = () => {
+                                DocId("MyImg").src = myimg.src;
+                            };
+                            myimg.onerror = () => {
+                                myimg.src = `imgPack/${type}/Default.png`;
+                                myimg.onload = () => {
+                                    DocId("MyImg").src = myimg.src;
+                                };
+                                myimg.onerror = () => {
+                                    myimg.src = `imgPack/${type}/Default.jpg`;
+                                    myimg.onload = () => {
+                                        DocId("MyImg").src = myimg.src;
+                                    };
+                                    myimg.onerror = () => {
+                                        // Total failure
+                                    };
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        console.log(myimg.src);
+    } else {
+        const source = () => {
+            switch (Settings.ImgPack) {
+                case "Mode1":
+                    return a + b + c;
+                case "Mode2":
+                    return d + e + c;
+                case "Mode3":
+                    return a + b + c + d + e;
+                case "Yllarius":
+                default:
+                    return "";
+            }
+        };
+        myimg.src = `imgPack/${source()}.jpg`;
+        myimg.onload = function () {
+            DocId("MyImg").src = myimg.src;
+        };
+        myimg.onerror = function () {
+            myimg.src = `imgPack/${type}/${source()}.png`;
+            myimg.onload = function () {
+                DocId("MyImg").src = myimg.src;
+            }
+            myimg.onerror = function () {
+                DocId("MyImg").src = "imgPack/Default.jpg";
+            }
+        };
+    }
+};
+
+DocId("MyImg").addEventListener("click", () => {
+    const img = DocId("MyImg"),
+        imgf = DocId("MyImgF"),
+        modal = DocId("MyImgModal"),
+        AfterBattle = DocId("AfterBattle");
+
+    modal.style.display = 'flex';
+    imgf.src = img.src;
+});
+
+DocId("MyImgF").addEventListener("click", () => {
+    const modal = DocId("MyImgModal"),
+        AfterBattle = DocId("AfterBattle");
+    modal.style.display = 'none';
+});
 function CmToInch(cm) {
     if (Settings.Inch) {
         var Inch = Math.round(cm / 2.54);
@@ -6386,24 +6486,19 @@ for (let e = 1; e < 6; e++) {
     });
 }
 
-DocId("LoadFile").addEventListener("input", function () {
-    var test = DocId("LoadFile");
-    var reader = new FileReader();
-    reader.readAsText(test.files[0]);
+DocId("LoadFile").addEventListener("input", function (file) {
+    const reader = new FileReader();
+    reader.readAsText(file.target.files[0]);
     reader.onload = function () {
-        var parseplayer = JSON.parse(reader.result);
-        var LoadArray = [];
-        LoadArray = parseplayer;
+        const parseplayer = JSON.parse(reader.result),
+         LoadArray = [...parseplayer];
         player = LoadArray[0];
         House = LoadArray[1];
         Flags = LoadArray[2];
         Settings = LoadArray[3];
-        battle = false;
         DocId("StartPage").style.display = 'none';
-        DocId("map").style.display = 'block';
-        DocId("buttons").style.display = 'block';
-        DocId("status").style.display = 'block';
         DocId("LoadMenu").style.display = 'none';
+        DisplayGame()
         CheckFlags();
         requestAnimationFrame(loop);
     }
@@ -10330,70 +10425,9 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 SiphonDiv.appendChild(DrainF);
             }
             Siphon.appendChild(SiphonDiv);
-            if (ee.Dicks.length > 0) { // Trial
-                const SiphonDickDiv = document.createElement("div"),
-                    SiphonDick = ButtonButton("Siphon Dick"),
-                    SiphonDickToMasc = ButtonButton("Shrink Dick ");
-                SiphonDickDiv.classList.add("MascFemi");
-
-                SiphonDick.addEventListener("click", function () {
-                    DrainSiphonDick();
-                });
-                SiphonDickDiv.appendChild(SiphonDick);
-
-                SiphonDickToMasc.addEventListener("click", DrainSiphonDickToMasc);
-                SiphonDickToMasc.style.background = "linear-gradient(to right,blue,rgba(245, 245, 220))";
-                SiphonDickDiv.appendChild(SiphonDickToMasc);
-
-                Siphon.appendChild(SiphonDickDiv);
-            };
-            if (ee.Balls.length > 0) {
-                const SiphonBallsDiv = document.createElement("div"),
-                    SiphonBalls = ButtonButton("Siphon Balls"),
-                    SiphonBallsToMasc = ButtonButton("Shrink Balls");
-                SiphonBallsDiv.classList.add("MascFemi");
-
-                SiphonBalls.addEventListener("click", function () {
-                    DrainSiphonBalls();
-                });
-                SiphonBallsDiv.appendChild(SiphonBalls);
-
-                SiphonBallsToMasc.addEventListener("click", DrainSiphonBallsToMasc);
-                SiphonBallsToMasc.style.background = "linear-gradient(to right,blue,rgba(245, 245, 220))";
-                SiphonBallsDiv.appendChild(SiphonBallsToMasc);
-
-                Siphon.appendChild(SiphonBallsDiv);
-            };
-            if (ee.Boobies.length > 1 || ee.Boobies[0].Size > 1) {
-                const SiphonBoobsDiv = document.createElement("div"),
-                    SiphonBoobs = ButtonButton("Siphon Boobs"),
-                    SiphonBoobsToFemi = ButtonButton("Shrink Boobs")
-                SiphonBoobsDiv.classList.add("MascFemi");
-
-                SiphonBoobs.addEventListener("click", DrainSiphonBoobs);
-                SiphonBoobsDiv.appendChild(SiphonBoobs);
-
-                SiphonBoobsToFemi.addEventListener("click", DrainSiphonBoobsToFemi);
-                SiphonBoobsToFemi.style.background = "linear-gradient(to right, #C12970,rgba(245, 245, 220))";
-                SiphonBoobsDiv.appendChild(SiphonBoobsToFemi);
-
-                Breast.appendChild(SiphonBoobsDiv);
+            if (EssenceCost(player.Dicks[player.Dicks.length - 1]) <= player.Masc || (player.Masc >= 30 && player.Dicks.length === 0)) {
+                SiphonDiv.appendChild(SexButton("Grow dick", GrowDick));
             }
-            if (ee.Pussies.length > 0) {
-                const SiphonPussiesDiv = document.createElement("div"),
-                    SiphonPussy = ButtonButton("Siphon Pussy"),
-                    SiphonPussyToFemi = ButtonButton("Shrink Pussy")
-                SiphonPussiesDiv.classList.add("MascFemi");
-
-                SiphonPussy.addEventListener("click", DrainSiphonPussy);
-                SiphonPussiesDiv.appendChild(SiphonPussy);
-
-                SiphonPussyToFemi.addEventListener("click", DrainSiphonPussyToFemi);
-                SiphonPussyToFemi.style.background = "linear-gradient(to right, #C12970,rgba(245, 245, 220))";
-                SiphonPussiesDiv.appendChild(SiphonPussyToFemi);
-
-                Pussy.appendChild(SiphonPussiesDiv);
-            };
         };
         if (Settings.Vore) {
             const {
@@ -10707,206 +10741,6 @@ function SexLooksExactAndKinda() { // A function to be able to enter a bunch of 
     });
 }
 SexLooksExactAndKinda();
-function DrainSiphonDick() {
-    const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        ed = ee.Dicks[ee.Dicks.length - 1],
-        pd = player.Dicks[player.Dicks.length - 1],
-        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
-
-    if (player.Dicks.length === 0) {
-        const Dick = {
-            Size: 1,
-            Type: player.SecondRace,
-            Virgin: true
-        }
-        player.Dicks.push(Dick);
-    } else {
-        pd.Size += Siphon;
-    }
-    ee.SessionOrgasm--;
-    ed.Size -= Siphon;
-    if (ed.Size <= 0) {
-        ee.Dicks.pop();
-    }
-    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
-    RaceDrain(ee);
-    CheckArousal();
-};
-
-function DrainSiphonDickToMasc() {
-    const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        ed = ee.Dicks[ee.Dicks.length - 1],
-        Ess = player.EssenceDrain;
-
-    player.Masc += Ess;
-    ee.SessionOrgasm--;
-    ed.Size -= Math.round(Ess / 5);
-    if (ed.Size <= 0.5) {
-        ee.Dicks.pop()
-    }
-    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
-    RaceDrain(ee);
-    AfterBattleButtons();
-    CheckArousal();
-}
-
-function DrainSiphonBalls() {
-    const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        eb = ee.Balls[ee.Balls.length - 1],
-        pb = player.Balls[player.Balls.length - 1],
-        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
-
-    if (player.Balls.length === 0) {
-        const Ball = {
-            Size: 1,
-            Type: player.SecondRace,
-            CumMax: 1 / 3 * Math.PI * Math.pow(1, 3),
-            Cum: 1 / 6 * Math.PI * Math.pow(1, 3),
-            CumRate: 0,
-            CumBaseRate: 0.5
-        }
-        player.Balls.push(Ball);
-    } else {
-        pb.Size += Siphon;
-    }
-    ee.SessionOrgasm--;
-    eb.Size -= Siphon;
-    if (eb.Size <= 0) {
-        ee.Balls.pop();
-    }
-    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
-    RaceDrain(ee);
-    CheckArousal();
-};
-
-function DrainSiphonBallsToMasc() {
-    const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        eb = ee.Balls[ee.Balls.length - 1],
-        Ess = player.EssenceDrain;
-
-    player.Masc += Ess;
-    ee.SessionOrgasm--;
-    eb.Size -= Math.round(Ess / 5);
-    if (eb.Size <= 0.5) {
-        ee.Balls.pop()
-    }
-    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
-    RaceDrain(ee);
-    AfterBattleButtons();
-    CheckArousal();
-};
-
-function DrainSiphonBoobs() {
-    const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        eb = ee.Boobies[ee.Boobies.length - 1],
-        pb = player.Boobies[player.Boobies.length - 1],
-        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
-
-    if (player.Boobies.length === 0) {
-        const Boob = {
-            Size: 1,
-            Type: player.SecondRace,
-            Milk: 0,
-            MilkBaseRate: 0,
-            MilkRate: 0,
-            MilkMax: 1 / 3 * Math.PI * Math.pow(1, 3)
-        }
-        player.Boobies.push(Boob);
-    } else {
-        pb.Size += Siphon;
-    }
-    ee.SessionOrgasm--;
-    eb.Size -= Siphon;
-    if (eb.Size <= 0 && ee.Boobies.length > 1) {
-        ee.Boobies.pop();
-    } else if (eb.Size <= 0 && ee.Boobies.length === 1) {
-        eb.Size = 0;
-    }
-    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
-    RaceDrain(ee);
-    CheckArousal();
-};
-
-
-function DrainSiphonBoobsToFemi() {
-    const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        eb = ee.Boobies[ee.Boobies.length - 1],
-        Ess = player.EssenceDrain;
-
-    player.Femi += Ess;
-    ee.SessionOrgasm--;
-    eb.Size -= Math.round(Ess / 5);
-    if (eb.Size <= 0 && ee.Boobies.length > 1) {
-        ee.Boobies.pop();
-    } else if (eb.Size <= 0 && ee.Boobies.length === 1) {
-        eb.Size = 0;
-    }
-    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
-    RaceDrain(ee);
-    AfterBattleButtons();
-    CheckArousal();
-};
-
-function DrainSiphonPussy() {
-    const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        eb = ee.Pussies[ee.Pussies.length - 1],
-        pb = player.Pussies[player.Pussies.length - 1],
-        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
-
-
-    if (player.Pussies.length === 0) {
-        const Pussy = {
-            Size: 1,
-            Type: player.SecondRace,
-            Virgin: true
-        }
-        player.Pussies.push(Pussy);
-    } else {
-        pb.Size += Siphon;
-    }
-    ee.SessionOrgasm--;
-    eb.Size -= Siphon;
-    if (eb.Size <= 0) {
-        ee.Pussies.pop();
-    }
-    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
-    RaceDrain(ee);
-    CheckArousal();
-};
-
-function DrainSiphonPussyToFemi() {
-    const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        eb = ee.Pussies[ee.Pussies.length - 1],
-        Ess = player.EssenceDrain;
-
-    player.Femi += Ess;
-    ee.SessionOrgasm--;
-    eb.Size -= Math.round(Ess / 5);
-    if (eb.Size <= 0.5) {
-        ee.Pussies.pop()
-    }
-    DocId("SexText").innerHTML = `${DrainChanges(old, player, eold, ee)}`;
-    RaceDrain(ee);
-    AfterBattleButtons();
-    CheckArousal();
-};
-
 function DrainDrainM() {
     const old = JSON.parse(JSON.stringify(player)),
         eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
@@ -11040,6 +10874,91 @@ function DrainInjectF() {
         AfterBattleButtons();
         CheckArousal();
         return;
+    }
+};
+
+function GrowDick() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        pd = player.Dicks[player.Dicks.length - 1];
+
+    if (player.Dicks.length === 0 && player.Masc >= 30) {
+        const Dick = {
+            Size: 1,
+            Type: player.SecondRace,
+            Virgin: true
+        }
+        player.Dicks.push(Dick);
+        player.Masc -= 30;
+    } else if (EssenceCost(pd) < player.Masc) {
+        pd.Size += 1 * ManualGrowthScale();
+        player.Masc -= EssenceCost(pd);
+    }
+};
+
+function GrowBalls() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        pb = player.Balls[player.Balls.length - 1];
+
+    if (player.Balls.length === 0 && player.Masc >= 50) {
+        const Ball = {
+            Size: 1,
+            Type: player.SecondRace,
+            CumMax: 1 / 3 * Math.PI * Math.pow(1, 3),
+            Cum: 1 / 6 * Math.PI * Math.pow(1, 3),
+            CumRate: 0,
+            CumBaseRate: 0.5
+        }
+        player.Balls.push(Ball);
+        player.Masc -= 50;
+    } else if (EssenceCost(pd) >= player.Masc) {
+        pb.Size += 1 * ManualGrowthScale();
+        player.Masc -= EssenceCost(pd);
+    };
+};
+
+function GrowPussy() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        eb = ee.Pussies[ee.Pussies.length - 1],
+        pb = player.Pussies[player.Pussies.length - 1],
+        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
+
+
+    if (player.Pussies.length === 0) {
+        const Pussy = {
+            Size: 1,
+            Type: player.SecondRace,
+            Virgin: true
+        }
+        player.Pussies.push(Pussy);
+    } else {
+        pb.Size += Siphon;
+    }
+};
+
+function GrowBoobs() {
+    const old = JSON.parse(JSON.stringify(player)),
+        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
+        ee = enemies[EnemyIndex],
+        eb = ee.Boobies[ee.Boobies.length - 1],
+        pb = player.Boobies[player.Boobies.length - 1],
+        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
+
+    if (player.Boobies.length === 0) {
+        const Boob = {
+            Size: 1,
+            Type: player.SecondRace,
+            Milk: 0,
+            MilkBaseRate: 0,
+            MilkRate: 0,
+            MilkMax: 1 / 3 * Math.PI * Math.pow(1, 3)
+        }
+        player.Boobies.push(Boob);
+    } else {
+        pb.Size += Siphon;
     }
 };
 function RaceDrain(whose) {
@@ -11966,7 +11885,7 @@ function SexActGiveBlowjob() {
     const Text = DocId("SexText"),
         ee = enemies[EnemyIndex];
     if (Settings.ImgPack) {
-        ImgChose(player, "GiveBlowjob", ee);
+        ImgChose("GiveBlowjob", ee);
     }
     ee.Arousal += SexAttack / 2
     player.Arousal += ESexAttack / 3;
@@ -11991,7 +11910,7 @@ function SexActGiveBlowjob() {
 
 function SexActGiveCunnilingus() {
     if (Settings.ImgPack) {
-        ImgChose(player, "GiveCunnilingus", enemies[EnemyIndex]);
+        ImgChose("GiveCunnilingus", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack / 2;
     player.Arousal += ESexAttack / 3;
@@ -12009,7 +11928,7 @@ function SexActGiveCunnilingus() {
 
 function SexActGiveRimjob() {
     if (Settings.ImgPack) {
-        ImgChose(player, "GiveRimjob", enemies[EnemyIndex]);
+        ImgChose("GiveRimjob", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack / 2;
     player.Arousal += ESexAttack / 3;
@@ -12025,7 +11944,7 @@ function SexActGiveRimjob() {
 // Vagina
 function SexActScissoring() {
     if (Settings.ImgPack) {
-        ImgChose(player, "Scissoring", enemies[EnemyIndex]);
+        ImgChose("Scissoring", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
@@ -12041,7 +11960,7 @@ function SexActScissoring() {
 
 function SexActGetCunnilingus() {
     if (Settings.ImgPack) {
-        ImgChose(player, "GetCunnilingus", enemies[EnemyIndex]);
+        ImgChose("GetCunnilingus", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack / 3;
     player.Arousal += ESexAttack / 2;
@@ -12059,7 +11978,7 @@ function SexActGetCunnilingus() {
 
 function SexActRideCowgirl() {
     if (Settings.ImgPack) {
-        ImgChose(player, "RideCowgirl", enemies[EnemyIndex]);
+        ImgChose("RideCowgirl", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
@@ -12084,7 +12003,7 @@ function SexActRideCowgirl() {
 
 function SexActInsertion() {
     if (Settings.ImgPack) {
-        ImgChose(player, "Insertion", enemies[EnemyIndex]);
+        ImgChose("Insertion", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
@@ -12108,7 +12027,7 @@ function SexActInsertion() {
 // Dick
 function SexActMissionary() {
     if (Settings.ImgPack) {
-        ImgChose(player, "Missionary", enemies[EnemyIndex]);
+        ImgChose("Missionary", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
@@ -12132,7 +12051,7 @@ function SexActDualPen() {
     enemies[EnemyIndex].Arousal += 2 * SexAttack;
     player.Arousal += 3 * ESexAttack;
     if (Settings.ImgPack) { //Going to need to split this, unless it's only for multiple orifices
-        ImgChose(player, "DualPen", enemies[EnemyIndex]);
+        ImgChose("DualPen", enemies[EnemyIndex]);
     }
     if (enemies[EnemyIndex].Pussies.length > 0) {
         if (LastPressed === "DualPen") {
@@ -12171,7 +12090,7 @@ function SexActMultiPen() {
     } else
         player.Arousal += player.Dicks.length * 2 * ESexAttack;
     if (Settings.ImgPack) { //Going to need to split this, surprise surprise.
-        ImgChose(player, "MultiPen", enemies[EnemyIndex]);
+        ImgChose("MultiPen", enemies[EnemyIndex]);
     }
     if (LastPressed === "MultiPen") {
         DocId("SexText").innerHTML = "Your mind's unable to handle the insane amount of pleasure, and you thrust wildly. Your entire world is focused on the pleasure your dicks are experiencing, fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " holes with your many dicks. Had you more awareness, you would've seen " + enemies[EnemyIndex].FirstName + "'s face in a state of ecstasy, unable to make a sound.";
@@ -12202,7 +12121,7 @@ function SexActMultiPen() {
 
 function SexActDoggyStyle() {
     if (Settings.ImgPack) {
-        ImgChose(player, "DoggyStyle", enemies[EnemyIndex]);
+        ImgChose("DoggyStyle", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
@@ -12224,7 +12143,7 @@ function SexActDoggyStyle() {
 
 function SexActGetBlowjob() {
     if (Settings.ImgPack) {
-        ImgChose(player, "GetBlowjob", enemies[EnemyIndex]);
+        ImgChose("GetBlowjob", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack / 3;
     player.Arousal += ESexAttack / 2;
@@ -12248,7 +12167,7 @@ function SexActGetBlowjob() {
 // Anal
 function SexActDoggyStyleAnal() {
     if (Settings.ImgPack) {
-        ImgChose(player, "DoggyStyleAnal", enemies[EnemyIndex]);
+        ImgChose("DoggyStyleAnal", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
@@ -12268,35 +12187,13 @@ function SexActDoggyStyleAnal() {
     return;
 };
 
-function SexActDualPen() {
-    enemies[EnemyIndex].Arousal += SexAttack * 2;
-    player.Arousal += ESexAttack * 2;
-    if (LastPressed === "DualPen") {
-        DocId("SexText").innerHTML = "You keep " + HisHer(enemies[EnemyIndex]) + " head down and fuck " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
-    } else {
-        DocId("SexText").innerHTML = "You order you opponent down on " + HisHer(enemies[EnemyIndex]) + " knees, and position yourself behind them. Pushing " + HisHer(enemies[EnemyIndex]) + " head down, you start fucking " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
-    }
-    if (player.Dicks[0].Virgin) {
-        player.Dicks[0].Virgin = false;
-        DocId("SexText").innerHTML += "<br>Your first dick is no longer virgin!"
-    }
-    if (player.Dicks[1].Virgin) {
-        player.Dicks[1].Virgin = false;
-        DocId("SexText").innerHTML += "<br>Your second dick is no longer virgin!"
-    }
-
-    CheckArousal();
-    LastPressed = "DoggyStyleAnal";
-    return;
-};
-
 function SexActMultiPen() {
 
 };
 
 function SexActGetRimjob() {
     if (Settings.ImgPack) {
-        ImgChose(player, "GetRimjob", enemies[EnemyIndex]);
+        ImgChose("GetRimjob", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack / 3;
     player.Arousal += ESexAttack / 2;
@@ -12312,7 +12209,7 @@ function SexActGetRimjob() {
 
 function SexActBreastFeed() {
     if (Settings.ImgPack) {
-        ImgChose(player, "BreastFeed", enemies[EnemyIndex]);
+        ImgChose("BreastFeed", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack * 1.2;
     player.Arousal += ESexAttack;
@@ -13403,7 +13300,7 @@ function TotalSexSkill() {
  function VoreActionsOralVore() {
      if (enemies[EnemyIndex].Weight < StomachCapacity()) {
          if (Settings.ImgPack) {
-             ImgChose(player, "OralVore", enemies[EnemyIndex]);
+             ImgChose("OralVore", enemies[EnemyIndex], "Vore");
          }
          enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
          player.Vore.Stomach.push(enemies[EnemyIndex]);
@@ -13427,7 +13324,7 @@ function TotalSexSkill() {
  function VoreActionsUnbirth() {
      if (enemies[EnemyIndex].Weight < VaginaCapacity()) {
          if (Settings.ImgPack) {
-             ImgChose(player, "Unbirth", enemies[EnemyIndex]);
+             ImgChose("Unbirth", enemies[EnemyIndex], "Vore");
          }
          enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
          player.Vore.Vagina.push(enemies[EnemyIndex]);
@@ -13443,7 +13340,7 @@ function TotalSexSkill() {
  function VoreActionsCockVore() {
      if (enemies[EnemyIndex].Weight < BallsCapacity()) {
          if (Settings.ImgPack) {
-             ImgChose(player, "CockVore", enemies[EnemyIndex]);
+             ImgChose("CockVore", enemies[EnemyIndex], "Vore");
          }
          enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
          player.Vore.Balls.push(enemies[EnemyIndex]);
@@ -13474,7 +13371,7 @@ function TotalSexSkill() {
  function VoreActionsBreastVore() {
      if (enemies[EnemyIndex].Weight < BreastCapacity()) {
          if (Settings.ImgPack) {
-             ImgChose(player, "BreastVore", enemies[EnemyIndex]);
+             ImgChose("BreastVore", enemies[EnemyIndex], "Vore");
          }
          enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
          player.Vore.Breast.push(enemies[EnemyIndex]);
@@ -13493,7 +13390,7 @@ function TotalSexSkill() {
  function VoreActionsAnalVore() {
      if (enemies[EnemyIndex].Weight < AnalCapacity() + 100) {
          if (Settings.ImgPack) {
-             ImgChose(player, "AnalVore", enemies[EnemyIndex]);
+             ImgChose("AnalVore", enemies[EnemyIndex], "Vore");
          }
          enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
          player.Vore.Anal.push(enemies[EnemyIndex]);

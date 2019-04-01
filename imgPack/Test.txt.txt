@@ -1,0 +1,14 @@
+Mode Yllarius works following:
+	myimg.src = `imgPack/${type}/${what}/${d}/${playerGender()+OtherGender()}.png`;
+Breaking this down we get
+1. In folder ImgPack go to folder "type" where "type" equals Category e.g. SexActs or Vore.
+2. In folder "type" go to folder "what" where "what" equals the act e.g. DoggyStyle. 
+3. equals a your opponents Race e.g. Human.
+4. In folder "what" take png or jpg with player gender + opponent gender, see gender below.
+
+Gender
+Herm and Dickgirl = H
+Male = M
+Female = F
+Doll = D
+Cuntboy = C

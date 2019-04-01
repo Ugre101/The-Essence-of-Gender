@@ -1,0 +1,27 @@
+Mode1:
+Player race + player gender + act
+e.g. humanmaleDoggyStyle or humanfemaleRideCowgirl
+
+Mode2:
+Enemy race + Enemy gender + +act
+e.g. TrollmaleGiveBlowjob or ElffemaleDoggyStyleAnal
+
+Mode3:
+player race + player gender + act + enemy race + enemy gender
+e.g. humanhermaphroditeScissoringHumanhermaphrodite  
+
+Default will trigger if no picture match so change that so something nicer.
+
+Sex act names:
+GiveBlowjob
+GiveCunniglus
+GiveRimjob
+Scissoring
+GetCunniglus
+RideCowgirl
+Missionary
+DoggyStyle
+GetBlowjob
+DoggyStyleAnal
+GetRimjob
+OralVore
