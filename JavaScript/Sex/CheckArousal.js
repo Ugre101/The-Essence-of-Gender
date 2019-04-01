@@ -229,56 +229,52 @@ function SexLooksExactAndKinda() { // A function to be able to enter a bunch of 
         playerExact = DocId("playerExact"),
         EnemySex = DocId("EnemySex"),
         PlayerSex = DocId("PlayerSex");
-    EnemySex.addEventListener("click", function () {
-        if (EnemyKinda.style.display == 'none') {
-            SexStats.innerHTML = " ";
-            EnemyKinda.style.display = 'block';
-            EnemyExact.style.display = 'none';
-            EnemyExact.innerHTML = "";
-        } else {
-            const ee = enemies[EnemyIndex];
-            SexStats.innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
-            EnemyKinda.style.display = 'none';
-            EnemyExact.style.display = 'block';
-            EnemyExact.innerHTML = `<p>${ExactBoobLook(ee)+ExactPussyLook(ee)+ExactDickLook(ee)+ExactBallLook(ee)}</p>`;
-        }
-    });
-    EnemySex.addEventListener("mouseenter", function () {
-        const ee = enemies[EnemyIndex];
-        SexStats.innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
-        EnemyKinda.style.display = 'none';
-        EnemyExact.style.display = 'block';
-        EnemyExact.innerHTML = `<p>${ExactBoobLook(ee) + ExactPussyLook(ee) + 
-            ExactDickLook(ee) + ExactBallLook(ee)}</p>`;
-    });
-    EnemySex.addEventListener("mouseleave", function () {
+
+    function PlayerExactFunc() {
+        playerKinda.style.display = 'none';
+        playerExact.style.display = 'block';
+        playerExact.innerHTML = `${player.Name} ${player.LastName}<br>${player.Race} ${Pronoun(CheckGender(player))}<br>
+        <p>${ExactBoobLook(player) + ExactPussyLook(player) + ExactDickLook(player) + ExactBallLook(player)}</p>`
+    };
+
+    function PlayerKindaFunc() {
+        playerKinda.style.display = 'block';
+        playerExact.style.display = 'none';
+        playerExact.innerHTML = "";
+    }
+
+    function EnemyKindaFunc() {
         SexStats.innerHTML = " ";
         EnemyKinda.style.display = 'block';
         EnemyExact.style.display = 'none';
         EnemyExact.innerHTML = "";
-    });
-    PlayerSex.addEventListener("click", function () {
-        if (playerKinda.style.display == 'none') {
-            playerKinda.style.display = 'block';
-            playerExact.style.display = 'none';
-            playerExact.innerHTML = "";
+    }
+
+    function EnemyExactFunc() {
+        const ee = enemies[EnemyIndex];
+        SexStats.innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
+        EnemyKinda.style.display = 'none';
+        EnemyExact.style.display = 'block';
+        EnemyExact.innerHTML = `${ee.FirstName} ${ee.LastName}<br>${ee.Name} ${ee.Race} ${Pronoun(CheckGender(ee))}<br>
+        <p>${ExactBoobLook(ee)+ExactPussyLook(ee)+ExactDickLook(ee)+ExactBallLook(ee)}</p>`;
+    }
+    EnemySex.addEventListener("click", function () {
+        if (EnemyKinda.style.display == 'none') {
+            EnemyKindaFunc();
         } else {
-            playerKinda.style.display = 'none';
-            playerExact.style.display = 'block';
-            playerExact.innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + 
-                ExactDickLook(player) + ExactBallLook(player)}</p>`
+            EnemyExactFunc();
         }
     });
-    PlayerSex.addEventListener("mouseenter", function () {
-        playerKinda.style.display = 'none';
-        playerExact.style.display = 'block';
-        playerExact.innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + 
-            ExactDickLook(player) + ExactBallLook(player)}</p>`
+    EnemySex.addEventListener("mouseenter", EnemyExactFunc);
+    EnemySex.addEventListener("mouseleave", EnemyKindaFunc);
+    PlayerSex.addEventListener("click", function () {
+        if (playerKinda.style.display == 'none') {
+            PlayerKindaFunc();
+        } else {
+            PlayerExactFunc();
+        }
     });
-    PlayerSex.addEventListener("mouseleave", function () {
-        playerKinda.style.display = 'block';
-        playerExact.style.display = 'none';
-        playerExact.innerHTML = "";
-    });
+    PlayerSex.addEventListener("mouseenter", PlayerExactFunc);
+    PlayerSex.addEventListener("mouseleave", PlayerKindaFunc);
 }
 SexLooksExactAndKinda();

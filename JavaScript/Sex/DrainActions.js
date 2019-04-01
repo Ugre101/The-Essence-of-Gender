@@ -136,7 +136,6 @@ function DrainInjectF() {
 
 function GrowDick() {
     const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
         pd = player.Dicks[player.Dicks.length - 1];
 
     if (player.Dicks.length === 0 && player.Masc >= 30) {
@@ -155,7 +154,6 @@ function GrowDick() {
 
 function GrowBalls() {
     const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
         pb = player.Balls[player.Balls.length - 1];
 
     if (player.Balls.length === 0 && player.Masc >= 50) {
@@ -173,38 +171,34 @@ function GrowBalls() {
         pb.Size += 1 * ManualGrowthScale();
         player.Masc -= EssenceCost(pd);
     };
+    AfterBattleButtons();
+    CheckArousal();
 };
 
 function GrowPussy() {
     const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        eb = ee.Pussies[ee.Pussies.length - 1],
-        pb = player.Pussies[player.Pussies.length - 1],
-        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
+        pb = player.Pussies[player.Pussies.length - 1];
 
-
-    if (player.Pussies.length === 0) {
+    if (player.Pussies.length === 0 && player.Femi >= 30) {
         const Pussy = {
             Size: 1,
             Type: player.SecondRace,
             Virgin: true
         }
         player.Pussies.push(Pussy);
-    } else {
-        pb.Size += Siphon;
-    }
+        player.Femi -= 30;
+    } else if (EssenceCost(pd) >= player.Femi) {
+        pb.Size += 1 * ManualGrowthScale();
+        player.Femi -= EssenceCost(pd);
+    };
+    AfterBattleButtons();
+    CheckArousal();
 };
 
 function GrowBoobs() {
     const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        eb = ee.Boobies[ee.Boobies.length - 1],
-        pb = player.Boobies[player.Boobies.length - 1],
-        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
-
-    if (player.Boobies.length === 0) {
+        pb = player.Boobies[player.Boobies.length - 1];
+    if (player.Boobies.length === 0 && player.Femi >= 30) {
         const Boob = {
             Size: 1,
             Type: player.SecondRace,
@@ -214,7 +208,11 @@ function GrowBoobs() {
             MilkMax: 1 / 3 * Math.PI * Math.pow(1, 3)
         }
         player.Boobies.push(Boob);
-    } else {
-        pb.Size += Siphon;
-    }
+        player.Femi -= 30;
+    } else if (EssenceCost(pb) >= player.Femi) {
+        pb.Size += 1 * ManualGrowthScale();
+        player.Femi -= EssenceCost(pb);
+    };
+    AfterBattleButtons();
+    CheckArousal();
 };

@@ -112,7 +112,6 @@ function ImgChose(what, who, type = "SexActs") {
                 };
             };
         };
-        console.log(myimg.src);
     } else {
         const source = () => {
             switch (Settings.ImgPack) {
