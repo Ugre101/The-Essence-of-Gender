@@ -5392,7 +5392,6 @@ function ImgChose(what, who, type = "SexActs") {
                 };
             };
         };
-        console.log(myimg.src);
     } else {
         const source = () => {
             switch (Settings.ImgPack) {
@@ -7352,7 +7351,7 @@ function ImageLoad(arr, callback) { // Preload images to stop flickering
         for (let e of arr) {
             let img = new Image();
             img.onload = ImageLoaded;
-            img.src = `Tiles/${e}.png`;
+            img.src = `Res/Tiles/${e}.png`;
             images[e] = img;
         }
     } else {
@@ -7931,7 +7930,7 @@ function OWImageLoad(arr, callback) { // Preload images to stop flickering
         for (let e of arr) {
             let img = new Image();
             img.onload = ImageLoaded;
-            img.src = `WorldMap/${e}.png`;
+            img.src = `Res/WorldMap/${e}.png`;
             images[e] = img;
         }
     } else {
@@ -10688,57 +10687,53 @@ function SexLooksExactAndKinda() { // A function to be able to enter a bunch of 
         playerExact = DocId("playerExact"),
         EnemySex = DocId("EnemySex"),
         PlayerSex = DocId("PlayerSex");
-    EnemySex.addEventListener("click", function () {
-        if (EnemyKinda.style.display == 'none') {
-            SexStats.innerHTML = " ";
-            EnemyKinda.style.display = 'block';
-            EnemyExact.style.display = 'none';
-            EnemyExact.innerHTML = "";
-        } else {
-            const ee = enemies[EnemyIndex];
-            SexStats.innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
-            EnemyKinda.style.display = 'none';
-            EnemyExact.style.display = 'block';
-            EnemyExact.innerHTML = `<p>${ExactBoobLook(ee)+ExactPussyLook(ee)+ExactDickLook(ee)+ExactBallLook(ee)}</p>`;
-        }
-    });
-    EnemySex.addEventListener("mouseenter", function () {
-        const ee = enemies[EnemyIndex];
-        SexStats.innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
-        EnemyKinda.style.display = 'none';
-        EnemyExact.style.display = 'block';
-        EnemyExact.innerHTML = `<p>${ExactBoobLook(ee) + ExactPussyLook(ee) + 
-            ExactDickLook(ee) + ExactBallLook(ee)}</p>`;
-    });
-    EnemySex.addEventListener("mouseleave", function () {
+
+    function PlayerExactFunc() {
+        playerKinda.style.display = 'none';
+        playerExact.style.display = 'block';
+        playerExact.innerHTML = `${player.Name} ${player.LastName}<br>${player.Race} ${Pronoun(CheckGender(player))}<br>
+        <p>${ExactBoobLook(player) + ExactPussyLook(player) + ExactDickLook(player) + ExactBallLook(player)}</p>`
+    };
+
+    function PlayerKindaFunc() {
+        playerKinda.style.display = 'block';
+        playerExact.style.display = 'none';
+        playerExact.innerHTML = "";
+    }
+
+    function EnemyKindaFunc() {
         SexStats.innerHTML = " ";
         EnemyKinda.style.display = 'block';
         EnemyExact.style.display = 'none';
         EnemyExact.innerHTML = "";
-    });
-    PlayerSex.addEventListener("click", function () {
-        if (playerKinda.style.display == 'none') {
-            playerKinda.style.display = 'block';
-            playerExact.style.display = 'none';
-            playerExact.innerHTML = "";
+    }
+
+    function EnemyExactFunc() {
+        const ee = enemies[EnemyIndex];
+        SexStats.innerHTML = "Looking at them you estimate that they are about " + CmToInch(ee.Height) + " tall and look to weigh around " + KgToPound(ee.Weight);
+        EnemyKinda.style.display = 'none';
+        EnemyExact.style.display = 'block';
+        EnemyExact.innerHTML = `${ee.FirstName} ${ee.LastName}<br>${ee.Name} ${ee.Race} ${Pronoun(CheckGender(ee))}<br>
+        <p>${ExactBoobLook(ee)+ExactPussyLook(ee)+ExactDickLook(ee)+ExactBallLook(ee)}</p>`;
+    }
+    EnemySex.addEventListener("click", function () {
+        if (EnemyKinda.style.display == 'none') {
+            EnemyKindaFunc();
         } else {
-            playerKinda.style.display = 'none';
-            playerExact.style.display = 'block';
-            playerExact.innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + 
-                ExactDickLook(player) + ExactBallLook(player)}</p>`
+            EnemyExactFunc();
         }
     });
-    PlayerSex.addEventListener("mouseenter", function () {
-        playerKinda.style.display = 'none';
-        playerExact.style.display = 'block';
-        playerExact.innerHTML = `<p>${ExactBoobLook(player) + ExactPussyLook(player) + 
-            ExactDickLook(player) + ExactBallLook(player)}</p>`
+    EnemySex.addEventListener("mouseenter", EnemyExactFunc);
+    EnemySex.addEventListener("mouseleave", EnemyKindaFunc);
+    PlayerSex.addEventListener("click", function () {
+        if (playerKinda.style.display == 'none') {
+            PlayerKindaFunc();
+        } else {
+            PlayerExactFunc();
+        }
     });
-    PlayerSex.addEventListener("mouseleave", function () {
-        playerKinda.style.display = 'block';
-        playerExact.style.display = 'none';
-        playerExact.innerHTML = "";
-    });
+    PlayerSex.addEventListener("mouseenter", PlayerExactFunc);
+    PlayerSex.addEventListener("mouseleave", PlayerKindaFunc);
 }
 SexLooksExactAndKinda();
 function DrainDrainM() {
@@ -10879,7 +10874,6 @@ function DrainInjectF() {
 
 function GrowDick() {
     const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
         pd = player.Dicks[player.Dicks.length - 1];
 
     if (player.Dicks.length === 0 && player.Masc >= 30) {
@@ -10898,7 +10892,6 @@ function GrowDick() {
 
 function GrowBalls() {
     const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
         pb = player.Balls[player.Balls.length - 1];
 
     if (player.Balls.length === 0 && player.Masc >= 50) {
@@ -10916,38 +10909,34 @@ function GrowBalls() {
         pb.Size += 1 * ManualGrowthScale();
         player.Masc -= EssenceCost(pd);
     };
+    AfterBattleButtons();
+    CheckArousal();
 };
 
 function GrowPussy() {
     const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        eb = ee.Pussies[ee.Pussies.length - 1],
-        pb = player.Pussies[player.Pussies.length - 1],
-        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
+        pb = player.Pussies[player.Pussies.length - 1];
 
-
-    if (player.Pussies.length === 0) {
+    if (player.Pussies.length === 0 && player.Femi >= 30) {
         const Pussy = {
             Size: 1,
             Type: player.SecondRace,
             Virgin: true
         }
         player.Pussies.push(Pussy);
-    } else {
-        pb.Size += Siphon;
-    }
+        player.Femi -= 30;
+    } else if (EssenceCost(pd) >= player.Femi) {
+        pb.Size += 1 * ManualGrowthScale();
+        player.Femi -= EssenceCost(pd);
+    };
+    AfterBattleButtons();
+    CheckArousal();
 };
 
 function GrowBoobs() {
     const old = JSON.parse(JSON.stringify(player)),
-        eold = JSON.parse(JSON.stringify(enemies[EnemyIndex])),
-        ee = enemies[EnemyIndex],
-        eb = ee.Boobies[ee.Boobies.length - 1],
-        pb = player.Boobies[player.Boobies.length - 1],
-        Siphon = typeof player.EssenceDrain === "number" ? player.EssenceDrain / 2 : 1;
-
-    if (player.Boobies.length === 0) {
+        pb = player.Boobies[player.Boobies.length - 1];
+    if (player.Boobies.length === 0 && player.Femi >= 30) {
         const Boob = {
             Size: 1,
             Type: player.SecondRace,
@@ -10957,9 +10946,13 @@ function GrowBoobs() {
             MilkMax: 1 / 3 * Math.PI * Math.pow(1, 3)
         }
         player.Boobies.push(Boob);
-    } else {
-        pb.Size += Siphon;
-    }
+        player.Femi -= 30;
+    } else if (EssenceCost(pb) >= player.Femi) {
+        pb.Size += 1 * ManualGrowthScale();
+        player.Femi -= EssenceCost(pb);
+    };
+    AfterBattleButtons();
+    CheckArousal();
 };
 function RaceDrain(whose) {
     const RaceEss = player.RaceEssence,

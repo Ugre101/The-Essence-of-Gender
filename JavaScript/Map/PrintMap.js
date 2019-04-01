@@ -33,7 +33,7 @@ function OWImageLoad(arr, callback) { // Preload images to stop flickering
         for (let e of arr) {
             let img = new Image();
             img.onload = ImageLoaded;
-            img.src = `WorldMap/${e}.png`;
+            img.src = `Res/WorldMap/${e}.png`;
             images[e] = img;
         }
     } else {
