@@ -649,9 +649,12 @@
 			</div>
 		</div>
 		<img id="MyImg" class="f">
+		<div id="MyImgModal" class="modal">
+			<img class="modal-content" id="MyImgF">
+			<div id="Caption"></div>
+		</div>
 		<!--Add a option to view image fullscreen if clicked on-->
 		<div id="SexButtons" class="e Grid"></div>
-	</div>
 	</div>
 
 	<!-- Lose -->
@@ -714,7 +717,6 @@
 				<input type="button" id="DungeonLose" value="Leave" />
 			</div>
 		</div>
-
 	</div>
 
 	<!-- Home-->
@@ -895,15 +897,12 @@
 		A single div which I change in js instead of html so that I can have them more modular and 
 		stop have so many active addeventlistners 
 	-->
-	<div id="Buildings" class="Building None">
-
-	</div>
+	<div id="Buildings" class="Building None"></div>
 	<!--
 		Seperate buildings and npcs as I want to add stuff like affection etc in future
 	-->
-	<div id="Npcs" class="Building None">
+	<div id="Npcs" class="Building None"></div>
 
-	</div>
 	<script src="Combined.js"></script>
 	<!--	<script src="JavaScript/NewGamePlus.js"></script>-->
 	<!--	<script src="JavaScript/TfBonus.js"></script> -->

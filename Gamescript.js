@@ -561,66 +561,6 @@ function StringCounter(array, string) {
 
 var enemies = [];
 
-DocId("ImgPack").addEventListener("click", function () {
-    switch (Settings.ImgPack) {
-        case false:
-            Settings.ImgPack = "Mode1";
-            break;
-        case "Mode1":
-            Settings.ImgPack = "Mode2";
-            break;
-        case "Mode2":
-            Settings.ImgPack = "Mode3";
-            break;
-        default:
-            Settings.ImgPack = false;
-            break;
-    }
-    DocId("ImgPack").value = `Img pack: ${Settings.ImgPack}`;
-});
-
-function ImgChose(who, what, who2) {
-    var myimg = new Image();
-    var a = who.Race;
-    var b = CheckGender(who);
-    var c = what;
-    var d = who2.Race;
-    var e = CheckGender(who2);
-    var source;
-    switch (Settings.ImgPack) {
-        case "Mode1":
-            source = a + b + c;
-            break;
-        case "Mode2":
-            source = d + e + c;
-            break;
-        case "Mode3":
-            source = a + b + c + d + e;
-            break;
-        default:
-            break;
-    }
-    myimg.src = "imgPack/" + source + ".jpg";
-    myimg.onload = function () {
-        DocId("MyImg").src = "imgPack/" + source + ".jpg";
-    }
-    myimg.onerror = function () {
-        DocId("MyImg").src = "imgPack/Default.jpg";
-    }
-}
-
-function checkImageExists(src, callback) {
-    var myimg = new Image();
-    myimg.src = "../imgPack/" + src + ".jpg";
-    myimg.onload = function () {
-        var a = true;
-        return true;
-    }
-    myimg.onerror = function () {
-        return false;
-    }
-}
-
 //    DocId("PlayerLooks").innerHTML = BoobLook(player) + "<br>" + PussyLook(player) + "<br>" + DickLook(player);
 //    DocId("EnemyLooks").innerHTML = BoobLook(enemies[EnemyIndex]) + "<br>" + PussyLook(enemies[EnemyIndex]) + "<br>" + DickLook(enemies[EnemyIndex]);
 
