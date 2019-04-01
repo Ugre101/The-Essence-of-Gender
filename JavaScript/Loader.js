@@ -41,24 +41,19 @@ for (let e = 1; e < 6; e++) {
     });
 }
 
-DocId("LoadFile").addEventListener("input", function () {
-    var test = DocId("LoadFile");
-    var reader = new FileReader();
-    reader.readAsText(test.files[0]);
+DocId("LoadFile").addEventListener("input", function (file) {
+    const reader = new FileReader();
+    reader.readAsText(file.target.files[0]);
     reader.onload = function () {
-        var parseplayer = JSON.parse(reader.result);
-        var LoadArray = [];
-        LoadArray = parseplayer;
+        const parseplayer = JSON.parse(reader.result),
+         LoadArray = [...parseplayer];
         player = LoadArray[0];
         House = LoadArray[1];
         Flags = LoadArray[2];
         Settings = LoadArray[3];
-        battle = false;
         DocId("StartPage").style.display = 'none';
-        DocId("map").style.display = 'block';
-        DocId("buttons").style.display = 'block';
-        DocId("status").style.display = 'block';
         DocId("LoadMenu").style.display = 'none';
+        DisplayGame()
         CheckFlags();
         requestAnimationFrame(loop);
     }
