@@ -1,7 +1,7 @@
  function VoreActionsOralVore() {
      if (enemies[EnemyIndex].Weight < StomachCapacity()) {
          if (Settings.ImgPack) {
-             ImgChose(player, "OralVore", enemies[EnemyIndex]);
+             ImgChose("OralVore", enemies[EnemyIndex], "Vore");
          }
          enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
          player.Vore.Stomach.push(enemies[EnemyIndex]);
@@ -25,7 +25,7 @@
  function VoreActionsUnbirth() {
      if (enemies[EnemyIndex].Weight < VaginaCapacity()) {
          if (Settings.ImgPack) {
-             ImgChose(player, "Unbirth", enemies[EnemyIndex]);
+             ImgChose("Unbirth", enemies[EnemyIndex], "Vore");
          }
          enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
          player.Vore.Vagina.push(enemies[EnemyIndex]);
@@ -41,7 +41,7 @@
  function VoreActionsCockVore() {
      if (enemies[EnemyIndex].Weight < BallsCapacity()) {
          if (Settings.ImgPack) {
-             ImgChose(player, "CockVore", enemies[EnemyIndex]);
+             ImgChose("CockVore", enemies[EnemyIndex], "Vore");
          }
          enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
          player.Vore.Balls.push(enemies[EnemyIndex]);
@@ -72,7 +72,7 @@
  function VoreActionsBreastVore() {
      if (enemies[EnemyIndex].Weight < BreastCapacity()) {
          if (Settings.ImgPack) {
-             ImgChose(player, "BreastVore", enemies[EnemyIndex]);
+             ImgChose("BreastVore", enemies[EnemyIndex], "Vore");
          }
          enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
          player.Vore.Breast.push(enemies[EnemyIndex]);
@@ -91,7 +91,7 @@
  function VoreActionsAnalVore() {
      if (enemies[EnemyIndex].Weight < AnalCapacity() + 100) {
          if (Settings.ImgPack) {
-             ImgChose(player, "AnalVore", enemies[EnemyIndex]);
+             ImgChose("AnalVore", enemies[EnemyIndex], "Vore");
          }
          enemies[EnemyIndex].StartWeight = enemies[EnemyIndex].Weight;
          player.Vore.Anal.push(enemies[EnemyIndex]);

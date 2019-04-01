@@ -6,7 +6,7 @@ function SexActGiveBlowjob() {
     const Text = DocId("SexText"),
         ee = enemies[EnemyIndex];
     if (Settings.ImgPack) {
-        ImgChose(player, "GiveBlowjob", ee);
+        ImgChose("GiveBlowjob", ee);
     }
     ee.Arousal += SexAttack / 2
     player.Arousal += ESexAttack / 3;
@@ -31,7 +31,7 @@ function SexActGiveBlowjob() {
 
 function SexActGiveCunnilingus() {
     if (Settings.ImgPack) {
-        ImgChose(player, "GiveCunnilingus", enemies[EnemyIndex]);
+        ImgChose("GiveCunnilingus", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack / 2;
     player.Arousal += ESexAttack / 3;
@@ -49,7 +49,7 @@ function SexActGiveCunnilingus() {
 
 function SexActGiveRimjob() {
     if (Settings.ImgPack) {
-        ImgChose(player, "GiveRimjob", enemies[EnemyIndex]);
+        ImgChose("GiveRimjob", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack / 2;
     player.Arousal += ESexAttack / 3;
@@ -65,7 +65,7 @@ function SexActGiveRimjob() {
 // Vagina
 function SexActScissoring() {
     if (Settings.ImgPack) {
-        ImgChose(player, "Scissoring", enemies[EnemyIndex]);
+        ImgChose("Scissoring", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
@@ -81,7 +81,7 @@ function SexActScissoring() {
 
 function SexActGetCunnilingus() {
     if (Settings.ImgPack) {
-        ImgChose(player, "GetCunnilingus", enemies[EnemyIndex]);
+        ImgChose("GetCunnilingus", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack / 3;
     player.Arousal += ESexAttack / 2;
@@ -99,7 +99,7 @@ function SexActGetCunnilingus() {
 
 function SexActRideCowgirl() {
     if (Settings.ImgPack) {
-        ImgChose(player, "RideCowgirl", enemies[EnemyIndex]);
+        ImgChose("RideCowgirl", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
@@ -124,7 +124,7 @@ function SexActRideCowgirl() {
 
 function SexActInsertion() {
     if (Settings.ImgPack) {
-        ImgChose(player, "Insertion", enemies[EnemyIndex]);
+        ImgChose("Insertion", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
@@ -148,7 +148,7 @@ function SexActInsertion() {
 // Dick
 function SexActMissionary() {
     if (Settings.ImgPack) {
-        ImgChose(player, "Missionary", enemies[EnemyIndex]);
+        ImgChose("Missionary", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
@@ -172,7 +172,7 @@ function SexActDualPen() {
     enemies[EnemyIndex].Arousal += 2 * SexAttack;
     player.Arousal += 3 * ESexAttack;
     if (Settings.ImgPack) { //Going to need to split this, unless it's only for multiple orifices
-        ImgChose(player, "DualPen", enemies[EnemyIndex]);
+        ImgChose("DualPen", enemies[EnemyIndex]);
     }
     if (enemies[EnemyIndex].Pussies.length > 0) {
         if (LastPressed === "DualPen") {
@@ -211,7 +211,7 @@ function SexActMultiPen() {
     } else
         player.Arousal += player.Dicks.length * 2 * ESexAttack;
     if (Settings.ImgPack) { //Going to need to split this, surprise surprise.
-        ImgChose(player, "MultiPen", enemies[EnemyIndex]);
+        ImgChose("MultiPen", enemies[EnemyIndex]);
     }
     if (LastPressed === "MultiPen") {
         DocId("SexText").innerHTML = "Your mind's unable to handle the insane amount of pleasure, and you thrust wildly. Your entire world is focused on the pleasure your dicks are experiencing, fucking " + HisHer(enemies[EnemyIndex]) + " " + enemies[EnemyIndex].Pussies[0].Type + " holes with your many dicks. Had you more awareness, you would've seen " + enemies[EnemyIndex].FirstName + "'s face in a state of ecstasy, unable to make a sound.";
@@ -242,7 +242,7 @@ function SexActMultiPen() {
 
 function SexActDoggyStyle() {
     if (Settings.ImgPack) {
-        ImgChose(player, "DoggyStyle", enemies[EnemyIndex]);
+        ImgChose("DoggyStyle", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
@@ -264,7 +264,7 @@ function SexActDoggyStyle() {
 
 function SexActGetBlowjob() {
     if (Settings.ImgPack) {
-        ImgChose(player, "GetBlowjob", enemies[EnemyIndex]);
+        ImgChose("GetBlowjob", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack / 3;
     player.Arousal += ESexAttack / 2;
@@ -288,7 +288,7 @@ function SexActGetBlowjob() {
 // Anal
 function SexActDoggyStyleAnal() {
     if (Settings.ImgPack) {
-        ImgChose(player, "DoggyStyleAnal", enemies[EnemyIndex]);
+        ImgChose("DoggyStyleAnal", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack;
     player.Arousal += ESexAttack;
@@ -308,35 +308,13 @@ function SexActDoggyStyleAnal() {
     return;
 };
 
-function SexActDualPen() {
-    enemies[EnemyIndex].Arousal += SexAttack * 2;
-    player.Arousal += ESexAttack * 2;
-    if (LastPressed === "DualPen") {
-        DocId("SexText").innerHTML = "You keep " + HisHer(enemies[EnemyIndex]) + " head down and fuck " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
-    } else {
-        DocId("SexText").innerHTML = "You order you opponent down on " + HisHer(enemies[EnemyIndex]) + " knees, and position yourself behind them. Pushing " + HisHer(enemies[EnemyIndex]) + " head down, you start fucking " + HisHer(enemies[EnemyIndex]) + " ass with your " + CmToInch(player.Dicks[0].Size) + " " + player.Dicks[0].Type + " dick.";
-    }
-    if (player.Dicks[0].Virgin) {
-        player.Dicks[0].Virgin = false;
-        DocId("SexText").innerHTML += "<br>Your first dick is no longer virgin!"
-    }
-    if (player.Dicks[1].Virgin) {
-        player.Dicks[1].Virgin = false;
-        DocId("SexText").innerHTML += "<br>Your second dick is no longer virgin!"
-    }
-
-    CheckArousal();
-    LastPressed = "DoggyStyleAnal";
-    return;
-};
-
 function SexActMultiPen() {
 
 };
 
 function SexActGetRimjob() {
     if (Settings.ImgPack) {
-        ImgChose(player, "GetRimjob", enemies[EnemyIndex]);
+        ImgChose("GetRimjob", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack / 3;
     player.Arousal += ESexAttack / 2;
@@ -352,7 +330,7 @@ function SexActGetRimjob() {
 
 function SexActBreastFeed() {
     if (Settings.ImgPack) {
-        ImgChose(player, "BreastFeed", enemies[EnemyIndex]);
+        ImgChose("BreastFeed", enemies[EnemyIndex]);
     }
     enemies[EnemyIndex].Arousal += SexAttack * 1.2;
     player.Arousal += ESexAttack;
