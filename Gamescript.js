@@ -28,24 +28,6 @@ var player = {
     ],
     Race: "human",
     SecondRace: "human",
-    isTaur: "false", // Testing, Not sure if useless or not
-    OrganMod: {
-        Dick: {
-            Size: 0
-        },
-        Boobies: {
-            Size: 0
-        },
-        Balls: {
-            Size: 0
-        },
-        Pussy: {
-            Size: 0
-        },
-        Anal: {
-            Size: 0
-        }
-    },
     Dicks: [],
     Balls: [],
     Pussies: [],
