@@ -28,24 +28,6 @@ var player = {
     ],
     Race: "human",
     SecondRace: "human",
-    isTaur: "false", // Testing, Not sure if useless or not
-    OrganMod: {
-        Dick: {
-            Size: 0
-        },
-        Boobies: {
-            Size: 0
-        },
-        Balls: {
-            Size: 0
-        },
-        Pussy: {
-            Size: 0
-        },
-        Anal: {
-            Size: 0
-        }
-    },
     Dicks: [],
     Balls: [],
     Pussies: [],
@@ -3063,25 +3045,6 @@ function CheckFlags() {
         ]
         console.log("Added race essence");
     };
-    if (!player.hasOwnProperty("OrganMod")) {
-        player.OrganMod = {
-            Dick: {
-                Size: 0
-            },
-            Boobies: {
-                Size: 0
-            },
-            Balls: {
-                Size: 0
-            },
-            Pussy: {
-                Size: 0
-            },
-            Anal: {
-                Size: 0
-            }
-        }
-    }
     if (!Flags.hasOwnProperty("LastTrain")) {
         Flags.LastTrain = {
             Day: 0,
@@ -3178,7 +3141,15 @@ function UpdateStats(YourTurn = true) {
         SH = DocId("StatusHealth2"),
         SWH = DocId("StatusWillHealth2"),
         BE = DocId("BattleEnemy"),
-        SN = DocId("StatusName2");
+        SN = DocId("StatusName2"),
+        BT = DocId("BattleText2"),
+        temp = BattleLog.slice(0);
+    BT.innerHTML = null;
+
+    for (let e of temp.reverse()) {
+        BT.innerHTML += `${e}<br>`
+    }
+    console.log(BattleLog)
     // Enemy Status
     BE.innerHTML = `${ee.Name}<br>${ee.Race} ${Pronoun(CheckGender(ee))}`;
     ESH.innerHTML = Math.round(ee.Health);
@@ -3206,39 +3177,45 @@ function UpdateStats(YourTurn = true) {
     }
 };
 
+const BattleLog = [];
+
+function AddToBattleLog(text, who = player) {
+    BattleLog.push(`${text}<br>`);
+    BattleLog.push(who.Name);
+}
+
 function EnemyAttack() {
-    const BT = DocId("BattleText2"),
-        {
-            Charm,
-            Str,
-            Boobies,
-            Balls
-        } = enemies[EnemyIndex];
+    const {
+        Charm,
+        Str,
+        Boobies,
+        Balls
+    } = enemies[EnemyIndex];
     if (Str >= Charm) {
         const PhysicalAttacks = [
-                "kicks", "hits", "grapple with"
+                "Kicks", "Hits", "Grapple with"
             ],
-            EAttack = (RandomInt(1, 5) * Str) / 2;
+            EAttack = (RandomInt(1, 5) * Str) / 2,
+            Text = `${RandomString(PhysicalAttacks)} you, causing ${EAttack} dmg.`
         player.Health -= EAttack;
-        BT.innerHTML = `Your opponent ${RandomString(PhysicalAttacks)} you, causing ${EAttack} dmg.`;
-        UpdateStats();
-        return;
+        AddToBattleLog(Text, enemies[EnemyIndex]);
     } else { // if (ee.Str < ee.Charm) Unnesary?
-        const LustAttacks = ["tease you"],
+        const LustAttacks = ["Tease you"],
             EAttack = (RandomInt(1, 5) * Charm) / 2;
         if (Boobies[0].Size > 5) {
-            const boob = "fondle their breast in a seductive manner";
+            const boob = "Fondle their breast in a seductive manner";
             LustAttacks.push(boob);
         };
         if (Balls.length > 0) {
-            const ball = "fondle their balls in a teasing manner";
+            const ball = "Fondle their balls in a teasing manner";
             LustAttacks.push(ball);
         };
-        BT.innerHTML = `Your opponent ${RandomString(LustAttacks)} causing your will to suffer by ${EAttack}.`;
+        const Text = `${RandomString(LustAttacks)} causing your will to suffer by ${EAttack}.`
+        AddToBattleLog(Text, enemies[EnemyIndex]);
         player.WillHealth -= EAttack;
-        UpdateStats();
-        return;
     };
+    UpdateStats();
+    return;
 };
 /**
  * Need to make enemy attack more flavour full
@@ -3318,7 +3295,7 @@ function CombatButtons() { // Just combat buttons
     Hit.addEventListener("click", function () {
         const PAttack = Math.floor(RandomInt(4, 8) * player.Str / 2); // * PhyRes(ee);
         ee.Health -= PAttack;
-        BT.innerHTML = "You dealt " + PAttack + " dmg.";
+        AddToBattleLog(`You dealt ${PAttack} dmg to ${ee.Name}.`);
         UpdateStats(false);
     });
     row1.appendChild(Hit);
@@ -3335,7 +3312,7 @@ function CombatButtons() { // Just combat buttons
         Tease.addEventListener("click", function () {
             const PAttack = Math.floor(RandomInt(4, 8) * player.Charm / 2); // * LusRes(ee);
             ee.WillHealth -= PAttack;
-            BT.innerHTML = "You dealt " + PAttack + " will dmg."
+            AddToBattleLog(`You dealt ${PAttack} will dmg to ${ee.Name}.`);
             UpdateStats(false);
         });
         row2.appendChild(Tease);
@@ -3364,10 +3341,11 @@ function CombatButtons() { // Just combat buttons
             battle = false;
             DisplayGame();
             DocId("Encounter").style.display = 'none';
-            BT.innerHTML = "Success!"
+            AddToBattleLog(`Success!`);
+        } else {
+            AddToBattleLog(`You failed to get away.`);
+            UpdateStats(false);
         }
-        UpdateStats(false);
-        BT.innerHTML = "You failed to get away."
     });
     row4.appendChild(FleeBattle);
 
@@ -3637,7 +3615,7 @@ function OrganSize(Size, who) {
 
 function EssenceCheck(who) {
     function DickSize(e = 0) {
-        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 1)) + who.OrganMod.Dick.Size) * GrowthScale(who)));
+        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 1))) * GrowthScale(who)));
         return Number.isNaN(Size) ? 0 : Size;
     }
 
@@ -3651,7 +3629,7 @@ function EssenceCheck(who) {
     }
 
     function BallsSize(e = 0) {
-        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 2) + who.OrganMod.Balls.Size) * GrowthScale(who))));
+        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 2)) * GrowthScale(who))));
         return Number.isNaN(Size) ? 0 : Size;
     }
 
@@ -3668,7 +3646,7 @@ function EssenceCheck(who) {
     }
 
     function BoobSize(e = 0) {
-        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 1) + who.OrganMod.Boobies.Size) * GrowthScale(who))));
+        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 1)) * GrowthScale(who))));
         return Number.isNaN(Size) ? 0 : Size;
     }
 
@@ -3685,7 +3663,7 @@ function EssenceCheck(who) {
     }
 
     function PussySize(e = 0) {
-        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 2) + who.OrganMod.Pussy.Size) * GrowthScale(who))));
+        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 2)) * GrowthScale(who))));
         return Number.isNaN(Size) ? 0 : Size;
     }
 
@@ -3696,25 +3674,6 @@ function EssenceCheck(who) {
             Virgin: true
         }
         return Pussy;
-    }
-    if (!who.hasOwnProperty("OrganMod")) {
-        who.OrganMod = {
-            Dick: {
-                Size: 0
-            },
-            Boobies: {
-                Size: 0
-            },
-            Balls: {
-                Size: 0
-            },
-            Pussy: {
-                Size: 0
-            },
-            Anal: {
-                Size: 0
-            }
-        }
     }
     if (!who.hasOwnProperty("Dicks")) {
         who.Dicks = [];
@@ -5437,6 +5396,7 @@ DocId("MyImgF").addEventListener("click", () => {
         AfterBattle = DocId("AfterBattle");
     modal.style.display = 'none';
 });
+
 function CmToInch(cm) {
     if (Settings.Inch) {
         var Inch = Math.round(cm / 2.54);
@@ -8922,16 +8882,12 @@ function GenderLock(who, amount, Genderlock) { // gives exact gender
     } else if (Genderlock == "cuntboy") {
         who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
-        who.OrganMod.Balls.Size = -Math.round(amount / 10);
-        who.OrganMod.Boobies.Size = -Math.round(amount / 10);
-        who.OrganMod.Dick.Size = -Math.round(amount / 10);
     } else if (Genderlock == "herm") {
         who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
     } else if (Genderlock == "dickgirl") {
         who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
-        who.OrganMod.Pussy.Size = -Math.round(amount / 10);
     } else if (Genderlock == "female") {
         who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Masc = 0;
@@ -8939,23 +8895,6 @@ function GenderLock(who, amount, Genderlock) { // gives exact gender
 }
 
 function EssenceGiver(who, amount, GenderPref = 0) { // Gives random gender
-    who.OrganMod = {
-        Dick: {
-            Size: 0
-        },
-        Boobies: {
-            Size: 0
-        },
-        Balls: {
-            Size: 0
-        },
-        Pussy: {
-            Size: 0
-        },
-        Anal: {
-            Size: 0
-        }
-    };
     var a = RandomInt(1, 13);
     a += GenderPref;
     /** Negative Genderpref gives more males and postive more girls. 
@@ -8966,16 +8905,12 @@ function EssenceGiver(who, amount, GenderPref = 0) { // Gives random gender
     } else if (a < 6) { // Dickgirl
         who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
-        who.OrganMod.Pussy.Size = -Math.round(amount / 10);
     } else if (a < 9) { // Herm
         who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
     } else if (a < 11) { // Cuntboy
         who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
-        who.OrganMod.Balls.Size = -Math.round(amount / 10);
-        who.OrganMod.Boobies.Size = -Math.round(amount / 10);
-        who.OrganMod.Dick.Size = -Math.round(amount / 10);
     } else { // Girl
         who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Masc = 0;
@@ -9965,6 +9900,10 @@ String.prototype.Capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
 }
 
+function Last(arr) {
+    return arr[arr.length - 1];
+}
+
 /* Checks if a array has duplicate value and if it does output a array without duplicate value
  to console so I can paste new array into code #Note keep it out commeted unless needed
 Array.prototype.RemoveDup = function () {
@@ -10424,9 +10363,18 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 SiphonDiv.appendChild(DrainF);
             }
             Siphon.appendChild(SiphonDiv);
-            if (EssenceCost(player.Dicks[player.Dicks.length - 1]) <= player.Masc || (player.Masc >= 30 && player.Dicks.length === 0)) {
+            if (EssenceCost(Last(player.Dicks)) <= player.Masc || (player.Masc >= 30 && player.Dicks.length === 0)) {
                 SiphonDiv.appendChild(SexButton("Grow dick", GrowDick));
-            }
+            };
+            if (EssenceCost(Last(player.Balls)) || (player.Masc >= 50 && player.Balls.length === 0)) {
+                SiphonDiv.appendChild(SexButton("Grow balls", GrowBalls));
+            };
+            if (EssenceCost(Last(player.Pussies)) || (player.Femi >= 30 && player.Pussies.length === 0)) {
+                Siphon.appendChild(SexButton("Grow pussy", GrowPussy));
+            };
+            if (EssenceCost(Last(player.Boobies))) {
+                Siphon.appendChild(SexButton("Grow boobs", GrowBoobs));
+            };
         };
         if (Settings.Vore) {
             const {
@@ -12308,12 +12256,11 @@ const SpellDict = {
         }, // short description of spell & value of action in this case "40 fire type dmg" 
         Succes: function () {},
         Fail: function () {
-            DocId("BattleText2").innerHTML = ""; // So it doesn't look like enemy attacked you.
+            AddToBattleLog(``); // So it doesn't look like enemy attacked you.
             return "" // e.g you are to exhausted to cast template.
         },
         Cast: function (index, ee) {
-            DocId("BattleText").innerHTML = this.Succes();
-
+            AddToBattleLog(this.Succes());
         }
     },
     Fireball: {
@@ -12326,24 +12273,25 @@ const SpellDict = {
             return Math.floor(20 * (player.Int / 20) + (Exp / 100))
         },
         Succes: function (dmg) {
-            DocId("BattleText").innerHTML = "You threw a ball covered in fire, dealing " + dmg + " damage to their HP and will!"
+            AddToBattleLog(`You threw a ball covered in fire, dealing ${dmg} damage to their HP and will!`);
             player.Mana -= this.ManaCost();
-            player.MagicAffinity[this.Type]++;
+            if (typeof player.MagicAffinity[this.Type] !== 'undefined') {
+                player.MagicAffinity[this.Type]++;
+            }
             UpdateStats();
         },
         Fail: function () {
-            DocId("BattleText2").innerHTML = "";
-            return "You're exhausted, and can't cast another fireball..."
+            AddToBattleLog(`You're exhausted, and can't cast another fireball...`)
         },
         Cast: function (index, ee) {
             if (player.Mana >= this.ManaCost()) {
-                var that = player.Spells[index];
-                var PAttack = Math.floor(RandomInt(3, 5) * this.Does(that.Exp) / 4)
+                const that = player.Spells[index],
+                    PAttack = Math.floor(RandomInt(3, 5) * this.Does(that.Exp) / 4)
                 ee.Health -= PAttack; // * MagRes(ee);
                 that.Exp++;
                 this.Succes(PAttack);
             } else {
-                DocId("BattleText").innerHTML = this.Fail();
+                this.Fail();
             }
         }
     },
@@ -12357,21 +12305,23 @@ const SpellDict = {
             return Math.floor(25 * (player.Int / 20) + (Exp / 100))
         },
         Succes: function (Heal) {
-            DocId("BattleText").innerHTML = "You healed for " + Heal;
+            AddToBattleLog(`You healed for ${Heal}`);
             player.Mana -= this.ManaCost();
-            player.MagicAffinity[this.Type]++;
+            if (typeof player.MagicAffinity[this.Type] !== 'undefined') {
+                player.MagicAffinity[this.Type]++;
+            }
             UpdateStats();
         },
         Fail: function () {
-            DocId("BattleText").innerHTML = "Fail";
+            AddToBattleLog(`Fail`);
         },
         Cast: function (index, ee) {
-            var that = player.Spells[index];
-            var ManaCost = this.ManaCost(); // Affinity will lower cost
-            var Heal = this.Does(that.Exp)
+            const that = player.Spells[index],
+                ManaCost = this.ManaCost(), // Affinity will lower cost
+                Heal = this.Does(that.Exp)
             if (player.Mana > ManaCost) {
                 if (player.Health > player.MaxHealth) {
-                    DocId("BattleText").innerHTML = "You already have full health."
+                    AddToBattleLog(`You already have full health.`)
                 } else if (player.Health + Heal > player.MaxHealth) {
                     player.Mana -= ManaCost;
                     player.Health = player.MaxHealth;

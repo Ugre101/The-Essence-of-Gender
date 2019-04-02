@@ -493,10 +493,16 @@
    }
 
    div.CombatStatus {
+       height: 80%;
        border-top-right-radius: 45%;
        border-top-left-radius: 45%;
        background-color: rgb(187, 161, 113);
        border: 14px ridge rgb(104, 91, 67);
+   }
+   @media screen and (max-height: 600px) {
+    div.CombatStatus {
+        border: 7px ridge rgb(104, 91, 67);
+    }
    }
 
    div.CombatButtonGrid {
@@ -509,22 +515,22 @@
 
    #Encounter {
        grid-template:
-           "a a a"
            "b c d"
            "e e e";
        grid-gap: 1em;
        grid-template-columns: 25% 40% 25%;
-       grid-template-rows: 15% 40% 45%;
+       grid-template-rows: repeat(2, 1fr);
 
        background-color: rgb(209, 171, 99);
        border: 20px solid transparent;
-       border-image: url(Res/frame_s_05.png) 20;
-       border-radius: 20px;
+       border-image: url(Res/frame_s_02.png) 25;
+       border-image-outset: 5px;
 
-       height: 96%;
-       width: 97%;
+       height: 92%;
+       width: 96%;
 
        justify-content: center;
+       align-items: center;
        text-align: center;
        -webkit-user-select: none;
        -moz-user-select: none;
@@ -546,16 +552,21 @@
            width: 100vw;
            grid-gap: 0;
        }
-
-       #Encounter>h1 {
-           display: none;
-       }
    }
 
    #BattleLog {
-       border: rgb(44, 13, 13) ridge 4px;
-       border-radius: 9px;
+       border: 20px solid transparent;
+       border-image: url(Res/slot_04.png) 20;
        background-color: rgb(255, 255, 255);
+       overflow: auto;
+       height: 80%;
+   }
+
+   @media screen and (max-height:600px) {
+    #BattleLog {
+        border: 1px solid black;
+        border-image: none;
+    } 
    }
 
    .a {
@@ -597,6 +608,7 @@
        border: 5px ridge purple;
        background-color: rgb(255, 211, 255);
        justify-items: center;
+       align-items: center;
        overflow: auto;
 
        -webkit-user-select: none;
@@ -617,7 +629,7 @@
            "c c c c c"
            "e e e e e";
        grid-template-columns: repeat(5, 1fr);
-       grid-template-rows: repeat(3, 1fr);
+       grid-template-rows: 40% 25% 35%;
        grid-gap: 1em 0;
        width: 98%;
        height: 97%;
@@ -627,6 +639,7 @@
        border: 5px ridge purple;
        background-color: rgb(192, 189, 192);
        justify-items: center;
+       align-items: center;
    }
 
    @media screen and (max-height: 1000px) {
@@ -731,10 +744,9 @@
 
 
    div.SexLog {
-       border: 20px solid indianred;
-       border-image: url(Res/frame_s_01.png) 40;
-       min-height: 100px;
-       width: 99%;
+       border: 4px ridge darkmagenta;
+       height: 100%;
+       width: 100%;
        background-color: rgb(255, 255, 255);
        grid-area: c;
        overflow: auto;
@@ -843,8 +855,8 @@
        color: inherit;
        width: 90%;
        max-width: 220px;
-       height: 2rem;
-       max-height: 40px;
+       height: 5vh;
+       max-height: 50px;
        margin: 0.3em 0.6em;
 
        border: 1px solid rgb(83, 57, 43);
@@ -1114,7 +1126,7 @@
        font-weight: bold;
        color: inherit;
        width: 95%;
-       height: 2.5rem;
+       height: 5vh;
        margin: 0.2em 0;
 
        border: 1px solid rgb(56, 38, 28);
