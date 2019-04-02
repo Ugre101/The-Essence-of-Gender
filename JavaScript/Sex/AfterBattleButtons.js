@@ -149,9 +149,18 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 SiphonDiv.appendChild(DrainF);
             }
             Siphon.appendChild(SiphonDiv);
-            if (EssenceCost(player.Dicks[player.Dicks.length - 1]) <= player.Masc || (player.Masc >= 30 && player.Dicks.length === 0)) {
+            if (EssenceCost(Last(player.Dicks)) <= player.Masc || (player.Masc >= 30 && player.Dicks.length === 0)) {
                 SiphonDiv.appendChild(SexButton("Grow dick", GrowDick));
-            }
+            };
+            if (EssenceCost(Last(player.Balls)) || (player.Masc >= 50 && player.Balls.length === 0)) {
+                SiphonDiv.appendChild(SexButton("Grow balls", GrowBalls));
+            };
+            if (EssenceCost(Last(player.Pussies)) || (player.Femi >= 30 && player.Pussies.length === 0)) {
+                Siphon.appendChild(SexButton("Grow pussy", GrowPussy));
+            };
+            if (EssenceCost(Last(player.Boobies))) {
+                Siphon.appendChild(SexButton("Grow boobs", GrowBoobs));
+            };
         };
         if (Settings.Vore) {
             const {

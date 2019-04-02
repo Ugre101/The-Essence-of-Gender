@@ -6,7 +6,15 @@ function UpdateStats(YourTurn = true) {
         SH = DocId("StatusHealth2"),
         SWH = DocId("StatusWillHealth2"),
         BE = DocId("BattleEnemy"),
-        SN = DocId("StatusName2");
+        SN = DocId("StatusName2"),
+        BT = DocId("BattleText2"),
+        temp = BattleLog.slice(0);
+    BT.innerHTML = null;
+
+    for (let e of temp.reverse()) {
+        BT.innerHTML += `${e}<br>`
+    }
+    console.log(BattleLog)
     // Enemy Status
     BE.innerHTML = `${ee.Name}<br>${ee.Race} ${Pronoun(CheckGender(ee))}`;
     ESH.innerHTML = Math.round(ee.Health);
@@ -34,39 +42,45 @@ function UpdateStats(YourTurn = true) {
     }
 };
 
+const BattleLog = [];
+
+function AddToBattleLog(text, who = player) {
+    BattleLog.push(`${text}<br>`);
+    BattleLog.push(who.Name);
+}
+
 function EnemyAttack() {
-    const BT = DocId("BattleText2"),
-        {
-            Charm,
-            Str,
-            Boobies,
-            Balls
-        } = enemies[EnemyIndex];
+    const {
+        Charm,
+        Str,
+        Boobies,
+        Balls
+    } = enemies[EnemyIndex];
     if (Str >= Charm) {
         const PhysicalAttacks = [
-                "kicks", "hits", "grapple with"
+                "Kicks", "Hits", "Grapple with"
             ],
-            EAttack = (RandomInt(1, 5) * Str) / 2;
+            EAttack = (RandomInt(1, 5) * Str) / 2,
+            Text = `${RandomString(PhysicalAttacks)} you, causing ${EAttack} dmg.`
         player.Health -= EAttack;
-        BT.innerHTML = `Your opponent ${RandomString(PhysicalAttacks)} you, causing ${EAttack} dmg.`;
-        UpdateStats();
-        return;
+        AddToBattleLog(Text, enemies[EnemyIndex]);
     } else { // if (ee.Str < ee.Charm) Unnesary?
-        const LustAttacks = ["tease you"],
+        const LustAttacks = ["Tease you"],
             EAttack = (RandomInt(1, 5) * Charm) / 2;
         if (Boobies[0].Size > 5) {
-            const boob = "fondle their breast in a seductive manner";
+            const boob = "Fondle their breast in a seductive manner";
             LustAttacks.push(boob);
         };
         if (Balls.length > 0) {
-            const ball = "fondle their balls in a teasing manner";
+            const ball = "Fondle their balls in a teasing manner";
             LustAttacks.push(ball);
         };
-        BT.innerHTML = `Your opponent ${RandomString(LustAttacks)} causing your will to suffer by ${EAttack}.`;
+        const Text = `${RandomString(LustAttacks)} causing your will to suffer by ${EAttack}.`
+        AddToBattleLog(Text, enemies[EnemyIndex]);
         player.WillHealth -= EAttack;
-        UpdateStats();
-        return;
     };
+    UpdateStats();
+    return;
 };
 /**
  * Need to make enemy attack more flavour full
@@ -146,7 +160,7 @@ function CombatButtons() { // Just combat buttons
     Hit.addEventListener("click", function () {
         const PAttack = Math.floor(RandomInt(4, 8) * player.Str / 2); // * PhyRes(ee);
         ee.Health -= PAttack;
-        BT.innerHTML = "You dealt " + PAttack + " dmg.";
+        AddToBattleLog(`You dealt ${PAttack} dmg to ${ee.Name}.`);
         UpdateStats(false);
     });
     row1.appendChild(Hit);
@@ -163,7 +177,7 @@ function CombatButtons() { // Just combat buttons
         Tease.addEventListener("click", function () {
             const PAttack = Math.floor(RandomInt(4, 8) * player.Charm / 2); // * LusRes(ee);
             ee.WillHealth -= PAttack;
-            BT.innerHTML = "You dealt " + PAttack + " will dmg."
+            AddToBattleLog(`You dealt ${PAttack} will dmg to ${ee.Name}.`);
             UpdateStats(false);
         });
         row2.appendChild(Tease);
@@ -192,10 +206,11 @@ function CombatButtons() { // Just combat buttons
             battle = false;
             DisplayGame();
             DocId("Encounter").style.display = 'none';
-            BT.innerHTML = "Success!"
+            AddToBattleLog(`Success!`);
+        } else {
+            AddToBattleLog(`You failed to get away.`);
+            UpdateStats(false);
         }
-        UpdateStats(false);
-        BT.innerHTML = "You failed to get away."
     });
     row4.appendChild(FleeBattle);
 
