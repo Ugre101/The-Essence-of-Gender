@@ -10,12 +10,11 @@ const SpellDict = {
         }, // short description of spell & value of action in this case "40 fire type dmg" 
         Succes: function () {},
         Fail: function () {
-            DocId("BattleText2").innerHTML = ""; // So it doesn't look like enemy attacked you.
+            AddToBattleLog(``); // So it doesn't look like enemy attacked you.
             return "" // e.g you are to exhausted to cast template.
         },
         Cast: function (index, ee) {
-            DocId("BattleText").innerHTML = this.Succes();
-
+            AddToBattleLog(this.Succes());
         }
     },
     Fireball: {
@@ -28,24 +27,25 @@ const SpellDict = {
             return Math.floor(20 * (player.Int / 20) + (Exp / 100))
         },
         Succes: function (dmg) {
-            DocId("BattleText").innerHTML = "You threw a ball covered in fire, dealing " + dmg + " damage to their HP and will!"
+            AddToBattleLog(`You threw a ball covered in fire, dealing ${dmg} damage to their HP and will!`);
             player.Mana -= this.ManaCost();
-            player.MagicAffinity[this.Type]++;
+            if (typeof player.MagicAffinity[this.Type] !== 'undefined') {
+                player.MagicAffinity[this.Type]++;
+            }
             UpdateStats();
         },
         Fail: function () {
-            DocId("BattleText2").innerHTML = "";
-            return "You're exhausted, and can't cast another fireball..."
+            AddToBattleLog(`You're exhausted, and can't cast another fireball...`)
         },
         Cast: function (index, ee) {
             if (player.Mana >= this.ManaCost()) {
-                var that = player.Spells[index];
-                var PAttack = Math.floor(RandomInt(3, 5) * this.Does(that.Exp) / 4)
+                const that = player.Spells[index],
+                    PAttack = Math.floor(RandomInt(3, 5) * this.Does(that.Exp) / 4)
                 ee.Health -= PAttack; // * MagRes(ee);
                 that.Exp++;
                 this.Succes(PAttack);
             } else {
-                DocId("BattleText").innerHTML = this.Fail();
+                this.Fail();
             }
         }
     },
@@ -59,21 +59,23 @@ const SpellDict = {
             return Math.floor(25 * (player.Int / 20) + (Exp / 100))
         },
         Succes: function (Heal) {
-            DocId("BattleText").innerHTML = "You healed for " + Heal;
+            AddToBattleLog(`You healed for ${Heal}`);
             player.Mana -= this.ManaCost();
-            player.MagicAffinity[this.Type]++;
+            if (typeof player.MagicAffinity[this.Type] !== 'undefined') {
+                player.MagicAffinity[this.Type]++;
+            }
             UpdateStats();
         },
         Fail: function () {
-            DocId("BattleText").innerHTML = "Fail";
+            AddToBattleLog(`Fail`);
         },
         Cast: function (index, ee) {
-            var that = player.Spells[index];
-            var ManaCost = this.ManaCost(); // Affinity will lower cost
-            var Heal = this.Does(that.Exp)
+            const that = player.Spells[index],
+                ManaCost = this.ManaCost(), // Affinity will lower cost
+                Heal = this.Does(that.Exp)
             if (player.Mana > ManaCost) {
                 if (player.Health > player.MaxHealth) {
-                    DocId("BattleText").innerHTML = "You already have full health."
+                    AddToBattleLog(`You already have full health.`)
                 } else if (player.Health + Heal > player.MaxHealth) {
                     player.Mana -= ManaCost;
                     player.Health = player.MaxHealth;

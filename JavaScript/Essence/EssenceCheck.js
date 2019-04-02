@@ -5,7 +5,7 @@ function OrganSize(Size, who) {
 
 function EssenceCheck(who) {
     function DickSize(e = 0) {
-        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 1)) + who.OrganMod.Dick.Size) * GrowthScale(who)));
+        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 1))) * GrowthScale(who)));
         return Number.isNaN(Size) ? 0 : Size;
     }
 
@@ -19,7 +19,7 @@ function EssenceCheck(who) {
     }
 
     function BallsSize(e = 0) {
-        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 2) + who.OrganMod.Balls.Size) * GrowthScale(who))));
+        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 2)) * GrowthScale(who))));
         return Number.isNaN(Size) ? 0 : Size;
     }
 
@@ -36,7 +36,7 @@ function EssenceCheck(who) {
     }
 
     function BoobSize(e = 0) {
-        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 1) + who.OrganMod.Boobies.Size) * GrowthScale(who))));
+        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 1)) * GrowthScale(who))));
         return Number.isNaN(Size) ? 0 : Size;
     }
 
@@ -53,7 +53,7 @@ function EssenceCheck(who) {
     }
 
     function PussySize(e = 0) {
-        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 2) + who.OrganMod.Pussy.Size) * GrowthScale(who))));
+        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 2)) * GrowthScale(who))));
         return Number.isNaN(Size) ? 0 : Size;
     }
 
@@ -64,25 +64,6 @@ function EssenceCheck(who) {
             Virgin: true
         }
         return Pussy;
-    }
-    if (!who.hasOwnProperty("OrganMod")) {
-        who.OrganMod = {
-            Dick: {
-                Size: 0
-            },
-            Boobies: {
-                Size: 0
-            },
-            Balls: {
-                Size: 0
-            },
-            Pussy: {
-                Size: 0
-            },
-            Anal: {
-                Size: 0
-            }
-        }
     }
     if (!who.hasOwnProperty("Dicks")) {
         who.Dicks = [];

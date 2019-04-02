@@ -241,25 +241,6 @@ function CheckFlags() {
         ]
         console.log("Added race essence");
     };
-    if (!player.hasOwnProperty("OrganMod")) {
-        player.OrganMod = {
-            Dick: {
-                Size: 0
-            },
-            Boobies: {
-                Size: 0
-            },
-            Balls: {
-                Size: 0
-            },
-            Pussy: {
-                Size: 0
-            },
-            Anal: {
-                Size: 0
-            }
-        }
-    }
     if (!Flags.hasOwnProperty("LastTrain")) {
         Flags.LastTrain = {
             Day: 0,

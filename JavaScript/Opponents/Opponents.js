@@ -89,16 +89,12 @@ function GenderLock(who, amount, Genderlock) { // gives exact gender
     } else if (Genderlock == "cuntboy") {
         who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
-        who.OrganMod.Balls.Size = -Math.round(amount / 10);
-        who.OrganMod.Boobies.Size = -Math.round(amount / 10);
-        who.OrganMod.Dick.Size = -Math.round(amount / 10);
     } else if (Genderlock == "herm") {
         who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
     } else if (Genderlock == "dickgirl") {
         who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
-        who.OrganMod.Pussy.Size = -Math.round(amount / 10);
     } else if (Genderlock == "female") {
         who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Masc = 0;
@@ -106,23 +102,6 @@ function GenderLock(who, amount, Genderlock) { // gives exact gender
 }
 
 function EssenceGiver(who, amount, GenderPref = 0) { // Gives random gender
-    who.OrganMod = {
-        Dick: {
-            Size: 0
-        },
-        Boobies: {
-            Size: 0
-        },
-        Balls: {
-            Size: 0
-        },
-        Pussy: {
-            Size: 0
-        },
-        Anal: {
-            Size: 0
-        }
-    };
     var a = RandomInt(1, 13);
     a += GenderPref;
     /** Negative Genderpref gives more males and postive more girls. 
@@ -133,16 +112,12 @@ function EssenceGiver(who, amount, GenderPref = 0) { // Gives random gender
     } else if (a < 6) { // Dickgirl
         who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
-        who.OrganMod.Pussy.Size = -Math.round(amount / 10);
     } else if (a < 9) { // Herm
         who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
     } else if (a < 11) { // Cuntboy
         who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
-        who.OrganMod.Balls.Size = -Math.round(amount / 10);
-        who.OrganMod.Boobies.Size = -Math.round(amount / 10);
-        who.OrganMod.Dick.Size = -Math.round(amount / 10);
     } else { // Girl
         who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Masc = 0;

@@ -3,6 +3,10 @@ String.prototype.Capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
 }
 
+function Last(arr) {
+    return arr[arr.length - 1];
+}
+
 /* Checks if a array has duplicate value and if it does output a array without duplicate value
  to console so I can paste new array into code #Note keep it out commeted unless needed
 Array.prototype.RemoveDup = function () {
