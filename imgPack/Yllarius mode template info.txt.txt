@@ -1,4 +1,7 @@
 Mode Yllarius works following:
+	SexActs["Race"]["Acts"]["Act"]
+	SexActs["Human"]["DoggyStyle"][RandomInt(0,DoggyStyle.lengt-1)]
+
 	myimg.src = `imgPack/${type}/${Race}/${Act}/${playerGender()+OtherGender()}.png`;
 Breaking this down we get
 1. In folder ImgPack go to folder "type", where "type" equals Category e.g. SexActs or Vore.
