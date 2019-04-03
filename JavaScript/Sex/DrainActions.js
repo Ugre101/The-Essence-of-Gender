@@ -8,9 +8,9 @@ function DrainDrainM() {
         player.Masc += Ess;
         ee.Masc -= Ess;
         EssenceCheck(ee);
-        //if (Settings.EssenceAuto) {
-        //    EssenceCheck(player);
-        //}
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
         DocId("SexText").innerHTML = (Ess >= ee.Masc) ?
             `You siphon the last essence of masculinity from them leaving them with no signs of masculinity left.<br>${DrainChanges(old, player, eold, ee)}` :
             `You siphon essence of masculinity from them.<br>${DrainChanges(old, player, eold, ee)}`;
@@ -55,9 +55,9 @@ function DrainDrainF() {
         player.Femi += Ess;
         ee.Femi -= Ess;
         EssenceCheck(ee);
-        //if (Settings.EssenceAuto) {
-        //    EssenceCheck(player);
-        //}
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
         DocId("SexText").innerHTML = (Ess >= ee.Femi) ?
             `You siphon the last essence of femininity from them leaving them with no signs of femininity left.<br>${DrainChanges(old, player, eold, ee)}` :
             `You siphon essence of femininity from them.<br>${DrainChanges(old, player, eold, ee)}`;
@@ -146,10 +146,12 @@ function GrowDick() {
         }
         player.Dicks.push(Dick);
         player.Masc -= 30;
-    } else if (EssenceCost(pd) < player.Masc) {
+    } else if (EssenceCost(pd) <= player.Masc) {
         pd.Size += 1 * ManualGrowthScale();
         player.Masc -= EssenceCost(pd);
-    }
+    };
+    AfterBattleButtons();
+    CheckArousal();
 };
 
 function GrowBalls() {
@@ -167,7 +169,7 @@ function GrowBalls() {
         }
         player.Balls.push(Ball);
         player.Masc -= 50;
-    } else if (EssenceCost(pd) >= player.Masc) {
+    } else if (EssenceCost(pd) <= player.Masc) {
         pb.Size += 1 * ManualGrowthScale();
         player.Masc -= EssenceCost(pd);
     };
@@ -187,7 +189,7 @@ function GrowPussy() {
         }
         player.Pussies.push(Pussy);
         player.Femi -= 30;
-    } else if (EssenceCost(pd) >= player.Femi) {
+    } else if (EssenceCost(pd) <= player.Femi) {
         pb.Size += 1 * ManualGrowthScale();
         player.Femi -= EssenceCost(pd);
     };
@@ -209,7 +211,7 @@ function GrowBoobs() {
         }
         player.Boobies.push(Boob);
         player.Femi -= 30;
-    } else if (EssenceCost(pb) >= player.Femi) {
+    } else if (EssenceCost(pb) <= player.Femi) {
         pb.Size += 1 * ManualGrowthScale();
         player.Femi -= EssenceCost(pb);
     };

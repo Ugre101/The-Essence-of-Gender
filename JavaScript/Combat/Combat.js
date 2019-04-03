@@ -1,3 +1,23 @@
+function BattleSetup(who) {
+    const none = [DocId("map"), DocId("status"), DocId("buttons"),
+        DocId("EmptyButtons"), DocId("EventLog")
+    ].forEach((src) => {
+        src.style.display = 'none';
+    })
+    DocId("Encounter").style.display = 'grid';
+    DocId("BattleText").innerHTML = null;
+    DocId("BattleText2").innerHTML = null;
+    battle = true;
+    who.Health = who.FullHealth;
+    who.WillHealth = who.FullWillHealth;
+    player.Mana = 100; // Remember to Change
+    // Clean battlelog
+    while (BattleLog.length > 0) {
+        BattleLog.pop();
+    };
+    UpdateStats(true);
+};
+
 function UpdateStats(YourTurn = true) {
     CombatButtons();
     const ee = enemies[EnemyIndex],
@@ -10,11 +30,9 @@ function UpdateStats(YourTurn = true) {
         BT = DocId("BattleText2"),
         temp = BattleLog.slice(0);
     BT.innerHTML = null;
-
     for (let e of temp.reverse()) {
         BT.innerHTML += `${e}<br>`
     }
-    console.log(BattleLog)
     // Enemy Status
     BE.innerHTML = `${ee.Name}<br>${ee.Race} ${Pronoun(CheckGender(ee))}`;
     ESH.innerHTML = Math.round(ee.Health);
@@ -47,7 +65,10 @@ const BattleLog = [];
 function AddToBattleLog(text, who = player) {
     BattleLog.push(`${text}<br>`);
     BattleLog.push(who.Name);
-}
+    if (who !== player) {
+        BattleLog.push(`Turn #TODO<br>`);
+    };
+};
 
 function EnemyAttack() {
     const {
@@ -67,7 +88,7 @@ function EnemyAttack() {
     } else { // if (ee.Str < ee.Charm) Unnesary?
         const LustAttacks = ["Tease you"],
             EAttack = (RandomInt(1, 5) * Charm) / 2;
-        if (Boobies[0].Size > 5) {
+        if (Boobies.length > 0 ? Boobies[0].Size > 5 : false) {
             const boob = "Fondle their breast in a seductive manner";
             LustAttacks.push(boob);
         };

@@ -705,24 +705,6 @@ function FoodEngine() {
 
 var EnemyIndex;
 
-function BattleSetup(who) {
-    const none = [DocId("map"), DocId("status"), DocId("buttons"),
-        DocId("EmptyButtons"), DocId("EventLog")
-    ].forEach((src) => {
-        src.style.display = 'none';
-    })
-    DocId("Encounter").style.display = 'grid';
-    DocId("BattleText").innerHTML = null;
-    DocId("BattleText2").innerHTML = null;
-    battle = true;
-    who.Health = who.FullHealth;
-    who.WillHealth = who.FullWillHealth;
-    player.Mana = 100; // Remember to Change
-    UpdateStats(true);
-}
-
-
-
 function Touching() {
     if (battle === true) {
         return;
