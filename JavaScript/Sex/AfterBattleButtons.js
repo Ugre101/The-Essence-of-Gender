@@ -149,16 +149,16 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 SiphonDiv.appendChild(DrainF);
             }
             Siphon.appendChild(SiphonDiv);
-            if (EssenceCost(Last(player.Dicks)) <= player.Masc || (player.Masc >= 30 && player.Dicks.length === 0)) {
+            if (player.Dicks.length > 0 ? EssenceCost(Last(player.Dicks)) <= player.Masc : false || (player.Masc >= 30 && player.Dicks.length === 0)) {
                 SiphonDiv.appendChild(SexButton("Grow dick", GrowDick));
             };
-            if (EssenceCost(Last(player.Balls)) || (player.Masc >= 50 && player.Balls.length === 0)) {
+            if (player.Balls.length > 0 ? EssenceCost(Last(player.Balls)) <= player.Masc : false || (player.Masc >= 50 && player.Balls.length === 0)) {
                 SiphonDiv.appendChild(SexButton("Grow balls", GrowBalls));
             };
-            if (EssenceCost(Last(player.Pussies)) || (player.Femi >= 30 && player.Pussies.length === 0)) {
+            if (player.Pussies.length > 0 ? EssenceCost(Last(player.Pussies)) <= player.Femi : false || (player.Femi >= 30 && player.Pussies.length === 0)) {
                 Siphon.appendChild(SexButton("Grow pussy", GrowPussy));
             };
-            if (EssenceCost(Last(player.Boobies))) {
+            if (player.Boobies.length > 0 ? EssenceCost(Last(player.Boobies)) <= player.Femi : false || player.Boobies.length === 0) {
                 Siphon.appendChild(SexButton("Grow boobs", GrowBoobs));
             };
         };

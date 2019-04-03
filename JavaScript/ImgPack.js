@@ -157,3 +157,116 @@ DocId("MyImgF").addEventListener("click", () => {
         AfterBattle = DocId("AfterBattle");
     modal.style.display = 'none';
 });
+
+
+const SexActs = {
+    Elf: {
+        Default: ["imgPack/SexActs/Elf/Default.jpg", ],
+        DoggyStyle: {
+            Default: ["imgPack/SexActs/Elf/DoggyStyle/Default.png", "imgPack/SexActs/Elf/DoggyStyle/HF.png", ],
+        },
+    },
+    Fairy: {
+        Default: [],
+        Example: {
+            Default: ["imgPack/SexActs/Fairy/Example/Default.jpg", "imgPack/SexActs/Fairy/Example/HF.png", "imgPack/SexActs/Fairy/Example/HH.png", "imgPack/SexActs/Fairy/Example/HM.png", "imgPack/SexActs/Fairy/Example/MF.png", ],
+        },
+    },
+    Human: {
+        Default: ["imgPack/SexActs/Human/Default.jpg", "imgPack/SexActs/Human/Default2.jpg", ],
+        DoggyStyle: {
+            Default: ["imgPack/SexActs/Human/DoggyStyle/asfae.png", "imgPack/SexActs/Human/DoggyStyle/Default.png", "imgPack/SexActs/Human/DoggyStyle/HF.png", ],
+            FF: ["imgPack/SexActs/Human/DoggyStyle/FF/FF.png", ],
+            HF: ["imgPack/SexActs/Human/DoggyStyle/HF/HF.png", ],
+            HH: ["imgPack/SexActs/Human/DoggyStyle/HH/HF.png", ],
+            MF: ["imgPack/SexActs/Human/DoggyStyle/MF/HF.png", ],
+            MM: ["imgPack/SexActs/Human/DoggyStyle/MM/HF.png", ],
+        },
+        DoggyStyle2: {
+            Default: ["imgPack/SexActs/Human/DoggyStyle2/Default.png", "imgPack/SexActs/Human/DoggyStyle2/HF.png", ],
+        },
+    },
+    Imp: {
+        Default: [],
+        xample: {
+            Default: ["imgPack/SexActs/Imp/xample/Default.jpg", "imgPack/SexActs/Imp/xample/HF.png", "imgPack/SexActs/Imp/xample/HH.png", "imgPack/SexActs/Imp/xample/HM.png", "imgPack/SexActs/Imp/xample/MF.png", ],
+        },
+    },
+    Incubus: {
+        Default: [],
+        Example: {
+            Default: ["imgPack/SexActs/Incubus/Example/Default.jpg", "imgPack/SexActs/Incubus/Example/HF.png", "imgPack/SexActs/Incubus/Example/HH.png", "imgPack/SexActs/Incubus/Example/HM.png", "imgPack/SexActs/Incubus/Example/MF.png", ],
+        },
+    },
+    Orc: {
+        Default: [],
+        ample: {
+            Default: ["imgPack/SexActs/Orc/ample/Default.jpg", "imgPack/SexActs/Orc/ample/HF.png", "imgPack/SexActs/Orc/ample/HH.png", "imgPack/SexActs/Orc/ample/HM.png", "imgPack/SexActs/Orc/ample/MF.png", ],
+        },
+    },
+    Succubus: {
+        Default: [],
+        mple: {
+            Default: ["imgPack/SexActs/Succubus/mple/Default.jpg", "imgPack/SexActs/Succubus/mple/HF.png", "imgPack/SexActs/Succubus/mple/HH.png", "imgPack/SexActs/Succubus/mple/HM.png", "imgPack/SexActs/Succubus/mple/MF.png", ],
+        },
+    },
+    Template: {
+        Default: [],
+        Example: {
+            Default: ["imgPack/SexActs/Template/a Example/Default.jpg", "imgPack/SexActs/Template/a Example/HF.png", "imgPack/SexActs/Template/a Example/HH.png", "imgPack/SexActs/Template/a Example/HM.png", "imgPack/SexActs/Template/a Example/MF.png", ],
+        },
+        BreastFeed: {
+            Default: [],
+        },
+        DoggyStyle: {
+            Default: [],
+        },
+        DoggyStyleAnal: {
+            Default: [],
+        },
+        DualPen: {
+            Default: [],
+        },
+        GetBlowjob: {
+            Default: [],
+        },
+        GetCunnilingus: {
+            Default: [],
+        },
+        GetRimjob: {
+            Default: [],
+        },
+        GiveBlowjob: {
+            Default: [],
+        },
+        GiveCunnilingus: {
+            Default: [],
+        },
+        GiveRimjob: {
+            Default: [],
+        },
+        Insertion: {
+            Default: [],
+        },
+        Missionary: {
+            Default: [],
+        },
+        MultiPen: {
+            Default: [],
+        },
+        RideCowgirl: {
+            Default: [],
+        },
+        Scissoring: {
+            Default: [],
+        },
+    },
+}
+const Vore = {
+    Template: {
+        Default: [],
+        OralVore: {
+            Default: ["imgPack/Vore/Template/OralVore/HF.png", "imgPack/Vore/Template/OralVore/HH.png", "imgPack/Vore/Template/OralVore/HM.png", "imgPack/Vore/Template/OralVore/MF.png", ],
+        },
+    },
+}

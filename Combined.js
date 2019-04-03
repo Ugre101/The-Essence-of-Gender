@@ -705,24 +705,6 @@ function FoodEngine() {
 
 var EnemyIndex;
 
-function BattleSetup(who) {
-    const none = [DocId("map"), DocId("status"), DocId("buttons"),
-        DocId("EmptyButtons"), DocId("EventLog")
-    ].forEach((src) => {
-        src.style.display = 'none';
-    })
-    DocId("Encounter").style.display = 'grid';
-    DocId("BattleText").innerHTML = null;
-    DocId("BattleText2").innerHTML = null;
-    battle = true;
-    who.Health = who.FullHealth;
-    who.WillHealth = who.FullWillHealth;
-    player.Mana = 100; // Remember to Change
-    UpdateStats(true);
-}
-
-
-
 function Touching() {
     if (battle === true) {
         return;
@@ -3133,6 +3115,26 @@ function CheckFlags() {
     }
  */
 
+function BattleSetup(who) {
+    const none = [DocId("map"), DocId("status"), DocId("buttons"),
+        DocId("EmptyButtons"), DocId("EventLog")
+    ].forEach((src) => {
+        src.style.display = 'none';
+    })
+    DocId("Encounter").style.display = 'grid';
+    DocId("BattleText").innerHTML = null;
+    DocId("BattleText2").innerHTML = null;
+    battle = true;
+    who.Health = who.FullHealth;
+    who.WillHealth = who.FullWillHealth;
+    player.Mana = 100; // Remember to Change
+    // Clean battlelog
+    while (BattleLog.length > 0) {
+        BattleLog.pop();
+    };
+    UpdateStats(true);
+};
+
 function UpdateStats(YourTurn = true) {
     CombatButtons();
     const ee = enemies[EnemyIndex],
@@ -3145,11 +3147,9 @@ function UpdateStats(YourTurn = true) {
         BT = DocId("BattleText2"),
         temp = BattleLog.slice(0);
     BT.innerHTML = null;
-
     for (let e of temp.reverse()) {
         BT.innerHTML += `${e}<br>`
     }
-    console.log(BattleLog)
     // Enemy Status
     BE.innerHTML = `${ee.Name}<br>${ee.Race} ${Pronoun(CheckGender(ee))}`;
     ESH.innerHTML = Math.round(ee.Health);
@@ -3182,7 +3182,10 @@ const BattleLog = [];
 function AddToBattleLog(text, who = player) {
     BattleLog.push(`${text}<br>`);
     BattleLog.push(who.Name);
-}
+    if (who !== player) {
+        BattleLog.push(`Turn #TODO<br>`);
+    };
+};
 
 function EnemyAttack() {
     const {
@@ -3202,7 +3205,7 @@ function EnemyAttack() {
     } else { // if (ee.Str < ee.Charm) Unnesary?
         const LustAttacks = ["Tease you"],
             EAttack = (RandomInt(1, 5) * Charm) / 2;
-        if (Boobies[0].Size > 5) {
+        if (Boobies.length > 0 ? Boobies[0].Size > 5 : false) {
             const boob = "Fondle their breast in a seductive manner";
             LustAttacks.push(boob);
         };
@@ -3614,11 +3617,6 @@ function OrganSize(Size, who) {
 }
 
 function EssenceCheck(who) {
-    function DickSize(e = 0) {
-        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 1))) * GrowthScale(who)));
-        return Number.isNaN(Size) ? 0 : Size;
-    }
-
     function DickMaker(e = 0) {
         const Dick = {
             Size: DickSize(e),
@@ -3626,11 +3624,6 @@ function EssenceCheck(who) {
             Virgin: true
         }
         return Dick;
-    }
-
-    function BallsSize(e = 0) {
-        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Masc / (e + 2)) * GrowthScale(who))));
-        return Number.isNaN(Size) ? 0 : Size;
     }
 
     function BallMakes(e = 0) {
@@ -3645,11 +3638,6 @@ function EssenceCheck(who) {
         return Ball;
     }
 
-    function BoobSize(e = 0) {
-        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 1)) * GrowthScale(who))));
-        return Number.isNaN(Size) ? 0 : Size;
-    }
-
     function BoobMaker(e = 0) {
         const Boob = {
             Size: BoobSize(e),
@@ -3660,11 +3648,6 @@ function EssenceCheck(who) {
             MilkMax: 1 / 3 * Math.PI * Math.pow(BoobSize(e), 3)
         }
         return Boob;
-    }
-
-    function PussySize(e = 0) {
-        const Size = Math.max(0, Math.min(who.Height / 3, (Math.sqrt(who.Femi / (e + 2)) * GrowthScale(who))));
-        return Number.isNaN(Size) ? 0 : Size;
     }
 
     function PussyMaker(e = 0) {
@@ -3690,90 +3673,75 @@ function EssenceCheck(who) {
     if (!who.hasOwnProperty("Anal")) {
         who.Anal = []
     }
-
-    if (DickSize() < who.Height * 0.03 && who.Dicks.length > 0) {
-        who.Dicks.pop();
-    } else {
-        if (who.Dicks.length === 0) {
-            who.Dicks.push(DickMaker());
-            EssenceCheck(who); // Recursion might be a problem?
-            return;
+    if (who.Dicks.length === 0 && who.Masc >= 30) {
+        const Dick = {
+            Size: 1,
+            Type: who.SecondRace,
+            Virgin: true
         }
-        for (let e = 0; e < who.Dicks.length; e++) {
-            who.Dicks[e].Size = DickSize(e);
-            if (e + 1 === who.Dicks.length && who.Dicks[e].Size > who.Height / 5 && Settings.MaxLimbs.MaxDicks > e) {
-                who.Dicks.push(DickMaker(e + 1));
-                EssenceCheck(who); // Recursion might be a problem?
-                return;
-            } else if (who.Dicks[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxDicks) {
-                if (who.Dicks.length > 0) {
-                    who.Dicks.pop();
-                }
-            }
-        }
-    }
-
-    if (BallsSize() < who.Height * 0.03 && who.Balls.length > 0) {
-        who.Balls.pop();
-    } else {
-        if (who.Balls.length === 0) {
-            who.Balls.push(BallMakes());
-            EssenceCheck(who);
-            return;
-        }
-        for (let e = 0; e < who.Balls.length; e++) {
-            who.Balls[e].Size = BallsSize(e);
-            if (e == who.Balls.length - 1 && who.Balls[e].Size > who.Height / 6 && Settings.MaxLimbs.MaxBalls > e) {
-                who.Balls.push(BallMakes(e + 1));
-                EssenceCheck(who);
-                return;
-            } else if (who.Balls[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxBalls) {
-                who.Balls.pop();
-            }
-        }
-
-    }
-
-    if (PussySize() < who.Height * 0.03 && who.Pussies.length > 0) {
-        who.Pussies.pop();
-    } else {
-        if (who.Pussies.length === 0) {
-            who.Pussies.push(PussyMaker());
-            EssenceCheck(who);
-            return;
-        }
-        for (var e = 0; e < who.Pussies.length; e++) {
-            who.Pussies[e].Size = PussySize(e);
-            if (e + 1 === who.Pussies.length && who.Pussies[e].Size > who.Height / 5 && Settings.MaxLimbs.MaxVaginas > e) {
-                who.Pussies.push(PussyMaker(e + 1));
-                EssenceCheck(who);
-                return;
-            } else if (who.Pussies[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxVaginas) {
-                who.Pussies.pop();
-            }
-        }
-    }
-    if (who.Boobies.length === 0) {
-        who.Boobies.push(BoobMaker());
+        who.Dicks.push(Dick);
+        who.Masc -= 30;
         EssenceCheck(who);
         return
-    }
-    for (let e = 0; e < who.Boobies.length; e++) {
-        if (e === 0) {
-            who.Boobies[e].Size = Math.max(0, BoobSize(e));
-        } else {
-            who.Boobies[e].Size = BoobSize(e)
+    } else if (who.Dicks.length > 0 ? EssenceCost(Last(who.Dicks)) <= who.Masc : false) {
+        Last(who.Dicks).Size += 1 * ManualGrowthScale();
+        who.Masc -= EssenceCost(Last(who.Dicks));
+        EssenceCheck(who);
+        return
+    };
+    if (who.Balls.length === 0 && who.Masc >= 50) {
+        const Ball = {
+            Size: 1,
+            Type: who.SecondRace,
+            CumMax: 1 / 3 * Math.PI * Math.pow(1, 3),
+            Cum: 1 / 6 * Math.PI * Math.pow(1, 3),
+            CumRate: 0,
+            CumBaseRate: 0.5
         }
-        who.Boobies[e].MilkMax = 1 / 3 * Math.PI * Math.pow(who.Boobies[e].Size, 3);
-        if (e + 1 === who.Boobies.length && who.Boobies[e].Size > who.Height / 5 && Settings.MaxLimbs.MaxBoobs > e) {
-            who.Boobies.push(BoobMaker(e + 1));
-            EssenceCheck(who);
-            return
-        } else if (who.Boobies.length > 1 && who.Boobies[e].Size < who.Height * 0.03 || e >= Settings.MaxLimbs.MaxBoobs) {
-            who.Boobies.pop();
-            console.log("pop")
+        who.Balls.push(Ball);
+        who.Masc -= 50;        EssenceCheck(who);
+        return
+    } else if (who.Balls.length > 0 ? EssenceCost(Last(who.Balls)) <= who.Masc : false) {
+        Last(who.Balls).Size += 1 * ManualGrowthScale();
+        who.Masc -= EssenceCost(Last(who.Balls));
+        EssenceCheck(who);
+        return
+    };
+    if (who.Pussies.length === 0 && who.Femi >= 30) {
+        const Pussy = {
+            Size: 1,
+            Type: who.SecondRace,
+            Virgin: true
         }
-    }
+        who.Pussies.push(Pussy);
+        who.Femi -= 30;
+        EssenceCheck(who);
+        return
+    } else if (who.Pussies.length > 0 ? EssenceCost(Last(who.Pussies)) <= who.Femi : false) {
+        Last(who.Pussies).Size += 1 * ManualGrowthScale();
+        who.Femi -= EssenceCost(Last(who.Pussies));
+        EssenceCheck(who);
+        return
+    };
+    if (who.Boobies.length === 0 && who.Femi >= 30) {
+        const Boob = {
+            Size: 0,
+            Type: who.SecondRace,
+            Milk: 0,
+            MilkBaseRate: 0,
+            MilkRate: 0,
+            MilkMax: 1 / 3 * Math.PI * Math.pow(1, 3)
+        }
+        who.Boobies.push(Boob);
+        who.Femi -= 30;
+        EssenceCheck(who);
+        return
+    } else if (who.Boobies.length > 0 ? EssenceCost(Last(who.Boobies)) <= who.Femi : false) {
+        Last(who.Boobies).Size += 1 * ManualGrowthScale();
+        who.Femi -= EssenceCost(Last(who.Boobies));
+        EssenceCheck(who);
+        return
+    };
     if (who.Anal.length === 0) {
         const Anal = {
             Size: who.Height / 12,
@@ -5396,6 +5364,119 @@ DocId("MyImgF").addEventListener("click", () => {
         AfterBattle = DocId("AfterBattle");
     modal.style.display = 'none';
 });
+
+
+const SexActs = {
+    Elf: {
+        Default: ["imgPack/SexActs/Elf/Default.jpg", ],
+        DoggyStyle: {
+            Default: ["imgPack/SexActs/Elf/DoggyStyle/Default.png", "imgPack/SexActs/Elf/DoggyStyle/HF.png", ],
+        },
+    },
+    Fairy: {
+        Default: [],
+        Example: {
+            Default: ["imgPack/SexActs/Fairy/Example/Default.jpg", "imgPack/SexActs/Fairy/Example/HF.png", "imgPack/SexActs/Fairy/Example/HH.png", "imgPack/SexActs/Fairy/Example/HM.png", "imgPack/SexActs/Fairy/Example/MF.png", ],
+        },
+    },
+    Human: {
+        Default: ["imgPack/SexActs/Human/Default.jpg", "imgPack/SexActs/Human/Default2.jpg", ],
+        DoggyStyle: {
+            Default: ["imgPack/SexActs/Human/DoggyStyle/asfae.png", "imgPack/SexActs/Human/DoggyStyle/Default.png", "imgPack/SexActs/Human/DoggyStyle/HF.png", ],
+            FF: ["imgPack/SexActs/Human/DoggyStyle/FF/FF.png", ],
+            HF: ["imgPack/SexActs/Human/DoggyStyle/HF/HF.png", ],
+            HH: ["imgPack/SexActs/Human/DoggyStyle/HH/HF.png", ],
+            MF: ["imgPack/SexActs/Human/DoggyStyle/MF/HF.png", ],
+            MM: ["imgPack/SexActs/Human/DoggyStyle/MM/HF.png", ],
+        },
+        DoggyStyle2: {
+            Default: ["imgPack/SexActs/Human/DoggyStyle2/Default.png", "imgPack/SexActs/Human/DoggyStyle2/HF.png", ],
+        },
+    },
+    Imp: {
+        Default: [],
+        xample: {
+            Default: ["imgPack/SexActs/Imp/xample/Default.jpg", "imgPack/SexActs/Imp/xample/HF.png", "imgPack/SexActs/Imp/xample/HH.png", "imgPack/SexActs/Imp/xample/HM.png", "imgPack/SexActs/Imp/xample/MF.png", ],
+        },
+    },
+    Incubus: {
+        Default: [],
+        Example: {
+            Default: ["imgPack/SexActs/Incubus/Example/Default.jpg", "imgPack/SexActs/Incubus/Example/HF.png", "imgPack/SexActs/Incubus/Example/HH.png", "imgPack/SexActs/Incubus/Example/HM.png", "imgPack/SexActs/Incubus/Example/MF.png", ],
+        },
+    },
+    Orc: {
+        Default: [],
+        ample: {
+            Default: ["imgPack/SexActs/Orc/ample/Default.jpg", "imgPack/SexActs/Orc/ample/HF.png", "imgPack/SexActs/Orc/ample/HH.png", "imgPack/SexActs/Orc/ample/HM.png", "imgPack/SexActs/Orc/ample/MF.png", ],
+        },
+    },
+    Succubus: {
+        Default: [],
+        mple: {
+            Default: ["imgPack/SexActs/Succubus/mple/Default.jpg", "imgPack/SexActs/Succubus/mple/HF.png", "imgPack/SexActs/Succubus/mple/HH.png", "imgPack/SexActs/Succubus/mple/HM.png", "imgPack/SexActs/Succubus/mple/MF.png", ],
+        },
+    },
+    Template: {
+        Default: [],
+        Example: {
+            Default: ["imgPack/SexActs/Template/a Example/Default.jpg", "imgPack/SexActs/Template/a Example/HF.png", "imgPack/SexActs/Template/a Example/HH.png", "imgPack/SexActs/Template/a Example/HM.png", "imgPack/SexActs/Template/a Example/MF.png", ],
+        },
+        BreastFeed: {
+            Default: [],
+        },
+        DoggyStyle: {
+            Default: [],
+        },
+        DoggyStyleAnal: {
+            Default: [],
+        },
+        DualPen: {
+            Default: [],
+        },
+        GetBlowjob: {
+            Default: [],
+        },
+        GetCunnilingus: {
+            Default: [],
+        },
+        GetRimjob: {
+            Default: [],
+        },
+        GiveBlowjob: {
+            Default: [],
+        },
+        GiveCunnilingus: {
+            Default: [],
+        },
+        GiveRimjob: {
+            Default: [],
+        },
+        Insertion: {
+            Default: [],
+        },
+        Missionary: {
+            Default: [],
+        },
+        MultiPen: {
+            Default: [],
+        },
+        RideCowgirl: {
+            Default: [],
+        },
+        Scissoring: {
+            Default: [],
+        },
+    },
+}
+const Vore = {
+    Template: {
+        Default: [],
+        OralVore: {
+            Default: ["imgPack/Vore/Template/OralVore/HF.png", "imgPack/Vore/Template/OralVore/HH.png", "imgPack/Vore/Template/OralVore/HM.png", "imgPack/Vore/Template/OralVore/MF.png", ],
+        },
+    },
+}
 
 function CmToInch(cm) {
     if (Settings.Inch) {
@@ -10363,16 +10444,16 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 SiphonDiv.appendChild(DrainF);
             }
             Siphon.appendChild(SiphonDiv);
-            if (EssenceCost(Last(player.Dicks)) <= player.Masc || (player.Masc >= 30 && player.Dicks.length === 0)) {
+            if (player.Dicks.length > 0 ? EssenceCost(Last(player.Dicks)) <= player.Masc : false || (player.Masc >= 30 && player.Dicks.length === 0)) {
                 SiphonDiv.appendChild(SexButton("Grow dick", GrowDick));
             };
-            if (EssenceCost(Last(player.Balls)) || (player.Masc >= 50 && player.Balls.length === 0)) {
+            if (player.Balls.length > 0 ? EssenceCost(Last(player.Balls)) <= player.Masc : false || (player.Masc >= 50 && player.Balls.length === 0)) {
                 SiphonDiv.appendChild(SexButton("Grow balls", GrowBalls));
             };
-            if (EssenceCost(Last(player.Pussies)) || (player.Femi >= 30 && player.Pussies.length === 0)) {
+            if (player.Pussies.length > 0 ? EssenceCost(Last(player.Pussies)) <= player.Femi : false || (player.Femi >= 30 && player.Pussies.length === 0)) {
                 Siphon.appendChild(SexButton("Grow pussy", GrowPussy));
             };
-            if (EssenceCost(Last(player.Boobies))) {
+            if (player.Boobies.length > 0 ? EssenceCost(Last(player.Boobies)) <= player.Femi : false || player.Boobies.length === 0) {
                 Siphon.appendChild(SexButton("Grow boobs", GrowBoobs));
             };
         };
@@ -10450,7 +10531,7 @@ function CheckArousal() {
             case "None":
                 break;
         }
-        // EssenceCheck(ee);
+        EssenceCheck(ee);
         const ImpregActions = ["DoggyStyle", "Missionary", "DualPen", "MultiPen"],
             AnalImpregActions = ["DoggyStyleAnal"];
         if (ImpregActions.indexOf(LastPressed) != -1) {
@@ -10694,9 +10775,9 @@ function DrainDrainM() {
         player.Masc += Ess;
         ee.Masc -= Ess;
         EssenceCheck(ee);
-        //if (Settings.EssenceAuto) {
-        //    EssenceCheck(player);
-        //}
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
         DocId("SexText").innerHTML = (Ess >= ee.Masc) ?
             `You siphon the last essence of masculinity from them leaving them with no signs of masculinity left.<br>${DrainChanges(old, player, eold, ee)}` :
             `You siphon essence of masculinity from them.<br>${DrainChanges(old, player, eold, ee)}`;
@@ -10741,9 +10822,9 @@ function DrainDrainF() {
         player.Femi += Ess;
         ee.Femi -= Ess;
         EssenceCheck(ee);
-        //if (Settings.EssenceAuto) {
-        //    EssenceCheck(player);
-        //}
+        if (Settings.EssenceAuto) {
+            EssenceCheck(player);
+        }
         DocId("SexText").innerHTML = (Ess >= ee.Femi) ?
             `You siphon the last essence of femininity from them leaving them with no signs of femininity left.<br>${DrainChanges(old, player, eold, ee)}` :
             `You siphon essence of femininity from them.<br>${DrainChanges(old, player, eold, ee)}`;
@@ -10832,10 +10913,12 @@ function GrowDick() {
         }
         player.Dicks.push(Dick);
         player.Masc -= 30;
-    } else if (EssenceCost(pd) < player.Masc) {
+    } else if (EssenceCost(pd) <= player.Masc) {
         pd.Size += 1 * ManualGrowthScale();
         player.Masc -= EssenceCost(pd);
-    }
+    };
+    AfterBattleButtons();
+    CheckArousal();
 };
 
 function GrowBalls() {
@@ -10853,7 +10936,7 @@ function GrowBalls() {
         }
         player.Balls.push(Ball);
         player.Masc -= 50;
-    } else if (EssenceCost(pd) >= player.Masc) {
+    } else if (EssenceCost(pd) <= player.Masc) {
         pb.Size += 1 * ManualGrowthScale();
         player.Masc -= EssenceCost(pd);
     };
@@ -10873,7 +10956,7 @@ function GrowPussy() {
         }
         player.Pussies.push(Pussy);
         player.Femi -= 30;
-    } else if (EssenceCost(pd) >= player.Femi) {
+    } else if (EssenceCost(pd) <= player.Femi) {
         pb.Size += 1 * ManualGrowthScale();
         player.Femi -= EssenceCost(pd);
     };
@@ -10895,7 +10978,7 @@ function GrowBoobs() {
         }
         player.Boobies.push(Boob);
         player.Femi -= 30;
-    } else if (EssenceCost(pb) >= player.Femi) {
+    } else if (EssenceCost(pb) <= player.Femi) {
         pb.Size += 1 * ManualGrowthScale();
         player.Femi -= EssenceCost(pb);
     };
