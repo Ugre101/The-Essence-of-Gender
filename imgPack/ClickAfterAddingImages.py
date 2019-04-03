@@ -2,16 +2,17 @@ import os.path
 
 Types = os.listdir()
 # TODO Clean up this fucking mess...
+JsArray = ""
 for file in Types:
     if os.path.isdir(file):
-        steg1 = "const " + file + " = {"
+        JsArray += "const " + file + " = {"
         Type = file
         Races = os.listdir(file)
         imgsrc1 = "\"imgPack/" + file
         for file in Races:
             if os.path.isdir(Type + "/" + file):
                 path1 = Type + "/" + file
-                steg2 = steg1 + file + ": {Default: ["
+                JsArray += file + ": {Default: ["
                 steg22 = ""
                 Acts = os.listdir(path1)
                 imgsrc2 = imgsrc1 +"/" + file
@@ -33,7 +34,6 @@ for file in Types:
                                         steg4 += imgsrc4 + "/"+file+"\","
                                     elif file.endswith(".jpg"):
                                         steg4 += imgsrc4 + "/"+file+"\","                                
-                                # TODO get final images FF
                                 steg4 += "]," 
                             elif file.endswith(".png"):
                                 steg3 += imgsrc3 + "/"+file+"\","
@@ -42,10 +42,13 @@ for file in Types:
                         steg3 += "]," + steg4 + "}"
                         steg22 += steg3 + ","
                     elif file.endswith(".png"): 
-                        steg2 += imgsrc2 + "/"+file+"\","
+                        JsArray += imgsrc2 + "/"+file+"\","
                     elif file.endswith(".jpg"):
-                        steg2 += imgsrc2 + "/"+file+"\","
-                print(steg2 + "]," + steg22 + "}"+"}")
+                        JsArray += imgsrc2 + "/"+file+"\","
+                JsArray += "],"+ steg22+" },"
+        JsArray += "}"
+
+print(JsArray)
 
                 
 
