@@ -1,0 +1,30 @@
+Mode Yllarius works following
+const ImgArray = Vore[playerRace] !== "undefined" ? Vore[playerRace][Act] !== "undefined" ?
+	(Vore[playerRace][Act][playerGender() + OtherGender()].length > 0 ?
+	Vore[playerRace][Act][playerGender() + OtherGender()] :
+	Vore[playerRace][Act][playerGender()].length > 0 ?
+	Vore[playerRace][Act][playerGender()] :
+	Vore[playerRace][Act].Default.length > 0 ?
+	Vore[playerRace][Act].Default : []) : [] : [];
+Breaking this down we get
+1. In folder ImgPack go to folder "Vore"
+2. In folder "Vore" go to folder "PlayerRace", where "PlayerRace" equals well player race e.g. Human. Note race is always with out whitespace and first letter only capitalized e.g. "Dark Elf" should be "Darkelf" 
+3. in folder "PlayerRace" go to folder "Act", where "Act" equals e.g. OralVore.
+4. In folder "Act" go to folder player gender + opponent gender e.g. HH, see gender below.
+5. if player gender + opponent gender doesn't have images go to folder player gender e.g. H.
+6. if player gender doesn't have images go to default folder and if that fails give up.
+
+Gender:
+Herm and Dickgirl = H
+Male = M
+Female = F
+Doll = D
+Cuntboy = C
+
+Adding Images:
+Place images in appropriate folders once done click on ClickAfterAddingImages.py.
+Naming of images should be irrelevant as long as they are jpg or png.
+
+
+Any feedback on bugs or suggestion for improvement if appreciated
+

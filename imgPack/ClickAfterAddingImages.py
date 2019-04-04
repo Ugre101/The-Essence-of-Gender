@@ -1,6 +1,7 @@
 import os.path
 
 Types = os.listdir()
+
 # TODO Clean up this fucking mess...
 JsArray = ""
 for file in Types:
@@ -33,7 +34,8 @@ for file in Types:
                                     if file.endswith(".png"):
                                         steg4 += imgsrc4 + "/"+file+"\","
                                     elif file.endswith(".jpg"):
-                                        steg4 += imgsrc4 + "/"+file+"\","                                
+                                        steg4 += imgsrc4 + "/"+file+"\","   
+                                        print(file)
                                 steg4 += "]," 
                             elif file.endswith(".png"):
                                 steg3 += imgsrc3 + "/"+file+"\","
@@ -46,10 +48,10 @@ for file in Types:
                     elif file.endswith(".jpg"):
                         JsArray += imgsrc2 + "/"+file+"\","
                 JsArray += "],"+ steg22+" },"
-        JsArray += "}"
-
-print(JsArray)
-
+        JsArray += "};"
+Outfile = open("ImgPackArrays.js", "w")
+Outfile.write(JsArray)
+Outfile.close()
                 
 
 

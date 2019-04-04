@@ -1,13 +1,18 @@
-Mode Yllarius works following:
-	SexActs["Race"]["Acts"]["Act"]
-	SexActs["Human"]["DoggyStyle"][RandomInt(0,DoggyStyle.lengt-1)]
-
-	myimg.src = `imgPack/${type}/${Race}/${Act}/${playerGender()+OtherGender()}.png`;
+Mode Yllarius works following
+const ImgArray = typeof SexActs[Race] !== "undefined" ? typeof SexActs[Race][Act] !== "undefined" ?
+	(SexActs[Race][Act][playerGender() + OtherGender()].length > 0 ?
+         SexActs[Race][Act][playerGender() + OtherGender()] :
+         SexActs[Race][Act][OtherGender()].length > 0 ?
+         SexActs[Race][Act][OtherGender()] :
+         SexActs[Race][Act].Default.length > 0 ?
+         SexActs[Race][Act].Default : []) : [] : [];
 Breaking this down we get
-1. In folder ImgPack go to folder "type", where "type" equals Category e.g. SexActs or Vore.
-2. In folder "type" go to folder "Race", where "Race" equals opponent race e.g. Human. 
-3. in folder "Race" go to folder "Act", where "Act" equals e.g. DoggyStyleAnal.
-4. In folder "Act" take png or jpg with player gender + opponent gender, see gender below.
+1. In folder ImgPack go to folder "SexActs"
+2. In folder "SexActs" go to folder "Race", where "Race" equals your enemy/opponents race e.g. Human. Note race is always with out whitespace and first letter only capitalized e.g. "Dark Elf" should be "Darkelf" 
+3. in folder "Race" go to folder "Act", where "Act" equals e.g. DoggyStyle.
+4. In folder "Act" go to folder OtherGender(enemy gender) + PlayerGender e.g. HH, see gender below.
+5. if opponent gender + player gender doesn't have images go to folder opponent gender e.g. H.
+6. if opponent gender doesn't have images check if the act folder itself has images and if that fails give up.
 
 Gender:
 Herm and Dickgirl = H
@@ -16,11 +21,10 @@ Female = F
 Doll = D
 Cuntboy = C
 
-Default / fallback:
-if step 4 fails it picks default image in Act folder,
-if that fails pick default image in Race folder,
-if that fails pick default image in Type folder,
-if that fails give up.
+Adding Images:
+Place images in appropriate folders once done click on ClickAfterAddingImages.py.
+Naming of images should be irrelevant as long as they are jpg or png.
+
 
 Any feedback on bugs or suggestion for improvement if appreciated
 
