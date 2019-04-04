@@ -350,6 +350,7 @@ function SexActBreastFeed() {
 
 function StopSexButton() {
     battle = false;
+    GamePaused = false;
     player.Orgasm = 0;
     player.cumGround = 0;
     DocId("map").style.display = 'block';
@@ -372,6 +373,7 @@ function SexActCapture() {
     House.Dormmates.push(enemies[EnemyIndex]);
     enemies.splice(EnemyIndex, 1);
     battle = false;
+    GamePaused = false;
     player.Orgasm = 0;
     player.cumGround = 0;
     DocId("AfterBattle").style.display = 'none';

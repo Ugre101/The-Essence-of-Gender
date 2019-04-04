@@ -1,3 +1,21 @@
+// Get a random int number(no decimals)
+function RandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function RandomString(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+function StringCounter(array, string) {
+    var counts = 0;
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === string) {
+            counts++;
+        }
+    }
+    return counts;
+}
+
 // Capitalize first letter of a string
 String.prototype.Capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();

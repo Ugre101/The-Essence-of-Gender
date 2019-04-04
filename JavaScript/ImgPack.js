@@ -26,10 +26,10 @@ DocId("ImgPack").addEventListener("click", function () {
 
 function ImgChose(what, who, type = "SexActs") {
     const myimg = new Image(),
-        a = player.Race.Capitalize(),
+        playerRace = player.Race.Capitalize().replace(/\s/g, ""),
         b = CheckGender(player),
-        c = what,
-        d = who.Race.Capitalize(),
+        Act = what,
+        Race = who.Race.Capitalize().replace(/\s/g, ""),
         e = CheckGender(who);
     if (Settings.ImgPack === "Yllarius") {
         const playerGender = () => {
@@ -63,55 +63,57 @@ function ImgChose(what, who, type = "SexActs") {
                 }
             }
         // This nested onload/onerror works but it looks like a disaster... TODO search for better way.
-        myimg.src = `imgPack/${type}/${d}/${what}/${playerGender()+OtherGender()}.png`;
-        myimg.onload = () => {
-            DocId("MyImg").src = myimg.src;
-        };
-        myimg.onerror = () => {
-            myimg.src = `imgPack/${type}/${d}/${what}/${playerGender()+OtherGender()}.jpg`;
-            myimg.onload = () => {
-                DocId("MyImg").src = myimg.src;
-            };
-            myimg.onerror = () => {
-                myimg.src = `imgPack/${type}/${d}/${what}/Default.png`;
-                myimg.onload = () => {
+        if (type === "SexActs") {
+            // if (SexActs.Race !== "undf") {if (SexActs.Race.Act !== "undf") {if array length > 0 etc.. }}
+            const ImgArray = typeof SexActs[Race] !== "undefined" ? typeof SexActs[Race][Act] !== "undefined" ?
+                typeof SexActs[Race][Act][playerGender() + OtherGender()] !== "undefined" ?
+                SexActs[Race][Act][playerGender() + OtherGender()].length > 0 ?
+                SexActs[Race][Act][playerGender() + OtherGender()] : false :
+                typeof SexActs[Race][Act][OtherGender()] !== "undefined" ?
+                SexActs[Race][Act][OtherGender()].length > 0 ?
+                SexActs[Race][Act][OtherGender()] : false :
+                typeof SexActs[Race][Act].Default !== "undefined" ?
+                SexActs[Race][Act].Default.length > 0 ?
+                SexActs[Race][Act].Default : [] : [] : [] : [];
+            if (ImgArray.length > 0) {
+                myimg.src = ImgArray[RandomInt(0, ImgArray.length - 1)];
+                myimg.onload = function () {
                     DocId("MyImg").src = myimg.src;
                 };
                 myimg.onerror = () => {
-                    myimg.src = `imgPack/${type}/${d}/${what}/Default.jpg`;
-                    myimg.onload = () => {
-                        DocId("MyImg").src = myimg.src;
-                    };
-                    myimg.onerror = () => {
-                        myimg.src = `imgPack/${type}/${d}/Default.png`;
-                        myimg.onload = () => {
-                            DocId("MyImg").src = myimg.src;
-                        };
-                        myimg.onerror = () => {
-                            myimg.src = `imgPack/${type}/${d}/Default.jpg`;
-                            myimg.onload = () => {
-                                DocId("MyImg").src = myimg.src;
-                            };
-                            myimg.onerror = () => {
-                                myimg.src = `imgPack/${type}/Default.png`;
-                                myimg.onload = () => {
-                                    DocId("MyImg").src = myimg.src;
-                                };
-                                myimg.onerror = () => {
-                                    myimg.src = `imgPack/${type}/Default.jpg`;
-                                    myimg.onload = () => {
-                                        DocId("MyImg").src = myimg.src;
-                                    };
-                                    myimg.onerror = () => {
-                                        // Total failure
-                                    };
-                                };
-                            };
-                        };
-                    };
+                    return
+                }
+            } else {
+                console.log(ImgArray);
+                console.log(`SexActs[${Race}][${Act}][${playerGender() + OtherGender()}]`);
+            }
+        } else if (type === "Vore") {
+            // if (SexActs.Race !== "undf") {if (SexActs.Race.Act !== "undf") {if array length > 0 etc.. }}
+            const ImgArray = typeof Vore[playerRace] !== "undefined" ? typeof Vore[playerRace][Act] !== "undefined" ?
+                typeof Vore[playerRace][Act][playerGender() + OtherGender()] !== "undefined" ?
+                Vore[playerRace][Act][playerGender() + OtherGender()].length > 0 ?
+                Vore[playerRace][Act][playerGender() + OtherGender()] : false :
+                typeof Vore[playerRace][Act][playerGender()] !== "undefined" ?
+                Vore[playerRace][Act][playerGender()].length > 0 ?
+                Vore[playerRace][Act][playerGender()] : false :
+                typeof Vore[playerRace][Act].Default !== "undefined" ?
+                Vore[playerRace][Act].Default.length > 0 ?
+                Vore[playerRace][Act].Default : [] : [] : [] : [];
+            console.log(ImgArray)
+            if (ImgArray.length > 0) {
+                myimg.src = ImgArray[RandomInt(0, ImgArray.length - 1)];
+                myimg.onload = function () {
+                    DocId("MyImg").src = myimg.src;
                 };
-            };
-        };
+                myimg.onerror = () => {
+                    return
+                }
+            } else {
+                console.log(ImgArray);
+                console.log(`SexActs[${playerRace}][${Act}][${playerGender() + OtherGender()}]`);
+            }
+        }
+
     } else {
         const source = () => {
             switch (Settings.ImgPack) {
@@ -157,116 +159,3 @@ DocId("MyImgF").addEventListener("click", () => {
         AfterBattle = DocId("AfterBattle");
     modal.style.display = 'none';
 });
-
-
-const SexActs = {
-    Elf: {
-        Default: ["imgPack/SexActs/Elf/Default.jpg", ],
-        DoggyStyle: {
-            Default: ["imgPack/SexActs/Elf/DoggyStyle/Default.png", "imgPack/SexActs/Elf/DoggyStyle/HF.png", ],
-        },
-    },
-    Fairy: {
-        Default: [],
-        Example: {
-            Default: ["imgPack/SexActs/Fairy/Example/Default.jpg", "imgPack/SexActs/Fairy/Example/HF.png", "imgPack/SexActs/Fairy/Example/HH.png", "imgPack/SexActs/Fairy/Example/HM.png", "imgPack/SexActs/Fairy/Example/MF.png", ],
-        },
-    },
-    Human: {
-        Default: ["imgPack/SexActs/Human/Default.jpg", "imgPack/SexActs/Human/Default2.jpg", ],
-        DoggyStyle: {
-            Default: ["imgPack/SexActs/Human/DoggyStyle/asfae.png", "imgPack/SexActs/Human/DoggyStyle/Default.png", "imgPack/SexActs/Human/DoggyStyle/HF.png", ],
-            FF: ["imgPack/SexActs/Human/DoggyStyle/FF/FF.png", ],
-            HF: ["imgPack/SexActs/Human/DoggyStyle/HF/HF.png", ],
-            HH: ["imgPack/SexActs/Human/DoggyStyle/HH/HF.png", ],
-            MF: ["imgPack/SexActs/Human/DoggyStyle/MF/HF.png", ],
-            MM: ["imgPack/SexActs/Human/DoggyStyle/MM/HF.png", ],
-        },
-        DoggyStyle2: {
-            Default: ["imgPack/SexActs/Human/DoggyStyle2/Default.png", "imgPack/SexActs/Human/DoggyStyle2/HF.png", ],
-        },
-    },
-    Imp: {
-        Default: [],
-        xample: {
-            Default: ["imgPack/SexActs/Imp/xample/Default.jpg", "imgPack/SexActs/Imp/xample/HF.png", "imgPack/SexActs/Imp/xample/HH.png", "imgPack/SexActs/Imp/xample/HM.png", "imgPack/SexActs/Imp/xample/MF.png", ],
-        },
-    },
-    Incubus: {
-        Default: [],
-        Example: {
-            Default: ["imgPack/SexActs/Incubus/Example/Default.jpg", "imgPack/SexActs/Incubus/Example/HF.png", "imgPack/SexActs/Incubus/Example/HH.png", "imgPack/SexActs/Incubus/Example/HM.png", "imgPack/SexActs/Incubus/Example/MF.png", ],
-        },
-    },
-    Orc: {
-        Default: [],
-        ample: {
-            Default: ["imgPack/SexActs/Orc/ample/Default.jpg", "imgPack/SexActs/Orc/ample/HF.png", "imgPack/SexActs/Orc/ample/HH.png", "imgPack/SexActs/Orc/ample/HM.png", "imgPack/SexActs/Orc/ample/MF.png", ],
-        },
-    },
-    Succubus: {
-        Default: [],
-        mple: {
-            Default: ["imgPack/SexActs/Succubus/mple/Default.jpg", "imgPack/SexActs/Succubus/mple/HF.png", "imgPack/SexActs/Succubus/mple/HH.png", "imgPack/SexActs/Succubus/mple/HM.png", "imgPack/SexActs/Succubus/mple/MF.png", ],
-        },
-    },
-    Template: {
-        Default: [],
-        Example: {
-            Default: ["imgPack/SexActs/Template/a Example/Default.jpg", "imgPack/SexActs/Template/a Example/HF.png", "imgPack/SexActs/Template/a Example/HH.png", "imgPack/SexActs/Template/a Example/HM.png", "imgPack/SexActs/Template/a Example/MF.png", ],
-        },
-        BreastFeed: {
-            Default: [],
-        },
-        DoggyStyle: {
-            Default: [],
-        },
-        DoggyStyleAnal: {
-            Default: [],
-        },
-        DualPen: {
-            Default: [],
-        },
-        GetBlowjob: {
-            Default: [],
-        },
-        GetCunnilingus: {
-            Default: [],
-        },
-        GetRimjob: {
-            Default: [],
-        },
-        GiveBlowjob: {
-            Default: [],
-        },
-        GiveCunnilingus: {
-            Default: [],
-        },
-        GiveRimjob: {
-            Default: [],
-        },
-        Insertion: {
-            Default: [],
-        },
-        Missionary: {
-            Default: [],
-        },
-        MultiPen: {
-            Default: [],
-        },
-        RideCowgirl: {
-            Default: [],
-        },
-        Scissoring: {
-            Default: [],
-        },
-    },
-}
-const Vore = {
-    Template: {
-        Default: [],
-        OralVore: {
-            Default: ["imgPack/Vore/Template/OralVore/HF.png", "imgPack/Vore/Template/OralVore/HH.png", "imgPack/Vore/Template/OralVore/HM.png", "imgPack/Vore/Template/OralVore/MF.png", ],
-        },
-    },
-}

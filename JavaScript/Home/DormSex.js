@@ -1,77 +1,119 @@
 function GetImpregOrgyFunc() {
-    DocId("HomeText").innerHTML = "Orgy";
-    var CumTotal = 0;
-    for (var a = 0; a < House.Dormmates.length; a++) {
-        for (var b = 0; b < House.Dormmates[a].Balls.length; b++) {
-            CumTotal += House.Dormmates[a].Balls[b].Cum;
-            while (House.Dormmates[a].Balls[b].Cum >= 10) {
-                if (player.Pregnant.Status) {
-                    break;
-                } else {
-                    Impregnate(player, House.Dormmates[a], "B", "Dorm")
-                    House.Dormmates[a].Balls[b].Cum -= 10;
-                }
-            }
-        }
-    }
-    DocId("HomeText").innerHTML += "<br><br> By the end of the night they have cummed " + (Math.round(CumTotal / 1000 * 100) / 100) + "L into you.";
+    const HomeText = DocId("HomeText");
+    HomeText.innerHTML = `Orgy`;
+    let CumTotal = 0;
+    for (let d of House.Dormmates) {
+        for (let b of d.Balls) {
+            CumTotal += b.Cum;
+            while (b.Cum >= 10 && !player.Pregnant.Status) {
+                Impregnate(player, d, "B", "Dorm")
+                b.Cum -= 10;
+            };
+        };
+    };
+    HomeText.innerHTML += `<br><br> By the end of the night they have emptied ${(LToGal(CumTotal/1000))} cum into you
+    ${player.Pregnant.Status ?  ` and you are now pregnant!` : `, but they failed to impregnate you...`}`;
 };
 
 function ImpregOrgyFunc() {
-    DocId("HomeText").innerHTML = "Orgy<br>"
-    var CumTotal = 0;
-    for (var b = 0; b < player.Balls.length; b++) {
-        CumTotal += player.Balls[b].Cum;
-    }
-    while (CumTotal >= 10) {
-        for (var non = 0; non < House.Dormmates.length; non++) {
-            if (House.Dormmates[non].Pregnant.Status) {
+    const HomeText = DocId("HomeText");
+    HomeText.innerHTML = "Orgy<br>"
+    let CumTotal = player.Balls.map(b => b.Cum).reduce((acc, curr) => acc + curr);
+    // some check if any of your dormmates isn't pregnant
+    while (CumTotal >= 10 && House.Dormmates.some(b => !b.Pregnant.Status)) {
+        for (let non of House.Dormmates) {
+            if (non.Pregnant.Status) {
                 CumTotal--;
                 continue;
             } else {
-                Impregnate(House.Dormmates[non], player, "A", "Dorm");
+                Impregnate(non, player, "A", "Dorm");
                 CumTotal -= 10;
-                if (House.Dormmates[non].Pregnant.Status) {
-                    DocId("HomeText").innerHTML += House.Dormmates[non].FirstName + " " + House.Dormmates[non].LastName + " is impregnated! "
-                }
-            }
+                if (non.Pregnant.Status) {
+                    HomeText.innerHTML += `${non.FirstName} ${non.LastName} is impregnated!<br>`
+                };
+            };
+        };
+    };
+    for (let non of House.Dormmates) {
+        if (!non.Pregnant.Status) {
+            HomeText.innerHTML += `You failed to impregnate ${non.FirstName} ${non.LastName}... `;
         }
-    }
-    for (var non = 0; non < House.Dormmates.length; non++) {
-        if (!House.Dormmates[non].Pregnant.Status) {
-            DocId("HomeText").innerHTML += "You failed to impregnate " + House.Dormmates[non].FirstName + " " + House.Dormmates[non].LastName + "...";
-
-        }
-    }
-    for (var b = 0; b < player.Balls.length; b++) {
-        player.Balls[b].Cum = 0;
     }
     FluidsEngine();
 };
 
 DocId("DormDrainMasc").addEventListener("click", function () {
-    const e = MateIndex,
-        Ess = Math.min(e.Masc, player.EssenceDrain);
+    const ee = MateIndex,
+        old = JSON.parse(JSON.stringify(player)),
+        Need = player.EssenceDrain;
+    let Have = ee.Masc;
+    ee.Masc = Math.max(0, ee.Masc - Need);
+    while (Have < Need && (ee.Balls.length > 0 || ee.Dicks.length > 0)) {
+        if (ee.Balls.length > 0) {
+            const ball = ee.Balls[ee.Balls.length - 1];
+            ball.Size--;
+            Have += EssenceCost(ball);
+            if (ball.Size <= 1) {
+                ee.Balls.pop();
+            };
+        };
+        if (ee.Dicks.length > 0) {
+            const dick = ee.Dicks[ee.Dicks.length - 1];
+            dick.Size--;
+            Have += EssenceCost(dick);
+            if (dick.Size <= 1) {
+                ee.Dicks.pop();
+            }
+        }
+    }
+    const Got = Math.min(Need, Have),
+        left = Math.max(0, Have - Need);
+    player.Masc += Got;
+    ee.Masc = left;
 
-    player.Masc += Ess;
-    e.Masc -= Ess;
-    EssenceCheck(e);
+    EssenceCheck(ee);
     if (Settings.EssenceAuto) {
         EssenceCheck(player);
     }
-    DormSex(e);
+    //RaceDrain(ee);
+    DormSex(ee);
     DocId("DormSexText").innerHTML = "Siphon masc";
 });
 DocId("DormDrainFemi").addEventListener("click", function () {
-    const e = MateIndex,
-        Ess = Math.min(e.Femi, player.EssenceDrain);
-    player.Femi += Ess;
-    e.Femi -= Ess;
-    EssenceCheck(e);
+    const ee = MateIndex,
+        old = JSON.parse(JSON.stringify(player));
+    //player.ForcedMale ? (player.Masc += ee.Femi) : (player.Femi += ee.Femi);
+    const Need = player.EssenceDrain;
+    let Have = ee.Femi;
+    ee.Femi = Math.max(0, ee.Femi - Need);
+    while (Have < Need && (ee.Pussies.length > 0 || ee.Boobies.length > 0)) {
+        if (ee.Pussies.length > 0) {
+            const pussy = ee.Pussies[ee.Pussies.length - 1];
+            pussy.Size--;
+            Have += EssenceCost(pussy);
+            if (pussy.Size <= 1) {
+                ee.Pussies.pop();
+            };
+        };
+        if (ee.Boobies.length > 0 ? ee.Boobies[0].Size > 0 : false) {
+            const boobs = ee.Boobies[ee.Boobies.length - 1];
+            boobs.Size--;
+            Have += EssenceExtraCost(boobs);
+            if (boobs.Size <= 1 && ee.Boobies.length > 1) {
+                ee.Boobies.pop();
+            };
+        };
+    };
+    const Got = Math.min(Need, Have),
+        left = Math.max(0, Have - Need);
+    player.Femi += Got;
+    ee.Femi = left;
+    EssenceCheck(ee);
     if (Settings.EssenceAuto) {
         EssenceCheck(player);
     }
-    DormSex(e);
+    //RaceDrain(ee); // This could be op way to gain race? Disabled for now
+    DormSex(ee);
     DocId("DormSexText").innerHTML = "Siphon femi";
     return;
 });

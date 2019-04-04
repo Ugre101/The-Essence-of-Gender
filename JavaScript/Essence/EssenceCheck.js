@@ -1,24 +1,24 @@
 function OrganSize(Size, who) {
-    return Size;
+    return Size * (who.Height / 160);
     // return Math.ceil(Math.sqrt(Size) * GrowthScale(who));
 }
 
 function EssenceCheck(who) {
-    function DickMaker(e = 0) {
+    function DickMaker() {
         const Dick = {
-            Size: DickSize(e),
+            Size: 2,
             Type: who.Race,
             Virgin: true
         }
         return Dick;
     }
 
-    function BallMakes(e = 0) {
+    function BallMakes() {
         const Ball = {
-            Size: BallsSize(e),
+            Size: 2,
             Type: who.Race,
-            CumMax: 1 / 3 * Math.PI * Math.pow(BallsSize(e), 3),
-            Cum: 1 / 6 * Math.PI * Math.pow(BallsSize(e), 3),
+            CumMax: 1 / 3 * Math.PI * Math.pow(2, 3),
+            Cum: 1 / 6 * Math.PI * Math.pow(2, 3),
             CumRate: 0,
             CumBaseRate: 0.5
         }
@@ -27,19 +27,19 @@ function EssenceCheck(who) {
 
     function BoobMaker(e = 0) {
         const Boob = {
-            Size: BoobSize(e),
+            Size: 2,
             Type: who.Race,
             Milk: 0,
             MilkBaseRate: 0,
             MilkRate: 0,
-            MilkMax: 1 / 3 * Math.PI * Math.pow(BoobSize(e), 3)
+            MilkMax: 1 / 3 * Math.PI * Math.pow(2, 3)
         }
         return Boob;
     }
 
     function PussyMaker(e = 0) {
         const Pussy = {
-            Size: PussySize(e),
+            Size: 2,
             Type: who.Race,
             Virgin: true
         }
@@ -61,74 +61,63 @@ function EssenceCheck(who) {
         who.Anal = []
     }
     if (who.Dicks.length === 0 && who.Masc >= 30) {
-        const Dick = {
-            Size: 1,
-            Type: who.SecondRace,
-            Virgin: true
-        }
-        who.Dicks.push(Dick);
+        who.Dicks.push(DickMaker());
         who.Masc -= 30;
         EssenceCheck(who);
         return
-    } else if (who.Dicks.length > 0 ? EssenceCost(Last(who.Dicks)) <= who.Masc : false) {
-        Last(who.Dicks).Size += 1 * ManualGrowthScale();
-        who.Masc -= EssenceCost(Last(who.Dicks));
-        EssenceCheck(who);
-        return
-    };
+    }
     if (who.Balls.length === 0 && who.Masc >= 50) {
-        const Ball = {
-            Size: 1,
-            Type: who.SecondRace,
-            CumMax: 1 / 3 * Math.PI * Math.pow(1, 3),
-            Cum: 1 / 6 * Math.PI * Math.pow(1, 3),
-            CumRate: 0,
-            CumBaseRate: 0.5
-        }
-        who.Balls.push(Ball);
-        who.Masc -= 50;        EssenceCheck(who);
-        return
-    } else if (who.Balls.length > 0 ? EssenceCost(Last(who.Balls)) <= who.Masc : false) {
-        Last(who.Balls).Size += 1 * ManualGrowthScale();
-        who.Masc -= EssenceCost(Last(who.Balls));
+        who.Balls.push(BallMakes());
+        who.Masc -= 50;
         EssenceCheck(who);
         return
-    };
+    }
     if (who.Pussies.length === 0 && who.Femi >= 30) {
-        const Pussy = {
-            Size: 1,
-            Type: who.SecondRace,
-            Virgin: true
-        }
-        who.Pussies.push(Pussy);
+        who.Pussies.push(PussyMaker());
         who.Femi -= 30;
         EssenceCheck(who);
         return
-    } else if (who.Pussies.length > 0 ? EssenceCost(Last(who.Pussies)) <= who.Femi : false) {
-        Last(who.Pussies).Size += 1 * ManualGrowthScale();
-        who.Femi -= EssenceCost(Last(who.Pussies));
-        EssenceCheck(who);
-        return
-    };
+    }
     if (who.Boobies.length === 0 && who.Femi >= 30) {
-        const Boob = {
-            Size: 0,
-            Type: who.SecondRace,
-            Milk: 0,
-            MilkBaseRate: 0,
-            MilkRate: 0,
-            MilkMax: 1 / 3 * Math.PI * Math.pow(1, 3)
-        }
-        who.Boobies.push(Boob);
+        who.Boobies.push(BoobMaker());
         who.Femi -= 30;
         EssenceCheck(who);
         return
-    } else if (who.Boobies.length > 0 ? EssenceCost(Last(who.Boobies)) <= who.Femi : false) {
-        Last(who.Boobies).Size += 1 * ManualGrowthScale();
-        who.Femi -= EssenceCost(Last(who.Boobies));
-        EssenceCheck(who);
-        return
-    };
+    }
+    const DickTotal = who.Dicks.length > 0 ? who.Dicks.map(d => d.Size).reduce((tot, cur) => tot + cur) : 0,
+        BallsTotal = who.Balls.length > 0 ? who.Balls.map(b => b.Size).reduce((tot, cur) => tot + cur) : 0,
+        PussyTotal = who.Pussies.length > 0 ? who.Pussies.map(p => p.Size).reduce((tot, cur) => tot + cur) : 0,
+        BoobsTotal = who.Boobies.length > 0 ? who.Boobies.map(b => b.Size).reduce((tot, cur) => tot + cur) : 0;
+    if (BallsTotal * 2 > DickTotal) {
+        if (who.Dicks.length > 0 ? EssenceCost(Last(who.Dicks)) <= who.Masc : false) {
+            who.Masc -= EssenceCost(Last(who.Dicks));
+            Last(who.Dicks).Size++;
+            EssenceCheck(who);
+            return
+        };
+    } else {
+        if (who.Balls.length > 0 ? EssenceCost(Last(who.Balls)) <= who.Masc : false) {
+            who.Masc -= EssenceCost(Last(who.Balls));
+            Last(who.Balls).Size++;
+            EssenceCheck(who);
+            return
+        };
+    }
+    if (BoobsTotal * 2 > PussyTotal) {
+        if (who.Pussies.length > 0 ? EssenceCost(Last(who.Pussies)) <= who.Femi : false) {
+            who.Femi -= EssenceCost(Last(who.Pussies));
+            Last(who.Pussies).Size++;
+            EssenceCheck(who);
+            return
+        };
+    } else {
+        if (who.Boobies.length > 0 ? EssenceCost(Last(who.Boobies)) <= who.Femi : false) {
+            who.Femi -= EssenceCost(Last(who.Boobies));
+            Last(who.Boobies).Size++;
+            EssenceCheck(who);
+            return
+        };
+    }
     if (who.Anal.length === 0) {
         const Anal = {
             Size: who.Height / 12,

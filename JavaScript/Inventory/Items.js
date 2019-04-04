@@ -352,12 +352,9 @@ const ItemDict = {
         },
         Name: "Milker500",
         Use: function (who, item) {
-            var Milktotal = 0;
-            for (var e of who.Boobies) {
-                if (e.Milk > 0) {
-                    Milktotal += e.Milk;
-                    e.Milk = 0
-                }
+            const Milktotal = who.Boobies.map(m => m.Milk).reduce((acc, cur) => acc + cur);
+            for (let e of who.Boobies) {
+                e.Milk = 0
             }
             item.Quantity++; // Crude way to stop player from wasteing milker.
             if (Math.round(Milktotal / 500) > 0) {

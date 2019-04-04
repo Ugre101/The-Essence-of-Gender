@@ -21,14 +21,6 @@ function WitchHutFunc() {
 
     var elf = new InputButton("Elf delight 200g", "Tired of being a human? Do you feel a desire to possess pointy ears? Become an elf today!")
     elf.addEventListener("click", function () {
-        if (player.Race == "elf") {
-            p.innerHTML = "You are already a elf!";
-            return;
-        }
-        if (TF.Status) {
-            p.innerHTML = "Your body is currently transforming!";
-            return;
-        }
         if (player.Gold >= 200) {
             player.Gold -= 200;
             PotionDrunk("elf");

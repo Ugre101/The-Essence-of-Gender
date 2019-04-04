@@ -1,3 +1,54 @@
 function HairGrowth() {
     player.Face.HairLength++;
 }
+
+
+myimg.src = `imgPack/${type}/${d}/${what}/${playerGender()+OtherGender()}.png`;
+        myimg.onload = () => {
+            DocId("MyImg").src = myimg.src;
+        };
+        myimg.onerror = () => {
+            myimg.src = `imgPack/${type}/${d}/${what}/${playerGender()+OtherGender()}.jpg`;
+            myimg.onload = () => {
+                DocId("MyImg").src = myimg.src;
+            };
+            myimg.onerror = () => {
+                myimg.src = `imgPack/${type}/${d}/${what}/Default.png`;
+                myimg.onload = () => {
+                    DocId("MyImg").src = myimg.src;
+                };
+                myimg.onerror = () => {
+                    myimg.src = `imgPack/${type}/${d}/${what}/Default.jpg`;
+                    myimg.onload = () => {
+                        DocId("MyImg").src = myimg.src;
+                    };
+                    myimg.onerror = () => {
+                        myimg.src = `imgPack/${type}/${d}/Default.png`;
+                        myimg.onload = () => {
+                            DocId("MyImg").src = myimg.src;
+                        };
+                        myimg.onerror = () => {
+                            myimg.src = `imgPack/${type}/${d}/Default.jpg`;
+                            myimg.onload = () => {
+                                DocId("MyImg").src = myimg.src;
+                            };
+                            myimg.onerror = () => {
+                                myimg.src = `imgPack/${type}/Default.png`;
+                                myimg.onload = () => {
+                                    DocId("MyImg").src = myimg.src;
+                                };
+                                myimg.onerror = () => {
+                                    myimg.src = `imgPack/${type}/Default.jpg`;
+                                    myimg.onload = () => {
+                                        DocId("MyImg").src = myimg.src;
+                                    };
+                                    myimg.onerror = () => {
+                                        // Total failure
+                                    };
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+        };
