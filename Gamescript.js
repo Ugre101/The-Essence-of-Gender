@@ -442,14 +442,8 @@ DocId("Quests").addEventListener("click", function () {
     DocId("ShowQuests").style.display = 'block';
 
     let questText = " ";
-    for (var e of player.Quests) {
-        let Tier = "";
-        if (e.hasOwnProperty("Tier")) {
-            Tier = "<br>Tier: " + e.Tier;
-            if (e.Tier > 4) {
-                Tier += " max";
-            }
-        }
+    for (let e of player.Quests) {
+        const Tier = e.hasOwnProperty("Tier") ? `<br>Tier: ${e.Tier}` + (e.Tier > 4 ? ` max` : ``) : ``;
         questText += `<div><h4>${e.Name}</h4>Completed: ${e.Completed} <br>Count:  ${e.Count} ${Tier} <br><br></div>`;
     }
     DocId("QuestTexts").innerHTML = questText;
@@ -459,15 +453,6 @@ DocId("QuestsLeave").addEventListener("click", function () {
     DocId("ShowQuests").style.display = 'none';
     DisplayGame();
 });
-
-function RandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
-
-function RandomString(array) {
-    return array[Math.floor(Math.random() * array.length)];
-}
-
 
 var battle = false,
     GamePaused = false;
@@ -527,16 +512,6 @@ function ExpCheck() {
         player.PerkPoints += 1;
         return;
     }
-}
-
-function StringCounter(array, string) {
-    var counts = 0;
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] === string) {
-            counts++;
-        }
-    }
-    return counts;
 }
 
 // function to update player & enemy stats, check if you win or lose and deal damage to player
@@ -615,6 +590,13 @@ function HealthWillBars() {
         will = DocId("StatusWillHealth"),
         red = 150 + 105 * (player.Health / player.MaxHealth),
         blue = 150 + 105 * (player.WillHealth / player.MaxWillHealth);
+
+    // Need to decide absoulte max health for overhealing
+    player.Health = Math.max(1, player.Health);
+    player.WillHealth = Math.max(1, player.WillHealth);
+    player.MaxHealth = player.End * 10 + player.Perks.ExtraHealth.Count * 20;
+    player.MaxWillHealth = player.Will * 10 + player.Perks.ExtraWillHealth.Count * 20;
+
     health.innerHTML = Math.round(player.Health);
     health.style.width = Math.min(100 * (player.Health / player.MaxHealth), 103) + "%";
     will.innerHTML = Math.round(player.WillHealth);
@@ -663,27 +645,27 @@ function HouseEngine() {
 };
 
 function GenitalChange(what) {
-    for (var e of player.Dicks) {
+    for (let e of player.Dicks) {
         e.Type = what;
     }
-    for (var e = 0; e < player.Balls.length; e++) {
-        player.Balls[e].Type = what;
+    for (let e of player.Balls) {
+        e.Type = what;
     }
-    for (var e = 0; e < player.Boobies.length; e++) {
-        player.Boobies[e].Type = what;
+    for (let e of player.Boobies) {
+        e.Type = what;
     }
-    for (var e = 0; e < player.Pussies.length; e++) {
-        player.Pussies[e].Type = what;
+    for (let e of player.Pussies) {
+        e.Type = what;
     }
-    for (var e = 0; e < player.Anal.length; e++) {
-        player.Anal[e].Type = what;
+    for (let e of player.Anal) {
+        e.Type = what;
     }
 }
 
 function addMilk(amount) {
-    for (var b = 0; b < player.Boobies.length; b++) {
-        if (player.Boobies[b].Milk <= player.Boobies[b].MilkMax)
-            player.Boobies[b].Milk += Math.min(player.Boobies[b].MilkMax - player.Boobies[b].Milk, amount);
+    for (let b of player.Boobies) {
+        if (b.Milk <= b.MilkMax)
+            b.Milk += Math.min(b.MilkMax - b.Milk, amount);
     }
 }
 
@@ -725,22 +707,23 @@ function Touching() {
     })
 };
 
-const fps = [];
+/* Disabled for now
+ * var fps = [];
+const t = new Date().getTime();
+fps.push(t);
+if (fps.length > 30) {
+    const Thefps = fps[30] - fps[29];
+    fps = [];
+    if (typeof Thefps === "number") { // Stop typing NaN but I still need to figure out why NaN in first place
+        DocId("Fps").innerHTML = `${Math.floor(1000 / Thefps)} Lps`;
+    }
+}
+ */
 
 function loop() {
     requestAnimationFrame(loop);
-    var d = new Date();
-    var n = d.getTime();
-    fps.push(n);
-    if (fps.length > 1) {
-        var Thefps = fps[1] - fps[0];
-        fps.pop();
-        fps.pop();
-    }
 
     DocId("StatusArea").innerHTML = `Area: ${player.Area} and Map: ${player.Map}`;
-    player.MaxHealth = player.End * 10 + player.Perks.ExtraHealth.Count * 20;
-    player.MaxWillHealth = player.Will * 10 + player.Perks.ExtraWillHealth.Count * 20;
     DocId("StatusName").innerHTML = player.Name + " " + player.LastName;
     HealthWillBars();
     DocId("StatusLevel").innerHTML = player.level;
@@ -780,8 +763,6 @@ function loop() {
             player.Muscle = Math.max(1, player.Muscle);
             player.Weight = Math.round(player.Height * 0.15 + player.Fat + player.Muscle);
             player.Height = Math.max(5, player.Height);
-            player.Health = Math.max(1, player.Health);
-            player.WillHealth = Math.max(1, player.WillHealth);
             // Check if essence is negative of NaN
             player.Masc = Math.max(0, player.Masc);
             if (typeof player.Masc !== "number" || Number.isNaN(player.Masc)) {
@@ -795,9 +776,6 @@ function loop() {
             player.GiveEssence = 0 + (player.Perks.GiveEssence.Count * 3);
 
             sprite.Size = 1; //Math.min(0.8 + player.Height / 320, 1.2);
-            if (typeof Thefps === "number") { // Stop typing NaN but I still need to figure out why NaN in first place
-                DocId("Fps").innerHTML = Math.round(1000 / Thefps) + "fps";
-            }
         }
     }
 };

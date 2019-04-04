@@ -71,6 +71,31 @@ function FluidsEngine() {
                 }
             }
         }
+    };
+    // Handle enemy fluid here insted of in essencecheck, at higher rate.
+    if (enemies.length > 0) {
+        for (let e of enemies) {
+            EssenceCheck(e);
+            if (e.Balls.length > 0) {
+                for (let b of e.Balls) {
+                    const Size = OrganSize(b.Size, e);
+                    b.CumMax = 1 / 3 * Math.PI * Math.pow(Size, 3),
+                        b.CumBaseRate = b.CumMax / 50;
+                    if (b.Cum < b.CumMax) {
+                        b.Cum += Math.max(0, b.CumRate + b.CumBaseRate);
+                    }
+                }
+            }
+            if (GotMilk(e)) {
+                for (let b of e.Boobies) {
+                    const Size = OrganSize(b.Size, e);
+                    b.MilkMax = 1 / 3 * Math.PI * Math.pow(Size, 3);
+                    if (b.MilkRate > 0) {
+                        b.Milk += b.MilkRate;
+                    }
+                }
+            }
+        }
     }
 };
 

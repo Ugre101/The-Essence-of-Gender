@@ -178,8 +178,8 @@
    }
 
    div.FullBar {
-       width: 200px;
-   }
+    width: 200px;
+}
 
    div.StatusHealth,
    div.StatusWillHealth {
@@ -438,10 +438,15 @@
        background-repeat: no-repeat;
        background-size: contain;
        background-position: center;
-
-       width: 285px;
+       
        text-align: center;
-       padding: 2em 4em;
+        padding: 2rem 7rem;
+   }
+
+   div.SLMenuInner {
+    display: inline-block;
+    overflow: auto;
+    padding: 1rem;
    }
 
    #LogLength,
@@ -932,7 +937,8 @@
 
    div.Vore {
        width: 55%;
-       min-height: 400px;
+       min-height: 500px;
+       max-height: 100%;
        height: auto;
        padding: 1em;
        border-radius: 5px;

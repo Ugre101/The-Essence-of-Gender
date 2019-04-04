@@ -1,5 +1,5 @@
 function ManualGrowthScale() {
-    return (player.Height / 160)
+    return 1 //(player.Height / 160)
 } // I put this a function to make it easier to trial different formulas.
 
 

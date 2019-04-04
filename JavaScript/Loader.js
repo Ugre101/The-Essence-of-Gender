@@ -15,7 +15,7 @@ function SaveLoader(Load) {
 DocId("LoadButton").addEventListener("click", function () {
     DocId("LoadMenu").style.display = 'block';
     DocId("StartPage").style.display = 'none';
-    DocId("StartLoad").style.display = 'inline-block';
+    DocId("StartLoad").style.display = 'block';
     for (let e = 1; e < 6; e++) {
         if (localStorage.getItem('SaveDate' + e) !== null) {
             DocId("LoadPlayer" + e).value = localStorage.getItem('SaveDate' + e);

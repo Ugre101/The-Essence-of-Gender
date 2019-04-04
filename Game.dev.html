@@ -10,9 +10,6 @@
 
 <body>
 	<!-- CharCreator: Form for user data-->
-
-	<div id="Fps" class="top" title="Main loop counter; it counts loops divided by sec"></div>
-
 	<div id="StartPage">
 		<p id="StartProgressBar"></p>
 		<h1>The Essence of Gender</h1>
@@ -142,32 +139,35 @@
 	</div>
 	<div id="EmptyButtons" class="left buttons None"></div>
 	<div id="SaveMenu" class="SLMenu None">
-		<h1>Save menu</h1>
-		<input type="button" id="SavePlayer1" value="Save 1" /><br>
-		<input type="button" id="SavePlayer2" value="Save 2" /><br>
-		<input type="button" id="SavePlayer3" value="Save 3" /><br>
-		<input type="button" id="SavePlayer4" value="Save 4" /><br>
-		<input type="button" id="SavePlayer5" value="Save 5" />
-		<div>
-			<input type="button" id="SaveLeave" value="Leave" />
+		<div class="SLMenuInner">
+			<h1>Save menu</h1>
+			<input type="button" id="SavePlayer1" value="Save 1" /><br>
+			<input type="button" id="SavePlayer2" value="Save 2" /><br>
+			<input type="button" id="SavePlayer3" value="Save 3" /><br>
+			<input type="button" id="SavePlayer4" value="Save 4" /><br>
+			<input type="button" id="SavePlayer5" value="Save 5" />
+			<div>
+				<input type="button" id="SaveLeave" value="Leave" />
+			</div>
+			<br><br><input type="button" id="SaveText" value="Save to computer" />
 		</div>
-		<br><br><input type="button" id="SaveText" value="Save to computer" />
-
 	</div>
 	<div id="LoadMenu" class="SLMenu None">
-		<h1>Load menu</h1>
-		<input type="button" id="LoadPlayer1" value="Load 1 " /><br>
-		<input type="button" id="LoadPlayer2" value="Load 2" /><br>
-		<input type="button" id="LoadPlayer3" value="Load 3" /><br>
-		<input type="button" id="LoadPlayer4" value="Load 4" /><br>
-		<input type="button" id="LoadPlayer5" value="Load 5" />
-		<div id="MapLoad" class="None">
-			<input type="button" id="LoadLeave" value="Leave">
+		<div class="SLMenuInner">
+			<h1>Load menu</h1>
+			<input type="button" id="LoadPlayer1" value="Load 1 " /><br>
+			<input type="button" id="LoadPlayer2" value="Load 2" /><br>
+			<input type="button" id="LoadPlayer3" value="Load 3" /><br>
+			<input type="button" id="LoadPlayer4" value="Load 4" /><br>
+			<input type="button" id="LoadPlayer5" value="Load 5" />
+			<div id="MapLoad" class="None">
+				<input type="button" id="LoadLeave" value="Leave">
+			</div>
+			<div id="StartLoad" class="None">
+				<input type="button" id="LoadLeaveStart" value="Leave">
+			</div>
+			<br><br><input type="file" id="LoadFile" value="Load from computer" />
 		</div>
-		<div id="StartLoad" class="None">
-			<input type="button" id="LoadLeaveStart" value="Leave">
-		</div>
-		<br><br><input type="file" id="LoadFile" value="Load from computer" />
 	</div>
 
 	<!--	<div id="NewGamePlusMenu" class="SLMenu None">
@@ -996,6 +996,7 @@
 		}
 	</script>
 	<script src="Gamescript.js"></script>
+	<script src="imgPack/ImgPackArrays.js"></script>
 	<!--	<script src="JavaScript/NewGamePlus.js"></script>-->
 	<!--	<script src="JavaScript/TfBonus.js"></script> -->
 </body>

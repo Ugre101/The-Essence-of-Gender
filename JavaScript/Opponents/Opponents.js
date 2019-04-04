@@ -87,6 +87,7 @@ function GenderLock(who, amount, Genderlock) { // gives exact gender
         who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Femi = 0;
     } else if (Genderlock == "cuntboy") {
+
         who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
     } else if (Genderlock == "herm") {
@@ -175,7 +176,7 @@ function EncounterStart() {
     let OP = new enemy(RandomString(Names), RandomString(Races), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5),
         RandomInt(2, 5), RandomInt(6, 9), 70, 70, RandomInt(15, 20), RandomInt(5, 15),
         'Chocolate', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 50);
+    EssenceGiver(OP, 70);
     FatMuscle(OP, 10, 50);
     StandardEnemy(OP);
     NameGiver(OP);
@@ -236,7 +237,7 @@ function EncounterPath1() {
     var OP = new enemy(RandomString(Names), RandomString(RacesRoad), RandomInt(3, 6), RandomInt(3, 6), RandomInt(3, 6), RandomInt(3, 6),
         RandomInt(3, 6), RandomInt(7, 10), 80, 80, RandomInt(20, 25), RandomInt(8, 18),
         'Chocolate', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 60);
+    EssenceGiver(OP, 80);
     FatMuscle(OP, 10, 50);
     StandardEnemy(OP);
     NameGiver(OP);
@@ -249,7 +250,7 @@ function EncounterPath2() {
     var OP = new enemy(RandomString(Names), RandomString(RacesRoad), RandomInt(4, 7), RandomInt(4, 7), RandomInt(4, 7), RandomInt(4, 7),
         RandomInt(4, 7), RandomInt(8, 12), 100, 100, RandomInt(23, 30), RandomInt(12, 25),
         'green', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 70);
+    EssenceGiver(OP, 100);
     FatMuscle(OP, 10, 50);
     StandardEnemy(OP);
     NameGiver(OP);
@@ -261,7 +262,7 @@ function EncounterBandit() {
     var OP = new enemy("Bandit", RandomString(RacesBandit), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15),
         RandomInt(8, 15), RandomInt(10, 15), 170, 170, RandomInt(30, 45), RandomInt(30, 55),
         'tomato ', grid, RandomInt(140, 180));
-    GenderLock(OP, 500, "male");
+    GenderLock(OP, 600, "male");
     FatMuscle(OP, 7, 70);
     StandardEnemy(OP);
     NameGiver(OP);
@@ -273,7 +274,7 @@ function EncounterBanditLord() {
     var OP = new enemy("Banditlord", RandomString(RacesBandit), RandomInt(20, 35), RandomInt(10, 15), RandomInt(20, 35), RandomInt(20, 35),
         RandomInt(20, 35), RandomInt(40, 60), 350, 300, RandomInt(55, 85), RandomInt(75, 150),
         'tomato', grid * 1.5, RandomInt(160, 200));
-    GenderLock(OP, 1000, "male");
+    GenderLock(OP, 1200, "male");
     FatMuscle(OP, 7, 80);
     StandardEnemy(OP);
     var startarea = document.getElementById("hem");
@@ -289,7 +290,7 @@ function EncounterForest() {
     var OP = new enemy("Forest", RandomString(RacesForest), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13),
         RandomInt(6, 13), RandomInt(8, 18), 150, 150, RandomInt(25, 40), RandomInt(25, 45),
         'darkgreen', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 300, 5);
+    EssenceGiver(OP, 400, 5);
     FatMuscle(OP, 11, 50);
     StandardEnemy(OP);
     NameGiver(OP);
@@ -301,7 +302,7 @@ function EncounterForest2() {
     var OP = new enemy("Forest", RandomString(RacesForest2), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13),
         RandomInt(6, 13), RandomInt(8, 18), 150, 150, RandomInt(25, 40), RandomInt(25, 45),
         'darkgreen', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 400, 5);
+    EssenceGiver(OP, 500, 5);
     FatMuscle(OP, 11, 50);
     StandardEnemy(OP);
     NameGiver(OP);
@@ -313,7 +314,7 @@ function EncounterPathToWitch2() {
     var OP = new enemy("Witch", RandomString(RacesWitch), RandomInt(1, 5), RandomInt(3, 7), RandomInt(7, 16), RandomInt(10, 40),
         RandomInt(30, 70), RandomInt(20, 80), 150, 300, RandomInt(30, 60), RandomInt(30, 70),
         'IndianRed', grid, RandomInt(140, 170));
-    EssenceGiver(OP, 350);
+    EssenceGiver(OP, 450);
     FatMuscle(OP, 10, 50);
     StandardEnemy(OP);
     NameGiver(OP);

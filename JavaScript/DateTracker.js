@@ -1,7 +1,6 @@
 function DateTracker() {
     Flags.Date.Hour++;
     HouseEngine();
-    FluidsEngine();
     if (Flags.Date.Hour % 6 === 0) {
         DocId("CurrentDate").innerHTML = `${Flags.Date.Day}/${Flags.Date.Month}/${Flags.Date.Year} 
         ${Flags.Date.Hour < 10 ? `0${Flags.Date.Hour}:00` : `${Flags.Date.Hour}:00`}`;
@@ -20,9 +19,10 @@ function DateTracker() {
         }
         PregnanyEngine();
     }
-    FoodEngine();
     // health/will && fat burn
     if (!battle) {
+        FoodEngine();
+        FluidsEngine();
         player.RestRate = 1 + player.Perks.FasterRest.Count * 1;
         if (player.Health < player.MaxHealth && player.Fat >= player.Height / 100) {
             if ((player.Health + player.RestRate) > player.MaxHealth) {
