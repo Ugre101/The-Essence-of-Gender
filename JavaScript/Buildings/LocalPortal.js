@@ -46,16 +46,12 @@ function LocalPortalFunc() {
     input1.addEventListener("click", function () {
         player.Area = "First";
         player.Map = "RoadToHome";
-        battle = false;
-        DocId("map").style.display = 'block';
-        DocId("buttons").style.display = 'block';
-        DocId("EmptyButtons").style.display = 'none';
-        DocId("status").style.display = 'block';
         Buildings.style.display = 'none';
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
         }
         DisplayGame();
+        return;
     });
     input1.addEventListener("mouseover", function () {
 
@@ -68,15 +64,11 @@ function LocalPortalFunc() {
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
-            battle = false;
-            DocId("map").style.display = 'block';
-            DocId("buttons").style.display = 'block';
-            DocId("EmptyButtons").style.display = 'none';
-            DocId("status").style.display = 'block';
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
                 Buildings.removeChild(Buildings.firstChild);
             }
+            DisplayGame();
             return;
         });
         Container.push(Mountain);
@@ -87,15 +79,11 @@ function LocalPortalFunc() {
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
-            battle = false;
-            DocId("map").style.display = 'block';
-            DocId("buttons").style.display = 'block';
-            DocId("EmptyButtons").style.display = 'none';
-            DocId("status").style.display = 'block';
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
                 Buildings.removeChild(Buildings.firstChild);
-            }
+            };
+            DisplayGame();
             return;
         });
         BlackMarket.addEventListener("mouseover", function () {
@@ -108,15 +96,11 @@ function LocalPortalFunc() {
         MountainPlateau.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainPlateau";
-            battle = false;
-            DocId("map").style.display = 'block';
-            DocId("buttons").style.display = 'block';
-            DocId("EmptyButtons").style.display = 'none';
-            DocId("status").style.display = 'block';
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
                 Buildings.removeChild(Buildings.firstChild);
-            }
+            };
+            DisplayGame();
             return;
         });
         MountainPlateau.addEventListener("mouseover", function () {

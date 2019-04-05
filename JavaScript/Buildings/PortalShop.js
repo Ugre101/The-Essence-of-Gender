@@ -1,23 +1,23 @@
 function PortalShopFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
+    const div = document.createElement("div");
 
     if (window.innerHeight > 600) { // Skip title on smaller screens
-        var h1 = document.createElement("h1");
-        var h1text = document.createTextNode("Portal shop");
+        const h1 = document.createElement("h1"),
+            h1text = document.createTextNode("Portal shop");
         h1.appendChild(h1text);
         div.appendChild(h1);
     }
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
 
     div.appendChild(p);
 
-    var input1 = InputButton("Pocket portal 1000g", "Are you tired of walking home? Then pocket portal is for you, now with 99 uses! #Note seller is not responsible if you waste them by using them without owning a home portal.");
+    const input1 = InputButton("Pocket portal 1000g", "Are you tired of walking home? Then pocket portal is for you, now with 99 uses! #Note seller is not responsible if you waste them by using them without owning a home portal.");
     input1.addEventListener("click", function () {
         if (player.Gold >= 1000) {
             player.Gold -= 1000;
@@ -35,7 +35,7 @@ function PortalShopFunc() {
     div.appendChild(input1);
 
     if (House.Portal.Mountain === false) {
-        var input2 = InputButton("Portal to mountain region 500g", "A beautiful land with wonderful views, but be vary as it’s the home for plenty dangerous races and tribes.");
+        const input2 = InputButton("Portal to mountain region 500g", "A beautiful land with wonderful views, but be consty as it’s the home for plenty dangerous races and tribes.");
         input2.addEventListener("click", function () {
             if (player.Gold >= 500) {
                 if (House.Portal.Mountain) {
@@ -54,13 +54,12 @@ function PortalShopFunc() {
             }
         });
         input2.addEventListener("mouseover", function () {
-            p.innerHTML = "A beautiful land with wonderful views, but be vary as it’s the home for plenty dangerous races and tribes."
+            p.innerHTML = "A beautiful land with wonderful views, but be consty as it’s the home for plenty dangerous races and tribes."
         });
         div.appendChild(input2);
     }
 
-    var br = document.createElement("br");
-    div.appendChild(br);
+    div.appendChild(document.createElement("br"));
 
     div.appendChild(LeaveBuilding()); // Call to leave building function; returns a leave button
 

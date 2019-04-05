@@ -486,29 +486,28 @@ ItemDict.SpellBook = {
     Use: function (who) {
         DocId("Inventory").style.display = "none";
 
-        var Div = DocId("SpellBook");
+        const Div = DocId("SpellBook");
         Div.style.display = "block";
         while (Div.hasChildNodes()) {
             Div.removeChild(Div.firstChild);
         }
 
-        var h1 = document.createElement("h1");
+        const h1 = document.createElement("h1");
         h1.innerHTML = "Spell book"
         Div.appendChild(h1);
 
-        var p = document.createElement("p");
+        const p = document.createElement("p");
         p.classList.add("TextBox");
         Div.appendChild(p);
 
-        for (var e = 0; e < player.Spells.length; e++) {
-            var Spell = DictSpell(e);
-            Div.appendChild(Spell);
+        for (let e of player.Spells) {
+            Div.appendChild(DictSpell(e));
         }
 
         function DictSpell(e) {
-            var it = player.Spells[e];
-            var DictIt = SpellDict[it.Name];
-            var DictSpell = InputButton(DictIt.Name);
+            const it = e,
+                DictIt = SpellDict[it.Name],
+                DictSpell = InputButton(DictIt.Name);
             DictSpell.addEventListener("click", function () {
                 h1.innerHTML = DictIt.Name
                 p.innerHTML = `${SpellDictLite[it.Name].Title}<br><br>Manacost: ${DictIt.ManaCost(it.Exp)}<br>
@@ -517,7 +516,7 @@ ItemDict.SpellBook = {
             Div.appendChild(DictSpell);
             return DictSpell
         }
-        var CloseBook = InputButton("Close book");
+        const CloseBook = InputButton("Close book");
         CloseBook.addEventListener("click", function () {
             while (Div.hasChildNodes()) {
                 Div.removeChild(Div.firstChild);

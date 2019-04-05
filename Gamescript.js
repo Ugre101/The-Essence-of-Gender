@@ -388,10 +388,8 @@ function CharCreator() { // No need have these active for players who use load.
         StartAutoEssenceButton.removeEventListener("click", StartAutoEssence)
         startgameButton.removeEventListener("click", startgame)
         VoreStartButton.removeEventListener("click", VoreStart)
-    }
-}
-
-
+    };
+};
 
 // Sets display to none used for menu buttons
 function DisplayNone() {
@@ -406,10 +404,9 @@ function DisplayNone() {
     if (window.innerHeight < 600) {
         const MobileNone = ["map", "buttons", "status", "EventLog"].forEach(function (src) {
             DocId(src).style.display = 'none';
-        })
-
-    }
-}
+        });
+    };
+};
 
 function DisplayGame() {
     battle = false;
@@ -424,8 +421,8 @@ function DisplayGame() {
         DocId("FirstButtons").style.display = 'none';
         DocId("SecondButtons").style.display = 'none';
         MobileButtons = false;
-    }
-}
+    };
+};
 // More buttons for small screen height
 DocId("MoreButtons").addEventListener("click", function () {
     DocId("FirstButtons").style.display = 'none';
@@ -522,43 +519,41 @@ var enemies = [];
 //    DocId("EnemyLooks").innerHTML = BoobLook(enemies[EnemyIndex]) + "<br>" + PussyLook(enemies[EnemyIndex]) + "<br>" + DickLook(enemies[EnemyIndex]);
 
 function HeightSystem(me, they) {
-    let a;
     if (me.Height > they.Height) {
         if (me.Height * 0.95 < they.Height) {
-            a = "Your opponent is almost as tall as you.";
+            return "Your opponent is almost as tall as you.";
         } else if (me.Height * 0.9 < they.Height) {
-            a = "You are a head taller than your opponent.";
+            return "You are a head taller than your opponent.";
         } else if (me.Height * 0.8 < they.Height) {
-            a = "You are taller than your opponent."
+            return "You are taller than your opponent."
         } else if (me.Height * 0.7 < they.Height) {
-            a = "You are taller than your opponent."
+            return "You are taller than your opponent."
         } else if (me.Height * 0.6 < they.Height) {
-            a = "You are taller than your opponent."
+            return "You are taller than your opponent."
         } else if (me.Height * 0.5 < they.Height) {
-            a = "You are taller than your opponent."
+            return "You are taller than your opponent."
         } else if (me.Height * 0.4 < they.Height) {
-            a = "Your opponent is short enough for their head to be almost be in level with your groin, how convenient.";
+            return "Your opponent is short enough for their head to be almost be in level with your groin, how convenient.";
         } else if (me.Height * 0.3 < they.Height) {
-            a = "Looking down at your opponent you see that they are almost tall enough to reach your groin.";
+            return "Looking down at your opponent you see that they are almost tall enough to reach your groin.";
         } else if (me.Height * 0.2 < they.Height) {
-            a = "Looking down at your opponent you see that they are just tall enough to reach over your knees.";
+            return "Looking down at your opponent you see that they are just tall enough to reach over your knees.";
         } else if (me.Height * 0.1 < they.Height) {
-            a = "Your opponent is so short, that they can't reach over your knees!";
+            return "Your opponent is so short, that they can't reach over your knees!";
         } else {
-            a = "Your opponent is so small than you could hold them in one hand."
+            return "Your opponent is so small than you could hold them in one hand."
         }
     } else if (me.Height == they.Height) {
-        a = "You and your opponent exact same height! What are the odds?"
+        return "You and your opponent exact same height! What are the odds?"
     } else {
         if (they.Height * 0.95 < me.Height) {
-            a = "You are almost as tall as your opponent."
+            return "You are almost as tall as your opponent."
         } else if (they.Height * 0.9 < me.Height) {
-            a = "You are a head shorter than your opponent."
+            return "You are a head shorter than your opponent."
         } else {
-            a = "Your opponent is taller than you."
+            return "Your opponent is taller than you."
         }
-    }
-    return a;
+    };
 };
 
 function SexColor(who, where) {
@@ -608,39 +603,37 @@ function HealthWillBars() {
 
 function HouseEngine() {
     if (House.Gym > 0) {
-        let maxMuscle;
-        for (let e = 0; e < House.Dormmates.length; e++) {
-            maxMuscle = (House.Dormmates[e].Height / 3) * (House.Gym * 0.1);
-            if (House.Dormmates[e].Fat > 1 && (House.Dormmates[e].Muscle < maxMuscle)) {
-                House.Dormmates[e].Muscle += 0.1;
-                House.Dormmates[e].Fat -= 0.4;
-            }
-        }
-    }
+        for (let e of House.Dormmates) {
+            const maxMuscle = (e.Height / 3) * (House.Gym * 0.1);
+            if (e.Fat > 1 && (e.Muscle < maxMuscle)) {
+                e.Muscle += 0.1;
+                e.Fat -= 0.4;
+            };
+        };
+    };
     if (House.Kitchen > 0) {
-        let maxFat;
-        for (let e = 0; e < House.Dormmates.length; e++) {
-            maxFat = (House.Dormmates[e].Height / 2) * (House.Kitchen * 0.1);
-            if (House.Dormmates[e].Fat < maxFat) {
-                House.Dormmates[e].Fat += 0.4;
-            }
-        }
-    }
+        for (let e of House.Dormmates) {
+            const maxFat = (e.Height / 2) * (House.Kitchen * 0.1);
+            if (e.Fat < maxFat) {
+                e.Fat += 0.4;
+            };
+        };
+    };
     if (House.Dormmates.length > 0) {
         player.Gold += 0.001 * House.Dormmates.length;
-        for (let esf = 0; House.Dormmates.length > esf; esf++) {
+        for (let esf of House.Dormmates) {
             if (Settings.Brothel.ServeMasc && Settings.Brothel.ServeFemi) {
-                House.Dormmates[esf].Masc += 0.05 * House.Brothel;
-                House.Dormmates[esf].Femi += 0.05 * House.Brothel;
+                esf.Masc += 0.05 * House.Brothel;
+                esf.Femi += 0.05 * House.Brothel;
             } else if (Settings.Brothel.ServeFemi) {
-                House.Dormmates[esf].Femi += 0.1 * House.Brothel;
+                esf.Femi += 0.1 * House.Brothel;
             } else if (Settings.Brothel.ServeMasc) {
-                House.Dormmates[esf].Masc += 0.1 * House.Brothel;
-            }
-        }
+                esf.Masc += 0.1 * House.Brothel;
+            };
+        };
         if (House.hasOwnProperty("Brothel")) {
             player.Gold += 0.01 * House.Dormmates.length * House.Brothel;
-        }
+        };
     }
 };
 

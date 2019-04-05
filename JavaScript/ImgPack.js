@@ -84,8 +84,8 @@ function ImgChose(what, who, type = "SexActs") {
                     return
                 }
             } else {
-                console.log(ImgArray);
-                console.log(`SexActs[${Race}][${Act}][${playerGender() + OtherGender()}]`);
+                //console.log(ImgArray);
+                //console.log(`SexActs[${Race}][${Act}][${playerGender() + OtherGender()}]`);
             }
         } else if (type === "Vore") {
             // if (SexActs.Race !== "undf") {if (SexActs.Race.Act !== "undf") {if array length > 0 etc.. }}
@@ -99,7 +99,6 @@ function ImgChose(what, who, type = "SexActs") {
                 typeof Vore[playerRace][Act].Default !== "undefined" ?
                 Vore[playerRace][Act].Default.length > 0 ?
                 Vore[playerRace][Act].Default : [] : [] : [] : [];
-            console.log(ImgArray)
             if (ImgArray.length > 0) {
                 myimg.src = ImgArray[RandomInt(0, ImgArray.length - 1)];
                 myimg.onload = function () {
@@ -109,8 +108,8 @@ function ImgChose(what, who, type = "SexActs") {
                     return
                 }
             } else {
-                console.log(ImgArray);
-                console.log(`SexActs[${playerRace}][${Act}][${playerGender() + OtherGender()}]`);
+                //console.log(ImgArray);
+                //console.log(`SexActs[${playerRace}][${Act}][${playerGender() + OtherGender()}]`);
             }
         }
 

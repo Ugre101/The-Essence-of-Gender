@@ -1,25 +1,25 @@
 function WitchHutFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Witch hut");
+    const div = document.createElement("div"),
+        h1 = document.createElement("h1"),
+        h1text = document.createTextNode("Witch hut");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
 
     div.appendChild(p);
 
-    var row1 = document.createElement("div");
-    row1.addEventListener("mouseover", function(e) {
+    const row1 = document.createElement("div");
+    row1.addEventListener("mouseover", function (e) {
         p.innerHTML = e.target.title;
     })
 
-    var elf = new InputButton("Elf delight 200g", "Tired of being a human? Do you feel a desire to possess pointy ears? Become an elf today!")
+    const elf = new InputButton("Elf delight 200g", "Tired of being a human? Do you feel a desire to possess pointy ears? Become an elf today!")
     elf.addEventListener("click", function () {
         if (player.Gold >= 200) {
             player.Gold -= 200;
@@ -31,7 +31,7 @@ function WitchHutFunc() {
     });
     row1.appendChild(elf);
 
-    var Perkup = new InputButton("Perk Up 1000g", "This pill glows green and yellow, and seems to hover slightly above your hand. Eat it to get a perk point!")
+    const Perkup = new InputButton("Perk Up 1000g", "This pill glows green and yellow, and seems to hover slightly above your hand. Eat it to get a perk point!")
     Perkup.addEventListener("click", function () {
         if (player.Gold >= 1000) {
             player.Gold -= 1000;
@@ -44,7 +44,7 @@ function WitchHutFunc() {
     row1.appendChild(Perkup);
 
     if (Settings.Vore) {
-        var VoreUp = InputButton("Eating Up 1000g", "This red pill makes your mouth water and stomach growl. Eat it for an other perk point! (Below it is a little disclaimer: 'store owner not responsible for ineffective pills.')")
+        const VoreUp = InputButton("Eating Up 1000g", "This red pill makes your mouth water and stomach growl. Eat it for an other perk point! (Below it is a little disclaimer: 'store owner not responsible for ineffective pills.')")
         // Move to more fitting place and need new title
         // title ideas
         // Ilegal item, made from havrested souls from the last great battle.
@@ -60,7 +60,7 @@ function WitchHutFunc() {
         row1.appendChild(VoreUp);
     }
 
-    var Fireball = new InputButton("Fireball 500g", "Basic quick course on elemental magic, includes how to cast a fireball.")
+    const Fireball = new InputButton("Fireball 500g", "Basic quick course on elemental magic, includes how to cast a fireball.")
     //Fireball.setAttribute("title", "This little ball allows you to cast a single fireball spell per ball you own, per battle! (Don't set yourself on fire, please.)");
     Fireball.addEventListener("click", function () {
         if (!Array.isArray(player.Spells)) { // Remove later
@@ -81,7 +81,7 @@ function WitchHutFunc() {
     });
     row1.appendChild(Fireball);
 
-    var HumanTF = new InputButton("Potion of Humanity 250g", "Do you not remember who you are anymore? Feel like you have lost you humanity?");
+    const HumanTF = new InputButton("Potion of Humanity 250g", "Do you not remember who you are anymore? Feel like you have lost you humanity?");
     HumanTF.addEventListener("click", function () {
         if (player.Gold >= 250) {
             player.Gold -= 250;
@@ -93,17 +93,17 @@ function WitchHutFunc() {
     });
     row1.appendChild(HumanTF);
 
-    var EyeColor = new InputButton("Eye color 50g", "Not happy with the eyes you were born with?");
+    const EyeColor = new InputButton("Eye color 50g", "Not happy with the eyes you were born with?");
     EyeColor.addEventListener("click", function () {
-        var row2 = document.createElement("div");
-        row2.addEventListener("mouseover", function(e) {
+        const row2 = document.createElement("div");
+        row2.addEventListener("mouseover", function (e) {
             p.innerHTML = e.target.title;
         })
-        var EyeColors = [
+        const EyeColors = [
             "brown", "hazel", "blue", "green", "silver", "amber"
         ]
-        for (var e of EyeColors) {
-            var inputs = new InputButton(e.Capitalize(), " " + e.Capitalize() + " eyes")
+        for (let e of EyeColors) {
+            const inputs = new InputButton(e.Capitalize(), " " + e.Capitalize() + " eyes")
             inputs.addEventListener("click", function (a) {
                 if (player.Gold >= 50) {
                     player.Face.Eyes = a.target.value.toLowerCase();
@@ -115,7 +115,7 @@ function WitchHutFunc() {
             row2.appendChild(inputs);
         };
 
-        var close = new InputButton("Close", "Close eye color menu");
+        const close = new InputButton("Close", "Close eye color menu");
         close.addEventListener("click", function () {
             WitchHutFunc();
         })
@@ -124,23 +124,8 @@ function WitchHutFunc() {
     });
     row1.appendChild(EyeColor);
 
-    var Leave = document.createElement("input");
-    Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
-    Leave.addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
-        Buildings.style.display = 'none';
-        while (Buildings.hasChildNodes()) {
-            Buildings.removeChild(Buildings.firstChild);
-        }
-        return;
-    });
     div.appendChild(row1);
-    div.appendChild(Leave);
+    div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
 }

@@ -27,12 +27,11 @@ const SpellDict = {
             return Math.floor(20 * (player.Int / 20) + (Exp / 100))
         },
         Succes: function (dmg) {
-            AddToBattleLog(`You threw a ball covered in fire, dealing ${dmg} damage to their HP and will!`);
+            AddToBattleLog(`You threw a ball covered in fire, dealing ${dmg} damage to their health!`);
             player.Mana -= this.ManaCost();
             if (typeof player.MagicAffinity[this.Type] !== 'undefined') {
                 player.MagicAffinity[this.Type]++;
             }
-            UpdateStats();
         },
         Fail: function () {
             AddToBattleLog(`You're exhausted, and can't cast another fireball...`)
@@ -64,7 +63,6 @@ const SpellDict = {
             if (typeof player.MagicAffinity[this.Type] !== 'undefined') {
                 player.MagicAffinity[this.Type]++;
             }
-            UpdateStats();
         },
         Fail: function () {
             AddToBattleLog(`Fail`);

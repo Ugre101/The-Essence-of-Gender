@@ -15,10 +15,49 @@ function BattleSetup(who) {
     while (BattleLog.length > 0) {
         BattleLog.pop();
     };
-    UpdateStats(true);
+    Combatants = [];
+    CombatTurn = 1;
+    CombatantIndex = -1;
+    Combatants.push(player);
+    // push player teammates
+    if (Array.isArray(who)) {
+        for (let e of who) {
+            Combatants.push(e);
+        };
+    } else {
+        Combatants.push(who);
+    };
+    // Push enemy teammates 
+    UpdateStats();
 };
 
-function UpdateStats(YourTurn = true) {
+// Combat turn system to allow me to add team mates or fight against 
+var CombatTurn = 1,
+    Combatants = [],
+    CombatantIndex = -1;
+
+function NextTurn() {
+    CombatantIndex++;
+    if (CombatantIndex >= Combatants.length) {
+        CombatantIndex = 0;
+        BattleLog.push(`<br>Turn ${CombatTurn}<br>`);
+        CombatTurn++;
+        const BT = DocId("BattleText2"),
+            temp = BattleLog.slice(0);
+        BT.innerHTML = null;
+        for (let e of temp.reverse()) {
+            BT.innerHTML += `${e}<br>`
+        }
+    };
+    if (Combatants[CombatantIndex] === player) {
+        // wait for player input
+    } else {
+        const ee = Combatants[CombatantIndex];
+        EnemyAttack(ee);
+    };
+};
+
+function UpdateStats() {
     CombatButtons();
     const ee = enemies[EnemyIndex],
         ESH = DocId("EnemyStatusHealth"),
@@ -26,13 +65,8 @@ function UpdateStats(YourTurn = true) {
         SH = DocId("StatusHealth2"),
         SWH = DocId("StatusWillHealth2"),
         BE = DocId("BattleEnemy"),
-        SN = DocId("StatusName2"),
-        BT = DocId("BattleText2"),
-        temp = BattleLog.slice(0);
-    BT.innerHTML = null;
-    for (let e of temp.reverse()) {
-        BT.innerHTML += `${e}<br>`
-    }
+        SN = DocId("StatusName2");
+
     // Enemy Status
     BE.innerHTML = `${ee.Name}<br>${ee.Race} ${Pronoun(CheckGender(ee))}`;
     ESH.innerHTML = Math.round(ee.Health);
@@ -54,10 +88,7 @@ function UpdateStats(YourTurn = true) {
         Lose();
         return;
     }
-
-    if (YourTurn === false) {
-        EnemyAttack();
-    }
+    NextTurn();
 };
 
 const BattleLog = [];
@@ -65,18 +96,15 @@ const BattleLog = [];
 function AddToBattleLog(text, who = player) {
     BattleLog.push(`${text}<br>`);
     BattleLog.push(who.Name);
-    if (who !== player) {
-        BattleLog.push(`Turn #TODO<br>`);
-    };
 };
 
-function EnemyAttack() {
+function EnemyAttack(ee) {
     const {
         Charm,
         Str,
         Boobies,
         Balls
-    } = enemies[EnemyIndex];
+    } = ee;
     if (Str >= Charm) {
         const PhysicalAttacks = [
                 "Kicks", "Hits", "Grapple with"
@@ -84,7 +112,7 @@ function EnemyAttack() {
             EAttack = (RandomInt(1, 5) * Str) / 2,
             Text = `${RandomString(PhysicalAttacks)} you, causing ${EAttack} dmg.`
         player.Health -= EAttack;
-        AddToBattleLog(Text, enemies[EnemyIndex]);
+        AddToBattleLog(Text, ee);
     } else { // if (ee.Str < ee.Charm) Unnesary?
         const LustAttacks = ["Tease you"],
             EAttack = (RandomInt(1, 5) * Charm) / 2;
@@ -97,7 +125,7 @@ function EnemyAttack() {
             LustAttacks.push(ball);
         };
         const Text = `${RandomString(LustAttacks)} causing your will to suffer by ${EAttack}.`
-        AddToBattleLog(Text, enemies[EnemyIndex]);
+        AddToBattleLog(Text, ee);
         player.WillHealth -= EAttack;
     };
     UpdateStats();
@@ -182,7 +210,7 @@ function CombatButtons() { // Just combat buttons
         const PAttack = Math.floor(RandomInt(4, 8) * player.Str / 2); // * PhyRes(ee);
         ee.Health -= PAttack;
         AddToBattleLog(`You dealt ${PAttack} dmg to ${ee.Name}.`);
-        UpdateStats(false);
+        UpdateStats();
     });
     row1.appendChild(Hit);
     Combat.appendChild(row1);
@@ -199,7 +227,7 @@ function CombatButtons() { // Just combat buttons
             const PAttack = Math.floor(RandomInt(4, 8) * player.Charm / 2); // * LusRes(ee);
             ee.WillHealth -= PAttack;
             AddToBattleLog(`You dealt ${PAttack} will dmg to ${ee.Name}.`);
-            UpdateStats(false);
+            UpdateStats();
         });
         row2.appendChild(Tease);
         Combat.appendChild(row2);
@@ -230,7 +258,7 @@ function CombatButtons() { // Just combat buttons
             AddToBattleLog(`Success!`);
         } else {
             AddToBattleLog(`You failed to get away.`);
-            UpdateStats(false);
+            UpdateStats();
         }
     });
     row4.appendChild(FleeBattle);
@@ -291,7 +319,7 @@ function SpellButton(index) { // Instead of repeating, Can only add fireball now
         ee = enemies[EnemyIndex];
     Spell.addEventListener("click", function () {
         DictIt.Cast(index, ee);
-        UpdateStats(false);
+        UpdateStats();
     });
     return Spell;
 }

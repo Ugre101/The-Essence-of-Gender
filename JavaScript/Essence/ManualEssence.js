@@ -12,15 +12,14 @@ function EssenceExtraCost(what) {
 };
 
 DocId("EssenceAuto").addEventListener("click", function () {
-    Settings.EssenceAuto = !Settings.EssenceAuto;
+    Settings.EssenceAuto = Settings.EssenceAuto ? false : true;
     if (Settings.EssenceAuto) {
         DocId("EssenceAuto").value = "Essence Auto";
         DocId("ManualGrowth").style.display = 'none';
-
     } else {
         DocId("EssenceAuto").value = "Essence Manual";
         DocId("ManualGrowth").style.display = 'block';
-        Settings.BalanceParts = false;
+        // Settings.BalanceParts = false;
     }
 });
 
