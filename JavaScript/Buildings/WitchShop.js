@@ -3,12 +3,12 @@ document.getElementById("WitchShop").addEventListener("click", function (e) {
     if (e.target.type == "button") {
         Chosen = String(e.target.id);
         if (Chosen == "Grow" && player.Gold >= 50) {
-            var growth = Math.round((180 / player.Height) * 100) / 100;
+            const growth = Math.round((180 / player.Height) * 100) / 100;
             player.Gold -= 50;
             player.Height += growth;
             document.getElementById("WitchShopText").innerHTML = "You grow " + growth + "cm.";
         } else if (Chosen == "Shrink" && player.Gold >= 50) {
-            var shrunk = Math.round((player.Height / 100) * 100) / 100;
+            const shrunk = Math.round((player.Height / 100) * 100) / 100;
             player.Gold -= 50;
             player.Height -= shrunk;
             document.getElementById("WitchShopText").innerHTML = "You shrink " + shrunk + "cm.";
@@ -30,13 +30,13 @@ document.getElementById("WitchShop").addEventListener("click", function (e) {
             document.getElementById("WitchShopText").innerHTML = "You feel your virility decreasing";
         } else if (Chosen == "CumRateAdd" && player.Gold >= 100 && player.Balls.length > 0) {
             player.Gold -= 100;
-            for (var e = 0; e < player.Balls.length; e++) {
+            for (let e = 0; e < player.Balls.length; e++) {
                 player.Balls[e].CumRate += 0.1;
             }
             document.getElementById("WitchShopText").innerHTML = "You get a tingling feeling in your balls, you think it works!"
         } else if (Chosen == "CumRateSub" && player.Gold >= 20 && player.Balls.length > 0) {
             player.Gold -= 20;
-            for (var e = 0; e < player.Balls.length; e++) {
+            for (let e = 0; e < player.Balls.length; e++) {
                 player.Balls[e].CumRate -= 0.5;
             }
             document.getElementById("WitchShopText").innerHTML = "You get a strange feeling in your balls, you think it works!"

@@ -8,9 +8,7 @@ function BlackMarketFunc() {
         input2 = InputButton("Sell 50 femininity 100g"),
         input3 = InputButton("Sell 50 masculinity 100g"),
         input4 = InputButton("Why can't I buy?", "I see a plenty signs here of what you are buying, but I see nothing about what I can buy?"),
-        Content = Settings.EssenceAuto ? [p, PESS, input2, input3, input4, LeaveBuilding()] : [p, input1, limbcon, PESS, input2, input3, input4, LeaveBuilding()];
-
-
+        Content = [p, input1, limbcon, PESS, input2, input3, input4, LeaveBuilding()];
 
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
@@ -41,11 +39,11 @@ function BlackMarketFunc() {
 
     });
 
-    PESS.innerHTML = `Masc: ${player.Masc} Femi: ${player.Femi}`
+    PESS.innerHTML = `Masc: ${Math.round(player.Masc)} Femi: ${Math.round(player.Femi)}`
 
     input2.addEventListener("click", function () {
         const amount = Math.min(50, player.Femi);
-        if (typeof amount === "number") {
+        if (typeof amount === "number" && !Number.isNaN(amount)) {
             player.Femi -= amount;
             player.Gold += amount * 2;
         }
@@ -57,7 +55,7 @@ function BlackMarketFunc() {
 
     input3.addEventListener("click", function () {
         const amount = Math.min(50, player.Masc);
-        if (typeof amount === "number") {
+        if (typeof amount === "number" && !Number.isNaN(amount)) {
             player.Masc -= amount;
             player.Gold += amount * 2;
         }

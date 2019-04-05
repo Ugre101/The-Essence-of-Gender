@@ -7,24 +7,24 @@
         DocId("HomeText").style.display = 'none';
         DocId("Upgrades").style.display = 'block';
 
-        var Upgrades = DocId("Upgrades");
+        const Upgrades = DocId("Upgrades");
         while (Upgrades.hasChildNodes()) {
             Upgrades.removeChild(Upgrades.firstChild);
         }
 
-        var p = document.createElement("p");
+        const p = document.createElement("p");
         p.classList.add("TextBox");
         Upgrades.appendChild(p);
 
-        var h2 = document.createElement("h2");
-        var h2Text = document.createTextNode("Upgrades");
+        const h2 = document.createElement("h2"),
+            h2Text = document.createTextNode("Upgrades");
         h2.appendChild(h2Text);
         Upgrades.appendChild(h2);
 
         function BedCost() {
             return Math.round(50 * Math.pow(1.2, House.BedLevel));
         }
-        var UpgradeBed = InputButton("Upgrade bedroom " + BedCost() + "g");
+        const UpgradeBed = InputButton(`Upgrade bedroom ${BedCost()}g`);
         UpgradeBed.addEventListener("click", function () {
             if (player.Gold >= BedCost()) {
                 House.BedLevel++;
@@ -34,7 +34,7 @@
                 } else {
                     p.innerHTML = "You upgrade your master bedroom.";
                 }
-                UpgradeBed.setAttribute("value", "Upgrade bedroom " + BedCost() + "g")
+                UpgradeBed.setAttribute("value", `Upgrade bedroom ${BedCost()}g`)
             } else {
                 p.innerHTML = "You can't afford to upgrade your bedroom.";
             }
@@ -47,24 +47,21 @@
         function DormCost() {
             return Math.round(250 * Math.pow(1.2, House.Dorm));
         }
-        if (House.Dorm > 0) {
-            var BuildDorm = InputButton("Upgrade dorm " + DormCost() + "g")
 
-        } else {
-            var BuildDorm = InputButton("Build dorm " + DormCost() + "g")
-        }
+        const DormValue = House.Dorm > 0 ? `Upgrade dorm ${DormCost()}g` : `Build dorm ${DormCost()}g`,
+            BuildDorm = InputButton(DormValue);
         BuildDorm.addEventListener("click", function () {
             if (player.Gold >= DormCost()) {
                 House.Dorm++;
                 player.Gold -= DormCost();
                 if (House.Dorm < 2) {
                     DocId("Dorm").style.display = "inline-block";
-                    p.innerHTML = "Hiring construction workers you give orders to build a dorm to house servants. <br><br>" +
-                        "Looking outside you see the newly built dorm. You can now take home opponent you have made orgasm five times."
+                    p.innerHTML = `Hiring construction workers you give orders to build a dorm to house servants.<br><br>
+                    Looking outside you see the newly built dorm. You can now take home opponent you have made orgasm five times.`
                 } else {
-                    p.innerHTML = "You expand your dorm to house three more servants.(" + House.Dorm * 3 + ")";
+                    p.innerHTML = `You expand your dorm to house three more servants.(${House.Dorm * 3})`;
                 }
-                BuildDorm.setAttribute("value", "Upgrade dorm " + DormCost() + "g")
+                BuildDorm.setAttribute("value", `Upgrade dorm ${DormCost()}g`)
             } else {
                 p.innerHTML = "You can't afford it.";
             }
@@ -77,11 +74,8 @@
         function Gymcost() {
             return Math.round(200 * Math.pow(1.2, House.Gym));
         }
-        if (House.Gym > 0) {
-            var BuildGym = InputButton("Upgrade gym " + Gymcost() + "g")
-        } else {
-            var BuildGym = InputButton("Build gym " + Gymcost() + "g")
-        }
+        const GymValue = House.Gym > 0 ? `Upgrade gym ${Gymcost()}g` : `Build gym ${Gymcost()}g`,
+            BuildGym = InputButton(GymValue);
         BuildGym.addEventListener("click", function () {
             if (player.Gold >= Gymcost()) {
                 if (House.Gym < 1) {
@@ -104,11 +98,9 @@
         function Kitchencost() {
             return Math.round(200 * Math.pow(1.2, House.Kitchen));
         }
-        if (House.Kitchen > 0) {
-            var BuildKitchen = InputButton("Upgrade kitchen " + Kitchencost() + "g")
-        } else {
-            var BuildKitchen = InputButton("Build kitchen " + Kitchencost() + "g")
-        }
+        const KitchenValue = House.Kitchen > 0 ? `Upgrade kitchen ${Kitchencost()}g` : `Build kitchen ${Kitchencost()}g`,
+            BuildKitchen = InputButton(KitchenValue)
+
         BuildKitchen.addEventListener("click", function () {
             if (player.Gold >= Kitchencost()) {
                 if (House.Kitchen < 1) {
@@ -131,11 +123,9 @@
         function Brothelcost() {
             return Math.round(500 * Math.pow(1.2, House.Brothel));
         }
-        if (House.Brothel > 0) {
-            var BuildBrothel = InputButton("Upgrade brothel " + Brothelcost() + "g")
-        } else {
-            var BuildBrothel = InputButton("Build brothel " + Brothelcost() + "g")
-        }
+        const BrothelValue = House.Brothel > 0 ? `Upgrade brothel ${Brothelcost()}g` : `Build brothel ${Brothelcost()}g`,
+            BuildBrothel = InputButton(BrothelValue);
+
         BuildBrothel.addEventListener("click", function () {
             if (player.Gold >= Brothelcost()) {
                 player.Gold -= Brothelcost();
@@ -156,11 +146,9 @@
         function Nurserycost() {
             return Math.round(200 * Math.pow(1.2, House.Nursery));
         }
-        if (House.Nursery > 0) {
-            var BuildNursery = InputButton("Upgrade nursery " + Nurserycost() + "g");
-        } else {
-            var BuildNursery = InputButton("Build nursery " + Nurserycost() + "g");
-        }
+        const NurseryValue = House.Nursery > 0 ? `Upgrade nursery ${Nurserycost()}g` : `Build nursery ${Nurserycost()}g`,
+            BuildNursery = InputButton(NurseryValue);
+
         BuildNursery.addEventListener("click", function () {
             if (player.Gold >= Nurserycost()) {
                 player.Gold -= Nurserycost();
@@ -170,7 +158,7 @@
                     p.innerHTML = "You upgrade your nursery.";
                 }
                 House.Nursery++;
-                BuildNursery.setAttribute("value", "Upgrade nursery " + Nurserycost() + "g");
+                BuildNursery.setAttribute("value", `Upgrade nursery ${Nurserycost()}g`);
             } else {
                 p.innerHTML = "You can't afford it.";
             }
@@ -182,7 +170,7 @@
         Upgrades.appendChild(BuildNursery);
 
         if (House.Portal.Owned === false) {
-            var BuildPortal = InputButton("Build portal 1000g")
+            const BuildPortal = InputButton("Build portal 1000g")
             BuildPortal.addEventListener("click", function () {
                 if (player.Gold >= 1000) {
                     player.Gold -= 1000;
@@ -191,8 +179,8 @@
                     DocId("Portal").style.display = 'inline-block';
                     Upgrades.removeChild(BuildPortal)
                 } else {
-                    p.innerHTML = "	Sadly you lack funds to afford commissions the construction of a portal…" +
-                        "<br><br>You will have to continue walking like the poor peasant you are."
+                    p.innerHTML = `Sadly you lack funds to afford commissions the construction of a portal…
+                    <br><br>You will have to continue walking like the poor peasant you are.`
                 }
             });
             BuildPortal.addEventListener("mouseover", function () {
@@ -201,13 +189,13 @@
             Upgrades.appendChild(BuildPortal);
         }
 
-        var Close = InputButton("Close");
+        const Close = InputButton("Close");
         Close.addEventListener("click", function () {
             DocId("HomeStart").style.display = 'block';
             DocId("Upgrades").style.display = 'none';
             DocId("HomeText").style.display = 'block';
 
-            var Upgrades = DocId("Upgrades");
+            const Upgrades = DocId("Upgrades");
             while (Upgrades.hasChildNodes()) {
                 Upgrades.removeChild(Upgrades.firstChild);
             }

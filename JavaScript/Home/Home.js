@@ -19,25 +19,25 @@ DocId("Sleep").addEventListener("click", function () {
 // Portal
 DocId("Portal").addEventListener("click", function () {
     DocId("LeaveHome").style.display = 'none';
-    var Buildings = DocId("PortalMenu")
+    const Buildings = DocId("PortalMenu")
     DocId("HomeStart").style.display = "none";
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
+    const div = document.createElement("div");
 
     if (window.innerHeight > 600) { // No title on small screen
-        var h1 = document.createElement("h1");
-        var h1text = document.createTextNode("Portal");
+        const h1 = document.createElement("h1"),
+            h1text = document.createTextNode("Portal");
         h1.appendChild(h1text);
         div.appendChild(h1);
     }
 
-    var p = DocId("HomeText");
+    const p = DocId("HomeText");
 
     // TODO in future when there is more portals make main buttons for each region
     if (House.Portal.Mountain) {
-        var Mountain = InputButton("Mountain")
+        const Mountain = InputButton("Mountain")
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
@@ -56,7 +56,7 @@ DocId("Portal").addEventListener("click", function () {
     }
 
     if (House.Portal.BlackMarket) {
-        var BlackMarket = InputButton("BlackMarket")
+        const BlackMarket = InputButton("BlackMarket")
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
@@ -74,7 +74,7 @@ DocId("Portal").addEventListener("click", function () {
         div.appendChild(BlackMarket);
     }
 
-    var LeavePortal = InputButton("Back");
+    const LeavePortal = InputButton("Back");
     LeavePortal.addEventListener("click", function () {
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
@@ -86,37 +86,6 @@ DocId("Portal").addEventListener("click", function () {
     div.appendChild(LeavePortal);
     Buildings.appendChild(div);
     Buildings.style.display = 'block';
-});
-DocId("LeavePortal").addEventListener("click", function () {
-    DocId("HomeStart").style.display = 'block';
-    DocId("PortalMenu").style.display = 'none';
-});
-DocId("Portals").addEventListener("click", function (e) {
-    Npcs = [];
-    var Chosen;
-    if (e.target.type == "button") {
-        Chosen = String(e.target.id);
-        switch (Chosen) {
-            case "TempLand":
-                player.Area = Chosen;
-                player.Map = "TempCity";
-                LeaveHome();
-                break
-            case "Mountain":
-                player.Area = Chosen;
-                player.Map = "MountainStart";
-                LeaveHome();
-                break
-            case "Lumindera":
-                /**                    player.Area = "Lumindera";
-                player.Map = "nice";
-                LeaveHome(); */
-                break;
-            default:
-                break;
-
-        }
-    }
 });
 
 DocId("Brothel").addEventListener("click", function () {

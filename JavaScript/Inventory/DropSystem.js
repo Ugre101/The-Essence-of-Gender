@@ -15,29 +15,29 @@ function SnowInventoryAdd(item, quantity = 1) {
 }
 
 function DropSystem(who) {
-    var dropRate = {
-        "Human": 1.00,
-        "Halfling": 1.00,
-        "Orc": 1.00,
-        "Troll": 1.00,
-        "Farmer": 1.00,
-        "Elf": 1.00,
-        "Amazon": 1.00,
-        "Fairy": 1.00,
-        "Commoner": 1.00,
-        "Thug": 1.00,
-        "Dark elf": 1.00,
-        "Imp": 1.00,
-        "Goblin": 1.00,
-        "Dhampir": 1.00,
-        "Demon": 1.00,
-        "Succubus": 1.00,
-        "Incubus": 1.00,
-        "Witch": 1.00
-    }
-    var e = who;
-    var r = Math.random();
-    if (r <= dropRate[e.Name]) {
+    const dropRate = {
+            "Human": 1.00,
+            "Halfling": 1.00,
+            "Orc": 1.00,
+            "Troll": 1.00,
+            "Farmer": 1.00,
+            "Elf": 1.00,
+            "Amazon": 1.00,
+            "Fairy": 1.00,
+            "Commoner": 1.00,
+            "Thug": 1.00,
+            "Dark elf": 1.00,
+            "Imp": 1.00,
+            "Goblin": 1.00,
+            "Dhampir": 1.00,
+            "Demon": 1.00,
+            "Succubus": 1.00,
+            "Incubus": 1.00,
+            "Witch": 1.00
+        },
+        e = who,
+        r = Math.random();
+    if (r <= typeof dropRate[e.Name] !== "undefined" ? dropRate[e.Name] : 0) {
         switch (e.Name) {
             case "Banditlord":
                 SnowInventoryAdd(ItemDict.orcCum.Lite);
@@ -58,8 +58,8 @@ function DropSystem(who) {
                 break;
         }
     }
-    var r = Math.random();
-    if (r <= dropRate[e.Race]) {
+    const r2 = Math.random();
+    if (r2 <= typeof dropRate[e.Race] !== "undefined" ? dropRate[e.Race] : 0) {
         switch (e.Race) {
             case "Fairy":
                 SnowInventoryAdd(ItemDict.fairyDust.Lite);

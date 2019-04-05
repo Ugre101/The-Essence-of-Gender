@@ -1,24 +1,23 @@
 function BarberFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
-
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Barber");
+    const div = document.createElement("div"),
+        h1 = document.createElement("h1"),
+        h1text = document.createTextNode("Barber");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
     div.appendChild(p);
 
-    var DyeCon = document.createElement("div");
-    var CutCon = document.createElement("div");
+    const DyeCon = document.createElement("div"),
+        CutCon = document.createElement("div");
 
     function DyeButton(e, p) {
-        var dye = document.createElement("input");
+        const dye = document.createElement("input");
         dye.setAttribute("type", "button");
         dye.setAttribute("value", e);
         dye.addEventListener("click", function () {
@@ -32,7 +31,7 @@ function BarberFunc() {
     }
 
     function CutButton(e) {
-        var cut = document.createElement("input");
+        const cut = document.createElement("input");
         cut.setAttribute("type", "button");
         cut.setAttribute("value", e);
         cut.addEventListener("click", function () {
@@ -43,7 +42,7 @@ function BarberFunc() {
         })
         return cut;
     }
-    var input1 = document.createElement("input");
+    const input1 = document.createElement("input");
     input1.setAttribute("type", "button");
     input1.setAttribute("value", "Dye");
     input1.addEventListener("click", function () {
@@ -55,8 +54,8 @@ function BarberFunc() {
             while (CutCon.hasChildNodes()) {
                 CutCon.removeChild(CutCon.firstChild);
             };
-            var Dyes = ["Red", "Blonde", "Dark brown", "Black", "Pink", "Purple"];
-            for (var e of Dyes) {
+            const Dyes = ["Red", "Blonde", "Dark brown", "Black", "Pink", "Purple"];
+            for (const e of Dyes) {
                 DyeCon.appendChild(DyeButton(e, p));
             };
         }
@@ -66,7 +65,7 @@ function BarberFunc() {
     });
     div.appendChild(input1);
 
-    var input2 = document.createElement("input");
+    const input2 = document.createElement("input");
     input2.setAttribute("type", "button");
     input2.setAttribute("value", "Cut");
     input2.addEventListener("click", function () {
@@ -82,7 +81,7 @@ function BarberFunc() {
                 /*"Armpit length", "Mid-back length",*/
                 "Hip length", "Knee length", "Floor length"
             ];
-            for (var e of Cuts) {
+            for (const e of Cuts) {
                 CutCon.appendChild(CutButton(e, p));
             };
         }
@@ -92,27 +91,11 @@ function BarberFunc() {
     });
     div.appendChild(input2);
 
-    var br = document.createElement("br");
-    div.appendChild(br);
+    div.appendChild(document.createElement("br"));
     div.appendChild(DyeCon);
     div.appendChild(CutCon);
 
-    var Leave = document.createElement("input");
-    Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
-    Leave.addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
-        Buildings.style.display = 'none';
-        while (Buildings.hasChildNodes()) {
-            Buildings.removeChild(Buildings.firstChild);
-        }
-        return;
-    });
-    div.appendChild(Leave);
+    div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
 }
