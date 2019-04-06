@@ -33,8 +33,9 @@ function CheckDoor() {
         Doors = [DoorE, DoorS, DoorN, DoorW];
     for (let i of Doors) {
         let Door = i.NESW;
-        if (sprite.x >= i.x && sprite.x <= i.x + i.width &&
-            sprite.y >= i.y && sprite.y <= i.y + i.height) {
+        // half grids are to pad doors not sure if they actually do something or if it's has placebo affect on me.
+        if (sprite.x + grid/2>= i.x && sprite.x -grid/2 <= i.x + i.width &&
+            sprite.y + grid/2>= i.y && sprite.y -grid/2<= i.y + i.height) {
             switch (player.Area) {
                 case "First":
                     switch (player.Map) {

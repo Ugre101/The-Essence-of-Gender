@@ -65,18 +65,23 @@ function ImgChose(what, who, type = "SexActs") {
         // This nested onload/onerror works but it looks like a disaster... TODO search for better way.
         if (type === "SexActs") {
             // if (SexActs.Race !== "undf") {if (SexActs.Race.Act !== "undf") {if array length > 0 etc.. }}
-            const ImgArray = typeof SexActs[Race] !== "undefined" ? typeof SexActs[Race][Act] !== "undefined" ?
-                typeof SexActs[Race][Act][playerGender() + OtherGender()] !== "undefined" ?
-                SexActs[Race][Act][playerGender() + OtherGender()].length > 0 ?
-                SexActs[Race][Act][playerGender() + OtherGender()] : false :
-                typeof SexActs[Race][Act][OtherGender()] !== "undefined" ?
-                SexActs[Race][Act][OtherGender()].length > 0 ?
-                SexActs[Race][Act][OtherGender()] : false :
-                typeof SexActs[Race][Act].Default !== "undefined" ?
-                SexActs[Race][Act].Default.length > 0 ?
-                SexActs[Race][Act].Default : [] : [] : [] : [];
-            if (ImgArray.length > 0) {
-                myimg.src = ImgArray[RandomInt(0, ImgArray.length - 1)];
+            const ImgArray = () => {
+                if (typeof SexActs[Race] !== "undefined" ? typeof SexActs[Race][Act] !== "undefined" : false) {
+                    if (typeof SexActs[Race][Act][playerGender() + OtherGender()] !== "undefined" ? SexActs[Race][Act][playerGender() + OtherGender()].length > 0 : false) {
+                        return SexActs[Race][Act][playerGender() + OtherGender()];
+                    } else if (typeof SexActs[Race][Act][OtherGender()] !== "undefined" ? SexActs[Race][Act][OtherGender()].length > 0 : false) {
+                        return SexActs[Race][Act][OtherGender()];
+                    } else if (typeof SexActs[Race][Act].Default !== "undefined" ? SexActs[Race][Act].Default.length > 0 : false) {
+                        return SexActs[Race][Act].Default;
+                    } else {
+                        return [];
+                    }
+                } else {
+                    return [];
+                }
+            }
+            if (ImgArray().length > 0) {
+                myimg.src = ImgArray()[RandomInt(0, ImgArray().length - 1)];
                 myimg.onload = function () {
                     DocId("MyImg").src = myimg.src;
                 };
@@ -84,23 +89,28 @@ function ImgChose(what, who, type = "SexActs") {
                     return
                 }
             } else {
-                //console.log(ImgArray);
+                //console.log(ImgArray());
                 //console.log(`SexActs[${Race}][${Act}][${playerGender() + OtherGender()}]`);
             }
         } else if (type === "Vore") {
             // if (SexActs.Race !== "undf") {if (SexActs.Race.Act !== "undf") {if array length > 0 etc.. }}
-            const ImgArray = typeof Vore[playerRace] !== "undefined" ? typeof Vore[playerRace][Act] !== "undefined" ?
-                typeof Vore[playerRace][Act][playerGender() + OtherGender()] !== "undefined" ?
-                Vore[playerRace][Act][playerGender() + OtherGender()].length > 0 ?
-                Vore[playerRace][Act][playerGender() + OtherGender()] : false :
-                typeof Vore[playerRace][Act][playerGender()] !== "undefined" ?
-                Vore[playerRace][Act][playerGender()].length > 0 ?
-                Vore[playerRace][Act][playerGender()] : false :
-                typeof Vore[playerRace][Act].Default !== "undefined" ?
-                Vore[playerRace][Act].Default.length > 0 ?
-                Vore[playerRace][Act].Default : [] : [] : [] : [];
-            if (ImgArray.length > 0) {
-                myimg.src = ImgArray[RandomInt(0, ImgArray.length - 1)];
+            const ImgArray = () => {
+                if (typeof Vore[playerRace] !== "undefined" ? typeof Vore[playerRace][Act] !== "undefined" : false) {
+                    if (typeof Vore[playerRace][Act][playerGender() + OtherGender()] !== "undefined" ? Vore[playerRace][Act][playerGender() + OtherGender()].length > 0 : false) {
+                        return Vore[playerRace][Act][playerGender() + OtherGender()];
+                    } else if (typeof Vore[playerRace][Act][playerGender()] !== "undefined" ? Vore[playerRace][Act][playerGender()].length > 0 : false) {
+                        return Vore[playerRace][Act][playerGender()];
+                    } else if (typeof Vore[playerRace][Act].Default !== "undefined" ? Vore[playerRace][Act].Default.length > 0 : false) {
+                        return Vore[playerRace][Act].Default;
+                    } else {
+                        return [];
+                    }
+                } else {
+                    return [];
+                };
+            };
+            if (ImgArray().length > 0) {
+                myimg.src = ImgArray()[RandomInt(0, ImgArray().length - 1)];
                 myimg.onload = function () {
                     DocId("MyImg").src = myimg.src;
                 };
