@@ -138,7 +138,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 SiphonDiv.appendChild(DrainM);
             }
 
-            if (ee.Femi > 0) {
+            if (ee.Femi > 0 || ee.Pussies.length > 0 || (ee.Boobies.length > 1 ? true : (ee.Boobies.length > 0 ? ee.Boobies[0].Size > 0 : false))) {
                 const DrainF = ButtonButton("Siphon Femi");
                 DrainF.addEventListener("click", DrainDrainF);
                 DrainF.style.background = "linear-gradient(to right, #C12970,rgba(245, 245, 220))";

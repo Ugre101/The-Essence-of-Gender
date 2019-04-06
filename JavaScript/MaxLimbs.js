@@ -2,13 +2,8 @@ DocId("EssenceOptions").addEventListener("click", function () {
     DisplayNone();
     DocId("EssenceOptionsMenu").style.display = 'block';
     DocId("MaxMenu").style.display = 'none';
-    if (Settings.EssenceAuto) {
-        DocId("EssenceAuto").value = "Essence Auto";
-        DocId("ManualGrowth").style.display = 'none';
-    } else {
-        DocId("EssenceAuto").value = "Essence Manual";
-        DocId("ManualGrowth").style.display = 'block';
-    }
+    DocId("EssenceAuto").value = Settings.EssenceAuto ? "Essence Auto" : "Essence Manual";
+    DocId("ManualGrowth").style.display = 'block';
     DocId("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
     DocId("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
     DocId("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
