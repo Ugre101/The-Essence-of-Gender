@@ -388,10 +388,8 @@ function CharCreator() { // No need have these active for players who use load.
         StartAutoEssenceButton.removeEventListener("click", StartAutoEssence)
         startgameButton.removeEventListener("click", startgame)
         VoreStartButton.removeEventListener("click", VoreStart)
-    }
-}
-
-
+    };
+};
 
 // Sets display to none used for menu buttons
 function DisplayNone() {
@@ -406,10 +404,9 @@ function DisplayNone() {
     if (window.innerHeight < 600) {
         const MobileNone = ["map", "buttons", "status", "EventLog"].forEach(function (src) {
             DocId(src).style.display = 'none';
-        })
-
-    }
-}
+        });
+    };
+};
 
 function DisplayGame() {
     battle = false;
@@ -424,8 +421,8 @@ function DisplayGame() {
         DocId("FirstButtons").style.display = 'none';
         DocId("SecondButtons").style.display = 'none';
         MobileButtons = false;
-    }
-}
+    };
+};
 // More buttons for small screen height
 DocId("MoreButtons").addEventListener("click", function () {
     DocId("FirstButtons").style.display = 'none';
@@ -522,43 +519,41 @@ var enemies = [];
 //    DocId("EnemyLooks").innerHTML = BoobLook(enemies[EnemyIndex]) + "<br>" + PussyLook(enemies[EnemyIndex]) + "<br>" + DickLook(enemies[EnemyIndex]);
 
 function HeightSystem(me, they) {
-    let a;
     if (me.Height > they.Height) {
         if (me.Height * 0.95 < they.Height) {
-            a = "Your opponent is almost as tall as you.";
+            return "Your opponent is almost as tall as you.";
         } else if (me.Height * 0.9 < they.Height) {
-            a = "You are a head taller than your opponent.";
+            return "You are a head taller than your opponent.";
         } else if (me.Height * 0.8 < they.Height) {
-            a = "You are taller than your opponent."
+            return "You are taller than your opponent."
         } else if (me.Height * 0.7 < they.Height) {
-            a = "You are taller than your opponent."
+            return "You are taller than your opponent."
         } else if (me.Height * 0.6 < they.Height) {
-            a = "You are taller than your opponent."
+            return "You are taller than your opponent."
         } else if (me.Height * 0.5 < they.Height) {
-            a = "You are taller than your opponent."
+            return "You are taller than your opponent."
         } else if (me.Height * 0.4 < they.Height) {
-            a = "Your opponent is short enough for their head to be almost be in level with your groin, how convenient.";
+            return "Your opponent is short enough for their head to be almost be in level with your groin, how convenient.";
         } else if (me.Height * 0.3 < they.Height) {
-            a = "Looking down at your opponent you see that they are almost tall enough to reach your groin.";
+            return "Looking down at your opponent you see that they are almost tall enough to reach your groin.";
         } else if (me.Height * 0.2 < they.Height) {
-            a = "Looking down at your opponent you see that they are just tall enough to reach over your knees.";
+            return "Looking down at your opponent you see that they are just tall enough to reach over your knees.";
         } else if (me.Height * 0.1 < they.Height) {
-            a = "Your opponent is so short, that they can't reach over your knees!";
+            return "Your opponent is so short, that they can't reach over your knees!";
         } else {
-            a = "Your opponent is so small than you could hold them in one hand."
+            return "Your opponent is so small than you could hold them in one hand."
         }
     } else if (me.Height == they.Height) {
-        a = "You and your opponent exact same height! What are the odds?"
+        return "You and your opponent exact same height! What are the odds?"
     } else {
         if (they.Height * 0.95 < me.Height) {
-            a = "You are almost as tall as your opponent."
+            return "You are almost as tall as your opponent."
         } else if (they.Height * 0.9 < me.Height) {
-            a = "You are a head shorter than your opponent."
+            return "You are a head shorter than your opponent."
         } else {
-            a = "Your opponent is taller than you."
+            return "Your opponent is taller than you."
         }
-    }
-    return a;
+    };
 };
 
 function SexColor(who, where) {
@@ -608,39 +603,37 @@ function HealthWillBars() {
 
 function HouseEngine() {
     if (House.Gym > 0) {
-        let maxMuscle;
-        for (let e = 0; e < House.Dormmates.length; e++) {
-            maxMuscle = (House.Dormmates[e].Height / 3) * (House.Gym * 0.1);
-            if (House.Dormmates[e].Fat > 1 && (House.Dormmates[e].Muscle < maxMuscle)) {
-                House.Dormmates[e].Muscle += 0.1;
-                House.Dormmates[e].Fat -= 0.4;
-            }
-        }
-    }
+        for (let e of House.Dormmates) {
+            const maxMuscle = (e.Height / 3) * (House.Gym * 0.1);
+            if (e.Fat > 1 && (e.Muscle < maxMuscle)) {
+                e.Muscle += 0.1;
+                e.Fat -= 0.4;
+            };
+        };
+    };
     if (House.Kitchen > 0) {
-        let maxFat;
-        for (let e = 0; e < House.Dormmates.length; e++) {
-            maxFat = (House.Dormmates[e].Height / 2) * (House.Kitchen * 0.1);
-            if (House.Dormmates[e].Fat < maxFat) {
-                House.Dormmates[e].Fat += 0.4;
-            }
-        }
-    }
+        for (let e of House.Dormmates) {
+            const maxFat = (e.Height / 2) * (House.Kitchen * 0.1);
+            if (e.Fat < maxFat) {
+                e.Fat += 0.4;
+            };
+        };
+    };
     if (House.Dormmates.length > 0) {
         player.Gold += 0.001 * House.Dormmates.length;
-        for (let esf = 0; House.Dormmates.length > esf; esf++) {
+        for (let esf of House.Dormmates) {
             if (Settings.Brothel.ServeMasc && Settings.Brothel.ServeFemi) {
-                House.Dormmates[esf].Masc += 0.05 * House.Brothel;
-                House.Dormmates[esf].Femi += 0.05 * House.Brothel;
+                esf.Masc += 0.05 * House.Brothel;
+                esf.Femi += 0.05 * House.Brothel;
             } else if (Settings.Brothel.ServeFemi) {
-                House.Dormmates[esf].Femi += 0.1 * House.Brothel;
+                esf.Femi += 0.1 * House.Brothel;
             } else if (Settings.Brothel.ServeMasc) {
-                House.Dormmates[esf].Masc += 0.1 * House.Brothel;
-            }
-        }
+                esf.Masc += 0.1 * House.Brothel;
+            };
+        };
         if (House.hasOwnProperty("Brothel")) {
             player.Gold += 0.01 * House.Dormmates.length * House.Brothel;
-        }
+        };
     }
 };
 
@@ -1561,18 +1554,23 @@ function ImgChose(what, who, type = "SexActs") {
         // This nested onload/onerror works but it looks like a disaster... TODO search for better way.
         if (type === "SexActs") {
             // if (SexActs.Race !== "undf") {if (SexActs.Race.Act !== "undf") {if array length > 0 etc.. }}
-            const ImgArray = typeof SexActs[Race] !== "undefined" ? typeof SexActs[Race][Act] !== "undefined" ?
-                typeof SexActs[Race][Act][playerGender() + OtherGender()] !== "undefined" ?
-                SexActs[Race][Act][playerGender() + OtherGender()].length > 0 ?
-                SexActs[Race][Act][playerGender() + OtherGender()] : false :
-                typeof SexActs[Race][Act][OtherGender()] !== "undefined" ?
-                SexActs[Race][Act][OtherGender()].length > 0 ?
-                SexActs[Race][Act][OtherGender()] : false :
-                typeof SexActs[Race][Act].Default !== "undefined" ?
-                SexActs[Race][Act].Default.length > 0 ?
-                SexActs[Race][Act].Default : [] : [] : [] : [];
-            if (ImgArray.length > 0) {
-                myimg.src = ImgArray[RandomInt(0, ImgArray.length - 1)];
+            const ImgArray = () => {
+                if (typeof SexActs[Race] !== "undefined" ? typeof SexActs[Race][Act] !== "undefined" : false) {
+                    if (typeof SexActs[Race][Act][playerGender() + OtherGender()] !== "undefined" ? SexActs[Race][Act][playerGender() + OtherGender()].length > 0 : false) {
+                        return SexActs[Race][Act][playerGender() + OtherGender()];
+                    } else if (typeof SexActs[Race][Act][OtherGender()] !== "undefined" ? SexActs[Race][Act][OtherGender()].length > 0 : false) {
+                        return SexActs[Race][Act][OtherGender()];
+                    } else if (typeof SexActs[Race][Act].Default !== "undefined" ? SexActs[Race][Act].Default.length > 0 : false) {
+                        return SexActs[Race][Act].Default;
+                    } else {
+                        return [];
+                    }
+                } else {
+                    return [];
+                }
+            }
+            if (ImgArray().length > 0) {
+                myimg.src = ImgArray()[RandomInt(0, ImgArray().length - 1)];
                 myimg.onload = function () {
                     DocId("MyImg").src = myimg.src;
                 };
@@ -1580,24 +1578,28 @@ function ImgChose(what, who, type = "SexActs") {
                     return
                 }
             } else {
-                console.log(ImgArray);
-                console.log(`SexActs[${Race}][${Act}][${playerGender() + OtherGender()}]`);
+                //console.log(ImgArray());
+                //console.log(`SexActs[${Race}][${Act}][${playerGender() + OtherGender()}]`);
             }
         } else if (type === "Vore") {
             // if (SexActs.Race !== "undf") {if (SexActs.Race.Act !== "undf") {if array length > 0 etc.. }}
-            const ImgArray = typeof Vore[playerRace] !== "undefined" ? typeof Vore[playerRace][Act] !== "undefined" ?
-                typeof Vore[playerRace][Act][playerGender() + OtherGender()] !== "undefined" ?
-                Vore[playerRace][Act][playerGender() + OtherGender()].length > 0 ?
-                Vore[playerRace][Act][playerGender() + OtherGender()] : false :
-                typeof Vore[playerRace][Act][playerGender()] !== "undefined" ?
-                Vore[playerRace][Act][playerGender()].length > 0 ?
-                Vore[playerRace][Act][playerGender()] : false :
-                typeof Vore[playerRace][Act].Default !== "undefined" ?
-                Vore[playerRace][Act].Default.length > 0 ?
-                Vore[playerRace][Act].Default : [] : [] : [] : [];
-            console.log(ImgArray)
-            if (ImgArray.length > 0) {
-                myimg.src = ImgArray[RandomInt(0, ImgArray.length - 1)];
+            const ImgArray = () => {
+                if (typeof Vore[playerRace] !== "undefined" ? typeof Vore[playerRace][Act] !== "undefined" : false) {
+                    if (typeof Vore[playerRace][Act][playerGender() + OtherGender()] !== "undefined" ? Vore[playerRace][Act][playerGender() + OtherGender()].length > 0 : false) {
+                        return Vore[playerRace][Act][playerGender() + OtherGender()];
+                    } else if (typeof Vore[playerRace][Act][playerGender()] !== "undefined" ? Vore[playerRace][Act][playerGender()].length > 0 : false) {
+                        return Vore[playerRace][Act][playerGender()];
+                    } else if (typeof Vore[playerRace][Act].Default !== "undefined" ? Vore[playerRace][Act].Default.length > 0 : false) {
+                        return Vore[playerRace][Act].Default;
+                    } else {
+                        return [];
+                    }
+                } else {
+                    return [];
+                };
+            };
+            if (ImgArray().length > 0) {
+                myimg.src = ImgArray()[RandomInt(0, ImgArray().length - 1)];
                 myimg.onload = function () {
                     DocId("MyImg").src = myimg.src;
                 };
@@ -1605,8 +1607,8 @@ function ImgChose(what, who, type = "SexActs") {
                     return
                 }
             } else {
-                console.log(ImgArray);
-                console.log(`SexActs[${playerRace}][${Act}][${playerGender() + OtherGender()}]`);
+                //console.log(ImgArray);
+                //console.log(`SexActs[${playerRace}][${Act}][${playerGender() + OtherGender()}]`);
             }
         }
 
@@ -3277,12 +3279,11 @@ const SpellDict = {
             return Math.floor(20 * (player.Int / 20) + (Exp / 100))
         },
         Succes: function (dmg) {
-            AddToBattleLog(`You threw a ball covered in fire, dealing ${dmg} damage to their HP and will!`);
+            AddToBattleLog(`You threw a ball covered in fire, dealing ${dmg} damage to their health!`);
             player.Mana -= this.ManaCost();
             if (typeof player.MagicAffinity[this.Type] !== 'undefined') {
                 player.MagicAffinity[this.Type]++;
             }
-            UpdateStats();
         },
         Fail: function () {
             AddToBattleLog(`You're exhausted, and can't cast another fireball...`)
@@ -3314,7 +3315,6 @@ const SpellDict = {
             if (typeof player.MagicAffinity[this.Type] !== 'undefined') {
                 player.MagicAffinity[this.Type]++;
             }
-            UpdateStats();
         },
         Fail: function () {
             AddToBattleLog(`Fail`);
@@ -3464,28 +3464,28 @@ function TotalSexSkill() {
     return SexSkill;
 }
 function BarFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Local bar");
+    const div = document.createElement("div"),
+        h1 = document.createElement("h1"),
+        h1text = document.createTextNode("Local bar");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.innerHTML = "The local tavern is small and cozy, quite calm for being a tavern but not that" +
         "surprising given the small number of patrons. The smell from the kitchen is very appetizing, maybe you should buy a meal?"
     p.classList.add("TextBox");
     div.appendChild(p);
 
-    var ShopMenu = document.createElement("div");
-    ShopMenu.addEventListener("mouseover", function(e) {
+    const ShopMenu = document.createElement("div");
+    ShopMenu.addEventListener("mouseover", function (e) {
         p.innerHTML = e.target.title;
     })
 
-    var input1 = new InputButton("Rest 5g", "Spend the night to recover health and will")
+    const input1 = new InputButton("Rest 5g", "Spend the night to recover health and will")
     input1.addEventListener("click", function () {
         if (player.Gold >= 5 && (player.Health < player.MaxHealth || player.WillHealth < player.MaxWillHealth)) {
             player.Gold -= 5;
@@ -3500,11 +3500,11 @@ function BarFunc() {
     });
     ShopMenu.appendChild(input1);
 
-    var input2 = new InputButton("Medium meal 10g","+2kg fat")
+    const input2 = new InputButton("Medium meal 10g", "+2kg fat")
     input2.addEventListener("click", function () {
         if (player.Gold > 10) {
             player.Fat += 2;
-            /*  var BarMeal = {
+            /*  const BarMeal = {
                   Kcal: 1200,
                   KcalRate: 0.05
               }
@@ -3519,14 +3519,13 @@ function BarFunc() {
         }
     });
     ShopMenu.appendChild(input2);
-    var br = document.createElement("br");
-    ShopMenu.appendChild(br);
+    ShopMenu.appendChild(document.createElement("br"));
 
-    var input3 = new InputButton("Large meal 30g","+4kg fat");
+    const input3 = new InputButton("Large meal 30g", "+4kg fat");
     input3.addEventListener("click", function () {
         if (player.Gold > 30) {
             player.Fat += 4;
-            /*    var BarMeal = {
+            /*    const BarMeal = {
                     Kcal: 1800,
                     KcalRate: 0.1
                 }
@@ -3542,11 +3541,11 @@ function BarFunc() {
     });
     ShopMenu.appendChild(input3);
 
-    var input4 = new InputButton("Buffet 50g","+8kg fat");
+    const input4 = new InputButton("Buffet 50g", "+8kg fat");
     input4.addEventListener("click", function () {
         if (player.Gold > 10) {
             player.Fat += 8;
-            /*    var BarMeal = {
+            /*    const BarMeal = {
                     Kcal: 3200,
                     KcalRate: 0.2
                 }
@@ -3561,47 +3560,31 @@ function BarFunc() {
     ShopMenu.appendChild(input4);
     div.appendChild(ShopMenu);
 
-    var Leave = document.createElement("input");
-    Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
-    Leave.addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
-        Buildings.style.display = 'none';
-        while (Buildings.hasChildNodes()) {
-            Buildings.removeChild(Buildings.firstChild);
-        }
-        return;
-    });
     div.appendChild(ShopMenu);
-    div.appendChild(Leave);
+    div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
 }
 function BarberFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
-
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Barber");
+    const div = document.createElement("div"),
+        h1 = document.createElement("h1"),
+        h1text = document.createTextNode("Barber");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
     div.appendChild(p);
 
-    var DyeCon = document.createElement("div");
-    var CutCon = document.createElement("div");
+    const DyeCon = document.createElement("div"),
+        CutCon = document.createElement("div");
 
     function DyeButton(e, p) {
-        var dye = document.createElement("input");
+        const dye = document.createElement("input");
         dye.setAttribute("type", "button");
         dye.setAttribute("value", e);
         dye.addEventListener("click", function () {
@@ -3615,7 +3598,7 @@ function BarberFunc() {
     }
 
     function CutButton(e) {
-        var cut = document.createElement("input");
+        const cut = document.createElement("input");
         cut.setAttribute("type", "button");
         cut.setAttribute("value", e);
         cut.addEventListener("click", function () {
@@ -3626,7 +3609,7 @@ function BarberFunc() {
         })
         return cut;
     }
-    var input1 = document.createElement("input");
+    const input1 = document.createElement("input");
     input1.setAttribute("type", "button");
     input1.setAttribute("value", "Dye");
     input1.addEventListener("click", function () {
@@ -3638,8 +3621,8 @@ function BarberFunc() {
             while (CutCon.hasChildNodes()) {
                 CutCon.removeChild(CutCon.firstChild);
             };
-            var Dyes = ["Red", "Blonde", "Dark brown", "Black", "Pink", "Purple"];
-            for (var e of Dyes) {
+            const Dyes = ["Red", "Blonde", "Dark brown", "Black", "Pink", "Purple"];
+            for (const e of Dyes) {
                 DyeCon.appendChild(DyeButton(e, p));
             };
         }
@@ -3649,7 +3632,7 @@ function BarberFunc() {
     });
     div.appendChild(input1);
 
-    var input2 = document.createElement("input");
+    const input2 = document.createElement("input");
     input2.setAttribute("type", "button");
     input2.setAttribute("value", "Cut");
     input2.addEventListener("click", function () {
@@ -3665,7 +3648,7 @@ function BarberFunc() {
                 /*"Armpit length", "Mid-back length",*/
                 "Hip length", "Knee length", "Floor length"
             ];
-            for (var e of Cuts) {
+            for (const e of Cuts) {
                 CutCon.appendChild(CutButton(e, p));
             };
         }
@@ -3675,27 +3658,11 @@ function BarberFunc() {
     });
     div.appendChild(input2);
 
-    var br = document.createElement("br");
-    div.appendChild(br);
+    div.appendChild(document.createElement("br"));
     div.appendChild(DyeCon);
     div.appendChild(CutCon);
 
-    var Leave = document.createElement("input");
-    Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
-    Leave.addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
-        Buildings.style.display = 'none';
-        while (Buildings.hasChildNodes()) {
-            Buildings.removeChild(Buildings.firstChild);
-        }
-        return;
-    });
-    div.appendChild(Leave);
+    div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
 }
@@ -3709,9 +3676,7 @@ function BlackMarketFunc() {
         input2 = InputButton("Sell 50 femininity 100g"),
         input3 = InputButton("Sell 50 masculinity 100g"),
         input4 = InputButton("Why can't I buy?", "I see a plenty signs here of what you are buying, but I see nothing about what I can buy?"),
-        Content = Settings.EssenceAuto ? [p, PESS, input2, input3, input4, LeaveBuilding()] : [p, input1, limbcon, PESS, input2, input3, input4, LeaveBuilding()];
-
-
+        Content = [p, input1, limbcon, PESS, input2, input3, input4, LeaveBuilding()];
 
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
@@ -3742,11 +3707,11 @@ function BlackMarketFunc() {
 
     });
 
-    PESS.innerHTML = `Masc: ${player.Masc} Femi: ${player.Femi}`
+    PESS.innerHTML = `Masc: ${Math.round(player.Masc)} Femi: ${Math.round(player.Femi)}`
 
     input2.addEventListener("click", function () {
         const amount = Math.min(50, player.Femi);
-        if (typeof amount === "number") {
+        if (typeof amount === "number" && !Number.isNaN(amount)) {
             player.Femi -= amount;
             player.Gold += amount * 2;
         }
@@ -3758,7 +3723,7 @@ function BlackMarketFunc() {
 
     input3.addEventListener("click", function () {
         const amount = Math.min(50, player.Masc);
-        if (typeof amount === "number") {
+        if (typeof amount === "number" && !Number.isNaN(amount)) {
             player.Masc -= amount;
             player.Gold += amount * 2;
         }
@@ -3920,10 +3885,8 @@ function BlackMarketFunc() {
         limbcon.appendChild(Frag);
     }
 }
-
-
 document.getElementById("SacRaceEss").addEventListener("click", function () {
-    var SacMenu = document.getElementById("SacRaceEssMenu");
+    const SacMenu = document.getElementById("SacRaceEssMenu");
     if (SacMenu.style.display === 'grid') {
         SacMenu.style.display = 'none';
     } else {
@@ -3933,19 +3896,18 @@ document.getElementById("SacRaceEss").addEventListener("click", function () {
 });
 
 function SacRaces(amount = 50) {
-    var SacMenu = document.getElementById("SacRaceEssMenu");
-    var SacFrag = document.createDocumentFragment();
+    const SacMenu = document.getElementById("SacRaceEssMenu"),
+        SacFrag = document.createDocumentFragment();
     while (SacMenu.hasChildNodes()) {
         SacMenu.removeChild(SacMenu.firstChild);
     }
 
-    var Sliderdiv = document.createElement("DIV");
-
-    var SliderOut = document.createElement("P");
+    const Sliderdiv = document.createElement("DIV"),
+        SliderOut = document.createElement("P");
     SliderOut.innerHTML = "Donate: " + amount;
     Sliderdiv.appendChild(SliderOut);
 
-    var Slider = document.createElement("input");
+    const Slider = document.createElement("input");
     Slider.setAttribute("type", "range");
     Slider.min = 0;
     Slider.max = 1000;
@@ -3962,25 +3924,24 @@ function SacRaces(amount = 50) {
     Sliderdiv.appendChild(Slider);
     SacFrag.appendChild(Sliderdiv);
 
-    var Condiv = document.createElement("DIV");
+    const Condiv = document.createElement("DIV");
     Condiv.setAttribute("class", "TwoColumn");
-    var RaceEss = player.RaceEssence;
-    for (var e = 0; e < player.RaceEssence.length; e++) {
-        var div = document.createElement("DIV");
-        var Race = document.createElement("INPUT");
-        Race.setAttribute("type", "button");
-        Race.setAttribute("data-index", e);
-        Race.setAttribute("value", RaceEss[e].Race + " " + RaceEss[e].amount);
-        Race.addEventListener("click", function (event) {
-            var e = event.target.dataset.index; // lol, I think this works without problem?
+    const RaceEss = player.RaceEssence,
+        {
+            ChimeraShrine
+        } = player.Blessings;
+    for (let e = 0; e < player.RaceEssence.length; e++) {
+        const div = document.createElement("DIV"),
+            Race = InputButton(RaceEss[e].Race + " " + RaceEss[e].amount);
+        Race.addEventListener("click", function () {
             if (amount > RaceEss[e].amount) {
-                player.Blessings.ChimeraShrine.Donated += RaceEss[e].amount;
-                player.RaceEssence.splice(e, 1);
+                ChimeraShrine.Donated += RaceEss[e].amount;
+                RaceEss.splice(e, 1);
             } else {
-                player.Blessings.ChimeraShrine.Donated += amount;
+                ChimeraShrine.Donated += amount;
                 RaceEss[e].amount -= amount;
             }
-            player.Blessings.ChimeraShrine.Points = Math.floor(Math.sqrt(player.Blessings.ChimeraShrine.Donated));
+            ChimeraShrine.Points = Math.floor(Math.sqrt(ChimeraShrine.Donated));
             SacRaces(amount);
         });
         div.appendChild(Race)
@@ -3988,8 +3949,7 @@ function SacRaces(amount = 50) {
     }
     SacFrag.appendChild(Condiv);
     SacMenu.appendChild(SacFrag);
-
-}
+};
 // "Friendly" shop in dungeon area
 var items = { // export to items.js when done!
     itemTemplate: {
@@ -4013,38 +3973,38 @@ var items = { // export to items.js when done!
     }
 }
 function GymFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Gym");
+    const div = document.createElement("div"),
+        h1 = document.createElement("h1"),
+        h1text = document.createTextNode("Gym");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
 
     div.appendChild(p);
 
-    var row1 = document.createElement("div");
+    const row1 = document.createElement("div");
     row1.addEventListener("mouseover", function (e) {
         p.innerHTML = e.target.title;
     });
 
-    var input1 = InputButton("Train muscle", "Gain muscle.");
+    const input1 = InputButton("Train muscle", "Gain muscle.");
     input1.addEventListener("click", function () {
         if (Flags.LastTrain.Day == Flags.Date.Day && Flags.LastTrain.Month == Flags.Date.Month && Flags.LastTrain.Year == Flags.Date.Year) {
             p.innerHTML = "You have already trained today.";
         } else {
             if (player.Fat > (player.Weight * 0.1)) {
-                var gains = Math.min(player.Height / 80, Math.round((player.Height / (player.Muscle * 4)) * (player.Str / 20)));
-                var burn = 0 * Math.round(gains * 4);
+                const gains = Math.min(player.Height / 80, Math.round((player.Height / (player.Muscle * 4)) * (player.Str / 20)));
+                const burn = Math.round(gains / 4);
                 player.Muscle += gains;
                 player.Fat -= burn;
-                p.innerHTML = "You burn " + KgToPound(burn) + " of fat and gain " + KgToPound(gains) + " of muscle." +
-                    "<br>" + Math.round(player.Muscle);
+                p.innerHTML = `You burn ${KgToPound(burn)} of fat and gain ${KgToPound(gains)} of muscle.
+                <br>${Math.round(player.Muscle)}`;
                 Flags.LastTrain = {
                     Day: Flags.Date.Day,
                     Month: Flags.Date.Month,
@@ -4061,22 +4021,22 @@ function GymFunc() {
     });
     row1.appendChild(input1);
 
-    var input2 = InputButton("Cardio", "Lose some fat.");
+    const input2 = InputButton("Cardio", "Lose some fat.");
     input2.addEventListener("click", function () {
         if (player.Fat > player.Weight * 0.1) {
-            var burn = Math.round(player.Fat * 0.09);
+            const burn = Math.round(player.Fat * 0.09);
             player.Fat -= burn;
-            p.innerHTML = "You speent an hour doing cardio, when stepping on the scale in the shower room you are happy to see you lost " + KgToPound(burn) + "." +
-                "<br>" + Math.round(player.Fat);
+            p.innerHTML = `You speent an hour doing cardio, when stepping on the scale in the shower room you are 
+            happy to see you lost ${KgToPound(burn)}.<br>`; //${Math.round(player.Fat)}`;
         } else {
             p.innerHTML = "Buring more fat would be dangerous!";
         }
     });
     row1.appendChild(input2);
 
-    var input3 = InputButton("Lose muscle", "Sacrifice your gains to the shining swole bro.")
+    const input3 = InputButton("Lose muscle", "Sacrifice your gains to the shining swole bro.")
     input3.addEventListener("click", function () {
-        var Sacrifice = Math.round(player.Muscle / 10 * 10) / 10;
+        const Sacrifice = Math.round(player.Muscle / 10 * 10) / 10;
         player.Muscle -= Sacrifice;
         p.innerHTML = `Mesmerized by the swole bro’s flexing you cannot look away from show of displaying 
          his sculpted muscle in a routine of poses, once finished he thanks for the audience.<br><br>
@@ -4086,20 +4046,7 @@ function GymFunc() {
     row1.appendChild(input3);
 
     div.appendChild(row1);
-    var Leave = InputButton("Leave", "")
-    Leave.addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
-        Buildings.style.display = 'none';
-        while (Buildings.hasChildNodes()) {
-            Buildings.removeChild(Buildings.firstChild);
-        }
-        return;
-    });
-    div.appendChild(Leave);
+    div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
 }
@@ -4151,16 +4098,12 @@ function LocalPortalFunc() {
     input1.addEventListener("click", function () {
         player.Area = "First";
         player.Map = "RoadToHome";
-        battle = false;
-        DocId("map").style.display = 'block';
-        DocId("buttons").style.display = 'block';
-        DocId("EmptyButtons").style.display = 'none';
-        DocId("status").style.display = 'block';
         Buildings.style.display = 'none';
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
         }
         DisplayGame();
+        return;
     });
     input1.addEventListener("mouseover", function () {
 
@@ -4173,15 +4116,11 @@ function LocalPortalFunc() {
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
-            battle = false;
-            DocId("map").style.display = 'block';
-            DocId("buttons").style.display = 'block';
-            DocId("EmptyButtons").style.display = 'none';
-            DocId("status").style.display = 'block';
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
                 Buildings.removeChild(Buildings.firstChild);
             }
+            DisplayGame();
             return;
         });
         Container.push(Mountain);
@@ -4192,15 +4131,11 @@ function LocalPortalFunc() {
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
-            battle = false;
-            DocId("map").style.display = 'block';
-            DocId("buttons").style.display = 'block';
-            DocId("EmptyButtons").style.display = 'none';
-            DocId("status").style.display = 'block';
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
                 Buildings.removeChild(Buildings.firstChild);
-            }
+            };
+            DisplayGame();
             return;
         });
         BlackMarket.addEventListener("mouseover", function () {
@@ -4213,15 +4148,11 @@ function LocalPortalFunc() {
         MountainPlateau.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainPlateau";
-            battle = false;
-            DocId("map").style.display = 'block';
-            DocId("buttons").style.display = 'block';
-            DocId("EmptyButtons").style.display = 'none';
-            DocId("status").style.display = 'block';
             Buildings.style.display = 'none';
             while (Buildings.hasChildNodes()) {
                 Buildings.removeChild(Buildings.firstChild);
-            }
+            };
+            DisplayGame();
             return;
         });
         MountainPlateau.addEventListener("mouseover", function () {
@@ -4237,28 +4168,25 @@ function LocalPortalFunc() {
     Buildings.appendChild(InnerDiv);
     Buildings.style.display = "block";
 }
-// Test of new way to add quests, in order to avoid public vars.
+// Test of new way to add quests, in order to avoid public consts.
 function PregQuests() {
-    var div = document.getElementById("Buildings")
-    var x = document.createElement("div");
+    const div = document.getElementById("Buildings"),
+        x = document.createElement("div");
     while (div.hasChildNodes()) {
         div.removeChild(div.firstChild);
     }
 
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Quests");
+    const h1 = document.createElement("h1"),
+        h1text = document.createTextNode("Quests");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
 
     div.appendChild(p);
 
-    var Impreg = document.createElement("INPUT");
-    Impreg.setAttribute("type", "button");
-    Impreg.setAttribute("value", "Impreg");
-    Impreg.setAttribute("title", "Impregnate our maidens.");
+    const Impreg = InputButton("Impreg", "Impregnate our maidens.");
     Impreg.addEventListener("click", function () {
         while (x.hasChildNodes()) {
             x.removeChild(x.firstChild);
@@ -4270,11 +4198,9 @@ function PregQuests() {
         <br><br>
         It’s a shame he could not defeat her, she has grown bitter over the years and I believe that finally losing her virginity and learning the joys of motherhood would greatly improve her personalty.`;
 
-        var Accept = document.createElement("INPUT");
-        Accept.setAttribute("type", "button");
-        Accept.setAttribute("value", "Accept");
+        const Accept = InputButton("Accept");
         Accept.addEventListener("click", function () {
-            var Quest = {
+            const Quest = {
                 Name: "Impregnate maidens",
                 Count: 0,
                 Completed: false
@@ -4282,9 +4208,7 @@ function PregQuests() {
             player.Quests.push(Quest);
             PregQuests();
         });
-        var Decline = document.createElement("INPUT");
-        Decline.setAttribute("type", "button");
-        Decline.setAttribute("value", "Decline");
+        const Decline = InputButton("Decline");
         Decline.addEventListener("click", function () {
             PregQuests();
         });
@@ -4292,34 +4216,26 @@ function PregQuests() {
         x.appendChild(Decline);
     });
 
-    var ImpregReward = document.createElement("INPUT");
-    ImpregReward.setAttribute("type", "button");
-    ImpregReward.setAttribute("value", "Impreg reward");
-    ImpregReward.setAttribute("title", "Impregnate our maidens.");
+    const ImpregReward = InputButton("Impreg reward", "Impregnate our maidens.");
     ImpregReward.addEventListener("click", function () {
-        var index = player.Quests.findIndex(e => e.Name == "Impregnate maidens");
+        const index = player.Quests.findIndex(e => e.Name == "Impregnate maidens");
         player.Blessings.MountainShrine.Points += player.Quests[index].Count;
         player.Quests.splice(index, 1);
         PregQuests();
     });
 
-    var GetImpreg = document.createElement("INPUT");
-    GetImpreg.setAttribute("type", "button");
-    GetImpreg.setAttribute("value", "Get Impreg");
-    GetImpreg.setAttribute("title", "Get impregnated.");
+    const GetImpreg = InputButton("Get Impreg", "Get impregnated.");
     GetImpreg.addEventListener("click", function () {
         while (x.hasChildNodes()) {
             x.removeChild(x.firstChild);
         }
 
-        p.innerHTML = "Get impregnated while carrying our goddesses blessing," +
-            " when the child is born we will send a cartage to collect so it can be raised here at our temple."
+        p.innerHTML = `Get impregnated while carrying our goddesses blessing, 
+        when the child is born we will send a cartage to collect so it can be raised here at our temple.`
 
-        var Accept = document.createElement("INPUT");
-        Accept.setAttribute("type", "button");
-        Accept.setAttribute("value", "Accept");
+        const Accept = InputButton("Accept");
         Accept.addEventListener("click", function () {
-            var Quest = {
+            const Quest = {
                 Name: "Get Impregnated",
                 Count: 0,
                 Completed: false
@@ -4327,9 +4243,7 @@ function PregQuests() {
             player.Quests.push(Quest);
             PregQuests();
         });
-        var Decline = document.createElement("INPUT");
-        Decline.setAttribute("type", "button");
-        Decline.setAttribute("value", "Decline");
+        const Decline = InputButton("Decline");
         Decline.addEventListener("click", function () {
             PregQuests();
         });
@@ -4337,12 +4251,9 @@ function PregQuests() {
         x.appendChild(Decline);
     });
 
-    var GetImpregReward = document.createElement("INPUT");
-    GetImpregReward.setAttribute("type", "button");
-    GetImpregReward.setAttribute("value", "Get Impreg");
-    GetImpregReward.setAttribute("title", "Get impregnated.");
+    const GetImpregReward = InputButton("Get Impreg", "Get impregnated.");
     GetImpregReward.addEventListener("click", function () {
-        var index = player.Quests.findIndex(e => e.Name == "Get Impregnated");
+        const index = player.Quests.findIndex(e => e.Name == "Get Impregnated");
         player.Blessings.MountainShrine.Points += player.Quests[index].Count * 7; // Getting yourself pregnant is harder to repeat therefore higher reward.
         player.Quests.splice(index, 1);
         PregQuests();
@@ -4358,41 +4269,37 @@ function PregQuests() {
         x.appendChild(ImpregReward);
     }
 
-    var back = document.createElement("input");
-    back.setAttribute("type", "button");
-    back.setAttribute("value", "Back");
+    const back = InputButton("Back");
     back.addEventListener("click", function () {
         MountainShrineFunc();
     })
 
-    var row1 = document.createElement("div");
+    const row1 = document.createElement("div");
     row1.appendChild(x);
     div.appendChild(row1);
-    var row2 = document.createElement("div");
+    const row2 = document.createElement("div");
     row2.appendChild(back);
     div.appendChild(row2);
 }
 
 function MountainShrineFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Shrine");
+    const div = document.createElement("div"),
+        h1 = document.createElement("h1"),
+        h1text = document.createTextNode("Shrine");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
 
     div.appendChild(p);
 
-    var row1 = document.createElement("div");
-    var input1 = document.createElement("input");
-    input1.setAttribute("type", "button");
-    input1.setAttribute("value", "Blessings");
+    const row1 = document.createElement("div"),
+        input1 = InputButton("Blessings");
     input1.addEventListener("click", function () {
         FertTempleBlessings();
     });
@@ -4400,9 +4307,7 @@ function MountainShrineFunc() {
 
     });
     row1.appendChild(input1);
-    var input2 = document.createElement("input");
-    input2.setAttribute("type", "button");
-    input2.setAttribute("value", "Quests");
+    const input2 = InputButton("Quests");
     input2.addEventListener("click", function () {
         PregQuests();
     });
@@ -4413,56 +4318,39 @@ function MountainShrineFunc() {
 
     div.appendChild(row1);
 
-    var Leave = document.createElement("input");
-    Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
-    Leave.addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
-        Buildings.style.display = 'none';
-        while (Buildings.hasChildNodes()) {
-            Buildings.removeChild(Buildings.firstChild);
-        }
-        return;
-    });
-    div.appendChild(Leave);
+    div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
 };
 
 function FertTempleBlessings(text = "") {
-    var div = document.getElementById("Buildings")
-    var x = document.createElement("div");
+    const div = document.getElementById("Buildings"),
+        x = document.createElement("div");
     while (div.hasChildNodes()) {
         div.removeChild(div.firstChild);
     }
 
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Quests");
+    const h1 = document.createElement("h1"),
+        h1text = document.createTextNode("Quests");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var h5 = document.createElement("h5");
-    h5.innerHTML = Flags.Impregnations + Flags.Pregnations * 5 + player.Blessings.MountainShrine.Points + " faith";
+    const PregPoints = Flags.Impregnations + Flags.Pregnations * 5 + player.Blessings.MountainShrine.Points;
+
+    const h5 = document.createElement("h5");
+    h5.innerHTML = `${PregPoints} faith`;
     div.appendChild(h5);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
     p.innerHTML = text;
 
     div.appendChild(p);
 
-    var PregPoints = Flags.Impregnations + Flags.Pregnations * 5 + player.Blessings.MountainShrine.Points;
 
-    var Incubator = document.createElement("input");
-    Incubator.setAttribute("value", "Incubator");
-    Incubator.setAttribute("type", "button");
-    Incubator.setAttribute("title", "Makes your pregnancy faster.");
+    const Incubator = InputButton("Incubator +" + player.Blessings.MountainShrine.Incubator, "Makes your pregnancy faster.");
     Incubator.addEventListener("click", function () {
-        var cost = player.Blessings.MountainShrine.Incubator + 1
+        const cost = player.Blessings.MountainShrine.Incubator + 1
         if (PregPoints > cost) {
             player.Blessings.MountainShrine.Incubator++;
             FertTempleBlessings("I pray for you to parent healthy children.");
@@ -4472,12 +4360,9 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(Incubator);
 
-    var IncubatorSeed = document.createElement("input");
-    IncubatorSeed.setAttribute("value", "Mature seeds");
-    IncubatorSeed.setAttribute("type", "button");
-    IncubatorSeed.setAttribute("title", "Makes your servant's pregnancies faster.");
+    const IncubatorSeed = InputButton("Mature seeds +" + player.Blessings.MountainShrine.IncubatorSeed, "Makes your servant's pregnancies faster.");
     IncubatorSeed.addEventListener("click", function () {
-        var cost = player.Blessings.MountainShrine.IncubatorSeed + 1;
+        const cost = player.Blessings.MountainShrine.IncubatorSeed + 1;
         if (PregPoints > cost) {
             player.Blessings.MountainShrine.IncubatorSeed++;
             FertTempleBlessings("I pray for you to parent healthy children.");
@@ -4487,12 +4372,9 @@ function FertTempleBlessings(text = "") {
     })
     div.appendChild(IncubatorSeed);
 
-    var Broodmother = document.createElement("input");
-    Broodmother.setAttribute("value", "Broodmother");
-    Broodmother.setAttribute("type", "button");
-    Broodmother.setAttribute("title", "Chance for twins or more for player.");
+    const Broodmother = InputButton("Broodmother +" + player.Blessings.MountainShrine.Broodmother, "Chance for twins or more for player.");
     Broodmother.addEventListener("click", function () {
-        var cost = player.Blessings.MountainShrine.Broodmother * 2 + 2;
+        const cost = player.Blessings.MountainShrine.Broodmother * 2 + 2;
         if (PregPoints > cost) {
             player.Blessings.MountainShrine.Broodmother++;
             FertTempleBlessings("I pray for you to parent healthy children.");
@@ -4502,12 +4384,9 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(Broodmother);
 
-    var BroodmotherSeed = document.createElement("input");
-    BroodmotherSeed.setAttribute("value", "Branching seeds");
-    BroodmotherSeed.setAttribute("type", "button");
-    BroodmotherSeed.setAttribute("title", "Chance for twins or more for others.");
+    const BroodmotherSeed = InputButton("Branching seeds +" + player.Blessings.MountainShrine.BroodmotherSeed, "Chance for twins or more for others.");
     BroodmotherSeed.addEventListener("click", function () {
-        var cost = player.Blessings.MountainShrine.BroodmotherSeed * 2 + 2;
+        const cost = player.Blessings.MountainShrine.BroodmotherSeed * 2 + 2;
         if (PregPoints > cost) {
             player.Blessings.MountainShrine.BroodmotherSeed++;
             FertTempleBlessings("I pray for you to parent healthy children.");
@@ -4517,12 +4396,9 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(BroodmotherSeed);
 
-    var MalePreg = document.createElement("input");
-    MalePreg.setAttribute("value", "Anal Incubator");
-    MalePreg.setAttribute("type", "button");
-    MalePreg.setAttribute("title", "Enables player non-female pregnancy.");
+    const MalePreg = InputButton("Anal Incubator +" + player.Blessings.MountainShrine.Malepreg, "Enables player non-female pregnancy.");
     MalePreg.addEventListener("click", function () {
-        var cost = player.Blessings.MountainShrine.Malepreg * 5;
+        const cost = player.Blessings.MountainShrine.Malepreg * 5;
         if (PregPoints > cost) {
             player.Blessings.MountainShrine.Malepreg++;
             FertTempleBlessings("I pray for you to parent healthy children.");
@@ -4532,34 +4408,32 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(MalePreg);
 
-    var back = document.createElement("input");
-    back.setAttribute("type", "button");
-    back.setAttribute("value", "Back");
+    const back = InputButton("Back");
     back.addEventListener("click", function () {
         MountainShrineFunc();
     });
     div.appendChild(back);
 }
 function PortalShopFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
+    const div = document.createElement("div");
 
     if (window.innerHeight > 600) { // Skip title on smaller screens
-        var h1 = document.createElement("h1");
-        var h1text = document.createTextNode("Portal shop");
+        const h1 = document.createElement("h1"),
+            h1text = document.createTextNode("Portal shop");
         h1.appendChild(h1text);
         div.appendChild(h1);
     }
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
 
     div.appendChild(p);
 
-    var input1 = InputButton("Pocket portal 1000g", "Are you tired of walking home? Then pocket portal is for you, now with 99 uses! #Note seller is not responsible if you waste them by using them without owning a home portal.");
+    const input1 = InputButton("Pocket portal 1000g", "Are you tired of walking home? Then pocket portal is for you, now with 99 uses! #Note seller is not responsible if you waste them by using them without owning a home portal.");
     input1.addEventListener("click", function () {
         if (player.Gold >= 1000) {
             player.Gold -= 1000;
@@ -4577,7 +4451,7 @@ function PortalShopFunc() {
     div.appendChild(input1);
 
     if (House.Portal.Mountain === false) {
-        var input2 = InputButton("Portal to mountain region 500g", "A beautiful land with wonderful views, but be vary as it’s the home for plenty dangerous races and tribes.");
+        const input2 = InputButton("Portal to mountain region 500g", "A beautiful land with wonderful views, but be consty as it’s the home for plenty dangerous races and tribes.");
         input2.addEventListener("click", function () {
             if (player.Gold >= 500) {
                 if (House.Portal.Mountain) {
@@ -4596,13 +4470,12 @@ function PortalShopFunc() {
             }
         });
         input2.addEventListener("mouseover", function () {
-            p.innerHTML = "A beautiful land with wonderful views, but be vary as it’s the home for plenty dangerous races and tribes."
+            p.innerHTML = "A beautiful land with wonderful views, but be consty as it’s the home for plenty dangerous races and tribes."
         });
         div.appendChild(input2);
     }
 
-    var br = document.createElement("br");
-    div.appendChild(br);
+    div.appendChild(document.createElement("br"));
 
     div.appendChild(LeaveBuilding()); // Call to leave building function; returns a leave button
 
@@ -4610,89 +4483,85 @@ function PortalShopFunc() {
     document.getElementById("Buildings").style.display = 'block';
 }
 function ShopFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
-
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Shop");
+    const div = document.createElement("div"),
+        h1 = document.createElement("h1"),
+        h1text = document.createTextNode("Shop");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
     div.appendChild(p);
 
-    var innerdiv = document.createElement("div");
+    const innerdiv = document.createElement("div");
 
-    var StrPotion = InputButton("Potion of Strength 100g");
+    const StrPotion = InputButton("Potion of Strength 100g");
     StrPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Str++
             player.Gold -= 100;
-            p.innerHTML = "You pay 100gold proced to drink the potion, once the fluid enter your stomach you can feel your body becoming stronger."
-            p.innerHTML += "<br>" + player.Str;
+            p.innerHTML = `You pay 100gold proced to drink the potion, once the fluid enter your stomach you can feel your body 
+            becoming stronger.<br>${player.Str}`;
         }
     });
 
-    var ChaPotion = InputButton("Potion of Charm 100g");
+    const ChaPotion = InputButton("Potion of Charm 100g");
     ChaPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Charm++
             player.Gold -= 100;
-            p.innerHTML = "You pay 100gold proced to drink the potion, once the fluid enter your stomach you can feel your charms grow."
-            p.innerHTML += "<br>" + player.Charm;
+            p.innerHTML = `You pay 100gold proced to drink the potion, once the fluid enter your stomach you can feel your 
+            charms grow.<br>${player.Charm}`;
         }
     });
     innerdiv.appendChild(StrPotion);
     innerdiv.appendChild(ChaPotion);
-    var br = document.createElement("br")
-    innerdiv.appendChild(br);
+    innerdiv.appendChild(document.createElement("br"));
 
-    var EndPotion = InputButton("Potion of Endurance 100g")
+    const EndPotion = InputButton("Potion of Endurance 100g")
     EndPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.End++
             player.MaxHealth += 5; // This is bad, need something that mod maxhealth dependent on end and other buffs.
             player.Gold -= 100;
-            p.innerHTML = "You pay 100gold proced to drink the potion, once the fluid enter your stomach you can feel your endurance growing."
-            p.innerHTML += "<br>" + player.End;
+            p.innerHTML = `You pay 100gold proced to drink the potion, once the fluid enter your stomach you can feel 
+            your endurance growing.<br>${player.End}`;
         }
     });
-    var IntPotion = InputButton("Potion of Intelligence 100g")
+    const IntPotion = InputButton("Potion of Intelligence 100g")
     IntPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Int++
             player.Gold -= 100;
-            p.innerHTML = "You pay 100gold proced to drink the potion, once the fluid enter your stomach you can feel your mind becoming sharper."
-            p.innerHTML += "<br>" + player.Int;
+            p.innerHTML = `You pay 100gold proced to drink the potion, once the fluid enter your stomach you can 
+            feel your mind becoming sharper.<br>${player.Int}`;
         }
     });
     innerdiv.appendChild(EndPotion);
     innerdiv.appendChild(IntPotion);
-    var br2 = document.createElement("br")
-    innerdiv.appendChild(br2);
+    innerdiv.appendChild(document.createElement("br"));
 
-
-    var WillPotion = InputButton("Potion of Willpower 100g")
+    const WillPotion = InputButton("Potion of Willpower 100g")
     WillPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Will++
             player.MaxWillHealth += 5;
             player.Gold -= 100;
-            p.innerHTML = "You pay 100gold proced to drink the potion, once the fluid enter your stomach you can feel your willpower growing."
-            p.innerHTML += "<br>" + player.Will;
+            p.innerHTML = `You pay 100gold proced to drink the potion, once the fluid enter your stomach you can 
+            feel your willpower growing.<br>${player.Will}`;
         }
     });
-    var SexPotion = InputButton("Potion of Sexskill 100g"); // Needs to be renamed, sounds stupid.
+    const SexPotion = InputButton("Potion of Sexskill 100g"); // Needs to be renamed, sounds stupid.
     SexPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.SexSkill++
             player.Gold -= 100;
-            p.innerHTML = "You pay 100gold proced to drink the potion, once the fluid enter your stomach you get a feeling that somehow your bedskills have grown."
-            p.innerHTML += "<br>" + player.SexSkill;
+            p.innerHTML = `You pay 100gold proced to drink the potion, once the fluid enter your stomach you get 
+            a feeling that somehow your bedskills have grown.<br>${player.SexSkill}`;
         }
     });
     innerdiv.appendChild(WillPotion);
@@ -4700,20 +4569,7 @@ function ShopFunc() {
 
     div.appendChild(innerdiv);
 
-    var Leave = InputButton("Leave");
-    Leave.addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
-        Buildings.style.display = 'none';
-        while (Buildings.hasChildNodes()) {
-            Buildings.removeChild(Buildings.firstChild);
-        }
-        return;
-    });
-    div.appendChild(Leave);
+    div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
 } // Saved 13 lines with inputbutton, wow... but looks better to me atleast!    
@@ -4898,26 +4754,26 @@ function FarmBarnFunc() {
     Buildings.appendChild(div);
     DocId("Buildings").style.display = 'block';
 }
-// Test of new way to add quests, in order to avoid public vars.
+// Test of new way to add quests, in order to avoid public consts.
 function TownHallQuests(text = "") {
-    var div = document.getElementById("Buildings");
+    const div = document.getElementById("Buildings");
     while (div.hasChildNodes()) {
         div.removeChild(div.firstChild);
     }
 
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Quests");
+    const h1 = document.createElement("h1"),
+        h1text = document.createTextNode("Quests");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
     div.appendChild(p);
     p.innerHTML = text;
 
-    var buttons = document.createElement("div");
+    const buttons = document.createElement("div");
 
-    var BanditLord = InputButton("BanditLord");
+    const BanditLord = InputButton("BanditLord");
     BanditLord.addEventListener("click", function () {
         if (Flags.BanditLord) {
             p.innerHTML = "The bandit are still humiliated from the defeat of their lord, but if you are willing please defeat them again to make sure they don't regain their confidence."
@@ -4928,9 +4784,9 @@ function TownHallQuests(text = "") {
         while (buttons.hasChildNodes()) {
             buttons.removeChild(buttons.firstChild);
         }
-        var Accept = InputButton("Accept");
+        const Accept = InputButton("Accept");
         Accept.addEventListener("click", function () {
-            var Quest = {
+            const Quest = {
                 Name: "BanditLord",
                 Count: 0,
                 Completed: false
@@ -4938,22 +4794,22 @@ function TownHallQuests(text = "") {
             player.Quests.push(Quest);
             TownHallQuests();
         });
-        var Decline = InputButton("Decline");
+        const Decline = InputButton("Decline");
         Decline.addEventListener("click", function () {
             TownHallQuests();
         });
         buttons.appendChild(Accept);
         buttons.appendChild(Decline);
     });
-    var ElfHunt = InputButton("Elf hunt")
+    const ElfHunt = InputButton("Elf hunt")
     ElfHunt.addEventListener("click", function () {
         p.innerHTML = "The elves to the south is becoming a problem, defeat atleast three of them and you will be awarded."
         while (buttons.hasChildNodes()) {
             buttons.removeChild(buttons.firstChild);
         }
-        var Accept = InputButton("Accept");
+        const Accept = InputButton("Accept");
         Accept.addEventListener("click", function () {
-            var Quest = {
+            const Quest = {
                 Name: "ElfHunt",
                 Count: 0,
                 Completed: false
@@ -4961,7 +4817,7 @@ function TownHallQuests(text = "") {
             player.Quests.push(Quest);
             TownHallQuests();
         });
-        var Decline = InputButton("Decline")
+        const Decline = InputButton("Decline")
         Decline.addEventListener("click", function () {
             TownHallQuests();
         });
@@ -4971,33 +4827,29 @@ function TownHallQuests(text = "") {
     if (!player.Quests.some(e => e.Name === "ElfHunt")) {
         buttons.appendChild(ElfHunt);
     } else if (player.Quests.some(e => e.Name === "ElfHunt" && e.Completed)) {
-        var ElfHuntReward = InputButton("Elf hunt reward")
+        const ElfHuntReward = InputButton("Elf hunt reward")
         ElfHuntReward.addEventListener("click", function () {
-            var Tier = 1;
-            for (var i = 0; i < player.Quests.length; i++) {
-                if (player.Quests[i].Name === "ElfHunt") {
-                    if (player.Quests[i].hasOwnProperty("Tier")) {
-                        Tier += Math.pow(2, player.Quests[i].Tier - 1)
-                    }
-                    player.Quests.splice(i, 1);
-                }
-            }
-            player.Exp += 50 * Tier;
-            player.Gold += 100 * Tier;
-            Flags.FirstCityLike += 1 * Tier;
-            TownHallQuests("You are rewarded: " + 50 * Tier + "Exp and " + 100 * Tier + "gold");
+            const ElfIndex = [player.Quests.findIndex((src) => src.Name === "ElfHunt")];
+            Tier = player.Quests[ElfIndex].hasOwnProperty("Tier") ?
+                player.Quests[ElfIndex].Tier : 0,
+                Multi = Math.pow(2, Tier - 1)
+
+            player.Quests.splice(ElfIndex, 1);
+            player.Exp += 50 * Multi;
+            player.Gold += 100 * Multi;
+            Flags.FirstCityLike += 1 * Multi;
+            TownHallQuests(`You are rewarded: ${50 * Multi} Exp and ${100 * Multi} gold`);
         });
         buttons.appendChild(ElfHuntReward);
-
-    }
+    };
     if (!player.Quests.some(e => e.Name === "BanditLord")) {
         buttons.appendChild(BanditLord);
     } else if (player.Quests.some(e => e.Name === "BanditLord" && e.Completed)) {
-        var BanditLordReward = InputButton("Banditlord reward")
+        const BanditLordReward = InputButton("Banditlord reward")
         BanditLordReward.addEventListener("click", function () {
             player.Exp += 300;
             player.Gold += 500;
-            for (var i = 0; i < player.Quests.length; i++) {
+            for (let i = 0; i < player.Quests.length; i++) {
                 if (player.Quests[i].Name === "BanditLord") {
                     player.Quests.splice(i, 1);
                 }
@@ -5014,7 +4866,7 @@ function TownHallQuests(text = "") {
         buttons.appendChild(BanditLordReward);
     };
 
-    var back = InputButton("Back");
+    const back = InputButton("Back");
     back.addEventListener("click", function () {
         TownhallFunc();
     });
@@ -5024,33 +4876,32 @@ function TownHallQuests(text = "") {
 }
 
 function TownhallFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
 
-    var div = document.createElement("div");
-
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Townhall");
+    const div = document.createElement("div"),
+        h1 = document.createElement("h1"),
+        h1text = document.createTextNode("Townhall");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
-    p.innerHTML = "Inside the local town hall there isn’t much to see, for being a town hall it’s honestly not" +
-        " that impressive at all. But this is just a small outpost after all, hopefully they do at least have work for you."
+    p.innerHTML = `Inside the local town hall there isn’t much to see, for being a town hall it’s honestly not that 
+    impressive at all. But this is just a small outskirt village after all, hopefully they do at least have work for you.`
     div.appendChild(p);
 
-    var row1 = document.createElement("div");
-    var input1 = InputButton("Quests")
+    const row1 = document.createElement("div"),
+        input1 = InputButton("Quests")
     input1.addEventListener("click", function () {
         TownHallQuests();
     });
     row1.appendChild(input1);
 
     if (House.Owned === false && Flags.BanditLord) {
-        var input2 = InputButton("Buy house 100g")
+        const input2 = InputButton("Buy house 100g")
         input2.addEventListener("click", function () {
             if (player.Gold >= 100) {
                 House.Owned = true;
@@ -5063,13 +4914,13 @@ function TownhallFunc() {
         row1.appendChild(input2);
     }
 
-    var input3 = InputButton("Services")
+    const input3 = InputButton("Services")
     input3.addEventListener("click", function () {
         TownHallService();
     });
     row1.appendChild(input3);
 
-    var input4 = InputButton("(placeholder)Reputation");
+    const input4 = InputButton("(placeholder)Reputation");
     input4.addEventListener("click", function () {
         p.innerHTML = Flags.FirstCityLike + "<br> They temp temp you.";
     });
@@ -5083,54 +4934,53 @@ function TownhallFunc() {
 }
 
 function TownHallService() {
-    var div = document.getElementById("Buildings");
+    const div = document.getElementById("Buildings");
     while (div.hasChildNodes()) {
         div.removeChild(div.firstChild);
     }
 
     // Container for services, atm there is only name change
-    var inputs = document.createElement("div");
+    const inputs = document.createElement("div");
 
     // Container for accept and back [Yes/No]
-    var YN = document.createElement("div");
-
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Service");
+    const YN = document.createElement("div"),
+     h1 = document.createElement("h1"),
+      h1text = document.createTextNode("Service");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
     div.appendChild(p);
 
-    var CN = InputButton("Change name");
+    const CN = InputButton("Change name");
     CN.addEventListener("click", function () {
         while (inputs.hasChildNodes()) {
             inputs.removeChild(inputs.firstChild);
         }
-        var FName = document.createElement("input");
+        const FName = document.createElement("input");
         FName.setAttribute("type", "text");
         FName.setAttribute("value", player.Name);
         FName.setAttribute("id", "ServiceFName724");
 
-        var FNameLabel = document.createElement("label");
+        const FNameLabel = document.createElement("label");
         FNameLabel.setAttribute("for", "ServiceFName724");
         FNameLabel.innerHTML = ("First name:")
         inputs.appendChild(FNameLabel);
         inputs.appendChild(FName);
 
-        var LName = document.createElement("input");
+        const LName = document.createElement("input");
         LName.setAttribute("type", "text");
         LName.setAttribute("value", player.LastName);
         LName.setAttribute("id", "ServiceLName244");
 
-        var LNameLabel = document.createElement("label");
+        const LNameLabel = document.createElement("label");
         LNameLabel.setAttribute("for", "ServiceLName244")
         LNameLabel.innerHTML = "Last name:";
         inputs.appendChild(LNameLabel);
         inputs.appendChild(LName);
 
-        var Accept = InputButton("Accept");
+        const Accept = InputButton("Accept");
         Accept.addEventListener("click", function () {
             player.Name = FName.value;
             player.LastName = LName.value;
@@ -5140,7 +4990,7 @@ function TownHallService() {
     });
     inputs.appendChild(CN);
 
-    var back = InputButton("Back");
+    const back = InputButton("Back");
     back.addEventListener("click", function () {
         TownhallFunc();
     });
@@ -5151,27 +5001,27 @@ function TownHallService() {
     div.appendChild(YN);
 }
 function WitchHutFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Witch hut");
+    const div = document.createElement("div"),
+        h1 = document.createElement("h1"),
+        h1text = document.createTextNode("Witch hut");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
 
     div.appendChild(p);
 
-    var row1 = document.createElement("div");
-    row1.addEventListener("mouseover", function(e) {
+    const row1 = document.createElement("div");
+    row1.addEventListener("mouseover", function (e) {
         p.innerHTML = e.target.title;
     })
 
-    var elf = new InputButton("Elf delight 200g", "Tired of being a human? Do you feel a desire to possess pointy ears? Become an elf today!")
+    const elf = new InputButton("Elf delight 200g", "Tired of being a human? Do you feel a desire to possess pointy ears? Become an elf today!")
     elf.addEventListener("click", function () {
         if (player.Gold >= 200) {
             player.Gold -= 200;
@@ -5183,7 +5033,7 @@ function WitchHutFunc() {
     });
     row1.appendChild(elf);
 
-    var Perkup = new InputButton("Perk Up 1000g", "This pill glows green and yellow, and seems to hover slightly above your hand. Eat it to get a perk point!")
+    const Perkup = new InputButton("Perk Up 1000g", "This pill glows green and yellow, and seems to hover slightly above your hand. Eat it to get a perk point!")
     Perkup.addEventListener("click", function () {
         if (player.Gold >= 1000) {
             player.Gold -= 1000;
@@ -5196,7 +5046,7 @@ function WitchHutFunc() {
     row1.appendChild(Perkup);
 
     if (Settings.Vore) {
-        var VoreUp = InputButton("Eating Up 1000g", "This red pill makes your mouth water and stomach growl. Eat it for an other perk point! (Below it is a little disclaimer: 'store owner not responsible for ineffective pills.')")
+        const VoreUp = InputButton("Eating Up 1000g", "This red pill makes your mouth water and stomach growl. Eat it for an other perk point! (Below it is a little disclaimer: 'store owner not responsible for ineffective pills.')")
         // Move to more fitting place and need new title
         // title ideas
         // Ilegal item, made from havrested souls from the last great battle.
@@ -5212,7 +5062,7 @@ function WitchHutFunc() {
         row1.appendChild(VoreUp);
     }
 
-    var Fireball = new InputButton("Fireball 500g", "Basic quick course on elemental magic, includes how to cast a fireball.")
+    const Fireball = new InputButton("Fireball 500g", "Basic quick course on elemental magic, includes how to cast a fireball.")
     //Fireball.setAttribute("title", "This little ball allows you to cast a single fireball spell per ball you own, per battle! (Don't set yourself on fire, please.)");
     Fireball.addEventListener("click", function () {
         if (!Array.isArray(player.Spells)) { // Remove later
@@ -5233,7 +5083,7 @@ function WitchHutFunc() {
     });
     row1.appendChild(Fireball);
 
-    var HumanTF = new InputButton("Potion of Humanity 250g", "Do you not remember who you are anymore? Feel like you have lost you humanity?");
+    const HumanTF = new InputButton("Potion of Humanity 250g", "Do you not remember who you are anymore? Feel like you have lost you humanity?");
     HumanTF.addEventListener("click", function () {
         if (player.Gold >= 250) {
             player.Gold -= 250;
@@ -5245,17 +5095,17 @@ function WitchHutFunc() {
     });
     row1.appendChild(HumanTF);
 
-    var EyeColor = new InputButton("Eye color 50g", "Not happy with the eyes you were born with?");
+    const EyeColor = new InputButton("Eye color 50g", "Not happy with the eyes you were born with?");
     EyeColor.addEventListener("click", function () {
-        var row2 = document.createElement("div");
-        row2.addEventListener("mouseover", function(e) {
+        const row2 = document.createElement("div");
+        row2.addEventListener("mouseover", function (e) {
             p.innerHTML = e.target.title;
         })
-        var EyeColors = [
+        const EyeColors = [
             "brown", "hazel", "blue", "green", "silver", "amber"
         ]
-        for (var e of EyeColors) {
-            var inputs = new InputButton(e.Capitalize(), " " + e.Capitalize() + " eyes")
+        for (let e of EyeColors) {
+            const inputs = new InputButton(e.Capitalize(), " " + e.Capitalize() + " eyes")
             inputs.addEventListener("click", function (a) {
                 if (player.Gold >= 50) {
                     player.Face.Eyes = a.target.value.toLowerCase();
@@ -5267,7 +5117,7 @@ function WitchHutFunc() {
             row2.appendChild(inputs);
         };
 
-        var close = new InputButton("Close", "Close eye color menu");
+        const close = new InputButton("Close", "Close eye color menu");
         close.addEventListener("click", function () {
             WitchHutFunc();
         })
@@ -5276,23 +5126,8 @@ function WitchHutFunc() {
     });
     row1.appendChild(EyeColor);
 
-    var Leave = document.createElement("input");
-    Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
-    Leave.addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
-        Buildings.style.display = 'none';
-        while (Buildings.hasChildNodes()) {
-            Buildings.removeChild(Buildings.firstChild);
-        }
-        return;
-    });
     div.appendChild(row1);
-    div.appendChild(Leave);
+    div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
 }
@@ -5301,12 +5136,12 @@ document.getElementById("WitchShop").addEventListener("click", function (e) {
     if (e.target.type == "button") {
         Chosen = String(e.target.id);
         if (Chosen == "Grow" && player.Gold >= 50) {
-            var growth = Math.round((180 / player.Height) * 100) / 100;
+            const growth = Math.round((180 / player.Height) * 100) / 100;
             player.Gold -= 50;
             player.Height += growth;
             document.getElementById("WitchShopText").innerHTML = "You grow " + growth + "cm.";
         } else if (Chosen == "Shrink" && player.Gold >= 50) {
-            var shrunk = Math.round((player.Height / 100) * 100) / 100;
+            const shrunk = Math.round((player.Height / 100) * 100) / 100;
             player.Gold -= 50;
             player.Height -= shrunk;
             document.getElementById("WitchShopText").innerHTML = "You shrink " + shrunk + "cm.";
@@ -5328,13 +5163,13 @@ document.getElementById("WitchShop").addEventListener("click", function (e) {
             document.getElementById("WitchShopText").innerHTML = "You feel your virility decreasing";
         } else if (Chosen == "CumRateAdd" && player.Gold >= 100 && player.Balls.length > 0) {
             player.Gold -= 100;
-            for (var e = 0; e < player.Balls.length; e++) {
+            for (let e = 0; e < player.Balls.length; e++) {
                 player.Balls[e].CumRate += 0.1;
             }
             document.getElementById("WitchShopText").innerHTML = "You get a tingling feeling in your balls, you think it works!"
         } else if (Chosen == "CumRateSub" && player.Gold >= 20 && player.Balls.length > 0) {
             player.Gold -= 20;
-            for (var e = 0; e < player.Balls.length; e++) {
+            for (let e = 0; e < player.Balls.length; e++) {
                 player.Balls[e].CumRate -= 0.5;
             }
             document.getElementById("WitchShopText").innerHTML = "You get a strange feeling in your balls, you think it works!"
@@ -5361,10 +5196,49 @@ function BattleSetup(who) {
     while (BattleLog.length > 0) {
         BattleLog.pop();
     };
-    UpdateStats(true);
+    Combatants = [];
+    CombatTurn = 1;
+    CombatantIndex = -1;
+    Combatants.push(player);
+    // push player teammates
+    if (Array.isArray(who)) {
+        for (let e of who) {
+            Combatants.push(e);
+        };
+    } else {
+        Combatants.push(who);
+    };
+    // Push enemy teammates 
+    UpdateStats();
 };
 
-function UpdateStats(YourTurn = true) {
+// Combat turn system to allow me to add team mates or fight against 
+var CombatTurn = 1,
+    Combatants = [],
+    CombatantIndex = -1;
+
+function NextTurn() {
+    CombatantIndex++;
+    if (CombatantIndex >= Combatants.length) {
+        CombatantIndex = 0;
+        BattleLog.push(`<br>Turn ${CombatTurn}<br>`);
+        CombatTurn++;
+        const BT = DocId("BattleText2"),
+            temp = BattleLog.slice(0);
+        BT.innerHTML = null;
+        for (let e of temp.reverse()) {
+            BT.innerHTML += `${e}<br>`
+        }
+    };
+    if (Combatants[CombatantIndex] === player) {
+        // wait for player input
+    } else {
+        const ee = Combatants[CombatantIndex];
+        EnemyAttack(ee);
+    };
+};
+
+function UpdateStats() {
     CombatButtons();
     const ee = enemies[EnemyIndex],
         ESH = DocId("EnemyStatusHealth"),
@@ -5372,13 +5246,8 @@ function UpdateStats(YourTurn = true) {
         SH = DocId("StatusHealth2"),
         SWH = DocId("StatusWillHealth2"),
         BE = DocId("BattleEnemy"),
-        SN = DocId("StatusName2"),
-        BT = DocId("BattleText2"),
-        temp = BattleLog.slice(0);
-    BT.innerHTML = null;
-    for (let e of temp.reverse()) {
-        BT.innerHTML += `${e}<br>`
-    }
+        SN = DocId("StatusName2");
+
     // Enemy Status
     BE.innerHTML = `${ee.Name}<br>${ee.Race} ${Pronoun(CheckGender(ee))}`;
     ESH.innerHTML = Math.round(ee.Health);
@@ -5400,10 +5269,7 @@ function UpdateStats(YourTurn = true) {
         Lose();
         return;
     }
-
-    if (YourTurn === false) {
-        EnemyAttack();
-    }
+    NextTurn();
 };
 
 const BattleLog = [];
@@ -5411,18 +5277,15 @@ const BattleLog = [];
 function AddToBattleLog(text, who = player) {
     BattleLog.push(`${text}<br>`);
     BattleLog.push(who.Name);
-    if (who !== player) {
-        BattleLog.push(`Turn #TODO<br>`);
-    };
 };
 
-function EnemyAttack() {
+function EnemyAttack(ee) {
     const {
         Charm,
         Str,
         Boobies,
         Balls
-    } = enemies[EnemyIndex];
+    } = ee;
     if (Str >= Charm) {
         const PhysicalAttacks = [
                 "Kicks", "Hits", "Grapple with"
@@ -5430,7 +5293,7 @@ function EnemyAttack() {
             EAttack = (RandomInt(1, 5) * Str) / 2,
             Text = `${RandomString(PhysicalAttacks)} you, causing ${EAttack} dmg.`
         player.Health -= EAttack;
-        AddToBattleLog(Text, enemies[EnemyIndex]);
+        AddToBattleLog(Text, ee);
     } else { // if (ee.Str < ee.Charm) Unnesary?
         const LustAttacks = ["Tease you"],
             EAttack = (RandomInt(1, 5) * Charm) / 2;
@@ -5443,7 +5306,7 @@ function EnemyAttack() {
             LustAttacks.push(ball);
         };
         const Text = `${RandomString(LustAttacks)} causing your will to suffer by ${EAttack}.`
-        AddToBattleLog(Text, enemies[EnemyIndex]);
+        AddToBattleLog(Text, ee);
         player.WillHealth -= EAttack;
     };
     UpdateStats();
@@ -5528,7 +5391,7 @@ function CombatButtons() { // Just combat buttons
         const PAttack = Math.floor(RandomInt(4, 8) * player.Str / 2); // * PhyRes(ee);
         ee.Health -= PAttack;
         AddToBattleLog(`You dealt ${PAttack} dmg to ${ee.Name}.`);
-        UpdateStats(false);
+        UpdateStats();
     });
     row1.appendChild(Hit);
     Combat.appendChild(row1);
@@ -5545,7 +5408,7 @@ function CombatButtons() { // Just combat buttons
             const PAttack = Math.floor(RandomInt(4, 8) * player.Charm / 2); // * LusRes(ee);
             ee.WillHealth -= PAttack;
             AddToBattleLog(`You dealt ${PAttack} will dmg to ${ee.Name}.`);
-            UpdateStats(false);
+            UpdateStats();
         });
         row2.appendChild(Tease);
         Combat.appendChild(row2);
@@ -5576,7 +5439,7 @@ function CombatButtons() { // Just combat buttons
             AddToBattleLog(`Success!`);
         } else {
             AddToBattleLog(`You failed to get away.`);
-            UpdateStats(false);
+            UpdateStats();
         }
     });
     row4.appendChild(FleeBattle);
@@ -5637,7 +5500,7 @@ function SpellButton(index) { // Instead of repeating, Can only add fireball now
         ee = enemies[EnemyIndex];
     Spell.addEventListener("click", function () {
         DictIt.Cast(index, ee);
-        UpdateStats(false);
+        UpdateStats();
     });
     return Spell;
 }
@@ -5920,15 +5783,14 @@ function EssenceExtraCost(what) {
 };
 
 DocId("EssenceAuto").addEventListener("click", function () {
-    Settings.EssenceAuto = !Settings.EssenceAuto;
+    Settings.EssenceAuto = Settings.EssenceAuto ? false : true;
     if (Settings.EssenceAuto) {
         DocId("EssenceAuto").value = "Essence Auto";
         DocId("ManualGrowth").style.display = 'none';
-
     } else {
         DocId("EssenceAuto").value = "Essence Manual";
         DocId("ManualGrowth").style.display = 'block';
-        Settings.BalanceParts = false;
+        // Settings.BalanceParts = false;
     }
 });
 
@@ -6853,25 +6715,25 @@ DocId("Sleep").addEventListener("click", function () {
 // Portal
 DocId("Portal").addEventListener("click", function () {
     DocId("LeaveHome").style.display = 'none';
-    var Buildings = DocId("PortalMenu")
+    const Buildings = DocId("PortalMenu")
     DocId("HomeStart").style.display = "none";
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
+    const div = document.createElement("div");
 
     if (window.innerHeight > 600) { // No title on small screen
-        var h1 = document.createElement("h1");
-        var h1text = document.createTextNode("Portal");
+        const h1 = document.createElement("h1"),
+            h1text = document.createTextNode("Portal");
         h1.appendChild(h1text);
         div.appendChild(h1);
     }
 
-    var p = DocId("HomeText");
+    const p = DocId("HomeText");
 
     // TODO in future when there is more portals make main buttons for each region
     if (House.Portal.Mountain) {
-        var Mountain = InputButton("Mountain")
+        const Mountain = InputButton("Mountain")
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
@@ -6890,7 +6752,7 @@ DocId("Portal").addEventListener("click", function () {
     }
 
     if (House.Portal.BlackMarket) {
-        var BlackMarket = InputButton("BlackMarket")
+        const BlackMarket = InputButton("BlackMarket")
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
@@ -6908,7 +6770,7 @@ DocId("Portal").addEventListener("click", function () {
         div.appendChild(BlackMarket);
     }
 
-    var LeavePortal = InputButton("Back");
+    const LeavePortal = InputButton("Back");
     LeavePortal.addEventListener("click", function () {
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
@@ -6920,37 +6782,6 @@ DocId("Portal").addEventListener("click", function () {
     div.appendChild(LeavePortal);
     Buildings.appendChild(div);
     Buildings.style.display = 'block';
-});
-DocId("LeavePortal").addEventListener("click", function () {
-    DocId("HomeStart").style.display = 'block';
-    DocId("PortalMenu").style.display = 'none';
-});
-DocId("Portals").addEventListener("click", function (e) {
-    Npcs = [];
-    var Chosen;
-    if (e.target.type == "button") {
-        Chosen = String(e.target.id);
-        switch (Chosen) {
-            case "TempLand":
-                player.Area = Chosen;
-                player.Map = "TempCity";
-                LeaveHome();
-                break
-            case "Mountain":
-                player.Area = Chosen;
-                player.Map = "MountainStart";
-                LeaveHome();
-                break
-            case "Lumindera":
-                /**                    player.Area = "Lumindera";
-                player.Map = "nice";
-                LeaveHome(); */
-                break;
-            default:
-                break;
-
-        }
-    }
 });
 
 DocId("Brothel").addEventListener("click", function () {
@@ -6991,24 +6822,24 @@ function LeaveHome() {
         DocId("HomeText").style.display = 'none';
         DocId("Upgrades").style.display = 'block';
 
-        var Upgrades = DocId("Upgrades");
+        const Upgrades = DocId("Upgrades");
         while (Upgrades.hasChildNodes()) {
             Upgrades.removeChild(Upgrades.firstChild);
         }
 
-        var p = document.createElement("p");
+        const p = document.createElement("p");
         p.classList.add("TextBox");
         Upgrades.appendChild(p);
 
-        var h2 = document.createElement("h2");
-        var h2Text = document.createTextNode("Upgrades");
+        const h2 = document.createElement("h2"),
+            h2Text = document.createTextNode("Upgrades");
         h2.appendChild(h2Text);
         Upgrades.appendChild(h2);
 
         function BedCost() {
             return Math.round(50 * Math.pow(1.2, House.BedLevel));
         }
-        var UpgradeBed = InputButton("Upgrade bedroom " + BedCost() + "g");
+        const UpgradeBed = InputButton(`Upgrade bedroom ${BedCost()}g`);
         UpgradeBed.addEventListener("click", function () {
             if (player.Gold >= BedCost()) {
                 House.BedLevel++;
@@ -7018,7 +6849,7 @@ function LeaveHome() {
                 } else {
                     p.innerHTML = "You upgrade your master bedroom.";
                 }
-                UpgradeBed.setAttribute("value", "Upgrade bedroom " + BedCost() + "g")
+                UpgradeBed.setAttribute("value", `Upgrade bedroom ${BedCost()}g`)
             } else {
                 p.innerHTML = "You can't afford to upgrade your bedroom.";
             }
@@ -7031,24 +6862,21 @@ function LeaveHome() {
         function DormCost() {
             return Math.round(250 * Math.pow(1.2, House.Dorm));
         }
-        if (House.Dorm > 0) {
-            var BuildDorm = InputButton("Upgrade dorm " + DormCost() + "g")
 
-        } else {
-            var BuildDorm = InputButton("Build dorm " + DormCost() + "g")
-        }
+        const DormValue = House.Dorm > 0 ? `Upgrade dorm ${DormCost()}g` : `Build dorm ${DormCost()}g`,
+            BuildDorm = InputButton(DormValue);
         BuildDorm.addEventListener("click", function () {
             if (player.Gold >= DormCost()) {
                 House.Dorm++;
                 player.Gold -= DormCost();
                 if (House.Dorm < 2) {
                     DocId("Dorm").style.display = "inline-block";
-                    p.innerHTML = "Hiring construction workers you give orders to build a dorm to house servants. <br><br>" +
-                        "Looking outside you see the newly built dorm. You can now take home opponent you have made orgasm five times."
+                    p.innerHTML = `Hiring construction workers you give orders to build a dorm to house servants.<br><br>
+                    Looking outside you see the newly built dorm. You can now take home opponent you have made orgasm five times.`
                 } else {
-                    p.innerHTML = "You expand your dorm to house three more servants.(" + House.Dorm * 3 + ")";
+                    p.innerHTML = `You expand your dorm to house three more servants.(${House.Dorm * 3})`;
                 }
-                BuildDorm.setAttribute("value", "Upgrade dorm " + DormCost() + "g")
+                BuildDorm.setAttribute("value", `Upgrade dorm ${DormCost()}g`)
             } else {
                 p.innerHTML = "You can't afford it.";
             }
@@ -7061,11 +6889,8 @@ function LeaveHome() {
         function Gymcost() {
             return Math.round(200 * Math.pow(1.2, House.Gym));
         }
-        if (House.Gym > 0) {
-            var BuildGym = InputButton("Upgrade gym " + Gymcost() + "g")
-        } else {
-            var BuildGym = InputButton("Build gym " + Gymcost() + "g")
-        }
+        const GymValue = House.Gym > 0 ? `Upgrade gym ${Gymcost()}g` : `Build gym ${Gymcost()}g`,
+            BuildGym = InputButton(GymValue);
         BuildGym.addEventListener("click", function () {
             if (player.Gold >= Gymcost()) {
                 if (House.Gym < 1) {
@@ -7088,11 +6913,9 @@ function LeaveHome() {
         function Kitchencost() {
             return Math.round(200 * Math.pow(1.2, House.Kitchen));
         }
-        if (House.Kitchen > 0) {
-            var BuildKitchen = InputButton("Upgrade kitchen " + Kitchencost() + "g")
-        } else {
-            var BuildKitchen = InputButton("Build kitchen " + Kitchencost() + "g")
-        }
+        const KitchenValue = House.Kitchen > 0 ? `Upgrade kitchen ${Kitchencost()}g` : `Build kitchen ${Kitchencost()}g`,
+            BuildKitchen = InputButton(KitchenValue)
+
         BuildKitchen.addEventListener("click", function () {
             if (player.Gold >= Kitchencost()) {
                 if (House.Kitchen < 1) {
@@ -7115,11 +6938,9 @@ function LeaveHome() {
         function Brothelcost() {
             return Math.round(500 * Math.pow(1.2, House.Brothel));
         }
-        if (House.Brothel > 0) {
-            var BuildBrothel = InputButton("Upgrade brothel " + Brothelcost() + "g")
-        } else {
-            var BuildBrothel = InputButton("Build brothel " + Brothelcost() + "g")
-        }
+        const BrothelValue = House.Brothel > 0 ? `Upgrade brothel ${Brothelcost()}g` : `Build brothel ${Brothelcost()}g`,
+            BuildBrothel = InputButton(BrothelValue);
+
         BuildBrothel.addEventListener("click", function () {
             if (player.Gold >= Brothelcost()) {
                 player.Gold -= Brothelcost();
@@ -7140,11 +6961,9 @@ function LeaveHome() {
         function Nurserycost() {
             return Math.round(200 * Math.pow(1.2, House.Nursery));
         }
-        if (House.Nursery > 0) {
-            var BuildNursery = InputButton("Upgrade nursery " + Nurserycost() + "g");
-        } else {
-            var BuildNursery = InputButton("Build nursery " + Nurserycost() + "g");
-        }
+        const NurseryValue = House.Nursery > 0 ? `Upgrade nursery ${Nurserycost()}g` : `Build nursery ${Nurserycost()}g`,
+            BuildNursery = InputButton(NurseryValue);
+
         BuildNursery.addEventListener("click", function () {
             if (player.Gold >= Nurserycost()) {
                 player.Gold -= Nurserycost();
@@ -7154,7 +6973,7 @@ function LeaveHome() {
                     p.innerHTML = "You upgrade your nursery.";
                 }
                 House.Nursery++;
-                BuildNursery.setAttribute("value", "Upgrade nursery " + Nurserycost() + "g");
+                BuildNursery.setAttribute("value", `Upgrade nursery ${Nurserycost()}g`);
             } else {
                 p.innerHTML = "You can't afford it.";
             }
@@ -7166,7 +6985,7 @@ function LeaveHome() {
         Upgrades.appendChild(BuildNursery);
 
         if (House.Portal.Owned === false) {
-            var BuildPortal = InputButton("Build portal 1000g")
+            const BuildPortal = InputButton("Build portal 1000g")
             BuildPortal.addEventListener("click", function () {
                 if (player.Gold >= 1000) {
                     player.Gold -= 1000;
@@ -7175,8 +6994,8 @@ function LeaveHome() {
                     DocId("Portal").style.display = 'inline-block';
                     Upgrades.removeChild(BuildPortal)
                 } else {
-                    p.innerHTML = "	Sadly you lack funds to afford commissions the construction of a portal…" +
-                        "<br><br>You will have to continue walking like the poor peasant you are."
+                    p.innerHTML = `Sadly you lack funds to afford commissions the construction of a portal…
+                    <br><br>You will have to continue walking like the poor peasant you are.`
                 }
             });
             BuildPortal.addEventListener("mouseover", function () {
@@ -7185,13 +7004,13 @@ function LeaveHome() {
             Upgrades.appendChild(BuildPortal);
         }
 
-        var Close = InputButton("Close");
+        const Close = InputButton("Close");
         Close.addEventListener("click", function () {
             DocId("HomeStart").style.display = 'block';
             DocId("Upgrades").style.display = 'none';
             DocId("HomeText").style.display = 'block';
 
-            var Upgrades = DocId("Upgrades");
+            const Upgrades = DocId("Upgrades");
             while (Upgrades.hasChildNodes()) {
                 Upgrades.removeChild(Upgrades.firstChild);
             }
@@ -7217,29 +7036,29 @@ function SnowInventoryAdd(item, quantity = 1) {
 }
 
 function DropSystem(who) {
-    var dropRate = {
-        "Human": 1.00,
-        "Halfling": 1.00,
-        "Orc": 1.00,
-        "Troll": 1.00,
-        "Farmer": 1.00,
-        "Elf": 1.00,
-        "Amazon": 1.00,
-        "Fairy": 1.00,
-        "Commoner": 1.00,
-        "Thug": 1.00,
-        "Dark elf": 1.00,
-        "Imp": 1.00,
-        "Goblin": 1.00,
-        "Dhampir": 1.00,
-        "Demon": 1.00,
-        "Succubus": 1.00,
-        "Incubus": 1.00,
-        "Witch": 1.00
-    }
-    var e = who;
-    var r = Math.random();
-    if (r <= dropRate[e.Name]) {
+    const dropRate = {
+            "Human": 1.00,
+            "Halfling": 1.00,
+            "Orc": 1.00,
+            "Troll": 1.00,
+            "Farmer": 1.00,
+            "Elf": 1.00,
+            "Amazon": 1.00,
+            "Fairy": 1.00,
+            "Commoner": 1.00,
+            "Thug": 1.00,
+            "Dark elf": 1.00,
+            "Imp": 1.00,
+            "Goblin": 1.00,
+            "Dhampir": 1.00,
+            "Demon": 1.00,
+            "Succubus": 1.00,
+            "Incubus": 1.00,
+            "Witch": 1.00
+        },
+        e = who,
+        r = Math.random();
+    if (r <= typeof dropRate[e.Name] !== "undefined" ? dropRate[e.Name] : 0) {
         switch (e.Name) {
             case "Banditlord":
                 SnowInventoryAdd(ItemDict.orcCum.Lite);
@@ -7260,8 +7079,8 @@ function DropSystem(who) {
                 break;
         }
     }
-    var r = Math.random();
-    if (r <= dropRate[e.Race]) {
+    const r2 = Math.random();
+    if (r2 <= typeof dropRate[e.Race] !== "undefined" ? dropRate[e.Race] : 0) {
         switch (e.Race) {
             case "Fairy":
                 SnowInventoryAdd(ItemDict.fairyDust.Lite);
@@ -7942,29 +7761,28 @@ ItemDict.SpellBook = {
     Use: function (who) {
         DocId("Inventory").style.display = "none";
 
-        var Div = DocId("SpellBook");
+        const Div = DocId("SpellBook");
         Div.style.display = "block";
         while (Div.hasChildNodes()) {
             Div.removeChild(Div.firstChild);
         }
 
-        var h1 = document.createElement("h1");
+        const h1 = document.createElement("h1");
         h1.innerHTML = "Spell book"
         Div.appendChild(h1);
 
-        var p = document.createElement("p");
+        const p = document.createElement("p");
         p.classList.add("TextBox");
         Div.appendChild(p);
 
-        for (var e = 0; e < player.Spells.length; e++) {
-            var Spell = DictSpell(e);
-            Div.appendChild(Spell);
+        for (let e of player.Spells) {
+            Div.appendChild(DictSpell(e));
         }
 
         function DictSpell(e) {
-            var it = player.Spells[e];
-            var DictIt = SpellDict[it.Name];
-            var DictSpell = InputButton(DictIt.Name);
+            const it = e,
+                DictIt = SpellDict[it.Name],
+                DictSpell = InputButton(DictIt.Name);
             DictSpell.addEventListener("click", function () {
                 h1.innerHTML = DictIt.Name
                 p.innerHTML = `${SpellDictLite[it.Name].Title}<br><br>Manacost: ${DictIt.ManaCost(it.Exp)}<br>
@@ -7973,7 +7791,7 @@ ItemDict.SpellBook = {
             Div.appendChild(DictSpell);
             return DictSpell
         }
-        var CloseBook = InputButton("Close book");
+        const CloseBook = InputButton("Close book");
         CloseBook.addEventListener("click", function () {
             while (Div.hasChildNodes()) {
                 Div.removeChild(Div.firstChild);
@@ -8019,8 +7837,9 @@ function CheckDoor() {
         Doors = [DoorE, DoorS, DoorN, DoorW];
     for (let i of Doors) {
         let Door = i.NESW;
-        if (sprite.x >= i.x && sprite.x <= i.x + i.width &&
-            sprite.y >= i.y && sprite.y <= i.y + i.height) {
+        // half grids are to pad doors not sure if they actually do something or if it's has placebo affect on me.
+        if (sprite.x + grid/2>= i.x && sprite.x -grid/2 <= i.x + i.width &&
+            sprite.y + grid/2>= i.y && sprite.y -grid/2<= i.y + i.height) {
             switch (player.Area) {
                 case "First":
                     switch (player.Map) {
@@ -8910,7 +8729,7 @@ document.getElementById("HideWorldMap").addEventListener("click", function () {
 });
 
 const MapIcons = {},
-    MapIconsToLoad = MapIconsLoader(["skull_01"])
+    MapIconsToLoad = MapIconsLoader(["skull_01", "Home"])
 
 function MapIconsLoader(urls) {
     urls.forEach((url) => {
@@ -9003,10 +8822,18 @@ function PrintMap() {
             TileImagePainter(3, 0, "OWRTW2"); //RTW2
             TileImagePainter(4, 0, "OWWitch"); //Witch
             World.font = "2em Arial";
-            World.drawImage(MapIcons.skull_01, WorldMap.width * 0.25, WorldMap.height * 0.05, Width / 2, Height / 2);
+            if (typeof MapIcons.skull_01 !== 'undefined') {
+                World.drawImage(MapIcons.skull_01, WorldMap.width * 0.25, WorldMap.height * 0.05, Width / 2, Height / 2);
+            } else {
+                World.strokeText("B", WorldMap.width * 0.27, WorldMap.height * 0.17, Width / 2, Height / 2);
+            }
             if (House.Owned == true) {
                 TilePainter(4, 2, WorldMap.width * 0.2, WorldMap.height * 0.2);
-                World.strokeText("H", WorldMap.width * 0.87, WorldMap.height * 0.57);
+                if (typeof MapIcons.Home !== 'undefined') {
+                    World.drawImage(MapIcons.Home, WorldMap.width * 0.85, WorldMap.height * 0.45, Width / 2, Height / 2);
+                } else {
+                    World.strokeText("H", WorldMap.width * 0.87, WorldMap.height * 0.57);
+                }
             }
 
             World.font = "1em Arial";
@@ -9324,8 +9151,56 @@ class enemy {
         this.Size = Size;
         this.Height = Height;
         this.SecondRace = EnemySecondRace;
+        // Under is non input values
         this.FullHealth = EnemyHealth;
         this.FullWillHealth = EnemyWillHealth;
+        this.Arousal = 0;
+        this.Orgasm = 0;
+        this.Dicks = [];
+        this.Balls = [];
+        this.Boobies = [];
+        this.Anal = [];
+        this.Pussies = [];
+        this.Cumin = {
+            Stomach: 0,
+            Pussy: 0,
+            Anal: 0
+        };
+    };
+    // Testing class prototypes... Think I prefer this method over functions maninly becasue use of "this"
+    FatMuscle2(minfatprocent, minweight) {
+        const fatratio = RandomInt(minfatprocent, minfatprocent + 10),
+            muscleration = 100 - fatratio;
+        this.Fat = minweight / 200 * fatratio;
+        this.Muscle = minweight / 200 * muscleration;
+        this.Weight = minweight + this.Fat + this.Muscle;
+    };
+    NameGiver2() {
+        const FemaleFirstNames = ["Jaiden", "Judy", "Nia", "Kelis", "Chelsea", "Amani", "Veronica", "Kyra", "Lauryn", "Alicja", "Tate", "Colleen", "Melody", "Pippa", "Keziah", "Melissa", "Lana", "Marie", "Molly", "Sandra", "Dannielle", "Yusra", "Laiba", "Gabrielle", "Syeda", "Amirah",
+                "Lindsay", "Karly", "Itzel", "Clarissa", "Ansley", "Leanna", "Briley", "Cara", "Katelynn", "Susan", "Alexis", "Kaia", "Marlee", "Emmy", "Genevieve", "Melany", "Jaylynn", "Amari", "Sharon", "Miah", "Karen", "Kylie"
+            ],
+            MaleFirstNames = ["Jerome", "Napoleon", "Duncan", "Brant", "Chance", "Dewitt", "Brendan", "Asim", "Faith", "Macy", "Landon", "Sulaiman", "Iestyn", "Gordon", "Hector", "Haris", "Lee", "Simran", "Ronnie", "Rishi", "Bartosz", "Shelley", "Virgil", "Howard", "Rio", "Prince",
+                "Glenn", "Daniel", "Felipe", "Willie", "Aden", "Brennen", "Cale", "Arnav", "Quentin", "River", "Clarence", "Jamal", "Luca", "Brent", "Tyrone", "Ryan", "Damien", "Carmelo", "Reese", "Braiden", "Beckham"
+            ],
+            LastNames = ["Paine", "Ward", "Bostock", "Devine", "Heath", "Bone", "Dupont", "Patterson", "Garza", "Stein", "Madden", "Francis", "Villanueva", "Perry", "Lyssa", "Beach", "Crouch", "Sharp", "Clifford", "Wade", "Vargas", "Hatfield", "Mata", "Lozano", "Everett",
+                "Krueger", "Jimenez", "Fitzpatrick", "Nelson", "Scott", "Vaughn", "Lee", "Hodge", "Blackburn", "Wall", "Hernandez", "Valdez", "Summers", "Mercado", "Villarreal", "Mitchell", "Duran", "David", "Black", "Hopkins", "Hughes", "Rangel"
+            ];
+        //LastNames.RemoveDup();
+        switch (CheckGender(this)) {
+            case "cuntboy":
+            case "male":
+                this.FirstName = RandomString(MaleFirstNames);
+                break;
+            case "hermaphrodite":
+            case "female":
+            case "dickgirl":
+                this.FirstName = RandomString(FemaleFirstNames);
+                break;
+            case "doll":
+                this.FirstName = RandomInt(0, 10) < 5 ? RandomString(FemaleFirstNames) : RandomString(MaleFirstNames);
+                break;
+        }
+        this.LastName = RandomString(LastNames);
     }
 }
 
@@ -9392,44 +9267,89 @@ function GenderLock(who, amount, Genderlock) { // gives exact gender
         who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Femi = 0;
     } else if (Genderlock == "cuntboy") {
-
-        who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
-        who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
+        who.Femi = RandomInt(0, 25);
+        who.Masc = RandomInt(0, 25);
+        who.Boobies = [];
+        who.Boobies.push(BoobMaker(Math.round(Math.max(amount / 3, Math.random() * amount))));
+        who.Pussies = [];
+        who.Pussies.push(PussyMaker(Math.round(Math.max(amount / 3, Math.random() * amount))));
     } else if (Genderlock == "herm") {
         who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
     } else if (Genderlock == "dickgirl") {
-        who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
-        who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
+        who.Femi = RandomInt(0, 25);
+        who.Masc = RandomInt(0, 25);
+        who.Dicks = [];
+        who.Dicks.push(DickMaker(Math.round(Math.max(amount / 3, Math.random() * amount))));
+        who.Boobies = [];
+        who.Boobies.push(BoobMaker(Math.round(Math.max(amount / 3, Math.random() * amount))));
     } else if (Genderlock == "female") {
         who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Masc = 0;
     }
+
+    function DickMaker(amount) {
+        const Dick = {
+            Size: Math.ceil(Math.sqrt(amount)),
+            Type: who.Race,
+            Virgin: true
+        }
+        return Dick;
+    }
+
+    function BallMakes(amount) {
+        const Ball = {
+            Size: Math.ceil(Math.sqrt(amount)),
+            Type: who.Race,
+            CumMax: 1 / 3 * Math.PI * Math.pow(Math.ceil(Math.sqrt(amount)), 3),
+            Cum: 1 / 6 * Math.PI * Math.pow(Math.ceil(Math.sqrt(amount)), 3),
+            CumRate: 0,
+            CumBaseRate: 0.5
+        }
+        return Ball;
+    }
+
+    function BoobMaker(amount) {
+        const Boob = {
+            Size: Math.ceil(Math.sqrt(amount)),
+            Type: who.Race,
+            Milk: 0,
+            MilkBaseRate: 0,
+            MilkRate: 0,
+            MilkMax: 1 / 3 * Math.PI * Math.pow(Math.ceil(Math.sqrt(amount)), 3)
+        }
+        return Boob;
+    }
+
+    function PussyMaker(amount) {
+        const Pussy = {
+            Size: Math.ceil(Math.sqrt(amount)),
+            Type: who.Race,
+            Virgin: true
+        }
+        return Pussy;
+    }
 }
 
 function EssenceGiver(who, amount, GenderPref = 0) { // Gives random gender
-    var a = RandomInt(1, 13);
-    a += GenderPref;
+    const a = RandomInt(1, 13) + GenderPref;
     /** Negative Genderpref gives more males and postive more girls. 
            e.g. -5 makes it's so only males to herm can spawn */
     if (a < 4) { // Boy
         who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Femi = 0;
     } else if (a < 6) { // Dickgirl
-        who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
-        who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
+        GenderLock(who, amount, "dickgirl");
     } else if (a < 9) { // Herm
         who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
         who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
     } else if (a < 11) { // Cuntboy
-        who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
-        who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
+        GenderLock(who, amount, "cuntboy");
     } else { // Girl
         who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
         who.Masc = 0;
-    }
-
-}
+    };
+};
 
 function FatMuscle(who, minfatprocent, minweight) {
     const fatratio = RandomInt(minfatprocent, minfatprocent + 10),
@@ -9439,29 +9359,15 @@ function FatMuscle(who, minfatprocent, minweight) {
     who.Weight = minweight + who.Fat + who.Muscle;
 }
 
-function EnemySetup(who) {
-    who.Arousal = 0;
-    who.Orgasm = 0;
-}
-
 function RandomPos(who) {
     who.XPos = RandomInt(2, 18) * grid;
     who.YPos = RandomInt(2, 18) * grid;
 }
 
 function StandardEnemy(who) {
-    EnemySetup(who);
     RandomPos(who);
     RaceBonus(who);
-    who.Cumin = {
-        Stomach: 0,
-        Pussy: 0,
-        Anal: 0
-    }
-    for (let a = 0; a < 10; a++) { // Loop for mor exact organs.
-        EssenceCheck(who);
-    }
-
+    EssenceCheck(who);
     if (who.Pussies.length > 0) {
         if (RandomInt(1, 5) < 5) {
             who.Pussies[0].Virgin = false;
@@ -9482,9 +9388,9 @@ function EncounterStart() {
         RandomInt(2, 5), RandomInt(6, 9), 70, 70, RandomInt(15, 20), RandomInt(5, 15),
         'Chocolate', grid, RandomInt(140, 180));
     EssenceGiver(OP, 70);
-    FatMuscle(OP, 10, 50);
+    OP.FatMuscle2(10, 50);
     StandardEnemy(OP);
-    NameGiver(OP);
+    OP.NameGiver2();
     return OP;
 }
 
@@ -9497,7 +9403,7 @@ function RespawnBlocker() {
     EssenceGiver(OP, 50);
     FatMuscle(OP, 1, 1);
     StandardEnemy(OP);
-    NameGiver(OP);
+    OP.NameGiver2();
     OP.XPos = 99 * grid;
     OP.YPos = 99 * grid;
     return OP;
@@ -9543,9 +9449,9 @@ function EncounterPath1() {
         RandomInt(3, 6), RandomInt(7, 10), 80, 80, RandomInt(20, 25), RandomInt(8, 18),
         'Chocolate', grid, RandomInt(140, 180));
     EssenceGiver(OP, 80);
-    FatMuscle(OP, 10, 50);
+    OP.FatMuscle2(10, 50);
     StandardEnemy(OP);
-    NameGiver(OP);
+    OP.NameGiver2();
     return OP;
 }
 
@@ -9556,9 +9462,9 @@ function EncounterPath2() {
         RandomInt(4, 7), RandomInt(8, 12), 100, 100, RandomInt(23, 30), RandomInt(12, 25),
         'green', grid, RandomInt(140, 180));
     EssenceGiver(OP, 100);
-    FatMuscle(OP, 10, 50);
+    OP.FatMuscle2(10, 50);
     StandardEnemy(OP);
-    NameGiver(OP);
+    OP.NameGiver2();
     return OP;
 }
 
@@ -9568,9 +9474,9 @@ function EncounterBandit() {
         RandomInt(8, 15), RandomInt(10, 15), 170, 170, RandomInt(30, 45), RandomInt(30, 55),
         'tomato ', grid, RandomInt(140, 180));
     GenderLock(OP, 600, "male");
-    FatMuscle(OP, 7, 70);
+    OP.FatMuscle2(7, 70);
     StandardEnemy(OP);
-    NameGiver(OP);
+    OP.NameGiver2();
     return OP;
 }
 
@@ -9580,13 +9486,12 @@ function EncounterBanditLord() {
         RandomInt(20, 35), RandomInt(40, 60), 350, 300, RandomInt(55, 85), RandomInt(75, 150),
         'tomato', grid * 1.5, RandomInt(160, 200));
     GenderLock(OP, 1200, "male");
-    FatMuscle(OP, 7, 80);
+    OP.FatMuscle2(OP, 7, 80);
     StandardEnemy(OP);
     var startarea = document.getElementById("hem");
     OP.XPos = startarea.width / 2 - grid;
     OP.YPos = grid;
-    NameGiver(OP);
-    NameGiver(OP);
+    OP.NameGiver2();
     return OP;
 }
 
@@ -9596,9 +9501,9 @@ function EncounterForest() {
         RandomInt(6, 13), RandomInt(8, 18), 150, 150, RandomInt(25, 40), RandomInt(25, 45),
         'darkgreen', grid, RandomInt(140, 180));
     EssenceGiver(OP, 400, 5);
-    FatMuscle(OP, 11, 50);
+    OP.FatMuscle2(11, 50);
     StandardEnemy(OP);
-    NameGiver(OP);
+    OP.NameGiver2();
     return OP;
 }
 
@@ -9608,9 +9513,9 @@ function EncounterForest2() {
         RandomInt(6, 13), RandomInt(8, 18), 150, 150, RandomInt(25, 40), RandomInt(25, 45),
         'darkgreen', grid, RandomInt(140, 180));
     EssenceGiver(OP, 500, 5);
-    FatMuscle(OP, 11, 50);
+    OP.FatMuscle2(11, 50);
     StandardEnemy(OP);
-    NameGiver(OP);
+    OP.NameGiver2();
     return OP;
 }
 
@@ -9620,9 +9525,9 @@ function EncounterPathToWitch2() {
         RandomInt(30, 70), RandomInt(20, 80), 150, 300, RandomInt(30, 60), RandomInt(30, 70),
         'IndianRed', grid, RandomInt(140, 170));
     EssenceGiver(OP, 450);
-    FatMuscle(OP, 10, 50);
+    OP.FatMuscle2(10, 50);
     StandardEnemy(OP);
-    NameGiver(OP);
+    OP.NameGiver2();
     switch (CheckGender(OP)) {
         case "male":
         case "cuntboy":
@@ -10596,10 +10501,10 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 SiphonDiv.appendChild(SexButton("Grow balls", GrowBalls));
             };
             if (player.Pussies.length > 0 ? EssenceCost(Last(player.Pussies)) <= player.Femi : false || (player.Femi >= 30 && player.Pussies.length === 0)) {
-                Siphon.appendChild(SexButton("Grow pussy", GrowPussy));
+                SiphonDiv.appendChild(SexButton("Grow pussy", GrowPussy));
             };
             if (player.Boobies.length > 0 ? EssenceCost(Last(player.Boobies)) <= player.Femi : false || player.Boobies.length === 0) {
-                Siphon.appendChild(SexButton("Grow boobs", GrowBoobs));
+                SiphonDiv.appendChild(SexButton("Grow boobs", GrowBoobs));
             };
         };
         if (Settings.Vore) {
