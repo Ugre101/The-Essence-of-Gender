@@ -1,12 +1,4 @@
 Mode Yllarius works following
-const ImgArray = typeof SexActs[Race] !== "undefined" ? typeof SexActs[Race][Act] !== "undefined" ?
-	(SexActs[Race][Act][playerGender() + OtherGender()].length > 0 ?
-         SexActs[Race][Act][playerGender() + OtherGender()] :
-         SexActs[Race][Act][OtherGender()].length > 0 ?
-         SexActs[Race][Act][OtherGender()] :
-         SexActs[Race][Act].Default.length > 0 ?
-         SexActs[Race][Act].Default : []) : [] : [];
-Breaking this down we get
 1. In folder ImgPack go to folder "SexActs"
 2. In folder "SexActs" go to folder "Race", where "Race" equals your enemy/opponents race e.g. Human. Note race is always with out whitespace and first letter only capitalized e.g. "Dark Elf" should be "Darkelf" 
 3. in folder "Race" go to folder "Act", where "Act" equals e.g. DoggyStyle.
