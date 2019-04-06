@@ -156,10 +156,10 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 SiphonDiv.appendChild(SexButton("Grow balls", GrowBalls));
             };
             if (player.Pussies.length > 0 ? EssenceCost(Last(player.Pussies)) <= player.Femi : false || (player.Femi >= 30 && player.Pussies.length === 0)) {
-                Siphon.appendChild(SexButton("Grow pussy", GrowPussy));
+                SiphonDiv.appendChild(SexButton("Grow pussy", GrowPussy));
             };
             if (player.Boobies.length > 0 ? EssenceCost(Last(player.Boobies)) <= player.Femi : false || player.Boobies.length === 0) {
-                Siphon.appendChild(SexButton("Grow boobs", GrowBoobs));
+                SiphonDiv.appendChild(SexButton("Grow boobs", GrowBoobs));
             };
         };
         if (Settings.Vore) {

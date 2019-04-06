@@ -11,7 +11,7 @@ document.getElementById("HideWorldMap").addEventListener("click", function () {
 });
 
 const MapIcons = {},
-    MapIconsToLoad = MapIconsLoader(["skull_01"])
+    MapIconsToLoad = MapIconsLoader(["skull_01", "Home"])
 
 function MapIconsLoader(urls) {
     urls.forEach((url) => {
@@ -104,10 +104,18 @@ function PrintMap() {
             TileImagePainter(3, 0, "OWRTW2"); //RTW2
             TileImagePainter(4, 0, "OWWitch"); //Witch
             World.font = "2em Arial";
-            World.drawImage(MapIcons.skull_01, WorldMap.width * 0.25, WorldMap.height * 0.05, Width / 2, Height / 2);
+            if (typeof MapIcons.skull_01 !== 'undefined') {
+                World.drawImage(MapIcons.skull_01, WorldMap.width * 0.25, WorldMap.height * 0.05, Width / 2, Height / 2);
+            } else {
+                World.strokeText("B", WorldMap.width * 0.27, WorldMap.height * 0.17, Width / 2, Height / 2);
+            }
             if (House.Owned == true) {
                 TilePainter(4, 2, WorldMap.width * 0.2, WorldMap.height * 0.2);
-                World.strokeText("H", WorldMap.width * 0.87, WorldMap.height * 0.57);
+                if (typeof MapIcons.Home !== 'undefined') {
+                    World.drawImage(MapIcons.Home, WorldMap.width * 0.85, WorldMap.height * 0.45, Width / 2, Height / 2);
+                } else {
+                    World.strokeText("H", WorldMap.width * 0.87, WorldMap.height * 0.57);
+                }
             }
 
             World.font = "1em Arial";
