@@ -8,8 +8,8 @@ import os.path
 #    return string
 
 # Pull all javascript into one to avoid loadorder isues
-g = open("Gamescript.js", "r")
-w = open("Combined.js", "w")
+g = open("Gamescript.js", "r",encoding="utf-8")
+w = open("Combined.js", "w",encoding="utf-8")
 f = os.listdir("JavaScript")
 with w as outfile:
     with g as infile:
@@ -20,7 +20,7 @@ with w as outfile:
     infile.close()
     for file in f:
         if file.endswith(".js"):
-            with open("JavaScript/"+file) as infile:
+            with open("JavaScript/"+file,encoding="utf-8") as infile:
                 for line in infile:
                     #striped = removeComments(line)
                     outfile.write(line)
@@ -31,7 +31,7 @@ with w as outfile:
             r = os.listdir("JavaScript/"+file)
             for file in r:
                 if file.endswith(".js"):
-                    with open(name +file) as infile:
+                    with open(name +file,encoding="utf-8") as infile:
                         for line in infile:
                             #striped = removeComments(line)
                             outfile.write(line)
