@@ -1,11 +1,11 @@
 import os.path
-
 Types = os.listdir()
 
 # TODO Clean up this fucking mess...
 JsArray = ""
 for file in Types:
-    if os.path.isdir(file):
+    if os.path.isdir(file) and file != "Python":
+        print(file)
         JsArray += "const " + file + " = {"
         Type = file
         Races = os.listdir(file)
