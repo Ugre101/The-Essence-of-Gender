@@ -51,7 +51,7 @@ function DrainDrainF() {
     const Need = player.EssenceDrain;
     let Have = ee.Femi;
     ee.Femi = Math.max(0, ee.Femi - Need);
-    while (Have < Need && (ee.Pussies.length > 0 || ee.Boobies.length > 0)) {
+    while (Have < Need && (ee.Pussies.length > 0 || ee.Boobies.length > 1 ? true : ee.Boobies[0].Size > 0)) {
         if (ee.Pussies.length > 0) {
             const pussy = ee.Pussies[ee.Pussies.length - 1];
             pussy.Size--;
@@ -60,10 +60,10 @@ function DrainDrainF() {
                 ee.Pussies.pop();
             };
         };
-        if (ee.Boobies.length > 0 ? ee.Boobies[0].Size > 0 : false) {
+        if (ee.Boobies.length > 1 ? true : ee.Boobies[0].Size > 0) {
             const boobs = ee.Boobies[ee.Boobies.length - 1];
             boobs.Size--;
-            Have += EssenceExtraCost(boobs);
+            Have += EssenceCost(boobs);
             if (boobs.Size <= 1 && ee.Boobies.length > 1) {
                 ee.Boobies.pop();
             };

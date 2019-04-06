@@ -26,7 +26,14 @@ class enemy {
         this.Orgasm = 0;
         this.Dicks = [];
         this.Balls = [];
-        this.Boobies = [];
+        this.Boobies = [Boob = {
+            Size: 0,
+            Type: this.Race,
+            Milk: 0,
+            MilkBaseRate: 0,
+            MilkRate: 0,
+            MilkMax: 0
+        }];
         this.Anal = [];
         this.Pussies = [];
         this.Cumin = {
@@ -137,9 +144,6 @@ function GenderLock(who, amount, Genderlock) { // gives exact gender
     } else if (Genderlock == "cuntboy") {
         who.Femi = RandomInt(0, 25);
         who.Masc = RandomInt(0, 25);
-        who.Boobies = [];
-        who.Boobies.push(BoobMaker(Math.round(Math.max(amount / 3, Math.random() * amount))));
-        who.Pussies = [];
         who.Pussies.push(PussyMaker(Math.round(Math.max(amount / 3, Math.random() * amount))));
     } else if (Genderlock == "herm") {
         who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
@@ -147,9 +151,10 @@ function GenderLock(who, amount, Genderlock) { // gives exact gender
     } else if (Genderlock == "dickgirl") {
         who.Femi = RandomInt(0, 25);
         who.Masc = RandomInt(0, 25);
-        who.Dicks = [];
         who.Dicks.push(DickMaker(Math.round(Math.max(amount / 3, Math.random() * amount))));
-        who.Boobies = [];
+        if (who.Boobies.length > 0) {
+            who.Boobies.pop()
+        };
         who.Boobies.push(BoobMaker(Math.round(Math.max(amount / 3, Math.random() * amount))));
     } else if (Genderlock == "female") {
         who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));

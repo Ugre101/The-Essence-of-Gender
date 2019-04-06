@@ -133,7 +133,7 @@ function BoobLook(who) {
         let boobies = "";
         who.Boobies.forEach((Boobs, index) => {
             const Size = OrganSize(Boobs.Size, who);
-            if (index === 0 && Size <= 4 && Size > 1) {
+            if (index === 0 && Size <= 4 && Size > 2) {
                 boobies += `An ${BoobSizeConvertor(Size)}-cup chest`;
             } else if (Size > 4 && Size < 28) {
                 boobies += `${IntToOne(index)} ${BoobSizeConvertor(Size)}-cup chest`;

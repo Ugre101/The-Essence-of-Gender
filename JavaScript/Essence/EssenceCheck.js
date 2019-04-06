@@ -25,9 +25,9 @@ function EssenceCheck(who) {
         return Ball;
     }
 
-    function BoobMaker(e = 0) {
+    function BoobMaker() {
         const Boob = {
-            Size: 2,
+            Size: 0,
             Type: who.Race,
             Milk: 0,
             MilkBaseRate: 0,
@@ -37,7 +37,7 @@ function EssenceCheck(who) {
         return Boob;
     }
 
-    function PussyMaker(e = 0) {
+    function PussyMaker() {
         const Pussy = {
             Size: 2,
             Type: who.Race,
@@ -78,9 +78,8 @@ function EssenceCheck(who) {
         EssenceCheck(who);
         return
     }
-    if (who.Boobies.length === 0 && who.Femi >= 30) {
+    if (who.Boobies.length === 0) {
         who.Boobies.push(BoobMaker());
-        who.Femi -= 30;
         EssenceCheck(who);
         return
     }

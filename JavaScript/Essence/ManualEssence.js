@@ -13,14 +13,8 @@ function EssenceExtraCost(what) {
 
 DocId("EssenceAuto").addEventListener("click", function () {
     Settings.EssenceAuto = Settings.EssenceAuto ? false : true;
-    if (Settings.EssenceAuto) {
-        DocId("EssenceAuto").value = "Essence Auto";
-        DocId("ManualGrowth").style.display = 'none';
-    } else {
-        DocId("EssenceAuto").value = "Essence Manual";
-        DocId("ManualGrowth").style.display = 'block';
+    DocId("EssenceAuto").value = Settings.EssenceAuto ? "Essence Auto" : "Essence Manual";
         // Settings.BalanceParts = false;
-    }
 });
 
 DocId("GrowBalls").addEventListener("click", function () {
@@ -70,6 +64,7 @@ function BreastButtons() {
     });
     ManualOrgans.appendChild(Extraboobs);
     ManualOrgans.appendChild(ManualOrgansClose());
+    ManualOrgans.appendChild(document.createElement("br"));
     for (var e of player.Boobies) {
         ManualOrgans.appendChild(BreastButton(e));
     }
@@ -113,6 +108,7 @@ function PussyButtons() {
     });
     ManualOrgans.appendChild(ExtraPussy);
     ManualOrgans.appendChild(ManualOrgansClose());
+    ManualOrgans.appendChild(document.createElement("br"));
     for (var e of player.Pussies) {
         ManualOrgans.appendChild(PussyButton(e))
     };
@@ -155,6 +151,7 @@ function DickButtons() {
     });
     ManualOrgans.appendChild(ExtraDick);
     ManualOrgans.appendChild(ManualOrgansClose());
+    ManualOrgans.appendChild(document.createElement("br"));
     for (var e of player.Dicks) {
         ManualOrgans.appendChild(DickButton(e));
     }
@@ -198,9 +195,8 @@ function BallsButtons() {
         }
     });
     ManualOrgans.appendChild(ExtraBall);
-    ManualOrgans.appendChild(ManualOrgansClose())
-    var br = document.createElement("br");
-    ManualOrgans.appendChild(br);
+    ManualOrgans.appendChild(ManualOrgansClose());
+    ManualOrgans.appendChild(document.createElement("br"));
     for (var e of player.Balls) {
         ManualOrgans.appendChild(BallsButton(e));
     }
