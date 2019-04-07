@@ -18,7 +18,7 @@ function GetImpregOrgyFunc() {
 function ImpregOrgyFunc() {
     const HomeText = DocId("HomeText");
     HomeText.innerHTML = "Orgy<br>"
-    let CumTotal = player.Balls.map(b => b.Cum).reduce((acc, curr) => acc + curr);
+    let CumTotal = player.Balls.length > 0 ? player.Balls.map(b => b.Cum).reduce((acc, curr) => acc + curr) : 0;
     // some check if any of your dormmates isn't pregnant
     while (CumTotal >= 10 && House.Dormmates.some(b => !b.Pregnant.Status)) {
         for (let non of House.Dormmates) {

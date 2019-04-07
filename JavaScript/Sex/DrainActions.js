@@ -132,7 +132,7 @@ function DrainInjectF() {
 
 function GrowDick() {
     const old = JSON.parse(JSON.stringify(player)),
-        pd = player.Dicks[player.Dicks.length - 1];
+        pd = player.Dicks.length > 0 ? player.Dicks[player.Dicks.length - 1] : 0;
 
     if (player.Dicks.length === 0 && player.Masc >= 30) {
         const Dick = {
@@ -142,7 +142,7 @@ function GrowDick() {
         }
         player.Dicks.push(Dick);
         player.Masc -= 30;
-    } else if (EssenceCost(pd) <= player.Masc) {
+    } else if (player.Dicks.length > 0 ? EssenceCost(pd) <= player.Masc : false) {
         pd.Size++;
         player.Masc -= EssenceCost(pd);
     };
@@ -152,7 +152,7 @@ function GrowDick() {
 
 function GrowBalls() {
     const old = JSON.parse(JSON.stringify(player)),
-        pb = player.Balls[player.Balls.length - 1];
+        pb = player.Balls.length > 0 ? player.Balls[player.Balls.length - 1] : 0;
 
     if (player.Balls.length === 0 && player.Masc >= 50) {
         const Ball = {
@@ -165,9 +165,9 @@ function GrowBalls() {
         }
         player.Balls.push(Ball);
         player.Masc -= 50;
-    } else if (EssenceCost(pd) <= player.Masc) {
+    } else if (player.Balls.length > 0 ? EssenceCost(pb) <= player.Masc : false) {
         pb.Size++;
-        player.Masc -= EssenceCost(pd);
+        player.Masc -= EssenceCost(pb);
     };
     AfterBattleButtons();
     CheckArousal();
@@ -175,7 +175,7 @@ function GrowBalls() {
 
 function GrowPussy() {
     const old = JSON.parse(JSON.stringify(player)),
-        pb = player.Pussies[player.Pussies.length - 1];
+        pp = player.Pussies.length > 0 ? player.Pussies[player.Pussies.length - 1] : 0;
 
     if (player.Pussies.length === 0 && player.Femi >= 30) {
         const Pussy = {
@@ -185,9 +185,9 @@ function GrowPussy() {
         }
         player.Pussies.push(Pussy);
         player.Femi -= 30;
-    } else if (EssenceCost(pd) <= player.Femi) {
-        pb.Size++;
-        player.Femi -= EssenceCost(pd);
+    } else if (EssenceCost(pp) <= player.Femi) {
+        pp.Size++;
+        player.Femi -= EssenceCost(pp);
     };
     AfterBattleButtons();
     CheckArousal();
@@ -195,10 +195,10 @@ function GrowPussy() {
 
 function GrowBoobs() {
     const old = JSON.parse(JSON.stringify(player)),
-        pb = player.Boobies[player.Boobies.length - 1];
-    if (player.Boobies.length === 0 && player.Femi >= 30) {
+        pb = player.Boobies.length > 0 ? player.Boobies[player.Boobies.length - 1] : 0;
+    if (player.Boobies.length === 0) {
         const Boob = {
-            Size: 2,
+            Size: 0,
             Type: player.SecondRace,
             Milk: 0,
             MilkBaseRate: 0,

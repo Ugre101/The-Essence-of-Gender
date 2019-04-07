@@ -3,8 +3,8 @@ function FirstWave() {
     var OP = new enemy("Guard", RandomString(RacesCave), RandomInt(10, 13), RandomInt(10, 13), RandomInt(10, 13), RandomInt(0, 2),
         RandomInt(1, 3), RandomInt(9, 18), 150, 180, RandomInt(30, 40), RandomInt(20, 35),
         'red', grid, RandomInt(120, 140));
-    EssenceGiver(OP, 250);
-    FatMuscle(OP, 1, 1);
+    OP.EssenceGiver(250);
+    OP.FatMuscle(1, 1);
     StandardEnemy(OP);
     EvilNameGiver(OP);
     return OP;
@@ -15,8 +15,8 @@ function SecondWave() {
     var OP = new enemy("Guard", RandomString(RacesCave2), RandomInt(15, 21), RandomInt(15, 21), RandomInt(15, 21), RandomInt(11, 15),
         RandomInt(8, 11), RandomInt(19, 28), 220, 240, RandomInt(45, 65), RandomInt(40, 65),
         'red', grid, RandomInt(150, 180));
-    EssenceGiver(OP, 270);
-    FatMuscle(OP, 1, 1);
+    OP.EssenceGiver(270);
+    OP.FatMuscle(1, 1);
     StandardEnemy(OP);
     EvilNameGiver(OP);
     return OP;
@@ -27,8 +27,8 @@ function ThirdWave() {
     var OP = new enemy("Guard", RandomString(RacesCave3), RandomInt(30, 45), RandomInt(30, 45), RandomInt(27, 43), RandomInt(23, 27),
         RandomInt(20, 23), RandomInt(55, 75), 420, 450, RandomInt(75, 95), RandomInt(65, 85),
         'red', grid, RandomInt(160, 190));
-    EssenceGiver(OP, 300);
-    FatMuscle(OP, 1, 1);
+    OP.EssenceGiver(300);
+    OP.FatMuscle(1, 1);
     StandardEnemy(OP);
     EvilNameGiver(OP);
     return OP;
@@ -39,8 +39,8 @@ function FourthWave() {
     var OP = new enemy("Guard", RandomString(RacesCave4), RandomInt(10, 15), RandomInt(50, 65), RandomInt(55, 70), RandomInt(55, 70),
         RandomInt(35, 55), RandomInt(95, 135), 500, 600, RandomInt(110, 140), RandomInt(90, 140),
         'purple', grid, RandomInt(150, 180));
-    EssenceGiver(OP, 2000);
-    FatMuscle(OP, 1, 1);
+    OP.EssenceGiver(2000);
+    OP.FatMuscle(1, 1);
     StandardEnemy(OP);
     EvilNameGiver(OP);
     return OP;
@@ -51,8 +51,8 @@ function SuccubusBoss() {
     var OP = new enemy("Mistress", RandomString(RacesCave4), RandomInt(20, 25), RandomInt(60, 75), RandomInt(65, 80), RandomInt(65, 80),
         RandomInt(45, 65), RandomInt(105, 145), 800, 1500, RandomInt(300, 400), RandomInt(200, 340),
         'purple', grid, RandomInt(150, 180));
-    EssenceGiver(OP, 2500);
-    FatMuscle(OP, 1, 1);
+    OP.EssenceGiver(2500);
+    OP.FatMuscle(1, 1);
     StandardEnemy(OP);
     EvilNameGiver(OP);
     if (OP.Race == "Succubus") {
@@ -71,8 +71,8 @@ function SuccubusBossUnique() {
     var OP = new enemy("Dungeon Mistress", "Succubus", RandomInt(20, 25), RandomInt(60, 75), RandomInt(65, 80), RandomInt(65, 80),
         RandomInt(45, 65), RandomInt(105, 145), 800, 1500, RandomInt(300, 400), RandomInt(200, 340),
         'purple', grid, RandomInt(150, 180));
-    EssenceGiver(OP, 3000, "female");
-    FatMuscle(OP, 1, 1);
+    OP.GenderLock(3000, "female");
+    OP.FatMuscle(1, 1);
     StandardEnemy(OP);
     EvilNameGiver(OP);
     return OP;
