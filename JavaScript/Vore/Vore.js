@@ -38,59 +38,49 @@
     });
 
     DocId("VorePerks").addEventListener("click", function () {
+        const {
+            VorePerks,
+            VorePoints
+        } = player.Vore
         DocId("VoreButtons").style.display = 'none';
         DocId("VorePerkMenu").style.display = 'block';
-        DocId("VorePerkPointsLeft").innerHTML = "You have " + player.Vore.VorePoints + " perk points left.";
-        if (player.Vore.VorePerks.hasOwnProperty("AbsorbEssence")) {
-            DocId("AbsorbEssence").value = "AbsorbEssence +" + player.Vore.VorePerks.AbsorbEssence.Count;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("FasterDigestion")) {
-            DocId("FasterDigestion").value = "Faster digestion +" + player.Vore.VorePerks.FasterDigestion.Count;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
-            if (player.Vore.VorePerks.AbsorbStats.Count > 9) {
-                DocId("AbsorbStats").style.display = 'none';
-            } else {
-                DocId("AbsorbStats").value = "Drain Stats +" + player.Vore.VorePerks.AbsorbStats.Count; //Had to shorten value as text got outside button
-            }
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) {
-            DocId("HigherCapacity").value = "Higher capacity +" + player.Vore.VorePerks.HigherCapacity.Count;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("AbsorbHeight")) {
-            DocId("AbsorbHeight").value = "Absorb height +" + player.Vore.VorePerks.AbsorbHeight.Count;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("PredatorsMeta")) {
-            DocId("PredatorsMeta").value = "Predators meta +" + player.Vore.VorePerks.PredatorsMeta.Count;
-        }
+        DocId("VorePerkPointsLeft").innerHTML = `You have ${VorePoints} perk points left.`;
+        DocId("AbsorbEssence").value = VorePerks.hasOwnProperty("AbsorbEssence") ? VorePerks.AbsorbEssence.Count > 0 ? `AbsorbEssence +${VorePerks.AbsorbEssence.Count}` : `AbsorbEssence` : `AbsorbEssence`;
+        DocId("FasterDigestion").value = VorePerks.hasOwnProperty("FasterDigestion") ? VorePerks.FasterDigestion.Count > 0 ? `Faster digestion +${VorePerks.FasterDigestion.Count}` : `Faster digestion` : `Faster digestion`;
+        DocId("AbsorbStats").value = VorePerks.hasOwnProperty("AbsorbStats") ? VorePerks.AbsorbStats.Count > 0 ? `Drain Stats +${VorePerks.AbsorbStats.Count}` : `Drain Stats` : `Drain Stats`; //Had to shorten value as text got outside button            
+        DocId("HigherCapacity").value = VorePerks.hasOwnProperty("HigherCapacity") ? VorePerks.HigherCapacity.Count > 0 ? `Higher capacity +${VorePerks.HigherCapacity.Count}` : `Higher capacity` : `Higher capacity`;
+        DocId("AbsorbHeight").value = VorePerks.hasOwnProperty("AbsorbHeight") ? VorePerks.AbsorbHeight.Count > 0 ? "Absorb height +" + player.Vore.VorePerks.AbsorbHeight.Count : `Absorb height` : `Absorb height`;
+        DocId("PredatorsMeta").value = VorePerks.hasOwnProperty("PredatorsMeta") ? VorePerks.PredatorsMeta.Count > 0 ? `Predators meta +${VorePerks.PredatorsMeta.Count}` : `Predators meta` : `Predators meta`;
         return;
     });
 
     function VorePerkHandler(perket) {
+        const {
+            VorePerks
+        } = player.Vore
         player.Vore.VorePoints--;
         if (perket === "AbsorbStats")
             player.Vore.VorePoints -= 9;
-        if (player.Vore.VorePerks.hasOwnProperty(perket)) {
-            player.Vore.VorePerks[perket].Count++;
+        if (VorePerks.hasOwnProperty(perket)) {
+            VorePerks[perket].Count++;
         } else {
-            player.Vore.VorePerks[perket] = {
+            VorePerks[perket] = {
                 Count: 1
             }
         }
-        DocId(perket).value = perket + " +" + player.Vore.VorePerks[perket].Count;
-        DocId("VorePerkPointsLeft").innerHTML = "You have " + player.Vore.VorePoints + " perk points left.";
+        DocId(perket).value = `${perket} +${VorePerks[perket].Count}`;
+        DocId("VorePerkPointsLeft").innerHTML = `You have ${player.Vore.VorePoints} perk points left.`;
     }
     DocId("AbsorbEssence").addEventListener("click", function () {
-        player.Vore.VorePoints > 0 ? VorePerkHandler("AbsorbEssence") : false;
+        player.Vore.VorePoints > 0 ? VorePerkHandler("AbsorbEssence") : DocId("VorePerkMenuText").innerHTML = `You don't have enough perk points`;
     });
     DocId("AbsorbStats").addEventListener("click", function () {
         if (player.Vore.VorePoints > 9) {
-            if (!player.Vore.VorePerks.hasOwnProperty("AbsorbStats")) {
-                VorePerkHandler("AbsorbStats");
-            } else if (player.Vore.VorePerks.AbsorbStats.Count < 10) {
+            if (player.Vore.VorePerks.hasOwnProperty("AbsorbStats") ? player.Vore.VorePerks.AbsorbStats.Count < 10 : true) {
                 VorePerkHandler("AbsorbStats");
             }
         } else {
+            DocId("VorePerkMenuText").innerHTML = `You don't have enough perk points or perk is maxed`
             return;
         }
     });
@@ -98,16 +88,16 @@
         DocId("VorePerkMenuText").innerHTML = e.target.title;
     });
     DocId("FasterDigestion").addEventListener("click", function () {
-        player.Vore.VorePoints > 0 ? VorePerkHandler("FasterDigestion") : false;
+        player.Vore.VorePoints > 0 ? VorePerkHandler("FasterDigestion") : DocId("VorePerkMenuText").innerHTML = `You don't have enough perk points`;
     });
     DocId("HigherCapacity").addEventListener("click", function () {
-        player.Vore.VorePoints > 0 ? VorePerkHandler("HigherCapacity") : false;
+        player.Vore.VorePoints > 0 ? VorePerkHandler("HigherCapacity") : DocId("VorePerkMenuText").innerHTML = `You don't have enough perk points`;
     });
     DocId("AbsorbHeight").addEventListener("click", function () {
-        player.Vore.VorePoints > 0 ? VorePerkHandler("AbsorbHeight") : false;
+        player.Vore.VorePoints > 0 ? VorePerkHandler("AbsorbHeight") : DocId("VorePerkMenuText").innerHTML = `You don't have enough perk points`;
     });
     DocId("PredatorsMeta").addEventListener("click", function () {
-        player.Vore.VorePoints > 0 ? VorePerkHandler("PredatorsMeta") : false;
+        player.Vore.VorePoints > 0 ? VorePerkHandler("PredatorsMeta") : DocId("VorePerkMenuText").innerHTML = `You don't have enough perk points`;
     });
     DocId("LeaveVorePerkMenu").addEventListener("click", function () {
         DocId("VoreButtons").style.display = 'grid';
@@ -115,25 +105,29 @@
     });
 
     DocId("VoreSettings").addEventListener("click", function () {
-        var VoreSettings = DocId("VoreSettingsMenu");
-        VoreSettings.style.display = VoreSettings.style.display === 'block' ? 'none' : 'block';
+        const {
+            style
+        } = DocId("VoreSettingsMenu");
+        style.display = style.display === 'block' ? 'none' : 'block';
     });
     DocId("AbsorbEssenceSetting").addEventListener("click", function () {
-        switch (Settings.VoreSettings.AbsorbEssence) {
-            case "Both":
-                Settings.VoreSettings.AbsorbEssence = "Femininity";
-                break;
-            case "Femininity":
-                Settings.VoreSettings.AbsorbEssence = "Masculinity";
-                break;
-            case "Masculinity":
-                Settings.VoreSettings.AbsorbEssence = "None";
-                break;
-            default:
-                Settings.VoreSettings.AbsorbEssence = "Both";
-                break;
-        }
-        DocId("AbsorbEssenceSetting").value = "Absorb Essence " + Settings.VoreSettings.AbsorbEssence;
+        const {
+            VoreSettings
+        } = Settings,
+        Next = () => {
+            switch (VoreSettings.AbsorbEssence) {
+                case "Both":
+                    return "Femininity";
+                case "Femininity":
+                    return "Masculinity";
+                case "Masculinity":
+                    return "None";
+                default:
+                    return "Both";
+            };
+        };
+        VoreSettings.AbsorbEssence = Next();
+        DocId("AbsorbEssenceSetting").value = `Absorb Essence ${VoreSettings.AbsorbEssence}`;
     });
     DocId("LeaveVore").addEventListener("click", function () {
         const none = ["ShowVore", "VoreAnal", "VoreBalls", "VoreBreast", "VoreVagina", "VoreStomach"].forEach((src) => {
@@ -165,454 +159,400 @@
         // Digestion perk
 
         // Stomach
-        var content = 0;
-        for (let e of player.Vore.Stomach) {
-            content += e.Weight;
+        const content = (arr) => {
+            return arr.length > 0 ? arr.map(arr => arr.Weight).reduce((acc, cur) => acc + cur) : 0;
         }
-        while (content > MaxStomachCapacity()) {
+        while (content(player.Vore.Stomach) > MaxStomachCapacity()) {
             enemies.push(player.Vore.Stomach[player.Vore.Stomach.length - 1]);
             player.Vore.Stomach.pop();
-            content = 0;
-            for (let e of player.Vore.Stomach) {
-                content += e.Weight;
-            }
         }
-        var fullness = content / MaxStomachCapacity() || 0.1; // prevent NaN if maxCapacity is 0
+        const Stomachfullness = content(player.Vore.Stomach) / MaxStomachCapacity() || 0.1; // prevent NaN if maxCapacity is 0
         // stomach fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.StomachDigestion) {
-            player.Vore.StomachExp += fullness * digestionCount * progress;
-            player.Vore.Exp += fullness * digestionCount * progress;
+            player.Vore.StomachExp += Stomachfullness * digestionCount * progress;
+            player.Vore.Exp += Stomachfullness * digestionCount * progress;
         } else {
-            player.Vore.StomachExp += 0.5 * fullness * digestionCount * progress;
-            player.Vore.Exp += 0.5 * fullness * digestionCount * progress;
+            player.Vore.StomachExp += 0.5 * Stomachfullness * digestionCount * progress;
+            player.Vore.Exp += 0.5 * Stomachfullness * digestionCount * progress;
         }
-        for (var e = 0; e < player.Vore.Stomach.length; e++) {
-            if (!player.Vore.Stomach[e].hasOwnProperty("LastName")) {
-                player.Vore.Stomach[e].LastName = "";
+        for (let e of player.Vore.Stomach) {
+            if (!e.hasOwnProperty("LastName")) {
+                e.LastName = "";
             }
             if (VP.hasOwnProperty("AbsorbEssence")) {
+                const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
+                    Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi)
+
                 switch (Settings.VoreSettings.AbsorbEssence) {
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Masc)
-                        player.Vore.Stomach[e].Masc -= shift;
-                        player.Masc += shift;
+                        e.Masc -= Mshift;
+                        player.Masc += Mshift;
                         break;
                     case "Femininity":
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Femi)
-                        player.Vore.Stomach[e].Femi -= shift;
-                        player.Femi += shift;
+                        e.Femi -= Fshift;
+                        player.Femi += Fshift;
                         break;
                     default:
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Masc)
-                        player.Vore.Stomach[e].Masc -= shift;
-                        player.Masc += shift;
-                        shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Stomach[e].Femi)
-                        player.Vore.Stomach[e].Femi -= shift;
-                        player.Femi += shift;
+                        e.Masc -= Mshift;
+                        player.Masc += Mshift;
+                        e.Femi -= Fshift;
+                        player.Femi += Fshift;
                         break;
                 }
             }
             if (VP.hasOwnProperty("AbsorbHeight")) {
-                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && player.Vore.Stomach[e].Height > 1) {
+                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
                     player.Height += VP.AbsorbHeight.Count * progress;
-                    player.Vore.Stomach[e].Height -= VP.AbsorbHeight.Count * progress;
+                    e.Height -= VP.AbsorbHeight.Count * progress;
                 }
-
             }
             if (Settings.VoreSettings.StomachDigestion) {
-                player.Vore.Stomach[e].Weight -= progress * digestionCount;
-                for (var q = 0; q < player.RaceEssence.length; q++) {
-                    if (player.RaceEssence[q].Race === player.Vore.Stomach[e].Race) {
-                        player.RaceEssence[q].amount += progress * digestionCount;
-                        break;
-                    } else if (q + 1 == player.RaceEssence.length) {}
+                e.Weight -= progress * digestionCount;
+                for (let q of player.RaceEssence) {
+                    if (q.Race === e.Race) {
+                        q.amount += progress * digestionCount;
+                    } else {
+
+                    }
                 }
                 player.Fat += progress / 2 * digestionCount;
 
-                if (player.Vore.Stomach[e].Weight < 0) {
-                    if (VP.hasOwnProperty("AbsorbStats")) {
-                        var snowA = Math.max(10 - VP.AbsorbStats.Count, 1);
-                        player.Str += Math.round(player.Vore.Stomach[e].Str / snowA);
-                        player.Int += Math.round(player.Vore.Stomach[e].Int / snowA);
-                        player.Charm += Math.round(player.Vore.Stomach[e].Charm / snowA);
-                        if (player.Vore.Stomach[e].hasOwnProperty("Will")) {
-                            player.Will += Math.round(player.Vore.Stomach[e].Will / snowA);
-                        } else if (player.Vore.Stomach[e].hasOwnProperty("Willpower")) {
-                            player.Will += Math.round(player.Vore.Stomach[e].Willpower / snowA);
-                        }
-                        player.End += Math.round(player.Vore.Stomach[e].End / snowA);
-                        player.SexSkill += Math.round(player.Vore.Stomach[e].SexSkill / snowA);
+                if (e.Weight < 0) {
+                    if (VP.hasOwnProperty("AbsorbStats") ? VP.AbsorbStats.Count > 0 : false) {
+                        const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
+                            ToAdd = (what) => {
+                                return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
+                            };
+                        player.Str += ToAdd("Str");
+                        player.Int += ToAdd("Int");
+                        player.Charm += ToAdd("Charm");
+                        player.Will += ToAdd("Will");
+                        player.End += ToAdd("End");
+                        player.SexSkill += ToAdd("SexSkill");
                     }
-                    EventLog("You have digested " + player.Vore.Stomach[e].Name + " " + player.Vore.Stomach[e].Race + " " + player.Vore.Stomach[e].FirstName + " " + player.Vore.Stomach[e].LastName);
-                    player.Vore.Stomach.splice(e, 1);
+                    EventLog(`You have digested ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
+                    player.Vore.Stomach.splice(player.Vore.Stomach.findIndex(i => i === e), 1);
                 }
             }
         }
         // Vagina
-        var content = 0;
-        for (var e of player.Vore.Vagina) {
-            content += e.Weight;
-        }
-        while (content > MaxVaginaCapacity()) {
+
+        while (content(player.Vore.Vagina) > MaxVaginaCapacity()) {
             enemies.push(player.Vore.Vagina[player.Vore.Vagina.length - 1]);
             player.Vore.Vagina.pop();
-            content = 0;
-            for (var e of player.Vore.Vagina) {
-                content += e.Weight;
-            }
         }
-        var fullness = content / MaxVaginaCapacity() || 0.1; // prevent NaN if maxCapacity is 0
+        const Vaginafullness = content(player.Vore.Vagina) / MaxVaginaCapacity() || 0.1; // prevent NaN if maxCapacity is 0
         // Vagina fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.VCumDigestion) {
-            player.Vore.VaginaExp += fullness * digestionCount * progress;
-            player.Vore.Exp += fullness * digestionCount * progress;
+            player.Vore.VaginaExp += Vaginafullness * digestionCount * progress;
+            player.Vore.Exp += Vaginafullness * digestionCount * progress;
         } else {
-            player.Vore.VaginaExp += 0.5 * fullness * digestionCount * progress;
-            player.Vore.Exp += 0.5 * fullness * digestionCount * progress;
+            player.Vore.VaginaExp += 0.5 * Vaginafullness * digestionCount * progress;
+            player.Vore.Exp += 0.5 * Vaginafullness * digestionCount * progress;
         }
-        for (var e = 0; e < player.Vore.Vagina.length; e++) {
+        for (let e of player.Vore.Vagina) {
             if (VP.hasOwnProperty("AbsorbEssence")) {
+                const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
+                    Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi);
                 switch (Settings.VoreSettings.AbsorbEssence) {
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Masc);
-                        player.Vore.Vagina[e].Masc -= shift;
-                        player.Masc += shift;
+                        e.Masc -= Mshift;
+                        player.Masc += Mshift;
                         break;
                     case "Femininity":
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Femi);
-                        player.Vore.Vagina[e].Femi -= shift;
-                        player.Femi += shift;
+                        e.Femi -= Fshift;
+                        player.Femi += Fshift;
                         break;
                     default:
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Masc);
-                        player.Vore.Vagina[e].Masc -= shift;
-                        player.Masc += shift;
-                        shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Vagina[e].Femi);
-                        player.Vore.Vagina[e].Femi -= shift;
-                        player.Femi += shift;
+                        e.Masc -= Mshift;
+                        player.Masc += Mshift;
+                        e.Femi -= Fshift;
+                        player.Femi += Fshift;
                         break;
                 }
             }
             if (VP.hasOwnProperty("AbsorbHeight")) {
-                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && player.Vore.Vagina[e].Height > 1) {
+                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
                     player.Height += VP.AbsorbHeight.Count * progress;
-                    player.Vore.Vagina[e].Height -= VP.AbsorbHeight.Count * progress;
+                    e.Height -= VP.AbsorbHeight.Count * progress;
                 }
             }
             if (Settings.VoreSettings.VCumDigestion) {
-                player.Vore.Vagina[e].Weight -= progress * digestionCount;
-                for (var q = 0; q < player.RaceEssence.length; q++) {
-                    if (player.RaceEssence[q].Race === player.Vore.Vagina[e].Race) {
-                        player.RaceEssence[q].amount += progress * digestionCount;
-                        break;
-                    } else if (q + 1 == player.RaceEssence.length) {}
-                }
-                if (player.Vore.Vagina[e].Weight < 0) {
-                    if (VP.hasOwnProperty("AbsorbStats")) {
-                        var snowA = Math.max(10 - VP.AbsorbStats.Count, 1);
-                        player.Str += Math.round(player.Vore.Vagina[e].Str / snowA);
-                        player.Int += Math.round(player.Vore.Vagina[e].Int / snowA);
-                        player.Charm += Math.round(player.Vore.Vagina[e].Charm / snowA);
-                        if (player.Vore.Vagina[e].hasOwnProperty("Will")) {
-                            player.Will += Math.round(player.Vore.Vagina[e].Will / snowA);
-                        } else if (player.Vore.Vagina[e].hasOwnProperty("Willpower")) {
-                            player.Will += Math.round(player.Vore.Vagina[e].Willpower / snowA);
-                        }
-                        player.End += Math.round(player.Vore.Vagina[e].End / snowA);
-                        player.SexSkill += Math.round(player.Vore.Vagina[e].SexSkill / snowA);
+                e.Weight -= progress * digestionCount;
+                for (let q of player.RaceEssence) {
+                    if (q.Race === e.Race) {
+                        q.amount += progress * digestionCount;
+                    } else {
+
                     }
-                    EventLog("The only trace left of " + player.Vore.Vagina[e].Name + " " + player.Vore.Vagina[e].Race + " " + player.Vore.Vagina[e].FirstName + " " + player.Vore.Vagina[e].LastName + " is a trail of pussy discharge traveling down your legs.");
-                    player.Vore.Vagina.splice(e, 1);
+                }
+                if (e.Weight < 0) {
+                    if (VP.hasOwnProperty("AbsorbStats") ? VP.AbsorbStats.Count > 0 : false) {
+                        const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
+                            ToAdd = (what) => {
+                                return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
+                            };
+                        player.Str += ToAdd("Str");
+                        player.Int += ToAdd("Int");
+                        player.Charm += ToAdd("Charm");
+                        player.Will += ToAdd("Will");
+                        player.End += ToAdd("End");
+                        player.SexSkill += ToAdd("SexSkill");
+                    }
+                    EventLog(`The only trace left of ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName} is a trail of pussy discharge traveling down your legs.`);
+                    player.Vore.Vagina.splice(player.Vore.Vagina.findIndex(i => i === e), 1);
                 }
             } else if (Settings.VoreSettings.ChildTF) {
-                if (!player.Vore.Vagina[e].hasOwnProperty("Counter")) {
-                    player.Vore.Vagina[e].Counter = 0;
-                } else {
-                    player.Vore.Vagina[e].Counter++;
-                    if (player.Vore.Vagina[e].Counter > 1000) {
-                        var Baby = {
-                            BabyAge: 0,
-                            BabyRace: player.Vore.Vagina[e].Race
-                        }
-                        player.Pregnant.Status = true;
-                        player.Pregnant.Babies.push(Baby);
-                        EventLog(player.Vore.Vagina[e].Name + " " + player.Vore.Vagina[e].Race + " " + player.Vore.Vagina[e].FirstName + " " + player.Vore.Vagina[e].LastName + " have been reduced to infant who now rests in your womb.")
-                        player.Vore.Vagina.splice(e, 1);
+                e.hasOwnProperty("Counter") ? e.Counter++ : e.Counter = 0;
+                e.Counter++;
+                if (e.Counter > 1000) {
+                    const Baby = {
+                        BabyAge: 0,
+                        BabyRace: e.Race,
+                        Father: player.Name + " " + player.LastName,
+                        Mother: player.FirstName + " " + player.LastName
                     }
-                }
-            }
-        }
+                    player.Pregnant.Status = true;
+                    player.Pregnant.Babies.push(Baby);
+                    EventLog(`${e.Name} ${e.Race} ${e.FirstName} ${e.LastName} have been reduced to infant who now rests in your womb.`);
+                    player.Vore.Vagina.splice(player.Vore.Vagina.findIndex(i => i === e), 1);
+                };
+            };
+        };
         // Breast
-        var content = 0;
-        for (var e of player.Vore.Breast) {
-            content += e.Weight;
-        }
-        while (content > MaxBreastCapacity()) {
+
+        while (content(player.Vore.Breast) > MaxBreastCapacity()) {
             enemies.push(player.Vore.Breast[player.Vore.Breast.length - 1]);
             player.Vore.Breast.pop();
-            content = 0;
-            for (var e of player.Vore.Breast) {
-                content += e.Weight;
-            }
         }
-        var fullness = content / MaxBreastCapacity() || 0.1; // prevent NaN if maxCapacity is 0
+        const Breastfullness = content(player.Vore.Breast) / MaxBreastCapacity() || 0.1; // prevent NaN if maxCapacity is 0
         // Breast fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.MilkTF) {
-            player.Vore.BreastExp += fullness * digestionCount * progress;
-            player.Vore.Exp += fullness * digestionCount * progress;
+            player.Vore.BreastExp += Breastfullness * digestionCount * progress;
+            player.Vore.Exp += Breastfullness * digestionCount * progress;
         } else {
-            player.Vore.BreastExp += 0.5 * fullness * digestionCount * progress;
-            player.Vore.Exp += 0.5 * fullness * digestionCount * progress;
+            player.Vore.BreastExp += 0.5 * Breastfullness * digestionCount * progress;
+            player.Vore.Exp += 0.5 * Breastfullness * digestionCount * progress;
         }
-        for (var e = 0; e < player.Vore.Breast.length; e++) {
+        for (let e of player.Vore.Breast) {
             if (VP.hasOwnProperty("AbsorbEssence")) {
+                const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
+                    Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi)
                 switch (Settings.VoreSettings.AbsorbEssence) {
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Breast[e].Masc)
-                        player.Vore.Breast[e].Masc -= shift;
-                        player.Masc += shift;
+                        e.Masc -= Mshift;
+                        player.Masc += Mshift;
                         break;
                     case "Femininity":
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Breast[e].Femi)
-                        player.Vore.Breast[e].Femi -= shift;
-                        player.Femi += shift;
+                        e.Femi -= Fshift;
+                        player.Femi += Fshift;
                         break;
                     default:
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Breast[e].Masc)
-                        player.Vore.Breast[e].Masc -= shift;
-                        player.Masc += shift;
-                        shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Breast[e].Femi)
-                        player.Vore.Breast[e].Femi -= shift;
-                        player.Femi += shift;
+                        e.Masc -= Mshift;
+                        player.Masc += Mshift;
+                        e.Femi -= Fshift;
+                        player.Femi += Fshift;
                         break;
-                }
-            }
+                };
+            };
             if (VP.hasOwnProperty("AbsorbHeight")) {
-                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && player.Vore.Breast[e].Height > 1) {
+                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
                     player.Height += VP.AbsorbHeight.Count * progress;
-                    player.Vore.Breast[e].Height -= VP.AbsorbHeight.Count * progress;
-                }
-
-            }
+                    e.Height -= VP.AbsorbHeight.Count * progress;
+                };
+            };
             if (Settings.VoreSettings.MilkTF) {
-                player.Vore.Breast[e].Weight -= progress * digestionCount;
-                for (var q = 0; q < player.RaceEssence.length; q++) {
-                    if (player.RaceEssence[q].Race === player.Vore.Breast[e].Race) {
-                        player.RaceEssence[q].amount += progress * digestionCount;
+                e.Weight -= progress * digestionCount;
+                for (let q of player.RaceEssence) {
+                    if (q.Race === e.Race) {
+                        q.amount += progress * digestionCount;
                         break;
-                    } else if (q + 1 == player.RaceEssence.length) {}
-                }
-                for (var b = 0; b < player.Boobies.length; b++) {
-                    if (player.Boobies[b].Milk < player.Boobies[b].MilkMax) {
-                        player.Boobies[b].Milk += progress * digestionCount;
+                    } else {
+
                     }
                 }
-                if (player.Vore.Breast[e].Weight < 0) {
-                    if (VP.hasOwnProperty("AbsorbStats")) {
-                        var snowA = Math.max(10 - VP.AbsorbStats.Count, 1);
-                        player.Str += Math.round(player.Vore.Breast[e].Str / snowA);
-                        player.Int += Math.round(player.Vore.Breast[e].Int / snowA);
-                        player.Charm += Math.round(player.Vore.Breast[e].Charm / snowA);
-                        if (player.Vore.Breast[e].hasOwnProperty("Will")) {
-                            player.Will += Math.round(player.Vore.Breast[e].Will / snowA);
-                        } else if (player.Vore.Breast[e].hasOwnProperty("Willpower")) {
-                            player.Will += Math.round(player.Vore.Breast[e].Willpower / snowA);
-                        }
-                        player.End += Math.round(player.Vore.Breast[e].End / snowA);
-                        player.SexSkill += Math.round(player.Vore.Breast[e].SexSkill / snowA);
-                    }
-                    EventLog("There is nothing but milk left of " + player.Vore.Breast[e].Name + " " + player.Vore.Breast[e].Race + " " + player.Vore.Breast[e].FirstName + " " + player.Vore.Breast[e].LastName);
-                    player.Vore.Breast.splice(e, 1);
-                }
-            }
-        }
+                for (let b of player.Boobies) {
+                    if (b.Milk < b.MilkMax) {
+                        b.Milk += progress * digestionCount;
+                    };
+                };
+                if (e.Weight < 0) {
+                    const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
+                        ToAdd = (what) => {
+                            return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
+                        };
+                    player.Str += ToAdd("Str");
+                    player.Int += ToAdd("Int");
+                    player.Charm += ToAdd("Charm");
+                    player.Will += ToAdd("Will");
+                    player.End += ToAdd("End");
+                    player.SexSkill += ToAdd("SexSkill");
+                    EventLog(`There is nothing but milk left of ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
+                    player.Vore.Breast.splice(player.Vore.Breast.findIndex(i => i === e), 1);
+                };
+            };
+        };
         // Balls
-        var content = 0;
-        for (var e of player.Vore.Balls) {
-            content += e.Weight;
-        }
-        while (content > MaxBallsCapacity()) {
+        while (content(player.Vore.Balls) > MaxBallsCapacity()) {
             enemies.push(player.Vore.Balls[player.Vore.Balls.length - 1]);
             player.Vore.Balls.pop();
-            content = 0;
-            for (var e of player.Vore.Balls) {
-                content += e.Weight;
-            }
         }
-        var fullness = content / MaxBallsCapacity() || 0.1; // prevent NaN if maxCapacity is 0
+        const Ballfullness = content(player.Vore.Balls) / MaxBallsCapacity() || 0.1; // prevent NaN if maxCapacity is 0
         // Balls fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.CumTF) {
-            player.Vore.BallsExp += fullness * digestionCount * progress;
-            player.Vore.Exp += fullness * digestionCount * progress;
+            player.Vore.BallsExp += Ballfullness * digestionCount * progress;
+            player.Vore.Exp += Ballfullness * digestionCount * progress;
         } else {
-            player.Vore.BallsExp += 0.5 * fullness * digestionCount * progress;
-            player.Vore.Exp += 0.5 * fullness * digestionCount * progress;
+            player.Vore.BallsExp += 0.5 * Ballfullness * digestionCount * progress;
+            player.Vore.Exp += 0.5 * Ballfullness * digestionCount * progress;
         }
-        for (var e = 0; e < player.Vore.Balls.length; e++) {
+        for (let e of player.Vore.Balls) {
             if (VP.hasOwnProperty("AbsorbEssence")) {
+                const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
+                    Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi)
                 switch (Settings.VoreSettings.AbsorbEssence) {
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Balls[e].Masc)
-                        player.Vore.Balls[e].Masc -= shift;
-                        player.Masc += shift;
+                        e.Masc -= Mshift;
+                        player.Masc += Mshift;
                         break;
                     case "Femininity":
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Balls[e].Femi)
-                        player.Vore.Balls[e].Femi -= shift;
-                        player.Femi += shift;
+                        e.Femi -= Fshift;
+                        player.Femi += Fshift;
                         break;
                     default:
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Balls[e].Masc)
-                        player.Vore.Balls[e].Masc -= shift;
-                        player.Masc += shift;
-                        shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Balls[e].Femi)
-                        player.Vore.Balls[e].Femi -= shift;
-                        player.Femi += shift;
+                        e.Masc -= Mshift;
+                        player.Masc += Mshift;
+                        e.Femi -= Fshift;
+                        player.Femi += Fshift;
                         break;
-                }
-            }
+                };
+            };
             if (VP.hasOwnProperty("AbsorbHeight")) {
-                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && player.Vore.Balls[e].Height > 1) {
+                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
                     player.Height += VP.AbsorbHeight.Count * progress;
-                    player.Vore.Balls[e].Height -= VP.AbsorbHeight.Count * progress;
-                }
-
-            }
+                    e.Height -= VP.AbsorbHeight.Count * progress;
+                };
+            };
             if (Settings.VoreSettings.CumTF) {
-                player.Vore.Balls[e].Weight -= progress * digestionCount;
-                for (var q = 0; q < player.RaceEssence.length; q++) {
-                    if (player.RaceEssence[q].Race === player.Vore.Balls[e].Race) {
-                        player.RaceEssence[q].amount += progress * digestionCount;
-                        break;
-                    } else if (q + 1 == player.RaceEssence.length) {}
-                }
-                for (var b = 0; b < player.Balls.length; b++) {
-                    if (player.Balls[b].Cum < player.Balls[b].CumMax) {
-                        player.Balls[b].Cum += 100 * progress * digestionCount;
-                    }
-                }
-                if (player.Vore.Balls[e].Weight < 0) {
+                e.Weight -= progress * digestionCount;
+                for (let q of player.RaceEssence) {
+                    if (q.Race === e.Race) {
+                        q.amount += progress * digestionCount;
+                    } else {
+
+                    };
+                };
+                for (let b of player.Balls) {
+                    if (b.Cum < b.CumMax) {
+                        b.Cum += 100 * progress * digestionCount;
+                    };
+                };
+                if (e.Weight < 0) {
                     if (VP.hasOwnProperty("AbsorbStats")) {
-                        var snowA = Math.max(10 - VP.AbsorbStats.Count, 1);
-                        player.Str += Math.round(player.Vore.Balls[e].Str / snowA);
-                        player.Int += Math.round(player.Vore.Balls[e].Int / snowA);
-                        player.Charm += Math.round(player.Vore.Balls[e].Charm / snowA);
-                        if (player.Vore.Balls[e].hasOwnProperty("Will")) {
-                            player.Will += Math.round(player.Vore.Balls[e].Will / snowA);
-                        } else if (player.Vore.Balls[e].hasOwnProperty("Willpower")) {
-                            player.Will += Math.round(player.Vore.Balls[e].Willpower / snowA);
-                        }
-                        player.End += Math.round(player.Vore.Balls[e].End / snowA);
-                        player.SexSkill += Math.round(player.Vore.Balls[e].SexSkill / snowA);
+                        const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
+                            ToAdd = (what) => {
+                                return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
+                            };
+                        player.Str += ToAdd("Str");
+                        player.Int += ToAdd("Int");
+                        player.Charm += ToAdd("Charm");
+                        player.Will += ToAdd("Will");
+                        player.End += ToAdd("End");
+                        player.SexSkill += ToAdd("SexSkill");
                     }
-                    EventLog("There is nothing but cum left of the " + player.Vore.Balls[e].Name + " " + player.Vore.Balls[e].Race + " " + player.Vore.Balls[e].FirstName + " " + player.Vore.Balls[e].LastName);
-                    player.Vore.Balls.splice(e, 1);
+                    EventLog(`There is nothing but cum left of the ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
+                    player.Vore.Balls.splice(player.Vore.Balls.findIndex(i => i === e), 1);
                     return;
                 }
             }
         }
         // Anal
-        var content = 0;
-        for (var e of player.Vore.Anal) {
-            content += e.Weight;
-        }
-        while (content > MaxAnalCapacity()) {
+        while (content(player.Vore.Anal) > MaxAnalCapacity()) {
             enemies.push(player.Vore.Anal[player.Vore.Anal.length - 1]);
             player.Vore.Anal.pop();
-            content = 0;
-            for (var e of player.Vore.Anal) {
-                content += e.Weight;
-            }
         }
-        var fullness = content / MaxAnalCapacity() || 0.1; // prevent NaN if maxCapacity is 0
+        const Analfullness = content(player.Vore.Anal) / MaxAnalCapacity() || 0.1; // prevent NaN if maxCapacity is 0
         // Anal fullness should be able to vary between 0 and 2
         if (Settings.VoreSettings.AnalDigestion) {
-            player.Vore.AnalExp += fullness * digestionCount * progress;
-            player.Vore.Exp += fullness * digestionCount * progress;
+            player.Vore.AnalExp += Analfullness * digestionCount * progress;
+            player.Vore.Exp += Analfullness * digestionCount * progress;
         } else {
-            player.Vore.AnalExp += 0.5 * fullness * digestionCount * progress;
-            player.Vore.Exp += 0.5 * fullness * digestionCount * progress;
+            player.Vore.AnalExp += 0.5 * Analfullness * digestionCount * progress;
+            player.Vore.Exp += 0.5 * Analfullness * digestionCount * progress;
         }
-        for (var e = 0; e < player.Vore.Anal.length; e++) {
+        for (let e of player.Vore.Anal) {
             if (VP.hasOwnProperty("AbsorbEssence")) {
+                const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
+                    Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi)
                 switch (Settings.VoreSettings.AbsorbEssence) {
                     case "None":
                         break;
                     case "Masculinity":
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Anal[e].Masc)
-                        player.Vore.Anal[e].Masc -= shift;
-                        player.Masc += shift;
+                        e.Masc -= Mshift;
+                        player.Masc += Mshift;
                         break;
                     case "Femininity":
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Anal[e].Femi)
-                        player.Vore.Anal[e].Femi -= shift;
-                        player.Femi += shift;
+                        e.Femi -= Fshift;
+                        player.Femi += Fshift;
                         break;
                     default:
-                        var shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Anal[e].Masc)
-                        player.Vore.Anal[e].Masc -= shift;
-                        player.Masc += shift;
-                        shift = Math.min(VP.AbsorbEssence.Count * progress, player.Vore.Anal[e].Femi)
-                        player.Vore.Anal[e].Femi -= shift;
-                        player.Femi += shift;
+                        e.Masc -= Mshift;
+                        player.Masc += Mshift;
+                        e.Femi -= Fshift;
+                        player.Femi += Fshift;
                         break;
                 }
             }
             if (VP.hasOwnProperty("AbsorbHeight")) {
-                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && player.Vore.Anal[e].Height > 1) {
+                if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
                     player.Height += VP.AbsorbHeight.Count * progress;
-                    player.Vore.Anal[e].Height -= VP.AbsorbHeight.Count * progress;
-                }
-            }
+                    e.Height -= VP.AbsorbHeight.Count * progress;
+                };
+            };
             if (Settings.VoreSettings.AnalDigestion) {
-                player.Vore.Anal[e].Weight -= progress * digestionCount;
-                for (var q = 0; q < player.RaceEssence.length; q++) {
-                    if (player.RaceEssence[q].Race === player.Vore.Anal[e].Race) {
-                        player.RaceEssence[q].amount += progress * digestionCount;
+                e.Weight -= progress * digestionCount;
+                for (let q of player.RaceEssence) {
+                    if (q.Race === e.Race) {
+                        q.amount += progress * digestionCount;
                         break;
-                    } else if (q + 1 == player.RaceEssence.length) {}
-                }
-                player.Fat += progress / 2 * digestionCount;
-                if (player.Vore.Anal[e].Weight < 0) {
-                    if (VP.hasOwnProperty("AbsorbStats")) {
-                        var snowA = Math.max(10 - VP.AbsorbStats.Count, 1);
-                        player.Str += Math.round(player.Vore.Anal[e].Str / snowA);
-                        player.Int += Math.round(player.Vore.Anal[e].Int / snowA);
-                        player.Charm += Math.round(player.Vore.Anal[e].Charm / snowA);
-                        if (player.Vore.Anal[e].hasOwnProperty("Will")) {
-                            player.Will += Math.round(player.Vore.Anal[e].Will / snowA);
-                        } else if (player.Vore.Anal[e].hasOwnProperty("Willpower")) {
-                            player.Will += Math.round(player.Vore.Anal[e].Willpower / snowA);
-                        }
-                        player.End += Math.round(player.Vore.Anal[e].End / snowA);
-                        player.SexSkill += Math.round(player.Vore.Anal[e].SexSkill / snowA);
-                    }
-                    EventLog("There is nothing left of the " + player.Vore.Anal[e].Name + " " + player.Vore.Anal[e].Race + " " + player.Vore.Anal[e].FirstName + " " + player.Vore.Anal[e].LastName);
-                    player.Vore.Anal.splice(e, 1);
-                }
-            }
-        }
-    }
+                    } else {
 
+                    };
+                };
+                player.Fat += progress / 2 * digestionCount;
+                if (e.Weight < 0) {
+                    if (VP.hasOwnProperty("AbsorbStats")) {
+                        const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
+                            ToAdd = (what) => {
+                                return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
+                            };
+                        player.Str += ToAdd("Str");
+                        player.Int += ToAdd("Int");
+                        player.Charm += ToAdd("Charm");
+                        player.Will += ToAdd("Will");
+                        player.End += ToAdd("End");
+                        player.SexSkill += ToAdd("SexSkill");
+                    };
+                    EventLog(`There is nothing left of the ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
+                    player.Vore.Anal.splice(player.Vore.Anal.findIndex(i => i === e), 1);
+                };
+            };
+        };
+    };
 
     function StomachCapacity() {
-        var capacity = player.Height / 3
-        var sub = 0;
-        if (player.hasOwnProperty("Vore")) {
-            var bonus = 1 + player.Vore.StomachExp / 100;
-        }
-        for (var e = 0; e < player.Vore.Stomach.length; e++) {
-            sub += player.Vore.Stomach[e].Weight;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
+        let capacity = player.Height / 3,
+            bonus = 1 + player.Vore.StomachExp / 100;
+        const sub = player.Vore.Stomach.length > 0 ? player.Vore.Stomach.map(s => s.Weight).reduce((acc, cur) => acc + cur) : 0;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity") ? player.Vore.VorePerks.HigherCapacity.Count > 0 : false) { //Flat bonus
             capacity += 20;
             bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
         }
@@ -620,11 +560,9 @@
     }
 
     function MaxStomachCapacity() {
-        var capacity = player.Height / 3
-        if (player.hasOwnProperty("Vore")) {
-            var bonus = 1 + player.Vore.StomachExp / 100;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
+        let capacity = player.Height / 3,
+            bonus = 1 + player.Vore.StomachExp / 100;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity") ? player.Vore.VorePerks.HigherCapacity.Count > 0 : false) { //Flat bonus
             capacity += 20;
             bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
         }
@@ -635,18 +573,10 @@
         if (player.Pussies.length < 1) {
             return 0;
         }
-        var capacity = 0;
-        for (var e = 0; e < player.Pussies.length; e++) {
-            capacity += player.Pussies[e].Size
-        }
-        var sub = 0;
-        if (player.hasOwnProperty("Vore")) {
-            var bonus = 1 + player.Vore.VaginaExp / 100;
-        }
-        for (var e = 0; e < player.Vore.Vagina.length; e++) {
-            sub += player.Vore.Vagina[e].Weight;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
+        let capacity = player.Pussies.map(p => p.Size).reduce((acc, cur) => acc + cur),
+            bonus = 1 + player.Vore.VaginaExp / 100;
+        const sub = player.Vore.Vagina.length > 0 ? player.Vore.Vagina.map(v => v.Weight).reduce((acc, cur) => acc + cur) : 0;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity") ? player.Vore.VorePerks.HigherCapacity.Count > 0 : false) { //Flat bonus
             capacity += 20;
             bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
         }
@@ -657,14 +587,9 @@
         if (player.Pussies.length < 1) {
             return 0;
         }
-        var capacity = 0;
-        for (var e = 0; e < player.Pussies.length; e++) {
-            capacity += player.Pussies[e].Size
-        }
-        if (player.hasOwnProperty("Vore")) {
-            var bonus = 1 + player.Vore.VaginaExp / 100;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
+        var capacity = player.Pussies.map(p => p.Size).reduce((acc, cur) => acc + cur);
+        var bonus = 1 + player.Vore.VaginaExp / 100;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity") ? player.Vore.VorePerks.HigherCapacity.Count > 0 : false) { //Flat bonus
             capacity += 20;
             bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
         }
@@ -672,18 +597,13 @@
     }
 
     function BreastCapacity() {
-        var capacity = 0;
-        for (var e = 0; e < player.Boobies.length; e++) {
-            capacity += player.Boobies[e].Size;
-        }
-        var sub = 0;
-        if (player.hasOwnProperty("Vore")) {
-            var bonus = 1 + player.Vore.BreastExp / 100;
-        }
-        for (var e = 0; e < player.Vore.Breast.length; e++) {
-            sub += player.Vore.Breast[e].Weight;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
+        if (player.Boobies.length < 1) {
+            return 0;
+        };
+        let capacity = player.Boobies.map(b => b.Size).reduce((acc, cur) => acc + cur),
+            bonus = 1 + player.Vore.BreastExp / 100;
+        const sub = player.Vore.Breast.length > 0 ? player.Vore.Breast.map(b => b.Weight).reduce((acc, cur) => acc + cur) : 0;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity") ? player.Vore.VorePerks.HigherCapacity.Count > 0 : false) { //Flat bonus
             capacity += 20;
             bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
         }
@@ -691,14 +611,12 @@
     }
 
     function MaxBreastCapacity() {
-        var capacity = 0;
-        for (var e = 0; e < player.Boobies.length; e++) {
-            capacity += player.Boobies[e].Size;
-        }
-        if (player.hasOwnProperty("Vore")) {
-            var bonus = 1 + player.Vore.BreastExp / 100;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
+        if (player.Boobies.length < 1) {
+            return 0;
+        };
+        let capacity = player.Boobies.map(b => b.Size).reduce((acc, cur) => acc + cur),
+            bonus = 1 + player.Vore.BreastExp / 100;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity") ? player.Vore.VorePerks.HigherCapacity.Count > 0 : false) { //Flat bonus
             capacity += 20;
             bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
         }
@@ -709,18 +627,10 @@
         if (player.Balls.length < 1) {
             return 0;
         }
-        var capacity = 0;
-        for (var e = 0; e < player.Balls.length; e++) {
-            capacity += player.Balls[e].Size;
-        }
-        var sub = 0;
-        if (player.hasOwnProperty("Vore")) {
-            var bonus = 1 + player.Vore.BallsExp / 100;
-        }
-        for (var e = 0; e < player.Vore.Balls.length; e++) {
-            sub += player.Vore.Balls[e].Weight;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
+        let capacity = player.Balls.map(b => b.Size).reduce((acc, cur) => acc + cur),
+            bonus = 1 + player.Vore.BallsExp / 100;
+        const sub = player.Vore.Balls.length > 0 ? player.Vore.Balls.map(b => b.Weight).reduce((acc, cur) => acc + cur) : 0;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity") ? player.Vore.VorePerks.HigherCapacity.Count > 0 : false) { //Flat bonus
             capacity += 20;
             bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
         }
@@ -731,14 +641,9 @@
         if (player.Balls.length < 1) {
             return 0;
         }
-        var capacity = 0;
-        for (var e = 0; e < player.Balls.length; e++) {
-            capacity += player.Balls[e].Size;
-        }
-        if (player.hasOwnProperty("Vore")) {
-            var bonus = 1 + player.Vore.BallsExp / 100;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
+        let capacity = player.Balls.map(b => b.Size).reduce((acc, cur) => acc + cur),
+            bonus = 1 + player.Vore.BallsExp / 100;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity") ? player.Vore.VorePerks.HigherCapacity.Count > 0 : false) { //Flat bonus
             capacity += 20;
             bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
         }
@@ -746,33 +651,26 @@
     }
 
     function AnalCapacity() {
-        var capacity = 0;
-        for (var e = 0; e < player.Anal.length; e++) {
-            capacity += player.Anal[e].Size;
+        if (player.Anal.length < 1) {
+            return 0;
         }
-        var sub = 0;
-        if (player.hasOwnProperty("Vore")) {
-            var bonus = 1 + player.Vore.AnalExp / 100;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
+        let capacity = player.Anal.map(a => a.Size).reduce((acc, cur) => acc + cur),
+            bonus = 1 + player.Vore.AnalExp / 100;
+        const sub = player.Vore.Anal.length > 0 ? player.Vore.Anal.map(a => a.Weight).reduce((acc, cur) => acc + cur) : 0;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity") ? player.Vore.VorePerks.HigherCapacity.Count > 0 : false) { //Flat bonus
             capacity += 20;
             bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
-        }
-        for (var e = 0; e < player.Vore.Anal.length; e++) {
-            sub += player.Vore.Anal[e].Weight;
         }
         return capacity * bonus - sub;
     }
 
     function MaxAnalCapacity() {
-        var capacity = 0;
-        for (var e = 0; e < player.Anal.length; e++) {
-            capacity += player.Anal[e].Size;
+        if (player.Anal.length < 1) {
+            return 0;
         }
-        if (player.hasOwnProperty("Vore")) {
-            var bonus = 1 + player.Vore.AnalExp / 100;
-        }
-        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity")) { //Flat bonus
+        let capacity = player.Anal.map(a => a.Size).reduce((acc, cur) => acc + cur),
+            bonus = 1 + player.Vore.AnalExp / 100;
+        if (player.Vore.VorePerks.hasOwnProperty("HigherCapacity") ? player.Vore.VorePerks.HigherCapacity.Count > 0 : false) { //Flat bonus
             capacity += 20;
             bonus += 0.1 * (player.Vore.VorePerks.HigherCapacity.Count - 1);
         }

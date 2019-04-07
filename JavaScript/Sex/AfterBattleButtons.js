@@ -26,6 +26,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
     Dick.appendChild(DickTwo);
     const PlayerMaxOrgasm = Math.round(player.End / 8),
         ee = enemies[EnemyIndex];
+
     if (Sex) {
         if (PlayerMaxOrgasm >= player.Orgasm) {
             Anal.appendChild(SexButton("Receive rimjob", SexActGetRimjob));
@@ -69,7 +70,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 };
                 DickTwo.appendChild(SexButton("Anal doggy style", SexActDoggyStyleAnal));
             }
-            const Milktotal = player.Boobies.map(v => v.Milk).reduce((acc, cur) => acc + cur);
+            const Milktotal = player.Boobies.length > 0 ? player.Boobies.some(b => b.hasOwnProperty("Milk")) ? player.Boobies.map(v => v.Milk).reduce((acc, cur) => acc + cur) : 0 : 0;
             if (Milktotal > 100) {
                 Breast.appendChild(SexButton("Breast feed", SexActBreastFeed));
             }

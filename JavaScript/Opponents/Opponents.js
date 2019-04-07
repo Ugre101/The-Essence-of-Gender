@@ -43,40 +43,92 @@ class enemy {
         };
     };
     // Testing class prototypes... Think I prefer this method over functions maninly becasue use of "this"
-    FatMuscle2(minfatprocent, minweight) {
+    FatMuscle(minfatprocent, minweight) {
         const fatratio = RandomInt(minfatprocent, minfatprocent + 10),
             muscleration = 100 - fatratio;
         this.Fat = minweight / 200 * fatratio;
         this.Muscle = minweight / 200 * muscleration;
         this.Weight = minweight + this.Fat + this.Muscle;
     };
-    NameGiver2() {
-        const FemaleFirstNames = ["Jaiden", "Judy", "Nia", "Kelis", "Chelsea", "Amani", "Veronica", "Kyra", "Lauryn", "Alicja", "Tate", "Colleen", "Melody", "Pippa", "Keziah", "Melissa", "Lana", "Marie", "Molly", "Sandra", "Dannielle", "Yusra", "Laiba", "Gabrielle", "Syeda", "Amirah",
-                "Lindsay", "Karly", "Itzel", "Clarissa", "Ansley", "Leanna", "Briley", "Cara", "Katelynn", "Susan", "Alexis", "Kaia", "Marlee", "Emmy", "Genevieve", "Melany", "Jaylynn", "Amari", "Sharon", "Miah", "Karen", "Kylie"
-            ],
-            MaleFirstNames = ["Jerome", "Napoleon", "Duncan", "Brant", "Chance", "Dewitt", "Brendan", "Asim", "Faith", "Macy", "Landon", "Sulaiman", "Iestyn", "Gordon", "Hector", "Haris", "Lee", "Simran", "Ronnie", "Rishi", "Bartosz", "Shelley", "Virgil", "Howard", "Rio", "Prince",
-                "Glenn", "Daniel", "Felipe", "Willie", "Aden", "Brennen", "Cale", "Arnav", "Quentin", "River", "Clarence", "Jamal", "Luca", "Brent", "Tyrone", "Ryan", "Damien", "Carmelo", "Reese", "Braiden", "Beckham"
-            ],
-            LastNames = ["Paine", "Ward", "Bostock", "Devine", "Heath", "Bone", "Dupont", "Patterson", "Garza", "Stein", "Madden", "Francis", "Villanueva", "Perry", "Lyssa", "Beach", "Crouch", "Sharp", "Clifford", "Wade", "Vargas", "Hatfield", "Mata", "Lozano", "Everett",
-                "Krueger", "Jimenez", "Fitzpatrick", "Nelson", "Scott", "Vaughn", "Lee", "Hodge", "Blackburn", "Wall", "Hernandez", "Valdez", "Summers", "Mercado", "Villarreal", "Mitchell", "Duran", "David", "Black", "Hopkins", "Hughes", "Rangel"
-            ];
-        //LastNames.RemoveDup();
-        switch (CheckGender(this)) {
-            case "cuntboy":
-            case "male":
-                this.FirstName = RandomString(MaleFirstNames);
-                break;
-            case "hermaphrodite":
-            case "female":
-            case "dickgirl":
-                this.FirstName = RandomString(FemaleFirstNames);
-                break;
-            case "doll":
-                this.FirstName = RandomInt(0, 10) < 5 ? RandomString(FemaleFirstNames) : RandomString(MaleFirstNames);
-                break;
+
+    GenderLock(amount, Genderlock) { // gives exact gender
+        const Dick = (v) => {
+            return {
+                Size: Math.ceil(Math.sqrt(v)),
+                Type: this.Race,
+                Virgin: true
+            };
+        };
+        const Ball = (v) => {
+            return {
+                Size: Math.ceil(Math.sqrt(v)),
+                Type: this.Race,
+                CumMax: 1 / 3 * Math.PI * Math.pow(Math.ceil(Math.sqrt(v)), 3),
+                Cum: 1 / 6 * Math.PI * Math.pow(Math.ceil(Math.sqrt(v)), 3),
+                CumRate: 0,
+                CumBaseRate: 0.5
+            };
+        };
+        const Boob = (v) => {
+            return {
+                Size: Math.ceil(Math.sqrt(v)),
+                Type: this.Race,
+                Milk: 0,
+                MilkBaseRate: 0,
+                MilkRate: 0,
+                MilkMax: 1 / 3 * Math.PI * Math.pow(Math.ceil(Math.sqrt(v)), 3)
+            };
+        };
+        const Pussy = (v) => {
+            return {
+                Size: Math.ceil(Math.sqrt(v)),
+                Type: this.Race,
+                Virgin: true
+            }
         }
-        this.LastName = RandomString(LastNames);
+        if (Genderlock == "male") {
+            this.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
+            this.Femi = 0;
+        } else if (Genderlock == "cuntboy") {
+            this.Femi = RandomInt(0, 25);
+            this.Masc = RandomInt(0, 25);
+            this.Pussies.push(Pussy(Math.round(Math.max(amount / 3, Math.random() * amount))));
+        } else if (Genderlock == "herm") {
+            this.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
+            this.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
+        } else if (Genderlock == "dickgirl") {
+            this.Femi = RandomInt(0, 25);
+            this.Masc = RandomInt(0, 25);
+            this.Dicks.push(Dick(Math.round(Math.max(amount / 3, Math.random() * amount))));
+            if (this.Boobies.length > 0) {
+                this.Boobies.pop()
+            };
+            this.Boobies.push(Boob(Math.round(Math.max(amount / 3, Math.random() * amount))));
+        } else if (Genderlock == "female") {
+            this.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
+            this.Masc = 0;
+        }
     }
+
+    EssenceGiver(amount, GenderPref = 0) { // Gives random gender
+        const a = RandomInt(1, 14) + GenderPref;
+        /** Negative Genderpref gives more males and postive more girls. 
+               e.g. -5 makes it's so only males to herm can spawn */
+        if (a < 4) { // Boy
+            this.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
+            this.Femi = 0;
+        } else if (a < 6) { // Dickgirl
+            this.GenderLock(amount, "dickgirl");
+        } else if (a < 9) { // Herm
+            this.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
+            this.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
+        } else if (a < 11) { // Cuntboy
+            this.GenderLock(amount, "cuntboy");
+        } else { // Girl
+            this.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
+            this.Masc = 0;
+        };
+    };
 }
 
 // Feral concept list
@@ -137,101 +189,6 @@ function EvilNameGiver(who) {
     who.LastName = RandomString(EvilLastNames);
 }
 
-function GenderLock(who, amount, Genderlock) { // gives exact gender
-    if (Genderlock == "male") {
-        who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
-        who.Femi = 0;
-    } else if (Genderlock == "cuntboy") {
-        who.Femi = RandomInt(0, 25);
-        who.Masc = RandomInt(0, 25);
-        who.Pussies.push(PussyMaker(Math.round(Math.max(amount / 3, Math.random() * amount))));
-    } else if (Genderlock == "herm") {
-        who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
-        who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
-    } else if (Genderlock == "dickgirl") {
-        who.Femi = RandomInt(0, 25);
-        who.Masc = RandomInt(0, 25);
-        who.Dicks.push(DickMaker(Math.round(Math.max(amount / 3, Math.random() * amount))));
-        if (who.Boobies.length > 0) {
-            who.Boobies.pop()
-        };
-        who.Boobies.push(BoobMaker(Math.round(Math.max(amount / 3, Math.random() * amount))));
-    } else if (Genderlock == "female") {
-        who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
-        who.Masc = 0;
-    }
-
-    function DickMaker(amount) {
-        const Dick = {
-            Size: Math.ceil(Math.sqrt(amount)),
-            Type: who.Race,
-            Virgin: true
-        }
-        return Dick;
-    }
-
-    function BallMakes(amount) {
-        const Ball = {
-            Size: Math.ceil(Math.sqrt(amount)),
-            Type: who.Race,
-            CumMax: 1 / 3 * Math.PI * Math.pow(Math.ceil(Math.sqrt(amount)), 3),
-            Cum: 1 / 6 * Math.PI * Math.pow(Math.ceil(Math.sqrt(amount)), 3),
-            CumRate: 0,
-            CumBaseRate: 0.5
-        }
-        return Ball;
-    }
-
-    function BoobMaker(amount) {
-        const Boob = {
-            Size: Math.ceil(Math.sqrt(amount)),
-            Type: who.Race,
-            Milk: 0,
-            MilkBaseRate: 0,
-            MilkRate: 0,
-            MilkMax: 1 / 3 * Math.PI * Math.pow(Math.ceil(Math.sqrt(amount)), 3)
-        }
-        return Boob;
-    }
-
-    function PussyMaker(amount) {
-        const Pussy = {
-            Size: Math.ceil(Math.sqrt(amount)),
-            Type: who.Race,
-            Virgin: true
-        }
-        return Pussy;
-    }
-}
-
-function EssenceGiver(who, amount, GenderPref = 0) { // Gives random gender
-    const a = RandomInt(1, 13) + GenderPref;
-    /** Negative Genderpref gives more males and postive more girls. 
-           e.g. -5 makes it's so only males to herm can spawn */
-    if (a < 4) { // Boy
-        who.Masc = Math.round(Math.max(amount / 3, Math.random() * amount));
-        who.Femi = 0;
-    } else if (a < 6) { // Dickgirl
-        GenderLock(who, amount, "dickgirl");
-    } else if (a < 9) { // Herm
-        who.Masc = Math.round(Math.max(amount / 4, Math.random() * amount));
-        who.Femi = Math.round(Math.max(amount / 4, Math.random() * amount));
-    } else if (a < 11) { // Cuntboy
-        GenderLock(who, amount, "cuntboy");
-    } else { // Girl
-        who.Femi = Math.round(Math.max(amount / 3, Math.random() * amount));
-        who.Masc = 0;
-    };
-};
-
-function FatMuscle(who, minfatprocent, minweight) {
-    const fatratio = RandomInt(minfatprocent, minfatprocent + 10),
-        muscleration = 100 - fatratio;
-    who.Fat = minweight / 200 * fatratio;
-    who.Muscle = minweight / 200 * muscleration;
-    who.Weight = minweight + who.Fat + who.Muscle;
-}
-
 function RandomPos(who) {
     who.XPos = RandomInt(2, 18) * grid;
     who.YPos = RandomInt(2, 18) * grid;
@@ -260,10 +217,10 @@ function EncounterStart() {
     let OP = new enemy(RandomString(Names), RandomString(Races), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5),
         RandomInt(2, 5), RandomInt(6, 9), 70, 70, RandomInt(15, 20), RandomInt(5, 15),
         'Chocolate', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 70);
-    OP.FatMuscle2(10, 50);
+    OP.EssenceGiver(70);
+    OP.FatMuscle(10, 50);
     StandardEnemy(OP);
-    OP.NameGiver2();
+    NameGiver(OP);
     return OP;
 }
 
@@ -273,10 +230,10 @@ function RespawnBlocker() {
     var OP = new enemy(RandomString(Names), RandomString(Races), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5), RandomInt(2, 5),
         RandomInt(2, 5), RandomInt(6, 9), 70, 70, RandomInt(15, 20), RandomInt(5, 15),
         'Chocolate', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 50);
-    FatMuscle(OP, 1, 1);
+    OP.EssenceGiver(50);
+    OP.FatMuscle(OP, 1, 1);
     StandardEnemy(OP);
-    OP.NameGiver2();
+    NameGiver(OP);
     OP.XPos = 99 * grid;
     OP.YPos = 99 * grid;
     return OP;
@@ -321,10 +278,10 @@ function EncounterPath1() {
     var OP = new enemy(RandomString(Names), RandomString(RacesRoad), RandomInt(3, 6), RandomInt(3, 6), RandomInt(3, 6), RandomInt(3, 6),
         RandomInt(3, 6), RandomInt(7, 10), 80, 80, RandomInt(20, 25), RandomInt(8, 18),
         'Chocolate', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 80);
-    OP.FatMuscle2(10, 50);
+    OP.EssenceGiver(80);
+    OP.FatMuscle(10, 50);
     StandardEnemy(OP);
-    OP.NameGiver2();
+    NameGiver(OP);
     return OP;
 }
 
@@ -334,10 +291,10 @@ function EncounterPath2() {
     var OP = new enemy(RandomString(Names), RandomString(RacesRoad), RandomInt(4, 7), RandomInt(4, 7), RandomInt(4, 7), RandomInt(4, 7),
         RandomInt(4, 7), RandomInt(8, 12), 100, 100, RandomInt(23, 30), RandomInt(12, 25),
         'green', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 100);
-    OP.FatMuscle2(10, 50);
+    OP.EssenceGiver(100);
+    OP.FatMuscle(10, 50);
     StandardEnemy(OP);
-    OP.NameGiver2();
+    NameGiver(OP);
     return OP;
 }
 
@@ -346,10 +303,10 @@ function EncounterBandit() {
     var OP = new enemy("Bandit", RandomString(RacesBandit), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15), RandomInt(8, 15),
         RandomInt(8, 15), RandomInt(10, 15), 170, 170, RandomInt(30, 45), RandomInt(30, 55),
         'tomato ', grid, RandomInt(140, 180));
-    GenderLock(OP, 600, "male");
-    OP.FatMuscle2(7, 70);
+    OP.GenderLock(600, "male");
+    OP.FatMuscle(7, 70);
     StandardEnemy(OP);
-    OP.NameGiver2();
+    NameGiver(OP);
     return OP;
 }
 
@@ -358,13 +315,13 @@ function EncounterBanditLord() {
     var OP = new enemy("Banditlord", RandomString(RacesBandit), RandomInt(20, 35), RandomInt(10, 15), RandomInt(20, 35), RandomInt(20, 35),
         RandomInt(20, 35), RandomInt(40, 60), 350, 300, RandomInt(55, 85), RandomInt(75, 150),
         'tomato', grid * 1.5, RandomInt(160, 200));
-    GenderLock(OP, 1200, "male");
-    OP.FatMuscle2(OP, 7, 80);
+    OP.GenderLock(1200, "male");
+    OP.FatMuscle(7, 80);
     StandardEnemy(OP);
     var startarea = document.getElementById("hem");
     OP.XPos = startarea.width / 2 - grid;
     OP.YPos = grid;
-    OP.NameGiver2();
+    NameGiver(OP);
     return OP;
 }
 
@@ -373,10 +330,10 @@ function EncounterForest() {
     var OP = new enemy("Forest", RandomString(RacesForest), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13),
         RandomInt(6, 13), RandomInt(8, 18), 150, 150, RandomInt(25, 40), RandomInt(25, 45),
         'darkgreen', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 400, 5);
-    OP.FatMuscle2(11, 50);
+    OP.EssenceGiver(400, 5);
+    OP.FatMuscle(11, 50);
     StandardEnemy(OP);
-    OP.NameGiver2();
+    NameGiver(OP);
     return OP;
 }
 
@@ -385,10 +342,10 @@ function EncounterForest2() {
     var OP = new enemy("Forest", RandomString(RacesForest2), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13), RandomInt(6, 13),
         RandomInt(6, 13), RandomInt(8, 18), 150, 150, RandomInt(25, 40), RandomInt(25, 45),
         'darkgreen', grid, RandomInt(140, 180));
-    EssenceGiver(OP, 500, 5);
-    OP.FatMuscle2(11, 50);
+    OP.EssenceGiver(500, 5);
+    OP.FatMuscle(11, 50);
     StandardEnemy(OP);
-    OP.NameGiver2();
+    NameGiver(OP);
     return OP;
 }
 
@@ -397,10 +354,10 @@ function EncounterPathToWitch2() {
     var OP = new enemy("Witch", RandomString(RacesWitch), RandomInt(1, 5), RandomInt(3, 7), RandomInt(7, 16), RandomInt(10, 40),
         RandomInt(30, 70), RandomInt(20, 80), 150, 300, RandomInt(30, 60), RandomInt(30, 70),
         'IndianRed', grid, RandomInt(140, 170));
-    EssenceGiver(OP, 450);
-    OP.FatMuscle2(10, 50);
+    OP.EssenceGiver(450);
+    OP.FatMuscle(10, 50);
     StandardEnemy(OP);
-    OP.NameGiver2();
+    NameGiver(OP);
     switch (CheckGender(OP)) {
         case "male":
         case "cuntboy":

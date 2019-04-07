@@ -143,9 +143,11 @@ function BlackMarketFunc() {
         player.Boobies.forEach((e, i) => {
             const inp = InputButton(e.Type + " boobs " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
-                player.Gold += e.Size * 30;
-                player.Boobies.splice(i, 1);
-                LimbSale();
+                if (player.Boobies.length > 1) {
+                    player.Gold += e.Size * 30;
+                    player.Boobies.splice(i, 1);
+                    LimbSale();
+                }
             });
             div3.appendChild(inp);
         });

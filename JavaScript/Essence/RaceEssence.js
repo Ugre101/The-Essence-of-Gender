@@ -43,8 +43,8 @@ function RaceEssenceBalance() {
 
     /* First I map the amounts then I count the total amount with reduce, after that I filter out
        results less than 1 percent than total amount or less than 20 amount*/
-    const totalAbsorb = RaceEss.map(m => m.amount).reduce((acc, cur) => acc + cur),
-        RA = RaceEss.filter(f => f.amount / totalAbsorb > 0.01 && f.amount > 10);
+    const totalAbsorb = RaceEss.length > 0 ? RaceEss.map(m => m.amount).reduce((acc, cur) => acc + cur) : 0,
+        RA = RaceEss.length > 0 ? RaceEss.filter(f => f.amount / totalAbsorb > 0.01 && f.amount > 10) : [];
 
     const oldRace = player.Race,
         oldSecondRace = player.SecondRace;
@@ -148,7 +148,7 @@ function DetailedRaceDesc() {
     const RaceEss = player.RaceEssence,
         RA = RaceEss;
     RaceEss.sort((a, b) => b.amount - a.amount); // Finding the new majority essence
-    const totalAbsorb = RaceEss.map(m => m.amount).reduce((acc, cur) => acc + cur);
+    const totalAbsorb = RaceEss.length > 0 ? RaceEss.map(m => m.amount).reduce((acc, cur) => acc + cur) : 0;
 
     const R1 = Math.round(100 * RA[0].amount / totalAbsorb),
         R2 = RA.length > 1 ? Math.round(100 * RA[1].amount / totalAbsorb) : 0,
