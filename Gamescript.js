@@ -451,8 +451,8 @@ DocId("QuestsLeave").addEventListener("click", function () {
     DisplayGame();
 });
 
-var battle = false,
-    GamePaused = false;
+var battle = true,
+    GamePaused = true;
 
 function Pronoun(gender) {
     switch (gender) {
@@ -688,7 +688,6 @@ function Touching() {
         if (sprite.x + grid * sprite.Size >= j.XPos && sprite.x < j.XPos + j.Size &&
             sprite.y + grid * sprite.Size >= j.YPos && sprite.y < j.YPos + j.Size) {
             if (mousedowner) {
-                clearInterval(mFunction);
                 mousedowner = false;
             }
             EnemyIndex = i;

@@ -153,6 +153,7 @@ function ExactBoobLook(who) {
         let boobies = "";
         who.Boobies.forEach((Boobs, index) => {
             const Size = OrganSize(Boobs.Size, who);
+            console.log(Size)
             if (index === 0 && Size <= 4 && Size > 1) {
                 boobies += `An ${BoobSizeConvertor(Size)}-cup chest`;
             } else if (Size > 4 && Size < 28) {
@@ -173,7 +174,7 @@ function AnalLook(who) {
 
 function BoobSizeConvertor(Size) {
     //const Prop = Size / GrowthScale(who)
-    switch (Math.round(Size)) {
+    switch (Math.floor(Size)) {
         case 0:
         case 1:
             return "flat";
@@ -302,3 +303,7 @@ function Fitness(who) {
 
     return a + b + c;
 }
+
+function AllSexualOrgans(who) {
+    return BoobLook(who) + DickLook(who) + BallLook(who) + PussyLook(who);
+};

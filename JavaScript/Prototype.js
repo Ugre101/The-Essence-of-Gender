@@ -6,6 +6,7 @@ function RandomInt(min, max) {
 function RandomString(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
+
 function StringCounter(array, string) {
     var counts = 0;
     for (let i = 0; i < array.length; i++) {

@@ -177,10 +177,6 @@
        background-color: rgb(228, 188, 188);
    }
 
-   div.FullBar {
-    width: 200px;
-}
-
    div.StatusHealth,
    div.StatusWillHealth {
        display: block;
@@ -334,13 +330,13 @@
        display: grid;
        grid-template-columns: 40% 40%;
        justify-content: center;
-       grid-column-gap: 1em;
-       margin: 1em 0;
+       grid-gap: 1rem;
+       margin: 1rem;
        overflow: auto;
    }
 
    #QuestTexts>div {
-       background-color: rgba(245, 222, 179, 0.24);
+       background-color: rgba(255, 255, 255, 0.219);
        border-radius: 5px;
        border: 5px ridge rgb(148, 111, 91);
        text-align: left;
@@ -355,8 +351,8 @@
    div.LPMenu,
    div.Looks {
        /*Still needs more work but I like it with border better than without, as it works better for more screens.*/
-       background-image: url(Res/bg_01_02.png);
-       background-color: rgb(136, 89, 45);
+       background-image: url(Res/bg_04.png);
+       background-color: rgb(194, 160, 114);
        background-repeat: no-repeat;
        background-size: contain;
        background-position: center;
@@ -438,15 +434,15 @@
        background-repeat: no-repeat;
        background-size: contain;
        background-position: center;
-       
+
        text-align: center;
-        padding: 2rem 7rem;
+       padding: 2rem 7rem;
    }
 
    div.SLMenuInner {
-    display: inline-block;
-    overflow: auto;
-    padding: 1rem;
+       display: inline-block;
+       overflow: auto;
+       padding: 1rem;
    }
 
    #LogLength,
@@ -504,10 +500,11 @@
        background-color: rgb(187, 161, 113);
        border: 14px ridge rgb(104, 91, 67);
    }
+
    @media screen and (max-height: 600px) {
-    div.CombatStatus {
-        border: 7px ridge rgb(104, 91, 67);
-    }
+       div.CombatStatus {
+           border: 7px ridge rgb(104, 91, 67);
+       }
    }
 
    div.CombatButtonGrid {
@@ -568,10 +565,10 @@
    }
 
    @media screen and (max-height:600px) {
-    #BattleLog {
-        border: 1px solid black;
-        border-image: none;
-    } 
+       #BattleLog {
+           border: 1px solid black;
+           border-image: none;
+       }
    }
 
    .a {
@@ -882,7 +879,17 @@
        box-shadow: 0 0 2px 1px black;
        background-color: rgb(221, 195, 160);
    }
-
+   input[type=file] {
+    font-family: inherit;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: inherit;
+    width: 90%;
+    max-width: 220px;
+    height: 5vh;
+    max-height: 50px;
+    margin: 0.3em 0.6em;
+   }
    button {
        height: auto;
        max-height: 200px;
@@ -958,10 +965,13 @@
        }
    }
 
-   div.Vore>#Stomach {
-       border: 1px solid black;
-       border-radius: 5px;
-       background-color: rgb(187, 127, 147);
+   #VoreStats {
+       width: 60%;
+   }
+
+   #VoreStats>label {
+       font-weight: bold;
+       font-size: 2rem;
    }
 
    div.VoreGrid {
@@ -972,16 +982,19 @@
        overflow: auto;
    }
 
-   #VoreButtons {
+   #VoreButtons{
+       width: 80%
+   }
+
+   div.VoreButtons {
        display: grid;
-       grid-template-columns: repeat(3, 1fr);
+       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
        justify-items: center;
-       width: 80%;
    }
 
    @media screen and (max-height: 600px) {
-       #VoreButtons {
-           grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+       div.VoreButtons {
+           grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
        }
    }
 
@@ -989,6 +1002,7 @@
        background-color: rgb(206, 172, 127);
        border: 20px solid transparent;
        border-image: url(Res/frame_s_02.png) 20;
+       border-image-outset: 4px;
        border-radius: 20px;
        width: 55%;
        height: 80%;
@@ -1011,9 +1025,9 @@
        grid-gap: 0.5em;
        overflow: auto;
        height: 89%;
-       background-color: rgb(206, 172, 127);
        border: 20px solid transparent;
        border-image: url(Res/frame_s_01.png) 20;
+       border-image-outset: 4px;
        background-color: rgb(165, 138, 102);
        padding: 0.5em;
    }

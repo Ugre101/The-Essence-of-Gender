@@ -1,7 +1,7 @@
-document.getElementById("Perks").addEventListener("click", function () {
+DocId("Perks").addEventListener("click", function () {
     // Moved everything to the button to clean up the player const.
     DisplayNone();
-    const div = document.getElementById("Levels");
+    const div = DocId("Levels");
     while (div.hasChildNodes()) {
         div.removeChild(div.lastChild);
     }
@@ -24,8 +24,8 @@ document.getElementById("Perks").addEventListener("click", function () {
     RawStats.appendChild(RawH4);
 
     const RawP = document.createElement("ol");
-    RawP.innerHTML = "<li>Str: " + player.Str + "</li><li>End: " + player.End + "</li><li>Will: " + player.Will +
-        "</li><li>Charm: " + player.Charm + "</li><li>Int: " + player.Int + "</li><li>Sex skill: " + player.SexSkill + "</li>";
+    RawP.innerHTML = `<li>Str: ${player.Str}</li><li>End: ${player.End}</li><li>Will: ${player.Will}
+    </li><li>Charm: ${player.Charm}</li><li>Int: ${player.Int}</li><li>Sex skill: ${player.SexSkill}</li>`;
     RawStats.appendChild(RawP);
 
     const H4 = document.createElement("h4"),
@@ -34,14 +34,14 @@ document.getElementById("Perks").addEventListener("click", function () {
     Stats.appendChild(H4);
 
     const P = document.createElement("ol");
-    P.innerHTML = "<li>Str: " + TotalStr() + "</li><li>End: " + TotalEnd() + "</li><li>Will: " + TotalWill() +
-        "</li><li>Charm: " + TotalCharm() + "</li><li>Int: " + TotalInt() + "</li><li>Sex skill: " + TotalSexSkill() + "</li>";
+    P.innerHTML = `<li>Str: ${TotalStr()}</li><li>End: ${TotalEnd()}</li><li>Will: ${TotalWill()}
+        </li><li>Charm: ${TotalCharm()}</li><li>Int: ${TotalInt()}</li><li>Sex skill: ${TotalSexSkill()}</li>`;
     Stats.appendChild(P);
 
     StatsLevel.appendChild(RawStats);
     StatsLevel.appendChild(Stats);
     div.appendChild(StatsLevel);
-    document.getElementById("Levels").style.display = 'block';
+    DocId("Levels").style.display = 'block';
 
     const Perks = document.createElement("div");
     Perks.style.display = "inline-block"
@@ -70,13 +70,8 @@ document.getElementById("Perks").addEventListener("click", function () {
     Races.appendChild(RacesH4);
 
     const RacesP = document.createElement("ol");
-    let RaceTotal = 0;
-    for (let e = 0; e < player.RaceEssence.length; e++) {
-        RaceTotal += player.RaceEssence[e].amount;
-    }
-    if (RaceTotal < 100) {
-        RaceTotal = 100;
-    }
+    const RaceTotal = Math.max(100, player.RaceEssence.length > 0 ?
+        player.RaceEssence.map(e => e.amount).reduce((cul, cur) => cul + cur) : 0);
     for (let e of player.RaceEssence) {
         const RacesLi = document.createElement("li");
         RacesLi.innerHTML = Math.round(e.amount / RaceTotal * 100) > 1 ?
@@ -114,46 +109,80 @@ document.getElementById("Perks").addEventListener("click", function () {
 
     const CloseLevel = InputButton("Close");
     CloseLevel.addEventListener("click", function () {
-        document.getElementById("Levels").style.display = 'none';
+        DocId("Levels").style.display = 'none';
         DisplayGame();
     });
     div.appendChild(CloseLevel);
 });
 
-document.getElementById("ExtraInfo").addEventListener("click", function () {
+DocId("ExtraInfo").addEventListener("click", function () {
     DisplayNone();
-    document.getElementById("DetailedInfo").style.display = 'block';
-    document.getElementById("FullRace").innerHTML = player.Race + " " + player.SecondRace + "<br><br>" + DetailedRaceDesc();
-    document.getElementById("Pregnancy").innerHTML = "Times you have impregnated: " + Flags.Impregnations + "<br> Times you have been pregnant: " + Flags.Pregnations;
-    document.getElementById("ExtraStats").innerHTML = "Virility: " + player.Virility + "<br>Fertility: " + player.Fertility + "<br>Essence drain: " + player.EssenceDrain +
-        "<br>Give essence: " + player.GiveEssence + "<br> passive rest rate: " + player.RestRate;
+    DocId("DetailedInfo").style.display = 'block';
+    const {
+        Race,
+        SecondRace,
+        Virility,
+        Fertility,
+        EssenceDrain,
+        GiveEssence,
+        RestRate
+    } = player, {
+        Impregnations,
+        Pregnations
+    } = Flags
+    DocId("FullRace").innerHTML = `${Race} ${SecondRace}<br><br>${DetailedRaceDesc()}`;
+    DocId("Pregnancy").innerHTML = `Times you have impregnated: ${Impregnations}<br>Times you have been 
+    pregnant: ${Pregnations}`;
+    DocId("ExtraStats").innerHTML = `Virility: ${Virility}<br>Fertility: ${Fertility}<br>
+    Essence drain: ${EssenceDrain}<br>Give essence: ${GiveEssence}<br>passive rest rate: ${RestRate}`;
 });
 
-document.getElementById("CloseExtra").addEventListener("click", function () {
-    document.getElementById("DetailedInfo").style.display = 'none';
+DocId("CloseExtra").addEventListener("click", function () {
+    DocId("DetailedInfo").style.display = 'none';
     DisplayGame();
 });
 
-document.getElementById("Looks").addEventListener("click", function () {
+DocId("Looks").addEventListener("click", function () {
     DisplayNone();
     Settings.EssenceAuto ? EssenceCheck(player) : false;
-    document.getElementById("ShowLooks").style.display = 'block';
+    DocId("ShowLooks").style.display = 'block';
     // Update for Looksmenu #Moved it here because there is no need to have it update every loop.
-    document.getElementById("StatusMascFemi").innerHTML = "Masculinity: " + Math.round(player.Masc) + "<br> Femininity: " + Math.round(player.Femi);
+    const {
+        Masc,
+        Femi,
+        Name,
+        LastName,
+        Height,
+        Face,
+        Skincolor,
+        Pregnant,
+        Age,
+        Weight,
+        Fat,
+        Muscle
+    } = player // To save space inside the innerhtmls
 
-    document.getElementById("looks2").innerHTML = "You are " + player.Name + " " + player.LastName + ", a " + CmToInch(Math.round(player.Height)) + " tall " + RaceDesc(player) + " " + Pronoun(CheckGender(player)) +
-        ". Looking at yourself in a mirror you see " + player.Face.HairColor + " " + player.Face.HairLength + " hair, " + player.Face.Eyes + " eyes and " + player.Skincolor + " skin.";
+    DocId("StatusMascFemi").innerHTML = `Masculinity: ${Math.round(Masc)}<br>Femininity: ${Math.round(Femi)}`;
 
-    if (player.Pregnant.Babies.length > 0) {
-        document.getElementById("looks2").innerHTML += (player.Pregnant.Babies[0].BabyAge < 30) ? "<br><br> You are pregnant" :
-            "<br><br> You are " + Math.round(player.Pregnant.Babies[0].BabyAge / 30) + " months pregnant.";
+    DocId("looks2").innerHTML = `You are ${Name} ${LastName}, a ${CmToInch(Math.round(Height))} 
+    tall ${RaceDesc(player)} ${Pronoun(CheckGender(player))}. Looking at yourself in a mirror you see 
+    ${Face.HairColor} ${Face.HairLength} hair, ${Face.Eyes} eyes and ${Skincolor} skin.`;
+
+
+    if (Pregnant.Babies.length > 0) {
+        const {
+            BabyAge
+        } = player.Pregnant.Babies[0]
+        DocId("looks2").innerHTML += (BabyAge < 30) ? `<br><br> You are pregnant` :
+            `<br><br>You are ${Math.round(BabyAge / 30)} months pregnant.`;
     }
-    document.getElementById("StatusFitness").innerHTML = "Age: " + player.Age + "years old<br>Weight: " + KgToPound(player.Weight) + "<br>" + "Fat: " + KgToPound(player.Fat) + "<br>Muscle: " + KgToPound(player.Muscle) + "<br>" + Fitness(player);
-    document.getElementById("genitals2").innerHTML = BoobLook(player) + DickLook(player) + BallLook(player) + PussyLook(player);
+    DocId("StatusFitness").innerHTML = `Age: ${Age} years old<br>Weight: ${KgToPound(Weight)}<br>Fat: 
+    ${KgToPound(Fat)}<br>Muscle: ${KgToPound(Muscle)}<br>${Fitness(player)}`;
+    DocId("genitals2").innerHTML = AllSexualOrgans(player);
     // End update Looksmenu
 });
 
-document.getElementById("CloseLooks").addEventListener("click", function () {
-    document.getElementById("ShowLooks").style.display = 'none';
+DocId("CloseLooks").addEventListener("click", function () {
+    DocId("ShowLooks").style.display = 'none';
     DisplayGame();
 });

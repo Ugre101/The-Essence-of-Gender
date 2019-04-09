@@ -345,7 +345,6 @@ function CurrentMap() {
             if (sprite.x + grid * sprite.Size >= n.X && sprite.x < n.X + n.Width &&
                 sprite.y + grid * sprite.Size >= n.Y && sprite.y < n.Y + n.Height) {
                 if (mousedowner) {
-                    clearInterval(mFunction);
                     mousedowner = false;
                 }
                 battle = true;

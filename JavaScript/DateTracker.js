@@ -43,8 +43,8 @@ function DateTracker() {
             player.WillHealth -= 1;
         }
         if (Settings.Vore) {
-            if (player.Vore.VorePerks.hasOwnProperty("PredatorsMeta")) {
-                var RestRate = player.Vore.VorePerks.PredatorsMeta.Count * 2;
+            if (player.Vore.VorePerks.hasOwnProperty("PredatorsMeta") ? player.Vore.VorePerks.PredatorsMeta.Count > 0 : false) {
+                const RestRate = player.Vore.VorePerks.PredatorsMeta.Count * 2;
                 if (player.Health < player.MaxHealth && player.Fat >= player.Height / 100) {
                     if ((player.Health + RestRate) > player.MaxHealth) {
                         player.Health = player.MaxHealth;
