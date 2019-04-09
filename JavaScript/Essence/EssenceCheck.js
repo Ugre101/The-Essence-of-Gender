@@ -1,5 +1,5 @@
 function OrganSize(Size, who) {
-    return Size * (who.Height / 160);
+    return Math.floor(Size * (who.Height / 180));
     // return Math.ceil(Math.sqrt(Size) * GrowthScale(who));
 }
 

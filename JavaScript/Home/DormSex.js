@@ -204,7 +204,7 @@ DocId("GetImpregnated").addEventListener("click", function () {
                 }
                 break;
             } else {
-                DocId("DormSexText").innerHTML += "<br><br>Their balls are dry, you have to let them recover.(10ml needed  )";
+                DocId("DormSexText").innerHTML += "<br><br>Their balls are dry, you have to let them recover.";
             }
         }
     }

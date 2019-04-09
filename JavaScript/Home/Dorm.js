@@ -29,8 +29,8 @@ function DormFunc() {
     for (let e of House.Dormmates) {
         const dormmate = ButtonButton(),
             DormName = e.hasOwnProperty("FirstName") ?
-            (e.hasOwnProperty("LastName") ? e.FirstName + " " + e.LastName : e.FirstName) :
-            (e.hasOwnProperty("LastName") ? e.LastName : "");
+            (e.hasOwnProperty("LastName") ? `${e.FirstName} ${e.LastName}` : e.FirstName) :
+            (e.hasOwnProperty("LastName") ? e.LastName : ``);
         dormmate.style.backgroundColor = Color(e);
         dormmate.innerHTML = `${DormName}<br>${e.Name} ${e.Race}`;
         dormmate.addEventListener("click", function () {
@@ -40,18 +40,24 @@ function DormFunc() {
     }
     dorm.appendChild(ButtonMates);
 
+    const Rules = InputButton("Rules(placeholder)");
+    Rules.addEventListener("click", function () {
+        // #TODO add rules for dormates,
+        DormRulesFunc();
+    });
+    dorm.appendChild(Rules);
+
     if (House.Dormmates.length > 0 && player.Balls.length > 0) {
         const ImpregOrgy = InputButton("Impregnate servants",
-            "Spend the day fucking you servants, until your balls are completely emptied.")
+            `Spend the day fucking you servants, until your balls are completely emptied.`)
         ImpregOrgy.addEventListener("click", ImpregOrgyFunc)
         dorm.appendChild(ImpregOrgy);
     }
     if (House.Dormmates.length > 0) {
-        const GetImpregOrgy = InputButton("Get impregnated",
-            "Spend the day getting fucked by your virile servants, till all of their balls content have been emptied into your orifices.")
+        const GetImpregOrgy = InputButton("Get impregnated", `Spend the day getting fucked by your virile servants, 
+        till all of their balls content have been emptied into your orifices.`)
         GetImpregOrgy.addEventListener("click", GetImpregOrgyFunc);
         dorm.appendChild(GetImpregOrgy);
-
     }
     const LeaveDorm = InputButton("Leave dorm");
     LeaveDorm.addEventListener("click", function () {
@@ -61,6 +67,40 @@ function DormFunc() {
     dorm.appendChild(LeaveDorm);
 }
 
+function DormRulesFunc() {
+    const dorm = DocId("TheDorm");
+    while (dorm.hasChildNodes()) {
+        dorm.removeChild(dorm.firstChild)
+    }
+
+    const h2 = document.createElement("h2"),
+        h2text = document.createTextNode("Rules");
+    h2.appendChild(h2text);
+    dorm.appendChild(h2);
+
+    const ButtonMates = document.createElement("div");
+    ButtonMates.classList.add("ButtonMates");
+    ButtonMates.style.display = 'grid';
+
+    const rule1 = ButtonButton("Impregnate each other: true/false");
+    rule1.addEventListener("click", function () {
+
+    });
+    ButtonMates.appendChild(rule1);
+    const rule2 = ButtonButton("");
+    rule2.addEventListener("click", function () {
+
+    });
+    ButtonMates.appendChild(rule2);
+    dorm.appendChild(ButtonMates);
+
+    const back = InputButton("Back");
+    back.addEventListener("click", function () {
+        DormFunc();
+    });
+    dorm.appendChild(back);
+}
+
 DocId("Dorm").addEventListener("click", function () {
     DormFunc();
     DocId("HomeStart").style.display = 'none';
@@ -68,14 +108,23 @@ DocId("Dorm").addEventListener("click", function () {
 });
 
 function MateDiv(e) {
-    // MateIndex = e;
-    const rm = e,
-        RoomMate = document.createElement("div"),
+    MateIndex = e;
+    const RoomMate = document.createElement("div"),
         RoomMateInner = document.createElement("div"),
         StatsDiv = document.createElement("div"),
         InputCon = document.createElement("div"),
         InnerDorm = document.createElement("div"),
-        dorm = DocId("TheDorm");
+        dorm = DocId("TheDorm"),
+        {
+            FirstName,
+            LastName,
+            Name,
+            Race,
+            Height,
+            Weight,
+            Muscle,
+            Fat
+        } = e;
 
     while (dorm.hasChildNodes()) {
         dorm.removeChild(dorm.firstChild)
@@ -85,35 +134,34 @@ function MateDiv(e) {
     StatsDiv.classList.add("DivMatesInner");
     InnerDorm.classList.add("DivMatesCon");
 
-    let PregnantStatus = "";
-    if (rm.hasOwnProperty("Pregnant")) {
-        if (rm.Pregnant.Status) {
-            const age = Math.round(rm.Pregnant.Babies[0].BabyAge / 30);
-            PregnantStatus = (age < 1) ? "<br>Impregnated" : "<br>" + age + " months pregnant";
+    const PregnantStatus = () => {
+        if (e.hasOwnProperty("Pregnant") ? e.Pregnant.Status : false) {
+            const age = Math.round(e.Pregnant.Babies[0].BabyAge / 30);
+            return age < 1 ? "<br>Impregnated" : `<br>${age} months pregnant`;
+        } else {
+            return ``;
         }
     }
 
-    const DormName = rm.FirstName + " " + rm.LastName;;
+    const DormName = `${FirstName} ${LastName}`;
 
     const stats = ["Str", "Charm", "End", "Int", "SexSkill", "Will"].forEach((src) => {
-        StatsDiv.innerHTML += `<br>${src}: ${rm[src]}`;
+        StatsDiv.innerHTML += `<br>${src}: ${e[src]}`;
     });
-    RoomMateInner.innerHTML = DormName + "<br>" + rm.Name + " " + rm.Race + "<br>" + Pronoun(CheckGender(rm)) +
-        "<br><br>Height: " + CmToInch(Math.round(rm.Height)) + "<br>Weight: " + KgToPound(rm.Weight) + "<br>Muscle: " + KgToPound(rm.Muscle) + "<br>Fat: " + KgToPound(rm.Fat) +
-        "<br>" + PregnantStatus + "<br><br>" + BoobLook(rm) + DickLook(rm) + BallLook(rm) + PussyLook(rm);
+    RoomMateInner.innerHTML = DormName + `<br>${Name} ${Race}<br>${Pronoun(CheckGender(e))}<br><br>Height: 
+    ${CmToInch(Height)}<br>Weight: ${KgToPound(Weight)}<br>Muscle: ${KgToPound(Muscle)}<br>Fat: 
+    ${KgToPound(Fat)}<br>${PregnantStatus()}<br><br>${AllSexualOrgans(e)}`;
     RoomMateInner.appendChild(StatsDiv);
     RoomMate.appendChild(RoomMateInner);
     InnerDorm.appendChild(RoomMate);
 
     const Fuck = InputButton("Fuck");
     Fuck.addEventListener("click", function () {
-        MateIndex = rm;
-        DocId("Home").style.display = 'none';
+        const None = ["Home", "status", "EmptyButtons", "EventLog"].forEach((src) => {
+            DocId(src).style.display = 'none';
+        });
         DocId("FuckDorm").style.display = 'grid';
-        DocId("status").style.display = 'none';
-        DocId("EmptyButtons").style.display = 'none';
-        DocId("EventLog").style.display = 'none';
-        DormSex(rm);
+        DormSex(e);
     });
     InputCon.appendChild(Fuck);
 
@@ -152,27 +200,30 @@ function MateDiv(e) {
 
         Firstinput.setAttribute("id", "ajog94");
         Firstinput.setAttribute("type", "text");
-        Firstlabel.setAttribute("for", "ajog94");
+        Firstlabel.innerHTML = "First name"
+        Firstlabel.htmlFor = "ajog94";
 
         Lastinput.setAttribute("id", "asegk3");
         Lastinput.setAttribute("type", "text");
-        Lastlabel.setAttribute("for", "asegk3");
+        Lastlabel.innerHTML = "Last name"
+        Lastlabel.htmlFor = "asegk3";
+
         InnerRenameDorm.appendChild(Firstlabel);
         InnerRenameDorm.appendChild(Firstinput);
         InnerRenameDorm.appendChild(Lastlabel);
         InnerRenameDorm.appendChild(Lastinput);
 
-        if (rm.hasOwnProperty("FirstName")) {
-            Firstinput.value = rm.FirstName;
+        if (e.hasOwnProperty("FirstName")) {
+            Firstinput.value = e.FirstName;
         };
-        if (rm.hasOwnProperty("LastName")) {
+        if (e.hasOwnProperty("LastName")) {
             Lastinput.value = e.LastName;
         };
 
         Accept.addEventListener("click", function () {
-            rm.FirstName = Firstinput.value;
-            rm.LastName = Lastinput.value;
-            MateDiv(rm);
+            e.FirstName = Firstinput.value;
+            e.LastName = Lastinput.value;
+            MateDiv(e);
         });
         InnerRenameDorm.appendChild(Accept);
         dorm.appendChild(InnerRenameDorm);
@@ -195,7 +246,7 @@ function MateDiv(e) {
             DormFunc();
         });
         No.addEventListener("click", function () {
-            MateDiv(rm);
+            MateDiv(e);
         })
         kickoutdiv.appendChild(Yes);
         kickoutdiv.appendChild(No);
@@ -203,56 +254,54 @@ function MateDiv(e) {
     }
 };
 
-function DormSex(rm) {
-    const e = rm;
+function DormSex(e) {
     EssenceCheck(e);
     if (Settings.EssenceAuto) {
         EssenceCheck(player);
     }
-    DocId("DormPName").innerHTML = player.Name + " " + player.LastName;
-    DocId("DormEName").innerHTML = e.Name + "<br>" + e.Race + " " + Pronoun(CheckGender(e));
+    DocId("DormPName").innerHTML = `${player.Name} ${player.LastName}`;
+    DocId("DormEName").innerHTML = `${e.Name}<br>${e.Race} ${Pronoun(CheckGender(e))}`;
     DocId("DormMascu").innerHTML = Math.round(player.Masc);
     DocId("DormFemin").innerHTML = Math.round(player.Femi);
     DocId("DormEMascu").innerHTML = Math.round(e.Masc);
     DocId("DormEFemin").innerHTML = Math.round(e.Femi);
-    DocId("DormPlayerLooks").innerHTML = BoobLook(player) + DickLook(player) + BallLook(player) + PussyLook(player);
-    DocId("DormEnemyLooks").innerHTML = BoobLook(e) + DickLook(e) + BallLook(e) + PussyLook(e);
+    DocId("DormPlayerLooks").innerHTML = AllSexualOrgans(player);
+    DocId("DormEnemyLooks").innerHTML = AllSexualOrgans(e);
     SexColor(player, "PlayerDorm");
     SexColor(e, "EnemyDorm");
-    if (e.Pregnant.Status || player.Balls.length == 0) {
-        DocId("Impregnate").style.display = 'none';
-    } else {
-        DocId("Impregnate").style.display = 'inline-block';
-    }
+
     if (player.Pregnant.Status) {
         DocId("GetImpregnated").style.display = 'none';
         const age = Math.round(player.Pregnant.Babies[0].BabyAge / 30);
         DocId("DormPlayerLooks").innerHTML += (age < 1) ?
-            "<br>Impregnated" : "<br>" + age + " months pregnant";
+            "<br>Impregnated" : `<br>${age} months pregnant`;
     } else {
-        if (e.Balls.length < 1) {
-            DocId("GetImpregnated").style.display = 'none';
-        } else {
-            DocId("GetImpregnated").style.display = 'inline-block';
-        }
+        DocId("GetImpregnated").style.display = e.Balls.length > 0 ? "inline-block" : "none";
     }
-
+    DocId("Impregnate").style.display = 'none';
     if (e.hasOwnProperty("Pregnant")) {
         if (e.Pregnant.Status) {
             const age = Math.round(e.Pregnant.Babies[0].BabyAge / 30);
             DocId("DormEnemyLooks").innerHTML += (age < 1) ?
-                "<br>Impregnated" : "<br>" + age + " months pregnant";
+                `<br>Impregnated` : `<br>${age} months pregnant`;
+        } else if ((player.Balls.length > 0 && player.Dicks.length > 0)) {
+            DocId("Impregnate").style.display = 'inline-block';
         }
+    } else if (player.Balls.length > 0 && player.Dicks.length > 0) {
+        DocId("Impregnate").style.display = 'inline-block';
     }
+
     const DelatMed =
         (player.Masc >= e.Masc && player.Masc >= e.Femi && player.Masc >= player.Femi) ? 100 / player.Masc :
         (player.Femi >= e.Masc && player.Femi >= e.Femi && player.Femi >= player.Masc) ? 100 / player.Femi :
         (e.Masc >= player.Masc && e.Masc >= e.Femi && e.Masc >= player.Femi) ? 100 / e.Masc : 100 / e.Femi;
-
-    DocId("DormMascu").style.width = player.Masc * DelatMed + "%";
-    DocId("DormFemin").style.width = player.Femi * DelatMed + "%";
-    DocId("DormEMascu").style.width = e.Masc * DelatMed + "%";
-    DocId("DormEFemin").style.width = e.Femi * DelatMed + "%";
+    const EW = (ess) => {
+        return `${ess * DelatMed}%`
+    }
+    DocId("DormMascu").style.width = EW(player.Masc);
+    DocId("DormFemin").style.width = EW(player.Femi);
+    DocId("DormEMascu").style.width = EW(e.Masc);
+    DocId("DormEFemin").style.width = EW(e.Femi);
     return;
 };
 DocId("LeaveDormSex").addEventListener("click", function () {
@@ -260,7 +309,6 @@ DocId("LeaveDormSex").addEventListener("click", function () {
     DocId("FuckDorm").style.display = 'none';
     DocId("status").style.display = 'block';
     DocId("EmptyButtons").style.display = 'block';
-    DocId("DormSexText").innerHTML = " "
-    MateDiv(MateIndex);
+    DocId("DormSexText").innerHTML = ``
     Setup = true;
 });

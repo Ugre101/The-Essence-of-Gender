@@ -1,34 +1,15 @@
 function CmToInch(cm) {
     if (Settings.Inch) {
-        var Inch = Math.round(cm / 2.54);
-        var Feet = Math.floor(Inch / 12)
-        Inch = Inch % 12;
-        if (Feet > 0) {
-            return Feet + " feet and " + Inch + " inches"
-        } else {
-            return Inch + " inches"
-        }
+        const Inch = Math.round(cm / 2.54),
+            Feet = Math.floor(Inch / 12),
+            Yard = Math.floor(Feet / 3);
+        return Feet > 0 ?
+            `${Feet} feet ${Inch % 12 > 0 ? 
+                `and ${Inch % 12} inches`: ``} inches` : `${Inch} inches`;
     } else {
-        if (cm < 1) {
-            return Math.round(cm * 10) + "mm"
-        } else {
-            return Math.round(cm) + "cm";
-        }
-    }
-}
-
-function CmToInchDecimal(cm) {
-    if (Settings.Inch) {
-        var Inch = Math.round(cm / 2.54 * 10) / 10;
-        var Feet = Math.floor(Inch / 12)
-        Inch = Inch % 12;
-        if (Feet > 0) {
-            return Feet + " feet and " + Inch + " inches"
-        } else {
-            return Inch + " inches"
-        }
-    } else {
-        return Math.round(cm * 10) / 10 + "cm";
+        return cm < 1 ?
+            Math.round(cm * 10) + "mm" : cm < 300 ? 
+                Math.round(cm) + "cm" : Math.round(cm * 10) / 1000 + "m";;
     }
 }
 
@@ -36,13 +17,8 @@ function KgToPound(kg) {
     if (Settings.Inch) {
         return Math.round(kg * 2.2046) + "lb"
     } else {
-        if (kg < 10) {
-            return Math.round(kg * 10) / 10 + "kg";
-        } else if (kg < 1) {
-            return Math.round(kg * 1000) / 1000 + "g"
-        } else {
-            return Math.round(kg) + "kg";
-        }
+        return kg < 1 ? `${Math.round(kg * 1000) / 1000}g` : kg < 10 ?
+            `${Math.round(kg * 10) / 10}kg` : `${Math.round(kg)}kg`;
     }
 }
 
@@ -73,12 +49,7 @@ function LToGal(L) {
         else
             return "Snow's overfilled! (Error: " + L + ")";
     } else {
-        if (L < 0.1) {
-            return Math.round(L * 100) + "cl";
-        } else if (L < 1) {
-            return Math.round(L * 10) + "dl";
-        } else {
-            return Math.round(L) + "L";
-        }
+        return L < 0.1 ? `${Math.round(L * 100)}cl` : L < 0.99 ? `${Math.round(L * 10)}dl` :
+            `${Math.round(L)}L`
     }
 }
