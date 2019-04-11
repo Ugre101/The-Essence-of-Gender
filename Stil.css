@@ -182,6 +182,8 @@
        display: block;
        height: 100%;
        max-height: inherit;
+        /* Text shadow helps readability but might look bad not sure how I feel about it*/
+       text-shadow: 0px 0px 7px white;
        background-color: rgb(255, 0, 0);
        border-radius: 4px;
    }
@@ -271,7 +273,8 @@
        min-height: 7em;
        height: auto;
        border-radius: 10px;
-       box-shadow: 0 0 3pt 2pt black;
+       border: 10px solid transparent;
+       border-image: url(res/el_08_02.png) 20;
 
        background-color: rgb(255, 255, 255);
        width: 80%;
@@ -289,7 +292,7 @@
    }
 
    input[type="button"].SmolButton {
-       border-radius: 5px;
+       border-radius: 4px;
        padding: 0;
        margin: 0.3em;
        height: auto;
@@ -458,7 +461,9 @@
    p.MenuText {
        min-height: 5em;
        height: auto;
-       box-shadow: 0 0 10px 1px rgb(77, 53, 40);
+       border-radius: 10px;
+       border: 10px solid transparent;
+       border-image: url(res/el_08_02.png) 20;
        border-radius: 10px;
        background-color: rgb(255, 255, 255);
        width: 75%;
@@ -476,6 +481,7 @@
        background-color: rgb(156, 135, 214);
        border-right: 4px ridge purple;
        text-align: center;
+       font-weight: bold;
    }
 
    div.buttons {
@@ -492,6 +498,29 @@
    #status>input[type=button] {
        float: left;
    }
+
+   #GoldContainer {
+       width: 40%;
+       margin: auto;
+       display: grid;
+       grid-template-columns: 40% 60%;
+       grid-gap: 2px;
+       text-align: center;
+       align-items: center;
+   }
+
+   #GoldImg {
+       height: 22px;
+       width: 22px;
+       justify-self: end;
+   }
+
+   #Gold {
+       color: rgb(250, 191, 41);
+       text-shadow: 0px 0px 4px black;
+       justify-self: start;
+   }
+
 
    div.CombatStatus {
        height: 80%;
@@ -862,7 +891,7 @@
        margin: 0.3em 0.6em;
 
        border: 1px solid rgb(83, 57, 43);
-       border-radius: 10px;
+       border-radius: 8px;
        box-shadow: 0 0 2px 1px black;
        background-color: rgb(221, 195, 160);
        transition: background 0.3s ease-in-out;
@@ -879,17 +908,19 @@
        box-shadow: 0 0 2px 1px black;
        background-color: rgb(221, 195, 160);
    }
+
    input[type=file] {
-    font-family: inherit;
-    font-size: 0.8em;
-    font-weight: bold;
-    color: inherit;
-    width: 90%;
-    max-width: 220px;
-    height: 5vh;
-    max-height: 50px;
-    margin: 0.3em 0.6em;
+       font-family: inherit;
+       font-size: 0.8em;
+       font-weight: bold;
+       color: inherit;
+       width: 90%;
+       max-width: 220px;
+       height: 5vh;
+       max-height: 50px;
+       margin: 0.3em 0.6em;
    }
+
    button {
        height: auto;
        max-height: 200px;
@@ -939,7 +970,8 @@
 
    label {
        display: block;
-       margin: 0.1em 0 0 0;
+       font-weight: bold;
+       margin-top: 0.2rem;
    }
 
    div.Vore {
@@ -982,7 +1014,7 @@
        overflow: auto;
    }
 
-   #VoreButtons{
+   #VoreButtons {
        width: 80%
    }
 
@@ -1041,7 +1073,11 @@
    }
 
    #InventoryBag>div>p {
-       display: inline-block;
+    float: left;
+    font-weight: bold;
+    height: auto;
+    padding: 0px;
+    margin: 0px;
    }
 
    #InventoryBag>div>input[type=button] {

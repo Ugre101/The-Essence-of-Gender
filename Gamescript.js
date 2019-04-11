@@ -317,7 +317,7 @@ var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.M
 // Start page
 DocId("GoToCharCreator").addEventListener("click", function () {
     CharCreator();
-    DocId("CharCreator").style.display = 'flex';
+    DocId("CharCreator").style.display = 'block';
     DocId("StartPage").style.display = 'none';
 });
 
@@ -340,17 +340,30 @@ function CharCreator() { // No need have these active for players who use load.
     function begin() {
         const form = document.forms.CreatePlayer.elements;
         CharCreator.style.display = 'none';
-        page2.style.display = 'flex';
+        page2.style.display = 'block';
         player.Name = form[0].value;
         player.LastName = form[1].value;
         // Will remove hair and skincolor later, as I want customize player to be a part of the game.
         player.Face.HairColor = form[2].value;
         player.Skincolor = form[3].value;
         player.Spells.push(SpellDictLite.MinorHealing);
-        DocId("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
-        DocId("looks").innerHTML = "You are  " + player.Name + " " + player.LastName + ", a " + Math.round(player.Height) + "cm tall " + Pronoun(CheckGender(player)) +
-            ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Face.HairColor + " hair and " + player.Skincolor +
-            " skin; hopefully the last time you see your body absent of any other details or personality.<br><br>For today, you will forge your own way in this world.";
+        const {
+            Day,
+            Month,
+            Year
+        } = Flags.Date, {
+            Name,
+            LastName,
+            Height,
+            Weight,
+            Skincolor,
+            Face
+        } = player
+        DocId("CurrentDate").innerHTML = `${Day}/${Month}/${Year}`;
+        DocId("looks").innerHTML = `You are ${Name} ${LastName}, a ${Math.round(Height)} cm tall 
+        ${Pronoun(CheckGender(player))}, who weighs ${KgToPound(Weight)}. Looking at yourself in a mirror you see 
+        ${Face.HairColor} hair and ${Skincolor} skin; hopefully the last time you see your body absent of any 
+        other details or personality.<br><br>For today, you will forge your own way in this world.`;
 
         requestAnimationFrame(loop);
         DateEngine();
@@ -363,11 +376,8 @@ function CharCreator() { // No need have these active for players who use load.
     };
 
     function StartAutoEssence() {
-        Settings.EssenceAuto = !Settings.EssenceAuto;
-        StartAutoEssenceButton.value = "Auto TF " + Settings.EssenceAuto;
-        if (Settings.BalanceParts) {
-            Settings.BalanceParts = false;
-        }
+        Settings.EssenceAuto = Settings.EssenceAuto ? false : true;
+        StartAutoEssenceButton.value = `Auto TF ${Settings.EssenceAuto}`;
     };
 
     function startgame() {
@@ -483,11 +493,11 @@ function CheckTitle(who) {
 function CheckGender(who) {
     if (who.Dicks.length > 0 && who.Pussies.length > 0) {
         return "hermaphrodite";
-    } else if (who.Dicks.length > 0 && Math.floor(who.Boobies.some(e => e.Size > 1))) {
+    } else if (who.Dicks.length > 0 && Math.floor(who.Boobies.some(e => e.Size > 2))) {
         return "dickgirl";
     } else if (who.Dicks.length > 0) {
         return "male";
-    } else if (who.Pussies.length > 0 && who.Boobies.some(e => e.Size < 1)) { // Check all rows of boobs
+    } else if (who.Pussies.length > 0 && who.Boobies.some(e => e.Size < 2)) { // Check all rows of boobs
         return "cuntboy";
     } else if (who.Pussies.length > 0) {
         return "female";
@@ -719,7 +729,7 @@ function loop() {
     DocId("StatusName").innerHTML = player.Name + " " + player.LastName;
     HealthWillBars();
     DocId("StatusLevel").innerHTML = player.level;
-    DocId("Gold").innerHTML = "Gold: " + Math.floor(player.Gold);
+    DocId("Gold").innerHTML = Math.floor(player.Gold);
     DocId("Hunger").innerHTML = (player.Fat <= player.Height / 100) ? "You are starving" : null
     DocId("EssenceTracker").innerHTML = `Masculinity: ${Math.round(player.Masc)} and Femininity: ${Math.round(player.Femi)}`;
     DocId("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none'
