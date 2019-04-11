@@ -45,7 +45,7 @@ function MovementEngine(e) {
 
 setInterval(() => {
     MovementEngine();
-}, 30);
+}, 40);
 
 DocId("hem").addEventListener('mousedown', function (e) {
     mousedowner = true;
