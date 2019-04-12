@@ -31,6 +31,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
         if (PlayerMaxOrgasm >= player.Orgasm) {
             Anal.appendChild(SexButton("Receive rimjob", SexActGetRimjob));
             Anal.appendChild(SexButton("Give rimjob", SexActGiveRimjob));
+            // TODO ride anal
             if (ee.Pussies.length > 0) {
                 Mouth.appendChild(SexButton("Give Cunnilingus", SexActGiveCunnilingus));
                 if (player.Pussies.length > 0) {

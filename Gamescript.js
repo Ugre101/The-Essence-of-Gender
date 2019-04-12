@@ -446,14 +446,38 @@ DocId("LessButtons").addEventListener("click", function () {
 
 DocId("Quests").addEventListener("click", function () {
     DisplayNone();
+    const Quest = DocId("QuestTexts"),
+        questText = document.createDocumentFragment();
     DocId("ShowQuests").style.display = 'block';
 
-    let questText = " ";
+    while (Quest.hasChildNodes()) {
+        Quest.removeChild(Quest.lastChild);
+    };
+
     for (let e of player.Quests) {
-        const Tier = e.hasOwnProperty("Tier") ? `<br>Tier: ${e.Tier}` + (e.Tier > 4 ? ` max` : ``) : ``;
-        questText += `<div><h4>${e.Name}</h4>Completed: ${e.Completed} <br>Count:  ${e.Count} ${Tier} <br><br></div>`;
+        const div = document.createElement("div"),
+            h4 = document.createElement("h4"),
+            p = document.createElement("p"),
+            h4text = document.createTextNode(e.Name),
+            Tier = e.hasOwnProperty("Tier") ? `<br>Tier: ${e.Tier}` + (e.Tier > 4 ? ` max` : ``) : ``;
+        h4.appendChild(h4text);
+        div.appendChild(h4);
+        p.innerHTML = `Completed: ${e.Completed} <br>Count:  ${e.Count} ${Tier} <br><br>`;
+        div.appendChild(p);
+
+        if (window.innerHeight > 500) {
+            const LoveQuests = ["Get Impregnated", "Impregnate maidens"],
+                FightQuests = ["ElfHunt", "BanditLord"];
+            if (LoveQuests.findIndex(i => i === e.Name) > -1) {
+                div.classList.add("LoverQuest");
+            } else if (FightQuests.findIndex(i => i === e.Name) > -1) {
+                div.classList.add("FightQuest");
+            };
+        };
+
+        questText.appendChild(div);
     }
-    DocId("QuestTexts").innerHTML = questText;
+    DocId("QuestTexts").appendChild(questText);
 });
 
 DocId("QuestsLeave").addEventListener("click", function () {

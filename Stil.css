@@ -1,1207 +1,1277 @@
-   html,
-   body {
-       height: 100%;
-       width: 100%;
-       font-size: 1em;
-       font-family: Verdana, Geneva, Tahoma, sans-serif;
-       overflow: hidden;
-       margin: 0;
-       padding: 0;
-   }
-
-   body {
-       background-color: #643a6d;
-       display: flex;
-       align-items: center;
-       justify-content: center;
-   }
-
-   @media screen and (min-height: 1000px) {
-
-       html,
-       body {
-           overflow: auto;
-       }
-   }
-
-   #StartPage {
-       background-image: linear-gradient(to bottom right, blue, purple, pink);
-       width: 100%;
-       height: 100%;
-       text-align: center;
-       font-weight: bolder;
-       color: #db65c6;
-       letter-spacing: 0.1em;
-
-       display: grid;
-       justify-content: center;
-       align-content: center;
-   }
-
-   #StartPage>input[type="button"] {
-       align-self: center;
-       justify-self: center;
-       margin: 0.5em;
-       background-image: linear-gradient(to bottom, white, hotpink, pink);
-       color: silver;
-       text-shadow:
-           -1px -1px 5px black,
-           1px -1px 5px black,
-           -1px 1px 5px black,
-           1px 1px 5px black;
-       height: 50px;
-       max-height: 100px;
-       font-size: 25px;
-       font-weight: bold;
-   }
-
-   #StartPage>h1 {
-       align-self: center;
-       justify-self: center;
-       text-shadow:
-           -1px -1px 5px black,
-           1px -1px 5px black,
-           -1px 1px 5px black,
-           1px 1px 5px black;
-       font-size: 6vw;
-   }
-
-   h2.visible {
-       visibility: visible;
-       opacity: 1;
-       transition: opacity 2s linear;
-   }
-
-   h2.hidden {
-       visibility: hidden;
-       opacity: 0;
-       transition: visibility 0s 2s, opacity 2s linear;
-   }
-
-   canvas {
-       box-shadow: 0 0 3px 4px rgb(58, 0, 58);
-       -webkit-touch-callout: none;
-       /* iOS Safari */
-       -webkit-user-select: none;
-       /* Safari */
-       -khtml-user-select: none;
-       /* Konqueror HTML */
-       -moz-user-select: none;
-       /* Firefox */
-       -ms-user-select: none;
-       /* Internet Explorer/Edge */
-       user-select: none;
-       /* Non-prefixed version, currently supported by Chrome and Opera */
-   }
-
-   #EventLog {
-       position: absolute;
-       bottom: 0;
-       right: 0;
-       background-color: rgb(137, 129, 168);
-       height: auto;
-       max-height: 50vh;
-       width: 18%;
-       border-top: 4px ridge purple;
-       border-left: 4px ridge purple;
-       border-top-left-radius: 15px;
-   }
-
-   #EventLog>h2 {
-       display: inline-block;
-       margin: 0;
-   }
-
-   @media screen and (max-height: 600px) {
-       #EventLog>h2 {
-           display: none;
-       }
-   }
-
-   #EventLog>div>p {
-       min-height: 10vh;
-       max-height: 20vh;
-       width: 94%;
-       padding: 0.3em 0.3em;
-       border: 2px solid rgb(75, 55, 55);
-       border-right: 0px;
-       border-top-left-radius: 10px;
-       border-bottom-left-radius: 10px;
-       background-color: white;
-       float: right;
-       text-align: center;
-       overflow: auto;
-   }
-
-   #FluidPart {
-       padding: 0 1em 1em 1em;
-       text-align: center;
-   }
-
-   @media (max-width: 400px) {
-       #map {
-           position: absolute;
-           right: 3vw;
-           top: 2vh;
-       }
-   }
-
-   div.None {
-       display: none;
-   }
-
-   div.left {
-       position: absolute;
-       left: 0;
-   }
-
-   div.right {
-       position: absolute;
-       right: 0;
-   }
-
-   div.top {
-       position: absolute;
-       top: 0;
-   }
-
-   div.FullFluidBar,
-   div.FullBar {
-       max-width: 92%;
-       height: 4vh;
-       max-height: 20px;
-       border: 2px solid rgb(54, 40, 40);
-       border-radius: 6px;
-       /*Border-radius need to have a higher value than it's content*/
-       margin: auto;
-       background-color: rgb(228, 188, 188);
-   }
-
-   div.StatusHealth,
-   div.StatusWillHealth,
-   #StatusLevel {
-       display: block;
-       height: 100%;
-       max-height: inherit;
-       /* Text shadow helps readability but might look bad not sure how I feel about it*/
-       font-weight: 100;
-       color: lightgray;
-       text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
-       border-radius: 4px;
-   }
-
-   div.StatusHealth {
-       background-color: rgb(255, 0, 0);
-   }
-
-   div.StatusWillHealth {
-       background-color: rgb(0, 0, 255);
-   }
-
-   #FluidMilk,
-   #VoreLevel,
-   #FluidCum {
-       background-color: cornsilk;
-       height: 4vh;
-       max-height: 20px;
-       border-right: 1px solid rgb(201, 196, 176);
-       border-radius: 4px;
-   }
-
-   #FluidMilk {
-       background-color: white;
-       border-right: 1px solid rgb(228, 226, 219);
-   }
-
-   #StatusLevel,
-   #VoreLevel {
-       background-color: greenyellow;
-       border-right: 1px solid rgb(129, 194, 33);
-   }
-
-   .Grid {
-       display: grid;
-       grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-       grid-column-gap: 0.1em;
-       width: 100%;
-   }
-
-   .AutoColumn {
-       display: grid;
-       grid-template-columns: repeat(auto-fit, minmax(1px, 1fr));
-       grid-gap: 1em;
-       align-items: center;
-   }
-
-   .OneColumn {
-       display: grid;
-       grid-template-columns: 1fr;
-       grid-gap: 1em;
-   }
-
-   .TwoColumn {
-       display: grid;
-       grid-template-columns: repeat(2, 1fr);
-       grid-gap: 1em;
-   }
-
-   .ThreeColumn {
-       display: grid;
-       grid-template-columns: repeat(3, 1fr);
-       grid-gap: 0.1em;
-   }
-
-   .BigSmallBig {
-       display: grid;
-       grid-template-columns: 1fr 0.1fr 1fr;
-       grid-gap: 0.1em;
-       align-items: center;
-   }
-
-   div.Building {
-       background-color: rgb(235, 235, 228);
-       border: 20px solid transparent;
-       border-image: url(Res/frame_s_01.png) 20;
-       border-radius: 20px;
-
-       width: 800px;
-       max-width: 90%;
-       min-height: 300px;
-       height: auto;
-       max-height: 90%;
-       text-align: center;
-       padding: 1em;
-       overflow: auto;
-   }
-
-   p.TextBox {
-       min-height: 7em;
-       height: auto;
-       border-radius: 10px;
-       border: 10px solid transparent;
-       border-image: url(res/el_08_02.png) 20;
-
-       background-color: rgb(255, 255, 255);
-       width: 80%;
-       margin: 1em auto 1em auto;
-       padding: 1em;
-       text-align: center;
-       overflow: auto;
-   }
-
-   #WorldMap {
-       height: 40vh;
-       width: 40vh;
-       z-index: -1;
-       float: right;
-   }
-
-   input[type="button"].SmolButton {
-       border-radius: 4px;
-       padding: 0;
-       margin: 0.3em;
-       height: auto;
-       width: auto;
-   }
-
-   #WorldMapContainer {
-       position: absolute;
-       right: 2vh;
-       top: 2vh;
-       text-align: center;
-   }
-
-   #WorldMapContainer>p {
-       float: left;
-       margin-top: 0.4em;
-   }
-
-   #WorldMapContainer>input[type=button] {
-       float: right;
-   }
-
-   @media (max-width: 700px) {
-       #WorldMapContainer {
-           right: 0;
-           top: 0;
-           height: 30vh;
-           width: 30vh;
-       }
-
-       #WorldMap {
-           height: 30vh;
-           width: 30vh;
-       }
-   }
-
-   #QuestTexts {
-       display: grid;
-       grid-template-columns: 40% 40%;
-       justify-content: center;
-       grid-gap: 1rem;
-       margin: 1rem;
-       overflow: auto;
-   }
-
-   #QuestTexts>div {
-       background-color: rgba(255, 255, 255, 0.219);
-       border-radius: 5px;
-       border: 5px ridge rgb(148, 111, 91);
-       text-align: left;
-       padding-left: 1em;
-   }
-
-   #QuestTexts>div>h4 {
-       margin: 0.5em 0;
-   }
-
-   div.Options,
-   div.LPMenu,
-   div.Looks {
-       /*Still needs more work but I like it with border better than without, as it works better for more screens.*/
-       background-image: url(Res/bg_04.png);
-       background-color: rgb(194, 160, 114);
-       background-repeat: no-repeat;
-       background-size: contain;
-       background-position: center;
-       border: 20px solid transparent;
-       border-image: url(Res/frame_s_01.png) 20;
-       border-radius: 20px;
-
-       width: 38%;
-       height: 90%;
-       overflow: auto;
-
-       justify-content: center;
-       align-items: center;
-       text-align: center;
-   }
-
-   div.Looks {
-       background-image: url(Res/page.png);
-       background-color: rgb(123, 94, 56);
-       background-size: cover;
-       width: 58%;
-       height: 94%;
-   }
-
-   @media screen and (max-height: 700px) {
-
-       div.Options,
-       div.LPMenu {
-           height: 94%;
-           width: 50%;
-           background-size: cover;
-       }
-   }
-
-   @media screen and (max-height: 500px) {
-
-       div.Options,
-       div.LPMenu,
-       div.Looks {
-           background: none;
-           width: 92%;
-           height: 95%;
-           padding: 0;
-           background-color: rgb(206, 172, 127);
-           overflow: auto;
-       }
-   }
-
-   @media screen and (max-height: 500px) {
-       div.LPMenu>h1 {
-           display: none;
-       }
-   }
-
-   div.OptionsInnerDiv,
-   div.LPMenuInner,
-   div.LooksInner {
-       display: inline-block;
-       padding: 1em;
-       margin-top: 3vh;
-       width: 80%;
-       overflow: auto;
-   }
-
-   @media screen and (max-height: 600px) {
-
-       div.OptionsInnerDiv,
-       div.LPMenuInner,
-       div.LooksInner {
-           width: 95%;
-           height: 95%;
-           padding: 0;
-           overflow: auto;
-       }
-   }
-
-   div.SLMenu {
-       background-image: url(Res/bg_01_02.png);
-       background-repeat: no-repeat;
-       background-size: contain;
-       background-position: center;
-
-       text-align: center;
-       padding: 2rem 7rem;
-   }
-
-   div.SLMenuInner {
-       display: inline-block;
-       overflow: auto;
-       padding: 1rem;
-   }
-
-   #LogLength,
-   #FontSize {
-       display: inline-block;
-       border: 1px solid black;
-   }
-
-   #Sizes>input[type=button] {
-       max-width: 25%;
-   }
-
-   p.MenuText {
-       min-height: 5em;
-       height: auto;
-       border-radius: 10px;
-       border: 10px solid transparent;
-       border-image: url(res/el_08_02.png) 20;
-       border-radius: 10px;
-       background-color: rgb(255, 255, 255);
-       width: 75%;
-       margin: 1em auto 1em auto;
-       padding: 1em;
-       text-align: center;
-   }
-
-   div.status,
-   div.buttons {
-       width: 18%;
-       max-width: 260px;
-       height: 50%;
-       top: 0;
-       background-color: rgb(156, 135, 214);
-       border-right: 4px ridge purple;
-       text-align: center;
-       font-weight: bold;
-   }
-
-   div.buttons {
-       top: 50%;
-   }
-
-   @media screen and (max-height:800px) {
-       div.container {
-           position: absolute;
-           bottom: 0;
-       }
-   }
-
-   #status>input[type=button] {
-       float: left;
-   }
-
-   #GoldContainer {
-       width: 40%;
-       margin: auto;
-       display: grid;
-       grid-template-columns: 40% 60%;
-       grid-gap: 2px;
-       text-align: center;
-       align-items: center;
-   }
-
-   #GoldImg {
-       height: 22px;
-       width: 22px;
-       justify-self: end;
-   }
-
-   #Gold {
-       color: rgb(250, 191, 41);
-       text-shadow: 0px 0px 4px black;
-       justify-self: start;
-   }
-
-
-   div.CombatStatus {
-       height: 80%;
-       border-top-right-radius: 45%;
-       border-top-left-radius: 45%;
-       background-color: rgb(187, 161, 113);
-       border: 14px ridge rgb(104, 91, 67);
-   }
-
-   @media screen and (max-height: 600px) {
-       div.CombatStatus {
-           border: 7px ridge rgb(104, 91, 67);
-       }
-   }
-
-   div.CombatStatusInner{
+html,
+body {
+    height: 100%;
+    width: 100%;
+    font-size: 1em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #643a6d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (min-height: 1000px) {
+
+    html,
+    body {
+        overflow: auto;
+    }
+}
+
+#StartPage {
+    background-image: linear-gradient(to bottom right, blue, purple, pink);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-weight: bolder;
+    color: #db65c6;
+    letter-spacing: 0.1em;
+
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+#StartPage>input[type="button"] {
+    align-self: center;
+    justify-self: center;
+    margin: 0.5em;
+    background-image: linear-gradient(to bottom, white, hotpink, pink);
+    color: lightgray;
+    text-shadow:
+        -1px -1px 2px black,
+        1px -1px 2px black,
+        -1px 1px 2px black,
+        1px 1px 2px black;
+    height: 50px;
+    max-height: 100px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#StartPage>h1 {
+    align-self: center;
+    justify-self: center;
+    color: blue;
+    text-shadow:
+        1px 1px 1px black,
+        1px -1px 1px black,
+        -1px -1px 1px black,
+        -1px 1px 1px black,
+        1px 2px 1px hotpink,
+        1px 3px 1px hotpink,
+        1px 4px 1px hotpink,
+        1px 5px 1px hotpink,
+        1px 8px 4px black,
+        -1px 8px 8px black;
+    font-size: 6vw;
+    animation-name: Genders;
+    animation-duration: 30s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes Genders {
+    0% {
+        color: blue;
+    }
+
+    33% {
+        color: purple;
+        text-shadow:
+            1px 1px 1px black,
+            1px -1px 1px black,
+            -1px -1px 1px black,
+            -1px 1px 1px black,
+            1px 2px 1px hotpink,
+            1px 3px 1px hotpink,
+            1px 4px 1px hotpink,
+            1px 5px 1px hotpink,
+            1px 8px 4px black,
+            -1px 8px 8px black;
+    }
+
+    66% {
+        color: hotpink;
+        text-shadow:
+            1px 1px 1px black,
+            1px -1px 1px black,
+            -1px -1px 1px black,
+            -1px 1px 1px black,
+            1px 2px 1px blue,
+            1px 3px 1px blue,
+            1px 4px 1px blue,
+            1px 5px 1px blue,
+            1px 8px 4px black,
+            -1px 8px 8px black;
+    }
+
+    100% {
+        color: blue;
+    }
+
+}
+
+h2.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 2s linear;
+}
+
+h2.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
+}
+
+canvas {
+    box-shadow: 0 0 3px 4px rgb(58, 0, 58);
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+#EventLog {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgb(137, 129, 168);
+    height: auto;
+    max-height: 50vh;
+    width: 18%;
+    border-top: 4px ridge purple;
+    border-left: 4px ridge purple;
+    border-top-left-radius: 15px;
+}
+
+#EventLog>h2 {
+    display: inline-block;
+    margin: 0;
+}
+
+@media screen and (max-height: 600px) {
+    #EventLog>h2 {
+        display: none;
+    }
+}
+
+#EventLog>div>p {
+    min-height: 10vh;
+    max-height: 20vh;
+    width: 94%;
+    padding: 0.3em 0.3em;
+    border: 2px solid rgb(75, 55, 55);
+    border-right: 0px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: white;
+    float: right;
+    text-align: center;
+    overflow: auto;
+}
+
+#FluidPart {
+    padding: 0 1em 1em 1em;
+    text-align: center;
+}
+
+@media (max-width: 400px) {
+    #map {
+        position: absolute;
+        right: 3vw;
+        top: 2vh;
+    }
+}
+
+div.None {
+    display: none;
+}
+
+div.left {
+    position: absolute;
+    left: 0;
+}
+
+div.right {
+    position: absolute;
+    right: 0;
+}
+
+div.top {
+    position: absolute;
+    top: 0;
+}
+
+div.FullFluidBar,
+div.FullBar {
+    max-width: 92%;
+    height: 4vh;
+    max-height: 20px;
+    border: 2px solid rgb(54, 40, 40);
+    border-radius: 6px;
+    /*Border-radius need to have a higher value than it's content*/
+    margin: auto;
+    background-color: rgb(228, 188, 188);
+}
+
+div.StatusHealth,
+div.StatusWillHealth,
+#StatusLevel {
+    display: block;
+    height: 100%;
+    max-height: inherit;
+    /* Text shadow helps readability but might look bad not sure how I feel about it*/
+    font-weight: 100;
+    color: lightgray;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    border-radius: 4px;
+}
+
+div.StatusHealth {
+    background-color: rgb(255, 0, 0);
+}
+
+div.StatusWillHealth {
+    background-color: rgb(0, 0, 255);
+}
+
+#FluidMilk,
+#VoreLevel,
+#FluidCum {
+    background-color: cornsilk;
+    height: 4vh;
+    max-height: 20px;
+    border-right: 1px solid rgb(201, 196, 176);
+    border-radius: 4px;
+}
+
+#FluidMilk {
+    background-color: white;
+    border-right: 1px solid rgb(228, 226, 219);
+}
+
+#StatusLevel,
+#VoreLevel {
+    background-color: greenyellow;
+    border-right: 1px solid rgb(129, 194, 33);
+}
+
+.Grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    grid-column-gap: 0.1em;
+    width: 100%;
+}
+
+.AutoColumn {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(1px, 1fr));
+    grid-gap: 1em;
+    align-items: center;
+}
+
+.OneColumn {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1em;
+}
+
+.TwoColumn {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1em;
+}
+
+.ThreeColumn {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0.1em;
+}
+
+.BigSmallBig {
+    display: grid;
+    grid-template-columns: 1fr 0.1fr 1fr;
+    grid-gap: 0.1em;
+    align-items: center;
+}
+
+div.Building {
+    background-color: rgb(235, 235, 228);
+    border: 20px solid transparent;
+    border-image: url(Res/frame_s_01.png) 20;
+    border-radius: 20px;
+
+    width: 800px;
+    max-width: 90%;
+    min-height: 300px;
+    height: auto;
+    max-height: 90%;
+    text-align: center;
+    padding: 1em;
+    overflow: auto;
+}
+
+p.TextBox {
+    min-height: 7em;
+    height: auto;
+    border-radius: 10px;
+    border: 10px solid transparent;
+    border-image: url(res/el_08_02.png) 20;
+
+    background-color: rgb(255, 255, 255);
+    width: 80%;
+    margin: 1em auto 1em auto;
+    padding: 1em;
+    text-align: center;
+    overflow: auto;
+}
+
+#WorldMap {
+    height: 40vh;
+    width: 40vh;
+    z-index: -1;
+    float: right;
+}
+
+input[type="button"].SmolButton {
+    border-radius: 4px;
+    padding: 0;
+    margin: 0.3em;
+    height: auto;
+    width: auto;
+}
+
+#WorldMapContainer {
+    position: absolute;
+    right: 2vh;
+    top: 2vh;
+    text-align: center;
+}
+
+#WorldMapContainer>p {
+    float: left;
+    margin-top: 0.4em;
+}
+
+#WorldMapContainer>input[type=button] {
+    float: right;
+}
+
+@media (max-width: 700px) {
+    #WorldMapContainer {
+        right: 0;
+        top: 0;
+        height: 30vh;
+        width: 30vh;
+    }
+
+    #WorldMap {
+        height: 30vh;
+        width: 30vh;
+    }
+}
+
+#QuestTexts {
+    display: grid;
+    grid-template-columns: 40% 40%;
+    justify-content: center;
+    grid-gap: 1rem;
+    margin: 1rem;
+    overflow: auto;
+}
+
+#QuestTexts>div {
+    background-color: rgba(255, 255, 255, 0.219);
+    border-radius: 5px;
+    border: 5px ridge rgb(148, 111, 91);
+    text-align: left;
+    padding-left: 1em;
+}
+
+#QuestTexts>div>h4 {
+    margin: 0.5em 0;
+}
+
+div.LoverQuest {
+    background-image: url(res/heart.png);
+    background-size: 28%;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+div.FightQuest {
+    background-image: url(res/sword_02.png);
+    background-size: 28%;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+div.Options,
+div.LPMenu,
+div.Looks {
+    /*Still needs more work but I like it with border better than without, as it works better for more screens.*/
+    background-image: url(Res/bg_04.png);
+    background-color: rgb(194, 160, 114);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    border: 20px solid transparent;
+    border-image: url(Res/frame_s_01.png) 20;
+    border-radius: 20px;
+
+    width: 38%;
+    height: 90%;
+    overflow: auto;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+div.Looks {
+    background-image: url(Res/page.png);
+    background-color: rgb(123, 94, 56);
+    background-size: cover;
+    width: 58%;
+    height: 94%;
+}
+
+@media screen and (max-height: 700px) {
+
+    div.Options,
+    div.LPMenu {
+        height: 94%;
+        width: 50%;
+        background-size: cover;
+    }
+}
+
+@media screen and (max-height: 500px) {
+
+    div.Options,
+    div.LPMenu,
+    div.Looks {
+        background: none;
+        width: 92%;
+        height: 95%;
+        padding: 0;
+        background-color: rgb(206, 172, 127);
+        overflow: auto;
+    }
+}
+
+@media screen and (max-height: 500px) {
+    div.LPMenu>h1 {
+        display: none;
+    }
+}
+
+div.OptionsInnerDiv,
+div.LPMenuInner,
+div.LooksInner {
+    display: inline-block;
+    padding: 1em;
+    margin-top: 3vh;
+    width: 80%;
+    overflow: auto;
+}
+
+@media screen and (max-height: 600px) {
+
+    div.OptionsInnerDiv,
+    div.LPMenuInner,
+    div.LooksInner {
+        width: 95%;
+        height: 95%;
+        padding: 0;
+        overflow: auto;
+    }
+}
+
+div.SLMenu {
+    background-image: url(Res/bg_01_02.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
+    text-align: center;
+    padding: 2rem 7rem;
+}
+
+div.SLMenuInner {
+    display: inline-block;
+    overflow: auto;
+    padding: 1rem;
+}
+
+#LogLength,
+#FontSize {
+    display: inline-block;
+    border: 1px solid black;
+}
+
+#Sizes>input[type=button] {
+    max-width: 25%;
+}
+
+p.MenuText {
+    min-height: 5em;
+    height: auto;
+    border-radius: 10px;
+    border: 10px solid transparent;
+    border-image: url(res/el_08_02.png) 20;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    width: 75%;
+    margin: 1em auto 1em auto;
+    padding: 1em;
+    text-align: center;
+}
+
+div.status,
+div.buttons {
+    width: 18%;
+    max-width: 260px;
+    height: 50%;
+    top: 0;
+    background-color: rgb(156, 135, 214);
+    border-right: 4px ridge purple;
+    text-align: center;
+    font-weight: bold;
+}
+
+div.buttons {
+    top: 50%;
+}
+
+@media screen and (max-height:800px) {
+    div.container {
+        position: absolute;
+        bottom: 0;
+    }
+}
+
+#status>input[type=button] {
+    float: left;
+}
+
+#GoldContainer {
+    width: 40%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-gap: 2px;
+    text-align: center;
+    align-items: center;
+}
+
+#GoldImg {
+    height: 22px;
+    width: 22px;
+    justify-self: end;
+}
+
+#Gold {
+    color: rgb(250, 191, 41);
+    text-shadow:
+         1px 1px 0 black,
+         1px -1px 0 black,
+        -1px 1px 0 black, 
+        -1px -1px 0 black;
+    justify-self: start;
+}
+
+
+div.CombatStatus {
+    height: 80%;
+    border-top-right-radius: 45%;
+    border-top-left-radius: 45%;
+    background-color: rgb(187, 161, 113);
+    border: 14px ridge rgb(104, 91, 67);
+}
+
+@media screen and (max-height: 600px) {
+    div.CombatStatus {
+        border: 7px ridge rgb(104, 91, 67);
+    }
+}
+
+div.CombatStatusInner {
     margin-top: 15%;
 }
 
-   div.CombatButtonGrid {
-       display: grid;
-       grid-template-columns: repeat(auto-fill, minmax(20px, 25%));
-       grid-column-gap: 0;
-       overflow: auto;
-       justify-content: center;
-   }
-
-   #Encounter {
-       grid-template:
-           "b c d"
-           "e e e";
-       grid-gap: 1em;
-       grid-template-columns: 25% 40% 25%;
-       grid-template-rows: 55% 45%;
-
-       background-color: rgb(209, 171, 99);
-       border: 20px solid transparent;
-       border-image: url(Res/frame_s_02.png) 25;
-       border-image-outset: 5px;
-
-       height: 92%;
-       width: 96%;
-
-       justify-content: center;
-       align-items: center;
-       text-align: center;
-       -webkit-user-select: none;
-       -moz-user-select: none;
-       -ms-user-select: none;
-       user-select: none;
-   }
-
-   @media (max-height: 500px) {
-       #Encounter {
-           grid-template:
-               "b d"
-               "c c"
-               "e e";
-           grid-template-columns: 50vw 50vw;
-           grid-template-rows: 20vh, 40vh, 40vh;
-           border: none;
-           border-radius: 0;
-           height: 100vh;
-           width: 100vw;
-           grid-gap: 0;
-       }
-   }
-
-   #BattleLog {
-       border: 20px solid transparent;
-       border-image: url(Res/slot_04.png) 20;
-       background-color: rgb(255, 255, 255);
-       overflow: auto;
-       height: 80%;
-   }
-
-   @media screen and (max-height:600px) {
-       #BattleLog {
-           border: 1px solid black;
-           border-image: none;
-       }
-   }
-
-   .a {
-       grid-area: a;
-   }
-
-   .b {
-       grid-area: b;
-   }
-
-   .c {
-       grid-area: c;
-   }
-
-   .d {
-       grid-area: d;
-   }
-
-   .e {
-       grid-area: e;
-   }
-
-   .f {
-       grid-area: f;
-   }
-
-   div.AfterBattle {
-       grid-template:
-           "b c d"
-           "e e e";
-       grid-template-columns: 24% 52% 24%;
-       grid-template-rows: 55% 45%;
-       grid-gap: 1em;
-       width: 99%;
-       height: 97%;
-       padding: 1em;
-       text-align: center;
-       border-radius: 5px;
-       border: 5px ridge purple;
-       background-color: rgb(255, 211, 255);
-       justify-items: center;
-       align-items: center;
-       overflow: auto;
-
-       -webkit-user-select: none;
-       -moz-user-select: none;
-       -ms-user-select: none;
-       user-select: none;
-   }
-
-   @media screen and (min-height: 1000px) {
-       div.AfterBattle {
-           overflow: hidden;
-       }
-   }
-
-   div.AfterBattleImg {
-       grid-template:
-           "b f f f d"
-           "c c c c c"
-           "e e e e e";
-       grid-template-columns: repeat(5, 1fr);
-       grid-template-rows: 40% 25% 35%;
-       grid-gap: 1em 0;
-       width: 98%;
-       height: 97%;
-       padding: 1em;
-       text-align: center;
-       border-radius: 5px;
-       border: 5px ridge purple;
-       background-color: rgb(192, 189, 192);
-       justify-items: center;
-       align-items: center;
-   }
-
-   @media screen and (max-height: 1000px) {
-       div.AfterBattleImg {
-           height: 95%;
-           width: 100%;
-       }
-   }
-
-   div.AfterBattleImg>img {
-       max-height: 100%;
-       max-width: 100%;
-   }
-
-   #MyImg {
-       cursor: pointer;
-       transition: 0.3s;
-   }
-
-   /* The Modal (background) */
-   .modal {
-       display: none;
-       /* Hidden by default */
-       position: fixed;
-       /* Stay in place */
-       z-index: 1;
-       /* Sit on top */
-       /* Location of the box */
-       left: 0;
-       top: 0;
-       width: 100%;
-       /* Full width */
-       height: 100%;
-       /* Full height */
-       overflow: auto;
-       /* Enable scroll if needed */
-       background-color: rgb(0, 0, 0);
-       /* Fallback color */
-       background-color: rgba(0, 0, 0, 0.8);
-       /* Black w/ opacity */
-   }
-
-   /* Modal Content (Image) */
-   .modal-content {
-       margin: auto;
-       display: block;
-       width: 80%;
-   }
-
-   /* Add Animation - Zoom in the Modal */
-   .modal-content,
-   #caption {
-       animation-name: zoom;
-       animation-duration: 0.6s;
-   }
-
-   @keyframes zoom {
-       from {
-           transform: scale(0)
-       }
-
-       to {
-           transform: scale(1)
-       }
-   }
-
-   /* 100% Image Width on Smaller Screens */
-   @media only screen and (max-width: 700px) {
-       .modal-content {
-           width: 100%;
-       }
-   }
-
-   /* Caption of Modal Image (Image Text) - Same Width as the Image */
-   #caption {
-       margin: auto;
-       display: block;
-       width: 80%;
-       max-width: 700px;
-       text-align: center;
-       color: #ccc;
-       padding: 10px 0;
-       height: 150px;
-   }
-
-   div.PlayerSex,
-   div.EnemySex {
-       border-radius: 5%;
-       border-top-right-radius: 20%;
-       border-top-left-radius: 20%;
-       grid-area: b;
-       width: 90%;
-       height: 99%;
-       padding: 0 0.5em;
-       overflow: auto;
-   }
-
-   div.EnemySex {
-       grid-area: d;
-   }
-
-
-
-   div.SexLog {
-       border: 4px ridge darkmagenta;
-       height: 100%;
-       width: 100%;
-       background-color: rgb(255, 255, 255);
-       grid-area: c;
-       overflow: auto;
-   }
-
-   div.SiphonButtons {
-       display: grid;
-       grid-template-columns: 15% 70% 15%;
-       justify-items: center;
-   }
-
-   div.MascFemi {
-       display: grid;
-       width: 100%;
-       grid-template-columns: repeat(2, 1fr);
-       justify-items: center;
-   }
-
-   div.MascFemi>input[type=button] {
-       /*Make text easier to read*/
-       text-shadow: white 0px 0px 10px;
-   }
-
-   #Home {
-       background-color: rgb(192, 189, 192);
-       width: 60%;
-       height: 92%;
-       box-shadow: 0 0 2px 1px black;
-       border-radius: 5px;
-       overflow: auto;
-       padding: 1em;
-       text-align: center;
-   }
-
-   #Upgrades {
-       width: 100%;
-       text-align: center;
-   }
-
-   div.ButtonMates {
-       display: grid;
-       grid-template-columns: repeat(auto-fit, minmax(100px, 210px));
-       grid-column-gap: 3px;
-       grid-row-gap: 3px;
-       justify-content: center;
-   }
-
-   div.DivMates {
-       position: relative;
-       float: left;
-       height: auto;
-       width: 30vw;
-       margin: 1em;
-       padding: 1em;
-       box-shadow: 0 0 1px 1px black;
-       border-radius: 10px;
-       overflow: auto;
-   }
-
-   div.DivMatesInner {
-       position: absolute;
-       top: 0;
-       right: 0;
-       padding: 1em;
-       margin: 1em;
-       box-shadow: 0 0 1px 1px black;
-       border-radius: 10px;
-   }
-
-   div.DivMatesCon {
-       display: grid;
-       grid-template-columns: 70% 30%;
-       grid-gap: 1em;
-   }
-
-   #flex {
-       display: grid;
-       grid-template-columns: 70% 1fr;
-   }
-
-   div.Masc {
-       margin: 0 0;
-       background-color: rgb(74, 74, 255);
-       border: 1px solid rgb(56, 56, 194);
-   }
-
-   div.Femi {
-       margin: 0 0;
-       background-color: rgb(247, 59, 231);
-       border: 1px solid rgb(161, 36, 151);
-   }
-
-   div.Arousal {
-       margin: 0 0;
-       background-color: rgb(247, 159, 59);
-       border: 1px solid rgb(207, 133, 49);
-   }
-
-   input[type=button],
-   input[type=submit],
-   button {
-       text-align: center;
-       font-family: inherit;
-       font-size: inherit;
-       font-weight: bold;
-       color: inherit;
-       width: 90%;
-       max-width: 220px;
-       height: 5vh;
-       max-height: 50px;
-       margin: 0.3em 0.6em;
-
-       border: 1px solid rgb(83, 57, 43);
-       border-radius: 8px;
-       box-shadow: 0 0 2px 1px black;
-       background-color: rgb(221, 195, 160);
-       transition: background 0.3s ease-in-out;
-   }
-
-   input[type=color] {
-       width: 100%;
-       max-width: 110px;
-       height: 5vh;
-       max-height: 40px;
-
-       border: 1px solid rgb(83, 57, 43);
-       border-radius: 10px;
-       box-shadow: 0 0 2px 1px black;
-       background-color: rgb(221, 195, 160);
-   }
-
-   input[type=file] {
-       font-family: inherit;
-       font-size: 0.8em;
-       font-weight: bold;
-       color: inherit;
-       width: 90%;
-       max-width: 220px;
-       height: 5vh;
-       max-height: 50px;
-       margin: 0.3em 0.6em;
-   }
-
-   button {
-       height: auto;
-       max-height: 200px;
-   }
-
-   input[type=button]:hover,
-   input[type=submit]:hover,
-   button:hover {
-       background-color: rgb(187, 160, 124);
-       cursor: pointer;
-   }
-
-   input[type=button]:active,
-   input[type=submit]:active,
-   button:active {
-       background-color: rgb(187, 160, 124);
-       box-shadow: 0 0 2px 2px black;
-   }
-
-   /* Delar på form-inputs fält så att alla blir samma storlek */
-   input[type=text],
-   select {
-       font-family: inherit;
-       font-size: inherit;
-       width: 80%;
-       max-width: 500px 0.1em;
-       padding: 0.4em;
-       margin: 0.5em;
-       border: 1px solid #ccc;
-       border-radius: 4px;
-       box-sizing: border-box;
-       text-align: center;
-   }
-
-   @media (max-height: 600px) {
-
-       input[type=text],
-       select {
-           padding: 0.2em;
-           margin: 0;
-       }
-   }
-
-   select {
-       text-align-last: center;
-   }
-
-   label {
-       display: block;
-       font-weight: bold;
-       margin-top: 0.2rem;
-   }
-
-   div.Vore {
-       width: 55%;
-       min-height: 500px;
-       max-height: 100%;
-       height: auto;
-       padding: 1em;
-       border-radius: 5px;
-       background-color: rgb(231, 166, 215);
-       text-align: center;
-       justify-items: center;
-
-       border: 20px solid transparent;
-       border-image: url(Res/slot_04.png) 20;
-       border-radius: 20px;
-   }
-
-   @media screen and (max-height: 600px) {
-       div.Vore {
-           width: 96%;
-           height: 95%;
-       }
-   }
-
-   #VoreStats {
-       width: 60%;
-   }
-
-   #VoreStats>label {
-       font-weight: bold;
-       font-size: 2rem;
-   }
-
-   div.VoreGrid {
-       max-height: 80vh;
-       display: grid;
-       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-       grid-template-rows: repeat(auto-fit, 140px);
-       overflow: auto;
-   }
-
-   #VoreButtons {
-       width: 80%
-   }
-
-   div.VoreButtons {
-       display: grid;
-       grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
-       justify-items: center;
-
-   }
-
-   @media screen and (max-height: 600px) {
-       div.VoreButtons {
-           grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-       }
-   }
-
-   #Inventory {
-       background-color: rgb(206, 172, 127);
-       border: 20px solid transparent;
-       border-image: url(Res/frame_s_02.png) 20;
-       border-image-outset: 4px;
-       border-radius: 20px;
-       width: 55%;
-       height: 80%;
-       text-align: center;
-       padding: 1em;
-       overflow: auto;
-   }
-
-   @media screen and (max-height: 500px) {
-       #Inventory {
-           width: 93%;
-           height: 91%;
-           padding: 0;
-       }
-   }
-
-   #InventoryBag {
-       display: grid;
-       grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-       grid-gap: 0.5em;
-       overflow: auto;
-       height: 89%;
-       border: 20px solid transparent;
-       border-image: url(Res/frame_s_01.png) 20;
-       border-image-outset: 4px;
-       background-color: rgb(165, 138, 102);
-   }
-
-   #InventoryBag>div {
-       border: 1px solid black;
-       padding: 0.5em;
-       min-height: 30px;
-       background-color: Cornsilk;
-       border-radius: 5px;
-   }
-
-   #InventoryBag>div>p {
-       float: left;
-       height: auto;
-       padding: 0px;
-       margin: 0px;
-   }
-
-   #InventoryBag>div>input[type=button] {
-       min-width: 10%;
-       width: auto;
-       height: auto;
-       margin: 0.2em;
-       padding: 0.1em;
-       border-radius: 3px;
-       float: right;
-   }
-
-   @media screen and (max-height: 500px) {
-       #InventoryBag {
-           border: 10px solid transparent;
-           border-image: url(Res/frame_s_01.png) 20;
-       }
-
-       #InventoryBag>div {
-           padding: 0;
-           height: auto;
-           text-align: left;
-           width: 80%;
-       }
-
-       #InventoryBag>div>p {
-           display: inline-block;
-           padding: 0;
-           margin: 0;
-       }
-
-       #InventoryBag>div>input[type=button] {
-           width: auto;
-           margin: 2px;
-           padding: 0;
-           border-radius: 0px;
-           float: left;
-       }
-   }
-
-   div.LimbSale {
-       max-height: 50vh;
-       border: 2px ridge black;
-       overflow: auto;
-   }
-
-   #ChildrenMenu {
-       width: 50%;
-       height: auto;
-       background-color: rgb(235, 235, 228);
-       border: 2px solid black;
-       border-radius: 5px;
-       text-align: center;
-       padding: 0.5em;
-       overflow: auto;
-   }
-
-   #ChildCorner {
-       display: grid;
-       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-       grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
-       overflow: auto;
-   }
-
-   div.Book {
-       background-image: url(Res/book.png);
-       background-repeat: no-repeat;
-       background-size: contain;
-       background-position: center;
-       width: 60%;
-       height: 90%;
-       text-align: center;
-       padding: 1em;
-   }
-
-   li {
-       list-style-type: disc;
-   }
-
-   .Pink {
-       background-color: pink;
-   }
-
-   .Blue {
-       background-color: blue;
-       color: white;
-   }
-
-   .Purple {
-       background-color: purple;
-       color: white;
-   }
-
-   .Beige {
-       background-color: beige;
-   }
-
-   #SexButtons input[type=button],
-   #SexButtons button {
-       text-align: center;
-       font-family: inherit;
-       font-size: inherit;
-       font-weight: bold;
-       color: inherit;
-       width: 95%;
-       height: 5vh;
-       margin: 0.2em 0;
-
-       border: 1px solid rgb(56, 38, 28);
-       border-radius: 2px;
-       background-color: rgb(221, 195, 160);
-       transition: background 0.3s ease-in-out;
-   }
-
-   #SexButtons input[type=button]:hover,
-   #SexButtons button:hover {
-       border: 2px solid rgb(56, 38, 28);
-       background-color: rgb(163, 138, 105);
-   }
+div.CombatButtonGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20px, 25%));
+    grid-column-gap: 0;
+    overflow: auto;
+    justify-content: center;
+}
+
+#Encounter {
+    grid-template:
+        "b c d"
+        "e e e";
+    grid-gap: 1em;
+    grid-template-columns: 25% 40% 25%;
+    grid-template-rows: 55% 45%;
+
+    background-color: rgb(209, 171, 99);
+    border: 20px solid transparent;
+    border-image: url(Res/frame_s_02.png) 25;
+    border-image-outset: 5px;
+
+    height: 92%;
+    width: 96%;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media (max-height: 500px) {
+    #Encounter {
+        grid-template:
+            "b d"
+            "c c"
+            "e e";
+        grid-template-columns: 50vw 50vw;
+        grid-template-rows: 20vh, 40vh, 40vh;
+        border: none;
+        border-radius: 0;
+        height: 100vh;
+        width: 100vw;
+        grid-gap: 0;
+    }
+}
+
+#BattleLog {
+    border: 20px solid transparent;
+    border-image: url(Res/slot_04.png) 20;
+    background-color: rgb(255, 255, 255);
+    overflow: auto;
+    height: 80%;
+}
+
+@media screen and (max-height:600px) {
+    #BattleLog {
+        border: 1px solid black;
+        border-image: none;
+    }
+}
+
+.a {
+    grid-area: a;
+}
+
+.b {
+    grid-area: b;
+}
+
+.c {
+    grid-area: c;
+}
+
+.d {
+    grid-area: d;
+}
+
+.e {
+    grid-area: e;
+}
+
+.f {
+    grid-area: f;
+}
+
+div.AfterBattle {
+    grid-template:
+        "b c d"
+        "e e e";
+    grid-template-columns: 24% 52% 24%;
+    grid-template-rows: 55% 45%;
+    grid-gap: 1em;
+    width: 99%;
+    height: 97%;
+    padding: 1em;
+    text-align: center;
+    border-radius: 5px;
+    border: 5px ridge purple;
+    background-color: rgb(255, 211, 255);
+    justify-items: center;
+    align-items: center;
+    overflow: auto;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media screen and (min-height: 1000px) {
+    div.AfterBattle {
+        overflow: hidden;
+    }
+}
+
+div.AfterBattleImg {
+    grid-template:
+        "b f f f d"
+        "c c c c c"
+        "e e e e e";
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 40% 25% 35%;
+    grid-gap: 1em 0;
+    width: 98%;
+    height: 97%;
+    padding: 1em;
+    text-align: center;
+    border-radius: 5px;
+    border: 5px ridge purple;
+    background-color: rgb(192, 189, 192);
+    justify-items: center;
+    align-items: center;
+}
+
+@media screen and (max-height: 1000px) {
+    div.AfterBattleImg {
+        height: 95%;
+        width: 100%;
+    }
+}
+
+div.AfterBattleImg>img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+#MyImg {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content,
+#caption {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px) {
+    .modal-content {
+        width: 100%;
+    }
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+div.PlayerSex,
+div.EnemySex {
+    border-radius: 5%;
+    border-top-right-radius: 20%;
+    border-top-left-radius: 20%;
+    grid-area: b;
+    width: 90%;
+    height: 99%;
+    padding: 0 0.5em;
+    overflow: auto;
+}
+
+div.EnemySex {
+    grid-area: d;
+}
+
+
+
+div.SexLog {
+    border: 4px ridge darkmagenta;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    grid-area: c;
+    overflow: auto;
+}
+
+div.SiphonButtons {
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+    justify-items: center;
+}
+
+div.MascFemi {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+}
+
+div.MascFemi>input[type=button] {
+    /*Make text easier to read*/
+    text-shadow: white 0px 0px 10px;
+}
+
+#Home {
+    background-color: rgb(192, 189, 192);
+    width: 60%;
+    height: 92%;
+    box-shadow: 0 0 2px 1px black;
+    border-radius: 5px;
+    overflow: auto;
+    padding: 1em;
+    text-align: center;
+}
+
+#Upgrades {
+    width: 100%;
+    text-align: center;
+}
+
+div.ButtonMates {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 210px));
+    grid-column-gap: 3px;
+    grid-row-gap: 3px;
+    justify-content: center;
+}
+
+div.DivMates {
+    position: relative;
+    float: left;
+    height: auto;
+    width: 30vw;
+    margin: 1em;
+    padding: 1em;
+    box-shadow: 0 0 1px 1px black;
+    border-radius: 10px;
+    overflow: auto;
+}
+
+div.DivMatesInner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    margin: 1em;
+    box-shadow: 0 0 1px 1px black;
+    border-radius: 10px;
+}
+
+div.DivMatesCon {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-gap: 1em;
+}
+
+#flex {
+    display: grid;
+    grid-template-columns: 70% 1fr;
+}
+
+div.Masc {
+    margin: 0 0;
+    background-color: rgb(74, 74, 255);
+    border: 1px solid rgb(56, 56, 194);
+}
+
+div.Femi {
+    margin: 0 0;
+    background-color: rgb(247, 59, 231);
+    border: 1px solid rgb(161, 36, 151);
+}
+
+div.Arousal {
+    margin: 0 0;
+    background-color: rgb(247, 159, 59);
+    border: 1px solid rgb(207, 133, 49);
+}
+
+input[type=button],
+input[type=submit],
+button {
+    text-align: center;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: bold;
+    color: inherit;
+    width: 90%;
+    max-width: 220px;
+    height: 5vh;
+    max-height: 50px;
+    margin: 0.3em 0.6em;
+
+    border: 1px solid rgb(83, 57, 43);
+    border-radius: 8px;
+    box-shadow: 0 0 2px 1px black;
+    background-color: rgb(221, 195, 160);
+    transition: background 0.3s ease-in-out;
+}
+
+input[type=color] {
+    width: 100%;
+    max-width: 110px;
+    height: 5vh;
+    max-height: 40px;
+
+    border: 1px solid rgb(83, 57, 43);
+    border-radius: 10px;
+    box-shadow: 0 0 2px 1px black;
+    background-color: rgb(221, 195, 160);
+}
+
+input[type=file] {
+    font-family: inherit;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: inherit;
+    width: 90%;
+    max-width: 220px;
+    height: 5vh;
+    max-height: 50px;
+    margin: 0.3em 0.6em;
+}
+
+button {
+    height: auto;
+    max-height: 200px;
+}
+
+input[type=button]:hover,
+input[type=submit]:hover,
+button:hover {
+    background-color: rgb(187, 160, 124);
+    cursor: pointer;
+}
+
+input[type=button]:active,
+input[type=submit]:active,
+button:active {
+    background-color: rgb(187, 160, 124);
+    box-shadow: 0 0 2px 2px black;
+}
+
+/* Delar på form-inputs fält så att alla blir samma storlek */
+input[type=text],
+select {
+    font-family: inherit;
+    font-size: inherit;
+    width: 80%;
+    max-width: 500px 0.1em;
+    padding: 0.4em;
+    margin: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+@media (max-height: 600px) {
+
+    input[type=text],
+    select {
+        padding: 0.2em;
+        margin: 0;
+    }
+}
+
+select {
+    text-align-last: center;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 0.2rem;
+}
+
+div.Vore {
+    width: 55%;
+    min-height: 500px;
+    max-height: 100%;
+    height: auto;
+    padding: 1em;
+    border-radius: 5px;
+    background-color: rgb(231, 166, 215);
+    text-align: center;
+    justify-items: center;
+
+    border: 20px solid transparent;
+    border-image: url(Res/slot_04.png) 20;
+    border-radius: 20px;
+}
+
+@media screen and (max-height: 600px) {
+    div.Vore {
+        width: 96%;
+        height: 95%;
+    }
+}
+
+#VoreStats {
+    width: 60%;
+}
+
+#VoreStats>label {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+div.VoreGrid {
+    max-height: 80vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-rows: repeat(auto-fit, 140px);
+    overflow: auto;
+}
+
+#VoreButtons {
+    width: 80%
+}
+
+div.VoreButtons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
+    justify-items: center;
+
+}
+
+@media screen and (max-height: 600px) {
+    div.VoreButtons {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+}
+
+#Inventory {
+    background-color: rgb(206, 172, 127);
+    border: 20px solid transparent;
+    border-image: url(Res/frame_s_02.png) 20;
+    border-image-outset: 4px;
+    border-radius: 20px;
+    width: 55%;
+    height: 80%;
+    text-align: center;
+    padding: 1em;
+    overflow: auto;
+}
+
+@media screen and (max-height: 500px) {
+    #Inventory {
+        width: 93%;
+        height: 91%;
+        padding: 0;
+    }
+}
+
+#InventoryBag {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-gap: 0.5em;
+    overflow: auto;
+    height: 89%;
+    border: 20px solid transparent;
+    border-image: url(Res/frame_s_01.png) 20;
+    border-image-outset: 4px;
+    background-color: rgb(165, 138, 102);
+}
+
+#InventoryBag>div {
+    border: 1px solid black;
+    padding: 0.5em;
+    min-height: 30px;
+    background-color: Cornsilk;
+    border-radius: 5px;
+}
+
+#InventoryBag>div>p {
+    float: left;
+    height: auto;
+    padding: 0px;
+    margin: 0px;
+}
+
+#InventoryBag>div>input[type=button] {
+    min-width: 10%;
+    width: auto;
+    height: auto;
+    margin: 0.2em;
+    padding: 0.1em;
+    border-radius: 3px;
+    float: right;
+}
+
+@media screen and (max-height: 500px) {
+    #InventoryBag {
+        border: 10px solid transparent;
+        border-image: url(Res/frame_s_01.png) 20;
+    }
+
+    #InventoryBag>div {
+        padding: 0;
+        height: auto;
+        text-align: left;
+        width: 80%;
+    }
+
+    #InventoryBag>div>p {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+    }
+
+    #InventoryBag>div>input[type=button] {
+        width: auto;
+        margin: 2px;
+        padding: 0;
+        border-radius: 0px;
+        float: left;
+    }
+}
+
+div.LimbSale {
+    max-height: 50vh;
+    border: 2px ridge black;
+    overflow: auto;
+}
+
+#ChildrenMenu {
+    width: 50%;
+    height: auto;
+    background-color: rgb(235, 235, 228);
+    border: 2px solid black;
+    border-radius: 5px;
+    text-align: center;
+    padding: 0.5em;
+    overflow: auto;
+}
+
+#ChildCorner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
+    overflow: auto;
+}
+
+div.Book {
+    background-image: url(Res/book.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 60%;
+    height: 90%;
+    text-align: center;
+    padding: 1em;
+}
+
+li {
+    list-style-type: disc;
+}
+
+.Pink {
+    background-color: pink;
+}
+
+.Blue {
+    background-color: blue;
+    color: white;
+}
+
+.Purple {
+    background-color: purple;
+    color: white;
+}
+
+.Beige {
+    background-color: beige;
+}
+
+#SexButtons input[type=button],
+#SexButtons button {
+    text-align: center;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: bold;
+    color: inherit;
+    width: 95%;
+    height: 5vh;
+    margin: 0.2em 0;
+
+    border: 1px solid rgb(56, 38, 28);
+    border-radius: 2px;
+    background-color: rgb(221, 195, 160);
+    transition: background 0.3s ease-in-out;
+}
+
+#SexButtons input[type=button]:hover,
+#SexButtons button:hover {
+    border: 2px solid rgb(56, 38, 28);
+    background-color: rgb(163, 138, 105);
+}

@@ -2,8 +2,8 @@ function DateTracker() {
     Flags.Date.Hour++;
     HouseEngine();
     if (Flags.Date.Hour % 6 === 0) {
-        DocId("CurrentDate").innerHTML = `${Flags.Date.Day}/${Flags.Date.Month}/${Flags.Date.Year} 
-        ${Flags.Date.Hour < 10 ? `0${Flags.Date.Hour}:00` : `${Flags.Date.Hour}:00`}`;
+        const displayDate = new Date(Flags.Date.Year, Flags.Date.Month - 1, Flags.Date.Day);
+        DocId("CurrentDate").innerHTML = `${displayDate.toDateString()} ${Flags.Date.Hour > 9 ? `${Flags.Date.Hour}:00` : `0${Flags.Date.Hour}:00`}`;
     }
     if (Flags.Date.Hour > 23) {
         Flags.Date.Day++;

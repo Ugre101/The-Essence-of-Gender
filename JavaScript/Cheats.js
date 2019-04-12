@@ -16,7 +16,7 @@ function CheatEngine() {
         player.Vore.Exp++;
     }
     if (Settings.Cheats.FastTime) {
-        Flags.Date.Hour++;
+        DateTracker();
     }
 }
 
