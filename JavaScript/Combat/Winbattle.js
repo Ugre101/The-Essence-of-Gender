@@ -51,7 +51,7 @@ function CombatQuests(ee) {
                 if (q.Count >= 3) {
                     q.Completed = true;
                     if (q.Count % 3 === 0) {
-                        q.hasOwnProperty("Tier") ? q.Tier++ : q.Tier = 1;
+                        q.hasOwnProperty("Tier") ? q.Tier < 3 ? q.Tier++ : q.Tier = 3 : q.Tier = 1;
                     }
                 }
             }

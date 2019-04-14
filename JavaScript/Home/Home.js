@@ -10,8 +10,6 @@ DocId("Sleep").addEventListener("click", function () {
     for (var e = 0; e < 8; e++) {
         DateTracker();
     }
-    battle = true;
-    DocId("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
     DocId("HomeText").innerHTML = "You sleep well, restoring your health and willpower.";
 });
 
@@ -27,10 +25,7 @@ DocId("Portal").addEventListener("click", function () {
     const div = document.createElement("div");
 
     if (window.innerHeight > 600) { // No title on small screen
-        const h1 = document.createElement("h1"),
-            h1text = document.createTextNode("Portal");
-        h1.appendChild(h1text);
-        div.appendChild(h1);
+        div.appendChild(TitleText("Portal"));
     }
 
     const p = DocId("HomeText");
@@ -114,6 +109,8 @@ function LeaveHome() {
     DocId("Home").style.display = 'none';
     DocId("EmptyButtons").style.display = 'none';
     battle = false;
+    GamePaused = false;
+    DocId("LeaveHome").style.display = 'inline-block';
     DisplayGame();
 }
 // End home

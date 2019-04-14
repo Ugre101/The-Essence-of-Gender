@@ -1,21 +1,15 @@
 function ShopFunc() {
     const Buildings = document.getElementById("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
-    const div = document.createElement("div"),
-        h1 = document.createElement("h1"),
-        h1text = document.createTextNode("Shop");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    CleanBuildings();
+    const div = document.createElement("div");
+    div.appendChild(TitleText("Potion shop"));
 
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     div.appendChild(p);
 
     const innerdiv = document.createElement("div");
 
-    const StrPotion = InputButton("Potion of Strength 100g");
+    const StrPotion = ButtonButton("Potion of Strength 100g");
     StrPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Str++
@@ -25,7 +19,7 @@ function ShopFunc() {
         }
     });
 
-    const ChaPotion = InputButton("Potion of Charm 100g");
+    const ChaPotion = ButtonButton("Potion of Charm <br>100g");
     ChaPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Charm++
@@ -38,7 +32,7 @@ function ShopFunc() {
     innerdiv.appendChild(ChaPotion);
     innerdiv.appendChild(document.createElement("br"));
 
-    const EndPotion = InputButton("Potion of Endurance 100g")
+    const EndPotion = ButtonButton("Potion of Endurance 100g")
     EndPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.End++
@@ -48,7 +42,7 @@ function ShopFunc() {
             your endurance growing.<br>${player.End}`;
         }
     });
-    const IntPotion = InputButton("Potion of Intelligence 100g")
+    const IntPotion = ButtonButton("Potion of Intelligence 100g")
     IntPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Int++
@@ -61,7 +55,7 @@ function ShopFunc() {
     innerdiv.appendChild(IntPotion);
     innerdiv.appendChild(document.createElement("br"));
 
-    const WillPotion = InputButton("Potion of Willpower 100g")
+    const WillPotion = ButtonButton("Potion of Willpower 100g")
     WillPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Will++
@@ -71,13 +65,13 @@ function ShopFunc() {
             feel your willpower growing.<br>${player.Will}`;
         }
     });
-    const SexPotion = InputButton("Potion of Sexskill 100g"); // Needs to be renamed, sounds stupid.
+    const SexPotion = ButtonButton("Potion of Sexskill 100g"); // Needs to be renamed, sounds stupid.
     SexPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.SexSkill++
             player.Gold -= 100;
             p.innerHTML = `You pay 100gold proced to drink the potion, once the fluid enter your stomach you get 
-            a feeling that somehow your bedskills have grown.<br>${player.SexSkill}`;
+            a feeling that somehow your bedskills have improved.<br>${player.SexSkill}`;
         }
     });
     innerdiv.appendChild(WillPotion);
@@ -88,4 +82,4 @@ function ShopFunc() {
     div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
-} // Saved 13 lines with inputbutton, wow... but looks better to me atleast!    
+} // Saved 13 lines with ButtonButton, wow... but looks better to me atleast!    

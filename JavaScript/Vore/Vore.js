@@ -229,6 +229,7 @@ function VoreEngine(progress = 0.001) {
                     player.Will += ToAdd("Will");
                     player.End += ToAdd("End");
                     player.SexSkill += ToAdd("SexSkill");
+                    console.log("Stomach")
                 }
                 EventLog(`You have digested ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Stomach.splice(Vore.Stomach.findIndex(i => i === e), 1);
@@ -300,6 +301,7 @@ function VoreEngine(progress = 0.001) {
                     player.Will += ToAdd("Will");
                     player.End += ToAdd("End");
                     player.SexSkill += ToAdd("SexSkill");
+                    console.log("Vagina")
                 }
                 EventLog(`The only trace left of ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName} is a trail of pussy discharge traveling down your legs.`);
                 Vore.Vagina.splice(Vore.Vagina.findIndex(i => i === e), 1);
@@ -381,16 +383,19 @@ function VoreEngine(progress = 0.001) {
                 };
             };
             if (e.Weight < 0) {
-                const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
-                    ToAdd = (what) => {
-                        return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
-                    };
-                player.Str += ToAdd("Str");
-                player.Int += ToAdd("Int");
-                player.Charm += ToAdd("Charm");
-                player.Will += ToAdd("Will");
-                player.End += ToAdd("End");
-                player.SexSkill += ToAdd("SexSkill");
+                if (VP.hasOwnProperty("AbsorbStats") ? VP.AbsorbStats.Count > 0 : false) {
+                    const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
+                        ToAdd = (what) => {
+                            return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
+                        };
+                    player.Str += ToAdd("Str");
+                    player.Int += ToAdd("Int");
+                    player.Charm += ToAdd("Charm");
+                    player.Will += ToAdd("Will");
+                    player.End += ToAdd("End");
+                    player.SexSkill += ToAdd("SexSkill");
+                    console.log("Breast")
+                }
                 EventLog(`There is nothing but milk left of ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Breast.splice(Vore.Breast.findIndex(i => i === e), 1);
             };
@@ -465,6 +470,7 @@ function VoreEngine(progress = 0.001) {
                     player.Will += ToAdd("Will");
                     player.End += ToAdd("End");
                     player.SexSkill += ToAdd("SexSkill");
+                    console.log("Balls")
                 }
                 EventLog(`There is nothing but cum left of the ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Balls.splice(Vore.Balls.findIndex(i => i === e), 1);

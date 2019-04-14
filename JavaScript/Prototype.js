@@ -52,6 +52,14 @@ function InputButton(Value, Title = "") { // Save space and stop repeating same 
     return button;
 }
 
+function InputText(value, id) {
+    const IText = document.createElement("input");
+    IText.setAttribute("type", "text");
+    IText.setAttribute("value", value);
+    IText.setAttribute("id", id);
+    return IText;
+}
+
 function ButtonButton(inner = "", Title = "") { // Same as above but for <button>
     const button = document.createElement("button");
     button.setAttribute("type", "button");
@@ -60,23 +68,80 @@ function ButtonButton(inner = "", Title = "") { // Same as above but for <button
     return button;
 }
 
+function LabelFor(forid, inner) {
+    const Label = document.createElement("label");
+    Label.setAttribute("for", forid);
+    Label.innerHTML = (inner)
+    return Label
+}
+
 function LeaveBuilding() {
     const Leave = document.createElement("input");
     Leave.setAttribute("type", "button");
     Leave.setAttribute("value", "Leave");
     Leave.addEventListener("click", function () {
         battle = false;
+        GamePaused = false;
         DocId("map").style.display = 'block';
         DocId("buttons").style.display = 'block';
         DocId("EmptyButtons").style.display = 'none';
         DocId("status").style.display = 'block';
+        const Buildings = DocId("Buildings");
         Buildings.style.display = 'none';
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
         }
         return;
     });
-    return Leave
+    return Leave;
+};
+
+function LeaveNpc() {
+    const Leave = document.createElement("input");
+    Leave.setAttribute("type", "button");
+    Leave.setAttribute("value", "Leave");
+    Leave.addEventListener("click", function () {
+        battle = false;
+        GamePaused = false;
+        document.getElementById("map").style.display = 'block';
+        document.getElementById("buttons").style.display = 'block';
+        document.getElementById("EmptyButtons").style.display = 'none';
+        document.getElementById("status").style.display = 'block';
+        const Npcs = DocId("Npcs")
+        Npcs.style.display = 'none';
+        while (Npcs.hasChildNodes()) {
+            Npcs.removeChild(Npcs.firstChild);
+        }
+        return;
+    });
+    return Leave;
+};
+
+function TitleText(text) {
+    const h1 = document.createElement("h1"),
+        h1text = document.createTextNode(text);
+    h1.appendChild(h1text);
+    return h1
+};
+
+function TextBox() {
+    const p = document.createElement("p");
+    p.classList.add("TextBox");
+    return p;
+};
+
+function CleanNpcs() {
+    const Npc = document.getElementById("Npcs")
+    while (Npc.hasChildNodes()) {
+        Npc.removeChild(Npc.firstChild);
+    }
+}
+
+function CleanBuildings() {
+    const Buildings = document.getElementById("Buildings")
+    while (Buildings.hasChildNodes()) {
+        Buildings.removeChild(Buildings.firstChild);
+    }
 }
 
 window.mobilecheck = function () { // Check if mobile device from detectmobile

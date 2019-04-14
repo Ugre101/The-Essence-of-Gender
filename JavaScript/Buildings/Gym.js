@@ -1,16 +1,11 @@
 function GymFunc() {
     const Buildings = document.getElementById("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
+    CleanBuildings();
+    const div = document.createElement("div");
+    if (window.innerHeight > 600) {
+        div.appendChild(TitleText("Gym"));
     }
-    const div = document.createElement("div"),
-        h1 = document.createElement("h1"),
-        h1text = document.createTextNode("Gym");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
-
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
 
     div.appendChild(p);
 
@@ -21,7 +16,7 @@ function GymFunc() {
 
     const input1 = InputButton("Train muscle", "Gain muscle.");
     input1.addEventListener("click", function () {
-        if (Flags.LastTrain.Day == Flags.Date.Day && Flags.LastTrain.Month == Flags.Date.Month && Flags.LastTrain.Year == Flags.Date.Year) {
+        if (Flags.LastTrain.Day === Flags.Date.Day && Flags.LastTrain.Month === Flags.Date.Month && Flags.LastTrain.Year === Flags.Date.Year) {
             p.innerHTML = "You have already trained today.";
         } else {
             if (player.Fat > (player.Weight * 0.1)) {

@@ -57,7 +57,7 @@ const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "Ci
         DocId("LoadingImagesProgress").classList.remove("visible");
         DocId("LoadingImagesProgress").classList.add("hidden");
     }),
-    NpcImageLoader = NpcImageLoad(["LocalPortal", "FarmBarn","BlackMarket"], function (images) {
+    NpcImageLoader = NpcImageLoad(["LocalPortal", "FarmBarn", "BlackMarket"], function (images) {
         Npc_images = images;
     });
 
@@ -323,7 +323,7 @@ function CurrentMap() {
 
     function PrintNpcs() {
         const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut"],
-            HasSprite = ["LocalPortal", "FarmBarn","BlackMarket"];
+            HasSprite = ["LocalPortal", "FarmBarn", "BlackMarket"];
         // var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
         // Switched it so new npcs always print
         for (var e of Npcs) {
@@ -347,7 +347,8 @@ function CurrentMap() {
                 if (mousedowner) {
                     mousedowner = false;
                 }
-                battle = true;
+                battle = false;
+                GamePaused = true;
                 sprite.x = startarea.width / 2 - grid;
                 sprite.y = startarea.height / 2;
                 UpdateNpc(n.Name);

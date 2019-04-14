@@ -86,9 +86,9 @@ DocId("DormDrainFemi").addEventListener("click", function () {
     const Need = player.EssenceDrain;
     let Have = ee.Femi;
     ee.Femi = Math.max(0, ee.Femi - Need);
-    while (Have < Need && (ee.Pussies.length > 0 || ee.Boobies.length > 0)) {
+    while (Have < Need && (ee.Pussies.length > 0 || ee.Boobies.length > 0 ? ee.Boobies[0].Size > 0 : false)) {
         if (ee.Pussies.length > 0) {
-            const pussy = ee.Pussies[ee.Pussies.length - 1];
+            const pussy = Last(ee.Pussies);
             pussy.Size--;
             Have += EssenceCost(pussy);
             if (pussy.Size <= 1) {
@@ -96,9 +96,9 @@ DocId("DormDrainFemi").addEventListener("click", function () {
             };
         };
         if (ee.Boobies.length > 0 ? ee.Boobies[0].Size > 0 : false) {
-            const boobs = ee.Boobies[ee.Boobies.length - 1];
+            const boobs = Last(ee.Boobies);
             boobs.Size--;
-            Have += EssenceExtraCost(boobs);
+            Have += EssenceCost(boobs);
             if (boobs.Size <= 1 && ee.Boobies.length > 1) {
                 ee.Boobies.pop();
             };

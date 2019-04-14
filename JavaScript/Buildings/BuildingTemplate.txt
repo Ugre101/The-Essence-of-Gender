@@ -1,19 +1,13 @@
 function Func() {
     const Buildings = document.getElementById("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
+    CleanBuildings(); // Empties div
     const div = document.createElement("div");
 
     if (window.innerHeight > 600) { // No title on small screen
-        const h1 = document.createElement("h1");
-        const h1text = document.createTextNode("");
-        h1.appendChild(h1text);
-        div.appendChild(h1);
+        div.appendChild(TitleText("Title"));
     }
 
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     div.appendChild(p);
 
     const input1 = InputButton("")

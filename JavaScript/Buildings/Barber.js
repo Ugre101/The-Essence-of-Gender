@@ -1,16 +1,10 @@
 function BarberFunc() {
     const Buildings = document.getElementById("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
-    const div = document.createElement("div"),
-        h1 = document.createElement("h1"),
-        h1text = document.createTextNode("Barber");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    CleanBuildings();
+    const div = document.createElement("div");
+    div.appendChild(TitleText("Barber"));
 
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     div.appendChild(p);
 
     const DyeCon = document.createElement("div"),
@@ -42,9 +36,7 @@ function BarberFunc() {
         })
         return cut;
     }
-    const input1 = document.createElement("input");
-    input1.setAttribute("type", "button");
-    input1.setAttribute("value", "Dye");
+    const input1 = ButtonButton("Dye");
     input1.addEventListener("click", function () {
         if (DyeCon.hasChildNodes()) {
             while (DyeCon.hasChildNodes()) {
@@ -65,9 +57,7 @@ function BarberFunc() {
     });
     div.appendChild(input1);
 
-    const input2 = document.createElement("input");
-    input2.setAttribute("type", "button");
-    input2.setAttribute("value", "Cut");
+    const input2 = document.ButtonButton("Cut");
     input2.addEventListener("click", function () {
         if (CutCon.hasChildNodes()) {
             while (CutCon.hasChildNodes()) {

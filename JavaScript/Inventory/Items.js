@@ -23,12 +23,12 @@ const ItemDict = {
         Use: function (who) {
             who.Masc += 50;
             //if (who == who.
-            return "After drinking the orc cum, " + who.Name + " absorbs the manly essence of it."
+        return `After drinking the orc cum, ${who.Name} absorbs the manly essence of it.`;
         },
         Equip: "No",
         Drop: true,
-        Does: "Heals 10% of HP.",
-        Title: "Low-quality beer. It'll heal a bit."
+        Does: "",
+        Title: ""
     },
     fairyDust: {
         Lite: {
@@ -39,7 +39,6 @@ const ItemDict = {
             who.Height -= 5;
             return "Inhaling the fairy dust you see the world grow before you, or maybe it's you who became shorter?"
         },
-        Use: "Yes",
         Equip: "No",
         Drop: true,
         Does: "Shrinks you 5 cm",

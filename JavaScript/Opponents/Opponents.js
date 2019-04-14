@@ -231,7 +231,7 @@ function RespawnBlocker() {
         RandomInt(2, 5), RandomInt(6, 9), 70, 70, RandomInt(15, 20), RandomInt(5, 15),
         'Chocolate', grid, RandomInt(140, 180));
     OP.EssenceGiver(50);
-    OP.FatMuscle(OP, 1, 1);
+    OP.FatMuscle(1, 1);
     StandardEnemy(OP);
     NameGiver(OP);
     OP.XPos = 99 * grid;

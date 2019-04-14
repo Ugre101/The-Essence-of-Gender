@@ -1,17 +1,11 @@
 // Test of new way to add quests, in order to avoid public consts.
 function TownHallQuests(text = "") {
     const div = document.getElementById("Buildings");
-    while (div.hasChildNodes()) {
-        div.removeChild(div.firstChild);
-    }
+    CleanBuildings();
 
-    const h1 = document.createElement("h1"),
-        h1text = document.createTextNode("Quests");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    div.appendChild(TitleText("Quests"));
 
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     div.appendChild(p);
     p.innerHTML = text;
 
@@ -22,8 +16,8 @@ function TownHallQuests(text = "") {
         if (Flags.BanditLord) {
             p.innerHTML = "The bandit are still humiliated from the defeat of their lord, but if you are willing please defeat them again to make sure they don't regain their confidence."
         } else {
-            p.innerHTML = "The bandits up to the north has become braver with their new leader, if you are strong enough please beat them into submission. <br> <br>" +
-                "You will be greatly awarded for your effort and we will grant you the right to buy the old mansion located east from the city."
+            p.innerHTML = `The bandits up to the north has become braver with their new leader, if you are strong enough please beat them into submission. <br> <br>
+            You will be greatly awarded for your effort and we will grant you the right to buy the old mansion located east from the city.`
         }
         while (buttons.hasChildNodes()) {
             buttons.removeChild(buttons.firstChild);
@@ -47,7 +41,7 @@ function TownHallQuests(text = "") {
     });
     const ElfHunt = InputButton("Elf hunt")
     ElfHunt.addEventListener("click", function () {
-        p.innerHTML = "The elves to the south is becoming a problem, defeat atleast three of them and you will be awarded."
+        p.innerHTML = "The elves to our south have lately become a problem, defeat atleast three of them and you will be awarded."
         while (buttons.hasChildNodes()) {
             buttons.removeChild(buttons.firstChild);
         }
@@ -71,9 +65,9 @@ function TownHallQuests(text = "") {
     if (!player.Quests.some(e => e.Name === "ElfHunt")) {
         buttons.appendChild(ElfHunt);
     } else if (player.Quests.some(e => e.Name === "ElfHunt" && e.Completed)) {
-        const ElfHuntReward = InputButton("Elf hunt reward")
+        const ElfHuntReward = ButtonButton("Elf hunt reward")
         ElfHuntReward.addEventListener("click", function () {
-            const ElfIndex = [player.Quests.findIndex((src) => src.Name === "ElfHunt")];
+            const ElfIndex = player.Quests.findIndex((src) => src.Name === "ElfHunt");
             Tier = player.Quests[ElfIndex].hasOwnProperty("Tier") ?
                 player.Quests[ElfIndex].Tier : 0,
                 Multi = Math.pow(2, Tier - 1)
@@ -89,15 +83,12 @@ function TownHallQuests(text = "") {
     if (!player.Quests.some(e => e.Name === "BanditLord")) {
         buttons.appendChild(BanditLord);
     } else if (player.Quests.some(e => e.Name === "BanditLord" && e.Completed)) {
-        const BanditLordReward = InputButton("Banditlord reward")
+        const BanditLordReward = ButtonButton("Banditlord reward")
         BanditLordReward.addEventListener("click", function () {
             player.Exp += 300;
             player.Gold += 500;
-            for (let i = 0; i < player.Quests.length; i++) {
-                if (player.Quests[i].Name === "BanditLord") {
-                    player.Quests.splice(i, 1);
-                }
-            }
+            const BanditIndex = player.Quests.findIndex((src) => src.Name === "BanditLord");
+            player.Quests.splice(BanditIndex, 1);
             if (Flags.BanditLord) {
                 TownHallQuests("You are rewared: 300Exp and 500gold");
             } else {
@@ -121,20 +112,14 @@ function TownHallQuests(text = "") {
 
 function TownhallFunc() {
     const Buildings = document.getElementById("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
+    CleanBuildings();
 
-    const div = document.createElement("div"),
-        h1 = document.createElement("h1"),
-        h1text = document.createTextNode("Townhall");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    const div = document.createElement("div");
+    div.appendChild(TitleText("Townhall"));
 
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     p.innerHTML = `Inside the local town hall there isn’t much to see, for being a town hall it’s honestly not that 
-    impressive at all. But this is just a small outskirt village after all, hopefully they do at least have work for you.`
+    impressive at all. But this is just a small outskirt village after all, hopefully they do at least have work for you.`;
     div.appendChild(p);
 
     const row1 = document.createElement("div"),
@@ -145,7 +130,7 @@ function TownhallFunc() {
     row1.appendChild(input1);
 
     if (House.Owned === false && Flags.BanditLord) {
-        const input2 = InputButton("Buy house 100g")
+        const input2 = ButtonButton("Buy house 100g")
         input2.addEventListener("click", function () {
             if (player.Gold >= 100) {
                 House.Owned = true;
@@ -164,9 +149,9 @@ function TownhallFunc() {
     });
     row1.appendChild(input3);
 
-    const input4 = InputButton("(placeholder)Reputation");
+    const input4 = ButtonButton("(placeholder)Reputation");
     input4.addEventListener("click", function () {
-        p.innerHTML = Flags.FirstCityLike + "<br> They temp temp you.";
+        p.innerHTML = `${Flags.FirstCityLike}<br> They temp temp you.`;
     });
     row1.appendChild(input4);
     div.appendChild(row1);
@@ -179,22 +164,16 @@ function TownhallFunc() {
 
 function TownHallService() {
     const div = document.getElementById("Buildings");
-    while (div.hasChildNodes()) {
-        div.removeChild(div.firstChild);
-    }
+    CleanBuildings();
 
     // Container for services, atm there is only name change
     const inputs = document.createElement("div");
 
     // Container for accept and back [Yes/No]
-    const YN = document.createElement("div"),
-     h1 = document.createElement("h1"),
-      h1text = document.createTextNode("Service");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    const YN = document.createElement("div");
+    div.appendChild(TitleText("Service"));
 
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     div.appendChild(p);
 
     const CN = InputButton("Change name");
@@ -202,26 +181,12 @@ function TownHallService() {
         while (inputs.hasChildNodes()) {
             inputs.removeChild(inputs.firstChild);
         }
-        const FName = document.createElement("input");
-        FName.setAttribute("type", "text");
-        FName.setAttribute("value", player.Name);
-        FName.setAttribute("id", "ServiceFName724");
-
-        const FNameLabel = document.createElement("label");
-        FNameLabel.setAttribute("for", "ServiceFName724");
-        FNameLabel.innerHTML = ("First name:")
-        inputs.appendChild(FNameLabel);
+        const FName = InputText(player.Name, "ServiceFName724");
+        inputs.appendChild(LabelFor("ServiceFName724", "First name:"));
         inputs.appendChild(FName);
 
-        const LName = document.createElement("input");
-        LName.setAttribute("type", "text");
-        LName.setAttribute("value", player.LastName);
-        LName.setAttribute("id", "ServiceLName244");
-
-        const LNameLabel = document.createElement("label");
-        LNameLabel.setAttribute("for", "ServiceLName244")
-        LNameLabel.innerHTML = "Last name:";
-        inputs.appendChild(LNameLabel);
+        const LName = InputText(player.LastName, "ServiceLName244");
+        inputs.appendChild(LabelFor("ServiceLName244", "Last name:"));
         inputs.appendChild(LName);
 
         const Accept = InputButton("Accept");

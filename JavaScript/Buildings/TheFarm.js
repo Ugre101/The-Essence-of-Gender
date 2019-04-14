@@ -41,23 +41,17 @@ DocId("FarmOwnerLooks").addEventListener("click", function () {
 
 function FarmBarnFunc() {
     var Buildings = DocId("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
+    CleanBuildings();
     var div = document.createElement("div");
 
     if (window.innerHeight > 600) { // No title on small screen
-        var h1 = document.createElement("h1");
-        var h1text = document.createTextNode("");
-        h1.appendChild(h1text);
-        div.appendChild(h1);
+        div.appendChild(TitleText("Barn"));
     }
 
-    var p = document.createElement("p");
-    p.classList.add("TextBox");
+    var p = TextBox();
     div.appendChild(p);
 
-    var input1 = InputButton("Milker500 499g", "Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away? Buy today; a portable milker!");
+    var input1 = ButtonButton("Milker500 499g", "Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away? Buy today; a portable milker!");
     input1.addEventListener("click", function () {
         if (player.Gold >= 499) {
             player.Gold -= 499;
@@ -72,11 +66,11 @@ function FarmBarnFunc() {
     });
     div.appendChild(input1);
 
-    var input2 = InputButton("Milk booster 30g", "Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?! Well, this is for your humble (or crazy) needs!")
+    var input2 = ButtonButton("Milk booster 30g", "Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?! Well, this is for your humble (or crazy) needs!")
     input2.addEventListener("click", function () {
         if (player.Gold >= 30) {
             player.Gold -= 30;
-            for (var e of player.Boobies) {
+            for (let e of player.Boobies) {
                 e.MilkRate++;
                 if (false) {
                     // if milkrate is over certain value say stuff like wow godly amounts etc...
@@ -92,14 +86,14 @@ function FarmBarnFunc() {
     });
     div.appendChild(input2);
 
-    var input3 = InputButton("Milk stopper 50g", "Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.' #Note this does not affect lacation rate from pregnancy.")
+    var input3 = ButtonButton("Milk stopper 50g", "Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.' #Note this does not affect lacation rate from pregnancy.")
     input3.addEventListener("click", function () {
         // Lower milkrate
         // if no breast have milkrate stop
         if (player.Gold >= 50) {
             player.Gold -= 50;
             p.innerHTML = ""
-            for (var e of player.Boobies) {
+            for (let e of player.Boobies) {
                 if (e.MilkRate - 1 < 0) {
                     e.MilkRate = 0;
                     p.innerHTML += "Your breasts stops lactating.<br>" //Milk stops
@@ -122,7 +116,7 @@ function FarmBarnFunc() {
     div.appendChild(input3);
 
     if (false) { // TODO
-        var DrinkFresh = InputButton("Drink fresh milk", "It's not yours. You think.");
+        var DrinkFresh = ButtonButton("Drink fresh milk", "It's not yours. You think.");
         DrinkFresh.addEventListener("click", function () {
             // Drink milk Maybe fuck a bovine furry? 
             // Get healed + temp boost to hp & will stronger than bar meal
@@ -139,7 +133,7 @@ function FarmBarnFunc() {
                 }
             }
         })
-        var GetMilked = InputButton("Get milked", "Mooooooooooooo!");
+        var GetMilked = ButtonButton("Get milked", "Mooooooooooooo!");
         GetMilked.addEventListener("click", function () {
             // Sell milk(maybe cum to?), this can trigger a event where farmowner tries to fuck you
             // depenent on your stats you can turn it around or get away, if your stats are to weak you get fucked.

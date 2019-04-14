@@ -1,27 +1,19 @@
 function BlackMarketFunc() {
     const Buildings = document.getElementById("Buildings"),
         MainFrag = document.createDocumentFragment(),
-        p = document.createElement("p"),
-        input1 = InputButton("Sell limbs"),
+        p = TextBox(),
+        input1 = ButtonButton("Sell limbs"),
         limbcon = document.createElement("div"),
         PESS = document.createElement("p"),
-        input2 = InputButton("Sell 50 femininity 100g"),
-        input3 = InputButton("Sell 50 masculinity 100g"),
-        input4 = InputButton("Why can't I buy?", "I see a plenty signs here of what you are buying, but I see nothing about what I can buy?"),
+        input2 = ButtonButton("Sell 50 femininity 100g"),
+        input3 = ButtonButton("Sell 50 masculinity 100g"),
+        input4 = ButtonButton("Why can't I buy?", "I see a plenty signs here of what you are buying, but I see nothing about what I can buy?"),
         Content = [p, input1, limbcon, PESS, input2, input3, input4, LeaveBuilding()];
 
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
-
+    CleanBuildings();
     if (window.innerHeight > 200) { // No title on small screen
-        const h1 = document.createElement("h1"),
-            h1text = document.createTextNode("Black Market");
-        h1.appendChild(h1text);
-        Content.unshift(h1);
+        Content.unshift(TitleText("Black Market"));
     }
-
-    p.classList.add("TextBox");
 
     input1.addEventListener("click", function () {
         limbcon.classList.add("LimbSale")
@@ -66,8 +58,9 @@ function BlackMarketFunc() {
     });
 
     input4.addEventListener("click", function () {
-        p.innerHTML = `Yeah we are only buying essence here, you see we have a contract with guys in the capital where we can sell for a lot more to nobles.  Nobles you might ask aren’t they the ones who preach about how you should only have as much essence you can conquer!
-             The thing is though while they say trading essence are forbidden and for the weak, the rich don’t follow the rules they only pretend to in order to maintain their image.`
+        p.innerHTML = `Yeah we are only buying essence here, you see we have a contract with guys in the capital where we can sell for a lot more to nobles.  
+        Nobles you might ask aren’t they the ones who preach about how you should only have as much essence you can conquer! 
+        The thing is though while they say trading essence are forbidden and for the weak, the rich don’t follow the rules they only pretend to in order to maintain their image.`
     });
     input4.addEventListener("mouseover", function () {
         p.innerHTML = `I see a plenty signs here of what you are buying, but I see nothing about what I can buy?`
@@ -86,23 +79,23 @@ function BlackMarketFunc() {
         const Frag = document.createDocumentFragment(),
             H41 = document.createElement("h4"),
             H41Text = document.createTextNode("Sell sexual organs 30g/cm"),
-            label1 = document.createElement("label"),
+            label1 = LabelFor("SellDicks", "Dicks"),
             div1 = document.createElement("div"),
-            label2 = document.createElement("label"),
+            label2 = LabelFor("SellBalls", "Balls"),
             div2 = document.createElement("div"),
-            label3 = document.createElement("label"),
+            label3 = LabelFor("SellBreasts", "Breasts"),
             div3 = document.createElement("div"),
-            label4 = document.createElement("label"),
+            label4 = LabelFor("SellVaginas", "Vaginas"),
             div4 = document.createElement("div"),
             H42 = document.createElement("h4"),
             H42Text = document.createTextNode("Sell sexual organ size 25g/cm"),
-            label5 = document.createElement("label"),
+            label5 = LabelFor("SellDickSize", "Dick size"),
             div5 = document.createElement("div"),
-            label6 = document.createElement("label"),
+            label6 = LabelFor("SellBallSize", "Ball size"),
             div6 = document.createElement("div"),
-            label7 = document.createElement("label"),
+            label7 = LabelFor("SellBreastSize", "Breast size"),
             div7 = document.createElement("div"),
-            label8 = document.createElement("label"),
+            label8 = LabelFor("SellVaginaSize", "Vagina depth"),
             div8 = document.createElement("div"),
             SellLimbsCon = [H41, label1, div1, label2, div2, label3, div3, label4, div4,
                 H42, label5, div5, label6, div6, label7, div7, label8, div8
@@ -112,10 +105,8 @@ function BlackMarketFunc() {
         H42.appendChild(H42Text);
 
         div1.setAttribute("id", "SellDicks");
-        label1.setAttribute("for", "SellDicks");
-        label1.innerHTML = "Dicks";
         player.Dicks.forEach((e, i) => {
-            const inp = InputButton(e.Type + " dick " + CmToInch(e.Size));
+            const inp = ButtonButton(e.Type + " dick " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 player.Gold += e.Size * 30;
                 player.Dicks.splice(i, 1);
@@ -125,10 +116,8 @@ function BlackMarketFunc() {
         });
 
         div2.setAttribute("id", "SellBalls");
-        label2.setAttribute("for", "SellBalls");
-        label2.innerHTML = "Balls";
         player.Balls.forEach((e, i) => {
-            const inp = InputButton(e.Type + " balls " + CmToInch(e.Size));
+            const inp = ButtonButton(e.Type + " balls " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 player.Gold += e.Size * 30;
                 player.Balls.splice(i, 1);
@@ -138,10 +127,8 @@ function BlackMarketFunc() {
         });
 
         div3.setAttribute("id", "SellBreasts");
-        label3.setAttribute("for", "SellBreasts");
-        label3.innerHTML = "Breasts";
         player.Boobies.forEach((e, i) => {
-            const inp = InputButton(e.Type + " boobs " + CmToInch(e.Size));
+            const inp = ButtonButton(e.Type + " boobs " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 if (player.Boobies.length > 1) {
                     player.Gold += e.Size * 30;
@@ -153,10 +140,8 @@ function BlackMarketFunc() {
         });
 
         div4.setAttribute("id", "SellVaginas");
-        label4.setAttribute("for", "SellVaginas");
-        label4.innerHTML = "Vaginas";
         player.Pussies.forEach((e, i) => {
-            const inp = InputButton(e.Type + " vagina " + CmToInch(e.Size));
+            const inp = ButtonButton(e.Type + " vagina " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 player.Gold += e.Size * 30;
                 player.Pussies.splice(i, 1);
@@ -166,10 +151,8 @@ function BlackMarketFunc() {
         });
 
         div5.setAttribute("id", "SellDickSize");
-        label5.setAttribute("for", "SellDickSize");
-        label5.innerHTML = "Dick size";
-        player.Dicks.forEach((e, i) => {
-            const inp = InputButton(e.Type + " dick " + CmToInch(e.Size));
+        player.Dicks.forEach((e) => {
+            const inp = ButtonButton(e.Type + " dick " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
                 LimbSale();
@@ -178,10 +161,8 @@ function BlackMarketFunc() {
         });
 
         div6.setAttribute("id", "SellBallSize");
-        label6.setAttribute("for", "SellBallSize");
-        label6.innerHTML = "Ball size";
-        player.Balls.forEach((e, i) => {
-            const inp = InputButton(e.Type + " balls " + CmToInch(e.Size));
+        player.Balls.forEach((e) => {
+            const inp = ButtonButton(e.Type + " balls " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
                 LimbSale();
@@ -190,10 +171,8 @@ function BlackMarketFunc() {
         });
 
         div7.setAttribute("id", "SellBreastSize");
-        label7.setAttribute("for", "SellBreastSize");
-        label7.innerHTML = "Breast size";
-        player.Boobies.forEach((e, i) => {
-            const inp = InputButton(e.Type + " boobs " + CmToInch(e.Size));
+        player.Boobies.forEach((e) => {
+            const inp = ButtonButton(e.Type + " boobs " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
                 LimbSale();
@@ -202,10 +181,8 @@ function BlackMarketFunc() {
         });
 
         div8.setAttribute("id", "SellVaginaSize");
-        label8.setAttribute("for", "SellVaginaSize");
-        label8.innerHTML = "Vagina depth";
-        player.Pussies.forEach((e, i) => {
-            const inp = InputButton(e.Type + " vagina " + CmToInch(e.Size));
+        player.Pussies.forEach((e) => {
+            const inp = ButtonButton(e.Type + " vagina " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
                 LimbSale();

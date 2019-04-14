@@ -12,8 +12,7 @@
             Upgrades.removeChild(Upgrades.firstChild);
         }
 
-        const p = document.createElement("p");
-        p.classList.add("TextBox");
+        const p = TextBox();
         Upgrades.appendChild(p);
 
         const h2 = document.createElement("h2"),
@@ -24,7 +23,7 @@
         function BedCost() {
             return Math.round(50 * Math.pow(1.2, House.BedLevel));
         }
-        const UpgradeBed = InputButton(`Upgrade bedroom ${BedCost()}g`);
+        const UpgradeBed = ButtonButton(`Upgrade bedroom ${BedCost()}g`);
         UpgradeBed.addEventListener("click", function () {
             if (player.Gold >= BedCost()) {
                 House.BedLevel++;
@@ -49,7 +48,7 @@
         }
 
         const DormValue = House.Dorm > 0 ? `Upgrade dorm ${DormCost()}g` : `Build dorm ${DormCost()}g`,
-            BuildDorm = InputButton(DormValue);
+            BuildDorm = ButtonButton(DormValue);
         BuildDorm.addEventListener("click", function () {
             if (player.Gold >= DormCost()) {
                 House.Dorm++;
@@ -75,7 +74,7 @@
             return Math.round(200 * Math.pow(1.2, House.Gym));
         }
         const GymValue = House.Gym > 0 ? `Upgrade gym ${Gymcost()}g` : `Build gym ${Gymcost()}g`,
-            BuildGym = InputButton(GymValue);
+            BuildGym = ButtonButton(GymValue);
         BuildGym.addEventListener("click", function () {
             if (player.Gold >= Gymcost()) {
                 if (House.Gym < 1) {
@@ -99,7 +98,7 @@
             return Math.round(200 * Math.pow(1.2, House.Kitchen));
         }
         const KitchenValue = House.Kitchen > 0 ? `Upgrade kitchen ${Kitchencost()}g` : `Build kitchen ${Kitchencost()}g`,
-            BuildKitchen = InputButton(KitchenValue)
+            BuildKitchen = ButtonButton(KitchenValue)
 
         BuildKitchen.addEventListener("click", function () {
             if (player.Gold >= Kitchencost()) {
@@ -124,7 +123,7 @@
             return Math.round(500 * Math.pow(1.2, House.Brothel));
         }
         const BrothelValue = House.Brothel > 0 ? `Upgrade brothel ${Brothelcost()}g` : `Build brothel ${Brothelcost()}g`,
-            BuildBrothel = InputButton(BrothelValue);
+            BuildBrothel = ButtonButton(BrothelValue);
 
         BuildBrothel.addEventListener("click", function () {
             if (player.Gold >= Brothelcost()) {
@@ -147,7 +146,7 @@
             return Math.round(200 * Math.pow(1.2, House.Nursery));
         }
         const NurseryValue = House.Nursery > 0 ? `Upgrade nursery ${Nurserycost()}g` : `Build nursery ${Nurserycost()}g`,
-            BuildNursery = InputButton(NurseryValue);
+            BuildNursery = ButtonButton(NurseryValue);
 
         BuildNursery.addEventListener("click", function () {
             if (player.Gold >= Nurserycost()) {
@@ -170,7 +169,7 @@
         Upgrades.appendChild(BuildNursery);
 
         if (House.Portal.Owned === false) {
-            const BuildPortal = InputButton("Build portal 1000g")
+            const BuildPortal = ButtonButton("Build portal 1000g")
             BuildPortal.addEventListener("click", function () {
                 if (player.Gold >= 1000) {
                     player.Gold -= 1000;
@@ -189,7 +188,7 @@
             Upgrades.appendChild(BuildPortal);
         }
 
-        const Close = InputButton("Close");
+        const Close = ButtonButton("Close");
         Close.addEventListener("click", function () {
             DocId("HomeStart").style.display = 'block';
             DocId("Upgrades").style.display = 'none';
@@ -200,6 +199,7 @@
                 Upgrades.removeChild(Upgrades.firstChild);
             }
         });
+        Upgrades.appendChild(document.createElement("br"));
         Upgrades.appendChild(Close);
 
         // Barn.innerHTML = "Allows you to milk your lactating servants. The milk can be brought with you as a travel snack or you can sell it for gold."

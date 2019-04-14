@@ -2,21 +2,13 @@ function LocalPortalFunc() {
     const Buildings = DocId("Buildings"),
         InnerDiv = document.createElement("div"),
         Frag = document.createDocumentFragment(),
-        p = document.createElement("p"),
+        p = TextBox(),
         Container = [p]
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
+    CleanBuildings();
 
     if (window.innerHeight > 600) { // No title on small screen
-        const h1 = document.createElement("h1"),
-            h1text = document.createTextNode("Portal");
-        h1.appendChild(h1text);
-        Container.unshift(h1);
+        Container.unshift(TitleText("Portal"));
     }
-
-
-    p.classList.add("TextBox");
 
     if (player.Map === "Outlaws" && House.Portal.BlackMarket === false) {
         const Activate = InputButton("Activate", "Sync this local portal with your home portal");
@@ -46,11 +38,7 @@ function LocalPortalFunc() {
     input1.addEventListener("click", function () {
         player.Area = "First";
         player.Map = "RoadToHome";
-        Buildings.style.display = 'none';
-        while (Buildings.hasChildNodes()) {
-            Buildings.removeChild(Buildings.firstChild);
-        }
-        DisplayGame();
+        Teleport();
         return;
     });
     input1.addEventListener("mouseover", function () {
@@ -64,11 +52,7 @@ function LocalPortalFunc() {
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
-            Buildings.style.display = 'none';
-            while (Buildings.hasChildNodes()) {
-                Buildings.removeChild(Buildings.firstChild);
-            }
-            DisplayGame();
+            Teleport();
             return;
         });
         Container.push(Mountain);
@@ -79,11 +63,7 @@ function LocalPortalFunc() {
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
-            Buildings.style.display = 'none';
-            while (Buildings.hasChildNodes()) {
-                Buildings.removeChild(Buildings.firstChild);
-            };
-            DisplayGame();
+            Teleport();
             return;
         });
         BlackMarket.addEventListener("mouseover", function () {
@@ -96,11 +76,7 @@ function LocalPortalFunc() {
         MountainPlateau.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainPlateau";
-            Buildings.style.display = 'none';
-            while (Buildings.hasChildNodes()) {
-                Buildings.removeChild(Buildings.firstChild);
-            };
-            DisplayGame();
+            Teleport();
             return;
         });
         MountainPlateau.addEventListener("mouseover", function () {
@@ -115,4 +91,10 @@ function LocalPortalFunc() {
     InnerDiv.appendChild(Frag);
     Buildings.appendChild(InnerDiv);
     Buildings.style.display = "block";
+
+    function Teleport() {
+        Buildings.style.display = 'none';
+        CleanBuildings();
+        DisplayGame();
+    }
 }

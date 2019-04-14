@@ -106,6 +106,7 @@ function DungeonStopButton() {
     DocId("AfterBattle").style.display = 'none';
     DocId("FirstDungeon").style.display = 'block';
     Wave++;
+    EnemyIndex = Wave;
     if (Wave == 4 && !Flags.BeatSuccubus && false) {
         Flags.BeatSuccubus = true;
         DocId("FirstDungeonText").innerHTML = "Having beaten her you found a teleport shard to a new world,"
@@ -129,11 +130,12 @@ function DungeonCapture() {
     DocId("EmptyButtons").style.display = 'block';
     DocId("EventLog").style.display = 'block';
 
-    House.Dormmates.push(enemies[EnemyIndex]);
+    House.Dormmates.push(enemies[Wave]);
     player.Orgasm = 0;
     DocId("AfterBattle").style.display = 'none';
     DocId("FirstDungeon").style.display = 'block';
     Wave++;
+    EnemyIndex = Wave;
     LastPressed = " ";
     if (Wave == 4) {
         Wave = 0;

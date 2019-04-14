@@ -1,23 +1,15 @@
 function PortalShopFunc() {
     const Buildings = document.getElementById("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
+    CleanBuildings();
     const div = document.createElement("div");
 
     if (window.innerHeight > 600) { // Skip title on smaller screens
-        const h1 = document.createElement("h1"),
-            h1text = document.createTextNode("Portal shop");
-        h1.appendChild(h1text);
-        div.appendChild(h1);
-    }
-
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
-
+        div.appendChild(TitleText("Portal shop"));
+    };
+    const p = TextBox();
     div.appendChild(p);
 
-    const input1 = InputButton("Pocket portal 1000g", "Are you tired of walking home? Then pocket portal is for you, now with 99 uses! #Note seller is not responsible if you waste them by using them without owning a home portal.");
+    const input1 = ButtonButton("Pocket portal 1000g", "Are you tired of walking home? Then pocket portal is for you, now with 99 uses! #Note seller is not responsible if you waste them by using them without owning a home portal.");
     input1.addEventListener("click", function () {
         if (player.Gold >= 1000) {
             player.Gold -= 1000;
@@ -35,7 +27,7 @@ function PortalShopFunc() {
     div.appendChild(input1);
 
     if (House.Portal.Mountain === false) {
-        const input2 = InputButton("Portal to mountain region 500g", "A beautiful land with wonderful views, but be consty as it’s the home for plenty dangerous races and tribes.");
+        const input2 = ButtonButton("Portal to mountain region 500g", "A beautiful land with wonderful views, but be consty as it’s the home for plenty dangerous races and tribes.");
         input2.addEventListener("click", function () {
             if (player.Gold >= 500) {
                 if (House.Portal.Mountain) {

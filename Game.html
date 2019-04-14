@@ -247,7 +247,10 @@
 		<div class="FullBar">
 			<div id="StatusLevel"></div>
 		</div>
-		<p id="Gold" data-clicked="0"></p>
+		<div id="GoldContainer">
+			<img src="res/coin.PNG" id="GoldImg">
+			<p id="Gold" data-clicked="0"></p>
+		</div>
 		<p id="Hunger"></p>
 	</div>
 
@@ -473,55 +476,7 @@
 				<div id="VoreLevel"></div>
 			</div>
 		</div>
-		<div id="VoreButtons">
-			<button type="button" id="ShowStomach">Stomach</button>
-			<button type="button" id="ShowVagina">Pussy</button>
-			<button type="button" id="ShowBreast">Breast</button>
-			<button type="button" id="ShowBalls">Balls</button>
-			<button type="button" id="ShowAnal">Anal</button>
-			<button type="button" id="VorePerks">Vore perks</button>
-		</div>
-		<div id="VoreStomach" class="None">
-			<div id="StomachContent" class="VoreGrid"></div>
-			<div id="StomachPrey" class="None"></div>
-			<input type="button" id="StomachDigestion" value="Stomach digestion true">
-			<input type="button" id="StomachLeave" value="Back">
-			<input type="button" id="LeaveStomachPrey" value="close" />
-			<input type="button" id="regurgitateStomach" value="regurgitate" />
-		</div>
-		<div id="VoreVagina" class="None">
-			<div id="VaginaContent" class="VoreGrid"></div>
-			<div id="VaginaPrey" class="None"></div>
-			<input type="button" id="VCumDigestion" value="Digestion false" />
-			<input type="button" id="ChildTF" value="Child tf/Age reduc. true" />
-			<input type="button" id="VaginaLeave" value="Back">
-			<input type="button" id="LeaveVaginaPrey" value="close" />
-			<input type="button" id="regurgitateVagina" value="regurgitate" />
-		</div>
-		<div id="VoreBreast" class="None">
-			<div id="BreastContent" class="VoreGrid"></div>
-			<div id="BreastPrey" class="None"></div>
-			<input type="button" id="MilkTransformation" value="Milk transformation true" />
-			<input type="button" id="BreastLeave" value="Back">
-			<input type="button" id="LeaveBreastPrey" value="close" />
-			<input type="button" id="regurgitateBreast" value="regurgitate" />
-		</div>
-		<div id="VoreBalls" class="None">
-			<div id="BallsContent" class="VoreGrid"></div>
-			<div id="BallsPrey" class="None"></div>
-			<input type="button" id="CumDigestion" value="Cum transformation true">
-			<input type="button" id="BallsLeave" value="Back">
-			<input type="button" id="LeaveBallsPrey" value="close" />
-			<input type="button" id="regurgitateBalls" value="regurgitate" />
-		</div>
-		<div id="VoreAnal" class="None">
-			<div id="AnalContent" class="VoreGrid"></div>
-			<div id="AnalPrey" class="None"></div>
-			<input type="button" id="AnalDigestion" value="Anal digestion true">
-			<input type="button" id="AnalLeave" value="Back">
-			<input type="button" id="LeaveAnalPrey" value="close" />
-			<input type="button" id="regurgitateAnal" value="regurgitate" />
-		</div>
+		<div id="VoreButtons"></div>
 		<div id="VorePerkMenu">
 			<p id="VorePerkMenuText" class="MenuText"></p>
 			<p id="VorePerkPointsLeft"></p>
@@ -542,6 +497,7 @@
 
 			<input type="button" id="LeaveVorePerkMenu" value="Done">
 		</div>
+		<br>
 		<div id="VoreSettingsMenu" class="None">
 			<input type="button" id="AbsorbEssenceSetting" value="Absorb Essence Both" />
 			<!--<input type="button" id="PlayerPrey" value="(not in game)Player prey true/false" />-->
@@ -553,26 +509,30 @@
 
 	<div id="Encounter" class="None">
 		<div id="TheEnemy" class="d CombatStatus">
-			<p id="BattleEnemy"></p>
-			<label for="EnemyStatusHealth">Health</label>
-			<div class="FullBar">
-				<div id="EnemyStatusHealth" class="StatusHealth"></div>
-			</div>
-			<label for="EnemyStatusWillHealth">Willpower</label>
-			<div class="FullBar">
-				<div id="EnemyStatusWillHealth" class="StatusWillHealth"></div>
+			<div class="CombatStatusInner">
+				<p id="BattleEnemy"></p>
+				<label for="EnemyStatusHealth">Health</label>
+				<div class="FullBar">
+					<div id="EnemyStatusHealth" class="StatusHealth"></div>
+				</div>
+				<label for="EnemyStatusWillHealth">Willpower</label>
+				<div class="FullBar">
+					<div id="EnemyStatusWillHealth" class="StatusWillHealth"></div>
+				</div>
 			</div>
 		</div>
 		<div id="ThePlayer" class="b CombatStatus">
-			<p id="StatusName2"></p>
-			<br>
-			<label for="StatusHealth2">Health</label>
-			<div class="FullBar">
-				<div id="StatusHealth2" class="StatusHealth"></div>
-			</div>
-			<label for="StatusWillHealth2">Willpower</label>
-			<div class="FullBar">
-				<div id="StatusWillHealth2" class="StatusWillHealth"></div>
+			<div class="CombatStatusInner">
+				<p id="StatusName2"></p>
+				<br>
+				<label for="StatusHealth2">Health</label>
+				<div class="FullBar">
+					<div id="StatusHealth2" class="StatusHealth"></div>
+				</div>
+				<label for="StatusWillHealth2">Willpower</label>
+				<div class="FullBar">
+					<div id="StatusWillHealth2" class="StatusWillHealth"></div>
+				</div>
 			</div>
 		</div>
 		<br>
@@ -738,15 +698,8 @@
 				<input type="button" id="LeaveHome" value="Leave">
 			</div>
 		</div>
-		<div id="Upgrades" class="None">
-
-		</div>
-		<div id="TheDorm" class="None">
-			<div id="KickYesNo" class="None">
-				<input type="button" id="KickYes" value="Yes">
-				<input type="button" id="KickNo" value="No">
-			</div>
-		</div>
+		<div id="Upgrades" class="None"></div>
+		<div id="TheDorm" class="None"></div>
 		<div id="PortalMenu" class="None"></div>
 		<div id="TheBrothel" class="None">
 			<h2>Brothel</h2>
@@ -851,12 +804,6 @@
 		<input type="button" id="LeaveTemp_Tempsson" value="Close" />
 	</div>
 
-	<div id="LocalPortal" class="None Building">
-		<p id="LocalPortalText" class="TextBox"></p>
-		<input type="button" id="LeaveLocalPortal" value="Leave" />
-		<input type="button" id="TeleportHome" value="Home" />
-	</div>
-
 	<div id="FarmOwner" class="None Building">
 		<p id="FarmOwnerText" class="TextBox"></p>
 		<div id="FarmTitles">
@@ -890,15 +837,11 @@
 		A single div which I change in js instead of html so that I can have them more modular and 
 		stop have so many active addeventlistners 
 	-->
-	<div id="Buildings" class="Building None">
-
-	</div>
+	<div id="Buildings" class="Building None"></div>
 	<!--
 		Seperate buildings and npcs as I want to add stuff like affection etc in future
 	-->
-	<div id="Npcs" class="Building None">
-
-	</div>
+	<div id="Npcs" class="Building None"></div>
 	<script src="Combined.js"></script>
 	<script src="imgPack/ImgPackArrays.js"></script>
 	<!--	<script src="JavaScript/NewGamePlus.js"></script>-->

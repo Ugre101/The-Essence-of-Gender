@@ -778,7 +778,7 @@ function loop() {
         }
     }
     if (!battle) {
-        Settings.Vore ? VoreEngine() : false; // However it does shrink the size of code quite a lot... idk
+        Settings.Vore ? VoreEngine() : false; //Should move this to datetracker
         Settings.Cheats.Enabled ? CheatEngine() : false;
         Laglimiter++;
         if (Laglimiter % 80 == 0) {
