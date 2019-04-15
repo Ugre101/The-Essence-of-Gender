@@ -980,12 +980,15 @@ button {
     font-family: inherit;
     font-size: inherit;
     font-weight: bold;
-    vertical-align: top; /* This one make buttons of different size start at same height */
+    vertical-align: top;
+    /* This one make buttons of different size start at same height */
     color: inherit;
     width: 90%;
     max-width: 220px;
     margin: 0.3em 0.6em;
-    min-height: 6vh;
+    min-height: 4vh;
+    height: auto;
+    max-height: 100%;
     border: 1px solid rgb(83, 57, 43);
     border-radius: 8px;
     box-shadow: 0 0 2px 1px black;
@@ -1121,8 +1124,9 @@ div.VoreButtons {
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     }
 }
-div.VoreButtons > button {
-   padding: 1em;
+
+div.VoreButtons>button {
+    padding: 1em;
 }
 
 #Inventory {

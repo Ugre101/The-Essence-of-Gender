@@ -28,7 +28,7 @@ const ItemDict = {
         Equip: "No",
         Drop: true,
         Does: "",
-        Title: ""
+        Title: "..."
     },
     fairyDust: {
         Lite: {
