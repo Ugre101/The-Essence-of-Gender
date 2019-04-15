@@ -3,17 +3,12 @@ function CheckFlags() {
     // Flags
 
     // load Settings
-    DocId("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+    DateTracker();
 
     document.body.style.backgroundColor = Settings.BackColor;
-    MapColor = Settings.MapColor
-    document.body.style.color = Settings.TextColor
-    document.body.style.fontFamily = Settings.TextFont
-
-    DocId("backcolor").value = Settings.BackColor;
-    DocId("MapColor").value = Settings.MapColor;
-    DocId("textcolor").value = Settings.TextColor;
-    DocId("textfont").value = Settings.TextFont;
+    MapColor = Settings.MapColor;
+    document.body.style.color = Settings.TextColor;
+    document.body.style.fontFamily = Settings.TextFont;
 
     if (!Settings.hasOwnProperty("MapPercent")) {
         Settings.MapPercent = 0.9;
@@ -36,8 +31,9 @@ function CheckFlags() {
             }
         }
         //More load fixing
-        if (!Settings.VoreSettings.hasOwnProperty("AnalDigestion"))
+        if (!Settings.VoreSettings.hasOwnProperty("AnalDigestion")) {
             Settings.VoreSettings.AnalDigestion = false;
+        }
         if (!Settings.VoreSettings.hasOwnProperty("AbsorbEssence")) {
             Settings.VoreSettings.AbsorbEssence = "Both";
         }
@@ -68,6 +64,7 @@ function CheckFlags() {
     }
     if (!player.Pregnant.hasOwnProperty("Babies")) {
         player.Pregnant = {};
+        player.Pregnant.Status = false;
         player.Pregnant.Babies = [];
         console.log("Added babies []");
     }
@@ -101,18 +98,6 @@ function CheckFlags() {
     if (!House.hasOwnProperty("Nursery")) {
         House.Nursery = 0;
         console.log("Added Nursery")
-    }
-
-    if (window.innerHeight < 800) {
-        DocId("FirstButtons").style.display = 'block';
-        DocId("SecondButtons").style.display = 'none';
-        DocId("MoreButtons").style.display = 'inline-block';
-        DocId("LessButtons").style.display = 'inline-block';
-    } else {
-        DocId("SecondButtons").style.display = 'block';
-        DocId("FirstButtons").style.display = 'block';
-        DocId("MoreButtons").style.display = 'none';
-        DocId("LessButtons").style.display = 'none';
     }
     if (!Settings.hasOwnProperty("MaxLimbs")) {
         Settings.MaxLimbs = {
@@ -189,26 +174,6 @@ function CheckFlags() {
             console.log("Added house portal owned false");
         }
     }
-    if (window.innerHeight < 600) {
-        DocId("FirstButtons").style.display = 'none';
-        DocId("SecondButtons").style.display = 'none';
-        DocId("MoreButtons").style.display = 'inline-block';
-        DocId("LessButtons").style.display = 'inline-block';
-        DocId("MobileButtons").style.display = 'inline-block';
-    } else if (window.innerHeight < 800) {
-        DocId("FirstButtons").style.display = 'block';
-        DocId("SecondButtons").style.display = 'none';
-        DocId("MoreButtons").style.display = 'inline-block';
-        DocId("LessButtons").style.display = 'inline-block';
-        DocId("MobileButtons").style.display = 'none';
-    } else {
-        DocId("SecondButtons").style.display = 'block';
-        DocId("FirstButtons").style.display = 'block';
-        DocId("MoreButtons").style.display = 'none';
-        DocId("LessButtons").style.display = 'none';
-        DocId("MobileButtons").style.display = 'none';
-    }
-
     if (!player.hasOwnProperty("Blessings")) {
         player.Blessings.MountainShrine = {
             Points: 0,
@@ -316,6 +281,7 @@ function CheckFlags() {
         player.Inventory.push(ItemDict.SpellBook);
     }
     HemScale();
+    StatusButtonSystem();
 };
 // Hopefully obselite
 /**

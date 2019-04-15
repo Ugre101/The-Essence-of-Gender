@@ -95,7 +95,7 @@ function CurrentMap() {
         //Outlaw
         BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 4, grid * 6, grid * 4, "RGB(133,94,66)"),
         // Dungeons
-        FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)"),
+        SuccubusDungeon = new Npc("SuccubusDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)"),
         // Farm
         FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)"),
         FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)"),
@@ -231,7 +231,7 @@ function CurrentMap() {
                     if (enemies.length < 1) {
                         enemies = [EncounterCave4(), EncounterCave4(), EncounterCave4(), EncounterCave4()]
                     }
-                    Npcs = [FirstDungeon];
+                    Npcs = [SuccubusDungeon];
                     break;
             }
             break;

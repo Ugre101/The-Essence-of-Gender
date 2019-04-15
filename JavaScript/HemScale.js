@@ -1,24 +1,5 @@
     // Makes sure map scales correctly when user change screen size.
     function HemScale() {
-        if (window.innerHeight < 500) {
-            DocId("FirstButtons").style.display = 'none';
-            DocId("SecondButtons").style.display = 'none';
-            DocId("MoreButtons").style.display = 'inline-block';
-            DocId("LessButtons").style.display = 'inline-block';
-            DocId("MobileButtons").style.display = 'inline-block';
-        } else if (window.innerHeight < 850) {
-            DocId("FirstButtons").style.display = 'block';
-            DocId("SecondButtons").style.display = 'none';
-            DocId("MoreButtons").style.display = 'inline-block';
-            DocId("LessButtons").style.display = 'inline-block';
-            DocId("MobileButtons").style.display = 'none';
-        } else {
-            DocId("SecondButtons").style.display = 'block';
-            DocId("FirstButtons").style.display = 'block';
-            DocId("MoreButtons").style.display = 'none';
-            DocId("LessButtons").style.display = 'none';
-            DocId("MobileButtons").style.display = 'none';
-        }
         const startarea = DocId("hem"),
             OldMap = medium;
         medium = Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20;

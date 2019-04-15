@@ -1,57 +1,82 @@
 // Start Farm
-DocId("EquineTaurTF").addEventListener("click", function () {
-    if (player.Gold >= 250) {
-        player.Gold -= 250;
-        PotionDrunk("centaur")
-        //TfEngine("centaur");
-    } else {
-        DocId("FarmOwnerText").innerHTML = "Insufficient gold.";
-        return;
-    }
-});
-DocId("FarmTitles").addEventListener("mouseover", function (e) {
-    DocId("FarmOwnerText").innerHTML = e.target.title;
-});
-DocId("EquineTF").addEventListener("click", function () {
-    if (player.Gold >= 250) {
-        player.Gold -= 250;
-        PotionDrunk("equine");
-    } else {
-        DocId("FarmOwnerText").innerHTML = "Insufficient gold.";
-        return;
-    }
-});
-DocId("FarmOwnerLooks").addEventListener("click", function () {
-    DocId("FarmOwnerText").innerHTML = "Standing before you, a centaur who introduce himself as Teoivz, looking at him it’s evident he spends many hours working on the farm. His human upper body possess muscle forged from years of work, " +
-        "his equine lower body is not one from a race horse but a work horse.<br>Throwing an eye towards his genitals, it’s	hard to guess the exact size his two members retracted inside their penile sheath but it's obvious that they are well capable of stretching a maiden."
-});
-// End FarmOwner
+function FarmOwnerFunc() {
+    const Npc = document.getElementById("Npcs")
+    CleanNpcs(); // Empties div
+    const div = document.createElement("div");
+    div.addEventListener("mouseover", function (e) {
+        p.innerHTML = e.target.title;
+    });
 
-// The FarmBarn
-
-/*DocId("InfinityMilker").addEventListener("click", function () {
-    if (player.Gold >= 7000) {
-        player.Gold -= 7000;
-        SnowInventoryAdd(ItemDict.Milker, Infinity);
-        // Add milker
-    } else {
-        // You can't afford 
+    if (window.innerHeight > 600) { // No title on small screen
+        Npc.appendChild(TitleText("Title"));
     }
-});*/
+
+    const p = TextBox();
+    Npc.appendChild(p);
+
+    const wip = ButtonButton("(Placeholder)Need help?");
+
+    const EquineTaurTF = ButtonButton("Equine-Taur Essence 250g", `Do you lack endurance? Want to able to work 
+    like a horse? One dose of this and you will turn to a taur hybrid of equine and you current race.`)
+    EquineTaurTF.addEventListener("click", function () {
+        if (player.Gold >= 250) {
+            player.Gold -= 250;
+            PotionDrunk("centaur");
+            return;
+            //TfEngine("centaur");
+        } else {
+            p.innerHTML = "Insufficient gold.";
+            return;
+        }
+    });
+    div.appendChild(EquineTaurTF);
+
+    const EquineTF = ButtonButton("Equine Essence 250g", `Want more lower body strength? Lucky for you this essence 
+    will make you to the mare or stallion of your dreams! One dose will turn your lower body to a set of humanoid 
+    equine legs while two doses will turn you to a anthropomorphic equine.`)
+    EquineTF.addEventListener("click", function () {
+        if (player.Gold >= 250) {
+            player.Gold -= 250;
+            PotionDrunk("equine");
+        } else {
+            p.innerHTML = "Insufficient gold.";
+            return;
+        }
+    });
+    div.appendChild(EquineTF);
+
+    const wip2 = ButtonButton("(Placeholder)Bovine Essence");
+
+    const Looks = ButtonButton("Looks");
+    Looks.addEventListener("click", function () {
+        p.innerHTML = `Standing before you, a centaur who introduce himself as Teoivz, looking at him it’s evident 
+        he spends many hours working on the farm. His human upper body possess muscle forged from years of work, 
+        his equine lower body is not one from a race horse but a work horse.<br>Throwing an eye towards his 
+        genitals, it’s	hard to guess the exact size his two members retracted inside their penile sheath but it's 
+        obvious that they are well capable of stretching a maiden.`
+    });
+    Looks.addEventListener("mouseover", function () {
+
+    });
+    Npc.appendChild(div);
+    Npc.appendChild(Looks);
+    Npc.appendChild(LeaveNpc());
+    Npc.style.display = 'block';
+};
 
 function FarmBarnFunc() {
-    var Buildings = DocId("Buildings")
+    const Buildings = DocId("Buildings")
     CleanBuildings();
-    var div = document.createElement("div");
+    const div = document.createElement("div");
 
     if (window.innerHeight > 600) { // No title on small screen
         div.appendChild(TitleText("Barn"));
     }
 
-    var p = TextBox();
+    const p = TextBox();
     div.appendChild(p);
 
-    var input1 = ButtonButton("Milker500 499g", "Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away? Buy today; a portable milker!");
+    const input1 = ButtonButton("Milker500 499g", "Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away? Buy today; a portable milker!");
     input1.addEventListener("click", function () {
         if (player.Gold >= 499) {
             player.Gold -= 499;
@@ -66,7 +91,7 @@ function FarmBarnFunc() {
     });
     div.appendChild(input1);
 
-    var input2 = ButtonButton("Milk booster 30g", "Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?! Well, this is for your humble (or crazy) needs!")
+    const input2 = ButtonButton("Milk booster 30g", "Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?! Well, this is for your humble (or crazy) needs!")
     input2.addEventListener("click", function () {
         if (player.Gold >= 30) {
             player.Gold -= 30;
@@ -86,7 +111,7 @@ function FarmBarnFunc() {
     });
     div.appendChild(input2);
 
-    var input3 = ButtonButton("Milk stopper 50g", "Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.' #Note this does not affect lacation rate from pregnancy.")
+    const input3 = ButtonButton("Milk stopper 50g", "Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.' #Note this does not affect lacation rate from pregnancy.")
     input3.addEventListener("click", function () {
         // Lower milkrate
         // if no breast have milkrate stop
@@ -116,11 +141,11 @@ function FarmBarnFunc() {
     div.appendChild(input3);
 
     if (false) { // TODO
-        var DrinkFresh = ButtonButton("Drink fresh milk", "It's not yours. You think.");
+        const DrinkFresh = ButtonButton("Drink fresh milk", "It's not yours. You think.");
         DrinkFresh.addEventListener("click", function () {
             // Drink milk Maybe fuck a bovine furry? 
             // Get healed + temp boost to hp & will stronger than bar meal
-            var a = RandomInt(1, 20);
+            const a = RandomInt(1, 20);
             if (a > 15) {
                 if (player.Int > 20) {
                     if (false) {
@@ -133,18 +158,18 @@ function FarmBarnFunc() {
                 }
             }
         })
-        var GetMilked = ButtonButton("Get milked", "Mooooooooooooo!");
+        const GetMilked = ButtonButton("Get milked", "Mooooooooooooo!");
         GetMilked.addEventListener("click", function () {
             // Sell milk(maybe cum to?), this can trigger a event where farmowner tries to fuck you
             // depenent on your stats you can turn it around or get away, if your stats are to weak you get fucked.
-            var MilkTotal = 0;
-            for (var e of player.Boobies) {
+            const MilkTotal = 0;
+            for (const e of player.Boobies) {
                 MilkTotal += e.Milk * 0.9;
                 e.Milk = e.Milk * 0.1;
             }
             if (MilkTotal > 0) {
                 if (MilkTotal > 10) {
-                    var a = RandomInt(1, 20);
+                    const a = RandomInt(1, 20);
                     if (a > 10) {
                         // if (Flags.Bovine) {};
                     }

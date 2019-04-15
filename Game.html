@@ -232,7 +232,7 @@
 	<div id="status" class="left None status">
 		<input type="button" id="FullScreen" value="F" class="SmolButton" title="Change to fullscreen/windowed" />
 		<div id="Date">
-			<p>Date: <time id="CurrentDate"></time></p>
+			<p id="DateContainer"><time id="CurrentDate"></time></p>
 		</div>
 		<p id="StatusName"></p>
 		<label for="StatusHealth">Health</label>
@@ -497,14 +497,14 @@
 
 			<input type="button" id="LeaveVorePerkMenu" value="Done">
 		</div>
-		<br>
 		<div id="VoreSettingsMenu" class="None">
 			<input type="button" id="AbsorbEssenceSetting" value="Absorb Essence Both" />
 			<!--<input type="button" id="PlayerPrey" value="(not in game)Player prey true/false" />-->
 		</div>
-		<br><br>
-		<input type="button" id="VoreSettings" value="Settings" />
-		<input type="button" id="LeaveVore" value="Close">
+		<div>
+			<input type="button" id="VoreSettings" value="Settings" />
+			<input type="button" id="LeaveVore" value="Close">
+		</div>
 	</div>
 
 	<div id="Encounter" class="None">
@@ -750,37 +750,6 @@
 		</div>
 	</div>
 
-
-	<!-- Witch&Gym-->
-	<div id="WitchShop" class="Building None">
-		<h1>Witchs store</h1>
-		<p id="WitchShopText" class="TextBox"></p>
-		<div>
-			<input type="button" id="Grow" value="Grow 50g" title="Can't reach the top shelf? Get taller today!" />
-			<input type="button" id="Shrink" value="Shrink 50g"
-				title="Hitting your head on ceilings and doorframes? Shrink today!" />
-		</div>
-		<div>
-			<input type="button" id="FertilityAdd" value="Fertility booster 30g"
-				title="Is it hard to become pregnant? Fear not! We have the product for you!" />
-			<input type="button" id="FertilitySub" value="Fertility subtractor 70g"
-				title="Tired of getting knocked up by a bunch of deadbeat fathers? We have the product to turn your fertile nethers into a barren wasteland! " />
-		</div>
-		<div>
-			<input type="button" id="VirilityAdd" value="Virility booster 70g"
-				title="Do you feel like you don't have enough children? Don't worry! With our virility booster you can be sure that you will get enough successors!" />
-			<input type="button" id="VirilitySub" value="Virility subtractor 30g"
-				title="Do you have nightmares that future partners will demand child support? Do you want to live a child-free life? Well then, look no further!" />
-		</div>
-		<div>
-			<input type="button" id="CumRateAdd" value="Cum booster 100g"
-				title="Do you shoot blanks? Say no more! With our cum booster, your balls will refill at a healthy rate. Warning: over-dosing can lead to spontaneous ejaculation." />
-			<input type="button" id="CumRateSub" value="Cum dropper 20g"
-				title="Do your balls overfill and you spontaneously ejaculate in your pants? Don't worry about it! This will dry up your balls. Warning: over-dosing can lead to impotence." />
-		</div>
-
-		<br><input type="button" id="LeaveWitchShop" value="Leave" />
-	</div>
 	<div id="ChimeraShrine" class="Building None">
 		<p id="ChimeraShrineText" class="TextBox"></p>
 		<input type="button" id="SacRaceEss" value="Sacrifice race essence" />
@@ -804,32 +773,7 @@
 		<input type="button" id="LeaveTemp_Tempsson" value="Close" />
 	</div>
 
-	<div id="FarmOwner" class="None Building">
-		<p id="FarmOwnerText" class="TextBox"></p>
-		<div id="FarmTitles">
-			<input type="button" id="" value="(Placeholder)Need help?" />
-			<input type="button" id="EquineTaurTF" value="Buy Equine-Taur Essence"
-				title="Do you lack endurance? Want to able to work like a horse? One dose of this and you will turn to a taur hybrid of equine and you current race." />
-			<input type="button" id="EquineTF" value="Buy Equine Essence"
-				title="Want more lower body strength? Lucky for you this essence will make you to the mare or stallion of your dreams! One dose will turn your lower body to a set of humanoid equine legs while two doses will turn you to a anthropomorphic equine." />
-			<input type="button" id="" value="(Placeholder)Bovine Essence" />
-		</div>
-		<br><br>
-		<input type="button" id="FarmOwnerLooks" value="Looks" />
-		<input type="button" id="LeaveFarmOwner" value="Bye" />
-	</div>
-
-	<div id="FirstDungeon" class="None Building">
-		<p id="FirstDungeonText" class="TextBox"></p>
-		<input type="button" id="LeaveFirstDungeon" value="Leave" />
-		<input type="button" id="EnterDungeon" value="Go deeper" />
-	</div>
-
-	<div id="DungeonSystem" class="None Building">
-		<p id="DungeonText" class="TextBox"></p>
-		<div id="DungeonButtons"></div>
-		<input type="button" id="LeaveDungeon" value="Turn back" />
-	</div>
+	<div id="DungeonSystem" class="None Dungeon"></div>
 
 	<!-- Fertility shrine, pay with times you been pregnant and times you impregnated, 
 		your pregnancies are worth more -->
@@ -837,11 +781,15 @@
 		A single div which I change in js instead of html so that I can have them more modular and 
 		stop have so many active addeventlistners 
 	-->
-	<div id="Buildings" class="Building None"></div>
+	<div id="Buildings" class="Building None">
+
+	</div>
 	<!--
 		Seperate buildings and npcs as I want to add stuff like affection etc in future
 	-->
-	<div id="Npcs" class="Building None"></div>
+	<div id="Npcs" class="Building None">
+
+	</div>
 	<script src="Combined.js"></script>
 	<script src="imgPack/ImgPackArrays.js"></script>
 	<!--	<script src="JavaScript/NewGamePlus.js"></script>-->

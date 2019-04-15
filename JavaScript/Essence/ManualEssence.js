@@ -14,7 +14,7 @@ function EssenceExtraCost(what) {
 DocId("EssenceAuto").addEventListener("click", function () {
     Settings.EssenceAuto = Settings.EssenceAuto ? false : true;
     DocId("EssenceAuto").value = Settings.EssenceAuto ? "Essence Auto" : "Essence Manual";
-        // Settings.BalanceParts = false;
+    // Settings.BalanceParts = false;
 });
 
 DocId("GrowBalls").addEventListener("click", function () {
@@ -44,7 +44,7 @@ function BreastButtons() {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
 
-    var Extraboobs = InputButton("Extra breasts " + EssenceExtraCost(player.Boobies) + "F");
+    var Extraboobs = InputButton(`Extra breasts ${EssenceExtraCost(player.Boobies)}F`);
     Extraboobs.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Boobies);
         if (player.Femi >= cost) {
@@ -71,9 +71,7 @@ function BreastButtons() {
 }
 
 function BreastButton(e) {
-    var boob = document.createElement("button");
-    boob.setAttribute("type", "button");
-    boob.innerHTML = BoobSizeConvertor(e.Size) + " " + EssenceCost(e) + "Feminity";
+    var boob = ButtonButton(`${BoobSizeConvertor(e.Size)} ${EssenceCost(e)}Feminity`)
     boob.addEventListener("click", function () {
         var cost = EssenceCost(e);
         if (player.Femi >= cost) {
@@ -92,7 +90,7 @@ function PussyButtons() {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
 
-    var ExtraPussy = InputButton("Extra pussy " + EssenceExtraCost(player.Pussies) + "F");
+    var ExtraPussy = InputButton(`Extra pussy ${EssenceExtraCost(player.Pussies)}F`);
     ExtraPussy.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Pussies);
         if (player.Femi >= cost) {
@@ -115,9 +113,7 @@ function PussyButtons() {
 }
 
 function PussyButton(e) {
-    var pussy = document.createElement("button");
-    pussy.setAttribute("type", "button");
-    pussy.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Feminity";
+    var pussy = ButtonButton(`${CmToInch(e.Size)} ${EssenceCost(e)}Feminity`)
     pussy.addEventListener("click", function () {
         var cost = EssenceCost(e);
         if (player.Femi >= cost) {
@@ -135,7 +131,7 @@ function DickButtons() {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
 
-    var ExtraDick = InputButton("Extra dick " + EssenceExtraCost(player.Dicks) + "M");
+    var ExtraDick = InputButton(`Extra dick ${EssenceExtraCost(player.Dicks)}M`);
     ExtraDick.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Dicks);
         if (player.Masc >= cost) {
@@ -158,9 +154,7 @@ function DickButtons() {
 }
 
 function DickButton(e) {
-    var Dick = document.createElement("button");
-    Dick.setAttribute("type", "button");
-    Dick.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Masculinity";
+    var Dick = ButtonButton(`${CmToInch(e.Size)} ${EssenceCost(e)}Masculinity`);
     Dick.addEventListener("click", function () {
         var cost = EssenceCost(e);
         if (player.Masc >= cost) {
@@ -177,7 +171,7 @@ function BallsButtons() {
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
-    var ExtraBall = InputButton("Extra Balls " + EssenceExtraCost(player.Balls) + "M");
+    var ExtraBall = InputButton(`Extra Balls ${EssenceExtraCost(player.Balls)}M`);
     ExtraBall.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Balls);
         if (player.Masc >= cost) {
@@ -203,9 +197,7 @@ function BallsButtons() {
 }
 
 function BallsButton(e) {
-    var Ball = document.createElement("button");
-    Ball.setAttribute("type", "button");
-    Ball.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Masculinity";
+    var Ball = ButtonButton(`${CmToInch(e.Size)} ${EssenceCost(e)}Masculinity`)
     Ball.addEventListener("click", function () {
         var cost = EssenceCost(e);
         if (player.Masc >= cost) {

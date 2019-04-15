@@ -20,22 +20,19 @@ DocId("MobileButtons").addEventListener("click", function () {
     }
 });
 
-window.onload = function () {
-    if (window.innerHeight < 500) {
+function StatusButtonSystem() {
+    if (window.innerHeight < 400) {
         DocId("FirstButtons").style.display = 'none';
         DocId("SecondButtons").style.display = 'none';
         DocId("MoreButtons").style.display = 'inline-block';
         DocId("LessButtons").style.display = 'inline-block';
         DocId("MobileButtons").style.display = 'inline-block';
-        document.body.style.fontSize = Settings.FontSize + "em";
-        HemScale();
     } else if (window.innerHeight < 800) {
         DocId("FirstButtons").style.display = 'block';
         DocId("SecondButtons").style.display = 'none';
         DocId("MoreButtons").style.display = 'inline-block';
         DocId("LessButtons").style.display = 'inline-block';
         DocId("MobileButtons").style.display = 'none';
-        document.body.style.fontSize = Settings.FontSize + "em";
     } else {
         DocId("SecondButtons").style.display = 'block';
         DocId("FirstButtons").style.display = 'block';
@@ -43,4 +40,4 @@ window.onload = function () {
         DocId("LessButtons").style.display = 'none';
         DocId("MobileButtons").style.display = 'none';
     }
-};
+}

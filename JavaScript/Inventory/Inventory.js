@@ -75,55 +75,53 @@ function Items2() {
 }
 
 function InventoryThing(e, b) {
-    var item = document.createElement("div");
+    const item = document.createElement("div");
     item.setAttribute("title", b.Title)
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.innerHTML = b.Name
     if (typeof e.Quantity === "number") {
-        p.innerHTML += " (" + e.Quantity + ")"
+        p.innerHTML += ` (${e.Quantity})`
     }
     item.appendChild(p);
 
     if (typeof b.Use === "function") {
-        var use = InputButton("Use");
+        const use = InputButton("Use");
         use.addEventListener("click", function () {
             DocId("InventoryText").innerHTML = b.Use(player, e);
             if (typeof e.Quantity === "number") {
                 e.Quantity--;
                 if (e.Quantity <= 0) {
-                    var index = player.Inventory.findIndex(a => a.Name === e.Name);
+                    const index = player.Inventory.findIndex(a => a.Name === e.Name);
                     player.Inventory.splice(index, 1);
                 }
             }
             Items2();
-
         });
         item.appendChild(use)
     }
     if (typeof b.Equip === "function") {
-        var Equip = InputButton("Equip");
+        const Equip = InputButton("Equip");
         Equip.addEventListener("click", function () {
             b.Equip();
             if (typeof e.Quantity === "number") {
                 e.Quantity--;
                 if (e.Quantity <= 0) {
-                    var index = player.Inventory.findIndex(a => a.Name === e.Name);
+                    const index = player.Inventory.findIndex(a => a.Name === e.Name);
                     player.Inventory.splice(index, 1);
                 }
             }
             Items2();
-
         });
         item.appendChild(Equip)
     }
     if (b.Drop === true) {
-        var drop = InputButton("Drop");
+        const drop = InputButton("Drop");
         drop.addEventListener("click", function () {
             if (typeof e.Quantity === "number") {
                 e.Quantity--;
                 if (e.Quantity <= 0) {
-                    var index = player.Inventory.findIndex(a => a.Name === e.Name);
+                    const index = player.Inventory.findIndex(a => a.Name === e.Name);
                     player.Inventory.splice(index, 1);
                 }
             }

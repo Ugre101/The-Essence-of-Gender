@@ -1,14 +1,8 @@
 function SnowInventoryAdd(item, quantity = 1) {
-    var i = 0;
-    for (i = 0; i < player.Inventory.length; i++) {
-        var q = false;
-        if (player.Inventory[i].Name === item.Name) {
-            player.Inventory[i].Quantity += quantity;
-            q = true;
-            break;
-        }
-    }
-    if (!q) {
+    if (player.Inventory.some(i => i.Name === item.Name)) {
+        const index = player.Inventory.findIndex(a => a.Name === item.Name);
+        player.Inventory[index].Quantity += quantity
+    } else {
         item.Quantity = quantity;
         player.Inventory.push(item);
     }

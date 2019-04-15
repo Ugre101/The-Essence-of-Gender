@@ -317,7 +317,7 @@ var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.M
 // Start page
 DocId("GoToCharCreator").addEventListener("click", function () {
     CharCreator();
-    DocId("CharCreator").style.display = 'flex';
+    DocId("CharCreator").style.display = 'block';
     DocId("StartPage").style.display = 'none';
 });
 
@@ -340,17 +340,30 @@ function CharCreator() { // No need have these active for players who use load.
     function begin() {
         const form = document.forms.CreatePlayer.elements;
         CharCreator.style.display = 'none';
-        page2.style.display = 'flex';
+        page2.style.display = 'block';
         player.Name = form[0].value;
         player.LastName = form[1].value;
         // Will remove hair and skincolor later, as I want customize player to be a part of the game.
         player.Face.HairColor = form[2].value;
         player.Skincolor = form[3].value;
         player.Spells.push(SpellDictLite.MinorHealing);
-        DocId("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
-        DocId("looks").innerHTML = "You are  " + player.Name + " " + player.LastName + ", a " + Math.round(player.Height) + "cm tall " + Pronoun(CheckGender(player)) +
-            ", who weighs " + KgToPound(player.Weight) + ". Looking at yourself in a mirror you see " + player.Face.HairColor + " hair and " + player.Skincolor +
-            " skin; hopefully the last time you see your body absent of any other details or personality.<br><br>For today, you will forge your own way in this world.";
+        const {
+            Day,
+            Month,
+            Year
+        } = Flags.Date, {
+            Name,
+            LastName,
+            Height,
+            Weight,
+            Skincolor,
+            Face
+        } = player
+        DocId("CurrentDate").innerHTML = `${Day}/${Month}/${Year}`;
+        DocId("looks").innerHTML = `You are ${Name} ${LastName}, a ${Math.round(Height)} cm tall 
+        ${Pronoun(CheckGender(player))}, who weighs ${KgToPound(Weight)}. Looking at yourself in a mirror you see 
+        ${Face.HairColor} hair and ${Skincolor} skin; hopefully the last time you see your body absent of any 
+        other details or personality.<br><br>For today, you will forge your own way in this world.`;
 
         requestAnimationFrame(loop);
         DateEngine();
@@ -363,11 +376,8 @@ function CharCreator() { // No need have these active for players who use load.
     };
 
     function StartAutoEssence() {
-        Settings.EssenceAuto = !Settings.EssenceAuto;
-        StartAutoEssenceButton.value = "Auto TF " + Settings.EssenceAuto;
-        if (Settings.BalanceParts) {
-            Settings.BalanceParts = false;
-        }
+        Settings.EssenceAuto = Settings.EssenceAuto ? false : true;
+        StartAutoEssenceButton.value = `Auto TF ${Settings.EssenceAuto}`;
     };
 
     function startgame() {
@@ -375,6 +385,7 @@ function CharCreator() { // No need have these active for players who use load.
         DisplayGame();
         HemScale();
         RemoveListerners();
+        StatusButtonSystem();
     };
 
     function VoreStart() {
@@ -436,14 +447,38 @@ DocId("LessButtons").addEventListener("click", function () {
 
 DocId("Quests").addEventListener("click", function () {
     DisplayNone();
+    const Quest = DocId("QuestTexts"),
+        questText = document.createDocumentFragment();
     DocId("ShowQuests").style.display = 'block';
 
-    let questText = " ";
+    while (Quest.hasChildNodes()) {
+        Quest.removeChild(Quest.lastChild);
+    };
+
     for (let e of player.Quests) {
-        const Tier = e.hasOwnProperty("Tier") ? `<br>Tier: ${e.Tier}` + (e.Tier > 4 ? ` max` : ``) : ``;
-        questText += `<div><h4>${e.Name}</h4>Completed: ${e.Completed} <br>Count:  ${e.Count} ${Tier} <br><br></div>`;
+        const div = document.createElement("div"),
+            h4 = document.createElement("h4"),
+            p = document.createElement("p"),
+            h4text = document.createTextNode(e.Name),
+            Tier = e.hasOwnProperty("Tier") ? `<br>Tier: ${e.Tier}` + (e.Tier > 4 ? ` max` : ``) : ``;
+        h4.appendChild(h4text);
+        div.appendChild(h4);
+        p.innerHTML = `Completed: ${e.Completed} <br>Count:  ${e.Count} ${Tier} <br><br>`;
+        div.appendChild(p);
+
+        if (window.innerHeight > 500) {
+            const LoveQuests = ["Get Impregnated", "Impregnate maidens"],
+                FightQuests = ["ElfHunt", "BanditLord"];
+            if (LoveQuests.findIndex(i => i === e.Name) > -1) {
+                div.classList.add("LoverQuest");
+            } else if (FightQuests.findIndex(i => i === e.Name) > -1) {
+                div.classList.add("FightQuest");
+            };
+        };
+
+        questText.appendChild(div);
     }
-    DocId("QuestTexts").innerHTML = questText;
+    DocId("QuestTexts").appendChild(questText);
 });
 
 DocId("QuestsLeave").addEventListener("click", function () {
@@ -483,11 +518,11 @@ function CheckTitle(who) {
 function CheckGender(who) {
     if (who.Dicks.length > 0 && who.Pussies.length > 0) {
         return "hermaphrodite";
-    } else if (who.Dicks.length > 0 && Math.floor(who.Boobies.some(e => e.Size > 1))) {
+    } else if (who.Dicks.length > 0 && Math.floor(who.Boobies.some(e => e.Size > 2))) {
         return "dickgirl";
     } else if (who.Dicks.length > 0) {
         return "male";
-    } else if (who.Pussies.length > 0 && who.Boobies.some(e => e.Size < 1)) { // Check all rows of boobs
+    } else if (who.Pussies.length > 0 && who.Boobies.some(e => e.Size < 2)) { // Check all rows of boobs
         return "cuntboy";
     } else if (who.Pussies.length > 0) {
         return "female";
@@ -719,7 +754,7 @@ function loop() {
     DocId("StatusName").innerHTML = player.Name + " " + player.LastName;
     HealthWillBars();
     DocId("StatusLevel").innerHTML = player.level;
-    DocId("Gold").innerHTML = "Gold: " + Math.floor(player.Gold);
+    DocId("Gold").innerHTML = Math.floor(player.Gold);
     DocId("Hunger").innerHTML = (player.Fat <= player.Height / 100) ? "You are starving" : null
     DocId("EssenceTracker").innerHTML = `Masculinity: ${Math.round(player.Masc)} and Femininity: ${Math.round(player.Femi)}`;
     DocId("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none'
@@ -733,6 +768,7 @@ function loop() {
 
         if (Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20 !== medium) {
             HemScale();
+            StatusButtonSystem();
         };
         CurrentMap();
         (enemies.length > 0) ? PrintEnemies(): false;
@@ -744,7 +780,7 @@ function loop() {
         }
     }
     if (!battle) {
-        Settings.Vore ? VoreEngine() : false; // However it does shrink the size of code quite a lot... idk
+        //Settings.Vore ? VoreEngine() : false; //Should move this to datetracker
         Settings.Cheats.Enabled ? CheatEngine() : false;
         Laglimiter++;
         if (Laglimiter % 80 == 0) {
@@ -796,19 +832,13 @@ function DocId(id) { // Important Prototype.js must be loaded before where you w
  */
 function BarFunc() {
     const Buildings = document.getElementById("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
-    const div = document.createElement("div"),
-        h1 = document.createElement("h1"),
-        h1text = document.createTextNode("Local bar");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    CleanBuildings()
+    const div = document.createElement("div");
+    div.appendChild(TitleText("Local bar"));
 
-    const p = document.createElement("p");
+    const p = TextBox();
     p.innerHTML = "The local tavern is small and cozy, quite calm for being a tavern but not that" +
         "surprising given the small number of patrons. The smell from the kitchen is very appetizing, maybe you should buy a meal?"
-    p.classList.add("TextBox");
     div.appendChild(p);
 
     const ShopMenu = document.createElement("div");
@@ -816,14 +846,17 @@ function BarFunc() {
         p.innerHTML = e.target.title;
     })
 
-    const input1 = new InputButton("Rest 5g", "Spend the night to recover health and will")
+    const input1 = ButtonButton("Rest 5g", "Spend the night to recover health and will")
     input1.addEventListener("click", function () {
-        if (player.Gold >= 5 && (player.Health < player.MaxHealth || player.WillHealth < player.MaxWillHealth)) {
+        if (player.Gold >= 5) {
             player.Gold -= 5;
             player.Health = player.MaxHealth;
             player.WillHealth = player.MaxWillHealth;
-            Flags.Date.Day++;
-            document.getElementById("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+            battle = false; // A bit overkill but whatever.
+            GamePaused = true;
+            for (let e = 0; e < 8; e++) {
+                DateTracker();
+            }
             return;
         } else {
             return;
@@ -831,7 +864,7 @@ function BarFunc() {
     });
     ShopMenu.appendChild(input1);
 
-    const input2 = new InputButton("Medium meal 10g", "+2kg fat")
+    const input2 = ButtonButton("Medium meal 10g", "+2kg fat")
     input2.addEventListener("click", function () {
         if (player.Gold > 10) {
             player.Fat += 2;
@@ -852,7 +885,7 @@ function BarFunc() {
     ShopMenu.appendChild(input2);
     ShopMenu.appendChild(document.createElement("br"));
 
-    const input3 = new InputButton("Large meal 30g", "+4kg fat");
+    const input3 = ButtonButton("Large meal 30g", "+4kg fat");
     input3.addEventListener("click", function () {
         if (player.Gold > 30) {
             player.Fat += 4;
@@ -872,7 +905,7 @@ function BarFunc() {
     });
     ShopMenu.appendChild(input3);
 
-    const input4 = new InputButton("Buffet 50g", "+8kg fat");
+    const input4 = ButtonButton("Buffet 50g", "+8kg fat");
     input4.addEventListener("click", function () {
         if (player.Gold > 10) {
             player.Fat += 8;
@@ -898,17 +931,11 @@ function BarFunc() {
 }
 function BarberFunc() {
     const Buildings = document.getElementById("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
-    const div = document.createElement("div"),
-        h1 = document.createElement("h1"),
-        h1text = document.createTextNode("Barber");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    CleanBuildings();
+    const div = document.createElement("div");
+    div.appendChild(TitleText("Barber"));
 
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     div.appendChild(p);
 
     const DyeCon = document.createElement("div"),
@@ -940,9 +967,7 @@ function BarberFunc() {
         })
         return cut;
     }
-    const input1 = document.createElement("input");
-    input1.setAttribute("type", "button");
-    input1.setAttribute("value", "Dye");
+    const input1 = ButtonButton("Dye");
     input1.addEventListener("click", function () {
         if (DyeCon.hasChildNodes()) {
             while (DyeCon.hasChildNodes()) {
@@ -963,9 +988,7 @@ function BarberFunc() {
     });
     div.appendChild(input1);
 
-    const input2 = document.createElement("input");
-    input2.setAttribute("type", "button");
-    input2.setAttribute("value", "Cut");
+    const input2 = document.ButtonButton("Cut");
     input2.addEventListener("click", function () {
         if (CutCon.hasChildNodes()) {
             while (CutCon.hasChildNodes()) {
@@ -1000,27 +1023,19 @@ function BarberFunc() {
 function BlackMarketFunc() {
     const Buildings = document.getElementById("Buildings"),
         MainFrag = document.createDocumentFragment(),
-        p = document.createElement("p"),
-        input1 = InputButton("Sell limbs"),
+        p = TextBox(),
+        input1 = ButtonButton("Sell limbs"),
         limbcon = document.createElement("div"),
         PESS = document.createElement("p"),
-        input2 = InputButton("Sell 50 femininity 100g"),
-        input3 = InputButton("Sell 50 masculinity 100g"),
-        input4 = InputButton("Why can't I buy?", "I see a plenty signs here of what you are buying, but I see nothing about what I can buy?"),
+        input2 = ButtonButton("Sell 50 femininity 100g"),
+        input3 = ButtonButton("Sell 50 masculinity 100g"),
+        input4 = ButtonButton("Why can't I buy?", "I see a plenty signs here of what you are buying, but I see nothing about what I can buy?"),
         Content = [p, input1, limbcon, PESS, input2, input3, input4, LeaveBuilding()];
 
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
-
+    CleanBuildings();
     if (window.innerHeight > 200) { // No title on small screen
-        const h1 = document.createElement("h1"),
-            h1text = document.createTextNode("Black Market");
-        h1.appendChild(h1text);
-        Content.unshift(h1);
+        Content.unshift(TitleText("Black Market"));
     }
-
-    p.classList.add("TextBox");
 
     input1.addEventListener("click", function () {
         limbcon.classList.add("LimbSale")
@@ -1065,8 +1080,9 @@ function BlackMarketFunc() {
     });
 
     input4.addEventListener("click", function () {
-        p.innerHTML = `Yeah we are only buying essence here, you see we have a contract with guys in the capital where we can sell for a lot more to nobles.  Nobles you might ask aren’t they the ones who preach about how you should only have as much essence you can conquer!
-             The thing is though while they say trading essence are forbidden and for the weak, the rich don’t follow the rules they only pretend to in order to maintain their image.`
+        p.innerHTML = `Yeah we are only buying essence here, you see we have a contract with guys in the capital where we can sell for a lot more to nobles.  
+        Nobles you might ask aren’t they the ones who preach about how you should only have as much essence you can conquer! 
+        The thing is though while they say trading essence are forbidden and for the weak, the rich don’t follow the rules they only pretend to in order to maintain their image.`
     });
     input4.addEventListener("mouseover", function () {
         p.innerHTML = `I see a plenty signs here of what you are buying, but I see nothing about what I can buy?`
@@ -1085,23 +1101,23 @@ function BlackMarketFunc() {
         const Frag = document.createDocumentFragment(),
             H41 = document.createElement("h4"),
             H41Text = document.createTextNode("Sell sexual organs 30g/cm"),
-            label1 = document.createElement("label"),
+            label1 = LabelFor("SellDicks", "Dicks"),
             div1 = document.createElement("div"),
-            label2 = document.createElement("label"),
+            label2 = LabelFor("SellBalls", "Balls"),
             div2 = document.createElement("div"),
-            label3 = document.createElement("label"),
+            label3 = LabelFor("SellBreasts", "Breasts"),
             div3 = document.createElement("div"),
-            label4 = document.createElement("label"),
+            label4 = LabelFor("SellVaginas", "Vaginas"),
             div4 = document.createElement("div"),
             H42 = document.createElement("h4"),
             H42Text = document.createTextNode("Sell sexual organ size 25g/cm"),
-            label5 = document.createElement("label"),
+            label5 = LabelFor("SellDickSize", "Dick size"),
             div5 = document.createElement("div"),
-            label6 = document.createElement("label"),
+            label6 = LabelFor("SellBallSize", "Ball size"),
             div6 = document.createElement("div"),
-            label7 = document.createElement("label"),
+            label7 = LabelFor("SellBreastSize", "Breast size"),
             div7 = document.createElement("div"),
-            label8 = document.createElement("label"),
+            label8 = LabelFor("SellVaginaSize", "Vagina depth"),
             div8 = document.createElement("div"),
             SellLimbsCon = [H41, label1, div1, label2, div2, label3, div3, label4, div4,
                 H42, label5, div5, label6, div6, label7, div7, label8, div8
@@ -1111,10 +1127,8 @@ function BlackMarketFunc() {
         H42.appendChild(H42Text);
 
         div1.setAttribute("id", "SellDicks");
-        label1.setAttribute("for", "SellDicks");
-        label1.innerHTML = "Dicks";
         player.Dicks.forEach((e, i) => {
-            const inp = InputButton(e.Type + " dick " + CmToInch(e.Size));
+            const inp = ButtonButton(e.Type + " dick " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 player.Gold += e.Size * 30;
                 player.Dicks.splice(i, 1);
@@ -1124,10 +1138,8 @@ function BlackMarketFunc() {
         });
 
         div2.setAttribute("id", "SellBalls");
-        label2.setAttribute("for", "SellBalls");
-        label2.innerHTML = "Balls";
         player.Balls.forEach((e, i) => {
-            const inp = InputButton(e.Type + " balls " + CmToInch(e.Size));
+            const inp = ButtonButton(e.Type + " balls " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 player.Gold += e.Size * 30;
                 player.Balls.splice(i, 1);
@@ -1137,10 +1149,8 @@ function BlackMarketFunc() {
         });
 
         div3.setAttribute("id", "SellBreasts");
-        label3.setAttribute("for", "SellBreasts");
-        label3.innerHTML = "Breasts";
         player.Boobies.forEach((e, i) => {
-            const inp = InputButton(e.Type + " boobs " + CmToInch(e.Size));
+            const inp = ButtonButton(e.Type + " boobs " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 if (player.Boobies.length > 1) {
                     player.Gold += e.Size * 30;
@@ -1152,10 +1162,8 @@ function BlackMarketFunc() {
         });
 
         div4.setAttribute("id", "SellVaginas");
-        label4.setAttribute("for", "SellVaginas");
-        label4.innerHTML = "Vaginas";
         player.Pussies.forEach((e, i) => {
-            const inp = InputButton(e.Type + " vagina " + CmToInch(e.Size));
+            const inp = ButtonButton(e.Type + " vagina " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 player.Gold += e.Size * 30;
                 player.Pussies.splice(i, 1);
@@ -1165,10 +1173,8 @@ function BlackMarketFunc() {
         });
 
         div5.setAttribute("id", "SellDickSize");
-        label5.setAttribute("for", "SellDickSize");
-        label5.innerHTML = "Dick size";
-        player.Dicks.forEach((e, i) => {
-            const inp = InputButton(e.Type + " dick " + CmToInch(e.Size));
+        player.Dicks.forEach((e) => {
+            const inp = ButtonButton(e.Type + " dick " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
                 LimbSale();
@@ -1177,10 +1183,8 @@ function BlackMarketFunc() {
         });
 
         div6.setAttribute("id", "SellBallSize");
-        label6.setAttribute("for", "SellBallSize");
-        label6.innerHTML = "Ball size";
-        player.Balls.forEach((e, i) => {
-            const inp = InputButton(e.Type + " balls " + CmToInch(e.Size));
+        player.Balls.forEach((e) => {
+            const inp = ButtonButton(e.Type + " balls " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
                 LimbSale();
@@ -1189,10 +1193,8 @@ function BlackMarketFunc() {
         });
 
         div7.setAttribute("id", "SellBreastSize");
-        label7.setAttribute("for", "SellBreastSize");
-        label7.innerHTML = "Breast size";
-        player.Boobies.forEach((e, i) => {
-            const inp = InputButton(e.Type + " boobs " + CmToInch(e.Size));
+        player.Boobies.forEach((e) => {
+            const inp = ButtonButton(e.Type + " boobs " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
                 LimbSale();
@@ -1201,10 +1203,8 @@ function BlackMarketFunc() {
         });
 
         div8.setAttribute("id", "SellVaginaSize");
-        label8.setAttribute("for", "SellVaginaSize");
-        label8.innerHTML = "Vagina depth";
-        player.Pussies.forEach((e, i) => {
-            const inp = InputButton(e.Type + " vagina " + CmToInch(e.Size));
+        player.Pussies.forEach((e) => {
+            const inp = ButtonButton(e.Type + " vagina " + CmToInch(e.Size));
             inp.addEventListener("click", function () {
                 (e.Size - 1 < 1) ? e.Size = 1: player.Gold += 25, e.Size--;
                 LimbSale();
@@ -1228,57 +1228,49 @@ document.getElementById("SacRaceEss").addEventListener("click", function () {
     }
 });
 
-function SacRaces(amount = 50) {
+function SacRaces(parAmount = 50) {
+    const MaxValue = player.RaceEssence.length > 0 ? player.RaceEssence.map(ess => ess.amount).reduce((a,b) => Math.max(a,b)) : 0;
+    var DonateAmount = parAmount > MaxValue ? Math.round(MaxValue) : parAmount;
     const SacMenu = document.getElementById("SacRaceEssMenu"),
         SacFrag = document.createDocumentFragment();
     while (SacMenu.hasChildNodes()) {
         SacMenu.removeChild(SacMenu.firstChild);
     }
-
     const Sliderdiv = document.createElement("DIV"),
         SliderOut = document.createElement("P");
-    SliderOut.innerHTML = "Donate: " + amount;
+    SliderOut.innerHTML = `Donate: ${DonateAmount}`;
     Sliderdiv.appendChild(SliderOut);
-
-    const Slider = document.createElement("input");
-    Slider.setAttribute("type", "range");
-    Slider.min = 0;
-    Slider.max = 1000;
-    Slider.value = amount;
+    const Slider = MakeSlider(DonateAmount, MaxValue);
     Slider.oninput = function () {
-        SliderOut.innerHTML = "Donate: " + this.value;
-    }
-    Slider.onmouseup = function () {
-        SacRaces(this.value);
-    }
-    Slider.ontouchend = function () {
-        SacRaces(this.value);
+        DonateAmount = this.value;
+        SliderOut.innerHTML = `Donate: ${this.value}`;
     }
     Sliderdiv.appendChild(Slider);
     SacFrag.appendChild(Sliderdiv);
 
     const Condiv = document.createElement("DIV");
     Condiv.setAttribute("class", "TwoColumn");
-    const RaceEss = player.RaceEssence,
-        {
-            ChimeraShrine
-        } = player.Blessings;
-    for (let e = 0; e < player.RaceEssence.length; e++) {
-        const div = document.createElement("DIV"),
-            Race = InputButton(RaceEss[e].Race + " " + RaceEss[e].amount);
-        Race.addEventListener("click", function () {
-            if (amount > RaceEss[e].amount) {
-                ChimeraShrine.Donated += RaceEss[e].amount;
-                RaceEss.splice(e, 1);
-            } else {
-                ChimeraShrine.Donated += amount;
-                RaceEss[e].amount -= amount;
-            }
-            ChimeraShrine.Points = Math.floor(Math.sqrt(ChimeraShrine.Donated));
-            SacRaces(amount);
-        });
-        div.appendChild(Race)
-        Condiv.appendChild(div);
+    const {
+        ChimeraShrine
+    } = player.Blessings;
+    if (player.RaceEssence.length > 0) {
+        player.RaceEssence.forEach((ess, i) => {
+            div = document.createElement("DIV"),
+                RaceButton = ButtonButton(`${ess.Race} ${Math.round(ess.amount)}`);
+            RaceButton.addEventListener("click", function () {
+                if (DonateAmount > ess.amount) {
+                    ChimeraShrine.Donated += ess.amount;
+                    player.RaceEssence.splice(i, 1);
+                } else {
+                    ChimeraShrine.Donated += DonateAmount;
+                    ess.amount -= DonateAmount;
+                }
+                ChimeraShrine.Points = Math.floor(Math.sqrt(ChimeraShrine.Donated));
+                SacRaces(DonateAmount);
+            });
+            div.appendChild(RaceButton)
+            Condiv.appendChild(div);
+        })
     }
     SacFrag.appendChild(Condiv);
     SacMenu.appendChild(SacFrag);
@@ -1307,17 +1299,12 @@ var items = { // export to items.js when done!
 }
 function GymFunc() {
     const Buildings = document.getElementById("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
+    CleanBuildings();
+    const div = document.createElement("div");
+    if (window.innerHeight > 600) {
+        div.appendChild(TitleText("Gym"));
     }
-    const div = document.createElement("div"),
-        h1 = document.createElement("h1"),
-        h1text = document.createTextNode("Gym");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
-
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
 
     div.appendChild(p);
 
@@ -1328,7 +1315,7 @@ function GymFunc() {
 
     const input1 = InputButton("Train muscle", "Gain muscle.");
     input1.addEventListener("click", function () {
-        if (Flags.LastTrain.Day == Flags.Date.Day && Flags.LastTrain.Month == Flags.Date.Month && Flags.LastTrain.Year == Flags.Date.Year) {
+        if (Flags.LastTrain.Day === Flags.Date.Day && Flags.LastTrain.Month === Flags.Date.Month && Flags.LastTrain.Year === Flags.Date.Year) {
             p.innerHTML = "You have already trained today.";
         } else {
             if (player.Fat > (player.Weight * 0.1)) {
@@ -1387,21 +1374,13 @@ function LocalPortalFunc() {
     const Buildings = DocId("Buildings"),
         InnerDiv = document.createElement("div"),
         Frag = document.createDocumentFragment(),
-        p = document.createElement("p"),
+        p = TextBox(),
         Container = [p]
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
+    CleanBuildings();
 
     if (window.innerHeight > 600) { // No title on small screen
-        const h1 = document.createElement("h1"),
-            h1text = document.createTextNode("Portal");
-        h1.appendChild(h1text);
-        Container.unshift(h1);
+        Container.unshift(TitleText("Portal"));
     }
-
-
-    p.classList.add("TextBox");
 
     if (player.Map === "Outlaws" && House.Portal.BlackMarket === false) {
         const Activate = InputButton("Activate", "Sync this local portal with your home portal");
@@ -1431,11 +1410,7 @@ function LocalPortalFunc() {
     input1.addEventListener("click", function () {
         player.Area = "First";
         player.Map = "RoadToHome";
-        Buildings.style.display = 'none';
-        while (Buildings.hasChildNodes()) {
-            Buildings.removeChild(Buildings.firstChild);
-        }
-        DisplayGame();
+        Teleport();
         return;
     });
     input1.addEventListener("mouseover", function () {
@@ -1449,11 +1424,7 @@ function LocalPortalFunc() {
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
-            Buildings.style.display = 'none';
-            while (Buildings.hasChildNodes()) {
-                Buildings.removeChild(Buildings.firstChild);
-            }
-            DisplayGame();
+            Teleport();
             return;
         });
         Container.push(Mountain);
@@ -1464,11 +1435,7 @@ function LocalPortalFunc() {
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
-            Buildings.style.display = 'none';
-            while (Buildings.hasChildNodes()) {
-                Buildings.removeChild(Buildings.firstChild);
-            };
-            DisplayGame();
+            Teleport();
             return;
         });
         BlackMarket.addEventListener("mouseover", function () {
@@ -1481,11 +1448,7 @@ function LocalPortalFunc() {
         MountainPlateau.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainPlateau";
-            Buildings.style.display = 'none';
-            while (Buildings.hasChildNodes()) {
-                Buildings.removeChild(Buildings.firstChild);
-            };
-            DisplayGame();
+            Teleport();
             return;
         });
         MountainPlateau.addEventListener("mouseover", function () {
@@ -1500,6 +1463,12 @@ function LocalPortalFunc() {
     InnerDiv.appendChild(Frag);
     Buildings.appendChild(InnerDiv);
     Buildings.style.display = "block";
+
+    function Teleport() {
+        Buildings.style.display = 'none';
+        CleanBuildings();
+        DisplayGame();
+    }
 }
 // Test of new way to add quests, in order to avoid public consts.
 function PregQuests() {
@@ -1749,24 +1718,16 @@ function FertTempleBlessings(text = "") {
 }
 function PortalShopFunc() {
     const Buildings = document.getElementById("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
+    CleanBuildings();
     const div = document.createElement("div");
 
     if (window.innerHeight > 600) { // Skip title on smaller screens
-        const h1 = document.createElement("h1"),
-            h1text = document.createTextNode("Portal shop");
-        h1.appendChild(h1text);
-        div.appendChild(h1);
-    }
-
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
-
+        div.appendChild(TitleText("Portal shop"));
+    };
+    const p = TextBox();
     div.appendChild(p);
 
-    const input1 = InputButton("Pocket portal 1000g", "Are you tired of walking home? Then pocket portal is for you, now with 99 uses! #Note seller is not responsible if you waste them by using them without owning a home portal.");
+    const input1 = ButtonButton("Pocket portal 1000g", "Are you tired of walking home? Then pocket portal is for you, now with 99 uses! #Note seller is not responsible if you waste them by using them without owning a home portal.");
     input1.addEventListener("click", function () {
         if (player.Gold >= 1000) {
             player.Gold -= 1000;
@@ -1784,7 +1745,7 @@ function PortalShopFunc() {
     div.appendChild(input1);
 
     if (House.Portal.Mountain === false) {
-        const input2 = InputButton("Portal to mountain region 500g", "A beautiful land with wonderful views, but be consty as it’s the home for plenty dangerous races and tribes.");
+        const input2 = ButtonButton("Portal to mountain region 500g", "A beautiful land with wonderful views, but be consty as it’s the home for plenty dangerous races and tribes.");
         input2.addEventListener("click", function () {
             if (player.Gold >= 500) {
                 if (House.Portal.Mountain) {
@@ -1817,22 +1778,16 @@ function PortalShopFunc() {
 }
 function ShopFunc() {
     const Buildings = document.getElementById("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
-    const div = document.createElement("div"),
-        h1 = document.createElement("h1"),
-        h1text = document.createTextNode("Shop");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    CleanBuildings();
+    const div = document.createElement("div");
+    div.appendChild(TitleText("Potion shop"));
 
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     div.appendChild(p);
 
     const innerdiv = document.createElement("div");
 
-    const StrPotion = InputButton("Potion of Strength 100g");
+    const StrPotion = ButtonButton("Potion of Strength 100g");
     StrPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Str++
@@ -1842,7 +1797,7 @@ function ShopFunc() {
         }
     });
 
-    const ChaPotion = InputButton("Potion of Charm 100g");
+    const ChaPotion = ButtonButton("Potion of Charm <br>100g");
     ChaPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Charm++
@@ -1855,7 +1810,7 @@ function ShopFunc() {
     innerdiv.appendChild(ChaPotion);
     innerdiv.appendChild(document.createElement("br"));
 
-    const EndPotion = InputButton("Potion of Endurance 100g")
+    const EndPotion = ButtonButton("Potion of Endurance 100g")
     EndPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.End++
@@ -1865,7 +1820,7 @@ function ShopFunc() {
             your endurance growing.<br>${player.End}`;
         }
     });
-    const IntPotion = InputButton("Potion of Intelligence 100g")
+    const IntPotion = ButtonButton("Potion of Intelligence 100g")
     IntPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Int++
@@ -1878,7 +1833,7 @@ function ShopFunc() {
     innerdiv.appendChild(IntPotion);
     innerdiv.appendChild(document.createElement("br"));
 
-    const WillPotion = InputButton("Potion of Willpower 100g")
+    const WillPotion = ButtonButton("Potion of Willpower 100g")
     WillPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.Will++
@@ -1888,13 +1843,13 @@ function ShopFunc() {
             feel your willpower growing.<br>${player.Will}`;
         }
     });
-    const SexPotion = InputButton("Potion of Sexskill 100g"); // Needs to be renamed, sounds stupid.
+    const SexPotion = ButtonButton("Potion of Sexskill 100g"); // Needs to be renamed, sounds stupid.
     SexPotion.addEventListener("click", function () {
         if (player.Gold >= 100) {
             player.SexSkill++
             player.Gold -= 100;
             p.innerHTML = `You pay 100gold proced to drink the potion, once the fluid enter your stomach you get 
-            a feeling that somehow your bedskills have grown.<br>${player.SexSkill}`;
+            a feeling that somehow your bedskills have improved.<br>${player.SexSkill}`;
         }
     });
     innerdiv.appendChild(WillPotion);
@@ -1905,67 +1860,86 @@ function ShopFunc() {
     div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
-} // Saved 13 lines with inputbutton, wow... but looks better to me atleast!    
+} // Saved 13 lines with ButtonButton, wow... but looks better to me atleast!    
 // Start Farm
-DocId("EquineTaurTF").addEventListener("click", function () {
-    if (player.Gold >= 250) {
-        player.Gold -= 250;
-        PotionDrunk("centaur")
-        //TfEngine("centaur");
-    } else {
-        DocId("FarmOwnerText").innerHTML = "Insufficient gold.";
-        return;
-    }
-});
-DocId("FarmTitles").addEventListener("mouseover", function (e) {
-    DocId("FarmOwnerText").innerHTML = e.target.title;
-});
-DocId("EquineTF").addEventListener("click", function () {
-    if (player.Gold >= 250) {
-        player.Gold -= 250;
-        PotionDrunk("equine");
-    } else {
-        DocId("FarmOwnerText").innerHTML = "Insufficient gold.";
-        return;
-    }
-});
-DocId("FarmOwnerLooks").addEventListener("click", function () {
-    DocId("FarmOwnerText").innerHTML = "Standing before you, a centaur who introduce himself as Teoivz, looking at him it’s evident he spends many hours working on the farm. His human upper body possess muscle forged from years of work, " +
-        "his equine lower body is not one from a race horse but a work horse.<br>Throwing an eye towards his genitals, it’s	hard to guess the exact size his two members retracted inside their penile sheath but it's obvious that they are well capable of stretching a maiden."
-});
-// End FarmOwner
-
-// The FarmBarn
-
-/*DocId("InfinityMilker").addEventListener("click", function () {
-    if (player.Gold >= 7000) {
-        player.Gold -= 7000;
-        SnowInventoryAdd(ItemDict.Milker, Infinity);
-        // Add milker
-    } else {
-        // You can't afford 
-    }
-});*/
-
-function FarmBarnFunc() {
-    var Buildings = DocId("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
-    var div = document.createElement("div");
+function FarmOwnerFunc() {
+    const Npc = document.getElementById("Npcs")
+    CleanNpcs(); // Empties div
+    const div = document.createElement("div");
+    div.addEventListener("mouseover", function (e) {
+        p.innerHTML = e.target.title;
+    });
 
     if (window.innerHeight > 600) { // No title on small screen
-        var h1 = document.createElement("h1");
-        var h1text = document.createTextNode("");
-        h1.appendChild(h1text);
-        div.appendChild(h1);
+        Npc.appendChild(TitleText("Title"));
     }
 
-    var p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
+    Npc.appendChild(p);
+
+    const wip = ButtonButton("(Placeholder)Need help?");
+
+    const EquineTaurTF = ButtonButton("Equine-Taur Essence 250g", `Do you lack endurance? Want to able to work 
+    like a horse? One dose of this and you will turn to a taur hybrid of equine and you current race.`)
+    EquineTaurTF.addEventListener("click", function () {
+        if (player.Gold >= 250) {
+            player.Gold -= 250;
+            PotionDrunk("centaur");
+            return;
+            //TfEngine("centaur");
+        } else {
+            p.innerHTML = "Insufficient gold.";
+            return;
+        }
+    });
+    div.appendChild(EquineTaurTF);
+
+    const EquineTF = ButtonButton("Equine Essence 250g", `Want more lower body strength? Lucky for you this essence 
+    will make you to the mare or stallion of your dreams! One dose will turn your lower body to a set of humanoid 
+    equine legs while two doses will turn you to a anthropomorphic equine.`)
+    EquineTF.addEventListener("click", function () {
+        if (player.Gold >= 250) {
+            player.Gold -= 250;
+            PotionDrunk("equine");
+        } else {
+            p.innerHTML = "Insufficient gold.";
+            return;
+        }
+    });
+    div.appendChild(EquineTF);
+
+    const wip2 = ButtonButton("(Placeholder)Bovine Essence");
+
+    const Looks = ButtonButton("Looks");
+    Looks.addEventListener("click", function () {
+        p.innerHTML = `Standing before you, a centaur who introduce himself as Teoivz, looking at him it’s evident 
+        he spends many hours working on the farm. His human upper body possess muscle forged from years of work, 
+        his equine lower body is not one from a race horse but a work horse.<br>Throwing an eye towards his 
+        genitals, it’s	hard to guess the exact size his two members retracted inside their penile sheath but it's 
+        obvious that they are well capable of stretching a maiden.`
+    });
+    Looks.addEventListener("mouseover", function () {
+
+    });
+    Npc.appendChild(div);
+    Npc.appendChild(Looks);
+    Npc.appendChild(LeaveNpc());
+    Npc.style.display = 'block';
+};
+
+function FarmBarnFunc() {
+    const Buildings = DocId("Buildings")
+    CleanBuildings();
+    const div = document.createElement("div");
+
+    if (window.innerHeight > 600) { // No title on small screen
+        div.appendChild(TitleText("Barn"));
+    }
+
+    const p = TextBox();
     div.appendChild(p);
 
-    var input1 = InputButton("Milker500 499g", "Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away? Buy today; a portable milker!");
+    const input1 = ButtonButton("Milker500 499g", "Are your breasts constantly leaking? Does it feel like a waste, seeing your milk drip away? Buy today; a portable milker!");
     input1.addEventListener("click", function () {
         if (player.Gold >= 499) {
             player.Gold -= 499;
@@ -1980,11 +1954,11 @@ function FarmBarnFunc() {
     });
     div.appendChild(input1);
 
-    var input2 = InputButton("Milk booster 30g", "Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?! Well, this is for your humble (or crazy) needs!")
+    const input2 = ButtonButton("Milk booster 30g", "Can't produce enough milk to feed a baby? Or maybe you want to feed your whole family, or even your town?! Well, this is for your humble (or crazy) needs!")
     input2.addEventListener("click", function () {
         if (player.Gold >= 30) {
             player.Gold -= 30;
-            for (var e of player.Boobies) {
+            for (let e of player.Boobies) {
                 e.MilkRate++;
                 if (false) {
                     // if milkrate is over certain value say stuff like wow godly amounts etc...
@@ -2000,14 +1974,14 @@ function FarmBarnFunc() {
     });
     div.appendChild(input2);
 
-    var input3 = InputButton("Milk stopper 50g", "Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.' #Note this does not affect lacation rate from pregnancy.")
+    const input3 = ButtonButton("Milk stopper 50g", "Sick and tired of your breasts leaving milk spots on your clothes? Just one of these will reduce future 'accidents.' #Note this does not affect lacation rate from pregnancy.")
     input3.addEventListener("click", function () {
         // Lower milkrate
         // if no breast have milkrate stop
         if (player.Gold >= 50) {
             player.Gold -= 50;
             p.innerHTML = ""
-            for (var e of player.Boobies) {
+            for (let e of player.Boobies) {
                 if (e.MilkRate - 1 < 0) {
                     e.MilkRate = 0;
                     p.innerHTML += "Your breasts stops lactating.<br>" //Milk stops
@@ -2030,11 +2004,11 @@ function FarmBarnFunc() {
     div.appendChild(input3);
 
     if (false) { // TODO
-        var DrinkFresh = InputButton("Drink fresh milk", "It's not yours. You think.");
+        const DrinkFresh = ButtonButton("Drink fresh milk", "It's not yours. You think.");
         DrinkFresh.addEventListener("click", function () {
             // Drink milk Maybe fuck a bovine furry? 
             // Get healed + temp boost to hp & will stronger than bar meal
-            var a = RandomInt(1, 20);
+            const a = RandomInt(1, 20);
             if (a > 15) {
                 if (player.Int > 20) {
                     if (false) {
@@ -2047,18 +2021,18 @@ function FarmBarnFunc() {
                 }
             }
         })
-        var GetMilked = InputButton("Get milked", "Mooooooooooooo!");
+        const GetMilked = ButtonButton("Get milked", "Mooooooooooooo!");
         GetMilked.addEventListener("click", function () {
             // Sell milk(maybe cum to?), this can trigger a event where farmowner tries to fuck you
             // depenent on your stats you can turn it around or get away, if your stats are to weak you get fucked.
-            var MilkTotal = 0;
-            for (var e of player.Boobies) {
+            const MilkTotal = 0;
+            for (const e of player.Boobies) {
                 MilkTotal += e.Milk * 0.9;
                 e.Milk = e.Milk * 0.1;
             }
             if (MilkTotal > 0) {
                 if (MilkTotal > 10) {
-                    var a = RandomInt(1, 20);
+                    const a = RandomInt(1, 20);
                     if (a > 10) {
                         // if (Flags.Bovine) {};
                     }
@@ -2090,17 +2064,11 @@ function FarmBarnFunc() {
 // Test of new way to add quests, in order to avoid public consts.
 function TownHallQuests(text = "") {
     const div = document.getElementById("Buildings");
-    while (div.hasChildNodes()) {
-        div.removeChild(div.firstChild);
-    }
+    CleanBuildings();
 
-    const h1 = document.createElement("h1"),
-        h1text = document.createTextNode("Quests");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    div.appendChild(TitleText("Quests"));
 
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     div.appendChild(p);
     p.innerHTML = text;
 
@@ -2111,8 +2079,8 @@ function TownHallQuests(text = "") {
         if (Flags.BanditLord) {
             p.innerHTML = "The bandit are still humiliated from the defeat of their lord, but if you are willing please defeat them again to make sure they don't regain their confidence."
         } else {
-            p.innerHTML = "The bandits up to the north has become braver with their new leader, if you are strong enough please beat them into submission. <br> <br>" +
-                "You will be greatly awarded for your effort and we will grant you the right to buy the old mansion located east from the city."
+            p.innerHTML = `The bandits up to the north has become braver with their new leader, if you are strong enough please beat them into submission. <br> <br>
+            You will be greatly awarded for your effort and we will grant you the right to buy the old mansion located east from the city.`
         }
         while (buttons.hasChildNodes()) {
             buttons.removeChild(buttons.firstChild);
@@ -2136,7 +2104,7 @@ function TownHallQuests(text = "") {
     });
     const ElfHunt = InputButton("Elf hunt")
     ElfHunt.addEventListener("click", function () {
-        p.innerHTML = "The elves to the south is becoming a problem, defeat atleast three of them and you will be awarded."
+        p.innerHTML = "The elves to our south have lately become a problem, defeat atleast three of them and you will be awarded."
         while (buttons.hasChildNodes()) {
             buttons.removeChild(buttons.firstChild);
         }
@@ -2160,9 +2128,9 @@ function TownHallQuests(text = "") {
     if (!player.Quests.some(e => e.Name === "ElfHunt")) {
         buttons.appendChild(ElfHunt);
     } else if (player.Quests.some(e => e.Name === "ElfHunt" && e.Completed)) {
-        const ElfHuntReward = InputButton("Elf hunt reward")
+        const ElfHuntReward = ButtonButton("Elf hunt reward")
         ElfHuntReward.addEventListener("click", function () {
-            const ElfIndex = [player.Quests.findIndex((src) => src.Name === "ElfHunt")];
+            const ElfIndex = player.Quests.findIndex((src) => src.Name === "ElfHunt");
             Tier = player.Quests[ElfIndex].hasOwnProperty("Tier") ?
                 player.Quests[ElfIndex].Tier : 0,
                 Multi = Math.pow(2, Tier - 1)
@@ -2178,15 +2146,12 @@ function TownHallQuests(text = "") {
     if (!player.Quests.some(e => e.Name === "BanditLord")) {
         buttons.appendChild(BanditLord);
     } else if (player.Quests.some(e => e.Name === "BanditLord" && e.Completed)) {
-        const BanditLordReward = InputButton("Banditlord reward")
+        const BanditLordReward = ButtonButton("Banditlord reward")
         BanditLordReward.addEventListener("click", function () {
             player.Exp += 300;
             player.Gold += 500;
-            for (let i = 0; i < player.Quests.length; i++) {
-                if (player.Quests[i].Name === "BanditLord") {
-                    player.Quests.splice(i, 1);
-                }
-            }
+            const BanditIndex = player.Quests.findIndex((src) => src.Name === "BanditLord");
+            player.Quests.splice(BanditIndex, 1);
             if (Flags.BanditLord) {
                 TownHallQuests("You are rewared: 300Exp and 500gold");
             } else {
@@ -2210,20 +2175,14 @@ function TownHallQuests(text = "") {
 
 function TownhallFunc() {
     const Buildings = document.getElementById("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
-    }
+    CleanBuildings();
 
-    const div = document.createElement("div"),
-        h1 = document.createElement("h1"),
-        h1text = document.createTextNode("Townhall");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    const div = document.createElement("div");
+    div.appendChild(TitleText("Townhall"));
 
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     p.innerHTML = `Inside the local town hall there isn’t much to see, for being a town hall it’s honestly not that 
-    impressive at all. But this is just a small outskirt village after all, hopefully they do at least have work for you.`
+    impressive at all. But this is just a small outskirt village after all, hopefully they do at least have work for you.`;
     div.appendChild(p);
 
     const row1 = document.createElement("div"),
@@ -2234,7 +2193,7 @@ function TownhallFunc() {
     row1.appendChild(input1);
 
     if (House.Owned === false && Flags.BanditLord) {
-        const input2 = InputButton("Buy house 100g")
+        const input2 = ButtonButton("Buy house 100g")
         input2.addEventListener("click", function () {
             if (player.Gold >= 100) {
                 House.Owned = true;
@@ -2253,9 +2212,9 @@ function TownhallFunc() {
     });
     row1.appendChild(input3);
 
-    const input4 = InputButton("(placeholder)Reputation");
+    const input4 = ButtonButton("(placeholder)Reputation");
     input4.addEventListener("click", function () {
-        p.innerHTML = Flags.FirstCityLike + "<br> They temp temp you.";
+        p.innerHTML = `${Flags.FirstCityLike}<br> They temp temp you.`;
     });
     row1.appendChild(input4);
     div.appendChild(row1);
@@ -2268,22 +2227,16 @@ function TownhallFunc() {
 
 function TownHallService() {
     const div = document.getElementById("Buildings");
-    while (div.hasChildNodes()) {
-        div.removeChild(div.firstChild);
-    }
+    CleanBuildings();
 
     // Container for services, atm there is only name change
     const inputs = document.createElement("div");
 
     // Container for accept and back [Yes/No]
-    const YN = document.createElement("div"),
-     h1 = document.createElement("h1"),
-      h1text = document.createTextNode("Service");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    const YN = document.createElement("div");
+    div.appendChild(TitleText("Service"));
 
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     div.appendChild(p);
 
     const CN = InputButton("Change name");
@@ -2291,26 +2244,12 @@ function TownHallService() {
         while (inputs.hasChildNodes()) {
             inputs.removeChild(inputs.firstChild);
         }
-        const FName = document.createElement("input");
-        FName.setAttribute("type", "text");
-        FName.setAttribute("value", player.Name);
-        FName.setAttribute("id", "ServiceFName724");
-
-        const FNameLabel = document.createElement("label");
-        FNameLabel.setAttribute("for", "ServiceFName724");
-        FNameLabel.innerHTML = ("First name:")
-        inputs.appendChild(FNameLabel);
+        const FName = InputText(player.Name, "ServiceFName724");
+        inputs.appendChild(LabelFor("ServiceFName724", "First name:"));
         inputs.appendChild(FName);
 
-        const LName = document.createElement("input");
-        LName.setAttribute("type", "text");
-        LName.setAttribute("value", player.LastName);
-        LName.setAttribute("id", "ServiceLName244");
-
-        const LNameLabel = document.createElement("label");
-        LNameLabel.setAttribute("for", "ServiceLName244")
-        LNameLabel.innerHTML = "Last name:";
-        inputs.appendChild(LNameLabel);
+        const LName = InputText(player.LastName, "ServiceLName244");
+        inputs.appendChild(LabelFor("ServiceLName244", "Last name:"));
         inputs.appendChild(LName);
 
         const Accept = InputButton("Accept");
@@ -2335,18 +2274,13 @@ function TownHallService() {
 }
 function WitchHutFunc() {
     const Buildings = document.getElementById("Buildings")
-    while (Buildings.hasChildNodes()) {
-        Buildings.removeChild(Buildings.firstChild);
+    CleanBuildings();
+    const div = document.createElement("div");
+    if (window.innerHeight > 600) {
+        div.appendChild(TitleText("Witch hut"));
     }
-    const div = document.createElement("div"),
-        h1 = document.createElement("h1"),
-        h1text = document.createTextNode("Witch hut");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
 
-    const p = document.createElement("p");
-    p.classList.add("TextBox");
-
+    const p = TextBox();
     div.appendChild(p);
 
     const row1 = document.createElement("div");
@@ -2354,7 +2288,7 @@ function WitchHutFunc() {
         p.innerHTML = e.target.title;
     })
 
-    const elf = new InputButton("Elf delight 200g", "Tired of being a human? Do you feel a desire to possess pointy ears? Become an elf today!")
+    const elf = ButtonButton("Elf delight 200g", "Tired of being a human? Do you feel a desire to possess pointy ears? Become an elf today!")
     elf.addEventListener("click", function () {
         if (player.Gold >= 200) {
             player.Gold -= 200;
@@ -2366,7 +2300,7 @@ function WitchHutFunc() {
     });
     row1.appendChild(elf);
 
-    const Perkup = new InputButton("Perk Up 1000g", "This pill glows green and yellow, and seems to hover slightly above your hand. Eat it to get a perk point!")
+    const Perkup = ButtonButton("Perk Up 1000g", "This pill glows green and yellow, and seems to hover slightly above your hand. Eat it to get a perk point!")
     Perkup.addEventListener("click", function () {
         if (player.Gold >= 1000) {
             player.Gold -= 1000;
@@ -2379,7 +2313,7 @@ function WitchHutFunc() {
     row1.appendChild(Perkup);
 
     if (Settings.Vore) {
-        const VoreUp = InputButton("Eating Up 1000g", "This red pill makes your mouth water and stomach growl. Eat it for an other perk point! (Below it is a little disclaimer: 'store owner not responsible for ineffective pills.')")
+        const VoreUp = ButtonButton("Eating Up 1000g", "This red pill makes your mouth water and stomach growl. Eat it for an other perk point! (Below it is a little disclaimer: 'store owner not responsible for ineffective pills.')")
         // Move to more fitting place and need new title
         // title ideas
         // Ilegal item, made from havrested souls from the last great battle.
@@ -2395,7 +2329,7 @@ function WitchHutFunc() {
         row1.appendChild(VoreUp);
     }
 
-    const Fireball = new InputButton("Fireball 500g", "Basic quick course on elemental magic, includes how to cast a fireball.")
+    const Fireball = ButtonButton("Fireball 500g", "Basic quick course on elemental magic, includes how to cast a fireball.")
     //Fireball.setAttribute("title", "This little ball allows you to cast a single fireball spell per ball you own, per battle! (Don't set yourself on fire, please.)");
     Fireball.addEventListener("click", function () {
         if (!Array.isArray(player.Spells)) { // Remove later
@@ -2416,7 +2350,7 @@ function WitchHutFunc() {
     });
     row1.appendChild(Fireball);
 
-    const HumanTF = new InputButton("Potion of Humanity 250g", "Do you not remember who you are anymore? Feel like you have lost you humanity?");
+    const HumanTF = ButtonButton("Potion of Humanity 250g", "Do you not remember who you are anymore? Feel like you have lost you humanity?");
     HumanTF.addEventListener("click", function () {
         if (player.Gold >= 250) {
             player.Gold -= 250;
@@ -2428,7 +2362,7 @@ function WitchHutFunc() {
     });
     row1.appendChild(HumanTF);
 
-    const EyeColor = new InputButton("Eye color 50g", "Not happy with the eyes you were born with?");
+    const EyeColor = ButtonButton("Eye color 50g", "Not happy with the eyes you were born with?");
     EyeColor.addEventListener("click", function () {
         const row2 = document.createElement("div");
         row2.addEventListener("mouseover", function (e) {
@@ -2438,7 +2372,7 @@ function WitchHutFunc() {
             "brown", "hazel", "blue", "green", "silver", "amber"
         ]
         for (let e of EyeColors) {
-            const inputs = new InputButton(e.Capitalize(), " " + e.Capitalize() + " eyes")
+            const inputs = ButtonButton(e.Capitalize(), ` ${e.Capitalize()} eyes`)
             inputs.addEventListener("click", function (a) {
                 if (player.Gold >= 50) {
                     player.Face.Eyes = a.target.value.toLowerCase();
@@ -2450,7 +2384,7 @@ function WitchHutFunc() {
             row2.appendChild(inputs);
         };
 
-        const close = new InputButton("Close", "Close eye color menu");
+        const close = ButtonButton("Close", "Close eye color menu");
         close.addEventListener("click", function () {
             WitchHutFunc();
         })
@@ -2464,54 +2398,109 @@ function WitchHutFunc() {
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
 }
-document.getElementById("WitchShop").addEventListener("click", function (e) {
-    var Chosen;
-    if (e.target.type == "button") {
-        Chosen = String(e.target.id);
-        if (Chosen == "Grow" && player.Gold >= 50) {
+function WitchShopFunc() {
+    const Buildings = document.getElementById("Buildings")
+    CleanBuildings(); // Empties div
+
+    if (window.innerHeight > 600) { // No title on small screen
+        Buildings.appendChild(TitleText("Title"));
+    }
+
+    const p = TextBox();
+    Buildings.appendChild(p);
+
+    const div = document.createElement("div");
+    div.addEventListener("mouseover", function (e) {
+        p.innerHTML = e.target.title;
+    });
+
+    const input1 = ButtonButton("Grow 50g", `Can't reach the top shelf? Get taller today!`);
+    input1.addEventListener("click", function () {
+        if (player.Gold >= 50) {
             const growth = Math.round((180 / player.Height) * 100) / 100;
             player.Gold -= 50;
             player.Height += growth;
-            document.getElementById("WitchShopText").innerHTML = "You grow " + growth + "cm.";
-        } else if (Chosen == "Shrink" && player.Gold >= 50) {
+            p.innerHTML = `You grow ${growth}cm.`;
+        }
+    });
+    const input2 = ButtonButton("Shrink 50g", `Hitting your head on ceilings and doorframes? Shrink today!`);
+    input2.addEventListener("click", function () {
+        if (player.Gold >= 50) {
             const shrunk = Math.round((player.Height / 100) * 100) / 100;
             player.Gold -= 50;
             player.Height -= shrunk;
-            document.getElementById("WitchShopText").innerHTML = "You shrink " + shrunk + "cm.";
-        } else if (Chosen == "FertilityAdd" && player.Gold >= 30) {
+            p.innerHTML = `You shrink ${shrunk}cm.`;
+        }
+    });
+    const input3 = ButtonButton("Fertility booster 30g", `Is it hard to become pregnant? Fear not! 
+    We have the product for you!`);
+    input3.addEventListener("click", function () {
+        if (player.Gold >= 30) {
             player.Gold -= 30;
             player.Fertility++;
-            document.getElementById("WitchShopText").innerHTML = "You feel your body becoming more fertil.";
-        } else if (Chosen == "FertilitySub" && player.Gold >= 70) {
+            p.innerHTML = `You feel your body becoming more fertil.`;
+        }
+    });
+    const input4 = ButtonButton("Fertility subtractor 70g", `Tired of getting knocked up by a bunch of deadbeat fathers? 
+    We have the product to turn your fertile nethers into a barren wasteland!`);
+    input4.addEventListener("click", function () {
+        if (player.Gold >= 70) {
             player.Gold -= 70;
             player.Fertility -= 3;
-            document.getElementById("WitchShopText").innerHTML = "You feel your body becoming more barren."
-        } else if (Chosen == "VirilityAdd" && player.Gold >= 70) {
+            p.innerHTML = "You feel your body becoming more barren."
+        }
+    });
+    const input5 = ButtonButton("Virility booster 70g", `Do you feel like you don't have enough children? 
+    Don't worry! With our virility booster you can be sure that you will get enough successors!`);
+    input5.addEventListener("click", function () {
+        if (player.Gold >= 70) {
             player.Gold -= 70;
             player.Virility++;
-            document.getElementById("WitchShopText").innerHTML = "You feel your virility increasing.";
-        } else if (Chosen == "VirilitySub" && player.Gold >= 30) {
+            p.innerHTML = `You feel your virility increasing.`;
+        }
+    });
+    const input6 = ButtonButton("Virility subtractor 30g", `Do you have nightmares that future partners will demand child support? 
+    Do you want to live a child-free life? Well then, look no further!`);
+    input6.addEventListener("click", function () {
+        if (player.Gold >= 30) {
             player.Gold -= 30;
             player.Virility -= 3;
-            document.getElementById("WitchShopText").innerHTML = "You feel your virility decreasing";
-        } else if (Chosen == "CumRateAdd" && player.Gold >= 100 && player.Balls.length > 0) {
-            player.Gold -= 100;
-            for (let e = 0; e < player.Balls.length; e++) {
-                player.Balls[e].CumRate += 0.1;
-            }
-            document.getElementById("WitchShopText").innerHTML = "You get a tingling feeling in your balls, you think it works!"
-        } else if (Chosen == "CumRateSub" && player.Gold >= 20 && player.Balls.length > 0) {
-            player.Gold -= 20;
-            for (let e = 0; e < player.Balls.length; e++) {
-                player.Balls[e].CumRate -= 0.5;
-            }
-            document.getElementById("WitchShopText").innerHTML = "You get a strange feeling in your balls, you think it works!"
+            p.innerHTML = `You feel your virility decreasing`;
         }
-    }
-});
-document.getElementById("WitchShop").addEventListener("mouseover", function (e) {
-    document.getElementById("WitchShopText").innerHTML = e.target.title;
-});
+    });
+    const input7 = ButtonButton("Cum booster 100g", `Do you shoot blanks? Say no more! With our cum booster, 
+    your balls will refill at a healthy rate. Warning: over-dosing can lead to spontaneous ejaculation.`);
+    input7.addEventListener("click", function () {
+        if (player.Gold >= 100) {
+            player.Gold -= 100;
+            for (let e of player.Balls) {
+                e.CumRate += 0.1;
+            }
+            p.innerHTML = `You get a tingling feeling in your balls, you think it works!`
+        }
+    });
+    const input8 = ButtonButton("Cum dropper 20g", `Do your balls overfill and you spontaneously ejaculate in your pants? 
+    Don't worry about it! This will dry up your balls. Warning: over-dosing can lead to impotence.`);
+    input8.addEventListener("click", function () {
+        if (player.Gold >= 20) {
+            player.Gold -= 20;
+            for (let e of player.Balls) {
+                e.CumRate -= 0.5;
+            }
+            p.innerHTML = `You get a strange feeling in your balls, you think it works!`
+        }
+    });
+    const br = () => {
+            return document.createElement("br");
+        },
+        Inputs = [input1, input2, br(), input3, input4, br(), input5, input6, br(), input7, input8].forEach((src) => {
+            div.appendChild(src);
+        });
+    Buildings.appendChild(div);
+    Buildings.appendChild(br());
+    Buildings.appendChild(LeaveBuilding());
+    document.getElementById("Buildings").style.display = 'block';
+};
 // Cheats to help me with development and aid those who don't like grinding. 
 function CheatEngine() {
     if (Settings.Cheats.Gold) {
@@ -2530,7 +2519,7 @@ function CheatEngine() {
         player.Vore.Exp++;
     }
     if (Settings.Cheats.FastTime) {
-        Flags.Date.Hour++;
+        DateTracker();
     }
 }
 
@@ -2588,17 +2577,12 @@ function CheckFlags() {
     // Flags
 
     // load Settings
-    DocId("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
+    DateTracker();
 
     document.body.style.backgroundColor = Settings.BackColor;
-    MapColor = Settings.MapColor
-    document.body.style.color = Settings.TextColor
-    document.body.style.fontFamily = Settings.TextFont
-
-    DocId("backcolor").value = Settings.BackColor;
-    DocId("MapColor").value = Settings.MapColor;
-    DocId("textcolor").value = Settings.TextColor;
-    DocId("textfont").value = Settings.TextFont;
+    MapColor = Settings.MapColor;
+    document.body.style.color = Settings.TextColor;
+    document.body.style.fontFamily = Settings.TextFont;
 
     if (!Settings.hasOwnProperty("MapPercent")) {
         Settings.MapPercent = 0.9;
@@ -2621,8 +2605,9 @@ function CheckFlags() {
             }
         }
         //More load fixing
-        if (!Settings.VoreSettings.hasOwnProperty("AnalDigestion"))
+        if (!Settings.VoreSettings.hasOwnProperty("AnalDigestion")) {
             Settings.VoreSettings.AnalDigestion = false;
+        }
         if (!Settings.VoreSettings.hasOwnProperty("AbsorbEssence")) {
             Settings.VoreSettings.AbsorbEssence = "Both";
         }
@@ -2653,6 +2638,7 @@ function CheckFlags() {
     }
     if (!player.Pregnant.hasOwnProperty("Babies")) {
         player.Pregnant = {};
+        player.Pregnant.Status = false;
         player.Pregnant.Babies = [];
         console.log("Added babies []");
     }
@@ -2686,18 +2672,6 @@ function CheckFlags() {
     if (!House.hasOwnProperty("Nursery")) {
         House.Nursery = 0;
         console.log("Added Nursery")
-    }
-
-    if (window.innerHeight < 800) {
-        DocId("FirstButtons").style.display = 'block';
-        DocId("SecondButtons").style.display = 'none';
-        DocId("MoreButtons").style.display = 'inline-block';
-        DocId("LessButtons").style.display = 'inline-block';
-    } else {
-        DocId("SecondButtons").style.display = 'block';
-        DocId("FirstButtons").style.display = 'block';
-        DocId("MoreButtons").style.display = 'none';
-        DocId("LessButtons").style.display = 'none';
     }
     if (!Settings.hasOwnProperty("MaxLimbs")) {
         Settings.MaxLimbs = {
@@ -2774,26 +2748,6 @@ function CheckFlags() {
             console.log("Added house portal owned false");
         }
     }
-    if (window.innerHeight < 600) {
-        DocId("FirstButtons").style.display = 'none';
-        DocId("SecondButtons").style.display = 'none';
-        DocId("MoreButtons").style.display = 'inline-block';
-        DocId("LessButtons").style.display = 'inline-block';
-        DocId("MobileButtons").style.display = 'inline-block';
-    } else if (window.innerHeight < 800) {
-        DocId("FirstButtons").style.display = 'block';
-        DocId("SecondButtons").style.display = 'none';
-        DocId("MoreButtons").style.display = 'inline-block';
-        DocId("LessButtons").style.display = 'inline-block';
-        DocId("MobileButtons").style.display = 'none';
-    } else {
-        DocId("SecondButtons").style.display = 'block';
-        DocId("FirstButtons").style.display = 'block';
-        DocId("MoreButtons").style.display = 'none';
-        DocId("LessButtons").style.display = 'none';
-        DocId("MobileButtons").style.display = 'none';
-    }
-
     if (!player.hasOwnProperty("Blessings")) {
         player.Blessings.MountainShrine = {
             Points: 0,
@@ -2901,6 +2855,7 @@ function CheckFlags() {
         player.Inventory.push(ItemDict.SpellBook);
     }
     HemScale();
+    StatusButtonSystem();
 };
 // Hopefully obselite
 /**
@@ -2913,7 +2868,6 @@ function CheckFlags() {
         }
     }
  */
-
 function BattleSetup(who) {
     const none = [DocId("map"), DocId("status"), DocId("buttons"),
         DocId("EmptyButtons"), DocId("EventLog")
@@ -3243,8 +3197,6 @@ function WinBattle() {
     const ee = enemies[EnemyIndex];
     player.Exp += ee.Exp;
     player.Gold += ee.Gold;
-    ee.SessionOrgasm = 0;
-    player.SessionOrgasm = 0;
     CombatQuests(ee);
     //WinEnemyChanges(ee);
     DropSystem(ee);
@@ -3262,6 +3214,10 @@ function WinBattle() {
 }
 
 function SetupSex(ee) {
+    ee.SessionOrgasm = 0;
+    player.SessionOrgasm = 0;
+    player.Orgasm = 0;
+    LastPressed = " ";
     DocId("SexText").innerHTML = HeightSystem(player, ee);
     DocId("AfterBattle").style.display = 'grid';
     DocId("SexButtons").style.display = 'grid';
@@ -3292,7 +3248,7 @@ function CombatQuests(ee) {
                 if (q.Count >= 3) {
                     q.Completed = true;
                     if (q.Count % 3 === 0) {
-                        q.hasOwnProperty("Tier") ? q.Tier++ : q.Tier = 1;
+                        q.hasOwnProperty("Tier") ? q.Tier < 3 ? q.Tier++ : q.Tier = 3 : q.Tier = 1;
                     }
                 }
             }
@@ -3315,8 +3271,8 @@ function DateTracker() {
     Flags.Date.Hour++;
     HouseEngine();
     if (Flags.Date.Hour % 6 === 0) {
-        DocId("CurrentDate").innerHTML = `${Flags.Date.Day}/${Flags.Date.Month}/${Flags.Date.Year} 
-        ${Flags.Date.Hour < 10 ? `0${Flags.Date.Hour}:00` : `${Flags.Date.Hour}:00`}`;
+        const displayDate = new Date(Flags.Date.Year, Flags.Date.Month - 1, Flags.Date.Day);
+        DocId("CurrentDate").innerHTML = `${displayDate.toDateString()} ${Flags.Date.Hour > 9 ? `${Flags.Date.Hour}:00` : `0${Flags.Date.Hour}:00`}`;
     }
     if (Flags.Date.Hour > 23) {
         Flags.Date.Day++;
@@ -3334,6 +3290,7 @@ function DateTracker() {
     }
     // health/will && fat burn
     if (!battle) {
+        VoreEngine();
         FoodEngine();
         FluidsEngine();
         player.RestRate = 1 + player.Perks.FasterRest.Count * 1;
@@ -3587,7 +3544,7 @@ function EssenceExtraCost(what) {
 DocId("EssenceAuto").addEventListener("click", function () {
     Settings.EssenceAuto = Settings.EssenceAuto ? false : true;
     DocId("EssenceAuto").value = Settings.EssenceAuto ? "Essence Auto" : "Essence Manual";
-        // Settings.BalanceParts = false;
+    // Settings.BalanceParts = false;
 });
 
 DocId("GrowBalls").addEventListener("click", function () {
@@ -3617,7 +3574,7 @@ function BreastButtons() {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
 
-    var Extraboobs = InputButton("Extra breasts " + EssenceExtraCost(player.Boobies) + "F");
+    var Extraboobs = InputButton(`Extra breasts ${EssenceExtraCost(player.Boobies)}F`);
     Extraboobs.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Boobies);
         if (player.Femi >= cost) {
@@ -3644,9 +3601,7 @@ function BreastButtons() {
 }
 
 function BreastButton(e) {
-    var boob = document.createElement("button");
-    boob.setAttribute("type", "button");
-    boob.innerHTML = BoobSizeConvertor(e.Size) + " " + EssenceCost(e) + "Feminity";
+    var boob = ButtonButton(`${BoobSizeConvertor(e.Size)} ${EssenceCost(e)}Feminity`)
     boob.addEventListener("click", function () {
         var cost = EssenceCost(e);
         if (player.Femi >= cost) {
@@ -3665,7 +3620,7 @@ function PussyButtons() {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
 
-    var ExtraPussy = InputButton("Extra pussy " + EssenceExtraCost(player.Pussies) + "F");
+    var ExtraPussy = InputButton(`Extra pussy ${EssenceExtraCost(player.Pussies)}F`);
     ExtraPussy.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Pussies);
         if (player.Femi >= cost) {
@@ -3688,9 +3643,7 @@ function PussyButtons() {
 }
 
 function PussyButton(e) {
-    var pussy = document.createElement("button");
-    pussy.setAttribute("type", "button");
-    pussy.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Feminity";
+    var pussy = ButtonButton(`${CmToInch(e.Size)} ${EssenceCost(e)}Feminity`)
     pussy.addEventListener("click", function () {
         var cost = EssenceCost(e);
         if (player.Femi >= cost) {
@@ -3708,7 +3661,7 @@ function DickButtons() {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
 
-    var ExtraDick = InputButton("Extra dick " + EssenceExtraCost(player.Dicks) + "M");
+    var ExtraDick = InputButton(`Extra dick ${EssenceExtraCost(player.Dicks)}M`);
     ExtraDick.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Dicks);
         if (player.Masc >= cost) {
@@ -3731,9 +3684,7 @@ function DickButtons() {
 }
 
 function DickButton(e) {
-    var Dick = document.createElement("button");
-    Dick.setAttribute("type", "button");
-    Dick.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Masculinity";
+    var Dick = ButtonButton(`${CmToInch(e.Size)} ${EssenceCost(e)}Masculinity`);
     Dick.addEventListener("click", function () {
         var cost = EssenceCost(e);
         if (player.Masc >= cost) {
@@ -3750,7 +3701,7 @@ function BallsButtons() {
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
-    var ExtraBall = InputButton("Extra Balls " + EssenceExtraCost(player.Balls) + "M");
+    var ExtraBall = InputButton(`Extra Balls ${EssenceExtraCost(player.Balls)}M`);
     ExtraBall.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Balls);
         if (player.Masc >= cost) {
@@ -3776,9 +3727,7 @@ function BallsButtons() {
 }
 
 function BallsButton(e) {
-    var Ball = document.createElement("button");
-    Ball.setAttribute("type", "button");
-    Ball.innerHTML = CmToInch(e.Size) + " " + EssenceCost(e) + "Masculinity";
+    var Ball = ButtonButton(`${CmToInch(e.Size)} ${EssenceCost(e)}Masculinity`)
     Ball.addEventListener("click", function () {
         var cost = EssenceCost(e);
         if (player.Masc >= cost) {
@@ -4197,25 +4146,6 @@ function GotMilk(who) {
 };
     // Makes sure map scales correctly when user change screen size.
     function HemScale() {
-        if (window.innerHeight < 500) {
-            DocId("FirstButtons").style.display = 'none';
-            DocId("SecondButtons").style.display = 'none';
-            DocId("MoreButtons").style.display = 'inline-block';
-            DocId("LessButtons").style.display = 'inline-block';
-            DocId("MobileButtons").style.display = 'inline-block';
-        } else if (window.innerHeight < 850) {
-            DocId("FirstButtons").style.display = 'block';
-            DocId("SecondButtons").style.display = 'none';
-            DocId("MoreButtons").style.display = 'inline-block';
-            DocId("LessButtons").style.display = 'inline-block';
-            DocId("MobileButtons").style.display = 'none';
-        } else {
-            DocId("SecondButtons").style.display = 'block';
-            DocId("FirstButtons").style.display = 'block';
-            DocId("MoreButtons").style.display = 'none';
-            DocId("LessButtons").style.display = 'none';
-            DocId("MobileButtons").style.display = 'none';
-        }
         const startarea = DocId("hem"),
             OldMap = medium;
         medium = Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20;
@@ -4546,6 +4476,65 @@ DocId("LeaveDormSex").addEventListener("click", function () {
     DocId("DormSexText").innerHTML = ``
     Setup = true;
 });
+function DormEngine() {
+    // connect this engine to date tracker
+    for (let e of House.Dormmates) {
+        // happiness
+        if (!e.hasOwnProperty("Happy")) {
+            e.Happy = 50;
+        };
+        // obedience
+        if (!e.hasOwnProperty("Obe")) {
+            e.Obe = 50;
+        }
+        // if dorm has thing to that
+
+        // if dorm has rule === a do a stuff
+
+        // Relationships between dormmates.
+        if (House.Dormmates.length > 1) {
+            // if same race
+            // if attraced to
+            // etc
+        };
+        
+
+        // Escape system
+        if (!e.hasOwnProperty("Escape")) {
+            e.Escape = 0;
+        }
+        if (e.Obe < 30 && e.Happy < 30) {
+            // Escape counter
+            e.Escape++;
+
+            // After being unhappy for 120 hours try to flee?
+            if (e.Escape > 120) {
+                // Count stuff that helps dorm mate to escape
+                // Count those who love you very much and will tell you if somebody tries to flee
+                // Count those who are super obedient 
+                // Count other stuff that helps or hinder flee chance
+                const FleeBoost = e.Str + e.Int,
+                    SupperHappy = House.Dormmates.some(e => e.Happy > 100) ? House.Dormmates : 0,
+                    SupperObe = House.Dormmates.some(e => e.Obe > 200) ? House.Dormmates : 0;
+
+                const FleeChance = Math.random() * FleeBoost, // plus otherstuff
+                    ToBeat = SupperHappy + SupperObe; // plus otherstuff
+                if (ToBeat < FleeChance) {
+                    // they ecaped
+                    // splice
+                    EventLog(`${e.FirstName} has escaped!`);
+                } else {
+                    EventLog(`${e.FirstName} tried to escape and has been caught.`);
+                };
+            };
+        } else if (e.Escape > 0) {
+            // Maybe insted of 0 have e.escape > value dependent on happy so that those who have been
+            // very happy doesn't flee as fast as others.
+            // Count down if they are out of escape values
+            e.Escape--;
+        };
+    };
+};
 function GetImpregOrgyFunc() {
     const HomeText = DocId("HomeText");
     HomeText.innerHTML = `Orgy`;
@@ -4634,9 +4623,9 @@ DocId("DormDrainFemi").addEventListener("click", function () {
     const Need = player.EssenceDrain;
     let Have = ee.Femi;
     ee.Femi = Math.max(0, ee.Femi - Need);
-    while (Have < Need && (ee.Pussies.length > 0 || ee.Boobies.length > 0)) {
+    while (Have < Need && (ee.Pussies.length > 0 || ee.Boobies.length > 0 ? ee.Boobies[0].Size > 0 : false)) {
         if (ee.Pussies.length > 0) {
-            const pussy = ee.Pussies[ee.Pussies.length - 1];
+            const pussy = Last(ee.Pussies);
             pussy.Size--;
             Have += EssenceCost(pussy);
             if (pussy.Size <= 1) {
@@ -4644,9 +4633,9 @@ DocId("DormDrainFemi").addEventListener("click", function () {
             };
         };
         if (ee.Boobies.length > 0 ? ee.Boobies[0].Size > 0 : false) {
-            const boobs = ee.Boobies[ee.Boobies.length - 1];
+            const boobs = Last(ee.Boobies);
             boobs.Size--;
-            Have += EssenceExtraCost(boobs);
+            Have += EssenceCost(boobs);
             if (boobs.Size <= 1 && ee.Boobies.length > 1) {
                 ee.Boobies.pop();
             };
@@ -4774,8 +4763,6 @@ DocId("Sleep").addEventListener("click", function () {
     for (var e = 0; e < 8; e++) {
         DateTracker();
     }
-    battle = true;
-    DocId("CurrentDate").innerHTML = Flags.Date.Day + "/" + Flags.Date.Month + "/" + Flags.Date.Year;
     DocId("HomeText").innerHTML = "You sleep well, restoring your health and willpower.";
 });
 
@@ -4791,10 +4778,7 @@ DocId("Portal").addEventListener("click", function () {
     const div = document.createElement("div");
 
     if (window.innerHeight > 600) { // No title on small screen
-        const h1 = document.createElement("h1"),
-            h1text = document.createTextNode("Portal");
-        h1.appendChild(h1text);
-        div.appendChild(h1);
+        div.appendChild(TitleText("Portal"));
     }
 
     const p = DocId("HomeText");
@@ -4878,6 +4862,8 @@ function LeaveHome() {
     DocId("Home").style.display = 'none';
     DocId("EmptyButtons").style.display = 'none';
     battle = false;
+    GamePaused = false;
+    DocId("LeaveHome").style.display = 'inline-block';
     DisplayGame();
 }
 // End home
@@ -4895,8 +4881,7 @@ function LeaveHome() {
             Upgrades.removeChild(Upgrades.firstChild);
         }
 
-        const p = document.createElement("p");
-        p.classList.add("TextBox");
+        const p = TextBox();
         Upgrades.appendChild(p);
 
         const h2 = document.createElement("h2"),
@@ -4907,7 +4892,7 @@ function LeaveHome() {
         function BedCost() {
             return Math.round(50 * Math.pow(1.2, House.BedLevel));
         }
-        const UpgradeBed = InputButton(`Upgrade bedroom ${BedCost()}g`);
+        const UpgradeBed = ButtonButton(`Upgrade bedroom ${BedCost()}g`);
         UpgradeBed.addEventListener("click", function () {
             if (player.Gold >= BedCost()) {
                 House.BedLevel++;
@@ -4932,7 +4917,7 @@ function LeaveHome() {
         }
 
         const DormValue = House.Dorm > 0 ? `Upgrade dorm ${DormCost()}g` : `Build dorm ${DormCost()}g`,
-            BuildDorm = InputButton(DormValue);
+            BuildDorm = ButtonButton(DormValue);
         BuildDorm.addEventListener("click", function () {
             if (player.Gold >= DormCost()) {
                 House.Dorm++;
@@ -4958,7 +4943,7 @@ function LeaveHome() {
             return Math.round(200 * Math.pow(1.2, House.Gym));
         }
         const GymValue = House.Gym > 0 ? `Upgrade gym ${Gymcost()}g` : `Build gym ${Gymcost()}g`,
-            BuildGym = InputButton(GymValue);
+            BuildGym = ButtonButton(GymValue);
         BuildGym.addEventListener("click", function () {
             if (player.Gold >= Gymcost()) {
                 if (House.Gym < 1) {
@@ -4982,7 +4967,7 @@ function LeaveHome() {
             return Math.round(200 * Math.pow(1.2, House.Kitchen));
         }
         const KitchenValue = House.Kitchen > 0 ? `Upgrade kitchen ${Kitchencost()}g` : `Build kitchen ${Kitchencost()}g`,
-            BuildKitchen = InputButton(KitchenValue)
+            BuildKitchen = ButtonButton(KitchenValue)
 
         BuildKitchen.addEventListener("click", function () {
             if (player.Gold >= Kitchencost()) {
@@ -5007,7 +4992,7 @@ function LeaveHome() {
             return Math.round(500 * Math.pow(1.2, House.Brothel));
         }
         const BrothelValue = House.Brothel > 0 ? `Upgrade brothel ${Brothelcost()}g` : `Build brothel ${Brothelcost()}g`,
-            BuildBrothel = InputButton(BrothelValue);
+            BuildBrothel = ButtonButton(BrothelValue);
 
         BuildBrothel.addEventListener("click", function () {
             if (player.Gold >= Brothelcost()) {
@@ -5030,7 +5015,7 @@ function LeaveHome() {
             return Math.round(200 * Math.pow(1.2, House.Nursery));
         }
         const NurseryValue = House.Nursery > 0 ? `Upgrade nursery ${Nurserycost()}g` : `Build nursery ${Nurserycost()}g`,
-            BuildNursery = InputButton(NurseryValue);
+            BuildNursery = ButtonButton(NurseryValue);
 
         BuildNursery.addEventListener("click", function () {
             if (player.Gold >= Nurserycost()) {
@@ -5053,7 +5038,7 @@ function LeaveHome() {
         Upgrades.appendChild(BuildNursery);
 
         if (House.Portal.Owned === false) {
-            const BuildPortal = InputButton("Build portal 1000g")
+            const BuildPortal = ButtonButton("Build portal 1000g")
             BuildPortal.addEventListener("click", function () {
                 if (player.Gold >= 1000) {
                     player.Gold -= 1000;
@@ -5072,7 +5057,7 @@ function LeaveHome() {
             Upgrades.appendChild(BuildPortal);
         }
 
-        const Close = InputButton("Close");
+        const Close = ButtonButton("Close");
         Close.addEventListener("click", function () {
             DocId("HomeStart").style.display = 'block';
             DocId("Upgrades").style.display = 'none';
@@ -5083,6 +5068,7 @@ function LeaveHome() {
                 Upgrades.removeChild(Upgrades.firstChild);
             }
         });
+        Upgrades.appendChild(document.createElement("br"));
         Upgrades.appendChild(Close);
 
         // Barn.innerHTML = "Allows you to milk your lactating servants. The milk can be brought with you as a travel snack or you can sell it for gold."
@@ -5313,16 +5299,10 @@ function LToGal(L) {
     }
 }
 function SnowInventoryAdd(item, quantity = 1) {
-    var i = 0;
-    for (i = 0; i < player.Inventory.length; i++) {
-        var q = false;
-        if (player.Inventory[i].Name === item.Name) {
-            player.Inventory[i].Quantity += quantity;
-            q = true;
-            break;
-        }
-    }
-    if (!q) {
+    if (player.Inventory.some(i => i.Name === item.Name)) {
+        const index = player.Inventory.findIndex(a => a.Name === item.Name);
+        player.Inventory[index].Quantity += quantity
+    } else {
         item.Quantity = quantity;
         player.Inventory.push(item);
     }
@@ -5499,55 +5479,53 @@ function Items2() {
 }
 
 function InventoryThing(e, b) {
-    var item = document.createElement("div");
+    const item = document.createElement("div");
     item.setAttribute("title", b.Title)
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.innerHTML = b.Name
     if (typeof e.Quantity === "number") {
-        p.innerHTML += " (" + e.Quantity + ")"
+        p.innerHTML += ` (${e.Quantity})`
     }
     item.appendChild(p);
 
     if (typeof b.Use === "function") {
-        var use = InputButton("Use");
+        const use = InputButton("Use");
         use.addEventListener("click", function () {
             DocId("InventoryText").innerHTML = b.Use(player, e);
             if (typeof e.Quantity === "number") {
                 e.Quantity--;
                 if (e.Quantity <= 0) {
-                    var index = player.Inventory.findIndex(a => a.Name === e.Name);
+                    const index = player.Inventory.findIndex(a => a.Name === e.Name);
                     player.Inventory.splice(index, 1);
                 }
             }
             Items2();
-
         });
         item.appendChild(use)
     }
     if (typeof b.Equip === "function") {
-        var Equip = InputButton("Equip");
+        const Equip = InputButton("Equip");
         Equip.addEventListener("click", function () {
             b.Equip();
             if (typeof e.Quantity === "number") {
                 e.Quantity--;
                 if (e.Quantity <= 0) {
-                    var index = player.Inventory.findIndex(a => a.Name === e.Name);
+                    const index = player.Inventory.findIndex(a => a.Name === e.Name);
                     player.Inventory.splice(index, 1);
                 }
             }
             Items2();
-
         });
         item.appendChild(Equip)
     }
     if (b.Drop === true) {
-        var drop = InputButton("Drop");
+        const drop = InputButton("Drop");
         drop.addEventListener("click", function () {
             if (typeof e.Quantity === "number") {
                 e.Quantity--;
                 if (e.Quantity <= 0) {
-                    var index = player.Inventory.findIndex(a => a.Name === e.Name);
+                    const index = player.Inventory.findIndex(a => a.Name === e.Name);
                     player.Inventory.splice(index, 1);
                 }
             }
@@ -5591,12 +5569,12 @@ const ItemDict = {
         Use: function (who) {
             who.Masc += 50;
             //if (who == who.
-            return "After drinking the orc cum, " + who.Name + " absorbs the manly essence of it."
+        return `After drinking the orc cum, ${who.Name} absorbs the manly essence of it.`;
         },
         Equip: "No",
         Drop: true,
-        Does: "Heals 10% of HP.",
-        Title: "Low-quality beer. It'll heal a bit."
+        Does: "",
+        Title: ""
     },
     fairyDust: {
         Lite: {
@@ -5607,7 +5585,6 @@ const ItemDict = {
             who.Height -= 5;
             return "Inhaling the fairy dust you see the world grow before you, or maybe it's you who became shorter?"
         },
-        Use: "Yes",
         Equip: "No",
         Drop: true,
         Does: "Shrinks you 5 cm",
@@ -7224,7 +7201,7 @@ const Tilesloader = ImageLoad(["Bandit", "Cave1", "Cave2", "Cave3", "Cave4", "Ci
         DocId("LoadingImagesProgress").classList.remove("visible");
         DocId("LoadingImagesProgress").classList.add("hidden");
     }),
-    NpcImageLoader = NpcImageLoad(["LocalPortal", "FarmBarn","BlackMarket"], function (images) {
+    NpcImageLoader = NpcImageLoad(["LocalPortal", "FarmBarn", "BlackMarket"], function (images) {
         Npc_images = images;
     });
 
@@ -7262,7 +7239,7 @@ function CurrentMap() {
         //Outlaw
         BlackMarket = new Npc("BlackMarket", "Black market", grid * 12, grid * 4, grid * 6, grid * 4, "RGB(133,94,66)"),
         // Dungeons
-        FirstDungeon = new Npc("FirstDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)"),
+        SuccubusDungeon = new Npc("SuccubusDungeon", "Dungeon", grid * 8, grid * 18, grid * 4, grid * 2, "RGB(133,94,66)"),
         // Farm
         FarmOwner = new Npc("FarmOwner", "Teoviz", grid * 5, grid * 2, grid, grid, "RGB(133,94,66)"),
         FarmBarn = new Npc("FarmBarn", "Barn", grid * 13, grid, grid * 5, grid * 7, "RGB(133,94,66)"),
@@ -7398,7 +7375,7 @@ function CurrentMap() {
                     if (enemies.length < 1) {
                         enemies = [EncounterCave4(), EncounterCave4(), EncounterCave4(), EncounterCave4()]
                     }
-                    Npcs = [FirstDungeon];
+                    Npcs = [SuccubusDungeon];
                     break;
             }
             break;
@@ -7490,7 +7467,7 @@ function CurrentMap() {
 
     function PrintNpcs() {
         const DontneedPrint = ["Townhall", "Shop", "Bar", "Gym", "WitchShop", "WitchHut"],
-            HasSprite = ["LocalPortal", "FarmBarn","BlackMarket"];
+            HasSprite = ["LocalPortal", "FarmBarn", "BlackMarket"];
         // var needPrint = ["FarmBarn", "FarmOwner", "LocalPortal", "PortalShop", "Barber", "MountainShrine", "ChimeraShrine"];
         // Switched it so new npcs always print
         for (var e of Npcs) {
@@ -7514,7 +7491,8 @@ function CurrentMap() {
                 if (mousedowner) {
                     mousedowner = false;
                 }
-                battle = true;
+                battle = false;
+                GamePaused = true;
                 sprite.x = startarea.width / 2 - grid;
                 sprite.y = startarea.height / 2;
                 UpdateNpc(n.Name);
@@ -8082,22 +8060,19 @@ DocId("MobileButtons").addEventListener("click", function () {
     }
 });
 
-window.onload = function () {
-    if (window.innerHeight < 500) {
+function StatusButtonSystem() {
+    if (window.innerHeight < 400) {
         DocId("FirstButtons").style.display = 'none';
         DocId("SecondButtons").style.display = 'none';
         DocId("MoreButtons").style.display = 'inline-block';
         DocId("LessButtons").style.display = 'inline-block';
         DocId("MobileButtons").style.display = 'inline-block';
-        document.body.style.fontSize = Settings.FontSize + "em";
-        HemScale();
     } else if (window.innerHeight < 800) {
         DocId("FirstButtons").style.display = 'block';
         DocId("SecondButtons").style.display = 'none';
         DocId("MoreButtons").style.display = 'inline-block';
         DocId("LessButtons").style.display = 'inline-block';
         DocId("MobileButtons").style.display = 'none';
-        document.body.style.fontSize = Settings.FontSize + "em";
     } else {
         DocId("SecondButtons").style.display = 'block';
         DocId("FirstButtons").style.display = 'block';
@@ -8105,26 +8080,21 @@ window.onload = function () {
         DocId("LessButtons").style.display = 'none';
         DocId("MobileButtons").style.display = 'none';
     }
-};
+}
 function TribeQuests() {
-    var x = DocId("TribeQuestsMenu");
+    const x = DocId("TribeQuestsMenu");
     while (x.hasChildNodes()) {
-        x.removeChild(x.firstChild);
+        x.removeChild(x.lastChild);
     }
 
-    var TribeDragon = document.createElement("INPUT");
-    TribeDragon.setAttribute("type", "button");
-    TribeDragon.setAttribute("value", "Dragon");
-    TribeDragon.setAttribute("title", "Prove you worth.");
+    const TribeDragon = ButtonButton("Dragon", "Prove you worth.");
     TribeDragon.addEventListener("click", function () {
         while (x.hasChildNodes()) {
             x.removeChild(x.firstChild);
         }
-        var Accept = document.createElement("INPUT");
-        Accept.setAttribute("type", "button");
-        Accept.setAttribute("value", "Accept");
+        const Accept = InputButton("Accept");
         Accept.addEventListener("click", function () {
-            var Quest = {
+            const Quest = {
                 Name: "",
                 Count: 0,
                 Completed: false
@@ -8132,9 +8102,7 @@ function TribeQuests() {
             player.Quests.push(Quest);
             TribeQuests();
         });
-        var Decline = document.createElement("INPUT");
-        Decline.setAttribute("type", "button");
-        Decline.setAttribute("value", "Decline");
+        const Decline = InputButton("Decline");
         Decline.addEventListener("click", function () {
             TribeQuests();
         });
@@ -8142,37 +8110,32 @@ function TribeQuests() {
         document.getElementById("ShrineQuestsMenu").appendChild(Decline);
     });
 
-    var TribeDragonReward = document.createElement("INPUT");
-    TribeDragonReward.setAttribute("type", "button");
-    TribeDragonReward.setAttribute("value", "reward");
-    TribeDragonReward.setAttribute("title", "");
+    const TribeDragonReward = ButtonButton("-reward");
     TribeDragonReward.addEventListener("click", function () {
-        var index = player.Quests.findIndex(e => e.Name == "");
+        const index = player.Quests.findIndex(e => e.Name == "");
         player.Quests.splice(index, 1);
         TribeQuests();
     });
 };
 
 function TribeShopFunc() {
-    var Buildings = document.getElementById("Buildings")
+    const Buildings = document.getElementById("Buildings")
     while (Buildings.hasChildNodes()) {
         Buildings.removeChild(Buildings.firstChild);
     }
-    var div = document.createElement("div");
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Tribe shop");
+    const div = document.createElement("div"),
+        h1 = document.createElement("h1"),
+        h1text = document.createTextNode("Tribe shop");
     h1.appendChild(h1text);
     div.appendChild(h1);
 
-    var p = document.createElement("p");
+    const p = document.createElement("p");
     p.classList.add("TextBox");
     div.appendChild(p);
 
-    var ShopMenu = document.createElement("div");
-    var row1 = document.createElement("div");
-    var input1 = document.createElement("input");
-    input1.setAttribute("type", "button");
-    input1.setAttribute("value", "");
+    const ShopMenu = document.createElement("div"),
+        row1 = document.createElement("div"),
+        input1 = ButtonButton("input");
     input1.addEventListener("click", function () {
 
     });
@@ -8180,9 +8143,7 @@ function TribeShopFunc() {
 
     });
     row1.appendChild(input1);
-    var input2 = document.createElement("input");
-    input2.setAttribute("type", "button");
-    input2.setAttribute("value", "");
+    const input2 = ButtonButton("input");
     input2.addEventListener("click", function () {
 
     });
@@ -8192,48 +8153,24 @@ function TribeShopFunc() {
     row1.appendChild(input2);
 
     ShopMenu.appendChild(row1);
-    var Leave = document.createElement("input");
-    Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
-    Leave.addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
-        Buildings.style.display = 'none';
-        while (Buildings.hasChildNodes()) {
-            Buildings.removeChild(Buildings.firstChild);
-        }
-        return;
-    });
-    div.appendChild(Leave);
+    div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';
 }
 
 function TribeChiefFunc() {
-    var Npc = document.getElementById("Npc")
-    Npc.style.display = 'none';
-    while (Npc.hasChildNodes()) {
-        Npc.removeChild(Npc.firstChild);
-    }
+    const Npc = document.getElementById("Npcs")
+    CleanNpcs();
 
-    var div = document.createElement("div");
+    const div = document.createElement("div");
     // Title / Name
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Tribe chief");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    div.appendChild(TitleText("Tribe chief"));
     // Textbox
-    var p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     div.appendChild(p);
 
     // Buttons for interaction, quests, etc..
-    var input1 = document.createElement("input");
-    input1.setAttribute("type", "button");
-    input1.setAttribute("value", "");
+    const input1 = ButtonButton("input");
     input1.addEventListener("click", function () {
 
     });
@@ -8242,9 +8179,7 @@ function TribeChiefFunc() {
     });
     div.appendChild(input1);
 
-    var input2 = document.createElement("input");
-    input2.setAttribute("type", "button");
-    input2.setAttribute("value", "");
+    const input2 = ButtonButton("input");
     input2.addEventListener("click", function () {
 
     });
@@ -8254,49 +8189,25 @@ function TribeChiefFunc() {
     div.appendChild(input2);
 
     // Leave button, kills all children so they don't take up space
-    var Leave = document.createElement("input");
-    Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
-    Leave.addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
-        Npc.style.display = 'none';
-        while (Npc.hasChildNodes()) {
-            Npc.removeChild(Npc.firstChild);
-        }
-        return;
-    });
-    div.appendChild(Leave);
+    div.appendChild(LeaveNpc());
 
     Npc.appendChild(div);
-    document.getElementById("Npc").style.display = 'block';
+    Npc.style.display = 'block';
 }
 
 function TribeChiefWifeFunc() {
-    var Npc = document.getElementById("Npc")
-    Npc.style.display = 'none';
-    while (Npc.hasChildNodes()) {
-        Npc.removeChild(Npc.firstChild);
-    }
+    const Npc = document.getElementById("Npcs")
+    CleanNpcs();
 
-    var div = document.createElement("div");
+    const div = document.createElement("div");
     // Title / Name
-    var h1 = document.createElement("h1");
-    var h1text = document.createTextNode("Tribe chief's Wife");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    div.appendChild(TitleText("Tribe chief's Wife"));
     // Textbox
-    var p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     div.appendChild(p);
 
     // Buttons for interaction, quests, etc..
-    var input1 = document.createElement("input");
-    input1.setAttribute("type", "button");
-    input1.setAttribute("value", "");
+    const input1 = ButtonButton("input");
     input1.addEventListener("click", function () {
 
     });
@@ -8305,9 +8216,7 @@ function TribeChiefWifeFunc() {
     });
     div.appendChild(input1);
 
-    var input2 = document.createElement("input");
-    input2.setAttribute("type", "button");
-    input2.setAttribute("value", "");
+    const input2 = ButtonButton("input");
     input2.addEventListener("click", function () {
         TestDialog();
     });
@@ -8317,58 +8226,38 @@ function TribeChiefWifeFunc() {
     div.appendChild(input2);
 
     // Leave button, kills all children so they don't take up space
-    var Leave = document.createElement("input");
-    Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
-    Leave.addEventListener("click", function () {
-        battle = false;
-        document.getElementById("map").style.display = 'block';
-        document.getElementById("buttons").style.display = 'block';
-        document.getElementById("EmptyButtons").style.display = 'none';
-        document.getElementById("status").style.display = 'block';
-        Npc.style.display = 'none';
-        while (Npc.hasChildNodes()) {
-            Npc.removeChild(Npc.firstChild);
-        }
-        return;
-    });
-    div.appendChild(Leave);
+    div.appendChild(LeaveNpc());
 
     Npc.appendChild(div);
-    document.getElementById("Npc").style.display = 'block';
+    Npc.style.display = 'block';
 
 }
 
 function TestDialog() {
-    var Npc = document.getElementById("Npc");
-    while (Npc.hasChildNodes()) {
-        Npc.removeChild(Npc.lastChild)
-    };
+    const Npc = document.getElementById("Npc");
+    CleanNpcs();
 
-    var h1 = document.createElement("h1");
-    var h1Text = document.createTextNode("Testsson");
-    h1.appendChild(h1Text);
+    h1.appendChild(TitleText("Testsson"));
     Npc.appendChild(h1);
 
-    var p = document.createElement("p");
-    p.classList.add("TextBox");
+    const p = TextBox();
     Npc.appendChild(p);
 
-    var Inputs = document.createElement("div");
+    const Inputs = document.createElement("div");
 
-    var Option1 = InputButton("Option 1");
+    const Option1 = ButtonButton("Option 1");
     Option1.addEventListener("click", function () {
         while (Inputs.hasChildNodes()) {
             Inputs.removeChild(Inputs.firstChild)
         }
 
-        var Option11 = InputButton("Option 1-1");
+        const Option11 = ButtonButton("Option 1-1");
         Option11.addEventListener("click", function () {
 
         });
         Inputs.appendChild(Option11);
 
-        var Option12 = InputButton("Option 1-2");
+        const Option12 = ButtonButton("Option 1-2");
         Option12.addEventListener("click", function () {
 
         });
@@ -8376,19 +8265,19 @@ function TestDialog() {
     });
     Inputs.appendChild(Option1);
 
-    var Option2 = InputButton("Option 2a");
+    const Option2 = ButtonButton("Option 2a");
     Option2.addEventListener("click", function () {
         while (Inputs.hasChildNodes()) {
             Inputs.removeChild(Inputs.firstChild)
         }
 
-        var Option21 = InputButton("Option 2-1");
+        const Option21 = ButtonButton("Option 2-1");
         Option21.addEventListener("click", function () {
 
         });
         Inputs.appendChild(Option21);
 
-        var Option22 = InputButton("Option 2-2");
+        const Option22 = ButtonButton("Option 2-2");
         Option22.addEventListener("click", function () {
 
         });
@@ -8445,7 +8334,7 @@ function MovementEngine(e) {
 
 setInterval(() => {
     MovementEngine();
-}, 30);
+}, 40);
 
 DocId("hem").addEventListener('mousedown', function (e) {
     mousedowner = true;
@@ -8864,7 +8753,7 @@ function RespawnBlocker() {
         RandomInt(2, 5), RandomInt(6, 9), 70, 70, RandomInt(15, 20), RandomInt(5, 15),
         'Chocolate', grid, RandomInt(140, 180));
     OP.EssenceGiver(50);
-    OP.FatMuscle(OP, 1, 1);
+    OP.FatMuscle(1, 1);
     StandardEnemy(OP);
     NameGiver(OP);
     OP.XPos = 99 * grid;
@@ -9087,8 +8976,8 @@ function PrintEnemies() {
     }
 };
 function FirstWave() {
-    var RacesCave = ["Goblin", "Imp"];
-    var OP = new enemy("Guard", RandomString(RacesCave), RandomInt(10, 13), RandomInt(10, 13), RandomInt(10, 13), RandomInt(0, 2),
+    const RacesCave = ["Goblin", "Imp"];
+    const OP = new enemy("Guard", RandomString(RacesCave), RandomInt(10, 13), RandomInt(10, 13), RandomInt(10, 13), RandomInt(0, 2),
         RandomInt(1, 3), RandomInt(9, 18), 150, 180, RandomInt(30, 40), RandomInt(20, 35),
         'red', grid, RandomInt(120, 140));
     OP.EssenceGiver(250);
@@ -9099,8 +8988,8 @@ function FirstWave() {
 }
 
 function SecondWave() {
-    var RacesCave2 = ["Goblin", "Demon"];
-    var OP = new enemy("Guard", RandomString(RacesCave2), RandomInt(15, 21), RandomInt(15, 21), RandomInt(15, 21), RandomInt(11, 15),
+    const RacesCave2 = ["Goblin", "Demon"];
+    const OP = new enemy("Guard", RandomString(RacesCave2), RandomInt(15, 21), RandomInt(15, 21), RandomInt(15, 21), RandomInt(11, 15),
         RandomInt(8, 11), RandomInt(19, 28), 220, 240, RandomInt(45, 65), RandomInt(40, 65),
         'red', grid, RandomInt(150, 180));
     OP.EssenceGiver(270);
@@ -9111,8 +9000,8 @@ function SecondWave() {
 }
 
 function ThirdWave() {
-    var RacesCave3 = ["Dhampir", "Demon"];
-    var OP = new enemy("Guard", RandomString(RacesCave3), RandomInt(30, 45), RandomInt(30, 45), RandomInt(27, 43), RandomInt(23, 27),
+    const RacesCave3 = ["Dhampir", "Demon"];
+    const OP = new enemy("Guard", RandomString(RacesCave3), RandomInt(30, 45), RandomInt(30, 45), RandomInt(27, 43), RandomInt(23, 27),
         RandomInt(20, 23), RandomInt(55, 75), 420, 450, RandomInt(75, 95), RandomInt(65, 85),
         'red', grid, RandomInt(160, 190));
     OP.EssenceGiver(300);
@@ -9123,8 +9012,8 @@ function ThirdWave() {
 }
 
 function FourthWave() {
-    var RacesCave4 = ["Succubus", "Incubus"];
-    var OP = new enemy("Guard", RandomString(RacesCave4), RandomInt(10, 15), RandomInt(50, 65), RandomInt(55, 70), RandomInt(55, 70),
+    const RacesCave4 = ["Succubus", "Incubus"];
+    const OP = new enemy("Guard", RandomString(RacesCave4), RandomInt(10, 15), RandomInt(50, 65), RandomInt(55, 70), RandomInt(55, 70),
         RandomInt(35, 55), RandomInt(95, 135), 500, 600, RandomInt(110, 140), RandomInt(90, 140),
         'purple', grid, RandomInt(150, 180));
     OP.EssenceGiver(2000);
@@ -9135,65 +9024,85 @@ function FourthWave() {
 }
 
 function SuccubusBoss() {
-    var RacesCave4 = ["Succubus", "Incubus"];
-    var OP = new enemy("Mistress", RandomString(RacesCave4), RandomInt(20, 25), RandomInt(60, 75), RandomInt(65, 80), RandomInt(65, 80),
+    const RacesCave4 = ["Succubus", "Incubus"];
+    const OP = new enemy("Mistress", RandomString(RacesCave4), RandomInt(20, 25), RandomInt(60, 75), RandomInt(65, 80), RandomInt(65, 80),
         RandomInt(45, 65), RandomInt(105, 145), 800, 1500, RandomInt(300, 400), RandomInt(200, 340),
         'purple', grid, RandomInt(150, 180));
-    OP.EssenceGiver(2500);
-    OP.FatMuscle(1, 1);
     StandardEnemy(OP);
-    EvilNameGiver(OP);
     if (OP.Race == "Succubus") {
+        OP.FatMuscle(11, 50);
         OP.Femi = RandomInt(4500, 7000);
         OP.Masc = 0;
         OP.Name = "Mistress";
     } else {
+        OP.FatMuscle(7, 70);
         OP.Femi = 0;
         OP.Masc = RandomInt(4500, 7000);
         OP.Name = "Master";
     }
+    EvilNameGiver(OP);
     return OP;
 }
 
 function SuccubusBossUnique() {
-    var OP = new enemy("Dungeon Mistress", "Succubus", RandomInt(20, 25), RandomInt(60, 75), RandomInt(65, 80), RandomInt(65, 80),
+    const OP = new enemy("Dungeon Mistress", "Succubus", RandomInt(20, 25), RandomInt(60, 75), RandomInt(65, 80), RandomInt(65, 80),
         RandomInt(45, 65), RandomInt(105, 145), 800, 1500, RandomInt(300, 400), RandomInt(200, 340),
         'purple', grid, RandomInt(150, 180));
-    OP.GenderLock(3000, "female");
+    OP.GenderLock(13000, "female");
     OP.FatMuscle(1, 1);
     StandardEnemy(OP);
     EvilNameGiver(OP);
     return OP;
 }
-var Dungeon = false;
-var Wave = 0;
-DocId("EnterDungeon").addEventListener("click", function () {
-    enemies = [];
-    if (false) {
-        enemies = [FirstWave(), SecondWave(), ThirdWave(), FourthWave(), SuccubusBossUnique()];
-    } else {
-        enemies = [FirstWave(), SecondWave(), ThirdWave(), FourthWave(), SuccubusBoss()];
+var Dungeon = false,
+    Wave = 0;
+
+function SuccubusDungeonFunc() {
+    const dungeon = document.getElementById("DungeonSystem")
+    while (dungeon.hasChildNodes()) {
+        dungeon.removeChild(dungeon.lastChild);
+    };
+
+    const div = document.createElement("div");
+
+    if (window.innerHeight > 600) { // No title on small screen
+        div.appendChild(TitleText("Cave dungeon"));
     }
 
-    EnemyIndex = Wave;
-    BattleSetup(enemies[Wave]);
+    const p = TextBox();
+    div.appendChild(p);
+    if (Wave === 5) {
+        Wave = 0;
+        p.innerHTML = "You beat the dungeon more to come!"
+    } else {
+        p.innerHTML = `Wave ${Wave + 1}`;
+    }
 
-    DocId("FirstDungeon").style.display = 'none';
-    DocId("FirstDungeonText").innerHTML = "Wave " + (Wave + 2);
-    EssenceCheck(enemies[Wave]);
-    Dungeon = true;
-});
+    const input1 = InputButton("Go deeper")
+    input1.addEventListener("click", function () {
+        enemies = [];
+        Dungeon = true;
+        if (false) {
+            enemies = [FirstWave(), SecondWave(), ThirdWave(), FourthWave(), SuccubusBossUnique()];
+        } else {
+            enemies = [FirstWave(), SecondWave(), ThirdWave(), FourthWave(), SuccubusBoss()];
+        }
+        EnemyIndex = Wave;
+        EssenceCheck(enemies[Wave]);
+        BattleSetup(enemies[Wave]);
+        dungeon.style.display = 'none';
+    });
+    div.appendChild(input1);
+    div.appendChild(LeaveDungeon());
+
+    dungeon.appendChild(div);
+    dungeon.style.display = 'block';
+}
 
 function DungeonStopButton() {
-    DocId("status").style.display = 'block';
-    DocId("buttons").style.display = 'none';
-    DocId("EmptyButtons").style.display = 'block';
-    DocId("EventLog").style.display = 'block';
-
-    player.Orgasm = 0;
     DocId("AfterBattle").style.display = 'none';
-    DocId("FirstDungeon").style.display = 'block';
     Wave++;
+    EnemyIndex = Wave;
     if (Wave == 4 && !Flags.BeatSuccubus && false) {
         Flags.BeatSuccubus = true;
         DocId("FirstDungeonText").innerHTML = "Having beaten her you found a teleport shard to a new world,"
@@ -9203,11 +9112,7 @@ function DungeonStopButton() {
             DocId("FirstDungeonText").innerHTML += " you should build a portal at your mansion so you can use it."
         }
     }
-    if (Wave == 5) {
-        Wave = 0;
-        DocId("FirstDungeonText").innerHTML += "<br><br> You beat the dungeon more to come!"
-    }
-    LastPressed = " ";
+    SuccubusDungeonFunc();
     return;
 };
 
@@ -9216,47 +9121,23 @@ function DungeonCapture() {
     DocId("buttons").style.display = 'none';
     DocId("EmptyButtons").style.display = 'block';
     DocId("EventLog").style.display = 'block';
-
-    House.Dormmates.push(enemies[EnemyIndex]);
-    player.Orgasm = 0;
     DocId("AfterBattle").style.display = 'none';
-    DocId("FirstDungeon").style.display = 'block';
+
+    House.Dormmates.push(enemies[Wave]);
     Wave++;
-    LastPressed = " ";
-    if (Wave == 4) {
-        Wave = 0;
-        DocId("FirstDungeonText").innerHTML += "<br><br> You beat the dungeon more to come!"
-    }
-    LastPressed = " ";
+    EnemyIndex = Wave;
+    SuccubusDungeonFunc();
     return;
 };
 DocId("DungeonLose").addEventListener("click", function () {
-    battle = false;
     DocId("Lose").style.display = 'none';
-    DocId("map").style.display = 'block';
-    DocId("status").style.display = 'block';
-    DocId("buttons").style.display = 'block';
     DocId("LoseStruggle").style.display = 'inline-block';
     DocId("LoseSubmit").style.display = 'inline-block';
     DocId("LosePlayerOrgasm").innerHTML = " ";
-    DocId("EventLog").style.display = 'block';
-    enemies = [];
+    enemies = [RespawnBlocker()];
     Dungeon = false;
     Wave = 0;
-});
-DocId("LeaveFirstDungeon").addEventListener("click", function () {
-    enemies = [];
-    battle = false;
-    player.Orgasm = 0;
-    DocId("AfterBattle").style.display = 'none';
-    DocId("map").style.display = 'block';
-    DocId("status").style.display = 'block';
-    DocId("buttons").style.display = 'block';
-    DocId("EventLog").style.display = 'block';
-    LastPressed = " ";
-    Dungeon = false;
-    Wave = 0;
-    return;
+    DisplayGame();
 });
 
 // change these to document.get... adventlistners
@@ -9815,6 +9696,14 @@ function InputButton(Value, Title = "") { // Save space and stop repeating same 
     return button;
 }
 
+function InputText(value, id) {
+    const IText = document.createElement("input");
+    IText.setAttribute("type", "text");
+    IText.setAttribute("value", value);
+    IText.setAttribute("id", id);
+    return IText;
+}
+
 function ButtonButton(inner = "", Title = "") { // Same as above but for <button>
     const button = document.createElement("button");
     button.setAttribute("type", "button");
@@ -9823,23 +9712,108 @@ function ButtonButton(inner = "", Title = "") { // Same as above but for <button
     return button;
 }
 
+function LabelFor(forid, inner) {
+    const Label = document.createElement("label");
+    Label.setAttribute("for", forid);
+    Label.innerHTML = (inner)
+    return Label
+}
+
+function MakeSlider(StartValue, MaxValue, MinValue = 0) {
+    const Slider = document.createElement("input");
+    Slider.setAttribute("type", "range");
+    Slider.min = MinValue;
+    Slider.max = MaxValue;
+    Slider.value = StartValue;
+    return Slider
+}
+
 function LeaveBuilding() {
     const Leave = document.createElement("input");
     Leave.setAttribute("type", "button");
     Leave.setAttribute("value", "Leave");
     Leave.addEventListener("click", function () {
         battle = false;
+        GamePaused = false;
         DocId("map").style.display = 'block';
         DocId("buttons").style.display = 'block';
         DocId("EmptyButtons").style.display = 'none';
         DocId("status").style.display = 'block';
+        const Buildings = DocId("Buildings");
         Buildings.style.display = 'none';
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
         }
         return;
     });
-    return Leave
+    return Leave;
+};
+
+function LeaveNpc() {
+    const Leave = document.createElement("input");
+    Leave.setAttribute("type", "button");
+    Leave.setAttribute("value", "Leave");
+    Leave.addEventListener("click", function () {
+        battle = false;
+        GamePaused = false;
+        document.getElementById("map").style.display = 'block';
+        document.getElementById("buttons").style.display = 'block';
+        document.getElementById("EmptyButtons").style.display = 'none';
+        document.getElementById("status").style.display = 'block';
+        const Npcs = DocId("Npcs")
+        Npcs.style.display = 'none';
+        while (Npcs.hasChildNodes()) {
+            Npcs.removeChild(Npcs.firstChild);
+        }
+        return;
+    });
+    return Leave;
+};
+
+function LeaveDungeon() {
+    const Leave = document.createElement("input");
+    Leave.setAttribute("type", "button");
+    Leave.setAttribute("value", "Leave");
+    Leave.addEventListener("click", function () {
+        Wave = 0;
+        enemies = [RespawnBlocker()];
+        Dungeon = false;
+        DisplayGame();
+        const DungeonSys = DocId("DungeonSystem")
+        DungeonSys.style.display = 'none';
+        while (DungeonSys.hasChildNodes()) {
+            DungeonSys.removeChild(DungeonSys.firstChild);
+        }
+        return;
+    });
+    return Leave;
+};
+
+function TitleText(text) {
+    const h1 = document.createElement("h1"),
+        h1text = document.createTextNode(text);
+    h1.appendChild(h1text);
+    return h1
+};
+
+function TextBox() {
+    const p = document.createElement("p");
+    p.classList.add("TextBox");
+    return p;
+};
+
+function CleanNpcs() {
+    const Npc = document.getElementById("Npcs")
+    while (Npc.hasChildNodes()) {
+        Npc.removeChild(Npc.firstChild);
+    }
+}
+
+function CleanBuildings() {
+    const Buildings = document.getElementById("Buildings")
+    while (Buildings.hasChildNodes()) {
+        Buildings.removeChild(Buildings.firstChild);
+    }
 }
 
 window.mobilecheck = function () { // Check if mobile device from detectmobile
@@ -9937,12 +9911,27 @@ DocId("SaveText").addEventListener("click", function () {
 });
 DocId("Options").addEventListener("click", function () {
     DisplayNone();
+    const {
+        ImgPack,
+        LogLength,
+        FontSize,
+        Inch,
+        HighLightDoors,
+        BackColor,
+        MapColor,
+        TextColor,
+        TextFont
+    } = Settings
     DocId("optionpage").style.display = 'block';
-    DocId("ImgPack").value = "Img pack: " + Settings.ImgPack;
-    DocId("LogLength").innerHTML = Settings.LogLength;
-    DocId("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
-    DocId("Inch").value = "Inch " + Settings.Inch;
-    DocId("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
+    DocId("ImgPack").value = `Img pack: ${ImgPack}`;
+    DocId("LogLength").innerHTML = LogLength;
+    DocId("FontSize").innerHTML = `${Math.round(FontSize * 100) / 100}em`
+    DocId("Inch").value = `Inch ${Inch}`;
+    DocId("HighLightDoors").value = `Highlight doors ${HighLightDoors}`;
+    DocId("backcolor").value = BackColor;
+    DocId("MapColor").value = MapColor;
+    DocId("textcolor").value = TextColor;
+    DocId("textfont").value = TextFont;
 });
 
 DocId("FontSmaller").addEventListener("click", function () {
@@ -10130,6 +10119,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
         if (PlayerMaxOrgasm >= player.Orgasm) {
             Anal.appendChild(SexButton("Receive rimjob", SexActGetRimjob));
             Anal.appendChild(SexButton("Give rimjob", SexActGiveRimjob));
+            // TODO ride anal
             if (ee.Pussies.length > 0) {
                 Mouth.appendChild(SexButton("Give Cunnilingus", SexActGiveCunnilingus));
                 if (player.Pussies.length > 0) {
@@ -12505,8 +12495,9 @@ DocId("LeaveVore").addEventListener("click", function () {
     DisplayGame();
 });
 
-function VoreEngine(progress = 0.001) {
-    const VoreMaxExp = 30 + Math.pow(1.05, player.Vore.Level - 1),
+function VoreEngine() {
+    const progress = 0.1,
+        VoreMaxExp = 30 + Math.pow(1.05, player.Vore.Level - 1),
         VP = player.Vore.VorePerks,
         digestionCount = VP.hasOwnProperty("FasterDigestion") ?
         1 + VP.FasterDigestion.Count : 1,
@@ -12597,6 +12588,7 @@ function VoreEngine(progress = 0.001) {
                     player.Will += ToAdd("Will");
                     player.End += ToAdd("End");
                     player.SexSkill += ToAdd("SexSkill");
+                    console.log("Stomach")
                 }
                 EventLog(`You have digested ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Stomach.splice(Vore.Stomach.findIndex(i => i === e), 1);
@@ -12668,6 +12660,7 @@ function VoreEngine(progress = 0.001) {
                     player.Will += ToAdd("Will");
                     player.End += ToAdd("End");
                     player.SexSkill += ToAdd("SexSkill");
+                    console.log("Vagina")
                 }
                 EventLog(`The only trace left of ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName} is a trail of pussy discharge traveling down your legs.`);
                 Vore.Vagina.splice(Vore.Vagina.findIndex(i => i === e), 1);
@@ -12749,16 +12742,19 @@ function VoreEngine(progress = 0.001) {
                 };
             };
             if (e.Weight < 0) {
-                const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
-                    ToAdd = (what) => {
-                        return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
-                    };
-                player.Str += ToAdd("Str");
-                player.Int += ToAdd("Int");
-                player.Charm += ToAdd("Charm");
-                player.Will += ToAdd("Will");
-                player.End += ToAdd("End");
-                player.SexSkill += ToAdd("SexSkill");
+                if (VP.hasOwnProperty("AbsorbStats") ? VP.AbsorbStats.Count > 0 : false) {
+                    const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
+                        ToAdd = (what) => {
+                            return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
+                        };
+                    player.Str += ToAdd("Str");
+                    player.Int += ToAdd("Int");
+                    player.Charm += ToAdd("Charm");
+                    player.Will += ToAdd("Will");
+                    player.End += ToAdd("End");
+                    player.SexSkill += ToAdd("SexSkill");
+                    console.log("Breast")
+                }
                 EventLog(`There is nothing but milk left of ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Breast.splice(Vore.Breast.findIndex(i => i === e), 1);
             };
@@ -12833,6 +12829,7 @@ function VoreEngine(progress = 0.001) {
                     player.Will += ToAdd("Will");
                     player.End += ToAdd("End");
                     player.SexSkill += ToAdd("SexSkill");
+                    console.log("Balls")
                 }
                 EventLog(`There is nothing but cum left of the ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Balls.splice(Vore.Balls.findIndex(i => i === e), 1);

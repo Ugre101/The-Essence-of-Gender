@@ -137,8 +137,9 @@ DocId("LeaveVore").addEventListener("click", function () {
     DisplayGame();
 });
 
-function VoreEngine(progress = 0.001) {
-    const VoreMaxExp = 30 + Math.pow(1.05, player.Vore.Level - 1),
+function VoreEngine() {
+    const progress = 0.1,
+        VoreMaxExp = 30 + Math.pow(1.05, player.Vore.Level - 1),
         VP = player.Vore.VorePerks,
         digestionCount = VP.hasOwnProperty("FasterDigestion") ?
         1 + VP.FasterDigestion.Count : 1,

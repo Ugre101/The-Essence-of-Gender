@@ -326,6 +326,22 @@ div.Building {
     overflow: auto;
 }
 
+div.Dungeon {
+    background-color: rgb(95, 95, 93);
+    border: 20px solid transparent;
+    border-image: url(Res/slot_01.png) 20;
+    border-radius: 20px;
+
+    width: 750px;
+    max-width: 90%;
+    min-height: 350px;
+    height: auto;
+    max-height: 90%;
+    text-align: center;
+    padding: 1em;
+    overflow: auto;
+}
+
 p.TextBox {
     min-height: 7em;
     height: auto;
@@ -959,7 +975,7 @@ div.Arousal {
 input[type=button],
 input[type=submit],
 button {
-    line-height: 1.1;
+    line-height: 1.3;
     text-align: center;
     font-family: inherit;
     font-size: inherit;
@@ -968,11 +984,8 @@ button {
     color: inherit;
     width: 90%;
     max-width: 220px;
-    min-height: 4vh;
-    height: auto;
-    max-height: 100%;
     margin: 0.3em 0.6em;
-
+    min-height: 6vh;
     border: 1px solid rgb(83, 57, 43);
     border-radius: 8px;
     box-shadow: 0 0 2px 1px black;
@@ -999,11 +1012,11 @@ input[type=color] {
     max-width: 110px;
     height: 5vh;
     max-height: 40px;
-
     border: 1px solid rgb(83, 57, 43);
     border-radius: 10px;
     box-shadow: 0 0 2px 1px black;
     background-color: rgb(221, 195, 160);
+    vertical-align: top;
 }
 
 input[type=file] {
@@ -1062,6 +1075,7 @@ div.Vore {
     background-color: rgb(231, 166, 215);
     text-align: center;
     justify-items: center;
+    align-content: space-around;
 
     border: 20px solid transparent;
     border-image: url(Res/slot_04.png) 20;
@@ -1100,13 +1114,15 @@ div.VoreButtons {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
     justify-items: center;
-
 }
 
 @media screen and (max-height: 600px) {
     div.VoreButtons {
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     }
+}
+div.VoreButtons > button {
+   padding: 1em;
 }
 
 #Inventory {

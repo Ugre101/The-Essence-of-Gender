@@ -385,6 +385,7 @@ function CharCreator() { // No need have these active for players who use load.
         DisplayGame();
         HemScale();
         RemoveListerners();
+        StatusButtonSystem();
     };
 
     function VoreStart() {
@@ -767,6 +768,7 @@ function loop() {
 
         if (Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20 !== medium) {
             HemScale();
+            StatusButtonSystem();
         };
         CurrentMap();
         (enemies.length > 0) ? PrintEnemies(): false;
@@ -778,7 +780,7 @@ function loop() {
         }
     }
     if (!battle) {
-        Settings.Vore ? VoreEngine() : false; //Should move this to datetracker
+        //Settings.Vore ? VoreEngine() : false; //Should move this to datetracker
         Settings.Cheats.Enabled ? CheatEngine() : false;
         Laglimiter++;
         if (Laglimiter % 80 == 0) {

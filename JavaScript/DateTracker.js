@@ -21,6 +21,7 @@ function DateTracker() {
     }
     // health/will && fat burn
     if (!battle) {
+        VoreEngine();
         FoodEngine();
         FluidsEngine();
         player.RestRate = 1 + player.Perks.FasterRest.Count * 1;

@@ -2,8 +2,6 @@ function WinBattle() {
     const ee = enemies[EnemyIndex];
     player.Exp += ee.Exp;
     player.Gold += ee.Gold;
-    ee.SessionOrgasm = 0;
-    player.SessionOrgasm = 0;
     CombatQuests(ee);
     //WinEnemyChanges(ee);
     DropSystem(ee);
@@ -21,6 +19,10 @@ function WinBattle() {
 }
 
 function SetupSex(ee) {
+    ee.SessionOrgasm = 0;
+    player.SessionOrgasm = 0;
+    player.Orgasm = 0;
+    LastPressed = " ";
     DocId("SexText").innerHTML = HeightSystem(player, ee);
     DocId("AfterBattle").style.display = 'grid';
     DocId("SexButtons").style.display = 'grid';

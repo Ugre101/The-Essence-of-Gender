@@ -1,11 +1,26 @@
 DocId("Options").addEventListener("click", function () {
     DisplayNone();
+    const {
+        ImgPack,
+        LogLength,
+        FontSize,
+        Inch,
+        HighLightDoors,
+        BackColor,
+        MapColor,
+        TextColor,
+        TextFont
+    } = Settings
     DocId("optionpage").style.display = 'block';
-    DocId("ImgPack").value = "Img pack: " + Settings.ImgPack;
-    DocId("LogLength").innerHTML = Settings.LogLength;
-    DocId("FontSize").innerHTML = Math.round(Settings.FontSize * 100) / 100 + "em"
-    DocId("Inch").value = "Inch " + Settings.Inch;
-    DocId("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
+    DocId("ImgPack").value = `Img pack: ${ImgPack}`;
+    DocId("LogLength").innerHTML = LogLength;
+    DocId("FontSize").innerHTML = `${Math.round(FontSize * 100) / 100}em`
+    DocId("Inch").value = `Inch ${Inch}`;
+    DocId("HighLightDoors").value = `Highlight doors ${HighLightDoors}`;
+    DocId("backcolor").value = BackColor;
+    DocId("MapColor").value = MapColor;
+    DocId("textcolor").value = TextColor;
+    DocId("textfont").value = TextFont;
 });
 
 DocId("FontSmaller").addEventListener("click", function () {

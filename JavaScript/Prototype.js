@@ -75,6 +75,15 @@ function LabelFor(forid, inner) {
     return Label
 }
 
+function MakeSlider(StartValue, MaxValue, MinValue = 0) {
+    const Slider = document.createElement("input");
+    Slider.setAttribute("type", "range");
+    Slider.min = MinValue;
+    Slider.max = MaxValue;
+    Slider.value = StartValue;
+    return Slider
+}
+
 function LeaveBuilding() {
     const Leave = document.createElement("input");
     Leave.setAttribute("type", "button");
@@ -111,6 +120,25 @@ function LeaveNpc() {
         Npcs.style.display = 'none';
         while (Npcs.hasChildNodes()) {
             Npcs.removeChild(Npcs.firstChild);
+        }
+        return;
+    });
+    return Leave;
+};
+
+function LeaveDungeon() {
+    const Leave = document.createElement("input");
+    Leave.setAttribute("type", "button");
+    Leave.setAttribute("value", "Leave");
+    Leave.addEventListener("click", function () {
+        Wave = 0;
+        enemies = [RespawnBlocker()];
+        Dungeon = false;
+        DisplayGame();
+        const DungeonSys = DocId("DungeonSystem")
+        DungeonSys.style.display = 'none';
+        while (DungeonSys.hasChildNodes()) {
+            DungeonSys.removeChild(DungeonSys.firstChild);
         }
         return;
     });
