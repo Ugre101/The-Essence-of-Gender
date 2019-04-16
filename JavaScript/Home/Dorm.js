@@ -40,7 +40,7 @@ function DormFunc() {
     }
     dorm.appendChild(ButtonMates);
 
-    const Rules = InputButton("Rules(placeholder)");
+    const Rules = ButtonButton("Rules(placeholder)");
     Rules.addEventListener("click", function () {
         // #TODO add rules for dormates,
         DormRulesFunc();
@@ -48,18 +48,18 @@ function DormFunc() {
     dorm.appendChild(Rules);
 
     if (House.Dormmates.length > 0 && player.Balls.length > 0) {
-        const ImpregOrgy = InputButton("Impregnate servants",
+        const ImpregOrgy = ButtonButton("Impregnate servants",
             `Spend the day fucking you servants, until your balls are completely emptied.`)
         ImpregOrgy.addEventListener("click", ImpregOrgyFunc)
         dorm.appendChild(ImpregOrgy);
     }
     if (House.Dormmates.length > 0) {
-        const GetImpregOrgy = InputButton("Get impregnated", `Spend the day getting fucked by your virile servants, 
+        const GetImpregOrgy = ButtonButton("Get impregnated", `Spend the day getting fucked by your virile servants, 
         till all of their balls content have been emptied into your orifices.`)
         GetImpregOrgy.addEventListener("click", GetImpregOrgyFunc);
         dorm.appendChild(GetImpregOrgy);
     }
-    const LeaveDorm = InputButton("Leave dorm");
+    const LeaveDorm = ButtonButton("Leave dorm");
     LeaveDorm.addEventListener("click", function () {
         DocId("HomeStart").style.display = 'block';
         DocId("TheDorm").style.display = 'none';
@@ -94,7 +94,7 @@ function DormRulesFunc() {
     ButtonMates.appendChild(rule2);
     dorm.appendChild(ButtonMates);
 
-    const back = InputButton("Back");
+    const back = ButtonButton("Back");
     back.addEventListener("click", function () {
         DormFunc();
     });
@@ -155,7 +155,7 @@ function MateDiv(e) {
     RoomMate.appendChild(RoomMateInner);
     InnerDorm.appendChild(RoomMate);
 
-    const Fuck = InputButton("Fuck");
+    const Fuck = ButtonButton("Fuck");
     Fuck.addEventListener("click", function () {
         const None = ["Home", "status", "EmptyButtons", "EventLog"].forEach((src) => {
             DocId(src).style.display = 'none';
@@ -165,21 +165,21 @@ function MateDiv(e) {
     });
     InputCon.appendChild(Fuck);
 
-    const LeaveRoom = InputButton("Leave room");
+    const LeaveRoom = ButtonButton("Leave room");
     LeaveRoom.addEventListener("click", function () {
         DormFunc();
     });
     InputCon.appendChild(LeaveRoom);
 
-    const DormChildren = InputButton("DormChildren");
+    const DormChildren = ButtonButton("DormChildren");
 
-    const Rename = InputButton("Rename");
+    const Rename = ButtonButton("Rename");
     Rename.addEventListener("click", function () {
         DormRename();
     });
     InputCon.appendChild(Rename);
 
-    const KickOut = InputButton("KickOut");
+    const KickOut = ButtonButton("KickOut");
     KickOut.addEventListener("click", function () {
         DormKickOut();
     });
@@ -196,7 +196,7 @@ function MateDiv(e) {
             Firstinput = document.createElement("input"),
             Lastlabel = document.createElement("label"),
             Lastinput = document.createElement("input"),
-            Accept = InputButton("Accept");
+            Accept = ButtonButton("Accept");
 
         Firstinput.setAttribute("id", "ajog94");
         Firstinput.setAttribute("type", "text");
@@ -239,8 +239,8 @@ function MateDiv(e) {
         DocId("HomeText").innerHTML = `Are you sure you want to kick out ${who.FirstName} ${who.LastName}?`;
 
         const kickoutdiv = document.createElement("div"),
-            Yes = InputButton("Yes"),
-            No = InputButton("No");
+            Yes = ButtonButton("Yes"),
+            No = ButtonButton("No");
         Yes.addEventListener("click", function () {
             House.Dormmates.splice(index, 1);
             DormFunc();

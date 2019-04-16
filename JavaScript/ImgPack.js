@@ -21,7 +21,7 @@ DocId("ImgPack").addEventListener("click", function () {
             Settings.ImgPack = false;
             break;
     }
-    DocId("ImgPack").value = `Img pack: ${Settings.ImgPack}`;
+    DocId("ImgPack").innerHTML = `Img pack: ${Settings.ImgPack}`;
 });
 
 function ImgChose(what, who, type = "SexActs") {

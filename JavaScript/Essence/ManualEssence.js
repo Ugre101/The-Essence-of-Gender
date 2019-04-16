@@ -13,7 +13,7 @@ function EssenceExtraCost(what) {
 
 DocId("EssenceAuto").addEventListener("click", function () {
     Settings.EssenceAuto = Settings.EssenceAuto ? false : true;
-    DocId("EssenceAuto").value = Settings.EssenceAuto ? "Essence Auto" : "Essence Manual";
+    DocId("EssenceAuto").innerHTML = Settings.EssenceAuto ? "Essence Auto" : "Essence Manual";
     // Settings.BalanceParts = false;
 });
 
@@ -44,7 +44,7 @@ function BreastButtons() {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
 
-    var Extraboobs = InputButton(`Extra breasts ${EssenceExtraCost(player.Boobies)}F`);
+    var Extraboobs = ButtonButton(`Extra breasts ${EssenceExtraCost(player.Boobies)}F`);
     Extraboobs.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Boobies);
         if (player.Femi >= cost) {
@@ -90,7 +90,7 @@ function PussyButtons() {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
 
-    var ExtraPussy = InputButton(`Extra pussy ${EssenceExtraCost(player.Pussies)}F`);
+    var ExtraPussy = ButtonButton(`Extra pussy ${EssenceExtraCost(player.Pussies)}F`);
     ExtraPussy.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Pussies);
         if (player.Femi >= cost) {
@@ -131,7 +131,7 @@ function DickButtons() {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
 
-    var ExtraDick = InputButton(`Extra dick ${EssenceExtraCost(player.Dicks)}M`);
+    var ExtraDick = ButtonButton(`Extra dick ${EssenceExtraCost(player.Dicks)}M`);
     ExtraDick.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Dicks);
         if (player.Masc >= cost) {
@@ -171,7 +171,7 @@ function BallsButtons() {
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
-    var ExtraBall = InputButton(`Extra Balls ${EssenceExtraCost(player.Balls)}M`);
+    var ExtraBall = ButtonButton(`Extra Balls ${EssenceExtraCost(player.Balls)}M`);
     ExtraBall.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Balls);
         if (player.Masc >= cost) {
@@ -210,7 +210,7 @@ function BallsButton(e) {
 }
 
 function ManualOrgansClose() {
-    var Close = InputButton("Back");
+    var Close = ButtonButton("Back");
     Close.addEventListener("click", function () {
         DocId("EssenceStart").style.display = 'block';
         ManualOrgans.style.display = 'none';

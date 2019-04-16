@@ -38,7 +38,7 @@ body {
     align-content: center;
 }
 
-#StartPage>input[type="button"] {
+#StartPage> button {
     align-self: center;
     justify-self: center;
     margin: 0.5em;
@@ -295,6 +295,7 @@ div.StatusWillHealth {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1em;
+    justify-items: center;
 }
 
 .ThreeColumn {
@@ -364,7 +365,7 @@ p.TextBox {
     float: right;
 }
 
-input[type="button"].SmolButton {
+button.SmolButton {
     border-radius: 4px;
     padding: 0;
     margin: 0.3em;
@@ -385,7 +386,7 @@ input[type="button"].SmolButton {
     margin-top: 0.4em;
 }
 
-#WorldMapContainer>input[type=button] {
+#WorldMapContainer>button {
     float: right;
 }
 
@@ -542,7 +543,7 @@ div.SLMenuInner {
     border: 1px solid black;
 }
 
-#Sizes>input[type=button] {
+#Sizes>button {
     max-width: 25%;
 }
 
@@ -583,7 +584,7 @@ div.buttons {
     }
 }
 
-#status>input[type=button] {
+#status>button {
     float: left;
 }
 
@@ -892,7 +893,7 @@ div.MascFemi {
     justify-items: center;
 }
 
-div.MascFemi>input[type=button] {
+div.MascFemi>button {
     /*Make text easier to read*/
     text-shadow: white 0px 0px 10px;
 }
@@ -972,7 +973,6 @@ div.Arousal {
     border: 1px solid rgb(207, 133, 49);
 }
 
-input[type=button],
 input[type=submit],
 button {
     line-height: 1.3;
@@ -996,14 +996,12 @@ button {
     transition: background 0.3s ease-in-out;
 }
 
-input[type=button]:hover,
 input[type=submit]:hover,
 button:hover {
     background-color: rgb(187, 160, 124);
     cursor: pointer;
 }
 
-input[type=button]:active,
 input[type=submit]:active,
 button:active {
     background-color: rgb(187, 160, 124);
@@ -1177,7 +1175,7 @@ div.VoreButtons>button {
     margin: 0px;
 }
 
-#InventoryBag>div>input[type=button] {
+#InventoryBag>div>button {
     min-width: 10%;
     width: auto;
     height: auto;
@@ -1206,7 +1204,7 @@ div.VoreButtons>button {
         margin: 0;
     }
 
-    #InventoryBag>div>input[type=button] {
+    #InventoryBag>div>button {
         width: auto;
         margin: 2px;
         padding: 0;
@@ -1272,7 +1270,6 @@ li {
     background-color: beige;
 }
 
-#SexButtons input[type=button],
 #SexButtons button {
     text-align: center;
     font-family: inherit;
@@ -1289,7 +1286,6 @@ li {
     transition: background 0.3s ease-in-out;
 }
 
-#SexButtons input[type=button]:hover,
 #SexButtons button:hover {
     border: 2px solid rgb(56, 38, 28);
     background-color: rgb(163, 138, 105);

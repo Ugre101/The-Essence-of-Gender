@@ -16,7 +16,7 @@ function PregQuests() {
 
     div.appendChild(p);
 
-    const Impreg = InputButton("Impreg", "Impregnate our maidens.");
+    const Impreg = ButtonButton("Impreg", "Impregnate our maidens.");
     Impreg.addEventListener("click", function () {
         while (x.hasChildNodes()) {
             x.removeChild(x.firstChild);
@@ -28,7 +28,7 @@ function PregQuests() {
         <br><br>
         It’s a shame he could not defeat her, she has grown bitter over the years and I believe that finally losing her virginity and learning the joys of motherhood would greatly improve her personalty.`;
 
-        const Accept = InputButton("Accept");
+        const Accept = ButtonButton("Accept");
         Accept.addEventListener("click", function () {
             const Quest = {
                 Name: "Impregnate maidens",
@@ -38,7 +38,7 @@ function PregQuests() {
             player.Quests.push(Quest);
             PregQuests();
         });
-        const Decline = InputButton("Decline");
+        const Decline = ButtonButton("Decline");
         Decline.addEventListener("click", function () {
             PregQuests();
         });
@@ -46,7 +46,7 @@ function PregQuests() {
         x.appendChild(Decline);
     });
 
-    const ImpregReward = InputButton("Impreg reward", "Impregnate our maidens.");
+    const ImpregReward = ButtonButton("Impreg reward", "Impregnate our maidens.");
     ImpregReward.addEventListener("click", function () {
         const index = player.Quests.findIndex(e => e.Name == "Impregnate maidens");
         player.Blessings.MountainShrine.Points += player.Quests[index].Count;
@@ -54,7 +54,7 @@ function PregQuests() {
         PregQuests();
     });
 
-    const GetImpreg = InputButton("Get Impreg", "Get impregnated.");
+    const GetImpreg = ButtonButton("Get Impreg", "Get impregnated.");
     GetImpreg.addEventListener("click", function () {
         while (x.hasChildNodes()) {
             x.removeChild(x.firstChild);
@@ -63,7 +63,7 @@ function PregQuests() {
         p.innerHTML = `Get impregnated while carrying our goddesses blessing, 
         when the child is born we will send a cartage to collect so it can be raised here at our temple.`
 
-        const Accept = InputButton("Accept");
+        const Accept = ButtonButton("Accept");
         Accept.addEventListener("click", function () {
             const Quest = {
                 Name: "Get Impregnated",
@@ -73,7 +73,7 @@ function PregQuests() {
             player.Quests.push(Quest);
             PregQuests();
         });
-        const Decline = InputButton("Decline");
+        const Decline = ButtonButton("Decline");
         Decline.addEventListener("click", function () {
             PregQuests();
         });
@@ -81,7 +81,7 @@ function PregQuests() {
         x.appendChild(Decline);
     });
 
-    const GetImpregReward = InputButton("Get Impreg", "Get impregnated.");
+    const GetImpregReward = ButtonButton("Get Impreg", "Get impregnated.");
     GetImpregReward.addEventListener("click", function () {
         const index = player.Quests.findIndex(e => e.Name == "Get Impregnated");
         player.Blessings.MountainShrine.Points += player.Quests[index].Count * 7; // Getting yourself pregnant is harder to repeat therefore higher reward.
@@ -99,7 +99,7 @@ function PregQuests() {
         x.appendChild(ImpregReward);
     }
 
-    const back = InputButton("Back");
+    const back = ButtonButton("Back");
     back.addEventListener("click", function () {
         MountainShrineFunc();
     })
@@ -129,7 +129,7 @@ function MountainShrineFunc() {
     div.appendChild(p);
 
     const row1 = document.createElement("div"),
-        input1 = InputButton("Blessings");
+        input1 = ButtonButton("Blessings");
     input1.addEventListener("click", function () {
         FertTempleBlessings();
     });
@@ -137,7 +137,7 @@ function MountainShrineFunc() {
 
     });
     row1.appendChild(input1);
-    const input2 = InputButton("Quests");
+    const input2 = ButtonButton("Quests");
     input2.addEventListener("click", function () {
         PregQuests();
     });
@@ -178,7 +178,7 @@ function FertTempleBlessings(text = "") {
     div.appendChild(p);
 
 
-    const Incubator = InputButton("Incubator +" + player.Blessings.MountainShrine.Incubator, "Makes your pregnancy faster.");
+    const Incubator = ButtonButton("Incubator +" + player.Blessings.MountainShrine.Incubator, "Makes your pregnancy faster.");
     Incubator.addEventListener("click", function () {
         const cost = player.Blessings.MountainShrine.Incubator + 1
         if (PregPoints > cost) {
@@ -190,7 +190,7 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(Incubator);
 
-    const IncubatorSeed = InputButton("Mature seeds +" + player.Blessings.MountainShrine.IncubatorSeed, "Makes your servant's pregnancies faster.");
+    const IncubatorSeed = ButtonButton("Mature seeds +" + player.Blessings.MountainShrine.IncubatorSeed, "Makes your servant's pregnancies faster.");
     IncubatorSeed.addEventListener("click", function () {
         const cost = player.Blessings.MountainShrine.IncubatorSeed + 1;
         if (PregPoints > cost) {
@@ -202,7 +202,7 @@ function FertTempleBlessings(text = "") {
     })
     div.appendChild(IncubatorSeed);
 
-    const Broodmother = InputButton("Broodmother +" + player.Blessings.MountainShrine.Broodmother, "Chance for twins or more for player.");
+    const Broodmother = ButtonButton("Broodmother +" + player.Blessings.MountainShrine.Broodmother, "Chance for twins or more for player.");
     Broodmother.addEventListener("click", function () {
         const cost = player.Blessings.MountainShrine.Broodmother * 2 + 2;
         if (PregPoints > cost) {
@@ -214,7 +214,7 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(Broodmother);
 
-    const BroodmotherSeed = InputButton("Branching seeds +" + player.Blessings.MountainShrine.BroodmotherSeed, "Chance for twins or more for others.");
+    const BroodmotherSeed = ButtonButton("Branching seeds +" + player.Blessings.MountainShrine.BroodmotherSeed, "Chance for twins or more for others.");
     BroodmotherSeed.addEventListener("click", function () {
         const cost = player.Blessings.MountainShrine.BroodmotherSeed * 2 + 2;
         if (PregPoints > cost) {
@@ -226,7 +226,7 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(BroodmotherSeed);
 
-    const MalePreg = InputButton("Anal Incubator +" + player.Blessings.MountainShrine.Malepreg, "Enables player non-female pregnancy.");
+    const MalePreg = ButtonButton("Anal Incubator +" + player.Blessings.MountainShrine.Malepreg, "Enables player non-female pregnancy.");
     MalePreg.addEventListener("click", function () {
         const cost = player.Blessings.MountainShrine.Malepreg * 5;
         if (PregPoints > cost) {
@@ -238,7 +238,7 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(MalePreg);
 
-    const back = InputButton("Back");
+    const back = ButtonButton("Back");
     back.addEventListener("click", function () {
         MountainShrineFunc();
     });

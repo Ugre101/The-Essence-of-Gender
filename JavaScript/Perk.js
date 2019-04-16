@@ -46,7 +46,7 @@ function PerkMenuFunc() {
         passiveh3Text = document.createTextNode("Passive");
     passiveh3.appendChild(passiveh3Text);
 
-    const ExtraHealth = InputButton(Perks.ExtraHealth.Count > 0 ?
+    const ExtraHealth = ButtonButton(Perks.ExtraHealth.Count > 0 ?
         `Extra Health +${Perks.ExtraHealth.Count}` : `Extra Health`, `Increase max health by 20`);
     ExtraHealth.addEventListener("click", function () {
         if (PerkPoints > 0) {
@@ -56,7 +56,7 @@ function PerkMenuFunc() {
     });
     passive.appendChild(ExtraHealth);
 
-    const ExtraWillHealth = InputButton(Perks.ExtraWillHealth.Count > 0 ?
+    const ExtraWillHealth = ButtonButton(Perks.ExtraWillHealth.Count > 0 ?
         `Extra Willhealth +${Perks.ExtraWillHealth.Count}` : "Extra Willhealth", "Increase willpower by 20");
     ExtraWillHealth.addEventListener("click", function () {
         if (PerkPoints > 0) {
@@ -66,7 +66,7 @@ function PerkMenuFunc() {
     });
     passive.appendChild(ExtraWillHealth);
 
-    const FasterRest = InputButton(Perks.FasterRest.Count > 0 ?
+    const FasterRest = ButtonButton(Perks.FasterRest.Count > 0 ?
         `Faster Rest +${Perks.FasterRest.Count}` : "Faster Rest",
         "Increases your passive rest with +0.01hp/tick. This will also increase rate burning fat.");
     FasterRest.addEventListener("click", function () {
@@ -77,7 +77,7 @@ function PerkMenuFunc() {
     });
     passive.appendChild(FasterRest);
 
-    const StealMore = InputButton(Perks.StealMore.Count > 0 ?
+    const StealMore = ButtonButton(Perks.StealMore.Count > 0 ?
         `More essence +${Perks.StealMore.Count}` : "More essence",
         `Increases the amount of essence you take when your enemy orgasms`);
     StealMore.addEventListener("click", function () {
@@ -88,7 +88,7 @@ function PerkMenuFunc() {
     });
     active.appendChild(StealMore);
 
-    const GiveEssence = InputButton(Perks.GiveEssence.Count > 0 ?
+    const GiveEssence = ButtonButton(Perks.GiveEssence.Count > 0 ?
         `Give essence +${Perks.GiveEssence.Count}` : "Give essence",
         `Gives your enemy your femininity and/or masculinity when you orgasm`);
     GiveEssence.addEventListener("click", function () {
@@ -99,12 +99,12 @@ function PerkMenuFunc() {
     });
     active.appendChild(GiveEssence);
 
-    const back = InputButton("Back");
+    const back = ButtonButton("Back");
     back.addEventListener("click", function () {
         LevelMenuFunc();
     });
 
-    const close = InputButton("Close");
+    const close = ButtonButton("Close");
     close.addEventListener("click", function () {
         DisplayNone();
         DisplayGame();

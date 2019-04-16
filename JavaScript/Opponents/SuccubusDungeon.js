@@ -101,7 +101,7 @@ function SuccubusDungeonFunc() {
         p.innerHTML = `Wave ${Wave + 1}`;
     }
 
-    const input1 = InputButton("Go deeper")
+    const input1 = ButtonButton("Go deeper")
     input1.addEventListener("click", function () {
         enemies = [];
         Dungeon = true;

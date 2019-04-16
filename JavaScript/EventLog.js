@@ -20,10 +20,10 @@
 	    		if (window.innerHeight > 600) {
 	    			DocId("EventLogH2").style.display = 'inline-block';
 	    		}
-	    		DocId("HideEventLog").value = "H";
+	    		DocId("HideEventLog").innerHTML = "H";
 	    	} else {
 	    		DocId("EventLogPart").style.display = 'none';
-	    		DocId("HideEventLog").value = "S";
+	    		DocId("HideEventLog").innerHTML = "S";
 	    		DocId("EventLogH2").style.display = 'none';
 	    	}
 	    });
@@ -34,33 +34,33 @@
 	    			DocId("EventFluidsH2").style.display = 'inline-block';
 	    		}
 	    		DocId("FluidsMode").style.display = 'inline-block';
-	    		DocId("HideFluids").value = "H";
+	    		DocId("HideFluids").innerHTML = "H";
 	    	} else {
 	    		DocId("FluidPart").style.display = 'none';
 	    		DocId("EventFluidsH2").style.display = 'none';
 	    		DocId("FluidsMode").style.display = 'none';
-	    		DocId("HideFluids").value = 'S';
+	    		DocId("HideFluids").innerHTML = 'S';
 	    	}
 	    });
 	    DocId("FluidsMode").addEventListener("click", function () {
 	    	const menu = DocId("FluidContainer"),
 	    		Fluid = DocId("FluidsMode");
-	    	switch (Fluid.value) {
+	    	switch (Fluid.innerHTML) {
 	    		case "1":
 	    			menu.setAttribute("class", "TwoColumn");
-	    			Fluid.value = 2;
+	    			Fluid.innerHTML = 2;
 	    			break;
 	    		case "2":
 	    			menu.setAttribute("class", "ThreeColumn");
-	    			Fluid.value = 3;
+	    			Fluid.innerHTML = 3;
 	    			break;
 	    		case "3":
 	    			menu.setAttribute("class", "AutoColumn");
-	    			Fluid.value = "A";
+	    			Fluid.innerHTML = "A";
 	    			break;
 	    		case "A":
 	    			menu.setAttribute("class", "OneColumn");
-	    			Fluid.value = 1;
+	    			Fluid.innerHTML = 1;
 	    			break;
 	    	}
 	    });

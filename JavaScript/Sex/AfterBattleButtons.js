@@ -5,7 +5,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
     }
 
     function SexButton(value, func) {
-        const button = InputButton(value);
+        const button = ButtonButton(value);
         button.addEventListener("click", func);
         button.classList.add("SexButtons");
         return button
@@ -48,7 +48,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 Mouth.appendChild(SexButton("Receive cunnilingus", SexActGetCunnilingus));
                 if (ee.Dicks.length > 1) {
                     // Dual pen old value Get dual penetrated
-                    const DualFuckt = InputButton("");
+                    const DualFuckt = ButtonButton("");
                     Pussy.appendChild(DualFuckt);
                 };
                 if (ee.Height * 9 < player.Height) {
@@ -78,7 +78,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
             const dickCount = DickOne.childElementCount + DickTwo.childElementCount
             if (window.innerHeight < 800 && dickCount > 3) {
                 DickTwo.style.display = "none";
-                const DickAction = InputButton("More");
+                const DickAction = ButtonButton("More");
                 DickAction.addEventListener("click", function () {
                     if (DickTwo.style.display === "none") {
                         DickOne.style.display = "none";
@@ -92,13 +92,13 @@ function AfterBattleButtons(Sex = true, Vored = false) {
             }
         }
     }
-    const Stop = InputButton("Stop sex");
+    const Stop = ButtonButton("Stop sex");
     Dungeon ? Stop.addEventListener("click", DungeonStopButton) :
         Stop.addEventListener("click", StopSexButton);
     Right.appendChild(Stop);
     if (!Vored) {
         if (ee.Orgasm > 4 && House.Dormmates.length < (House.Dorm * 3)) {
-            const Capture = InputButton("Take them home");
+            const Capture = ButtonButton("Take them home");
             Dungeon ? Capture.addEventListener("click", DungeonCapture) :
                 Capture.addEventListener("click", SexActCapture);
             Right.appendChild(Capture);
@@ -112,7 +112,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 InjectM.style.background = "linear-gradient(to right,rgba(245, 245, 220),blue)";
                 InfuseDiv.appendChild(InjectM);
             } else { //filler button to stop player from missclicking
-                const InjectM = InputButton("Empty");
+                const InjectM = ButtonButton("Empty");
                 InfuseDiv.appendChild(InjectM);
             }
             if (player.Femi > 0) {
@@ -121,7 +121,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 InjectF.style.background = "linear-gradient(to right,rgba(245, 245, 220),#C12970)";
                 InfuseDiv.appendChild(InjectF);
             } else {
-                const InjectF = InputButton("Empty");
+                const InjectF = ButtonButton("Empty");
                 InfuseDiv.appendChild(InjectF);
             }
             Siphon.appendChild(InfuseDiv);
@@ -136,7 +136,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 DrainM.style.background = "linear-gradient(to right,blue,rgba(245, 245, 220))";
                 SiphonDiv.appendChild(DrainM);
             } else {
-                const DrainM = InputButton("Drained");
+                const DrainM = ButtonButton("Drained");
                 SiphonDiv.appendChild(DrainM);
             }
 
@@ -147,7 +147,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
 
                 SiphonDiv.appendChild(DrainF);
             } else {
-                const DrainF = InputButton("Drained");
+                const DrainF = ButtonButton("Drained");
                 SiphonDiv.appendChild(DrainF);
             }
             Siphon.appendChild(SiphonDiv);

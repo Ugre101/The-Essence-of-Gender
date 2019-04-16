@@ -5,13 +5,15 @@ function BlackMarketFunc() {
         input1 = ButtonButton("Sell limbs"),
         limbcon = document.createElement("div"),
         PESS = document.createElement("p"),
-        input2 = ButtonButton("Sell 50 femininity 100g"),
-        input3 = ButtonButton("Sell 50 masculinity 100g"),
+        pdon = document.createElement("p"),
+        slider = MakeSlider(50, player.Masc > player.Femi ? player.Masc : player.Femi),
+        input2 = ButtonButton("Sell femininity 2g/ess"),
+        input3 = ButtonButton("Sell masculinity 2g/ess"),
         input4 = ButtonButton("Why can't I buy?", "I see a plenty signs here of what you are buying, but I see nothing about what I can buy?"),
-        Content = [p, input1, limbcon, PESS, input2, input3, input4, LeaveBuilding()];
+        Content = [p, input1, limbcon, pdon, PESS, slider, document.createElement("br"), input2, input3, input4, LeaveBuilding()];
 
     CleanBuildings();
-    if (window.innerHeight > 200) { // No title on small screen
+    if (window.innerHeight > 600) { // No title on small screen
         Content.unshift(TitleText("Black Market"));
     }
 
@@ -31,30 +33,30 @@ function BlackMarketFunc() {
 
     });
 
-    PESS.innerHTML = `Masc: ${Math.round(player.Masc)} Femi: ${Math.round(player.Femi)}`
+    var ToSell = 50;
+    pdon.innerHTML = `Sell: ${ToSell} essence`;
+    PESS.innerHTML = `Masc: ${Math.round(player.Masc)} Femi: ${Math.round(player.Femi)}`;
+    slider.oninput = function () {
+        ToSell = this.value;
+        pdon.innerHTML = `Sell: ${ToSell} essence`;
+    }
 
     input2.addEventListener("click", function () {
-        const amount = Math.min(50, player.Femi);
+        const amount = Math.min(ToSell, player.Femi);
         if (typeof amount === "number" && !Number.isNaN(amount)) {
             player.Femi -= amount;
             player.Gold += amount * 2;
         }
         BlackMarketFunc();
     });
-    input2.addEventListener("mouseover", function () {
-
-    });
 
     input3.addEventListener("click", function () {
-        const amount = Math.min(50, player.Masc);
+        const amount = Math.min(ToSell, player.Masc);
         if (typeof amount === "number" && !Number.isNaN(amount)) {
             player.Masc -= amount;
             player.Gold += amount * 2;
         }
         BlackMarketFunc();
-    });
-    input3.addEventListener("mouseover", function () {
-
     });
 
     input4.addEventListener("click", function () {

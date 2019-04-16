@@ -7,14 +7,14 @@ DocId("MobileButtons").addEventListener("click", function () {
             DocId("buttons").style.maxWidth = 260 + "px";
             DocId("FirstButtons").style.display = 'none';
             DocId("SecondButtons").style.display = 'none';
-            DocId("MobileButtons").value = "Buttons";
+            DocId("MobileButtons").innerHTML = "Buttons";
             MobileButtons = false;
             break;
         default:
             DocId("buttons").style.width = 70 + "vw";
             DocId("buttons").style.maxWidth = 70 + "vw";
             DocId("FirstButtons").style.display = 'block';
-            DocId("MobileButtons").value = "Buttons";
+            DocId("MobileButtons").innerHTML = "Buttons";
             MobileButtons = true;
             break;
     }

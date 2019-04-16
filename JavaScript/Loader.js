@@ -15,15 +15,12 @@ function SaveLoader(Load) {
 DocId("LoadButton").addEventListener("click", function () {
     DocId("LoadMenu").style.display = 'block';
     DocId("StartPage").style.display = 'none';
-    DocId("StartLoad").style.display = 'block';
-    for (let e = 1; e < 6; e++) {
-        if (localStorage.getItem('SaveDate' + e) !== null) {
-            DocId("LoadPlayer" + e).value = localStorage.getItem('SaveDate' + e);
-        }
-    }
+    DocId("LoadLeaveStart").style.display = 'inline-block';
+    DocId("LoadLeave").style.display = 'none';
+    DisplayLoadDates();
 });
 // Start page load button
-DocId("StartLoad").addEventListener("click", function () {
+DocId("LoadLeaveStart").addEventListener("click", function () {
     DocId("LoadMenu").style.display = 'none';
     DocId("StartPage").style.display = 'grid';
 })
@@ -60,18 +57,21 @@ DocId("LoadFile").addEventListener("input", function (file) {
 });
 DocId("Load").addEventListener("click", function () {
     DisplayNone();
-    DocId("MapLoad").style.display = 'block';
     DocId("LoadMenu").style.display = 'block';
-    DocId("StartLoad").style.display = 'none';
-
-    for (let e = 1; e < 6; e++) {
-        if (localStorage.getItem('SaveDate' + e) !== null) {
-            DocId("LoadPlayer" + e).value = localStorage.getItem('SaveDate' + e);
-        }
-    }
+    DocId("LoadLeaveStart").style.display = 'none';
+    DocId("LoadLeave").style.display = 'inline-block';
+    DisplayLoadDates();
 });
 DocId("LoadLeave").addEventListener("click", function () {
     DocId("LoadMenu").style.display = 'none';
     DisplayGame();
 })
-// End Load handler
+
+function DisplayLoadDates(){
+    for (let e = 1; e < 6; e++) {
+        if (localStorage.getItem('SaveDate' + e) !== null) {
+            const savedate = new Date(localStorage.getItem('SaveDate' + e));
+            DocId("LoadPlayer" + e).innerHTML = savedate.toUTCString();
+        }
+    }
+}

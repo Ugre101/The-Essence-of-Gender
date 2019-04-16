@@ -368,12 +368,9 @@ function CurrentMap() {
                 DocId("buttons").style.display = 'none';
                 DocId("EmptyButtons").style.display = 'block';
                 DocId("Leave" + name).addEventListener("click", function () {
-                    battle = false;
                     DocId(name).style.display = 'none';
                     DocId("map").style.display = 'block';
-                    DocId("buttons").style.display = 'block';
-                    DocId("EmptyButtons").style.display = 'none';
-                    DocId("status").style.display = 'block';
+                    DisplayGame();
                     DocId(name + "Text").innerHTML = null;
                     return;
                 });

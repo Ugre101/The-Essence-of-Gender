@@ -33,7 +33,7 @@
                 } else {
                     p.innerHTML = "You upgrade your master bedroom.";
                 }
-                UpgradeBed.setAttribute("value", `Upgrade bedroom ${BedCost()}g`)
+                UpgradeBed.innerHTML = `Upgrade bedroom ${BedCost()}g`
             } else {
                 p.innerHTML = "You can't afford to upgrade your bedroom.";
             }
@@ -60,7 +60,7 @@
                 } else {
                     p.innerHTML = `You expand your dorm to house three more servants.(${House.Dorm * 3})`;
                 }
-                BuildDorm.setAttribute("value", `Upgrade dorm ${DormCost()}g`)
+                BuildDorm.innerHTML = `Upgrade dorm ${DormCost()}g`;
             } else {
                 p.innerHTML = "You can't afford it.";
             }
@@ -84,7 +84,7 @@
                 }
                 House.Gym++;
                 player.Gold -= Gymcost();
-                BuildGym.setAttribute("value", "Upgrade gym " + Gymcost() + "g")
+                BuildGym.innerHTML =  "Upgrade gym " + Gymcost() + "g";
             } else {
                 p.innerHTML = "You can't afford it.";
             }
@@ -109,7 +109,7 @@
                 }
                 House.Kitchen++;
                 player.Gold -= Kitchencost();
-                BuildKitchen.setAttribute("value", "Upgrade kitchen " + Kitchencost() + "g")
+                BuildKitchen.innerHTML = `Upgrade kitchen ${Kitchencost()}g`;
             } else {
                 p.innerHTML = "You can't afford it.";
             }
@@ -135,7 +135,7 @@
                 }
                 House.Brothel++;
                 DocId("Brothel").style.display = 'inline-block';
-                BuildBrothel.setAttribute("value", "Upgrade brothel " + Brothelcost() + "g")
+                BuildBrothel.innerHTML = `Upgrade brothel ${Brothelcost()}g`
             } else {
                 p.innerHTML = "You can't afford it.";
             }
@@ -157,7 +157,7 @@
                     p.innerHTML = "You upgrade your nursery.";
                 }
                 House.Nursery++;
-                BuildNursery.setAttribute("value", `Upgrade nursery ${Nurserycost()}g`);
+                BuildNursery.innerHTML = `Upgrade nursery ${Nurserycost()}g`;
             } else {
                 p.innerHTML = "You can't afford it.";
             }

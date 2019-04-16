@@ -14,7 +14,7 @@ function GymFunc() {
         p.innerHTML = e.target.title;
     });
 
-    const input1 = InputButton("Train muscle", "Gain muscle.");
+    const input1 = ButtonButton("Train muscle", "Gain muscle.");
     input1.addEventListener("click", function () {
         if (Flags.LastTrain.Day === Flags.Date.Day && Flags.LastTrain.Month === Flags.Date.Month && Flags.LastTrain.Year === Flags.Date.Year) {
             p.innerHTML = "You have already trained today.";
@@ -42,7 +42,7 @@ function GymFunc() {
     });
     row1.appendChild(input1);
 
-    const input2 = InputButton("Cardio", "Lose some fat.");
+    const input2 = ButtonButton("Cardio", "Lose some fat.");
     input2.addEventListener("click", function () {
         if (player.Fat > player.Weight * 0.1) {
             const burn = Math.round(player.Fat * 0.09);
@@ -55,7 +55,7 @@ function GymFunc() {
     });
     row1.appendChild(input2);
 
-    const input3 = InputButton("Lose muscle", "Sacrifice your gains to the shining swole bro.")
+    const input3 = ButtonButton("Lose muscle", "Sacrifice your gains to the shining swole bro.")
     input3.addEventListener("click", function () {
         const Sacrifice = Math.round(player.Muscle / 10 * 10) / 10;
         player.Muscle -= Sacrifice;

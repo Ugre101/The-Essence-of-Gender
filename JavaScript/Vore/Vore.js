@@ -3,7 +3,7 @@ DocId("VoreLooks").style.display = 'none';
 DocId("Vore").addEventListener("click", function () {
     Settings.Vore = Settings.Vore ? false : true;
     DocId("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none';
-    DocId("Vore").value = "Vore " + Settings.Vore;
+    DocId("Vore").innerHTML = "Vore " + Settings.Vore;
     if (!player.hasOwnProperty("Vore")) {
         player.Vore = {
             Level: 0,
@@ -47,7 +47,7 @@ function VorePerkFunc() {
             const text = () => {
                 return str.replace(regex, '$1 $2')
             }
-            DocId(str).value = VorePerks.hasOwnProperty(str) ? VorePerks[str].Count > 0 ?
+            DocId(str).innerHTML = VorePerks.hasOwnProperty(str) ? VorePerks[str].Count > 0 ?
                 `${text()} + ${VorePerks[str].Count}` : text() : text();
         },
         strings = ["AbsorbEssence", "FasterDigestion", "AbsorbStats", "HigherCapacity", "AbsorbHeight", "PredatorsMeta"].forEach((str) => {
@@ -130,7 +130,7 @@ DocId("AbsorbEssenceSetting").addEventListener("click", function () {
         };
     };
     VoreSettings.AbsorbEssence = Next();
-    DocId("AbsorbEssenceSetting").value = `Absorb Essence ${VoreSettings.AbsorbEssence}`;
+    DocId("AbsorbEssenceSetting").innerHTML = `Absorb Essence ${VoreSettings.AbsorbEssence}`;
 });
 DocId("LeaveVore").addEventListener("click", function () {
     DocId("ShowVore").style.display = 'none';

@@ -11,7 +11,7 @@ function TownHallQuests(text = "") {
 
     const buttons = document.createElement("div");
 
-    const BanditLord = InputButton("BanditLord");
+    const BanditLord = ButtonButton("BanditLord");
     BanditLord.addEventListener("click", function () {
         if (Flags.BanditLord) {
             p.innerHTML = "The bandit are still humiliated from the defeat of their lord, but if you are willing please defeat them again to make sure they don't regain their confidence."
@@ -22,7 +22,7 @@ function TownHallQuests(text = "") {
         while (buttons.hasChildNodes()) {
             buttons.removeChild(buttons.firstChild);
         }
-        const Accept = InputButton("Accept");
+        const Accept = ButtonButton("Accept");
         Accept.addEventListener("click", function () {
             const Quest = {
                 Name: "BanditLord",
@@ -32,20 +32,20 @@ function TownHallQuests(text = "") {
             player.Quests.push(Quest);
             TownHallQuests();
         });
-        const Decline = InputButton("Decline");
+        const Decline = ButtonButton("Decline");
         Decline.addEventListener("click", function () {
             TownHallQuests();
         });
         buttons.appendChild(Accept);
         buttons.appendChild(Decline);
     });
-    const ElfHunt = InputButton("Elf hunt")
+    const ElfHunt = ButtonButton("Elf hunt")
     ElfHunt.addEventListener("click", function () {
         p.innerHTML = "The elves to our south have lately become a problem, defeat atleast three of them and you will be awarded."
         while (buttons.hasChildNodes()) {
             buttons.removeChild(buttons.firstChild);
         }
-        const Accept = InputButton("Accept");
+        const Accept = ButtonButton("Accept");
         Accept.addEventListener("click", function () {
             const Quest = {
                 Name: "ElfHunt",
@@ -55,7 +55,7 @@ function TownHallQuests(text = "") {
             player.Quests.push(Quest);
             TownHallQuests();
         });
-        const Decline = InputButton("Decline")
+        const Decline = ButtonButton("Decline")
         Decline.addEventListener("click", function () {
             TownHallQuests();
         });
@@ -101,7 +101,7 @@ function TownHallQuests(text = "") {
         buttons.appendChild(BanditLordReward);
     };
 
-    const back = InputButton("Back");
+    const back = ButtonButton("Back");
     back.addEventListener("click", function () {
         TownhallFunc();
     });
@@ -123,7 +123,7 @@ function TownhallFunc() {
     div.appendChild(p);
 
     const row1 = document.createElement("div"),
-        input1 = InputButton("Quests")
+        input1 = ButtonButton("Quests")
     input1.addEventListener("click", function () {
         TownHallQuests();
     });
@@ -143,7 +143,7 @@ function TownhallFunc() {
         row1.appendChild(input2);
     }
 
-    const input3 = InputButton("Services")
+    const input3 = ButtonButton("Services")
     input3.addEventListener("click", function () {
         TownHallService();
     });
@@ -176,7 +176,7 @@ function TownHallService() {
     const p = TextBox();
     div.appendChild(p);
 
-    const CN = InputButton("Change name");
+    const CN = ButtonButton("Change name");
     CN.addEventListener("click", function () {
         while (inputs.hasChildNodes()) {
             inputs.removeChild(inputs.firstChild);
@@ -189,7 +189,7 @@ function TownHallService() {
         inputs.appendChild(LabelFor("ServiceLName244", "Last name:"));
         inputs.appendChild(LName);
 
-        const Accept = InputButton("Accept");
+        const Accept = ButtonButton("Accept");
         Accept.addEventListener("click", function () {
             player.Name = FName.value;
             player.LastName = LName.value;
@@ -199,7 +199,7 @@ function TownHallService() {
     });
     inputs.appendChild(CN);
 
-    const back = InputButton("Back");
+    const back = ButtonButton("Back");
     back.addEventListener("click", function () {
         TownhallFunc();
     });

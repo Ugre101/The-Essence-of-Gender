@@ -506,7 +506,7 @@ ItemDict.SpellBook = {
         function DictSpell(e) {
             const it = e,
                 DictIt = SpellDict[it.Name],
-                DictSpell = InputButton(DictIt.Name);
+                DictSpell = ButtonButton(DictIt.Name);
             DictSpell.addEventListener("click", function () {
                 h1.innerHTML = DictIt.Name
                 p.innerHTML = `${SpellDictLite[it.Name].Title}<br><br>Manacost: ${DictIt.ManaCost(it.Exp)}<br>
@@ -515,7 +515,7 @@ ItemDict.SpellBook = {
             Div.appendChild(DictSpell);
             return DictSpell
         }
-        const CloseBook = InputButton("Close book");
+        const CloseBook = ButtonButton("Close book");
         CloseBook.addEventListener("click", function () {
             while (Div.hasChildNodes()) {
                 Div.removeChild(Div.firstChild);

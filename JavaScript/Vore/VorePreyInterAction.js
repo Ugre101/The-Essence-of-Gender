@@ -2,7 +2,7 @@ DocId("VoreLooks").addEventListener("click", function () {
     DisplayNone();
     DocId("ShowVore").style.display = 'grid';
     DocId("VorePerkMenu").style.display = 'none';
-    DocId("AbsorbEssenceSetting").value = "Absorb Essence " + Settings.VoreSettings.AbsorbEssence;
+    DocId("AbsorbEssenceSetting").innerHTML = `Absorb Essence ${Settings.VoreSettings.AbsorbEssence}`;
     VoreButtonsFunc();
 });
 
@@ -13,7 +13,7 @@ function VoreButtonsFunc() {
     };
     // Local functions for repeting actions
     const Back = () => {
-        const temp = InputButton("Back");
+        const temp = ButtonButton("Back");
         temp.addEventListener("click", function () {
             VoreButtonsFunc();
         });
@@ -57,7 +57,7 @@ function VoreButtonsFunc() {
         innerCon.appendChild(Preys(Vore.Stomach));
         con.appendChild(innerCon);
         con.appendChild(document.createElement("br"));
-        const StomachDigestion = InputButton(`Stomach digestion ${VoreSettings.StomachDigestion}`);
+        const StomachDigestion = ButtonButton(`Stomach digestion ${VoreSettings.StomachDigestion}`);
         StomachDigestion.addEventListener("click", function () {
             VoreSettings.StomachDigestion = VoreSettings.StomachDigestion ? false : true;
             StomachDigestion.setAttribute("value", `Stomach digestion ${VoreSettings.StomachDigestion}`);
@@ -74,7 +74,7 @@ function VoreButtonsFunc() {
         innerCon.appendChild(Preys(Vore.Vagina));
         con.appendChild(innerCon);
         con.appendChild(document.createElement("br"));
-        const ChildTF = InputButton(`Child tf/Age reduc ${VoreSettings.ChildTF}`);
+        const ChildTF = ButtonButton(`Child tf/Age reduc ${VoreSettings.ChildTF}`);
         ChildTF.addEventListener("click", function () {
             VoreSettings.ChildTF = VoreSettings.ChildTF ? false : true;
             VoreSettings.VCumDigestion = false;
@@ -82,7 +82,7 @@ function VoreButtonsFunc() {
             ChildTF.setAttribute("value", `Child tf/Age reduc ${VoreSettings.ChildTF}`);
         });
         con.appendChild(ChildTF);
-        const VCumDigestion = InputButton(`Digestion ${VoreSettings.VCumDigestion}`);
+        const VCumDigestion = ButtonButton(`Digestion ${VoreSettings.VCumDigestion}`);
         VCumDigestion.addEventListener("click", function () {
             VoreSettings.VCumDigestion = VoreSettings.VCumDigestion ? false : true;
             VoreSettings.ChildTF = false;
@@ -101,7 +101,7 @@ function VoreButtonsFunc() {
         innerCon.appendChild(Preys(Vore.Breast));
         con.appendChild(innerCon);
         con.appendChild(document.createElement("br"));
-        const MilkTF = InputButton(`Milk transformation ${VoreSettings.MilkTF}`);
+        const MilkTF = ButtonButton(`Milk transformation ${VoreSettings.MilkTF}`);
         MilkTF.addEventListener("click", function () {
             VoreSettings.MilkTF = VoreSettings.MilkTF ? false : true;
             MilkTF.setAttribute("value", `Milk transformation ${VoreSettings.MilkTF}`);
@@ -118,7 +118,7 @@ function VoreButtonsFunc() {
         innerCon.appendChild(Preys(Vore.Balls));
         con.appendChild(innerCon);
         con.appendChild(document.createElement("br"));
-        const CumDigestion = InputButton(`Cum transformation ${VoreSettings.CumTF}`);
+        const CumDigestion = ButtonButton(`Cum transformation ${VoreSettings.CumTF}`);
         CumDigestion.addEventListener("click", function () {
             VoreSettings.CumTF = VoreSettings.CumTF ? false : true;
             CumDigestion.setAttribute("value", `Cum transformation ${VoreSettings.CumTF}`);
@@ -135,7 +135,7 @@ function VoreButtonsFunc() {
         innerCon.appendChild(Preys(Vore.Anal));
         con.appendChild(innerCon);
         con.appendChild(document.createElement("br"));
-        const CumDigestion = InputButton(`Anal Digestion ${VoreSettings.AnalDigestion}`);
+        const CumDigestion = ButtonButton(`Anal Digestion ${VoreSettings.AnalDigestion}`);
         CumDigestion.addEventListener("click", function () {
             VoreSettings.AnalDigestion = VoreSettings.AnalDigestion ? false : true;
             CumDigestion.setAttribute("value", `Anal Digestion ${VoreSettings.AnalDigestion}`);
@@ -184,7 +184,7 @@ function PreyButton(e, arr) {
             h3Text = document.createTextNode(`${e.Name} ${e.Race}`);
         h3.appendChild(h3Text);
         con.appendChild(h3);
-        const regulate = InputButton("Regurgitate");
+        const regulate = ButtonButton("Regurgitate");
         regulate.addEventListener("click", function () {
             console.log(arr.findIndex(i => i === e));
             // Check so that prey haven't already been digested.
@@ -194,7 +194,7 @@ function PreyButton(e, arr) {
             VoreButtonsFunc();
         });
         con.appendChild(regulate)
-        const back = InputButton("Back");
+        const back = ButtonButton("Back");
         back.addEventListener("click", function () {
             VoreButtonsFunc();
         });

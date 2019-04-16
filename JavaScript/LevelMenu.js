@@ -39,7 +39,7 @@
             br2 = document.createElement("br"),
             br3 = document.createElement("br");
 
-        let Strength = InputButton("Strength: " + player.Str, "Makes physical attacks stronger");
+        let Strength = ButtonButton("Strength: " + player.Str, "Makes physical attacks stronger");
         Strength.addEventListener("click", function () {
             if (player.SkillPoints > 0) {
                 player.Str++;
@@ -51,7 +51,7 @@
         });
         Con.appendChild(Strength);
 
-        let Charm = InputButton("Charm: " + player.Charm, "Makes tease stronger");
+        let Charm = ButtonButton("Charm: " + player.Charm, "Makes tease stronger");
         Charm.addEventListener("click", function () {
             if (player.SkillPoints > 0) {
                 player.Charm++;
@@ -64,7 +64,7 @@
         Con.appendChild(Charm);
         Con.appendChild(br);
 
-        let Endurance = InputButton("Endurance: " + player.End, "Gives you more health and every 8 point increase max orgasm");
+        let Endurance = ButtonButton("Endurance: " + player.End, "Gives you more health and every 8 point increase max orgasm");
         Endurance.addEventListener("click", function () {
             if (player.SkillPoints > 0) {
                 player.End++;
@@ -77,7 +77,7 @@
         });
         Con.appendChild(Endurance);
 
-        let Intelligence = InputButton("Intelligence: " + player.Int, "Increases spell effects");
+        let Intelligence = ButtonButton("Intelligence: " + player.Int, "Increases spell effects");
         Intelligence.addEventListener("click", function () {
             if (player.SkillPoints > 0) {
                 player.Int++;
@@ -90,7 +90,7 @@
         Con.appendChild(Intelligence);
         Con.appendChild(br2);
 
-        let Willpower = InputButton("Willpower: " + player.Will, "Increases your willhealth");
+        let Willpower = ButtonButton("Willpower: " + player.Will, "Increases your willhealth");
         Willpower.addEventListener("click", function () {
             if (player.SkillPoints > 0) {
                 player.Will++;
@@ -103,7 +103,7 @@
         });
         Con.appendChild(Willpower);
 
-        let Sexskill = InputButton("Sex skill: " + player.SexSkill, "When having sex your enemy gains more arousal");
+        let Sexskill = ButtonButton("Sex skill: " + player.SexSkill, "When having sex your enemy gains more arousal");
         Sexskill.addEventListener("click", function () {
             if (player.SkillPoints > 0) {
                 player.SexSkill++;
@@ -118,13 +118,13 @@
         innerdiv.appendChild(Con);
         innerdiv.appendChild(br3);
 
-        let PerkMenu = InputButton("Perk menu");
+        let PerkMenu = ButtonButton("Perk menu");
         PerkMenu.addEventListener("click", function () {
             PerkMenuFunc();
         });
         innerdiv.appendChild(PerkMenu);
 
-        let Done = InputButton("Done");
+        let Done = ButtonButton("Done");
         Done.addEventListener("click", function () {
             div.style.display = 'none';
             DisplayGame();

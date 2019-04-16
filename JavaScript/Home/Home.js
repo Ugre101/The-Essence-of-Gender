@@ -32,7 +32,7 @@ DocId("Portal").addEventListener("click", function () {
 
     // TODO in future when there is more portals make main buttons for each region
     if (House.Portal.Mountain) {
-        const Mountain = InputButton("Mountain")
+        const Mountain = ButtonButton("Mountain")
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
@@ -51,7 +51,7 @@ DocId("Portal").addEventListener("click", function () {
     }
 
     if (House.Portal.BlackMarket) {
-        const BlackMarket = InputButton("BlackMarket")
+        const BlackMarket = ButtonButton("BlackMarket")
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
@@ -69,7 +69,7 @@ DocId("Portal").addEventListener("click", function () {
         div.appendChild(BlackMarket);
     }
 
-    const LeavePortal = InputButton("Back");
+    const LeavePortal = ButtonButton("Back");
     LeavePortal.addEventListener("click", function () {
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
@@ -89,11 +89,11 @@ DocId("Brothel").addEventListener("click", function () {
 });
 DocId("ServeMasc").addEventListener("click", function () {
     Settings.Brothel.ServeMasc = !Settings.Brothel.ServeMasc;
-    DocId("ServeMasc").value = "Masculine customers? " + Settings.Brothel.ServeMasc;
+    DocId("ServeMasc").innerHTML = "Masculine customers? " + Settings.Brothel.ServeMasc;
 });
 DocId("ServeFemi").addEventListener("click", function () {
     Settings.Brothel.ServeFemi = !Settings.Brothel.ServeFemi;
-    DocId("ServeFemi").value = "Feminine customers? " + Settings.Brothel.ServeFemi;
+    DocId("ServeFemi").innerHTML = "Feminine customers? " + Settings.Brothel.ServeFemi;
 });
 DocId("CloseBrothel").addEventListener("click", function () {
     DocId("TheBrothel").style.display = 'none';

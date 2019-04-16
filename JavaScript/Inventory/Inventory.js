@@ -86,7 +86,7 @@ function InventoryThing(e, b) {
     item.appendChild(p);
 
     if (typeof b.Use === "function") {
-        const use = InputButton("Use");
+        const use = ButtonButton("Use");
         use.addEventListener("click", function () {
             DocId("InventoryText").innerHTML = b.Use(player, e);
             if (typeof e.Quantity === "number") {
@@ -101,7 +101,7 @@ function InventoryThing(e, b) {
         item.appendChild(use)
     }
     if (typeof b.Equip === "function") {
-        const Equip = InputButton("Equip");
+        const Equip = ButtonButton("Equip");
         Equip.addEventListener("click", function () {
             b.Equip();
             if (typeof e.Quantity === "number") {
@@ -116,7 +116,7 @@ function InventoryThing(e, b) {
         item.appendChild(Equip)
     }
     if (b.Drop === true) {
-        const drop = InputButton("Drop");
+        const drop = ButtonButton("Drop");
         drop.addEventListener("click", function () {
             if (typeof e.Quantity === "number") {
                 e.Quantity--;
@@ -129,7 +129,7 @@ function InventoryThing(e, b) {
         });
         item.appendChild(drop);
     }
-    var what = InputButton("?");
+    var what = ButtonButton("?");
     what.addEventListener("mouseover", function () {
         DocId("InventoryText").innerHTML = b.Title
     });

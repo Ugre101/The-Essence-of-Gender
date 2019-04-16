@@ -107,7 +107,7 @@ DocId("Perks").addEventListener("click", function () {
     const br = document.createElement("br");
     div.appendChild(br);
 
-    const CloseLevel = InputButton("Close");
+    const CloseLevel = ButtonButton("Close");
     CloseLevel.addEventListener("click", function () {
         DocId("Levels").style.display = 'none';
         DisplayGame();

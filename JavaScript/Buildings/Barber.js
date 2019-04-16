@@ -11,9 +11,7 @@ function BarberFunc() {
         CutCon = document.createElement("div");
 
     function DyeButton(e, p) {
-        const dye = document.createElement("input");
-        dye.setAttribute("type", "button");
-        dye.setAttribute("value", e);
+        const dye = ButtonButton(e);
         dye.addEventListener("click", function () {
             player.Face.HairColor = e.toLowerCase()
             p.innerHTML = "Looking into the barbers mirror you see your hair dying is complete and your hair is now " + player.Face.HairColor;
@@ -25,9 +23,7 @@ function BarberFunc() {
     }
 
     function CutButton(e) {
-        const cut = document.createElement("input");
-        cut.setAttribute("type", "button");
-        cut.setAttribute("value", e);
+        const cut = ButtonButton(e);
         cut.addEventListener("click", function () {
             player.Face.HairLength = e.toLowerCase();
         });
@@ -57,7 +53,7 @@ function BarberFunc() {
     });
     div.appendChild(input1);
 
-    const input2 = document.ButtonButton("Cut");
+    const input2 = ButtonButton("Cut");
     input2.addEventListener("click", function () {
         if (CutCon.hasChildNodes()) {
             while (CutCon.hasChildNodes()) {

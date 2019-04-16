@@ -11,7 +11,7 @@ function LocalPortalFunc() {
     }
 
     if (player.Map === "Outlaws" && House.Portal.BlackMarket === false) {
-        const Activate = InputButton("Activate", "Sync this local portal with your home portal");
+        const Activate = ButtonButton("Activate", "Sync this local portal with your home portal");
         Activate.addEventListener("click", function () {
             House.Portal.BlackMarket = true;
             p.innerHTML = "Sync"
@@ -22,7 +22,7 @@ function LocalPortalFunc() {
         });
         Container.push(Activate);
     } else if (player.Map === "MountainPlateau" && House.Portal.MountainPlateau != true) {
-        const Activate = InputButton("Activate", "Sync this local portal with your home portal");
+        const Activate = ButtonButton("Activate", "Sync this local portal with your home portal");
         Activate.addEventListener("click", function () {
             House.Portal.MountainPlateau = true;
             p.innerHTML = "Sync"
@@ -34,7 +34,7 @@ function LocalPortalFunc() {
         Container.push(Activate);
     }
 
-    const input1 = InputButton("Home")
+    const input1 = ButtonButton("Home")
     input1.addEventListener("click", function () {
         player.Area = "First";
         player.Map = "RoadToHome";
@@ -48,7 +48,7 @@ function LocalPortalFunc() {
 
     // TODO in future when there is more portals make main buttons for each region
     if (House.Portal.Mountain) {
-        const Mountain = InputButton("Mountain")
+        const Mountain = ButtonButton("Mountain")
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
@@ -59,7 +59,7 @@ function LocalPortalFunc() {
     }
 
     if (House.Portal.BlackMarket) {
-        const BlackMarket = InputButton("BlackMarket")
+        const BlackMarket = ButtonButton("BlackMarket")
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
@@ -72,7 +72,7 @@ function LocalPortalFunc() {
         Container.push(BlackMarket);
     }
     if (House.Portal.MountainPlateau) {
-        const MountainPlateau = InputButton("Mountain plateau")
+        const MountainPlateau = ButtonButton("Mountain plateau")
         MountainPlateau.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainPlateau";

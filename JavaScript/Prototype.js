@@ -44,14 +44,6 @@ Array.prototype.RemoveDup = function () {
     }
 }*/
 
-function InputButton(Value, Title = "") { // Save space and stop repeating same lines
-    var button = document.createElement("input");
-    button.setAttribute("type", "button");
-    button.setAttribute("value", Value);
-    button.setAttribute("title", Title);
-    return button;
-}
-
 function InputText(value, id) {
     const IText = document.createElement("input");
     IText.setAttribute("type", "text");
@@ -85,16 +77,11 @@ function MakeSlider(StartValue, MaxValue, MinValue = 0) {
 }
 
 function LeaveBuilding() {
-    const Leave = document.createElement("input");
+    const Leave = document.createElement("button");
     Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
+    Leave.innerHTML = "Leave"
     Leave.addEventListener("click", function () {
-        battle = false;
-        GamePaused = false;
-        DocId("map").style.display = 'block';
-        DocId("buttons").style.display = 'block';
-        DocId("EmptyButtons").style.display = 'none';
-        DocId("status").style.display = 'block';
+        DisplayGame();
         const Buildings = DocId("Buildings");
         Buildings.style.display = 'none';
         while (Buildings.hasChildNodes()) {
@@ -106,9 +93,9 @@ function LeaveBuilding() {
 };
 
 function LeaveNpc() {
-    const Leave = document.createElement("input");
+    const Leave = document.createElement("button");
     Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
+    Leave.innerHTML = "Leave";
     Leave.addEventListener("click", function () {
         battle = false;
         GamePaused = false;
@@ -127,9 +114,9 @@ function LeaveNpc() {
 };
 
 function LeaveDungeon() {
-    const Leave = document.createElement("input");
+    const Leave = document.createElement("button");
     Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
+    Leave.innerHTML =  "Leave";
     Leave.addEventListener("click", function () {
         Wave = 0;
         enemies = [RespawnBlocker()];

@@ -377,7 +377,7 @@ function CharCreator() { // No need have these active for players who use load.
 
     function StartAutoEssence() {
         Settings.EssenceAuto = Settings.EssenceAuto ? false : true;
-        StartAutoEssenceButton.value = `Auto TF ${Settings.EssenceAuto}`;
+        StartAutoEssenceButton.innerHTML = `Auto TF ${Settings.EssenceAuto}`;
     };
 
     function startgame() {
@@ -390,7 +390,7 @@ function CharCreator() { // No need have these active for players who use load.
 
     function VoreStart() {
         Settings.Vore = Settings.Vore ? false : true;
-        VoreStartButton.value = "Vore " + Settings.Vore;
+        VoreStartButton.innerHTML = `Vore ${Settings.Vore}`;
     };
 
     function RemoveListerners() {
@@ -942,9 +942,7 @@ function BarberFunc() {
         CutCon = document.createElement("div");
 
     function DyeButton(e, p) {
-        const dye = document.createElement("input");
-        dye.setAttribute("type", "button");
-        dye.setAttribute("value", e);
+        const dye = ButtonButton(e);
         dye.addEventListener("click", function () {
             player.Face.HairColor = e.toLowerCase()
             p.innerHTML = "Looking into the barbers mirror you see your hair dying is complete and your hair is now " + player.Face.HairColor;
@@ -956,9 +954,7 @@ function BarberFunc() {
     }
 
     function CutButton(e) {
-        const cut = document.createElement("input");
-        cut.setAttribute("type", "button");
-        cut.setAttribute("value", e);
+        const cut = ButtonButton(e);
         cut.addEventListener("click", function () {
             player.Face.HairLength = e.toLowerCase();
         });
@@ -988,7 +984,7 @@ function BarberFunc() {
     });
     div.appendChild(input1);
 
-    const input2 = document.ButtonButton("Cut");
+    const input2 = ButtonButton("Cut");
     input2.addEventListener("click", function () {
         if (CutCon.hasChildNodes()) {
             while (CutCon.hasChildNodes()) {
@@ -1027,13 +1023,15 @@ function BlackMarketFunc() {
         input1 = ButtonButton("Sell limbs"),
         limbcon = document.createElement("div"),
         PESS = document.createElement("p"),
-        input2 = ButtonButton("Sell 50 femininity 100g"),
-        input3 = ButtonButton("Sell 50 masculinity 100g"),
+        pdon = document.createElement("p"),
+        slider = MakeSlider(50, player.Masc > player.Femi ? player.Masc : player.Femi),
+        input2 = ButtonButton("Sell femininity 2g/ess"),
+        input3 = ButtonButton("Sell masculinity 2g/ess"),
         input4 = ButtonButton("Why can't I buy?", "I see a plenty signs here of what you are buying, but I see nothing about what I can buy?"),
-        Content = [p, input1, limbcon, PESS, input2, input3, input4, LeaveBuilding()];
+        Content = [p, input1, limbcon, pdon, PESS, slider, document.createElement("br"), input2, input3, input4, LeaveBuilding()];
 
     CleanBuildings();
-    if (window.innerHeight > 200) { // No title on small screen
+    if (window.innerHeight > 600) { // No title on small screen
         Content.unshift(TitleText("Black Market"));
     }
 
@@ -1053,30 +1051,30 @@ function BlackMarketFunc() {
 
     });
 
-    PESS.innerHTML = `Masc: ${Math.round(player.Masc)} Femi: ${Math.round(player.Femi)}`
+    var ToSell = 50;
+    pdon.innerHTML = `Sell: ${ToSell} essence`;
+    PESS.innerHTML = `Masc: ${Math.round(player.Masc)} Femi: ${Math.round(player.Femi)}`;
+    slider.oninput = function () {
+        ToSell = this.value;
+        pdon.innerHTML = `Sell: ${ToSell} essence`;
+    }
 
     input2.addEventListener("click", function () {
-        const amount = Math.min(50, player.Femi);
+        const amount = Math.min(ToSell, player.Femi);
         if (typeof amount === "number" && !Number.isNaN(amount)) {
             player.Femi -= amount;
             player.Gold += amount * 2;
         }
         BlackMarketFunc();
     });
-    input2.addEventListener("mouseover", function () {
-
-    });
 
     input3.addEventListener("click", function () {
-        const amount = Math.min(50, player.Masc);
+        const amount = Math.min(ToSell, player.Masc);
         if (typeof amount === "number" && !Number.isNaN(amount)) {
             player.Masc -= amount;
             player.Gold += amount * 2;
         }
         BlackMarketFunc();
-    });
-    input3.addEventListener("mouseover", function () {
-
     });
 
     input4.addEventListener("click", function () {
@@ -1313,7 +1311,7 @@ function GymFunc() {
         p.innerHTML = e.target.title;
     });
 
-    const input1 = InputButton("Train muscle", "Gain muscle.");
+    const input1 = ButtonButton("Train muscle", "Gain muscle.");
     input1.addEventListener("click", function () {
         if (Flags.LastTrain.Day === Flags.Date.Day && Flags.LastTrain.Month === Flags.Date.Month && Flags.LastTrain.Year === Flags.Date.Year) {
             p.innerHTML = "You have already trained today.";
@@ -1341,7 +1339,7 @@ function GymFunc() {
     });
     row1.appendChild(input1);
 
-    const input2 = InputButton("Cardio", "Lose some fat.");
+    const input2 = ButtonButton("Cardio", "Lose some fat.");
     input2.addEventListener("click", function () {
         if (player.Fat > player.Weight * 0.1) {
             const burn = Math.round(player.Fat * 0.09);
@@ -1354,7 +1352,7 @@ function GymFunc() {
     });
     row1.appendChild(input2);
 
-    const input3 = InputButton("Lose muscle", "Sacrifice your gains to the shining swole bro.")
+    const input3 = ButtonButton("Lose muscle", "Sacrifice your gains to the shining swole bro.")
     input3.addEventListener("click", function () {
         const Sacrifice = Math.round(player.Muscle / 10 * 10) / 10;
         player.Muscle -= Sacrifice;
@@ -1383,7 +1381,7 @@ function LocalPortalFunc() {
     }
 
     if (player.Map === "Outlaws" && House.Portal.BlackMarket === false) {
-        const Activate = InputButton("Activate", "Sync this local portal with your home portal");
+        const Activate = ButtonButton("Activate", "Sync this local portal with your home portal");
         Activate.addEventListener("click", function () {
             House.Portal.BlackMarket = true;
             p.innerHTML = "Sync"
@@ -1394,7 +1392,7 @@ function LocalPortalFunc() {
         });
         Container.push(Activate);
     } else if (player.Map === "MountainPlateau" && House.Portal.MountainPlateau != true) {
-        const Activate = InputButton("Activate", "Sync this local portal with your home portal");
+        const Activate = ButtonButton("Activate", "Sync this local portal with your home portal");
         Activate.addEventListener("click", function () {
             House.Portal.MountainPlateau = true;
             p.innerHTML = "Sync"
@@ -1406,7 +1404,7 @@ function LocalPortalFunc() {
         Container.push(Activate);
     }
 
-    const input1 = InputButton("Home")
+    const input1 = ButtonButton("Home")
     input1.addEventListener("click", function () {
         player.Area = "First";
         player.Map = "RoadToHome";
@@ -1420,7 +1418,7 @@ function LocalPortalFunc() {
 
     // TODO in future when there is more portals make main buttons for each region
     if (House.Portal.Mountain) {
-        const Mountain = InputButton("Mountain")
+        const Mountain = ButtonButton("Mountain")
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
@@ -1431,7 +1429,7 @@ function LocalPortalFunc() {
     }
 
     if (House.Portal.BlackMarket) {
-        const BlackMarket = InputButton("BlackMarket")
+        const BlackMarket = ButtonButton("BlackMarket")
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
@@ -1444,7 +1442,7 @@ function LocalPortalFunc() {
         Container.push(BlackMarket);
     }
     if (House.Portal.MountainPlateau) {
-        const MountainPlateau = InputButton("Mountain plateau")
+        const MountainPlateau = ButtonButton("Mountain plateau")
         MountainPlateau.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainPlateau";
@@ -1488,7 +1486,7 @@ function PregQuests() {
 
     div.appendChild(p);
 
-    const Impreg = InputButton("Impreg", "Impregnate our maidens.");
+    const Impreg = ButtonButton("Impreg", "Impregnate our maidens.");
     Impreg.addEventListener("click", function () {
         while (x.hasChildNodes()) {
             x.removeChild(x.firstChild);
@@ -1500,7 +1498,7 @@ function PregQuests() {
         <br><br>
         It’s a shame he could not defeat her, she has grown bitter over the years and I believe that finally losing her virginity and learning the joys of motherhood would greatly improve her personalty.`;
 
-        const Accept = InputButton("Accept");
+        const Accept = ButtonButton("Accept");
         Accept.addEventListener("click", function () {
             const Quest = {
                 Name: "Impregnate maidens",
@@ -1510,7 +1508,7 @@ function PregQuests() {
             player.Quests.push(Quest);
             PregQuests();
         });
-        const Decline = InputButton("Decline");
+        const Decline = ButtonButton("Decline");
         Decline.addEventListener("click", function () {
             PregQuests();
         });
@@ -1518,7 +1516,7 @@ function PregQuests() {
         x.appendChild(Decline);
     });
 
-    const ImpregReward = InputButton("Impreg reward", "Impregnate our maidens.");
+    const ImpregReward = ButtonButton("Impreg reward", "Impregnate our maidens.");
     ImpregReward.addEventListener("click", function () {
         const index = player.Quests.findIndex(e => e.Name == "Impregnate maidens");
         player.Blessings.MountainShrine.Points += player.Quests[index].Count;
@@ -1526,7 +1524,7 @@ function PregQuests() {
         PregQuests();
     });
 
-    const GetImpreg = InputButton("Get Impreg", "Get impregnated.");
+    const GetImpreg = ButtonButton("Get Impreg", "Get impregnated.");
     GetImpreg.addEventListener("click", function () {
         while (x.hasChildNodes()) {
             x.removeChild(x.firstChild);
@@ -1535,7 +1533,7 @@ function PregQuests() {
         p.innerHTML = `Get impregnated while carrying our goddesses blessing, 
         when the child is born we will send a cartage to collect so it can be raised here at our temple.`
 
-        const Accept = InputButton("Accept");
+        const Accept = ButtonButton("Accept");
         Accept.addEventListener("click", function () {
             const Quest = {
                 Name: "Get Impregnated",
@@ -1545,7 +1543,7 @@ function PregQuests() {
             player.Quests.push(Quest);
             PregQuests();
         });
-        const Decline = InputButton("Decline");
+        const Decline = ButtonButton("Decline");
         Decline.addEventListener("click", function () {
             PregQuests();
         });
@@ -1553,7 +1551,7 @@ function PregQuests() {
         x.appendChild(Decline);
     });
 
-    const GetImpregReward = InputButton("Get Impreg", "Get impregnated.");
+    const GetImpregReward = ButtonButton("Get Impreg", "Get impregnated.");
     GetImpregReward.addEventListener("click", function () {
         const index = player.Quests.findIndex(e => e.Name == "Get Impregnated");
         player.Blessings.MountainShrine.Points += player.Quests[index].Count * 7; // Getting yourself pregnant is harder to repeat therefore higher reward.
@@ -1571,7 +1569,7 @@ function PregQuests() {
         x.appendChild(ImpregReward);
     }
 
-    const back = InputButton("Back");
+    const back = ButtonButton("Back");
     back.addEventListener("click", function () {
         MountainShrineFunc();
     })
@@ -1601,7 +1599,7 @@ function MountainShrineFunc() {
     div.appendChild(p);
 
     const row1 = document.createElement("div"),
-        input1 = InputButton("Blessings");
+        input1 = ButtonButton("Blessings");
     input1.addEventListener("click", function () {
         FertTempleBlessings();
     });
@@ -1609,7 +1607,7 @@ function MountainShrineFunc() {
 
     });
     row1.appendChild(input1);
-    const input2 = InputButton("Quests");
+    const input2 = ButtonButton("Quests");
     input2.addEventListener("click", function () {
         PregQuests();
     });
@@ -1650,7 +1648,7 @@ function FertTempleBlessings(text = "") {
     div.appendChild(p);
 
 
-    const Incubator = InputButton("Incubator +" + player.Blessings.MountainShrine.Incubator, "Makes your pregnancy faster.");
+    const Incubator = ButtonButton("Incubator +" + player.Blessings.MountainShrine.Incubator, "Makes your pregnancy faster.");
     Incubator.addEventListener("click", function () {
         const cost = player.Blessings.MountainShrine.Incubator + 1
         if (PregPoints > cost) {
@@ -1662,7 +1660,7 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(Incubator);
 
-    const IncubatorSeed = InputButton("Mature seeds +" + player.Blessings.MountainShrine.IncubatorSeed, "Makes your servant's pregnancies faster.");
+    const IncubatorSeed = ButtonButton("Mature seeds +" + player.Blessings.MountainShrine.IncubatorSeed, "Makes your servant's pregnancies faster.");
     IncubatorSeed.addEventListener("click", function () {
         const cost = player.Blessings.MountainShrine.IncubatorSeed + 1;
         if (PregPoints > cost) {
@@ -1674,7 +1672,7 @@ function FertTempleBlessings(text = "") {
     })
     div.appendChild(IncubatorSeed);
 
-    const Broodmother = InputButton("Broodmother +" + player.Blessings.MountainShrine.Broodmother, "Chance for twins or more for player.");
+    const Broodmother = ButtonButton("Broodmother +" + player.Blessings.MountainShrine.Broodmother, "Chance for twins or more for player.");
     Broodmother.addEventListener("click", function () {
         const cost = player.Blessings.MountainShrine.Broodmother * 2 + 2;
         if (PregPoints > cost) {
@@ -1686,7 +1684,7 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(Broodmother);
 
-    const BroodmotherSeed = InputButton("Branching seeds +" + player.Blessings.MountainShrine.BroodmotherSeed, "Chance for twins or more for others.");
+    const BroodmotherSeed = ButtonButton("Branching seeds +" + player.Blessings.MountainShrine.BroodmotherSeed, "Chance for twins or more for others.");
     BroodmotherSeed.addEventListener("click", function () {
         const cost = player.Blessings.MountainShrine.BroodmotherSeed * 2 + 2;
         if (PregPoints > cost) {
@@ -1698,7 +1696,7 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(BroodmotherSeed);
 
-    const MalePreg = InputButton("Anal Incubator +" + player.Blessings.MountainShrine.Malepreg, "Enables player non-female pregnancy.");
+    const MalePreg = ButtonButton("Anal Incubator +" + player.Blessings.MountainShrine.Malepreg, "Enables player non-female pregnancy.");
     MalePreg.addEventListener("click", function () {
         const cost = player.Blessings.MountainShrine.Malepreg * 5;
         if (PregPoints > cost) {
@@ -1710,7 +1708,7 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(MalePreg);
 
-    const back = InputButton("Back");
+    const back = ButtonButton("Back");
     back.addEventListener("click", function () {
         MountainShrineFunc();
     });
@@ -2074,7 +2072,7 @@ function TownHallQuests(text = "") {
 
     const buttons = document.createElement("div");
 
-    const BanditLord = InputButton("BanditLord");
+    const BanditLord = ButtonButton("BanditLord");
     BanditLord.addEventListener("click", function () {
         if (Flags.BanditLord) {
             p.innerHTML = "The bandit are still humiliated from the defeat of their lord, but if you are willing please defeat them again to make sure they don't regain their confidence."
@@ -2085,7 +2083,7 @@ function TownHallQuests(text = "") {
         while (buttons.hasChildNodes()) {
             buttons.removeChild(buttons.firstChild);
         }
-        const Accept = InputButton("Accept");
+        const Accept = ButtonButton("Accept");
         Accept.addEventListener("click", function () {
             const Quest = {
                 Name: "BanditLord",
@@ -2095,20 +2093,20 @@ function TownHallQuests(text = "") {
             player.Quests.push(Quest);
             TownHallQuests();
         });
-        const Decline = InputButton("Decline");
+        const Decline = ButtonButton("Decline");
         Decline.addEventListener("click", function () {
             TownHallQuests();
         });
         buttons.appendChild(Accept);
         buttons.appendChild(Decline);
     });
-    const ElfHunt = InputButton("Elf hunt")
+    const ElfHunt = ButtonButton("Elf hunt")
     ElfHunt.addEventListener("click", function () {
         p.innerHTML = "The elves to our south have lately become a problem, defeat atleast three of them and you will be awarded."
         while (buttons.hasChildNodes()) {
             buttons.removeChild(buttons.firstChild);
         }
-        const Accept = InputButton("Accept");
+        const Accept = ButtonButton("Accept");
         Accept.addEventListener("click", function () {
             const Quest = {
                 Name: "ElfHunt",
@@ -2118,7 +2116,7 @@ function TownHallQuests(text = "") {
             player.Quests.push(Quest);
             TownHallQuests();
         });
-        const Decline = InputButton("Decline")
+        const Decline = ButtonButton("Decline")
         Decline.addEventListener("click", function () {
             TownHallQuests();
         });
@@ -2164,7 +2162,7 @@ function TownHallQuests(text = "") {
         buttons.appendChild(BanditLordReward);
     };
 
-    const back = InputButton("Back");
+    const back = ButtonButton("Back");
     back.addEventListener("click", function () {
         TownhallFunc();
     });
@@ -2186,7 +2184,7 @@ function TownhallFunc() {
     div.appendChild(p);
 
     const row1 = document.createElement("div"),
-        input1 = InputButton("Quests")
+        input1 = ButtonButton("Quests")
     input1.addEventListener("click", function () {
         TownHallQuests();
     });
@@ -2206,7 +2204,7 @@ function TownhallFunc() {
         row1.appendChild(input2);
     }
 
-    const input3 = InputButton("Services")
+    const input3 = ButtonButton("Services")
     input3.addEventListener("click", function () {
         TownHallService();
     });
@@ -2239,7 +2237,7 @@ function TownHallService() {
     const p = TextBox();
     div.appendChild(p);
 
-    const CN = InputButton("Change name");
+    const CN = ButtonButton("Change name");
     CN.addEventListener("click", function () {
         while (inputs.hasChildNodes()) {
             inputs.removeChild(inputs.firstChild);
@@ -2252,7 +2250,7 @@ function TownHallService() {
         inputs.appendChild(LabelFor("ServiceLName244", "Last name:"));
         inputs.appendChild(LName);
 
-        const Accept = InputButton("Accept");
+        const Accept = ButtonButton("Accept");
         Accept.addEventListener("click", function () {
             player.Name = FName.value;
             player.LastName = LName.value;
@@ -2262,7 +2260,7 @@ function TownHallService() {
     });
     inputs.appendChild(CN);
 
-    const back = InputButton("Back");
+    const back = ButtonButton("Back");
     back.addEventListener("click", function () {
         TownhallFunc();
     });
@@ -2531,42 +2529,42 @@ DocId("Gold").addEventListener("click", function () {
     if (clicked > 10) {
         DisplayNone();
         DocId("CheatMenu").style.display = 'block';
-        DocId("CheatsEnabled").value = "Cheats Enabled " + Settings.Cheats.Enabled;
-        DocId("CheatsGold").value = "Gold " + Settings.Cheats.Gold;
-        DocId("CheatsMasc").value = "Masc " + Settings.Cheats.Masc;
-        DocId("CheatsFemi").value = "Femi " + Settings.Cheats.Femi;
-        DocId("CheatsExp").value = "Exp " + Settings.Cheats.Exp;
-        DocId("CheatsVoreExp").value = "Vore Exp " + Settings.Cheats.VoreExp;
-        DocId("CheatsFastTime").value = "FastTime " + Settings.Cheats.FastTime;
+        DocId("CheatsEnabled").innerHTML = "Cheats Enabled " + Settings.Cheats.Enabled;
+        DocId("CheatsGold").innerHTML = "Gold " + Settings.Cheats.Gold;
+        DocId("CheatsMasc").innerHTML = "Masc " + Settings.Cheats.Masc;
+        DocId("CheatsFemi").innerHTML = "Femi " + Settings.Cheats.Femi;
+        DocId("CheatsExp").innerHTML = "Exp " + Settings.Cheats.Exp;
+        DocId("CheatsVoreExp").innerHTML = "Vore Exp " + Settings.Cheats.VoreExp;
+        DocId("CheatsFastTime").innerHTML = "FastTime " + Settings.Cheats.FastTime;
     }
 });
 DocId("CheatsEnabled").addEventListener("click", function () {
     Settings.Cheats.Enabled = Settings.Cheats.Enabled ? false : true;
-    DocId("CheatsEnabled").value = "Cheats Enabled " + Settings.Cheats.Enabled;
+    DocId("CheatsEnabled").innerHTML = "Cheats Enabled " + Settings.Cheats.Enabled;
 });
 DocId("CheatsGold").addEventListener("click", function () {
     Settings.Cheats.Gold = Settings.Cheats.Gold ? false : true;
-    DocId("CheatsGold").value = "Gold " + Settings.Cheats.Gold;
+    DocId("CheatsGold").innerHTML = "Gold " + Settings.Cheats.Gold;
 });
 DocId("CheatsMasc").addEventListener("click", function () {
     Settings.Cheats.Masc = Settings.Cheats.Masc ? false : true;
-    DocId("CheatsMasc").value = "Masc " + Settings.Cheats.Masc;
+    DocId("CheatsMasc").innerHTML = "Masc " + Settings.Cheats.Masc;
 });
 DocId("CheatsFemi").addEventListener("click", function () {
     Settings.Cheats.Femi = Settings.Cheats.Femi ? false : true;
-    DocId("CheatsFemi").value = "Femi " + Settings.Cheats.Femi;
+    DocId("CheatsFemi").innerHTML = "Femi " + Settings.Cheats.Femi;
 });
 DocId("CheatsExp").addEventListener("click", function () {
     Settings.Cheats.Exp = Settings.Cheats.Exp ? false : true;
-    DocId("CheatsExp").value = "Exp " + Settings.Cheats.Exp;
+    DocId("CheatsExp").innerHTML = "Exp " + Settings.Cheats.Exp;
 });
 DocId("CheatsVoreExp").addEventListener("click", function () {
     Settings.Cheats.VoreExp = Settings.Cheats.VoreExp ? false : true;
-    DocId("CheatsVoreExp").value = "Vore Exp " + Settings.Cheats.VoreExp;
+    DocId("CheatsVoreExp").innerHTML = "Vore Exp " + Settings.Cheats.VoreExp;
 });
 DocId("CheatsFastTime").addEventListener("click", function () {
     Settings.Cheats.FastTime = Settings.Cheats.FastTime ? false : true;
-    DocId("CheatsFastTime").value = "FastTime " + Settings.Cheats.FastTime;
+    DocId("CheatsFastTime").innerHTML = "FastTime " + Settings.Cheats.FastTime;
 });
 DocId("CloseCheatMenu").addEventListener("click", function () {
     DocId("CheatMenu").style.display = 'none';
@@ -3110,7 +3108,7 @@ function CombatButtons() { // Just combat buttons
         // Todo make it so that instead of spell with index 0,1,2 spawn at outside book make it so
         // that last casted spells is at the "quick cast" menu 
         if (player.Spells.length >= 2) {
-            const book = InputButton("Spellbook");
+            const book = ButtonButton("Spellbook");
             book.addEventListener("click", function () {
                 Spellbook();
             });
@@ -3119,7 +3117,7 @@ function CombatButtons() { // Just combat buttons
         Combat.appendChild(row3)
     }
 
-    const FleeBattle = InputButton("Flee");
+    const FleeBattle = ButtonButton("Flee");
     FleeBattle.addEventListener("click", function () {
         if (RandomInt(1, 10) > 7) {
             battle = false;
@@ -3133,7 +3131,7 @@ function CombatButtons() { // Just combat buttons
     });
     row4.appendChild(FleeBattle);
 
-    const Surrender = InputButton("Surrender");
+    const Surrender = ButtonButton("Surrender");
     Surrender.addEventListener("click", function () {
         Lose();
     });
@@ -3154,7 +3152,7 @@ function Spellbook() {
         row3 = document.createElement("div"),
         row4 = document.createElement("div");
 
-    const CloseBook = InputButton("Close book");
+    const CloseBook = ButtonButton("Close book");
     CloseBook.addEventListener("click", function () {
         CombatButtons();
     });
@@ -3336,65 +3334,6 @@ function DateTracker() {
         }
     }
 };
-function TestDialog() {
-    var Npc = document.getElementById("Npcs");
-    while (Npc.hasChildNodes()) {
-        Npc.removeChild(Npc.lastChild)
-    };
-
-    var h1 = document.createElement("h1");
-    var h1Text = document.createTextNode("Testsson");
-    h1.appendChild(h1Text);
-    Npc.appendChild(h1);
-
-    var p = document.createElement("p");
-    p.classList.add("TextBox");
-    Npc.appendChild(p);
-
-    var Inputs = document.createElement("div");
-
-    var Option1 = InputButton("Option 1");
-    Option1.addEventListener("click", function () {
-        while (Inputs.hasChildNodes()) {
-            Inputs.removeChild(Inputs.firstChild)
-        }
-
-        var Option11 = InputButton("Option 1-1");
-        Option11.addEventListener("click", function () {
-
-        });
-        Inputs.appendChild(Option11);
-
-        var Option12 = InputButton("Option 1-2");
-        Option12.addEventListener("click", function () {
-
-        });
-        Inputs.appendChild(Option12);
-    });
-    Inputs.appendChild(Option1);
-
-    var Option2 = InputButton("Option 2a");
-    Option2.addEventListener("click", function () {
-        while (Inputs.hasChildNodes()) {
-            Inputs.removeChild(Inputs.firstChild)
-        }
-
-        var Option21 = InputButton("Option 2-1");
-        Option21.addEventListener("click", function () {
-
-        });
-        Inputs.appendChild(Option21);
-
-        var Option22 = InputButton("Option 2-2");
-        Option22.addEventListener("click", function () {
-
-        });
-        Inputs.appendChild(Option22);
-    });
-    Inputs.appendChild(Option2);
-
-    Npc.appendChild(Inputs);
-}
 function OrganSize(Size, who) {
     return Math.floor(Size * (who.Height / 180));
     // return Math.ceil(Math.sqrt(Size) * GrowthScale(who));
@@ -3543,7 +3482,7 @@ function EssenceExtraCost(what) {
 
 DocId("EssenceAuto").addEventListener("click", function () {
     Settings.EssenceAuto = Settings.EssenceAuto ? false : true;
-    DocId("EssenceAuto").value = Settings.EssenceAuto ? "Essence Auto" : "Essence Manual";
+    DocId("EssenceAuto").innerHTML = Settings.EssenceAuto ? "Essence Auto" : "Essence Manual";
     // Settings.BalanceParts = false;
 });
 
@@ -3574,7 +3513,7 @@ function BreastButtons() {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
 
-    var Extraboobs = InputButton(`Extra breasts ${EssenceExtraCost(player.Boobies)}F`);
+    var Extraboobs = ButtonButton(`Extra breasts ${EssenceExtraCost(player.Boobies)}F`);
     Extraboobs.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Boobies);
         if (player.Femi >= cost) {
@@ -3620,7 +3559,7 @@ function PussyButtons() {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
 
-    var ExtraPussy = InputButton(`Extra pussy ${EssenceExtraCost(player.Pussies)}F`);
+    var ExtraPussy = ButtonButton(`Extra pussy ${EssenceExtraCost(player.Pussies)}F`);
     ExtraPussy.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Pussies);
         if (player.Femi >= cost) {
@@ -3661,7 +3600,7 @@ function DickButtons() {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
 
-    var ExtraDick = InputButton(`Extra dick ${EssenceExtraCost(player.Dicks)}M`);
+    var ExtraDick = ButtonButton(`Extra dick ${EssenceExtraCost(player.Dicks)}M`);
     ExtraDick.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Dicks);
         if (player.Masc >= cost) {
@@ -3701,7 +3640,7 @@ function BallsButtons() {
     while (ManualOrgans.hasChildNodes()) {
         ManualOrgans.removeChild(ManualOrgans.firstChild);
     }
-    var ExtraBall = InputButton(`Extra Balls ${EssenceExtraCost(player.Balls)}M`);
+    var ExtraBall = ButtonButton(`Extra Balls ${EssenceExtraCost(player.Balls)}M`);
     ExtraBall.addEventListener("click", function () {
         var cost = EssenceExtraCost(player.Balls);
         if (player.Masc >= cost) {
@@ -3740,7 +3679,7 @@ function BallsButton(e) {
 }
 
 function ManualOrgansClose() {
-    var Close = InputButton("Back");
+    var Close = ButtonButton("Back");
     Close.addEventListener("click", function () {
         DocId("EssenceStart").style.display = 'block';
         ManualOrgans.style.display = 'none';
@@ -3981,10 +3920,10 @@ function DetailedRaceDesc() {
 	    		if (window.innerHeight > 600) {
 	    			DocId("EventLogH2").style.display = 'inline-block';
 	    		}
-	    		DocId("HideEventLog").value = "H";
+	    		DocId("HideEventLog").innerHTML = "H";
 	    	} else {
 	    		DocId("EventLogPart").style.display = 'none';
-	    		DocId("HideEventLog").value = "S";
+	    		DocId("HideEventLog").innerHTML = "S";
 	    		DocId("EventLogH2").style.display = 'none';
 	    	}
 	    });
@@ -3995,33 +3934,33 @@ function DetailedRaceDesc() {
 	    			DocId("EventFluidsH2").style.display = 'inline-block';
 	    		}
 	    		DocId("FluidsMode").style.display = 'inline-block';
-	    		DocId("HideFluids").value = "H";
+	    		DocId("HideFluids").innerHTML = "H";
 	    	} else {
 	    		DocId("FluidPart").style.display = 'none';
 	    		DocId("EventFluidsH2").style.display = 'none';
 	    		DocId("FluidsMode").style.display = 'none';
-	    		DocId("HideFluids").value = 'S';
+	    		DocId("HideFluids").innerHTML = 'S';
 	    	}
 	    });
 	    DocId("FluidsMode").addEventListener("click", function () {
 	    	const menu = DocId("FluidContainer"),
 	    		Fluid = DocId("FluidsMode");
-	    	switch (Fluid.value) {
+	    	switch (Fluid.innerHTML) {
 	    		case "1":
 	    			menu.setAttribute("class", "TwoColumn");
-	    			Fluid.value = 2;
+	    			Fluid.innerHTML = 2;
 	    			break;
 	    		case "2":
 	    			menu.setAttribute("class", "ThreeColumn");
-	    			Fluid.value = 3;
+	    			Fluid.innerHTML = 3;
 	    			break;
 	    		case "3":
 	    			menu.setAttribute("class", "AutoColumn");
-	    			Fluid.value = "A";
+	    			Fluid.innerHTML = "A";
 	    			break;
 	    		case "A":
 	    			menu.setAttribute("class", "OneColumn");
-	    			Fluid.value = 1;
+	    			Fluid.innerHTML = 1;
 	    			break;
 	    	}
 	    });
@@ -4204,7 +4143,7 @@ function DormFunc() {
     }
     dorm.appendChild(ButtonMates);
 
-    const Rules = InputButton("Rules(placeholder)");
+    const Rules = ButtonButton("Rules(placeholder)");
     Rules.addEventListener("click", function () {
         // #TODO add rules for dormates,
         DormRulesFunc();
@@ -4212,18 +4151,18 @@ function DormFunc() {
     dorm.appendChild(Rules);
 
     if (House.Dormmates.length > 0 && player.Balls.length > 0) {
-        const ImpregOrgy = InputButton("Impregnate servants",
+        const ImpregOrgy = ButtonButton("Impregnate servants",
             `Spend the day fucking you servants, until your balls are completely emptied.`)
         ImpregOrgy.addEventListener("click", ImpregOrgyFunc)
         dorm.appendChild(ImpregOrgy);
     }
     if (House.Dormmates.length > 0) {
-        const GetImpregOrgy = InputButton("Get impregnated", `Spend the day getting fucked by your virile servants, 
+        const GetImpregOrgy = ButtonButton("Get impregnated", `Spend the day getting fucked by your virile servants, 
         till all of their balls content have been emptied into your orifices.`)
         GetImpregOrgy.addEventListener("click", GetImpregOrgyFunc);
         dorm.appendChild(GetImpregOrgy);
     }
-    const LeaveDorm = InputButton("Leave dorm");
+    const LeaveDorm = ButtonButton("Leave dorm");
     LeaveDorm.addEventListener("click", function () {
         DocId("HomeStart").style.display = 'block';
         DocId("TheDorm").style.display = 'none';
@@ -4258,7 +4197,7 @@ function DormRulesFunc() {
     ButtonMates.appendChild(rule2);
     dorm.appendChild(ButtonMates);
 
-    const back = InputButton("Back");
+    const back = ButtonButton("Back");
     back.addEventListener("click", function () {
         DormFunc();
     });
@@ -4319,7 +4258,7 @@ function MateDiv(e) {
     RoomMate.appendChild(RoomMateInner);
     InnerDorm.appendChild(RoomMate);
 
-    const Fuck = InputButton("Fuck");
+    const Fuck = ButtonButton("Fuck");
     Fuck.addEventListener("click", function () {
         const None = ["Home", "status", "EmptyButtons", "EventLog"].forEach((src) => {
             DocId(src).style.display = 'none';
@@ -4329,21 +4268,21 @@ function MateDiv(e) {
     });
     InputCon.appendChild(Fuck);
 
-    const LeaveRoom = InputButton("Leave room");
+    const LeaveRoom = ButtonButton("Leave room");
     LeaveRoom.addEventListener("click", function () {
         DormFunc();
     });
     InputCon.appendChild(LeaveRoom);
 
-    const DormChildren = InputButton("DormChildren");
+    const DormChildren = ButtonButton("DormChildren");
 
-    const Rename = InputButton("Rename");
+    const Rename = ButtonButton("Rename");
     Rename.addEventListener("click", function () {
         DormRename();
     });
     InputCon.appendChild(Rename);
 
-    const KickOut = InputButton("KickOut");
+    const KickOut = ButtonButton("KickOut");
     KickOut.addEventListener("click", function () {
         DormKickOut();
     });
@@ -4360,7 +4299,7 @@ function MateDiv(e) {
             Firstinput = document.createElement("input"),
             Lastlabel = document.createElement("label"),
             Lastinput = document.createElement("input"),
-            Accept = InputButton("Accept");
+            Accept = ButtonButton("Accept");
 
         Firstinput.setAttribute("id", "ajog94");
         Firstinput.setAttribute("type", "text");
@@ -4403,8 +4342,8 @@ function MateDiv(e) {
         DocId("HomeText").innerHTML = `Are you sure you want to kick out ${who.FirstName} ${who.LastName}?`;
 
         const kickoutdiv = document.createElement("div"),
-            Yes = InputButton("Yes"),
-            No = InputButton("No");
+            Yes = ButtonButton("Yes"),
+            No = ButtonButton("No");
         Yes.addEventListener("click", function () {
             House.Dormmates.splice(index, 1);
             DormFunc();
@@ -4785,7 +4724,7 @@ DocId("Portal").addEventListener("click", function () {
 
     // TODO in future when there is more portals make main buttons for each region
     if (House.Portal.Mountain) {
-        const Mountain = InputButton("Mountain")
+        const Mountain = ButtonButton("Mountain")
         Mountain.addEventListener("click", function () {
             player.Area = "Mountain";
             player.Map = "MountainStart";
@@ -4804,7 +4743,7 @@ DocId("Portal").addEventListener("click", function () {
     }
 
     if (House.Portal.BlackMarket) {
-        const BlackMarket = InputButton("BlackMarket")
+        const BlackMarket = ButtonButton("BlackMarket")
         BlackMarket.addEventListener("click", function () {
             player.Area = "Second";
             player.Map = "Outlaws";
@@ -4822,7 +4761,7 @@ DocId("Portal").addEventListener("click", function () {
         div.appendChild(BlackMarket);
     }
 
-    const LeavePortal = InputButton("Back");
+    const LeavePortal = ButtonButton("Back");
     LeavePortal.addEventListener("click", function () {
         while (Buildings.hasChildNodes()) {
             Buildings.removeChild(Buildings.firstChild);
@@ -4842,11 +4781,11 @@ DocId("Brothel").addEventListener("click", function () {
 });
 DocId("ServeMasc").addEventListener("click", function () {
     Settings.Brothel.ServeMasc = !Settings.Brothel.ServeMasc;
-    DocId("ServeMasc").value = "Masculine customers? " + Settings.Brothel.ServeMasc;
+    DocId("ServeMasc").innerHTML = "Masculine customers? " + Settings.Brothel.ServeMasc;
 });
 DocId("ServeFemi").addEventListener("click", function () {
     Settings.Brothel.ServeFemi = !Settings.Brothel.ServeFemi;
-    DocId("ServeFemi").value = "Feminine customers? " + Settings.Brothel.ServeFemi;
+    DocId("ServeFemi").innerHTML = "Feminine customers? " + Settings.Brothel.ServeFemi;
 });
 DocId("CloseBrothel").addEventListener("click", function () {
     DocId("TheBrothel").style.display = 'none';
@@ -4902,7 +4841,7 @@ function LeaveHome() {
                 } else {
                     p.innerHTML = "You upgrade your master bedroom.";
                 }
-                UpgradeBed.setAttribute("value", `Upgrade bedroom ${BedCost()}g`)
+                UpgradeBed.innerHTML = `Upgrade bedroom ${BedCost()}g`
             } else {
                 p.innerHTML = "You can't afford to upgrade your bedroom.";
             }
@@ -4929,7 +4868,7 @@ function LeaveHome() {
                 } else {
                     p.innerHTML = `You expand your dorm to house three more servants.(${House.Dorm * 3})`;
                 }
-                BuildDorm.setAttribute("value", `Upgrade dorm ${DormCost()}g`)
+                BuildDorm.innerHTML = `Upgrade dorm ${DormCost()}g`;
             } else {
                 p.innerHTML = "You can't afford it.";
             }
@@ -4953,7 +4892,7 @@ function LeaveHome() {
                 }
                 House.Gym++;
                 player.Gold -= Gymcost();
-                BuildGym.setAttribute("value", "Upgrade gym " + Gymcost() + "g")
+                BuildGym.innerHTML =  "Upgrade gym " + Gymcost() + "g";
             } else {
                 p.innerHTML = "You can't afford it.";
             }
@@ -4978,7 +4917,7 @@ function LeaveHome() {
                 }
                 House.Kitchen++;
                 player.Gold -= Kitchencost();
-                BuildKitchen.setAttribute("value", "Upgrade kitchen " + Kitchencost() + "g")
+                BuildKitchen.innerHTML = `Upgrade kitchen ${Kitchencost()}g`;
             } else {
                 p.innerHTML = "You can't afford it.";
             }
@@ -5004,7 +4943,7 @@ function LeaveHome() {
                 }
                 House.Brothel++;
                 DocId("Brothel").style.display = 'inline-block';
-                BuildBrothel.setAttribute("value", "Upgrade brothel " + Brothelcost() + "g")
+                BuildBrothel.innerHTML = `Upgrade brothel ${Brothelcost()}g`
             } else {
                 p.innerHTML = "You can't afford it.";
             }
@@ -5026,7 +4965,7 @@ function LeaveHome() {
                     p.innerHTML = "You upgrade your nursery.";
                 }
                 House.Nursery++;
-                BuildNursery.setAttribute("value", `Upgrade nursery ${Nurserycost()}g`);
+                BuildNursery.innerHTML = `Upgrade nursery ${Nurserycost()}g`;
             } else {
                 p.innerHTML = "You can't afford it.";
             }
@@ -5096,7 +5035,7 @@ DocId("ImgPack").addEventListener("click", function () {
             Settings.ImgPack = false;
             break;
     }
-    DocId("ImgPack").value = `Img pack: ${Settings.ImgPack}`;
+    DocId("ImgPack").innerHTML = `Img pack: ${Settings.ImgPack}`;
 });
 
 function ImgChose(what, who, type = "SexActs") {
@@ -5490,7 +5429,7 @@ function InventoryThing(e, b) {
     item.appendChild(p);
 
     if (typeof b.Use === "function") {
-        const use = InputButton("Use");
+        const use = ButtonButton("Use");
         use.addEventListener("click", function () {
             DocId("InventoryText").innerHTML = b.Use(player, e);
             if (typeof e.Quantity === "number") {
@@ -5505,7 +5444,7 @@ function InventoryThing(e, b) {
         item.appendChild(use)
     }
     if (typeof b.Equip === "function") {
-        const Equip = InputButton("Equip");
+        const Equip = ButtonButton("Equip");
         Equip.addEventListener("click", function () {
             b.Equip();
             if (typeof e.Quantity === "number") {
@@ -5520,7 +5459,7 @@ function InventoryThing(e, b) {
         item.appendChild(Equip)
     }
     if (b.Drop === true) {
-        const drop = InputButton("Drop");
+        const drop = ButtonButton("Drop");
         drop.addEventListener("click", function () {
             if (typeof e.Quantity === "number") {
                 e.Quantity--;
@@ -5533,7 +5472,7 @@ function InventoryThing(e, b) {
         });
         item.appendChild(drop);
     }
-    var what = InputButton("?");
+    var what = ButtonButton("?");
     what.addEventListener("mouseover", function () {
         DocId("InventoryText").innerHTML = b.Title
     });
@@ -6052,7 +5991,7 @@ ItemDict.SpellBook = {
         function DictSpell(e) {
             const it = e,
                 DictIt = SpellDict[it.Name],
-                DictSpell = InputButton(DictIt.Name);
+                DictSpell = ButtonButton(DictIt.Name);
             DictSpell.addEventListener("click", function () {
                 h1.innerHTML = DictIt.Name
                 p.innerHTML = `${SpellDictLite[it.Name].Title}<br><br>Manacost: ${DictIt.ManaCost(it.Exp)}<br>
@@ -6061,7 +6000,7 @@ ItemDict.SpellBook = {
             Div.appendChild(DictSpell);
             return DictSpell
         }
-        const CloseBook = InputButton("Close book");
+        const CloseBook = ButtonButton("Close book");
         CloseBook.addEventListener("click", function () {
             while (Div.hasChildNodes()) {
                 Div.removeChild(Div.firstChild);
@@ -6113,7 +6052,7 @@ ItemDict.SpellBook = {
             br2 = document.createElement("br"),
             br3 = document.createElement("br");
 
-        let Strength = InputButton("Strength: " + player.Str, "Makes physical attacks stronger");
+        let Strength = ButtonButton("Strength: " + player.Str, "Makes physical attacks stronger");
         Strength.addEventListener("click", function () {
             if (player.SkillPoints > 0) {
                 player.Str++;
@@ -6125,7 +6064,7 @@ ItemDict.SpellBook = {
         });
         Con.appendChild(Strength);
 
-        let Charm = InputButton("Charm: " + player.Charm, "Makes tease stronger");
+        let Charm = ButtonButton("Charm: " + player.Charm, "Makes tease stronger");
         Charm.addEventListener("click", function () {
             if (player.SkillPoints > 0) {
                 player.Charm++;
@@ -6138,7 +6077,7 @@ ItemDict.SpellBook = {
         Con.appendChild(Charm);
         Con.appendChild(br);
 
-        let Endurance = InputButton("Endurance: " + player.End, "Gives you more health and every 8 point increase max orgasm");
+        let Endurance = ButtonButton("Endurance: " + player.End, "Gives you more health and every 8 point increase max orgasm");
         Endurance.addEventListener("click", function () {
             if (player.SkillPoints > 0) {
                 player.End++;
@@ -6151,7 +6090,7 @@ ItemDict.SpellBook = {
         });
         Con.appendChild(Endurance);
 
-        let Intelligence = InputButton("Intelligence: " + player.Int, "Increases spell effects");
+        let Intelligence = ButtonButton("Intelligence: " + player.Int, "Increases spell effects");
         Intelligence.addEventListener("click", function () {
             if (player.SkillPoints > 0) {
                 player.Int++;
@@ -6164,7 +6103,7 @@ ItemDict.SpellBook = {
         Con.appendChild(Intelligence);
         Con.appendChild(br2);
 
-        let Willpower = InputButton("Willpower: " + player.Will, "Increases your willhealth");
+        let Willpower = ButtonButton("Willpower: " + player.Will, "Increases your willhealth");
         Willpower.addEventListener("click", function () {
             if (player.SkillPoints > 0) {
                 player.Will++;
@@ -6177,7 +6116,7 @@ ItemDict.SpellBook = {
         });
         Con.appendChild(Willpower);
 
-        let Sexskill = InputButton("Sex skill: " + player.SexSkill, "When having sex your enemy gains more arousal");
+        let Sexskill = ButtonButton("Sex skill: " + player.SexSkill, "When having sex your enemy gains more arousal");
         Sexskill.addEventListener("click", function () {
             if (player.SkillPoints > 0) {
                 player.SexSkill++;
@@ -6192,13 +6131,13 @@ ItemDict.SpellBook = {
         innerdiv.appendChild(Con);
         innerdiv.appendChild(br3);
 
-        let PerkMenu = InputButton("Perk menu");
+        let PerkMenu = ButtonButton("Perk menu");
         PerkMenu.addEventListener("click", function () {
             PerkMenuFunc();
         });
         innerdiv.appendChild(PerkMenu);
 
-        let Done = InputButton("Done");
+        let Done = ButtonButton("Done");
         Done.addEventListener("click", function () {
             div.style.display = 'none';
             DisplayGame();
@@ -6223,15 +6162,12 @@ function SaveLoader(Load) {
 DocId("LoadButton").addEventListener("click", function () {
     DocId("LoadMenu").style.display = 'block';
     DocId("StartPage").style.display = 'none';
-    DocId("StartLoad").style.display = 'block';
-    for (let e = 1; e < 6; e++) {
-        if (localStorage.getItem('SaveDate' + e) !== null) {
-            DocId("LoadPlayer" + e).value = localStorage.getItem('SaveDate' + e);
-        }
-    }
+    DocId("LoadLeaveStart").style.display = 'inline-block';
+    DocId("LoadLeave").style.display = 'none';
+    DisplayLoadDates();
 });
 // Start page load button
-DocId("StartLoad").addEventListener("click", function () {
+DocId("LoadLeaveStart").addEventListener("click", function () {
     DocId("LoadMenu").style.display = 'none';
     DocId("StartPage").style.display = 'grid';
 })
@@ -6268,21 +6204,24 @@ DocId("LoadFile").addEventListener("input", function (file) {
 });
 DocId("Load").addEventListener("click", function () {
     DisplayNone();
-    DocId("MapLoad").style.display = 'block';
     DocId("LoadMenu").style.display = 'block';
-    DocId("StartLoad").style.display = 'none';
-
-    for (let e = 1; e < 6; e++) {
-        if (localStorage.getItem('SaveDate' + e) !== null) {
-            DocId("LoadPlayer" + e).value = localStorage.getItem('SaveDate' + e);
-        }
-    }
+    DocId("LoadLeaveStart").style.display = 'none';
+    DocId("LoadLeave").style.display = 'inline-block';
+    DisplayLoadDates();
 });
 DocId("LoadLeave").addEventListener("click", function () {
     DocId("LoadMenu").style.display = 'none';
     DisplayGame();
 })
-// End Load handler
+
+function DisplayLoadDates(){
+    for (let e = 1; e < 6; e++) {
+        if (localStorage.getItem('SaveDate' + e) !== null) {
+            const savedate = new Date(localStorage.getItem('SaveDate' + e));
+            DocId("LoadPlayer" + e).innerHTML = savedate.toUTCString();
+        }
+    }
+}
 function IntToOne(i) {
     switch (i) {
         case 0:
@@ -6701,7 +6640,7 @@ DocId("Perks").addEventListener("click", function () {
     const br = document.createElement("br");
     div.appendChild(br);
 
-    const CloseLevel = InputButton("Close");
+    const CloseLevel = ButtonButton("Close");
     CloseLevel.addEventListener("click", function () {
         DocId("Levels").style.display = 'none';
         DisplayGame();
@@ -7512,12 +7451,9 @@ function CurrentMap() {
                 DocId("buttons").style.display = 'none';
                 DocId("EmptyButtons").style.display = 'block';
                 DocId("Leave" + name).addEventListener("click", function () {
-                    battle = false;
                     DocId(name).style.display = 'none';
                     DocId("map").style.display = 'block';
-                    DocId("buttons").style.display = 'block';
-                    DocId("EmptyButtons").style.display = 'none';
-                    DocId("status").style.display = 'block';
+                    DisplayGame();
                     DocId(name + "Text").innerHTML = null;
                     return;
                 });
@@ -7698,11 +7634,11 @@ document.getElementById("HideWorldMap").addEventListener("click", function () {
     const HideWorld = document.getElementById("HideWorldMap");
     if (document.getElementById("WorldMapPart").style.display == 'none') {
         document.getElementById("WorldMapPart").style.display = 'block';
-        HideWorld.value = "H";
+        HideWorld.innerHTML = "H";
         PrintMap();
     } else {
         document.getElementById("WorldMapPart").style.display = 'none';
-        HideWorld.value = "S"
+        HideWorld.innerHTML = "S"
     }
 });
 
@@ -7964,78 +7900,84 @@ function PrintMap() {
 
 // ⇦ ⇨ ⇩ ⇧ Unicode arrows
 DocId("EssenceOptions").addEventListener("click", function () {
+    const {
+        MaxBoobs,
+        MaxVaginas,
+        MaxDicks,
+        MaxBalls
+    } = Settings.MaxLimbs
     DisplayNone();
     DocId("EssenceOptionsMenu").style.display = 'block';
     DocId("MaxMenu").style.display = 'none';
-    DocId("EssenceAuto").value = Settings.EssenceAuto ? "Essence Auto" : "Essence Manual";
+    DocId("EssenceAuto").innerHTML = Settings.EssenceAuto ? "Essence Auto" : "Essence Manual";
     DocId("ManualGrowth").style.display = 'block';
-    DocId("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
-    DocId("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
-    DocId("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
-    DocId("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
-    DocId("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
-    DocId("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
-    DocId("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
-    DocId("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
+    DocId("BoobsLess").innerHTML = `Boobs ${MaxBoobs}--`;
+    DocId("BoobsMore").innerHTML = `Boobs ${MaxBoobs}++`;
+    DocId("VaginasLess").innerHTML = `Pussies ${MaxVaginas}--`;
+    DocId("VaginasMore").innerHTML = `Pussies ${MaxVaginas}++`;
+    DocId("DicksLess").innerHTML = `Dicks ${MaxDicks}--`;
+    DocId("DicksMore").innerHTML = `Dicks ${MaxDicks}++`;
+    DocId("BallsLess").innerHTML = `Balls ${MaxBalls}--`;
+    DocId("BallsMore").innerHTML = `Balls ${MaxBalls}++`;
 });
 
 DocId("BoobsLess").addEventListener("click", function () {
     if (Settings.MaxLimbs.MaxBoobs > 1) {
         Settings.MaxLimbs.MaxBoobs--;
     }
-    DocId("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
-    DocId("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
+    DocId("BoobsLess").innerHTML = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
+    DocId("BoobsMore").innerHTML = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
 });
 DocId("BoobsMore").addEventListener("click", function () {
     Settings.MaxLimbs.MaxBoobs++;
-    DocId("BoobsLess").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
-    DocId("BoobsMore").value = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
+    DocId("BoobsLess").innerHTML = "Boobs " + Settings.MaxLimbs.MaxBoobs + "--";
+    DocId("BoobsMore").innerHTML = "Boobs " + Settings.MaxLimbs.MaxBoobs + "++";
 });
 DocId("VaginasLess").addEventListener("click", function () {
     if (Settings.MaxLimbs.MaxVaginas > 0) {
         Settings.MaxLimbs.MaxVaginas--;
     }
-    DocId("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
-    DocId("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
+    DocId("VaginasLess").innerHTML = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
+    DocId("VaginasMore").innerHTML = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
 });
 DocId("VaginasMore").addEventListener("click", function () {
     Settings.MaxLimbs.MaxVaginas++;
-    DocId("VaginasLess").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
-    DocId("VaginasMore").value = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
+    DocId("VaginasLess").innerHTML = "Pussies " + Settings.MaxLimbs.MaxVaginas + "--";
+    DocId("VaginasMore").innerHTML = "Pussies " + Settings.MaxLimbs.MaxVaginas + "++";
 });
 DocId("DicksLess").addEventListener("click", function () {
     if (Settings.MaxLimbs.MaxDicks > 0) {
         Settings.MaxLimbs.MaxDicks--;
     }
-    DocId("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
-    DocId("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
+    DocId("DicksLess").innerHTML = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
+    DocId("DicksMore").innerHTML = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
 });
 DocId("DicksMore").addEventListener("click", function () {
     Settings.MaxLimbs.MaxDicks++;
-    DocId("DicksLess").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
-    DocId("DicksMore").value = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
+    DocId("DicksLess").innerHTML = "Dicks " + Settings.MaxLimbs.MaxDicks + "--";
+    DocId("DicksMore").innerHTML = "Dicks " + Settings.MaxLimbs.MaxDicks + "++";
 });
 DocId("BallsLess").addEventListener("click", function () {
     if (Settings.MaxLimbs.MaxBalls > 0) {
         Settings.MaxLimbs.MaxBalls--;
     }
-    DocId("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
-    DocId("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
+    DocId("BallsLess").innerHTML = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
+    DocId("BallsMore").innerHTML = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
 });
 DocId("BallsMore").addEventListener("click", function () {
     Settings.MaxLimbs.MaxBalls++;
-    DocId("BallsLess").value = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
-    DocId("BallsMore").value = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
+    DocId("BallsLess").innerHTML = "Balls " + Settings.MaxLimbs.MaxBalls + "--";
+    DocId("BallsMore").innerHTML = "Balls " + Settings.MaxLimbs.MaxBalls + "++";
 });
 
 
 DocId("NoExtra").addEventListener("click", function () {
     if (DocId("MaxMenu").style.display == 'none') {
         DocId("MaxMenu").style.display = 'block';
-        DocId("NoExtra").value = "Hide";
+        DocId("NoExtra").innerHTML = "Hide";
     } else {
         DocId("MaxMenu").style.display = 'none';
-        DocId("NoExtra").value = "Max boobs/dicks etc";
+        DocId("NoExtra").innerHTML = "Max boobs/dicks etc";
     }
 });
 var MobileButtons = false;
@@ -8047,14 +7989,14 @@ DocId("MobileButtons").addEventListener("click", function () {
             DocId("buttons").style.maxWidth = 260 + "px";
             DocId("FirstButtons").style.display = 'none';
             DocId("SecondButtons").style.display = 'none';
-            DocId("MobileButtons").value = "Buttons";
+            DocId("MobileButtons").innerHTML = "Buttons";
             MobileButtons = false;
             break;
         default:
             DocId("buttons").style.width = 70 + "vw";
             DocId("buttons").style.maxWidth = 70 + "vw";
             DocId("FirstButtons").style.display = 'block';
-            DocId("MobileButtons").value = "Buttons";
+            DocId("MobileButtons").innerHTML = "Buttons";
             MobileButtons = true;
             break;
     }
@@ -8092,7 +8034,7 @@ function TribeQuests() {
         while (x.hasChildNodes()) {
             x.removeChild(x.firstChild);
         }
-        const Accept = InputButton("Accept");
+        const Accept = ButtonButton("Accept");
         Accept.addEventListener("click", function () {
             const Quest = {
                 Name: "",
@@ -8102,7 +8044,7 @@ function TribeQuests() {
             player.Quests.push(Quest);
             TribeQuests();
         });
-        const Decline = InputButton("Decline");
+        const Decline = ButtonButton("Decline");
         Decline.addEventListener("click", function () {
             TribeQuests();
         });
@@ -9078,7 +9020,7 @@ function SuccubusDungeonFunc() {
         p.innerHTML = `Wave ${Wave + 1}`;
     }
 
-    const input1 = InputButton("Go deeper")
+    const input1 = ButtonButton("Go deeper")
     input1.addEventListener("click", function () {
         enemies = [];
         Dungeon = true;
@@ -9206,7 +9148,7 @@ function PerkMenuFunc() {
         passiveh3Text = document.createTextNode("Passive");
     passiveh3.appendChild(passiveh3Text);
 
-    const ExtraHealth = InputButton(Perks.ExtraHealth.Count > 0 ?
+    const ExtraHealth = ButtonButton(Perks.ExtraHealth.Count > 0 ?
         `Extra Health +${Perks.ExtraHealth.Count}` : `Extra Health`, `Increase max health by 20`);
     ExtraHealth.addEventListener("click", function () {
         if (PerkPoints > 0) {
@@ -9216,7 +9158,7 @@ function PerkMenuFunc() {
     });
     passive.appendChild(ExtraHealth);
 
-    const ExtraWillHealth = InputButton(Perks.ExtraWillHealth.Count > 0 ?
+    const ExtraWillHealth = ButtonButton(Perks.ExtraWillHealth.Count > 0 ?
         `Extra Willhealth +${Perks.ExtraWillHealth.Count}` : "Extra Willhealth", "Increase willpower by 20");
     ExtraWillHealth.addEventListener("click", function () {
         if (PerkPoints > 0) {
@@ -9226,7 +9168,7 @@ function PerkMenuFunc() {
     });
     passive.appendChild(ExtraWillHealth);
 
-    const FasterRest = InputButton(Perks.FasterRest.Count > 0 ?
+    const FasterRest = ButtonButton(Perks.FasterRest.Count > 0 ?
         `Faster Rest +${Perks.FasterRest.Count}` : "Faster Rest",
         "Increases your passive rest with +0.01hp/tick. This will also increase rate burning fat.");
     FasterRest.addEventListener("click", function () {
@@ -9237,7 +9179,7 @@ function PerkMenuFunc() {
     });
     passive.appendChild(FasterRest);
 
-    const StealMore = InputButton(Perks.StealMore.Count > 0 ?
+    const StealMore = ButtonButton(Perks.StealMore.Count > 0 ?
         `More essence +${Perks.StealMore.Count}` : "More essence",
         `Increases the amount of essence you take when your enemy orgasms`);
     StealMore.addEventListener("click", function () {
@@ -9248,7 +9190,7 @@ function PerkMenuFunc() {
     });
     active.appendChild(StealMore);
 
-    const GiveEssence = InputButton(Perks.GiveEssence.Count > 0 ?
+    const GiveEssence = ButtonButton(Perks.GiveEssence.Count > 0 ?
         `Give essence +${Perks.GiveEssence.Count}` : "Give essence",
         `Gives your enemy your femininity and/or masculinity when you orgasm`);
     GiveEssence.addEventListener("click", function () {
@@ -9259,12 +9201,12 @@ function PerkMenuFunc() {
     });
     active.appendChild(GiveEssence);
 
-    const back = InputButton("Back");
+    const back = ButtonButton("Back");
     back.addEventListener("click", function () {
         LevelMenuFunc();
     });
 
-    const close = InputButton("Close");
+    const close = ButtonButton("Close");
     close.addEventListener("click", function () {
         DisplayNone();
         DisplayGame();
@@ -9688,14 +9630,6 @@ Array.prototype.RemoveDup = function () {
     }
 }*/
 
-function InputButton(Value, Title = "") { // Save space and stop repeating same lines
-    var button = document.createElement("input");
-    button.setAttribute("type", "button");
-    button.setAttribute("value", Value);
-    button.setAttribute("title", Title);
-    return button;
-}
-
 function InputText(value, id) {
     const IText = document.createElement("input");
     IText.setAttribute("type", "text");
@@ -9729,16 +9663,11 @@ function MakeSlider(StartValue, MaxValue, MinValue = 0) {
 }
 
 function LeaveBuilding() {
-    const Leave = document.createElement("input");
+    const Leave = document.createElement("button");
     Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
+    Leave.innerHTML = "Leave"
     Leave.addEventListener("click", function () {
-        battle = false;
-        GamePaused = false;
-        DocId("map").style.display = 'block';
-        DocId("buttons").style.display = 'block';
-        DocId("EmptyButtons").style.display = 'none';
-        DocId("status").style.display = 'block';
+        DisplayGame();
         const Buildings = DocId("Buildings");
         Buildings.style.display = 'none';
         while (Buildings.hasChildNodes()) {
@@ -9750,9 +9679,9 @@ function LeaveBuilding() {
 };
 
 function LeaveNpc() {
-    const Leave = document.createElement("input");
+    const Leave = document.createElement("button");
     Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
+    Leave.innerHTML = "Leave";
     Leave.addEventListener("click", function () {
         battle = false;
         GamePaused = false;
@@ -9771,9 +9700,9 @@ function LeaveNpc() {
 };
 
 function LeaveDungeon() {
-    const Leave = document.createElement("input");
+    const Leave = document.createElement("button");
     Leave.setAttribute("type", "button");
-    Leave.setAttribute("value", "Leave");
+    Leave.innerHTML =  "Leave";
     Leave.addEventListener("click", function () {
         Wave = 0;
         enemies = [RespawnBlocker()];
@@ -9884,7 +9813,7 @@ DocId("Save").addEventListener("click", function () {
     DocId("SaveMenu").style.display = 'block';
     for (let e = 1; e < 6; e++) {
         if (localStorage.getItem('SaveDate' + e) !== null) {
-            DocId("SavePlayer" + e).value = localStorage.getItem('SaveDate' + e);
+            DocId("SavePlayer" + e).innerHTML = localStorage.getItem('SaveDate' + e);
         }
     }
 });
@@ -9899,8 +9828,8 @@ for (let e = 1; e < 6; e++) {
         const SaveArray = [player, House, Flags, Settings];
         localStorage.setItem('SavedPlayer' + e, JSON.stringify(SaveArray));
         localStorage.setItem('SaveDate' + e, Date());
-        DocId("SavePlayer" + e).value = Date();
-        DocId("LoadPlayer" + e).value = Date();
+        DocId("SavePlayer" + e).innerHTML = Date();
+        DocId("LoadPlayer" + e).innerHTML = Date();
     });
 }
 
@@ -9923,11 +9852,11 @@ DocId("Options").addEventListener("click", function () {
         TextFont
     } = Settings
     DocId("optionpage").style.display = 'block';
-    DocId("ImgPack").value = `Img pack: ${ImgPack}`;
+    DocId("ImgPack").innerHTML = `Img pack: ${ImgPack}`;
     DocId("LogLength").innerHTML = LogLength;
     DocId("FontSize").innerHTML = `${Math.round(FontSize * 100) / 100}em`
-    DocId("Inch").value = `Inch ${Inch}`;
-    DocId("HighLightDoors").value = `Highlight doors ${HighLightDoors}`;
+    DocId("Inch").innerHTML = `Inch ${Inch}`;
+    DocId("HighLightDoors").innerHTML = `Highlight doors ${HighLightDoors}`;
     DocId("backcolor").value = BackColor;
     DocId("MapColor").value = MapColor;
     DocId("textcolor").value = TextColor;
@@ -9982,7 +9911,7 @@ DocId("DisablePronoun").addEventListener("click", function () {
 
 DocId("Inch").addEventListener("click", function () {
     Settings.Inch = Settings.Inch ? false : true;
-    DocId("Inch").value = "Inch " + Settings.Inch;
+    DocId("Inch").innerHTML = "Inch " + Settings.Inch;
 });
 
 DocId("FullScreen").addEventListener("click", function () {
@@ -10001,7 +9930,7 @@ DocId("FullScreen").addEventListener("click", function () {
             /* IE/Edge */
             elem.msRequestFullscreen();
         }
-        button.value = "W";
+        button.innerHTML = "W";
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -10015,7 +9944,7 @@ DocId("FullScreen").addEventListener("click", function () {
             /* IE/Edge */
             document.msExitFullscreen();
         }
-        button.value = "F"
+        button.innerHTML = "F"
     }
 });
 
@@ -10045,18 +9974,18 @@ DocId("saveoptions").addEventListener("click", function () {
 DocId("PerkOptions").addEventListener("click", function () {
     DisplayNone();
     DocId("PerkOptionsMenu").style.display = 'block';
-    DocId("Skip").value = "Skip " + Settings.Skip;
-    DocId("Vore").value = "Vore " + Settings.Vore;
+    DocId("Skip").innerHTML = "Skip " + Settings.Skip;
+    DocId("Vore").innerHTML = "Vore " + Settings.Vore;
 });
 
 DocId("Skip").addEventListener("click", function () {
     Settings.Skip = Settings.Skip ? false : true;
-    DocId("Skip").value = "Skip " + Settings.Skip;
+    DocId("Skip").innerHTML = "Skip " + Settings.Skip;
 });
 
 DocId("PlayerSpriteEnable").addEventListener("click", function () {
     Settings.PlayerSpriteEnable = Settings.PlayerSpriteEnable ? false : true;
-    DocId("PlayerSpriteEnable").value = Settings.PlayerSpriteEnable;
+    DocId("PlayerSpriteEnable").innerHTML = Settings.PlayerSpriteEnable;
 })
 
 DocId("OptionGiveEssence").addEventListener("click", function () {
@@ -10074,7 +10003,7 @@ DocId("OptionGiveEssence").addEventListener("click", function () {
             Settings.GiveEssence = "Both";
             break;
     }
-    DocId("OptionGiveEssence").value = Settings.GiveEssence;
+    DocId("OptionGiveEssence").innerHTML = Settings.GiveEssence;
 });
 
 DocId("PerkOptionsLeave").addEventListener("click", function () {
@@ -10084,7 +10013,7 @@ DocId("PerkOptionsLeave").addEventListener("click", function () {
 
 DocId("HighLightDoors").addEventListener("click", function () {
     Settings.HighLightDoors = Settings.HighLightDoors ? false : true;
-    DocId("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
+    DocId("HighLightDoors").innerHTML = "Highlight doors " + Settings.HighLightDoors;
 });
 function AfterBattleButtons(Sex = true, Vored = false) {
     const div = document.getElementById("SexButtons");
@@ -10093,7 +10022,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
     }
 
     function SexButton(value, func) {
-        const button = InputButton(value);
+        const button = ButtonButton(value);
         button.addEventListener("click", func);
         button.classList.add("SexButtons");
         return button
@@ -10136,7 +10065,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 Mouth.appendChild(SexButton("Receive cunnilingus", SexActGetCunnilingus));
                 if (ee.Dicks.length > 1) {
                     // Dual pen old value Get dual penetrated
-                    const DualFuckt = InputButton("");
+                    const DualFuckt = ButtonButton("");
                     Pussy.appendChild(DualFuckt);
                 };
                 if (ee.Height * 9 < player.Height) {
@@ -10166,7 +10095,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
             const dickCount = DickOne.childElementCount + DickTwo.childElementCount
             if (window.innerHeight < 800 && dickCount > 3) {
                 DickTwo.style.display = "none";
-                const DickAction = InputButton("More");
+                const DickAction = ButtonButton("More");
                 DickAction.addEventListener("click", function () {
                     if (DickTwo.style.display === "none") {
                         DickOne.style.display = "none";
@@ -10180,13 +10109,13 @@ function AfterBattleButtons(Sex = true, Vored = false) {
             }
         }
     }
-    const Stop = InputButton("Stop sex");
+    const Stop = ButtonButton("Stop sex");
     Dungeon ? Stop.addEventListener("click", DungeonStopButton) :
         Stop.addEventListener("click", StopSexButton);
     Right.appendChild(Stop);
     if (!Vored) {
         if (ee.Orgasm > 4 && House.Dormmates.length < (House.Dorm * 3)) {
-            const Capture = InputButton("Take them home");
+            const Capture = ButtonButton("Take them home");
             Dungeon ? Capture.addEventListener("click", DungeonCapture) :
                 Capture.addEventListener("click", SexActCapture);
             Right.appendChild(Capture);
@@ -10200,7 +10129,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 InjectM.style.background = "linear-gradient(to right,rgba(245, 245, 220),blue)";
                 InfuseDiv.appendChild(InjectM);
             } else { //filler button to stop player from missclicking
-                const InjectM = InputButton("Empty");
+                const InjectM = ButtonButton("Empty");
                 InfuseDiv.appendChild(InjectM);
             }
             if (player.Femi > 0) {
@@ -10209,7 +10138,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 InjectF.style.background = "linear-gradient(to right,rgba(245, 245, 220),#C12970)";
                 InfuseDiv.appendChild(InjectF);
             } else {
-                const InjectF = InputButton("Empty");
+                const InjectF = ButtonButton("Empty");
                 InfuseDiv.appendChild(InjectF);
             }
             Siphon.appendChild(InfuseDiv);
@@ -10224,7 +10153,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
                 DrainM.style.background = "linear-gradient(to right,blue,rgba(245, 245, 220))";
                 SiphonDiv.appendChild(DrainM);
             } else {
-                const DrainM = InputButton("Drained");
+                const DrainM = ButtonButton("Drained");
                 SiphonDiv.appendChild(DrainM);
             }
 
@@ -10235,7 +10164,7 @@ function AfterBattleButtons(Sex = true, Vored = false) {
 
                 SiphonDiv.appendChild(DrainF);
             } else {
-                const DrainF = InputButton("Drained");
+                const DrainF = ButtonButton("Drained");
                 SiphonDiv.appendChild(DrainF);
             }
             Siphon.appendChild(SiphonDiv);
@@ -12361,7 +12290,7 @@ DocId("VoreLooks").style.display = 'none';
 DocId("Vore").addEventListener("click", function () {
     Settings.Vore = Settings.Vore ? false : true;
     DocId("VoreLooks").style.display = Settings.Vore ? 'inline-block' : 'none';
-    DocId("Vore").value = "Vore " + Settings.Vore;
+    DocId("Vore").innerHTML = "Vore " + Settings.Vore;
     if (!player.hasOwnProperty("Vore")) {
         player.Vore = {
             Level: 0,
@@ -12405,7 +12334,7 @@ function VorePerkFunc() {
             const text = () => {
                 return str.replace(regex, '$1 $2')
             }
-            DocId(str).value = VorePerks.hasOwnProperty(str) ? VorePerks[str].Count > 0 ?
+            DocId(str).innerHTML = VorePerks.hasOwnProperty(str) ? VorePerks[str].Count > 0 ?
                 `${text()} + ${VorePerks[str].Count}` : text() : text();
         },
         strings = ["AbsorbEssence", "FasterDigestion", "AbsorbStats", "HigherCapacity", "AbsorbHeight", "PredatorsMeta"].forEach((str) => {
@@ -12488,7 +12417,7 @@ DocId("AbsorbEssenceSetting").addEventListener("click", function () {
         };
     };
     VoreSettings.AbsorbEssence = Next();
-    DocId("AbsorbEssenceSetting").value = `Absorb Essence ${VoreSettings.AbsorbEssence}`;
+    DocId("AbsorbEssenceSetting").innerHTML = `Absorb Essence ${VoreSettings.AbsorbEssence}`;
 });
 DocId("LeaveVore").addEventListener("click", function () {
     DocId("ShowVore").style.display = 'none';
@@ -13168,7 +13097,7 @@ DocId("VoreLooks").addEventListener("click", function () {
     DisplayNone();
     DocId("ShowVore").style.display = 'grid';
     DocId("VorePerkMenu").style.display = 'none';
-    DocId("AbsorbEssenceSetting").value = "Absorb Essence " + Settings.VoreSettings.AbsorbEssence;
+    DocId("AbsorbEssenceSetting").innerHTML = `Absorb Essence ${Settings.VoreSettings.AbsorbEssence}`;
     VoreButtonsFunc();
 });
 
@@ -13179,7 +13108,7 @@ function VoreButtonsFunc() {
     };
     // Local functions for repeting actions
     const Back = () => {
-        const temp = InputButton("Back");
+        const temp = ButtonButton("Back");
         temp.addEventListener("click", function () {
             VoreButtonsFunc();
         });
@@ -13223,7 +13152,7 @@ function VoreButtonsFunc() {
         innerCon.appendChild(Preys(Vore.Stomach));
         con.appendChild(innerCon);
         con.appendChild(document.createElement("br"));
-        const StomachDigestion = InputButton(`Stomach digestion ${VoreSettings.StomachDigestion}`);
+        const StomachDigestion = ButtonButton(`Stomach digestion ${VoreSettings.StomachDigestion}`);
         StomachDigestion.addEventListener("click", function () {
             VoreSettings.StomachDigestion = VoreSettings.StomachDigestion ? false : true;
             StomachDigestion.setAttribute("value", `Stomach digestion ${VoreSettings.StomachDigestion}`);
@@ -13240,7 +13169,7 @@ function VoreButtonsFunc() {
         innerCon.appendChild(Preys(Vore.Vagina));
         con.appendChild(innerCon);
         con.appendChild(document.createElement("br"));
-        const ChildTF = InputButton(`Child tf/Age reduc ${VoreSettings.ChildTF}`);
+        const ChildTF = ButtonButton(`Child tf/Age reduc ${VoreSettings.ChildTF}`);
         ChildTF.addEventListener("click", function () {
             VoreSettings.ChildTF = VoreSettings.ChildTF ? false : true;
             VoreSettings.VCumDigestion = false;
@@ -13248,7 +13177,7 @@ function VoreButtonsFunc() {
             ChildTF.setAttribute("value", `Child tf/Age reduc ${VoreSettings.ChildTF}`);
         });
         con.appendChild(ChildTF);
-        const VCumDigestion = InputButton(`Digestion ${VoreSettings.VCumDigestion}`);
+        const VCumDigestion = ButtonButton(`Digestion ${VoreSettings.VCumDigestion}`);
         VCumDigestion.addEventListener("click", function () {
             VoreSettings.VCumDigestion = VoreSettings.VCumDigestion ? false : true;
             VoreSettings.ChildTF = false;
@@ -13267,7 +13196,7 @@ function VoreButtonsFunc() {
         innerCon.appendChild(Preys(Vore.Breast));
         con.appendChild(innerCon);
         con.appendChild(document.createElement("br"));
-        const MilkTF = InputButton(`Milk transformation ${VoreSettings.MilkTF}`);
+        const MilkTF = ButtonButton(`Milk transformation ${VoreSettings.MilkTF}`);
         MilkTF.addEventListener("click", function () {
             VoreSettings.MilkTF = VoreSettings.MilkTF ? false : true;
             MilkTF.setAttribute("value", `Milk transformation ${VoreSettings.MilkTF}`);
@@ -13284,7 +13213,7 @@ function VoreButtonsFunc() {
         innerCon.appendChild(Preys(Vore.Balls));
         con.appendChild(innerCon);
         con.appendChild(document.createElement("br"));
-        const CumDigestion = InputButton(`Cum transformation ${VoreSettings.CumTF}`);
+        const CumDigestion = ButtonButton(`Cum transformation ${VoreSettings.CumTF}`);
         CumDigestion.addEventListener("click", function () {
             VoreSettings.CumTF = VoreSettings.CumTF ? false : true;
             CumDigestion.setAttribute("value", `Cum transformation ${VoreSettings.CumTF}`);
@@ -13301,7 +13230,7 @@ function VoreButtonsFunc() {
         innerCon.appendChild(Preys(Vore.Anal));
         con.appendChild(innerCon);
         con.appendChild(document.createElement("br"));
-        const CumDigestion = InputButton(`Anal Digestion ${VoreSettings.AnalDigestion}`);
+        const CumDigestion = ButtonButton(`Anal Digestion ${VoreSettings.AnalDigestion}`);
         CumDigestion.addEventListener("click", function () {
             VoreSettings.AnalDigestion = VoreSettings.AnalDigestion ? false : true;
             CumDigestion.setAttribute("value", `Anal Digestion ${VoreSettings.AnalDigestion}`);
@@ -13350,7 +13279,7 @@ function PreyButton(e, arr) {
             h3Text = document.createTextNode(`${e.Name} ${e.Race}`);
         h3.appendChild(h3Text);
         con.appendChild(h3);
-        const regulate = InputButton("Regurgitate");
+        const regulate = ButtonButton("Regurgitate");
         regulate.addEventListener("click", function () {
             console.log(arr.findIndex(i => i === e));
             // Check so that prey haven't already been digested.
@@ -13360,7 +13289,7 @@ function PreyButton(e, arr) {
             VoreButtonsFunc();
         });
         con.appendChild(regulate)
-        const back = InputButton("Back");
+        const back = ButtonButton("Back");
         back.addEventListener("click", function () {
             VoreButtonsFunc();
         });

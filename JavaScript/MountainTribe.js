@@ -9,7 +9,7 @@ function TribeQuests() {
         while (x.hasChildNodes()) {
             x.removeChild(x.firstChild);
         }
-        const Accept = InputButton("Accept");
+        const Accept = ButtonButton("Accept");
         Accept.addEventListener("click", function () {
             const Quest = {
                 Name: "",
@@ -19,7 +19,7 @@ function TribeQuests() {
             player.Quests.push(Quest);
             TribeQuests();
         });
-        const Decline = InputButton("Decline");
+        const Decline = ButtonButton("Decline");
         Decline.addEventListener("click", function () {
             TribeQuests();
         });

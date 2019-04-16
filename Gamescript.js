@@ -377,7 +377,7 @@ function CharCreator() { // No need have these active for players who use load.
 
     function StartAutoEssence() {
         Settings.EssenceAuto = Settings.EssenceAuto ? false : true;
-        StartAutoEssenceButton.value = `Auto TF ${Settings.EssenceAuto}`;
+        StartAutoEssenceButton.innerHTML = `Auto TF ${Settings.EssenceAuto}`;
     };
 
     function startgame() {
@@ -390,7 +390,7 @@ function CharCreator() { // No need have these active for players who use load.
 
     function VoreStart() {
         Settings.Vore = Settings.Vore ? false : true;
-        VoreStartButton.value = "Vore " + Settings.Vore;
+        VoreStartButton.innerHTML = `Vore ${Settings.Vore}`;
     };
 
     function RemoveListerners() {

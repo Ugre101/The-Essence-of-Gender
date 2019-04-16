@@ -2,11 +2,11 @@ document.getElementById("HideWorldMap").addEventListener("click", function () {
     const HideWorld = document.getElementById("HideWorldMap");
     if (document.getElementById("WorldMapPart").style.display == 'none') {
         document.getElementById("WorldMapPart").style.display = 'block';
-        HideWorld.value = "H";
+        HideWorld.innerHTML = "H";
         PrintMap();
     } else {
         document.getElementById("WorldMapPart").style.display = 'none';
-        HideWorld.value = "S"
+        HideWorld.innerHTML = "S"
     }
 });
 

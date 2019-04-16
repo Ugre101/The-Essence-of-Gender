@@ -12,11 +12,11 @@ DocId("Options").addEventListener("click", function () {
         TextFont
     } = Settings
     DocId("optionpage").style.display = 'block';
-    DocId("ImgPack").value = `Img pack: ${ImgPack}`;
+    DocId("ImgPack").innerHTML = `Img pack: ${ImgPack}`;
     DocId("LogLength").innerHTML = LogLength;
     DocId("FontSize").innerHTML = `${Math.round(FontSize * 100) / 100}em`
-    DocId("Inch").value = `Inch ${Inch}`;
-    DocId("HighLightDoors").value = `Highlight doors ${HighLightDoors}`;
+    DocId("Inch").innerHTML = `Inch ${Inch}`;
+    DocId("HighLightDoors").innerHTML = `Highlight doors ${HighLightDoors}`;
     DocId("backcolor").value = BackColor;
     DocId("MapColor").value = MapColor;
     DocId("textcolor").value = TextColor;
@@ -71,7 +71,7 @@ DocId("DisablePronoun").addEventListener("click", function () {
 
 DocId("Inch").addEventListener("click", function () {
     Settings.Inch = Settings.Inch ? false : true;
-    DocId("Inch").value = "Inch " + Settings.Inch;
+    DocId("Inch").innerHTML = "Inch " + Settings.Inch;
 });
 
 DocId("FullScreen").addEventListener("click", function () {
@@ -90,7 +90,7 @@ DocId("FullScreen").addEventListener("click", function () {
             /* IE/Edge */
             elem.msRequestFullscreen();
         }
-        button.value = "W";
+        button.innerHTML = "W";
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -104,7 +104,7 @@ DocId("FullScreen").addEventListener("click", function () {
             /* IE/Edge */
             document.msExitFullscreen();
         }
-        button.value = "F"
+        button.innerHTML = "F"
     }
 });
 
@@ -134,18 +134,18 @@ DocId("saveoptions").addEventListener("click", function () {
 DocId("PerkOptions").addEventListener("click", function () {
     DisplayNone();
     DocId("PerkOptionsMenu").style.display = 'block';
-    DocId("Skip").value = "Skip " + Settings.Skip;
-    DocId("Vore").value = "Vore " + Settings.Vore;
+    DocId("Skip").innerHTML = "Skip " + Settings.Skip;
+    DocId("Vore").innerHTML = "Vore " + Settings.Vore;
 });
 
 DocId("Skip").addEventListener("click", function () {
     Settings.Skip = Settings.Skip ? false : true;
-    DocId("Skip").value = "Skip " + Settings.Skip;
+    DocId("Skip").innerHTML = "Skip " + Settings.Skip;
 });
 
 DocId("PlayerSpriteEnable").addEventListener("click", function () {
     Settings.PlayerSpriteEnable = Settings.PlayerSpriteEnable ? false : true;
-    DocId("PlayerSpriteEnable").value = Settings.PlayerSpriteEnable;
+    DocId("PlayerSpriteEnable").innerHTML = Settings.PlayerSpriteEnable;
 })
 
 DocId("OptionGiveEssence").addEventListener("click", function () {
@@ -163,7 +163,7 @@ DocId("OptionGiveEssence").addEventListener("click", function () {
             Settings.GiveEssence = "Both";
             break;
     }
-    DocId("OptionGiveEssence").value = Settings.GiveEssence;
+    DocId("OptionGiveEssence").innerHTML = Settings.GiveEssence;
 });
 
 DocId("PerkOptionsLeave").addEventListener("click", function () {
@@ -173,5 +173,5 @@ DocId("PerkOptionsLeave").addEventListener("click", function () {
 
 DocId("HighLightDoors").addEventListener("click", function () {
     Settings.HighLightDoors = Settings.HighLightDoors ? false : true;
-    DocId("HighLightDoors").value = "Highlight doors " + Settings.HighLightDoors;
+    DocId("HighLightDoors").innerHTML = "Highlight doors " + Settings.HighLightDoors;
 });

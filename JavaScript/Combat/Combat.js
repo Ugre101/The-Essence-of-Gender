@@ -240,7 +240,7 @@ function CombatButtons() { // Just combat buttons
         // Todo make it so that instead of spell with index 0,1,2 spawn at outside book make it so
         // that last casted spells is at the "quick cast" menu 
         if (player.Spells.length >= 2) {
-            const book = InputButton("Spellbook");
+            const book = ButtonButton("Spellbook");
             book.addEventListener("click", function () {
                 Spellbook();
             });
@@ -249,7 +249,7 @@ function CombatButtons() { // Just combat buttons
         Combat.appendChild(row3)
     }
 
-    const FleeBattle = InputButton("Flee");
+    const FleeBattle = ButtonButton("Flee");
     FleeBattle.addEventListener("click", function () {
         if (RandomInt(1, 10) > 7) {
             battle = false;
@@ -263,7 +263,7 @@ function CombatButtons() { // Just combat buttons
     });
     row4.appendChild(FleeBattle);
 
-    const Surrender = InputButton("Surrender");
+    const Surrender = ButtonButton("Surrender");
     Surrender.addEventListener("click", function () {
         Lose();
     });
@@ -284,7 +284,7 @@ function Spellbook() {
         row3 = document.createElement("div"),
         row4 = document.createElement("div");
 
-    const CloseBook = InputButton("Close book");
+    const CloseBook = ButtonButton("Close book");
     CloseBook.addEventListener("click", function () {
         CombatButtons();
     });
