@@ -6,7 +6,7 @@ DocId("EssenceOptions").addEventListener("click", function () {
         MaxBalls
     } = Settings.MaxLimbs
     DisplayNone();
-    DocId("EssenceOptionsMenu").style.display = 'block';
+    DocId("EssenceOptionsMenu").style.display = 'flex';
     DocId("MaxMenu").style.display = 'none';
     DocId("EssenceAuto").innerHTML = Settings.EssenceAuto ? "Essence Auto" : "Essence Manual";
     DocId("ManualGrowth").style.display = 'block';

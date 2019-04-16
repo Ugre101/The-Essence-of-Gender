@@ -2,7 +2,7 @@
     DocId("LevelButton").addEventListener("click", function () {
         DisplayNone();
         LevelMenuFunc();
-        DocId("LevelMenu").style.display = 'block';
+        DocId("LevelMenu").style.display = 'flex';
     });
     // Incraese stats
 

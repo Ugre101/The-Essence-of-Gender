@@ -11,7 +11,7 @@ DocId("Options").addEventListener("click", function () {
         TextColor,
         TextFont
     } = Settings
-    DocId("optionpage").style.display = 'block';
+    DocId("optionpage").style.display = 'flex';
     DocId("ImgPack").innerHTML = `Img pack: ${ImgPack}`;
     DocId("LogLength").innerHTML = LogLength;
     DocId("FontSize").innerHTML = `${Math.round(FontSize * 100) / 100}em`

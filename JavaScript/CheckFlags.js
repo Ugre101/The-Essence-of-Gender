@@ -281,7 +281,6 @@ function CheckFlags() {
         player.Inventory.push(ItemDict.SpellBook);
     }
     HemScale();
-    StatusButtonSystem();
 };
 // Hopefully obselite
 /**

@@ -91,8 +91,6 @@ function BarFunc() {
     });
     ShopMenu.appendChild(input4);
     div.appendChild(ShopMenu);
-
-    div.appendChild(ShopMenu);
     div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
     document.getElementById("Buildings").style.display = 'block';

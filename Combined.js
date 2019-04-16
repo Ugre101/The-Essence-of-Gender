@@ -317,7 +317,7 @@ var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.M
 // Start page
 DocId("GoToCharCreator").addEventListener("click", function () {
     CharCreator();
-    DocId("CharCreator").style.display = 'block';
+    DocId("CharCreator").style.display = 'flex';
     DocId("StartPage").style.display = 'none';
 });
 
@@ -340,7 +340,7 @@ function CharCreator() { // No need have these active for players who use load.
     function begin() {
         const form = document.forms.CreatePlayer.elements;
         CharCreator.style.display = 'none';
-        page2.style.display = 'block';
+        page2.style.display = 'flex';
         player.Name = form[0].value;
         player.LastName = form[1].value;
         // Will remove hair and skincolor later, as I want customize player to be a part of the game.
@@ -422,28 +422,13 @@ function DisplayNone() {
 function DisplayGame() {
     battle = false;
     GamePaused = false;
-    const DisplayGameArray = ["map", "buttons", "status", "EventLog"].forEach(function (src) {
+    const DisplayGameArray = ["map", "status", "EventLog"].forEach(function (src) {
         DocId(src).style.display = 'block';
     });
+    DocId("buttons").style.display = 'grid';
     DocId("EmptyButtons").style.display = 'none';
-    if (MobileButtons) {
-        DocId("buttons").style.width = 18 + "%";
-        DocId("buttons").style.maxWidth = 260 + "px";
-        DocId("FirstButtons").style.display = 'none';
-        DocId("SecondButtons").style.display = 'none';
-        MobileButtons = false;
-    };
 };
 // More buttons for small screen height
-DocId("MoreButtons").addEventListener("click", function () {
-    DocId("FirstButtons").style.display = 'none';
-    DocId("SecondButtons").style.display = 'block';
-});
-
-DocId("LessButtons").addEventListener("click", function () {
-    DocId("FirstButtons").style.display = 'block';
-    DocId("SecondButtons").style.display = 'none';
-});
 
 DocId("Quests").addEventListener("click", function () {
     DisplayNone();
@@ -768,7 +753,6 @@ function loop() {
 
         if (Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20 !== medium) {
             HemScale();
-            StatusButtonSystem();
         };
         CurrentMap();
         (enemies.length > 0) ? PrintEnemies(): false;
@@ -922,8 +906,6 @@ function BarFunc() {
         }
     });
     ShopMenu.appendChild(input4);
-    div.appendChild(ShopMenu);
-
     div.appendChild(ShopMenu);
     div.appendChild(LeaveBuilding());
     Buildings.appendChild(div);
@@ -1216,62 +1198,88 @@ function BlackMarketFunc() {
         limbcon.appendChild(Frag);
     }
 }
-document.getElementById("SacRaceEss").addEventListener("click", function () {
-    const SacMenu = document.getElementById("SacRaceEssMenu");
-    if (SacMenu.style.display === 'grid') {
-        SacMenu.style.display = 'none';
-    } else {
-        SacMenu.style.display = 'grid';
+function ChimeraShrineFunc() {
+    const Buildings = document.getElementById("Buildings")
+    CleanBuildings(); // Empties div
+    const div = document.createElement("div");
+
+    if (window.innerHeight > 600) { // No title on small screen
+        div.appendChild(TitleText("Chimera shrine"));
+    }
+
+    const p = TextBox();
+    div.appendChild(p);
+
+    const input1 = ButtonButton("Sacrifice race essence")
+    input1.addEventListener("click", function () {
         SacRaces();
-    }
-});
+    });
+    input1.addEventListener("mouseover", function () {
 
-function SacRaces(parAmount = 50) {
-    const MaxValue = player.RaceEssence.length > 0 ? player.RaceEssence.map(ess => ess.amount).reduce((a,b) => Math.max(a,b)) : 0;
-    var DonateAmount = parAmount > MaxValue ? Math.round(MaxValue) : parAmount;
-    const SacMenu = document.getElementById("SacRaceEssMenu"),
-        SacFrag = document.createDocumentFragment();
-    while (SacMenu.hasChildNodes()) {
-        SacMenu.removeChild(SacMenu.firstChild);
-    }
-    const Sliderdiv = document.createElement("DIV"),
-        SliderOut = document.createElement("P");
-    SliderOut.innerHTML = `Donate: ${DonateAmount}`;
-    Sliderdiv.appendChild(SliderOut);
-    const Slider = MakeSlider(DonateAmount, MaxValue);
-    Slider.oninput = function () {
-        DonateAmount = this.value;
-        SliderOut.innerHTML = `Donate: ${this.value}`;
-    }
-    Sliderdiv.appendChild(Slider);
-    SacFrag.appendChild(Sliderdiv);
+    });
+    div.appendChild(input1);
 
-    const Condiv = document.createElement("DIV");
-    Condiv.setAttribute("class", "TwoColumn");
-    const {
-        ChimeraShrine
-    } = player.Blessings;
-    if (player.RaceEssence.length > 0) {
-        player.RaceEssence.forEach((ess, i) => {
-            div = document.createElement("DIV"),
-                RaceButton = ButtonButton(`${ess.Race} ${Math.round(ess.amount)}`);
-            RaceButton.addEventListener("click", function () {
-                if (DonateAmount > ess.amount) {
-                    ChimeraShrine.Donated += ess.amount;
-                    player.RaceEssence.splice(i, 1);
-                } else {
-                    ChimeraShrine.Donated += DonateAmount;
-                    ess.amount -= DonateAmount;
-                }
-                ChimeraShrine.Points = Math.floor(Math.sqrt(ChimeraShrine.Donated));
-                SacRaces(DonateAmount);
-            });
-            div.appendChild(RaceButton)
-            Condiv.appendChild(div);
-        })
-    }
-    SacFrag.appendChild(Condiv);
-    SacMenu.appendChild(SacFrag);
+    const input2 = ButtonButton("Placeholder")
+    input2.addEventListener("click", function () {
+
+    });
+    input2.addEventListener("mouseover", function () {
+
+    });
+    div.appendChild(input2);
+
+    div.appendChild(LeaveBuilding());
+    Buildings.appendChild(div);
+    document.getElementById("Buildings").style.display = 'block';
+
+    function SacRaces(parAmount = 50) {
+        const MaxValue = player.RaceEssence.length > 0 ? player.RaceEssence.map(ess => ess.amount).reduce((a, b) => Math.max(a, b)) : 0;
+        var DonateAmount = parAmount > MaxValue ? Math.round(MaxValue) : parAmount;
+        const SacMenu = Buildings,
+            SacFrag = document.createDocumentFragment();
+        while (SacMenu.hasChildNodes()) {
+            SacMenu.removeChild(SacMenu.firstChild);
+        }
+        const Sliderdiv = document.createElement("DIV"),
+            SliderOut = document.createElement("P");
+        SliderOut.innerHTML = `Donate: ${DonateAmount}`;
+        Sliderdiv.appendChild(SliderOut);
+        const Slider = MakeSlider(DonateAmount, MaxValue);
+        Slider.oninput = function () {
+            DonateAmount = this.value;
+            SliderOut.innerHTML = `Donate: ${this.value}`;
+        }
+        Sliderdiv.appendChild(Slider);
+        SacFrag.appendChild(Sliderdiv);
+
+        const Condiv = document.createElement("DIV");
+        Condiv.setAttribute("class", "AutoColumn");
+        const {
+            ChimeraShrine
+        } = player.Blessings;
+        if (player.RaceEssence.length > 0) {
+            player.RaceEssence.forEach((ess, i) => {
+                Sacdiv = document.createElement("div"),
+                    RaceButton = ButtonButton(`${ess.Race} ${Math.round(ess.amount)}`);
+                RaceButton.addEventListener("click", function () {
+                    if (DonateAmount > ess.amount) {
+                        ChimeraShrine.Donated += ess.amount;
+                        player.RaceEssence.splice(i, 1);
+                    } else {
+                        ChimeraShrine.Donated += DonateAmount;
+                        ess.amount -= DonateAmount;
+                    }
+                    ChimeraShrine.Points = Math.floor(Math.sqrt(ChimeraShrine.Donated));
+                    SacRaces(DonateAmount);
+                });
+                Sacdiv.appendChild(RaceButton)
+                Condiv.appendChild(Sacdiv);
+            })
+        }
+        SacFrag.appendChild(Condiv);
+        SacMenu.appendChild(SacFrag);
+        SacMenu.appendChild(LeaveBuilding());
+    };
 };
 // "Friendly" shop in dungeon area
 var items = { // export to items.js when done!
@@ -2853,7 +2861,6 @@ function CheckFlags() {
         player.Inventory.push(ItemDict.SpellBook);
     }
     HemScale();
-    StatusButtonSystem();
 };
 // Hopefully obselite
 /**
@@ -6015,7 +6022,7 @@ ItemDict.SpellBook = {
     DocId("LevelButton").addEventListener("click", function () {
         DisplayNone();
         LevelMenuFunc();
-        DocId("LevelMenu").style.display = 'block';
+        DocId("LevelMenu").style.display = 'flex';
     });
     // Incraese stats
 
@@ -7907,7 +7914,7 @@ DocId("EssenceOptions").addEventListener("click", function () {
         MaxBalls
     } = Settings.MaxLimbs
     DisplayNone();
-    DocId("EssenceOptionsMenu").style.display = 'block';
+    DocId("EssenceOptionsMenu").style.display = 'flex';
     DocId("MaxMenu").style.display = 'none';
     DocId("EssenceAuto").innerHTML = Settings.EssenceAuto ? "Essence Auto" : "Essence Manual";
     DocId("ManualGrowth").style.display = 'block';
@@ -7980,49 +7987,6 @@ DocId("NoExtra").addEventListener("click", function () {
         DocId("NoExtra").innerHTML = "Max boobs/dicks etc";
     }
 });
-var MobileButtons = false;
-
-DocId("MobileButtons").addEventListener("click", function () {
-    switch (MobileButtons) {
-        case true:
-            DocId("buttons").style.width = 18 + "%";
-            DocId("buttons").style.maxWidth = 260 + "px";
-            DocId("FirstButtons").style.display = 'none';
-            DocId("SecondButtons").style.display = 'none';
-            DocId("MobileButtons").innerHTML = "Buttons";
-            MobileButtons = false;
-            break;
-        default:
-            DocId("buttons").style.width = 70 + "vw";
-            DocId("buttons").style.maxWidth = 70 + "vw";
-            DocId("FirstButtons").style.display = 'block';
-            DocId("MobileButtons").innerHTML = "Buttons";
-            MobileButtons = true;
-            break;
-    }
-});
-
-function StatusButtonSystem() {
-    if (window.innerHeight < 400) {
-        DocId("FirstButtons").style.display = 'none';
-        DocId("SecondButtons").style.display = 'none';
-        DocId("MoreButtons").style.display = 'inline-block';
-        DocId("LessButtons").style.display = 'inline-block';
-        DocId("MobileButtons").style.display = 'inline-block';
-    } else if (window.innerHeight < 800) {
-        DocId("FirstButtons").style.display = 'block';
-        DocId("SecondButtons").style.display = 'none';
-        DocId("MoreButtons").style.display = 'inline-block';
-        DocId("LessButtons").style.display = 'inline-block';
-        DocId("MobileButtons").style.display = 'none';
-    } else {
-        DocId("SecondButtons").style.display = 'block';
-        DocId("FirstButtons").style.display = 'block';
-        DocId("MoreButtons").style.display = 'none';
-        DocId("LessButtons").style.display = 'none';
-        DocId("MobileButtons").style.display = 'none';
-    }
-}
 function TribeQuests() {
     const x = DocId("TribeQuestsMenu");
     while (x.hasChildNodes()) {
@@ -9813,7 +9777,8 @@ DocId("Save").addEventListener("click", function () {
     DocId("SaveMenu").style.display = 'block';
     for (let e = 1; e < 6; e++) {
         if (localStorage.getItem('SaveDate' + e) !== null) {
-            DocId("SavePlayer" + e).innerHTML = localStorage.getItem('SaveDate' + e);
+            const savedate = new Date(localStorage.getItem('SaveDate' + e));
+            DocId("SavePlayer" + e).innerHTML = savedate.toUTCString();
         }
     }
 });
@@ -9827,9 +9792,9 @@ for (let e = 1; e < 6; e++) {
     DocId("SavePlayer" + e).addEventListener("click", function () {
         const SaveArray = [player, House, Flags, Settings];
         localStorage.setItem('SavedPlayer' + e, JSON.stringify(SaveArray));
-        localStorage.setItem('SaveDate' + e, Date());
-        DocId("SavePlayer" + e).innerHTML = Date();
-        DocId("LoadPlayer" + e).innerHTML = Date();
+        localStorage.setItem('SaveDate' + e, new Date());
+        DocId("SavePlayer" + e).innerHTML = new Date().toUTCString();
+        DocId("LoadPlayer" + e).innerHTML = new Date().toUTCString();
     });
 }
 
@@ -9851,7 +9816,7 @@ DocId("Options").addEventListener("click", function () {
         TextColor,
         TextFont
     } = Settings
-    DocId("optionpage").style.display = 'block';
+    DocId("optionpage").style.display = 'flex';
     DocId("ImgPack").innerHTML = `Img pack: ${ImgPack}`;
     DocId("LogLength").innerHTML = LogLength;
     DocId("FontSize").innerHTML = `${Math.round(FontSize * 100) / 100}em`
@@ -12466,27 +12431,7 @@ function VoreEngine() {
             e.LastName = "";
         }
         if (VP.hasOwnProperty("AbsorbEssence")) {
-            const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
-                Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi)
-
-            switch (Settings.VoreSettings.AbsorbEssence) {
-                case "None":
-                    break;
-                case "Masculinity":
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    break;
-                case "Femininity":
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-                default:
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-            }
+            AbsorbEssenceCalc(e);
         }
         if (VP.hasOwnProperty("AbsorbHeight")) {
             if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
@@ -12507,17 +12452,7 @@ function VoreEngine() {
 
             if (e.Weight < 0) {
                 if (VP.hasOwnProperty("AbsorbStats") ? VP.AbsorbStats.Count > 0 : false) {
-                    const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
-                        ToAdd = (what) => {
-                            return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
-                        };
-                    player.Str += ToAdd("Str");
-                    player.Int += ToAdd("Int");
-                    player.Charm += ToAdd("Charm");
-                    player.Will += ToAdd("Will");
-                    player.End += ToAdd("End");
-                    player.SexSkill += ToAdd("SexSkill");
-                    console.log("Stomach")
+                    AbsorbStatsCalc(e);
                 }
                 EventLog(`You have digested ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Stomach.splice(Vore.Stomach.findIndex(i => i === e), 1);
@@ -12541,26 +12476,7 @@ function VoreEngine() {
     }
     for (let e of Vore.Vagina) {
         if (VP.hasOwnProperty("AbsorbEssence")) {
-            const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
-                Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi);
-            switch (Settings.VoreSettings.AbsorbEssence) {
-                case "None":
-                    break;
-                case "Masculinity":
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    break;
-                case "Femininity":
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-                default:
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-            }
+            AbsorbEssenceCalc(e);
         }
         if (VP.hasOwnProperty("AbsorbHeight")) {
             if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
@@ -12579,17 +12495,7 @@ function VoreEngine() {
             }
             if (e.Weight < 0) {
                 if (VP.hasOwnProperty("AbsorbStats") ? VP.AbsorbStats.Count > 0 : false) {
-                    const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
-                        ToAdd = (what) => {
-                            return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
-                        };
-                    player.Str += ToAdd("Str");
-                    player.Int += ToAdd("Int");
-                    player.Charm += ToAdd("Charm");
-                    player.Will += ToAdd("Will");
-                    player.End += ToAdd("End");
-                    player.SexSkill += ToAdd("SexSkill");
-                    console.log("Vagina")
+                    AbsorbStatsCalc(e);
                 }
                 EventLog(`The only trace left of ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName} is a trail of pussy discharge traveling down your legs.`);
                 Vore.Vagina.splice(Vore.Vagina.findIndex(i => i === e), 1);
@@ -12597,7 +12503,7 @@ function VoreEngine() {
         } else if (Settings.VoreSettings.ChildTF) {
             e.hasOwnProperty("Counter") ? e.Counter++ : e.Counter = 0;
             e.Counter++;
-            if (e.Counter > 1000) {
+            if (e.Counter > 73) {
                 const Baby = {
                     BabyAge: 0,
                     BabyRace: e.Race,
@@ -12628,26 +12534,7 @@ function VoreEngine() {
     }
     for (let e of Vore.Breast) {
         if (VP.hasOwnProperty("AbsorbEssence")) {
-            const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
-                Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi)
-            switch (Settings.VoreSettings.AbsorbEssence) {
-                case "None":
-                    break;
-                case "Masculinity":
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    break;
-                case "Femininity":
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-                default:
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-            };
+            AbsorbEssenceCalc(e);
         };
         if (VP.hasOwnProperty("AbsorbHeight")) {
             if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
@@ -12672,17 +12559,7 @@ function VoreEngine() {
             };
             if (e.Weight < 0) {
                 if (VP.hasOwnProperty("AbsorbStats") ? VP.AbsorbStats.Count > 0 : false) {
-                    const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
-                        ToAdd = (what) => {
-                            return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
-                        };
-                    player.Str += ToAdd("Str");
-                    player.Int += ToAdd("Int");
-                    player.Charm += ToAdd("Charm");
-                    player.Will += ToAdd("Will");
-                    player.End += ToAdd("End");
-                    player.SexSkill += ToAdd("SexSkill");
-                    console.log("Breast")
+                    AbsorbStatsCalc(e);
                 }
                 EventLog(`There is nothing but milk left of ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Breast.splice(Vore.Breast.findIndex(i => i === e), 1);
@@ -12705,26 +12582,7 @@ function VoreEngine() {
     }
     for (let e of Vore.Balls) {
         if (VP.hasOwnProperty("AbsorbEssence")) {
-            const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
-                Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi)
-            switch (Settings.VoreSettings.AbsorbEssence) {
-                case "None":
-                    break;
-                case "Masculinity":
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    break;
-                case "Femininity":
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-                default:
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-            };
+            AbsorbEssenceCalc(e);
         };
         if (VP.hasOwnProperty("AbsorbHeight")) {
             if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
@@ -12748,17 +12606,7 @@ function VoreEngine() {
             };
             if (e.Weight < 0) {
                 if (VP.hasOwnProperty("AbsorbStats")) {
-                    const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
-                        ToAdd = (what) => {
-                            return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
-                        };
-                    player.Str += ToAdd("Str");
-                    player.Int += ToAdd("Int");
-                    player.Charm += ToAdd("Charm");
-                    player.Will += ToAdd("Will");
-                    player.End += ToAdd("End");
-                    player.SexSkill += ToAdd("SexSkill");
-                    console.log("Balls")
+                    AbsorbStatsCalc(e);
                 }
                 EventLog(`There is nothing but cum left of the ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Balls.splice(Vore.Balls.findIndex(i => i === e), 1);
@@ -12782,26 +12630,7 @@ function VoreEngine() {
     }
     for (let e of Vore.Anal) {
         if (VP.hasOwnProperty("AbsorbEssence")) {
-            const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
-                Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi)
-            switch (Settings.VoreSettings.AbsorbEssence) {
-                case "None":
-                    break;
-                case "Masculinity":
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    break;
-                case "Femininity":
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-                default:
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-            }
+            AbsorbEssenceCalc(e);
         }
         if (VP.hasOwnProperty("AbsorbHeight")) {
             if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
@@ -12822,22 +12651,51 @@ function VoreEngine() {
             player.Fat += progress / 2 * digestionCount;
             if (e.Weight < 0) {
                 if (VP.hasOwnProperty("AbsorbStats")) {
-                    const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
-                        ToAdd = (what) => {
-                            return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
-                        };
-                    player.Str += ToAdd("Str");
-                    player.Int += ToAdd("Int");
-                    player.Charm += ToAdd("Charm");
-                    player.Will += ToAdd("Will");
-                    player.End += ToAdd("End");
-                    player.SexSkill += ToAdd("SexSkill");
+                    AbsorbStatsCalc(e);
                 };
                 EventLog(`There is nothing left of the ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Anal.splice(Vore.Anal.findIndex(i => i === e), 1);
             };
         };
     };
+
+    function AbsorbStatsCalc(prey) {
+        const snowA = Math.max(20 - VP.AbsorbStats.Count, 1);
+
+        function ToAdd(what) {
+            return Math.floor(prey.hasOwnProperty(what) ? prey[what] / snowA : 0)
+        };
+        player.Str += ToAdd("Str");
+        player.Int += ToAdd("Int");
+        player.Charm += ToAdd("Charm");
+        player.Will += ToAdd("Will");
+        player.End += ToAdd("End");
+        player.SexSkill += ToAdd("SexSkill");
+    }
+
+    function AbsorbEssenceCalc(prey) {
+        const Mshift = Math.min(VP.AbsorbEssence.Count * progress, prey.Masc),
+            Fshift = Math.min(VP.AbsorbEssence.Count * progress, prey.Femi)
+
+        switch (Settings.VoreSettings.AbsorbEssence) {
+            case "None":
+                break;
+            case "Masculinity":
+                prey.Masc -= Mshift;
+                player.Masc += Mshift;
+                break;
+            case "Femininity":
+                prey.Femi -= Fshift;
+                player.Femi += Fshift;
+                break;
+            default:
+                prey.Masc -= Mshift;
+                player.Masc += Mshift;
+                prey.Femi -= Fshift;
+                player.Femi += Fshift;
+                break;
+        }
+    }
 };
 
 function StomachCapacity() {

@@ -317,7 +317,7 @@ var medium = Math.ceil((document.documentElement.clientHeight / 20) * Settings.M
 // Start page
 DocId("GoToCharCreator").addEventListener("click", function () {
     CharCreator();
-    DocId("CharCreator").style.display = 'block';
+    DocId("CharCreator").style.display = 'flex';
     DocId("StartPage").style.display = 'none';
 });
 
@@ -340,7 +340,7 @@ function CharCreator() { // No need have these active for players who use load.
     function begin() {
         const form = document.forms.CreatePlayer.elements;
         CharCreator.style.display = 'none';
-        page2.style.display = 'block';
+        page2.style.display = 'flex';
         player.Name = form[0].value;
         player.LastName = form[1].value;
         // Will remove hair and skincolor later, as I want customize player to be a part of the game.
@@ -422,28 +422,13 @@ function DisplayNone() {
 function DisplayGame() {
     battle = false;
     GamePaused = false;
-    const DisplayGameArray = ["map", "buttons", "status", "EventLog"].forEach(function (src) {
+    const DisplayGameArray = ["map", "status", "EventLog"].forEach(function (src) {
         DocId(src).style.display = 'block';
     });
+    DocId("buttons").style.display = 'grid';
     DocId("EmptyButtons").style.display = 'none';
-    if (MobileButtons) {
-        DocId("buttons").style.width = 18 + "%";
-        DocId("buttons").style.maxWidth = 260 + "px";
-        DocId("FirstButtons").style.display = 'none';
-        DocId("SecondButtons").style.display = 'none';
-        MobileButtons = false;
-    };
 };
 // More buttons for small screen height
-DocId("MoreButtons").addEventListener("click", function () {
-    DocId("FirstButtons").style.display = 'none';
-    DocId("SecondButtons").style.display = 'block';
-});
-
-DocId("LessButtons").addEventListener("click", function () {
-    DocId("FirstButtons").style.display = 'block';
-    DocId("SecondButtons").style.display = 'none';
-});
 
 DocId("Quests").addEventListener("click", function () {
     DisplayNone();
@@ -768,7 +753,6 @@ function loop() {
 
         if (Math.ceil((document.documentElement.clientHeight * Settings.MapPercent) / 20) * 20 !== medium) {
             HemScale();
-            StatusButtonSystem();
         };
         CurrentMap();
         (enemies.length > 0) ? PrintEnemies(): false;

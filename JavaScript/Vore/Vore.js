@@ -179,27 +179,7 @@ function VoreEngine() {
             e.LastName = "";
         }
         if (VP.hasOwnProperty("AbsorbEssence")) {
-            const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
-                Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi)
-
-            switch (Settings.VoreSettings.AbsorbEssence) {
-                case "None":
-                    break;
-                case "Masculinity":
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    break;
-                case "Femininity":
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-                default:
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-            }
+            AbsorbEssenceCalc(e);
         }
         if (VP.hasOwnProperty("AbsorbHeight")) {
             if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
@@ -220,17 +200,7 @@ function VoreEngine() {
 
             if (e.Weight < 0) {
                 if (VP.hasOwnProperty("AbsorbStats") ? VP.AbsorbStats.Count > 0 : false) {
-                    const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
-                        ToAdd = (what) => {
-                            return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
-                        };
-                    player.Str += ToAdd("Str");
-                    player.Int += ToAdd("Int");
-                    player.Charm += ToAdd("Charm");
-                    player.Will += ToAdd("Will");
-                    player.End += ToAdd("End");
-                    player.SexSkill += ToAdd("SexSkill");
-                    console.log("Stomach")
+                    AbsorbStatsCalc(e);
                 }
                 EventLog(`You have digested ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Stomach.splice(Vore.Stomach.findIndex(i => i === e), 1);
@@ -254,26 +224,7 @@ function VoreEngine() {
     }
     for (let e of Vore.Vagina) {
         if (VP.hasOwnProperty("AbsorbEssence")) {
-            const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
-                Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi);
-            switch (Settings.VoreSettings.AbsorbEssence) {
-                case "None":
-                    break;
-                case "Masculinity":
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    break;
-                case "Femininity":
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-                default:
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-            }
+            AbsorbEssenceCalc(e);
         }
         if (VP.hasOwnProperty("AbsorbHeight")) {
             if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
@@ -292,17 +243,7 @@ function VoreEngine() {
             }
             if (e.Weight < 0) {
                 if (VP.hasOwnProperty("AbsorbStats") ? VP.AbsorbStats.Count > 0 : false) {
-                    const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
-                        ToAdd = (what) => {
-                            return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
-                        };
-                    player.Str += ToAdd("Str");
-                    player.Int += ToAdd("Int");
-                    player.Charm += ToAdd("Charm");
-                    player.Will += ToAdd("Will");
-                    player.End += ToAdd("End");
-                    player.SexSkill += ToAdd("SexSkill");
-                    console.log("Vagina")
+                    AbsorbStatsCalc(e);
                 }
                 EventLog(`The only trace left of ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName} is a trail of pussy discharge traveling down your legs.`);
                 Vore.Vagina.splice(Vore.Vagina.findIndex(i => i === e), 1);
@@ -310,7 +251,7 @@ function VoreEngine() {
         } else if (Settings.VoreSettings.ChildTF) {
             e.hasOwnProperty("Counter") ? e.Counter++ : e.Counter = 0;
             e.Counter++;
-            if (e.Counter > 1000) {
+            if (e.Counter > 73) {
                 const Baby = {
                     BabyAge: 0,
                     BabyRace: e.Race,
@@ -341,26 +282,7 @@ function VoreEngine() {
     }
     for (let e of Vore.Breast) {
         if (VP.hasOwnProperty("AbsorbEssence")) {
-            const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
-                Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi)
-            switch (Settings.VoreSettings.AbsorbEssence) {
-                case "None":
-                    break;
-                case "Masculinity":
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    break;
-                case "Femininity":
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-                default:
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-            };
+            AbsorbEssenceCalc(e);
         };
         if (VP.hasOwnProperty("AbsorbHeight")) {
             if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
@@ -385,17 +307,7 @@ function VoreEngine() {
             };
             if (e.Weight < 0) {
                 if (VP.hasOwnProperty("AbsorbStats") ? VP.AbsorbStats.Count > 0 : false) {
-                    const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
-                        ToAdd = (what) => {
-                            return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
-                        };
-                    player.Str += ToAdd("Str");
-                    player.Int += ToAdd("Int");
-                    player.Charm += ToAdd("Charm");
-                    player.Will += ToAdd("Will");
-                    player.End += ToAdd("End");
-                    player.SexSkill += ToAdd("SexSkill");
-                    console.log("Breast")
+                    AbsorbStatsCalc(e);
                 }
                 EventLog(`There is nothing but milk left of ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Breast.splice(Vore.Breast.findIndex(i => i === e), 1);
@@ -418,26 +330,7 @@ function VoreEngine() {
     }
     for (let e of Vore.Balls) {
         if (VP.hasOwnProperty("AbsorbEssence")) {
-            const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
-                Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi)
-            switch (Settings.VoreSettings.AbsorbEssence) {
-                case "None":
-                    break;
-                case "Masculinity":
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    break;
-                case "Femininity":
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-                default:
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-            };
+            AbsorbEssenceCalc(e);
         };
         if (VP.hasOwnProperty("AbsorbHeight")) {
             if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
@@ -461,17 +354,7 @@ function VoreEngine() {
             };
             if (e.Weight < 0) {
                 if (VP.hasOwnProperty("AbsorbStats")) {
-                    const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
-                        ToAdd = (what) => {
-                            return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
-                        };
-                    player.Str += ToAdd("Str");
-                    player.Int += ToAdd("Int");
-                    player.Charm += ToAdd("Charm");
-                    player.Will += ToAdd("Will");
-                    player.End += ToAdd("End");
-                    player.SexSkill += ToAdd("SexSkill");
-                    console.log("Balls")
+                    AbsorbStatsCalc(e);
                 }
                 EventLog(`There is nothing but cum left of the ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Balls.splice(Vore.Balls.findIndex(i => i === e), 1);
@@ -495,26 +378,7 @@ function VoreEngine() {
     }
     for (let e of Vore.Anal) {
         if (VP.hasOwnProperty("AbsorbEssence")) {
-            const Mshift = Math.min(VP.AbsorbEssence.Count * progress, e.Masc),
-                Fshift = Math.min(VP.AbsorbEssence.Count * progress, e.Femi)
-            switch (Settings.VoreSettings.AbsorbEssence) {
-                case "None":
-                    break;
-                case "Masculinity":
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    break;
-                case "Femininity":
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-                default:
-                    e.Masc -= Mshift;
-                    player.Masc += Mshift;
-                    e.Femi -= Fshift;
-                    player.Femi += Fshift;
-                    break;
-            }
+            AbsorbEssenceCalc(e);
         }
         if (VP.hasOwnProperty("AbsorbHeight")) {
             if (player.Height < 160 + VP.AbsorbHeight.Count * 20 && e.Height > 1) {
@@ -535,22 +399,51 @@ function VoreEngine() {
             player.Fat += progress / 2 * digestionCount;
             if (e.Weight < 0) {
                 if (VP.hasOwnProperty("AbsorbStats")) {
-                    const snowA = Math.max(20 - VP.AbsorbStats.Count, 1),
-                        ToAdd = (what) => {
-                            return Math.floor(e.hasOwnProperty(what) ? e[what] / snowA : 0)
-                        };
-                    player.Str += ToAdd("Str");
-                    player.Int += ToAdd("Int");
-                    player.Charm += ToAdd("Charm");
-                    player.Will += ToAdd("Will");
-                    player.End += ToAdd("End");
-                    player.SexSkill += ToAdd("SexSkill");
+                    AbsorbStatsCalc(e);
                 };
                 EventLog(`There is nothing left of the ${e.Name} ${e.Race} ${e.FirstName} ${e.LastName}`);
                 Vore.Anal.splice(Vore.Anal.findIndex(i => i === e), 1);
             };
         };
     };
+
+    function AbsorbStatsCalc(prey) {
+        const snowA = Math.max(20 - VP.AbsorbStats.Count, 1);
+
+        function ToAdd(what) {
+            return Math.floor(prey.hasOwnProperty(what) ? prey[what] / snowA : 0)
+        };
+        player.Str += ToAdd("Str");
+        player.Int += ToAdd("Int");
+        player.Charm += ToAdd("Charm");
+        player.Will += ToAdd("Will");
+        player.End += ToAdd("End");
+        player.SexSkill += ToAdd("SexSkill");
+    }
+
+    function AbsorbEssenceCalc(prey) {
+        const Mshift = Math.min(VP.AbsorbEssence.Count * progress, prey.Masc),
+            Fshift = Math.min(VP.AbsorbEssence.Count * progress, prey.Femi)
+
+        switch (Settings.VoreSettings.AbsorbEssence) {
+            case "None":
+                break;
+            case "Masculinity":
+                prey.Masc -= Mshift;
+                player.Masc += Mshift;
+                break;
+            case "Femininity":
+                prey.Femi -= Fshift;
+                player.Femi += Fshift;
+                break;
+            default:
+                prey.Masc -= Mshift;
+                player.Masc += Mshift;
+                prey.Femi -= Fshift;
+                player.Femi += Fshift;
+                break;
+        }
+    }
 };
 
 function StomachCapacity() {

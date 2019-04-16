@@ -460,12 +460,10 @@ div.Looks {
     border-image: url(Res/frame_s_01.png) 20;
     border-radius: 20px;
 
-    width: 38%;
-    height: 90%;
+    height: 800px;
+    width: 800px;
     overflow: auto;
 
-    justify-content: center;
-    align-items: center;
     text-align: center;
 }
 
@@ -510,9 +508,9 @@ div.Looks {
 div.OptionsInnerDiv,
 div.LPMenuInner,
 div.LooksInner {
-    display: inline-block;
+    display: block;
     padding: 1em;
-    margin-top: 3vh;
+    margin: auto;
     width: 80%;
     overflow: auto;
 }
@@ -585,13 +583,9 @@ div.buttons {
 
 div.buttons {
     top: 50%;
-}
-
-@media screen and (max-height:800px) {
-    div.container {
-        position: absolute;
-        bottom: 0;
-    }
+    grid-template-rows: repeat(auto-fit, minmax(10px, 1fr));
+    grid-template-columns: 1fr;
+    justify-items: center;
 }
 
 #status>button {
@@ -738,27 +732,21 @@ div.AfterBattle {
     grid-template-columns: 24% 52% 24%;
     grid-template-rows: 55% 45%;
     grid-gap: 1em;
-    width: 99%;
-    height: 97%;
+    width: 98%;
+    height: 96.4vh;
     padding: 1em;
     text-align: center;
     border-radius: 5px;
     border: 5px ridge purple;
     background-color: rgb(255, 211, 255);
     justify-items: center;
-    align-items: center;
-    overflow: auto;
+    justify-content: center;
+    overflow: none;
 
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-
-@media screen and (min-height: 1000px) {
-    div.AfterBattle {
-        overflow: hidden;
-    }
 }
 
 div.AfterBattleImg {
@@ -872,7 +860,7 @@ div.EnemySex {
     width: 90%;
     height: 99%;
     padding: 0 0.5em;
-    overflow: auto;
+    overflow: hidden;
 }
 
 div.EnemySex {
@@ -995,7 +983,7 @@ button {
     width: 90%;
     max-width: 220px;
     margin: 0.3em 0.6em;
-    min-height: 2rem;
+    min-height: 4vh;
     height: auto;
     max-height: 100%;
     border: 1px solid rgb(83, 57, 43);
