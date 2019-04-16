@@ -14,8 +14,8 @@
 		<p id="StartProgressBar"></p>
 		<h1>The Essence of Gender</h1>
 		<h2 id="LoadingImagesProgress" class="visible">Loading tiles...</h2>
-		<input type="button" id="GoToCharCreator" value="Start game" />
-		<input type="button" id="LoadButton" value="Load game" />
+		<button type="button" id="GoToCharCreator">Start game</button>
+		<button type="button" id="LoadButton">Load game</button>
 		<!--<input type="button" id="NewGamePlus" value="(placeholder)Old release load" />-->
 	</div>
 
@@ -44,8 +44,8 @@
 				</select>
 			</form>
 			<br>
-			<input type="button" id="BackHome" value=" Return " />
-			<input type="button" id="Begin" value="Continue">
+			<button type="button" id="BackHome">Return</button>
+			<button type="button" id="Begin">Continue</button>
 		</div>
 	</div>
 
@@ -63,10 +63,10 @@
 				<p>Notes: You can move with mouse, wasd or arrow keys.</p>
 				<label for="StartAutoEssence">Do you want gender transformations to happen automatically or manually?
 					(Also: vore?)</label>
-				<input type="button" id="StartAutoEssence" value="Auto TF true" />
-				<input type="button" id="VoreStart" value="Vore false" />
+				<button type="button" id="StartAutoEssence">Auto TF true</button>
+				<button type="button" id="VoreStart">Vore false</button>
 				<!--	<input type="button" id="Balance" value="Balance False" /> -->
-				<br><input type="button" id="startgame" value="Start game" />
+				<br><button type="button" id="startgame">Start game</button>
 			</div>
 		</div>
 	</div>
@@ -77,20 +77,20 @@
 			<div id="WorldMapPart">
 				<canvas id="WorldMap"></canvas>
 			</div>
-			<input type="button" id="HideWorldMap" value="H" class="SmolButton" title="Click to hide or show" />
+			<button type="button" id="HideWorldMap" class="SmolButton" title="Click to hide or show">H</button>
 			<p id="StatusArea">Start</p>
 		</div>
 	</div>
 
 	<div id="EventLog" class="None">
-		<input type="button" id="HideEventLog" value="Hide" class="SmolButton" />
+		<button type="button" id="HideEventLog" class="SmolButton">Hide</button>
 		<h2 id="EventLogH2">Event Log</h2>
 		<div id="EventLogPart" title="Click to enlarge">
 			<p id="EventText"></p>
 		</div>
-		<input type="button" id="HideFluids" value="Hide" class="SmolButton" />
+		<button type="button" id="HideFluids" class="SmolButton">Hide</button>
 		<h2 id="EventFluidsH2">Fluids</h2>
-		<input type="button" id="FluidsMode" value="A" class="SmolButton" title="Change the amount of rows." />
+		<button type="button" id="FluidsMode" class="SmolButton" title="Change the amount of rows.">A</button>
 		<div id="FluidPart">
 			<div id="FluidContainer" class="AutoColumn">
 				<div id="CumBar">
@@ -118,21 +118,21 @@
 	<div id="buttons" class="left buttons None">
 		<div class="container">
 			<div>
-				<input type="button" id="MobileButtons" value="Buttons" />
+				<button type="button" id="MobileButtons">Buttons</button>
 				<div id="FirstButtons">
-					<input type="button" id="LevelButton" value="Level up">
-					<input type="button" id="Looks" value="Looks" />
-					<input type="button" id="ShowInventory" value="Inventory" />
-					<input type="button" id="Quests" value="Quests" />
-					<input type="button" id="Save" value="Save" />
-					<input type="button" id="Load" value="Load" />
-					<input type="button" id="MoreButtons" value="More buttons" />
+					<button type="button" id="LevelButton">Level up</button>
+					<button type="button" id="Looks">Looks</button>
+					<button type="button" id="ShowInventory">Inventory</button>
+					<button type="button" id="Quests">Quests</button>
+					<button type="button" id="Save">Save</button>
+					<button type="button" id="Load">Load</button>
+					<button type="button" id="MoreButtons">More buttons</button>
 				</div>
 				<div id="SecondButtons">
-					<input type="button" id="Options" value="Options" />
-					<input type="button" id="EssenceOptions" value="Essence" />
-					<input type="button" id="VoreLooks" value="Vore" />
-					<input type="button" id="LessButtons" value="Less buttons" />
+					<button type="button" id="Options">Options</button>
+					<button type="button" id="EssenceOptions">Essence</button>
+					<button type="button" id="VoreLooks">Vore</button>
+					<button type="button" id="LessButtons">Less buttons</button>
 				</div>
 			</div>
 		</div>
@@ -141,32 +141,26 @@
 	<div id="SaveMenu" class="SLMenu None">
 		<div class="SLMenuInner">
 			<h1>Save menu</h1>
-			<input type="button" id="SavePlayer1" value="Save 1" /><br>
-			<input type="button" id="SavePlayer2" value="Save 2" /><br>
-			<input type="button" id="SavePlayer3" value="Save 3" /><br>
-			<input type="button" id="SavePlayer4" value="Save 4" /><br>
-			<input type="button" id="SavePlayer5" value="Save 5" />
-			<div>
-				<input type="button" id="SaveLeave" value="Leave" />
-			</div>
-			<br><br><input type="button" id="SaveText" value="Save to computer" />
+			<button type="button" id="SavePlayer1">Save 1</button><br>
+			<button type="button" id="SavePlayer2">Save 2</button><br>
+			<button type="button" id="SavePlayer3">Save 3</button><br>
+			<button type="button" id="SavePlayer4">Save 4</button><br>
+			<button type="button" id="SavePlayer5">Save 5</button><br><br>
+			<button type="button" id="SaveLeave">Leave</button>
+			<br><br><button type="button" id="SaveText">Save to computer</button>
 		</div>
 	</div>
 	<div id="LoadMenu" class="SLMenu None">
 		<div class="SLMenuInner">
 			<h1>Load menu</h1>
-			<input type="button" id="LoadPlayer1" value="Load 1 " /><br>
-			<input type="button" id="LoadPlayer2" value="Load 2" /><br>
-			<input type="button" id="LoadPlayer3" value="Load 3" /><br>
-			<input type="button" id="LoadPlayer4" value="Load 4" /><br>
-			<input type="button" id="LoadPlayer5" value="Load 5" />
-			<div id="MapLoad" class="None">
-				<input type="button" id="LoadLeave" value="Leave">
-			</div>
-			<div id="StartLoad" class="None">
-				<input type="button" id="LoadLeaveStart" value="Leave">
-			</div>
-			<br><br><input type="file" id="LoadFile" value="Load from computer" />
+			<button type="button" id="LoadPlayer1">Load 1</button><br>
+			<button type="button" id="LoadPlayer2">Load 2</button><br>
+			<button type="button" id="LoadPlayer3">Load 3</button><br>
+			<button type="button" id="LoadPlayer4">Load 4</button><br>
+			<button type="button" id="LoadPlayer5">Load 5</button><br><br>
+			<button type="button" id="LoadLeave">Leave</button>
+			<button type="button" id="LoadLeaveStart">Leave</button>
+			<br><br><button type="file" id="LoadFile">Load from computer</button>
 		</div>
 	</div>
 
@@ -190,9 +184,9 @@
 			<p id="genitals2"></p>
 			<p id="StatusMascFemi"></p>
 			<p id="StatusFitness"></p>
-			<input type="button" id="CloseLooks" value="Close" />
-			<input type="button" id="ExtraInfo" value="Detailed info" />
-			<input type="button" id="Perks" value="Levels" />
+			<button type="button" id="CloseLooks">Close</button>
+			<button type="button" id="ExtraInfo">Detailed info</button>
+			<button type="button" id="Perks">Levels</button>
 		</div>
 	</div>
 
@@ -202,21 +196,21 @@
 			<p id="FullRace"></p>
 			<br>
 			<p id="Pregnancy"></p>
-			<input type="button" id="Children" value="Children(alpha)" />
+			<button type="button" id="Children">Children(alpha)</button>
 			<br>
 			<p id="ExtraStats"></p>
-			<input type="button" id="CloseExtra" value="Close" />
+			<button type="button" id="CloseExtra">Close</button>
 		</div>
 	</div>
 
 	<div id="Levels" class="None Looks">
-		<input type="button" id="CloseLevel" value="Close" />
+		<button type="button" id="CloseLevel">Close</button>
 	</div>
 
 	<div id="ChildrenMenu" class="None">
 		<h2>Birthed by</h2>
 		<div id="ChildCorner"></div>
-		<input type="button" id="LeaveChildrenMenu" value="close" />
+		<button type="button" id="LeaveChildrenMenu">Close</button>
 	</div>
 
 	<div id="ShowQuests" class="None Options">
@@ -224,13 +218,13 @@
 			<h1>Quests</h1>
 			<div id="QuestTexts">
 			</div>
-			<input type="button" id="QuestsLeave" value="Close" />
+			<button type="button" id="QuestsLeave">Close</button>
 		</div>
 	</div>
 
 
 	<div id="status" class="left None status">
-		<input type="button" id="FullScreen" value="F" class="SmolButton" title="Change to fullscreen/windowed" />
+		<button type="button" id="FullScreen" class="SmolButton" title="Change to fullscreen/windowed">F</button>
 		<div id="Date">
 			<p id="DateContainer"><time id="CurrentDate"></time></p>
 		</div>
@@ -258,30 +252,14 @@
 		<div class="OptionsInnerDiv">
 			<h1>Cheats</h1>
 			<div class="TwoColumn">
-				<div>
-					<input type="button" id="CheatsEnabled" value="Cheats Enabled false" />
-				</div>
-				<div>
-					<input type="button" id="CheatsGold" value="Gold false" />
-				</div>
-				<div>
-					<input type="button" id="CheatsMasc" value="Masc false" />
-				</div>
-				<div>
-					<input type="button" id="CheatsFemi" value="Femi false" />
-				</div>
-				<div>
-					<input type="button" id="CheatsExp" value="Exp false" />
-				</div>
-				<div>
-					<input type="button" id="CheatsVoreExp" value="Vore Exp false" />
-				</div>
-				<div>
-					<input type="button" id="CheatsFastTime" value="FastTime false" />
-				</div>
-				<div>
-					<input type="button" id="CloseCheatMenu" value="Close" />
-				</div>
+				<button type="button" id="CheatsEnabled">Cheats Enabled false</button>
+				<button type="button" id="CheatsGold">Gold false</button>
+				<button type="button" id="CheatsMasc">Masc false</button>
+				<button type="button" id="CheatsFemi">Femi false</button>
+				<button type="button" id="CheatsExp">Exp false</button>
+				<button type="button" id="CheatsVoreExp">Vore Exp false</button>
+				<button type="button" id="CheatsFastTime">FastTime false</button>
+				<button type="button" id="CloseCheatMenu">Close</button>
 			</div>
 		</div>
 	</div>
@@ -301,7 +279,7 @@
 				</div>
 				<div class="TwoColumn">
 					<div>
-						<label for="BorderColor">Border & Map color</label>
+						<label for="BorderColor">Border color</label>
 						<input type="color" id="BorderColor" value="#B22222" />
 					</div>
 					<div>
@@ -338,51 +316,46 @@
 				<div>
 					<label for="Sizes">Font size</label>
 					<div id="Sizes">
-						<input type="button" id="FontSmaller" value="-" />
+						<button type="button" id="FontSmaller">-</button>
 						<p id="FontSize"></p>
-						<input type="button" id="FontBigger" value="+" />
+						<button type="button" id="FontBigger">+</button>
 					</div>
 				</div>
 				<div>
 					<label for="Inch">Imperial units</label>
-					<input type="button" id="Inch" value="Inch false"
-						title="Switches to imperial units, pound, inch..." />
+					<button type="button" id="Inch" title="Switches to imperial units, pound, inch...">Inch
+						false</button>
 				</div>
 				<div>
 					<label for="ImgPack">Image pack</label>
-					<input type="button" id="ImgPack" value="ImgPack(No included)" />
+					<button type="button" id="ImgPack">ImgPack(No included)</button>
 				</div>
 
 				<div>
 					<label for="SetPronoun">Set pronouns</label>
-					<input type="button" id="SetPronoun" value="Change Pronouns"
-						title="Set your preferred pronouns for different genders." />
+					<button type="button" id="SetPronoun"
+						title="Set your preferred pronouns for different genders.">Change Pronouns</button>
 				</div>
 				<div>
 					<label for="HighLightDoors">Highlight doors</label>
-					<input type="button" id="HighLightDoors" value="Highlight Doors" title="Highlight doors" />
-				</div>
-			</div>
-			<label for="EventLogCon">Eventlog max inputs</label>
-			<div class="BigSmallBig" id="EventLogCon">
-				<div>
-					<input type="button" id="Log+10" value="+10 to Event Log" title="" />
-				</div>
-				<div>
-					<p id="LogLength"></p>
-				</div>
-				<div>
-					<input type="button" id="Log-10" value="-10 to Event Log" title="" />
+					<button type="button" id="HighLightDoors" title="Highlight doors">Highlight Doors</button>
 				</div>
 			</div>
 			<div class="TwoColumn">
 				<div>
-					<input type="button" id="PerkOptions" value="Fetish options" />
+					<label>Other</label>
+					<button type="button" id="PerkOptions">Fetish options</button>
 				</div>
 				<div>
-					<input type="button" id="saveoptions" value="Save options" />
+					<label for="EventLogCon">Eventlog max inputs</label>
+					<div class="BigSmallBig" id="EventLogCon">
+						<button type="button" id="Log+10" title="">+10</button>
+						<p id="LogLength"></p>
+						<button type="button" id="Log-10" title="">-10</button>
+					</div>
 				</div>
 			</div>
+			<button type="button" id="saveoptions">Save options</button>
 		</div>
 	</div>
 
@@ -401,8 +374,8 @@
 			<label for="CuntBoy">Cuntboy</label>
 			<input type="text" id="CuntBoy" placeholder="CuntBoy" value="cuntboy" />
 			<br><br>
-			<input type="button" id="DisablePronoun" value="Disable" />
-			<input type="button" id="AcceptPronoun" value="Accept" />
+			<button type="button" id="DisablePronoun">Disable</button>
+			<button type="button" id="AcceptPronoun">Accept</button>
 		</div>
 	</div>
 
@@ -411,57 +384,56 @@
 			<p id="EssenceTracker"></p>
 			<div id="EssenceStart">
 				<label for="OptionGiveEssence">Give Essence</label>
-				<input type="button" id="OptionGiveEssence" value="Both"
-					title="If you have the give essence perk this set what essence you give to your opponents when you orgasm." />
+				<button type="button" id="OptionGiveEssence"
+					title="If you have the give essence perk this set what essence you give to your opponents when you orgasm.">Both</button>
 				<label for="NoExtra">Set max dicks/boobs/pussies/balls for you and opponents.</label>
-				<input type="button" id="NoExtra" value="Set max boobs/dicks etc"
-					title="On auto you can't grow more than the set amount of dick, pussy, balls and breast. This settings always effect opponents. Setting t.ex. dick to zero will make all opponents female or doll likewise setting pussies to zero makes all opponents male or doll." />
+				<button type="button" id="NoExtra"
+					title="On auto you can't grow more than the set amount of dick, pussy, balls and breast. This settings always effect opponents. Setting t.ex. dick to zero will make all opponents female or doll likewise setting pussies to zero makes all opponents male or doll.">Set
+					max boobs/dicks etc</button>
 				<div id="MaxMenu" class="None">
-					<input type="button" id="BoobsLess" value="Boobs--" />
-					<input type="button" id="BoobsMore" value="Boobs++" />
-					<input type="button" id="VaginasLess" value="Pussies--" />
-					<input type="button" id="VaginasMore" value="Pussies++" />
-					<input type="button" id="DicksLess" value="Dick--" />
-					<input type="button" id="DicksMore" value="Dick++" />
-					<input type="button" id="BallsLess" value="Balls--" />
-					<input type="button" id="BallsMore" value="Balls++" />
+					<button type="button" id="BoobsLess">Boobs--</button>
+					<button type="button" id="BoobsMore">Boobs++</button>
+					<button type="button" id="VaginasLess">Pussies--</button>
+					<button type="button" id="VaginasMore">Pussies++</button>
+					<button type="button" id="DicksLess">Dick--</button>
+					<button type="button" id="DicksMore">Dick++</button>
+					<button type="button" id="BallsLess">Balls--</button>
+					<button type="button" id="BallsMore">Balls++</button>
 				</div>
 
 				<label for="EssenceAuto">Are essence body changes Automatic or Manual?</label>
-				<input type="button" id="EssenceAuto" value="Essence Auto" /><br>
+				<button type="button" id="EssenceAuto">Essence Auto</button><br>
 				<!--	<input type="button" id="MBalance" value="Balance false" />-->
 				<p>Warning: if you play on manual, switching to Auto will change you according to your current
 					Femininity and Masculinity, so if you have spent a lot of Essence it will be lost.</p>
 				<div id="ManualGrowth" class="TwoColumn None">
-					<input type="button" id="GrowBreast" value="Breast menu" />
-					<input type="button" id="GrowPussy" value="Pussy menu" /><br>
-					<input type="button" id="GrowDick" value="Dick menu" />
-					<input type="button" id="GrowBalls" value="Balls menu" />
+					<button type="button" id="GrowBreast">Breast menu</button>
+					<button type="button" id="GrowPussy">Pussy menu</button><br>
+					<button type="button" id="GrowDick">Dick menu</button>
+					<button type="button" id="GrowBalls">Balls menu</button>
 				</div>
 			</div>
 			<div id="ManualOrgans" class="None"></div>
-			<br><input type="button" id="EssenceOptionsLeave" value="Close" />
+			<br><button type="button" id="EssenceOptionsLeave">Close</button>
 		</div>
 	</div>
 
 	<div id="PerkOptionsMenu" class="Options None">
 		<br>
 		<label for="Skip">Skip Sex</label>
-		<input type="button" id="Skip" value="Skip">
-		<br>
+		<button type="button" id="Skip">Skip</button><br>
 		<label for="Vore">Vore</label>
-		<input type="button" id="Vore" value="Vore false" />
-		<br>
+		<button type="button" id="Vore">Vore false</button><br>
 		<label for="PlayerSpriteEnable">Player sprite image(testing)</label>
-		<input type="button" id="PlayerSpriteEnable" value="Player sprite false">
-		<br><br><input type="button" id="PerkOptionsLeave" value="Leave" />
+		<button type="button" id="PlayerSpriteEnable">Player sprite false</button>
+		<br><br><button type="button" id="PerkOptionsLeave">Leave</button>
 	</div>
 
 	<div id="Inventory" class="None">
 		<p id="InventoryText" class="MenuText"></p>
 		<div id="InventoryBag"></div>
 		<div>
-			<input type="button" id="InventoryLeave" value="Close" />
+			<button type="button" id="InventoryLeave">Close</button>
 		</div>
 	</div>
 
@@ -481,29 +453,32 @@
 			<p id="VorePerkMenuText" class="MenuText"></p>
 			<p id="VorePerkPointsLeft"></p>
 			<div>
-				<input type="button" id="AbsorbEssence" value="Absorb prey essence"
-					title="Absorb essence of masculinity and femininity from your prey">
-				<input type="button" id="FasterDigestion" value="Faster digestion"
-					title="Digest your prey faster, also speeds up gain of fat, cum and milk">
-				<input type="button" id="HigherCapacity" value="Higher capacity"
-					title="Increase the total weight of prey your body can hold">
-				<input type="button" id="AbsorbHeight" value="Absorb height"
+				<button type="button" id="AbsorbEssence"
+					title="Absorb essence of masculinity and femininity from your prey">Absorb prey essence</button>
+				<button type="button" id="FasterDigestion"
+					title="Digest your prey faster, also speeds up gain of fat, cum and milk">Faster digestion</button>
+				<button type="button" id="HigherCapacity"
+					title="Increase the total weight of prey your body can hold">Higher capacity</button>
+				<button type="button" id="AbsorbHeight"
 					title="Grow taller by absorbing height from your prey. (Growth limit [160cm + 20 * perklevel] t.ex. perk level 3 allows you to grow to 220cm)">
-				<input type="button" id="AbsorbStats" value="Absorb prey stats"
-					title="Get stronger while digesting! (Costs 10 perk points, max level of 10)">
-				<input type="button" id="PredatorsMeta" value="Predators metabolism"
-					title="Increase your fat burn rate and makes you recover faster, burn more fat the fatter you are.">
+					Absorb height</button>
+				<button type="button" id="AbsorbStats"
+					title="Get stronger while digesting! (Costs 10 perk points, max level of 10)">Absorb prey
+					stats</button>
+				<button type="button" id="PredatorsMeta"
+					title="Increase your fat burn rate and makes you recover faster, burn more fat the fatter you are.">Predators
+					metabolism</button>
 			</div>
 
 			<input type="button" id="LeaveVorePerkMenu" value="Done">
 		</div>
 		<div id="VoreSettingsMenu" class="None">
-			<input type="button" id="AbsorbEssenceSetting" value="Absorb Essence Both" />
+			<button type="button" id="AbsorbEssenceSetting">Absorb Essence Both</button>
 			<!--<input type="button" id="PlayerPrey" value="(not in game)Player prey true/false" />-->
 		</div>
 		<div>
-			<input type="button" id="VoreSettings" value="Settings" />
-			<input type="button" id="LeaveVore" value="Close">
+			<button type="button" id="VoreSettings">Settings</button>
+			<button type="button" id="LeaveVore">Close</button>
 		</div>
 	</div>
 
@@ -665,15 +640,15 @@
 		</div>
 		<div class="e Grid">
 			<div>
-				<input type="button" id="LoseSubmit" value="Submit" />
+				<button type="button" id="LoseSubmit">Submit</button>
 			</div>
 			<div>
-				<input type="button" id="LoseStruggle" value="Struggle" />
+				<button type="button" id="LoseStruggle">Struggle</button>
 			</div>
 			<!--			<input type="button" id="Cycle" value="TEST!!"/>-->
 			<div>
-				<input type="button" id="LeaveLose" value="Leave" />
-				<input type="button" id="DungeonLose" value="Leave" />
+				<button type="button" id="LeaveLose">Leave</button>
+				<button type="button" id="DungeonLose">Leave</button>
 			</div>
 		</div>
 	</div>
@@ -685,17 +660,17 @@
 		<div id="HomeStart">
 			<h2>Entrance</h2>
 			<div>
-				<input type="button" id="Sleep" value="Sleep" />
-				<input type="button" id="Dorm" value="Dorm" />
+				<button type="button" id="Sleep">Sleep</button>
+				<button type="button" id="Dorm">Dorm</button>
 			</div>
 			<div>
-				<input type="button" id="UpgradeHome" value="Home upgrades" />
-				<input type="button" id="Portal" value="Portal" />
-				<input type="button" id="Brothel" value="Brothel" />
+				<button type="button" id="UpgradeHome">Home upgrades</button>
+				<button type="button" id="Portal">Portal</button>
+				<button type="button" id="Brothel">Brothel</button>
 			</div>
 			<br>
 			<div>
-				<input type="button" id="LeaveHome" value="Leave">
+				<button type="button" id="LeaveHome">Leave</button>
 			</div>
 		</div>
 		<div id="Upgrades" class="None"></div>
@@ -703,11 +678,13 @@
 		<div id="PortalMenu" class="None"></div>
 		<div id="TheBrothel" class="None">
 			<h2>Brothel</h2>
-			<input type="button" id="ServeMasc" value="Masculine customers? true"
-				title="Allows dorm servants to gain masculinity though whoring themselves out." />
-			<input type="button" id="ServeFemi" value="Feminine customers? true"
-				title="Allows dorm servants to  gain femininity through whoring themselves out." />
-			<input type="button" id="CloseBrothel" value="Back" />
+			<button type="button" id="ServeMasc"
+				title="Allows dorm servants to gain masculinity though whoring themselves out.">Masculine customers?
+				true</button>
+			<button type="button" id="ServeFemi"
+				title="Allows dorm servants to  gain femininity through whoring themselves out.">Feminine customers?
+				true</button>
+			<button type="button" id="CloseBrothel">Back</button>
 		</div>
 	</div>
 
@@ -737,40 +714,22 @@
 		</div>
 		<div class="e Grid">
 			<div>
-				<input type="button" id="DormDrainMasc" value="Siphon masculinity" />
-				<input type="button" id="DormDrainFemi" value="Siphon femininity" />
-				<input type="button" id="DormInjFemi" value="Inject femininity" />
-				<input type="button" id="DormInjMasc" value="Inject masculinity" />
+				<button type="button" id="DormDrainMasc">Siphon masculinity</button>
+				<button type="button" id="DormDrainFemi">Siphon femininity</button>
+				<button type="button" id="DormInjFemi">Inject femininity</button>
+				<button type="button" id="DormInjMasc">Inject masculinity</button>
 			</div>
 			<div>
-				<input type="button" id="Impregnate" value="Try to impregnate" />
-				<input type="button" id="GetImpregnated" value="Get impregnated" />
+				<button type="button" id="Impregnate">Try to impregnate</button>
+				<button type="button" id="GetImpregnated">Get impregnated</button>
 			</div>
-			<input type="button" id="LeaveDormSex" value="Leave" />
+			<button type="button" id="LeaveDormSex">Leave</button>
 		</div>
-	</div>
-
-	<div id="ChimeraShrine" class="Building None">
-		<p id="ChimeraShrineText" class="TextBox"></p>
-		<input type="button" id="SacRaceEss" value="Sacrifice race essence" />
-		<input type="button" id="ChimeraBlessings" value="Placeholder" />
-		<div id="ChimeraBlessingsMenu" class="None">
-			<input type="button" id="" value="" title=" " />
-			<input type="button" id="" value="" title=" " />
-			<input type="button" id="" value="" title=" " />
-			<input type="button" id="" value="" title=" " />
-			<input type="button" id="" value="" title=" " />
-			<input type="button" id="" value="" title=" " />
-		</div>
-		<div id="SacRaceEssMenu" class="None">
-			<p>You Sould not see this...</p>
-		</div>
-		<br><input type="button" id="LeaveChimeraShrine" value="Leave" />
 	</div>
 
 	<div id="Temp_Tempsson" class="None">
 		<p id="Temp_TempssonText" class="TextBox">Dungeon coming Soon</p>
-		<input type="button" id="LeaveTemp_Tempsson" value="Close" />
+		<button type="button" id="LeaveTemp_Tempsson">Close</button>
 	</div>
 
 	<div id="DungeonSystem" class="None Dungeon"></div>

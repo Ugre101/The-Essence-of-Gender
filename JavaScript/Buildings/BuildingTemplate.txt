@@ -10,7 +10,7 @@ function Func() {
     const p = TextBox();
     div.appendChild(p);
 
-    const input1 = InputButton("")
+    const input1 = ButtonButton("")
     input1.addEventListener("click", function () {
 
     });
@@ -19,7 +19,7 @@ function Func() {
     });
     div.appendChild(input1);
 
-    const input2 = InputButton("")
+    const input2 = ButtonButton("")
     input2.addEventListener("click", function () {
 
     });

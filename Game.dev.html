@@ -279,7 +279,7 @@
 				</div>
 				<div class="TwoColumn">
 					<div>
-						<label for="BorderColor">Border & Map color</label>
+						<label for="BorderColor">Border color</label>
 						<input type="color" id="BorderColor" value="#B22222" />
 					</div>
 					<div>
@@ -328,7 +328,7 @@
 				</div>
 				<div>
 					<label for="ImgPack">Image pack</label>
-					<input type="button" id="ImgPack" value="ImgPack(No included)" />
+					<button type="button" id="ImgPack">ImgPack(No included)</button>
 				</div>
 
 				<div>
@@ -341,26 +341,21 @@
 					<button type="button" id="HighLightDoors" title="Highlight doors">Highlight Doors</button>
 				</div>
 			</div>
-			<label for="EventLogCon">Eventlog max inputs</label>
-			<div class="BigSmallBig" id="EventLogCon">
-				<div>
-					<button type="button" id="Log+10" title="">+10 to Event Log</button>
-				</div>
-				<div>
-					<p id="LogLength"></p>
-				</div>
-				<div>
-					<button type="button" id="Log-10" title="">-10 to Event Log</button>
-				</div>
-			</div>
 			<div class="TwoColumn">
 				<div>
+					<label>Other</label>
 					<button type="button" id="PerkOptions">Fetish options</button>
 				</div>
 				<div>
-					<button type="button" id="saveoptions">Save options</button>
+					<label for="EventLogCon">Eventlog max inputs</label>
+					<div class="BigSmallBig" id="EventLogCon">
+						<button type="button" id="Log+10" title="">+10</button>
+						<p id="LogLength"></p>
+						<button type="button" id="Log-10" title="">-10</button>
+					</div>
 				</div>
 			</div>
+			<button type="button" id="saveoptions">Save options</button>
 		</div>
 	</div>
 
@@ -730,17 +725,6 @@
 			</div>
 			<button type="button" id="LeaveDormSex">Leave</button>
 		</div>
-	</div>
-
-	<div id="ChimeraShrine" class="Building None">
-		<p id="ChimeraShrineText" class="TextBox"></p>
-		<button type="button" id="SacRaceEss">Sacrifice race essence</button>
-		<button type="button" id="ChimeraBlessings">Placeholder</button>
-		<div id="ChimeraBlessingsMenu" class="None"></div>
-		<div id="SacRaceEssMenu" class="None">
-			<p>You Sould not see this...</p>
-		</div>
-		<br><button type="button" id="LeaveChimeraShrine">Leave</button>
 	</div>
 
 	<div id="Temp_Tempsson" class="None">

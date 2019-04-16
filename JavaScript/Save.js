@@ -3,7 +3,8 @@ DocId("Save").addEventListener("click", function () {
     DocId("SaveMenu").style.display = 'block';
     for (let e = 1; e < 6; e++) {
         if (localStorage.getItem('SaveDate' + e) !== null) {
-            DocId("SavePlayer" + e).innerHTML = localStorage.getItem('SaveDate' + e);
+            const savedate = new Date(localStorage.getItem('SaveDate' + e));
+            DocId("SavePlayer" + e).innerHTML = savedate.toUTCString();
         }
     }
 });
@@ -17,9 +18,9 @@ for (let e = 1; e < 6; e++) {
     DocId("SavePlayer" + e).addEventListener("click", function () {
         const SaveArray = [player, House, Flags, Settings];
         localStorage.setItem('SavedPlayer' + e, JSON.stringify(SaveArray));
-        localStorage.setItem('SaveDate' + e, Date());
-        DocId("SavePlayer" + e).innerHTML = Date();
-        DocId("LoadPlayer" + e).innerHTML = Date();
+        localStorage.setItem('SaveDate' + e, new Date());
+        DocId("SavePlayer" + e).innerHTML = new Date().toUTCString();
+        DocId("LoadPlayer" + e).innerHTML = new Date().toUTCString();
     });
 }
 
