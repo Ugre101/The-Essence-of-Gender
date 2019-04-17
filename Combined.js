@@ -12397,7 +12397,10 @@ function VoreEngine() {
         1 + VP.FasterDigestion.Count : 1,
         {
             Vore
-        } = player;
+        } = player,
+        {
+            VoreSettings
+        } = Settings;
     if (Vore.Exp >= VoreMaxExp) {
         Vore.Exp = Vore.Exp - VoreMaxExp;
         Vore.Level++;
@@ -12414,18 +12417,14 @@ function VoreEngine() {
         return arr.length > 0 ? arr.map(arr => arr.Weight).reduce((acc, cur) => acc + cur) : 0;
     }
     while (content(Vore.Stomach) > MaxStomachCapacity()) {
-        enemies.push(Vore.Stomach[Vore.Stomach.length - 1]);
+        enemies.push(Last(Vore.Stomach));
         Vore.Stomach.pop();
     }
     const Stomachfullness = content(Vore.Stomach) / MaxStomachCapacity() || 0.1; // prevent NaN if maxCapacity is 0
     // stomach fullness should be able to vary between 0 and 2
-    if (Settings.VoreSettings.StomachDigestion) {
-        Vore.StomachExp += Stomachfullness * digestionCount * progress;
-        Vore.Exp += Stomachfullness * digestionCount * progress;
-    } else {
-        Vore.StomachExp += 0.5 * Stomachfullness * digestionCount * progress;
-        Vore.Exp += 0.5 * Stomachfullness * digestionCount * progress;
-    }
+    Vore.StomachExp += VoreSettings.StomachDigestion ? DigestionTick(Stomachfullness) : 0.5 * DigestionTick(Stomachfullness);
+    Vore.Exp += VoreSettings.StomachDigestion ? DigestionTick(Stomachfullness) : 0.5 * DigestionTick(Stomachfullness);
+    console.log(VoreSettings.StomachDigestion ? DigestionTick(Stomachfullness) : 0.5 * DigestionTick(Stomachfullness))
     for (let e of Vore.Stomach) {
         if (!e.hasOwnProperty("LastName")) {
             e.LastName = "";
@@ -12468,11 +12467,11 @@ function VoreEngine() {
     const Vaginafullness = content(Vore.Vagina) / MaxVaginaCapacity() || 0.1; // prevent NaN if maxCapacity is 0
     // Vagina fullness should be able to vary between 0 and 2
     if (Settings.VoreSettings.VCumDigestion) {
-        Vore.VaginaExp += Vaginafullness * digestionCount * progress;
-        Vore.Exp += Vaginafullness * digestionCount * progress;
+        Vore.VaginaExp += DigestionTick(Vaginafullness);
+        Vore.Exp += DigestionTick(Vaginafullness);
     } else {
-        Vore.VaginaExp += 0.5 * Vaginafullness * digestionCount * progress;
-        Vore.Exp += 0.5 * Vaginafullness * digestionCount * progress;
+        Vore.VaginaExp += 0.5 * DigestionTick(Vaginafullness);
+        Vore.Exp += 0.5 * DigestionTick(Vaginafullness);
     }
     for (let e of Vore.Vagina) {
         if (VP.hasOwnProperty("AbsorbEssence")) {
@@ -12507,8 +12506,8 @@ function VoreEngine() {
                 const Baby = {
                     BabyAge: 0,
                     BabyRace: e.Race,
-                    Father: player.Name + " " + player.LastName,
-                    Mother: player.FirstName + " " + player.LastName
+                    Father: `${player.Name} ${player.LastName}`,
+                    Mother: `${player.Name} ${player.LastName}`
                 }
                 player.Pregnant.Status = true;
                 player.Pregnant.Babies.push(Baby);
@@ -12526,11 +12525,11 @@ function VoreEngine() {
     const Breastfullness = content(Vore.Breast) / MaxBreastCapacity() || 0.1; // prevent NaN if maxCapacity is 0
     // Breast fullness should be able to vary between 0 and 2
     if (Settings.VoreSettings.MilkTF) {
-        Vore.BreastExp += Breastfullness * digestionCount * progress;
-        Vore.Exp += Breastfullness * digestionCount * progress;
+        Vore.BreastExp += DigestionTick(Breastfullness);
+        Vore.Exp += DigestionTick(Breastfullness);
     } else {
-        Vore.BreastExp += 0.5 * Breastfullness * digestionCount * progress;
-        Vore.Exp += 0.5 * Breastfullness * digestionCount * progress;
+        Vore.BreastExp += 0.5 * DigestionTick(Breastfullness);
+        Vore.Exp += 0.5 * DigestionTick(Breastfullness);
     }
     for (let e of Vore.Breast) {
         if (VP.hasOwnProperty("AbsorbEssence")) {
@@ -12547,7 +12546,6 @@ function VoreEngine() {
             for (let q of player.RaceEssence) {
                 if (q.Race === e.Race) {
                     q.amount += progress * digestionCount;
-                    break;
                 } else {
 
                 }
@@ -12557,7 +12555,7 @@ function VoreEngine() {
                     b.Milk += progress * digestionCount;
                 };
             };
-            if (e.Weight < 0) {
+            if (e.Weight <= 0) {
                 if (VP.hasOwnProperty("AbsorbStats") ? VP.AbsorbStats.Count > 0 : false) {
                     AbsorbStatsCalc(e);
                 }
@@ -12574,11 +12572,11 @@ function VoreEngine() {
     const Ballfullness = content(Vore.Balls) / MaxBallsCapacity() || 0.1; // prevent NaN if maxCapacity is 0
     // Balls fullness should be able to vary between 0 and 2
     if (Settings.VoreSettings.CumTF) {
-        Vore.BallsExp += Ballfullness * digestionCount * progress;
-        Vore.Exp += Ballfullness * digestionCount * progress;
+        Vore.BallsExp += DigestionTick(Ballfullness);
+        Vore.Exp += DigestionTick(Ballfullness);
     } else {
-        Vore.BallsExp += 0.5 * Ballfullness * digestionCount * progress;
-        Vore.Exp += 0.5 * Ballfullness * digestionCount * progress;
+        Vore.BallsExp += 0.5 * DigestionTick(Ballfullness);
+        Vore.Exp += 0.5 * DigestionTick(Ballfullness);
     }
     for (let e of Vore.Balls) {
         if (VP.hasOwnProperty("AbsorbEssence")) {
@@ -12622,11 +12620,11 @@ function VoreEngine() {
     const Analfullness = content(Vore.Anal) / MaxAnalCapacity() || 0.1; // prevent NaN if maxCapacity is 0
     // Anal fullness should be able to vary between 0 and 2
     if (Settings.VoreSettings.AnalDigestion) {
-        Vore.AnalExp += Analfullness * digestionCount * progress;
-        Vore.Exp += Analfullness * digestionCount * progress;
+        Vore.AnalExp += DigestionTick(Analfullness);
+        Vore.Exp += DigestionTick(Analfullness);
     } else {
-        Vore.AnalExp += 0.5 * Analfullness * digestionCount * progress;
-        Vore.Exp += 0.5 * Analfullness * digestionCount * progress;
+        Vore.AnalExp += 0.5 * DigestionTick(Analfullness);
+        Vore.Exp += 0.5 * DigestionTick(Analfullness);
     }
     for (let e of Vore.Anal) {
         if (VP.hasOwnProperty("AbsorbEssence")) {
@@ -12696,6 +12694,10 @@ function VoreEngine() {
                 break;
         }
     }
+
+    function DigestionTick(organfullness) {
+        return Math.max(0, organfullness * progress * digestionCount)
+    };
 };
 
 function StomachCapacity() {
@@ -13013,7 +13015,7 @@ function VoreButtonsFunc() {
         const StomachDigestion = ButtonButton(`Stomach digestion ${VoreSettings.StomachDigestion}`);
         StomachDigestion.addEventListener("click", function () {
             VoreSettings.StomachDigestion = VoreSettings.StomachDigestion ? false : true;
-            StomachDigestion.setAttribute("value", `Stomach digestion ${VoreSettings.StomachDigestion}`);
+            StomachDigestion.innerHTML = `Stomach digestion ${VoreSettings.StomachDigestion}`;
         });
         con.appendChild(StomachDigestion);
         con.appendChild(Back());
@@ -13031,16 +13033,16 @@ function VoreButtonsFunc() {
         ChildTF.addEventListener("click", function () {
             VoreSettings.ChildTF = VoreSettings.ChildTF ? false : true;
             VoreSettings.VCumDigestion = false;
-            VCumDigestion.setAttribute("value", `Digestion ${VoreSettings.VCumDigestion}`);
-            ChildTF.setAttribute("value", `Child tf/Age reduc ${VoreSettings.ChildTF}`);
+            VCumDigestion.innerHTML = `Digestion ${VoreSettings.VCumDigestion}`;
+            ChildTF.innerHTML = `Child tf/Age reduc ${VoreSettings.ChildTF}`;
         });
         con.appendChild(ChildTF);
         const VCumDigestion = ButtonButton(`Digestion ${VoreSettings.VCumDigestion}`);
         VCumDigestion.addEventListener("click", function () {
             VoreSettings.VCumDigestion = VoreSettings.VCumDigestion ? false : true;
             VoreSettings.ChildTF = false;
-            VCumDigestion.setAttribute("value", `Digestion ${VoreSettings.VCumDigestion}`);
-            ChildTF.setAttribute("value", `Child tf/Age reduc ${VoreSettings.ChildTF}`);
+            VCumDigestion.innerHTML = `Digestion ${VoreSettings.VCumDigestion}`;
+            ChildTF.innerHTML = `Child tf/Age reduc ${VoreSettings.ChildTF}`;
         });
         con.appendChild(VCumDigestion);
         con.appendChild(Back());
@@ -13057,7 +13059,7 @@ function VoreButtonsFunc() {
         const MilkTF = ButtonButton(`Milk transformation ${VoreSettings.MilkTF}`);
         MilkTF.addEventListener("click", function () {
             VoreSettings.MilkTF = VoreSettings.MilkTF ? false : true;
-            MilkTF.setAttribute("value", `Milk transformation ${VoreSettings.MilkTF}`);
+            MilkTF.innerHTML =  `Milk transformation ${VoreSettings.MilkTF}`;
         });
         con.appendChild(MilkTF);
         con.appendChild(Back());
@@ -13074,7 +13076,7 @@ function VoreButtonsFunc() {
         const CumDigestion = ButtonButton(`Cum transformation ${VoreSettings.CumTF}`);
         CumDigestion.addEventListener("click", function () {
             VoreSettings.CumTF = VoreSettings.CumTF ? false : true;
-            CumDigestion.setAttribute("value", `Cum transformation ${VoreSettings.CumTF}`);
+            CumDigestion.innerHTML = `Cum transformation ${VoreSettings.CumTF}`;
         });
         con.appendChild(CumDigestion);
         con.appendChild(Back());
@@ -13091,7 +13093,7 @@ function VoreButtonsFunc() {
         const CumDigestion = ButtonButton(`Anal Digestion ${VoreSettings.AnalDigestion}`);
         CumDigestion.addEventListener("click", function () {
             VoreSettings.AnalDigestion = VoreSettings.AnalDigestion ? false : true;
-            CumDigestion.setAttribute("value", `Anal Digestion ${VoreSettings.AnalDigestion}`);
+            CumDigestion.innerHTML = `Anal Digestion ${VoreSettings.AnalDigestion}`;
         });
         con.appendChild(CumDigestion);
         con.appendChild(Back());

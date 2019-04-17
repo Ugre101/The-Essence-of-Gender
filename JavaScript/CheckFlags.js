@@ -280,6 +280,10 @@ function CheckFlags() {
         console.log(player.Inventory.findIndex(e => e.Name === "SpellBook"))
         player.Inventory.push(ItemDict.SpellBook);
     }
+    if (!Settings.VoreSettings.hasOwnProperty("AbsorbRace")){
+        Settings.VoreSettings.AbsorbRace = true;
+        console.log("Added vore race absorb toggle")
+    };
     HemScale();
 };
 // Hopefully obselite

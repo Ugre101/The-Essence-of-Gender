@@ -2,7 +2,6 @@ DocId("VoreLooks").addEventListener("click", function () {
     DisplayNone();
     DocId("ShowVore").style.display = 'grid';
     DocId("VorePerkMenu").style.display = 'none';
-    DocId("AbsorbEssenceSetting").innerHTML = `Absorb Essence ${Settings.VoreSettings.AbsorbEssence}`;
     VoreButtonsFunc();
 });
 
@@ -60,7 +59,7 @@ function VoreButtonsFunc() {
         const StomachDigestion = ButtonButton(`Stomach digestion ${VoreSettings.StomachDigestion}`);
         StomachDigestion.addEventListener("click", function () {
             VoreSettings.StomachDigestion = VoreSettings.StomachDigestion ? false : true;
-            StomachDigestion.setAttribute("value", `Stomach digestion ${VoreSettings.StomachDigestion}`);
+            StomachDigestion.innerHTML = `Stomach digestion ${VoreSettings.StomachDigestion}`;
         });
         con.appendChild(StomachDigestion);
         con.appendChild(Back());
@@ -78,16 +77,16 @@ function VoreButtonsFunc() {
         ChildTF.addEventListener("click", function () {
             VoreSettings.ChildTF = VoreSettings.ChildTF ? false : true;
             VoreSettings.VCumDigestion = false;
-            VCumDigestion.setAttribute("value", `Digestion ${VoreSettings.VCumDigestion}`);
-            ChildTF.setAttribute("value", `Child tf/Age reduc ${VoreSettings.ChildTF}`);
+            VCumDigestion.innerHTML = `Digestion ${VoreSettings.VCumDigestion}`;
+            ChildTF.innerHTML = `Child tf/Age reduc ${VoreSettings.ChildTF}`;
         });
         con.appendChild(ChildTF);
         const VCumDigestion = ButtonButton(`Digestion ${VoreSettings.VCumDigestion}`);
         VCumDigestion.addEventListener("click", function () {
             VoreSettings.VCumDigestion = VoreSettings.VCumDigestion ? false : true;
             VoreSettings.ChildTF = false;
-            VCumDigestion.setAttribute("value", `Digestion ${VoreSettings.VCumDigestion}`);
-            ChildTF.setAttribute("value", `Child tf/Age reduc ${VoreSettings.ChildTF}`);
+            VCumDigestion.innerHTML = `Digestion ${VoreSettings.VCumDigestion}`;
+            ChildTF.innerHTML = `Child tf/Age reduc ${VoreSettings.ChildTF}`;
         });
         con.appendChild(VCumDigestion);
         con.appendChild(Back());
@@ -104,7 +103,7 @@ function VoreButtonsFunc() {
         const MilkTF = ButtonButton(`Milk transformation ${VoreSettings.MilkTF}`);
         MilkTF.addEventListener("click", function () {
             VoreSettings.MilkTF = VoreSettings.MilkTF ? false : true;
-            MilkTF.setAttribute("value", `Milk transformation ${VoreSettings.MilkTF}`);
+            MilkTF.innerHTML =  `Milk transformation ${VoreSettings.MilkTF}`;
         });
         con.appendChild(MilkTF);
         con.appendChild(Back());
@@ -121,7 +120,7 @@ function VoreButtonsFunc() {
         const CumDigestion = ButtonButton(`Cum transformation ${VoreSettings.CumTF}`);
         CumDigestion.addEventListener("click", function () {
             VoreSettings.CumTF = VoreSettings.CumTF ? false : true;
-            CumDigestion.setAttribute("value", `Cum transformation ${VoreSettings.CumTF}`);
+            CumDigestion.innerHTML = `Cum transformation ${VoreSettings.CumTF}`;
         });
         con.appendChild(CumDigestion);
         con.appendChild(Back());
@@ -138,7 +137,7 @@ function VoreButtonsFunc() {
         const CumDigestion = ButtonButton(`Anal Digestion ${VoreSettings.AnalDigestion}`);
         CumDigestion.addEventListener("click", function () {
             VoreSettings.AnalDigestion = VoreSettings.AnalDigestion ? false : true;
-            CumDigestion.setAttribute("value", `Anal Digestion ${VoreSettings.AnalDigestion}`);
+            CumDigestion.innerHTML = `Anal Digestion ${VoreSettings.AnalDigestion}`;
         });
         con.appendChild(CumDigestion);
         con.appendChild(Back());
@@ -154,7 +153,6 @@ function VoreButtonsFunc() {
         };
     });
     con.appendChild(innerCon);
-    console.log(con)
     con.style.display = 'block';
 }
 
@@ -175,7 +173,6 @@ function PreyButton(e, arr) {
     <br>Height:${CmToInch(e.Height)}<br>Weight:${KgToPound(e.Weight)}`);
     prey.addEventListener("click", function () {
         //ThePrey(e);
-        console.log(arr.findIndex(i => i === e));
         const con = DocId("VoreButtons");
         while (con.hasChildNodes()) {
             con.removeChild(con.lastChild);
@@ -186,7 +183,6 @@ function PreyButton(e, arr) {
         con.appendChild(h3);
         const regulate = ButtonButton("Regurgitate");
         regulate.addEventListener("click", function () {
-            console.log(arr.findIndex(i => i === e));
             // Check so that prey haven't already been digested.
             if (arr.findIndex(i => i === e) > -1) {
                 arr.splice(arr.findIndex(i => i === e), 1);

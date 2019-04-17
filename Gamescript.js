@@ -211,7 +211,6 @@ var Settings = {
         ServeFemi: true
     },
     Inch: false,
-    Approx: false,
     VoreSettings: {
         StomachDigestion: true,
         CumTF: true,
@@ -219,14 +218,8 @@ var Settings = {
         VCumDigestion: true,
         MilkTF: true,
         AnalDigestion: true,
-        AbsorbEssence: true
-    },
-    BalanceParts: false,
-    BalanceSettings: {
-        StepPussy: 1500,
-        StepBoobs: 1000,
-        StepPenis: 1000,
-        StepBalls: 1500
+        AbsorbEssence: true,
+        AbsorbRace: true
     },
     Cheats: {
         Enabled: false,

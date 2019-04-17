@@ -76,7 +76,7 @@ DocId("Perks").addEventListener("click", function () {
         const RacesLi = document.createElement("li");
         RacesLi.innerHTML = Math.round(e.amount / RaceTotal * 100) > 1 ?
             `${e.Race}: ${Math.round(e.amount / RaceTotal * 100)}%  (${Math.round(e.amount)})` :
-            `${e.Race}: <1%  (${e.amount})`;
+            `${e.Race}: <1%  (${Math.round(e.amount)})`;
         RacesP.appendChild(RacesLi);
     }
     Races.appendChild(RacesP);
