@@ -124,10 +124,8 @@ function Lose(sex = true) {
 				LoseText.innerHTML += "They steal " + steal + " gold from you.";
 				break;
 			case "orc":
-				const Steal = Math.min(30, player.Masc);
 				player.Femi += 30;
-				player.Masc -= Steal;
-				enemy.Masc += Steal;
+				DrainMascFromPlayer(30);
 				// player.Mind.Sub++
 				if (enemy.Balls.length > 0) {
 					let i = 0;
@@ -139,8 +137,8 @@ function Lose(sex = true) {
 				// "while also transforminng you to better suit their preference."
 				break;
 			case "fairy":
-				if (player.Height > 30) {
-					player.Height -= Math.min(RandomInt(7, player.Height / 10), 50);
+				if (player.Height > 10) {
+					player.Height -= Math.min(player.Height / RandomInt(5, 10), 50);
 				}
 				PotionDrunk("Fairy", RandomInt(10, 20));
 				LoseText.innerHTML += "Attempting to transform you into a fairy they shrunk you"
@@ -165,21 +163,12 @@ function Lose(sex = true) {
 				}
 				break;
 			case "incubus":
-				if (player.Masc > 0) {
-					const take = Math.min(400, player.Masc * Math.min(0.15, Math.random())); // Up to 15% or 400ess
-					player.Masc -= take;
-					enemy.Masc += take;
-				}
+				DrainMascFromPlayer(400);
 				Impregnate(player, enemy, "B");
 				// "drainging your masculinity "
 				break;
 			case "succubus":
-				if (player.Femi > 0) {
-					const take = Math.min(400, player.Femi * Math.min(0.15, Math.random())); // Up to 15% or 400ess
-					console.log(take)
-					player.Femi -= take;
-					enemy.Femi += take;
-				}
+				DrainFemiFromPlayer(400);
 				Impregnate(enemy, player);
 				// "draining your feminity"
 				break;
@@ -271,7 +260,10 @@ DocId("LeaveLose").addEventListener("click", function () {
 
 function loseScene(struggle, selectScene) {
 	const Player = player,
-		Enemy = enemies[EnemyIndex]; // bad fix for now wanting to rename all Player to player
+		Enemy = enemies[EnemyIndex],
+		{
+			FirstName
+		} = enemies[EnemyIndex]; // bad fix for now wanting to rename all Player to player
 	function DrainBalls() {
 		if (player.Balls.length > 0) {
 			player.Balls.forEach((b) => {
@@ -288,9 +280,9 @@ function loseScene(struggle, selectScene) {
 	if (struggle) {
 		switch (selectScene) {
 			case "forcedBJ":
-				return `${Enemy.FirstName} forces your head to their crotch, and starts thrusting their ${CmToInch(Enemy.Dicks[0].Size)} dick into your mouth. Despite your intentions, your body betrays you and orgasms as they cum ${enemyCum()}`;
+				return `${FirstName} forces your head to their crotch, and starts thrusting their ${CmToInch(Enemy.Dicks[0].Size)} dick into your mouth. Despite your intentions, your body betrays you and orgasms as they cum ${enemyCum()}`;
 			case "forcedCunn":
-				returnText = `${Enemy.FirstName} forces your head to their crotch, forcing you to start eating them out. `
+				returnText = `${FirstName} forces your head to their crotch, forcing you to start eating them out. `
 				if (Enemy.Balls.length > 0) {
 					returnText += `Their ${CmToInch(Enemy.Balls[0].Size)} balls cover your face, forcing their musky scent into your nose. `
 				}
@@ -301,18 +293,18 @@ function loseScene(struggle, selectScene) {
 				break;
 			case "forcedRim":
 				if (CheckGender(Enemy) != "doll") {
-					returnText = `Despite having more sensitive erogenous zones, ${Enemy.FirstName} wants to maximize your humiliation by forcing you to eat their ass out. 
+					returnText = `Despite having more sensitive erogenous zones, ${FirstName} wants to maximize your humiliation by forcing you to eat their ass out. 
 					They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure.`
 				} else if (CheckGender(Enemy) === "doll" && player.Dicks.length <= 0) {
-					returnText = "With no other way to get pleasure, " + Enemy.FirstName + " forces you to the ground and sit on your face, giving you no other option than to eat their ass out for pleasure. "
+					returnText = "With no other way to get pleasure, " + FirstName + " forces you to the ground and sit on your face, giving you no other option than to eat their ass out for pleasure. "
 				} else {
-					returnText = `Rather that let you use your dick on their only hole, ${Enemy.FirstName} decides to force you to use your tongue. 
+					returnText = `Rather that let you use your dick on their only hole, ${FirstName} decides to force you to use your tongue. 
 					They force you to the ground and sit on your face, giving you no other option than to eat their ass out for their pleasure.`
 				}
 				returnText += "<br>Despite your humiliating position, you find your body responding, reaching orgasm as you feel them shudder above you."
 				break;
 			case "getBJ":
-				returnText = "Forcing you onto your back, " + Enemy.FirstName + " expertly massages your cock and balls, quickly bringing you erect. "
+				returnText = "Forcing you onto your back, " + FirstName + " expertly massages your cock and balls, quickly bringing you erect. "
 				if (player.Pussies.length > 0) {
 					returnText += "They even tease your pussy a bit, all to make you cum quicker. "
 				}
@@ -320,7 +312,7 @@ function loseScene(struggle, selectScene) {
 				DrainBalls()
 				break;
 			case "getCunn":
-				returnText = "Forcing you onto your back, " + Enemy.FirstName + " expertly fingers your pussy, quickly making you wet. "
+				returnText = "Forcing you onto your back, " + FirstName + " expertly fingers your pussy, quickly making you wet. "
 				if (player.Balls.length > 0) {
 					returnText += "They even tease your balls a bit, all to make you cum quicker. "
 				}
@@ -420,7 +412,7 @@ function loseScene(struggle, selectScene) {
 				break;
 			case "getRidden":
 				returnText = "Pushing you over, your enemy fondles your balls, quickly giving you an erection. Straddling your groin, they quickly thrust down, riding your dick. "
-				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3) {
+				if (player.Boobies.length > 0 ? player.Boobies[0].size > 3 : false && enemies.Boobies.length > 0 ? enemies[EnemyIndex].Boobies[0].size > 3 : false) {
 					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
 				}
 				returnText = "<br>It doesn't take long before you cum, emptying your balls into their pussy. They're not satisfied yet, though, and continue to ride you for several orgasms. "
@@ -435,7 +427,7 @@ function loseScene(struggle, selectScene) {
 				break;
 			case "getRiddenAnal":
 				returnText = "Pushing you over, your enemy fondles your balls, quickly giving you an erection. Straddling your groin, they quickly thrust down, riding your dick. "
-				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3) {
+				if (player.Boobies.length > 0 ? player.Boobies[0].size > 3 : false && enemies.Boobies.length > 0 ? enemies[EnemyIndex].Boobies[0].size > 3 : false) {
 					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
 				}
 				returnText = "<br>It doesn't take long before you cum, emptying your balls into their ass. They're not satisfied yet, though, and continue to ride you for several orgasms. "
@@ -599,20 +591,21 @@ function loseScene(struggle, selectScene) {
 				break;
 			case "getRidden":
 				returnText = "Telling you to sit down, your enemy kisses you deeply as they fondle your balls, quickly giving you an erection. Hugging your shoulders, they ease their pussy onto your dick, causing both of you to moan out loud. "
-				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3)
+				if (player.Boobies.length > 0 ? player.Boobies[0].size > 3 : false && enemies.Boobies.length > 0 ? enemies[EnemyIndex].Boobies[0].size > 3 : false) {
 					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
-				returnText = "<br>It doesn't take long before you cum, emptying your balls into their pussy. They're not satisfied yet, though, and give you a few seconds to recover, before continuing to ride you for several orgasms. "
-				/*if(!enemies[EnemyIndex].hasOwnProperty(Pregnant)) {
-					Impregnate(enemies[EnemyIndex], player, "A", "");
-					if(enemies[EnemyIndex].hasOwnProperty(Pregnant) && Flags.Impregnations == 1)
-							returnText += "You see them rubbing their belly, looking content... They couldn't have gotten pregnant, could they?"
-					else if (enemies[EnemyIndex].hasOwnProperty(Pregnant))
-						returnText += "Well, looks like you've knocked someone up again. You hope they're alright with you being the father..."
-				}*/
-				break;
+					returnText = "<br>It doesn't take long before you cum, emptying your balls into their pussy. They're not satisfied yet, though, and give you a few seconds to recover, before continuing to ride you for several orgasms. "
+					/*if(!enemies[EnemyIndex].hasOwnProperty(Pregnant)) {
+						Impregnate(enemies[EnemyIndex], player, "A", "");
+						if(enemies[EnemyIndex].hasOwnProperty(Pregnant) && Flags.Impregnations == 1)
+								returnText += "You see them rubbing their belly, looking content... They couldn't have gotten pregnant, could they?"
+						else if (enemies[EnemyIndex].hasOwnProperty(Pregnant))
+							returnText += "Well, looks like you've knocked someone up again. You hope they're alright with you being the father..."
+					}*/
+					break;
+				}
 			case "getRiddenAnal":
 				returnText = "Telling you to sit down, your enemy kisses you deeply as they fondle your balls, quickly giving you an erection. Hugging your shoulders, they ease their asshole onto your dick, causing both of you to moan out loud. "
-				if (player.Boobies[0].size > 3 && enemies[EnemyIndex].Boobies[0].size > 3) {
+				if (player.Boobies.length > 0 ? player.Boobies[0].size > 3 : false && enemies.Boobies.length > 0 ? enemies[EnemyIndex].Boobies[0].size > 3 : false) {
 					returnText += "As they bounce up and down on your rod, they hug you close, mashing your nipples and theirs together, sending shivers of pleasure through your chest. "
 				}
 				returnText = "<br>It doesn't take long before you cum, emptying your balls into their ass. They're not satisfied yet, though, and give you a few seconds to recover, before continuing to ride you for several orgasms. "

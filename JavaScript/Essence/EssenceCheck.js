@@ -1,4 +1,4 @@
-function OrganSize(Size, who) {
+function OrganSize(Size, who = player) {
     return Math.floor(Size * (who.Height / 180));
     // return Math.ceil(Math.sqrt(Size) * GrowthScale(who));
 }

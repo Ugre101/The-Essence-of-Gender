@@ -71,7 +71,7 @@ function BreastButtons() {
 }
 
 function BreastButton(e) {
-    var boob = ButtonButton(`${BoobSizeConvertor(e.Size)} ${EssenceCost(e)}Feminity`)
+    var boob = ButtonButton(`${BoobSizeConvertor(OrganSize(e.Size))} ${EssenceCost(e)}Feminity`)
     boob.addEventListener("click", function () {
         var cost = EssenceCost(e);
         if (player.Femi >= cost) {
@@ -113,7 +113,7 @@ function PussyButtons() {
 }
 
 function PussyButton(e) {
-    var pussy = ButtonButton(`${CmToInch(e.Size)} ${EssenceCost(e)}Feminity`)
+    var pussy = ButtonButton(`${CmToInch(OrganSize(e.Size))} ${EssenceCost(e)}Feminity`)
     pussy.addEventListener("click", function () {
         var cost = EssenceCost(e);
         if (player.Femi >= cost) {
@@ -154,7 +154,7 @@ function DickButtons() {
 }
 
 function DickButton(e) {
-    var Dick = ButtonButton(`${CmToInch(e.Size)} ${EssenceCost(e)}Masculinity`);
+    var Dick = ButtonButton(`${CmToInch(OrganSize(e.Size))} ${EssenceCost(e)}Masculinity`);
     Dick.addEventListener("click", function () {
         var cost = EssenceCost(e);
         if (player.Masc >= cost) {
@@ -197,7 +197,7 @@ function BallsButtons() {
 }
 
 function BallsButton(e) {
-    var Ball = ButtonButton(`${CmToInch(e.Size)} ${EssenceCost(e)}Masculinity`)
+    var Ball = ButtonButton(`${CmToInch(OrganSize(e.Size))} ${EssenceCost(e)}Masculinity`)
     Ball.addEventListener("click", function () {
         var cost = EssenceCost(e);
         if (player.Masc >= cost) {
