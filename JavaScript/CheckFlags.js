@@ -181,7 +181,7 @@ function CheckFlags() {
             IncubatorSeed: 0,
             Broodmother: 0,
             BroodmotherSeed: 0,
-            MalePreg: 0
+            Malepreg: 0
         }
     }
     if (!player.Blessings.hasOwnProperty("MountainShrine")) {
@@ -192,9 +192,12 @@ function CheckFlags() {
             IncubatorSeed: 0,
             Broodmother: 0,
             BroodmotherSeed: 0,
-            MalePreg: 0
+            Malepreg: 0
         }
     };
+    if (!player.Blessings.MountainShrine.hasOwnProperty("Malepreg")){
+        player.Blessings.MountainShrine.Malepreg = 0;
+    }
 
     FluidsEngine();
     if (!player.hasOwnProperty("RaceEssence")) {

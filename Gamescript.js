@@ -789,21 +789,3 @@ var Laglimiter = 0;
 function DocId(id) { // Important Prototype.js must be loaded before where you want to use this!
     return document.getElementById(id);
 }
-
-/**
- * (function () {
-    var a = RandomInt(1, 6);
-    a === 1 ? console.log("One") : a === 2 ? console.log("Two") : a === 3 ? console.log("Three") :
-        a === 4 ? console.log("Four") : a === 5 ? console.log("Five") : console.log("Six");
-    var b = [1, 2, 3],
-        c = [4, 5, 6],
-        d = [...b, ...c];
-    console.log(d);
-    setTimeout(() => {
-        console.log("Hello")
-    }, 2000)
-    setTimeout(() => {
-        console.log("Future")
-    }, 4000);
-})()
- */

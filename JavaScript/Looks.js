@@ -153,7 +153,6 @@ function ExactBoobLook(who) {
         let boobies = "";
         who.Boobies.forEach((Boobs, index) => {
             const Size = OrganSize(Boobs.Size, who);
-            console.log(Size)
             if (index === 0 && Size <= 4 && Size > 1) {
                 boobies += `An ${BoobSizeConvertor(Size)}-cup chest`;
             } else if (Size > 4 && Size < 28) {
