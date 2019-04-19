@@ -790,23 +790,6 @@ function DocId(id) { // Important Prototype.js must be loaded before where you w
     return document.getElementById(id);
 }
 
-/**
- * (function () {
-    var a = RandomInt(1, 6);
-    a === 1 ? console.log("One") : a === 2 ? console.log("Two") : a === 3 ? console.log("Three") :
-        a === 4 ? console.log("Four") : a === 5 ? console.log("Five") : console.log("Six");
-    var b = [1, 2, 3],
-        c = [4, 5, 6],
-        d = [...b, ...c];
-    console.log(d);
-    setTimeout(() => {
-        console.log("Hello")
-    }, 2000)
-    setTimeout(() => {
-        console.log("Future")
-    }, 4000);
-})()
- */
 function BarFunc() {
     const Buildings = document.getElementById("Buildings")
     CleanBuildings()
@@ -1631,12 +1614,12 @@ function FertTempleBlessings(text = "") {
         div.removeChild(div.firstChild);
     }
 
-    const h1 = document.createElement("h1"),
-        h1text = document.createTextNode("Quests");
-    h1.appendChild(h1text);
-    div.appendChild(h1);
+    div.appendChild(TitleText("Quests"));
 
-    const PregPoints = Flags.Impregnations + Flags.Pregnations * 5 + player.Blessings.MountainShrine.Points;
+    const {
+        MountainShrine
+    } = player.Blessings;
+    const PregPoints = Flags.Impregnations + Flags.Pregnations * 5 + MountainShrine.Points;
 
     const h5 = document.createElement("h5");
     h5.innerHTML = `${PregPoints} faith`;
@@ -1648,12 +1631,12 @@ function FertTempleBlessings(text = "") {
 
     div.appendChild(p);
 
-
-    const Incubator = ButtonButton("Incubator +" + player.Blessings.MountainShrine.Incubator, "Makes your pregnancy faster.");
+    const IncubatorInner = MountainShrine.Incubator > 0 ? `Incubator +${MountainShrine.Incubator}` : `Incubator`;
+    const Incubator = ButtonButton(IncubatorInner, "Makes your pregnancy faster.");
     Incubator.addEventListener("click", function () {
-        const cost = player.Blessings.MountainShrine.Incubator + 1
+        const cost = MountainShrine.Incubator + 1
         if (PregPoints > cost) {
-            player.Blessings.MountainShrine.Incubator++;
+            MountainShrine.Incubator++;
             FertTempleBlessings("I pray for you to parent healthy children.");
         } else {
             FertTempleBlessings("I’m sorry your faith isn’t strong enough to receive that.");
@@ -1661,11 +1644,12 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(Incubator);
 
-    const IncubatorSeed = ButtonButton("Mature seeds +" + player.Blessings.MountainShrine.IncubatorSeed, "Makes your servant's pregnancies faster.");
+    const IncubatorSeedInner = MountainShrine.IncubatorSeed > 0 ? `Mature seeds +${MountainShrine.IncubatorSeed}` : `Mature seeds`;
+    const IncubatorSeed = ButtonButton(IncubatorSeedInner, "Makes your servant's pregnancies faster.");
     IncubatorSeed.addEventListener("click", function () {
-        const cost = player.Blessings.MountainShrine.IncubatorSeed + 1;
+        const cost = MountainShrine.IncubatorSeed + 1;
         if (PregPoints > cost) {
-            player.Blessings.MountainShrine.IncubatorSeed++;
+            MountainShrine.IncubatorSeed++;
             FertTempleBlessings("I pray for you to parent healthy children.");
         } else {
             FertTempleBlessings("I’m sorry your faith isn’t strong enough to receive that.");
@@ -1673,23 +1657,24 @@ function FertTempleBlessings(text = "") {
     })
     div.appendChild(IncubatorSeed);
 
-    const Broodmother = ButtonButton("Broodmother +" + player.Blessings.MountainShrine.Broodmother, "Chance for twins or more for player.");
+    const BroodmotherInner = MountainShrine.Broodmother > 0 ? `Broodmother +${MountainShrine.Broodmother}` : `Broodmother`;
+    const Broodmother = ButtonButton(BroodmotherInner, "Chance for twins or more for player.");
     Broodmother.addEventListener("click", function () {
-        const cost = player.Blessings.MountainShrine.Broodmother * 2 + 2;
+        const cost = MountainShrine.Broodmother * 2 + 2;
         if (PregPoints > cost) {
-            player.Blessings.MountainShrine.Broodmother++;
+            MountainShrine.Broodmother++;
             FertTempleBlessings("I pray for you to parent healthy children.");
         } else {
             FertTempleBlessings("I’m sorry your faith isn’t strong enough to receive that.");
         }
     });
     div.appendChild(Broodmother);
-
-    const BroodmotherSeed = ButtonButton("Branching seeds +" + player.Blessings.MountainShrine.BroodmotherSeed, "Chance for twins or more for others.");
+    const BroodmotherSeedInner = MountainShrine.BroodmotherSeed > 0 ? `Branching seeds +${MountainShrine.BroodmotherSeed}` : `Branching seeds`;
+    const BroodmotherSeed = ButtonButton(BroodmotherSeedInner, "Chance for twins or more for others.");
     BroodmotherSeed.addEventListener("click", function () {
-        const cost = player.Blessings.MountainShrine.BroodmotherSeed * 2 + 2;
+        const cost = MountainShrine.BroodmotherSeed * 2 + 2;
         if (PregPoints > cost) {
-            player.Blessings.MountainShrine.BroodmotherSeed++;
+            MountainShrine.BroodmotherSeed++;
             FertTempleBlessings("I pray for you to parent healthy children.");
         } else {
             FertTempleBlessings("I’m sorry your faith isn’t strong enough to receive that.");
@@ -1697,11 +1682,12 @@ function FertTempleBlessings(text = "") {
     });
     div.appendChild(BroodmotherSeed);
 
-    const MalePreg = ButtonButton("Anal Incubator +" + player.Blessings.MountainShrine.Malepreg, "Enables player non-female pregnancy.");
+    const MalePregInner = MountainShrine.Malepreg > 0 ? `Anal Incubator +${MountainShrine.Malepreg}` : `Anal Incubator`;
+    const MalePreg = ButtonButton(MalePregInner, "Enables player non-female pregnancy.");
     MalePreg.addEventListener("click", function () {
-        const cost = player.Blessings.MountainShrine.Malepreg * 5;
+        const cost = MountainShrine.Malepreg * 5;
         if (PregPoints > cost) {
-            player.Blessings.MountainShrine.Malepreg++;
+            MountainShrine.Malepreg++;
             FertTempleBlessings("I pray for you to parent healthy children.");
         } else {
             FertTempleBlessings("I’m sorry your faith isn’t strong enough to receive that.");
@@ -2754,7 +2740,7 @@ function CheckFlags() {
             IncubatorSeed: 0,
             Broodmother: 0,
             BroodmotherSeed: 0,
-            MalePreg: 0
+            Malepreg: 0
         }
     }
     if (!player.Blessings.hasOwnProperty("MountainShrine")) {
@@ -2765,9 +2751,12 @@ function CheckFlags() {
             IncubatorSeed: 0,
             Broodmother: 0,
             BroodmotherSeed: 0,
-            MalePreg: 0
+            Malepreg: 0
         }
     };
+    if (!player.Blessings.MountainShrine.hasOwnProperty("Malepreg")){
+        player.Blessings.MountainShrine.Malepreg = 0;
+    }
 
     FluidsEngine();
     if (!player.hasOwnProperty("RaceEssence")) {
@@ -6381,7 +6370,6 @@ function ExactBoobLook(who) {
         let boobies = "";
         who.Boobies.forEach((Boobs, index) => {
             const Size = OrganSize(Boobs.Size, who);
-            console.log(Size)
             if (index === 0 && Size <= 4 && Size > 1) {
                 boobies += `An ${BoobSizeConvertor(Size)}-cup chest`;
             } else if (Size > 4 && Size < 28) {
