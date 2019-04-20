@@ -12423,13 +12423,20 @@ function VoreEngine() {
 
     // Stomach
     const content = (arr) => {
-        return arr.length > 0 ? arr.map(arr => arr.Weight).reduce((acc, cur) => acc + cur) : 0;
-    }
+            return arr.length > 0 ? arr.map(arr => arr.Weight).reduce((acc, cur) => acc + cur) : 0;
+        },
+        Fullness = (content, max) => {
+            if (max <= 0 || content <= 0) {
+                return 0;
+            } else {
+                return content / max
+            };
+        };
     while (content(Stomach) > MaxStomachCapacity()) {
         enemies.push(Last(Stomach));
         Stomach.pop();
     }
-    const Stomachfullness = content(Stomach) / MaxStomachCapacity() || 0.1; // prevent NaN if maxCapacity is 0
+    const Stomachfullness = Fullness(content(Stomach), MaxStomachCapacity());
     // stomach fullness should be able to vary between 0 and 2
     Vore.StomachExp += StomachDigestion ? VoreExpTick(Stomachfullness) : 0.5 * VoreExpTick(Stomachfullness);
     Vore.Exp += StomachDigestion ? VoreExpTick(Stomachfullness) : 0.5 * VoreExpTick(Stomachfullness);
@@ -12453,7 +12460,7 @@ function VoreEngine() {
         enemies.push(Last(Vagina));
         Vagina.pop();
     }
-    const Vaginafullness = content(Vagina) / MaxVaginaCapacity() || 0.1; // prevent NaN if maxCapacity is 0
+    const Vaginafullness = Fullness(content(Vagina), MaxVaginaCapacity());
     // Vagina fullness should be able to vary between 0 and 2
     Vore.VaginaExp += VCumDigestion ? VoreExpTick(Vaginafullness) : 0.5 * VoreExpTick(Vaginafullness);
     Vore.Exp += VCumDigestion ? VoreExpTick(Vaginafullness) : 0.5 * VoreExpTick(Vaginafullness);
@@ -12491,7 +12498,7 @@ function VoreEngine() {
         enemies.push(Last(Breast));
         Breast.pop();
     }
-    const Breastfullness = content(Breast) / MaxBreastCapacity() || 0.1; // prevent NaN if maxCapacity is 0
+    const Breastfullness = Fullness(content(Breast), MaxBreastCapacity());
     // Breast fullness should be able to vary between 0 and 2
     Vore.BreastExp += MilkTF ? VoreExpTick(Breastfullness) : 0.5 * VoreExpTick(Breastfullness);
     Vore.Exp += MilkTF ? VoreExpTick(Breastfullness) : 0.5 * VoreExpTick(Breastfullness);
@@ -12518,7 +12525,7 @@ function VoreEngine() {
         enemies.push(Last(Balls));
         Balls.pop();
     }
-    const Ballfullness = content(Balls) / MaxBallsCapacity() || 0.1; // prevent NaN if maxCapacity is 0
+    const Ballfullness = Fullness(content(Balls), MaxBallsCapacity());
     // Balls fullness should be able to vary between 0 and 2
     Vore.BallsExp += CumTF ? VoreExpTick(Ballfullness) : 0.5 * VoreExpTick(Ballfullness);
     Vore.Exp += CumTF ? VoreExpTick(Ballfullness) : 0.5 * VoreExpTick(Ballfullness);
@@ -12546,7 +12553,7 @@ function VoreEngine() {
         enemies.push(Last(Anal));
         Anal.pop();
     }
-    const Analfullness = content(Anal) / MaxAnalCapacity() || 0.1; // prevent NaN if maxCapacity is 0
+    const Analfullness = Fullness(content(Anal), MaxAnalCapacity());
     // Anal fullness should be able to vary between 0 and 2
     Vore.AnalExp += AnalDigestion ? VoreExpTick(Analfullness) : 0.5 * VoreExpTick(Analfullness);
     Vore.Exp += AnalDigestion ? VoreExpTick(Analfullness) : 0.5 * VoreExpTick(Analfullness);
