@@ -4,7 +4,7 @@ body {
     width: 100%;
     font-size: 1em;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    overflow: hidden;
+    overflow: auto;
     margin: 0;
     padding: 0;
 }
@@ -16,12 +16,59 @@ body {
     justify-content: center;
 }
 
-@media screen and (min-height: 1000px) {
+h1 {
+    font-size: 2rem;
+    /* Make all H1 large, remove nested-shrinking sizes. */
+    margin: 0.67em 0;
+}
 
-    html,
-    body {
-        overflow: auto;
-    }
+h2 {
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-size: 1.17rem;
+}
+
+h4 {
+    font-size: 1.00rem;
+}
+
+h5 {
+    font-size: 0.83rem;
+}
+
+h6 {
+    font-size: 0.67rem;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1;
+}
+
+p,
+ul,
+ol,
+dl,
+address {
+    line-height: 1.5;
+}
+
+img,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+    display: block;
+    /* Switch display mode to block, since that's what we usually want for images. */
+    vertical-align: middle;
+    /* If you override, and make an image inline, it's likely you'll want middle vertical alignment. */
 }
 
 #StartPage {
@@ -55,7 +102,7 @@ body {
     font-weight: bold;
 }
 
-#StartPage>h1 {
+#StartPage h1 {
     align-self: center;
     justify-self: center;
     color: blue;
@@ -159,13 +206,13 @@ canvas {
     border-top-left-radius: 15px;
 }
 
-#EventLog>h2 {
-    display: inline-block;
+#EventLog h2 {
+    display: inline;
     margin: 0;
 }
 
 @media screen and (max-height: 600px) {
-    #EventLog>h2 {
+    #EventLog h2 {
         display: none;
     }
 }
@@ -384,8 +431,8 @@ button.SmolButton {
 
 #WorldMapContainer {
     position: absolute;
-    right: 2vh;
-    top: 2vh;
+    right: 5px;
+    top: 5px;
     text-align: center;
 }
 
