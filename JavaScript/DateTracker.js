@@ -1,6 +1,7 @@
 function DateTracker() {
     Flags.Date.Hour++;
     HouseEngine();
+    DormEngine();
     if (Flags.Date.Hour % 6 === 0) {
         const displayDate = new Date(Flags.Date.Year, Flags.Date.Month - 1, Flags.Date.Day);
         DocId("CurrentDate").innerHTML = `${displayDate.toDateString()} ${Flags.Date.Hour > 9 ? `${Flags.Date.Hour}:00` : `0${Flags.Date.Hour}:00`}`;

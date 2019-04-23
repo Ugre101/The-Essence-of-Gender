@@ -1,6 +1,10 @@
 function DormEngine() {
     // connect this engine to date tracker
-    for (let e of House.Dormmates) {
+    const {
+        Dormmates
+    } = House
+    for (let i in Dormmates) {
+        const e = Dormmates[i];
         // happiness
         if (!e.hasOwnProperty("Happy")) {
             e.Happy = 50;
@@ -14,12 +18,25 @@ function DormEngine() {
         // if dorm has rule === a do a stuff
 
         // Relationships between dormmates.
-        if (House.Dormmates.length > 1) {
+        if (Dormmates.length > 1) {
+            // TempArray containing everbody execpt current person.
+            const TA = Dormmates.filter(c => c !== e);
+            // If allowed to impregnate each others
+            if (false) {
+                // if e1 want to impregnate e2
+            };
+            // if might make right
+            if (false) {
+                if (e.Race === "Orc") {
+                    // Orcs tries to impregnate everybody weaker than them.
+                }
+                // Need to make a function to count combat stats.
+            }
             // if same race
             // if attraced to
             // etc
         };
-        
+
 
         // Escape system
         if (!e.hasOwnProperty("Escape")) {
@@ -45,6 +62,8 @@ function DormEngine() {
                     // they ecaped
                     // splice
                     EventLog(`${e.FirstName} has escaped!`);
+                    // Maybe add a container to track escapes? So that player can regain them?
+                    Dormmates.splice(Dormmates.findIndex(i => i === e, 1));
                 } else {
                     EventLog(`${e.FirstName} tried to escape and has been caught.`);
                 };

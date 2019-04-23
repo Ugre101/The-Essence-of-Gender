@@ -69,8 +69,18 @@
 	    	if (EventLog.style.width > 20 + "vw") {
 	    		EventLog.style.width = 20 + "vw";
 	    		EventLog.style.maxHeight = 50 + "vh";
+	    		DocId("FluidPart").style.display = 'block';
+	    		if (window.innerHeight > 600) {
+	    			DocId("EventFluidsH2").style.display = 'inline-block';
+	    		}
+	    		DocId("FluidsMode").style.display = 'inline-block';
+	    		DocId("HideFluids").style.display = 'inline-block';
 	    	} else {
-				EventLog.style.width = 80 + "vw";
+	    		EventLog.style.width = 80 + "vw";
 	    		EventLog.style.maxHeight = 80 + "vh";
+	    		DocId("FluidPart").style.display = 'none';
+	    		DocId("EventFluidsH2").style.display = 'none';
+	    		DocId("FluidsMode").style.display = 'none';
+	    		DocId("HideFluids").style.display = 'none';
 	    	}
 	    });
