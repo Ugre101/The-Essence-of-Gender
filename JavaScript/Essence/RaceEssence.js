@@ -89,6 +89,30 @@ function RaceEssenceBalance() {
     if (player.SecondRace !== oldSecondRace) {
         console.log("SecondRace change");
     }
+    // Add Tails
+    switch (player.Race) {
+        case "equine":
+        case "centaur":
+            if (player.Tails.length === 0 || player.Tails[0].Race !== "equine") {
+                player.Tails = [];
+                player.Tails.push(Tails.Horse);
+            }
+            break;
+        case "dragon":
+        case "anthro dragon":
+        case "dragonkind":
+            if (player.Tails.length === 0 || player.Tails[0].Race !== "dragon") {
+                player.Tails = [];
+                player.Tails.push(Tails.Dragon);
+            }
+            break;
+        default:
+            if (player.Tails.length > 0) {
+                player.Tails = [];
+            };
+            break;
+    };
+    console.log(player.Tails);
 }
 
 function PotionDrunk(race, Dose = 50) {

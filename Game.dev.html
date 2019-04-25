@@ -464,7 +464,7 @@
 		</div>
 		<div id="VoreSettingsMenu" class="None">
 			<button type="button" id="AbsorbEssenceSetting">Absorb Essence Both</button>
-			<button type="button" id="" >Absorb Race-essence true</button>
+			<button type="button" id="">Absorb Race-essence true</button>
 			<!--<input type="button" id="PlayerPrey" value="(not in game)Player prey true/false" />-->
 		</div>
 		<div>
@@ -770,7 +770,7 @@
 				Home = {
 					name: "JavaScript/Home",
 					array: [
-						"Dorm", "Home", "HomeUpgrades", "DormSex" /*,"BrothelSystem"*/,"DormEngine"
+						"Dorm", "Home", "HomeUpgrades", "DormSex" /*,"BrothelSystem"*/ , "DormEngine"
 					]
 				},
 				Opponents = {
@@ -811,8 +811,12 @@
 					name: "JavaScript/Pregnancy",
 					array: ["Children", "Impregnate", "Pregnancy"]
 				},
+				Looks = {
+					name: "JavaScript/Looks",
+					array: ["Tails"]
+				},
 				Arrays = [Scripts, Buildings, Vore, Home, Opponents, Settings, Maps, Sex, Combat,
-					Essence, Inventory, Pregnancy
+					Essence, Inventory, Pregnancy, Looks
 				].forEach(
 					function (den) {
 						den.array.forEach(function (src) {

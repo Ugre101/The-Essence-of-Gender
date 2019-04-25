@@ -1269,6 +1269,7 @@ div.LimbSale {
 #ChildrenMenu {
     width: 50%;
     height: auto;
+    max-height: 95%;
     background-color: rgb(235, 235, 228);
     border: 2px solid black;
     border-radius: 5px;
